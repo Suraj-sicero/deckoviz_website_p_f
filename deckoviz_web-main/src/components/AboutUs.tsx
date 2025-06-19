@@ -397,7 +397,8 @@ export default function AboutUs() {
 
                 {/* Image container - with custom padding: equal on top/left/right, more at bottom */}
                 <div
-                  className="relative bg-white rounded-2xl shadow-lg max-w-sm mx-auto  ml-8 p-4 pb-2 h-[480px]"
+                  className="relative bg-gradient-to-b from-[#e5d4f8] via-[#fbcfe8] to-[#ffeacc]
+ rounded-2xl shadow-lg max-w-sm mx-auto  ml-8 p-4 pb-2 h-[480px]"
                   style={{
                     zIndex: 2,
                     padding: "16px 16px 35px 16px", // 1cm top/left/right, reduced bottom
@@ -412,7 +413,7 @@ export default function AboutUs() {
 
                   {/* AI Badge - positioned at bottom right, 2cm above, half outside */}
                   <div
-                    className="absolute bg-white text-gray-900 px-4 py-3 rounded-lg shadow-lg"
+                    className="absolute bg-white text-gray-900 px-2 py-5 rounded-xl shadow-lg"
                     style={{
                       zIndex: 50,
                       bottom: "20px", // 2cm above bottom
