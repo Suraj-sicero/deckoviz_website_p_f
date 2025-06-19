@@ -1,6 +1,6 @@
 export default function AboutUs() {
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div className="relative min-h-screen bg-white">
       {/* Background gradient section */}
       <div className="absolute inset-0 z-0">
         {/* Base white background with subtle pattern */}
@@ -204,6 +204,220 @@ export default function AboutUs() {
               soothe, energize, or uplift, depending on your intentions and needs. Every piece of art it displays, every
               visual it curates, is attuned to your unique life, spirit, and essence.
             </p>
+          </div>
+        </div>
+
+        {/* Our Philosophy Section */}
+        <div className="relative mt-32 mb-32">
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
+            {/* Top Badge - centered like Vision section */}
+            <div className="flex justify-start mb-8">
+              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+                Our Philosophy
+              </div>
+            </div>
+
+            {/* Main Content - Two Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+              <div className="text-left">
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
+                  Because we believe technology should not just be functional —
+                </h2>
+              </div>
+              <div className="text-left flex items-center">
+                <p className="text-lg text-gray-500 leading-relaxed">
+                  At Deckoviz, we are pioneering a new category —<br />
+                  AI-powered spatial enhancement — bringing
+                  <br />
+                  future-ready beauty, personalization, and emotion
+                  <br />
+                  into homes, offices, cafés, hotels, wellness spaces, and
+                  <br />
+                  beyond.
+                </p>
+              </div>
+            </div>
+
+            {/* Spiral gradient positioned right below the text and above the 4 boxes */}
+            <div className="relative">
+              <div
+                className="absolute -left-1 transform -translate-x-1/2 w-[150vw] max-w-[120rem] h-[34rem] -top-32"
+                style={{
+                  background:
+                    "conic-gradient(from 0deg at center, rgba(236,72,153,0.32) 0%, rgba(147,51,234,0.22) 90deg, rgba(255,165,0,0.03) 180deg, rgba(236,72,153,0.04) 270deg, rgba(147,51,234,0.06) 360deg)",
+                  borderRadius: "60%",
+                  filter: "blur(90px)",
+                  boxShadow: "0 0 0 120px rgba(236,72,153,0.03), 0 0 0 240px rgba(147,51,234,0.02)",
+                }}
+              />
+
+              {/* Four Philosophy Cards */}
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
+                  <div className="mb-6 flex justify-center">
+                    <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                      {/* Icon will be added from public images folder */}
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    It should be
+                    <br />
+                    beautiful.
+                  </h3>
+                </div>
+
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
+                  <div className="mb-6 flex justify-center">
+                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                      {/* Icon will be added from public images folder */}
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    It should be
+                    <br />
+                    magical.
+                  </h3>
+                </div>
+
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
+                  <div className="mb-6 flex justify-center">
+                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                      {/* Icon will be added from public images folder */}
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    It should be
+                    <br />
+                    emotionally
+                    <br />
+                    enriching.
+                  </h3>
+                </div>
+
+                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
+                  <div className="mb-6 flex justify-center">
+                    <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                      {/* Icon will be added from public images folder */}
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    It should help us live
+                    more intentionally,
+                    more expressively,
+                    more joyfully
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Content Placeholder */}
+        <div className="mt-32 mb-32">{/* Future content will go here */}</div>
+
+        {/* Our Vision Section */}
+        <div className="relative mt-32 mb-32">
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
+            {/* Top Badge */}
+            <div className="flex justify-center mb-8">
+              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+                Our Vision
+              </div>
+            </div>
+
+            {/* Main Heading */}
+            <div className="text-center mb-12">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-8">Our Vision</h2>
+              <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
+                Our mission is to develop an ecosystem of cutting-edge, artistically rich,
+                <br />
+                technologically beautiful products that continue to blur the lines between
+                <br />
+                technology, art, and life — breathing curiosity, wonder, joy, and inspiration into
+                <br />
+                every corner of your world.
+              </p>
+            </div>
+
+            {/* Two Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Left Column - Text Content with exact line breaks */}
+              <div className="text-left space-y-12">
+                <div>
+                  <h3 className="text-2xl md:text-2xl font-bold text-gray-900 leading-tight mb-4" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                    We envision a world where your spaces
+                    <br />
+                    are not static, but alive with your story.
+                    <br />
+                    Where art evolves with you.
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed">
+                    Where your home and work environments are
+                    <br />
+                    extensions of your innermost self — vibrant,
+                    <br />
+                    dynamic, deeply personal.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-2xl md:text-2xl font-bold text-gray-900 leading-tight mb-4" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                    We are building the next generation of
+                    <br />
+                    products at the crossroads of art, AI,
+                    <br />
+                    smart technology, and design
+                  </h3>
+                  <p className="text-gray-500 leading-relaxed">
+                    creating living environments that resonate
+                    <br />
+                    emotionally, artistically, and intelligently with
+                    <br />
+                    the people who inhabit them
+                  </p>
+                </div>
+              </div>
+
+              {/* Right Column - Image with Pink Spiral Gradient Background */}
+              <div className="relative">
+                {/* Pink spiral gradient glow that extends beyond the image */}
+                <div
+                  className="absolute -inset-16 transform"
+                  style={{
+                    background:
+                      "conic-gradient(from 0deg at center, rgba(236,72,153,0.25) 0%, rgba(147,51,234,0.18) 90deg, rgba(255,165,0,0.08) 180deg, rgba(236,72,153,0.12) 270deg, rgba(147,51,234,0.15) 360deg)",
+                    borderRadius: "50%",
+                    filter: "blur(60px)",
+                    zIndex: 1,
+                  }}
+                />
+
+                {/* Image container - made smaller */}
+                <div className="relative bg-white rounded-2xl p-2 shadow-lg max-w-sm mx-auto" style={{ zIndex: 2 }}>
+                  <img
+                    src="/images/Gemini_Generated_Image_qcetl0qcetl0qcet.jpeg"
+                    alt="AI-Powered Vision That Inspires You"
+                    className="w-full h-auto object-cover rounded-xl"
+                  />
+
+                  {/* AI Badge - positioned half in/half out with highest z-index */}
+                  <div
+                    className="absolute -bottom-2 -right-2 bg-[#6670d8] text-white px-3 py-2 rounded-lg shadow-lg"
+                    style={{ zIndex: 50 }}
+                  >
+                    <div className="flex items-center space-x-2">
+                      <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-[#6670d8] text-xs font-bold">AI</span>
+                      </div>
+                      <div>
+                        <div className="text-sm font-semibold">AI-Powered</div>
+                        <div className="text-xs opacity-90">Vision That Inspires You.</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
