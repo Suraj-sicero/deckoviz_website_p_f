@@ -252,7 +252,7 @@ export default function AboutUs() {
               />
 
               {/* Four Philosophy Cards */}
-              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
                   <div className="mb-6 flex justify-center">
                     <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
@@ -302,8 +302,11 @@ export default function AboutUs() {
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
                     It should help us live
+                    <br />
                     more intentionally,
+                    <br />
                     more expressively,
+                    <br />
                     more joyfully
                   </h3>
                 </div>
@@ -325,7 +328,7 @@ export default function AboutUs() {
               </div>
             </div>
 
-            {/* Main Heading */}
+             {/* Main Heading */}
             <div className="text-center mb-12">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-8">Our Vision</h2>
               <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
@@ -392,26 +395,38 @@ export default function AboutUs() {
                   }}
                 />
 
-                {/* Image container - made smaller */}
-                <div className="relative bg-white rounded-2xl p-2 shadow-lg max-w-sm mx-auto" style={{ zIndex: 2 }}>
+                {/* Image container - with custom padding: equal on top/left/right, more at bottom */}
+                <div
+                  className="relative bg-white rounded-2xl shadow-lg max-w-sm mx-auto  ml-8 p-4 pb-2 h-[480px]"
+                  style={{
+                    zIndex: 2,
+                    padding: "16px 16px 35px 16px", // 1cm top/left/right, reduced bottom
+                    marginLeft: "2rem", // Move image more to the right
+                  }}
+                >
                   <img
                     src="/images/Gemini_Generated_Image_qcetl0qcetl0qcet.jpeg"
                     alt="AI-Powered Vision That Inspires You"
                     className="w-full h-auto object-cover rounded-xl"
                   />
 
-                  {/* AI Badge - positioned half in/half out with highest z-index */}
+                  {/* AI Badge - positioned at bottom right, 2cm above, half outside */}
                   <div
-                    className="absolute -bottom-2 -right-2 bg-[#6670d8] text-white px-3 py-2 rounded-lg shadow-lg"
-                    style={{ zIndex: 50 }}
+                    className="absolute bg-white text-gray-900 px-4 py-3 rounded-lg shadow-lg"
+                    style={{
+                      zIndex: 50,
+                      bottom: "20px", // 2cm above bottom
+                      left: "-50%", // Half outside to the left
+                      transform: "translateX(50%)",
+                    }}
                   >
                     <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-                        <span className="text-[#6670d8] text-xs font-bold">AI</span>
+                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center">
+                        <span className="text-white text-xs font-bold">AI</span>
                       </div>
                       <div>
                         <div className="text-sm font-semibold">AI-Powered</div>
-                        <div className="text-xs opacity-90">Vision That Inspires You.</div>
+                        <div className="text-xs opacity-70">Vision That Inspires You.</div>
                       </div>
                     </div>
                   </div>
