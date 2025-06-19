@@ -397,8 +397,7 @@ export default function AboutUs() {
 
                 {/* Image container - with custom padding: equal on top/left/right, more at bottom */}
                 <div
-                  className="relative bg-gradient-to-b from-[#e5d4f8] via-[#fbcfe8] to-[#ffeacc]
- rounded-2xl shadow-lg max-w-sm mx-auto  ml-8 p-4 pb-2 h-[480px]"
+                  className="relative bg-gradient-to-b from-orange-300 via-[#ff5bb8] to-[#dbbbff] rounded-2xl shadow-lg max-w-sm mx-auto  ml-8 p-4 pb-2 h-[480px]"
                   style={{
                     zIndex: 2,
                     padding: "16px 16px 35px 16px", // 1cm top/left/right, reduced bottom
@@ -422,8 +421,8 @@ export default function AboutUs() {
                     }}
                   >
                     <div className="flex items-center space-x-2">
-                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center">
-                        <span className="text-white text-xs font-bold">AI</span>
+                      <div className="w-9 h-9 bg-[#6670d8] rounded-full flex items-center justify-center ">
+                        <span className="text-white text- font-light">AI</span>
                       </div>
                       <div>
                         <div className="text-sm font-semibold">AI-Powered</div>
@@ -436,6 +435,368 @@ export default function AboutUs() {
             </div>
           </div>
         </div>
+                    
+{/* Product Section 1 - Our Product Deckoviz */}
+        <div className="relative mt-32 mb-32">
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
+            {/* Top Badge - White bg with gray border */}
+            <div className="flex justify-start mb-8">
+              <div className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 shadow-md">
+                Our Product Deckoviz
+              </div>
+            </div>
+
+            {/* Two Column Layout - Text Left, Image Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Left Column - Text Content */}
+              <div className="text-left space-y-8">
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Our Product :
+                    <br />
+                    <span className="text-[#6670d8]">Deckoviz</span>
+                  </h2>
+                  <p className="text-gray-700 leading-relaxed text-lg mb-8">
+                    Deckoviz is a personalized AI art frame that curates,
+                    <br />
+                    creates, and displays a continually evolving collection of
+                    <br />
+                    artworks, paintings, photography, and visuals — all tailored
+                    <br />
+                    precisely to your tastes, moods, goals, intentions, and inner
+                    <br />
+                    world.
+                  </p>
+                  
+                  <button className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
+                    Find Out More
+                  </button>
+
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                      <p className="text-gray-700">It evolves hourly, daily, or at any pace you choose.</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                      <p className="text-gray-700">
+                        It curates art that feels like it was made
+                        <br />
+                        for you — because, in a sense, it was.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Image with Browser Frame */}
+              <div className="relative">
+                {/* Pink/Purple gradient background like in your image */}
+                <div
+                  className="absolute -inset-20 transform"
+                  style={{
+                    background: "radial-gradient(ellipse at center, rgba(255,192,203,0.8) 0%, rgba(221,160,221,0.6) 40%, rgba(230,230,250,0.4) 80%, transparent 100%)",
+                    borderRadius: "50%",
+                    filter: "blur(60px)",
+                    zIndex: 1,
+                  }}
+                />
+
+                {/* Browser mockup container - WHITE with shadow */}
+                <div 
+                  className="relative bg-white rounded-3xl overflow-hidden max-w-md mx-auto border border-gray-200" 
+                  style={{ 
+                    zIndex: 2,
+                    boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06)"
+                  }}
+                >
+                  {/* Browser header */}
+                  <div className="bg-gray-100 px-4 py-3 flex items-center justify-between">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    
+                    {/* URL bar with lock icon */}
+                    <div className="flex items-center bg-gray-300 px-3 py-1.5 rounded-lg">
+                      <svg className="w-3 h-3 text-gray-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm text-gray-700 font-medium">Deckoviz.Com</span>
+                    </div>
+                    
+                    <div></div>
+                  </div>
+                  
+                  {/* Image content */}
+                  <div className="aspect-square relative overflow-hidden">
+                    <img
+                      src="/images/aboutusimg1.png"
+                      alt="Deckoviz AI Art Frame showing cosmic space scene"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Product Section 2 - Think of Deckoviz */}
+        <div className="relative mt-32 mb-32">
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
+            {/* Top Badge - White bg with gray border */}
+            <div className="flex justify-center mb-8 ml-60">
+              <div className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 shadow-md">
+                Product Features
+              </div>
+            </div>
+
+            {/* Two Column Layout - Image Left, Text Right */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+              {/* Left Column - Image with Browser Frame */}
+              <div className="relative">
+                {/* Pink/Purple gradient background */}
+                <div
+                  className="absolute -inset-20 transform"
+                  style={{
+                    background: "radial-gradient(ellipse at center, rgba(255,192,203,0.8) 0%, rgba(221,160,221,0.6) 40%, rgba(230,230,250,0.4) 80%, transparent 100%)",
+                    borderRadius: "50%",
+                    filter: "blur(60px)",
+                    zIndex: 1,
+                  }}
+                />
+
+                {/* Browser mockup container - WHITE with shadow */}
+                <div 
+                  className="relative bg-white rounded-3xl overflow-hidden max-w-md mx-auto border border-gray-200" 
+                  style={{ 
+                    zIndex: 2,
+                    boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06)"
+                  }}
+                >
+                  {/* Browser header */}
+                  <div className="bg-gray-100 px-4 py-3 flex items-center justify-between">
+                    <div className="flex space-x-2">
+                      <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                      <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                    </div>
+                    
+                    {/* URL bar with lock icon */}
+                    <div className="flex items-center bg-gray-300 px-3 py-1.5 rounded-lg">
+                      <svg className="w-3 h-3 text-gray-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm text-gray-700 font-medium">Deckoviz.com</span>
+                    </div>
+                    
+                    <div></div>
+                  </div>
+                  
+                  {/* Image content */}
+                  <div className="aspect-square relative overflow-hidden">
+                    <img
+                      src="/images/aboutusimg2.png"
+                      alt="Deckoviz showing mountain landscape with cosmic elements"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Text Content */}
+              <div className="text-left space-y-8">
+                <div>
+                  <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                    Think of Deckoviz as a
+                    <br />
+                    new kind of art:
+                  </h2>
+                  <p className="text-gray-700 leading-relaxed text-lg mb-8">
+                    With stunning frame options, customizable collections,
+                    <br />
+                    evolving AI art styles, and endless possibilities for
+                    <br />
+                    expression, Deckoviz ensures that your space never feels
+                    <br />
+                    stale — only ever more you.
+                  </p>
+                  
+                  <button className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
+                    Find Out More
+                  </button>
+
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                      <p className="text-gray-700">Not static, but alive.</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                      <p className="text-gray-700">Not generic, but deeply personal.</p>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                        <span className="text-white text-xs">✓</span>
+                      </div>
+                      <p className="text-gray-700">
+                        Not merely decorative, but emotionally
+                        <br />
+                        intelligent.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+{/* Our Technology Section */}
+        <div className="relative mt-32 mb-32">
+          {/* Radial gradient background - moved down and slightly darker */}
+          <div
+            className="absolute inset-0 transform translate-y-16"
+            style={{
+              background: "radial-gradient(circle at center, rgba(255,182,193,0.5) 0%, rgba(221,160,221,0.35) 25%, rgba(230,230,250,0.25) 50%, rgba(240,248,255,0.15) 75%, transparent 100%)",
+              filter: "blur(40px)",
+              zIndex: 1,
+            }}
+          />
+
+          <div className="relative z-10 max-w-6xl mx-auto px-4">
+            {/* Top Badge */}
+            <div className="flex justify-center mb-8">
+              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+                Our Technology
+              </div>
+            </div>
+
+            {/* Main Heading */}
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">Our Technology</h2>
+              <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+                At the heart of Deckoviz lies our proprietary AI personalization architecture,
+                <br />
+                built from the ground up to understand you intimately
+              </p>
+            </div>
+
+            {/* Three Technology Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Card 1 - Taste & Preference */}
+              <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                {/* Image container with exact gradient background */}
+                <div className="bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/images/doodle1.png"
+                    alt="AI character representing taste and preferences"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                {/* Single tag aligned left */}
+                <div className="mb-4 flex justify-start">
+                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Taste & Preference</span>
+                </div>
+
+                {/* Title with exact line breaks */}
+                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight">
+                  Your tastes, your preferences,<br />your emotional states.
+                </h3>
+
+                {/* Learn More Button with exact styling */}
+                <button className="w-full bg-white border border-gray-300 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-300 shadow-sm">
+                  Learn More
+                </button>
+              </div>
+
+              {/* Card 2 - Dream & Moods */}
+              <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                {/* Image container with purple gradient */}
+                <div className="bg-gradient-to-br from-purple-100 via-purple-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/images/doodle2.png"
+                    alt="AI character representing dreams and moods"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                {/* Two tags aligned left */}
+                <div className="flex gap-2 mb-4">
+                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Dream</span>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Moods</span>
+                </div>
+
+                {/* Title with exact line breaks */}
+                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight">
+                  Your intentions, your<br />dreams, your moods.
+                </h3>
+
+                {/* Learn More Button */}
+                <button className="w-full bg-white border border-gray-300 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-300 shadow-sm">
+                  Learn More
+                </button>
+              </div>
+
+              {/* Card 3 - Beauty, Growth, Connection */}
+              <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                {/* Image container with pink gradient */}
+                <div className="bg-gradient-to-br from-pink-100 via-pink-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/images/doodle3.png"
+                    alt="AI character representing beauty, growth and connection"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+
+                {/* Three tags aligned left */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Beauty</span>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Growth</span>
+                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Connection</span>
+                </div>
+
+                {/* Title with exact line breaks */}
+                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight">
+                  Your desire for beauty, growth,<br />expression, and connection.
+                </h3>
+
+                {/* Learn More Button */}
+                <button className="w-full bg-white border border-gray-300 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-300 shadow-sm">
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
       </div>
     </div>
   )
