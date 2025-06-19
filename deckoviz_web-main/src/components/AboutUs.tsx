@@ -8,15 +8,15 @@ export default function AboutUs() {
 
         {/* Subtle dot pattern overlay */}
         <div
-          className="absolute inset-0 opacity-[0.02]"
+          className="absolute inset-0 opacity-[0.12]"
           style={{
             backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
             backgroundSize: "30px 30px",
           }}
         />
 
-        {/* Enhanced gradient with more depth and animation */}
-        <div className="absolute left-0 right-0" style={{ top: "310px", height: "420px" }}>
+        {/* Enhanced gradient with more depth and animation - extended height */}
+        <div className="absolute left-0 right-0" style={{ top: "260px", height: "480px" }}>
           <div
             className="mx-4 h-full overflow-hidden relative animate-pulse"
             style={{
@@ -87,17 +87,17 @@ export default function AboutUs() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {[
             {
-              src: "/images/ce3552c2-18fd-471f-90ef-1edb442673ab.png",
+              src: "/images/about1.png",
               alt: "Modern living room with mountain landscape display",
               accent: "violet",
             },
             {
-              src: "/images/Gemini_Generated_Image_rgywbsrgywbsrgyw.jpeg",
+              src: "/images/about2.png",
               alt: "Contemporary space with cosmic night sky display",
               accent: "fuchsia",
             },
             {
-              src: "/images/Gemini_Generated_Image_rgywbrrgywbrrgyw.jpeg",
+              src: "/images/about3.png",
               alt: "Modern interior with ocean sunset display",
               accent: "orange",
             },
@@ -255,8 +255,8 @@ export default function AboutUs() {
               <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
                   <div className="mb-6 flex justify-center">
-                    <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                      {/* Icon will be added from public images folder */}
+                    <div className="">
+                      <img src="/images/3dicons-notify-heart-dynamic-color.png" alt="Beautiful Icon" className="w-15 h-15" />
                     </div>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -268,8 +268,8 @@ export default function AboutUs() {
 
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
                   <div className="mb-6 flex justify-center">
-                    <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                      {/* Icon will be added from public images folder */}
+                    <div className="">
+                      <img src="/images/3dicons-magic-trick-dynamic-color.png" alt="Intelligent Icon" className="w-15 h-14" />
                     </div>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -281,8 +281,8 @@ export default function AboutUs() {
 
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
                   <div className="mb-6 flex justify-center">
-                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
-                      {/* Icon will be added from public images folder */}
+                    <div className="">
+                      <img src="/images/3dicons-thumb-up-dynamic-color.png" alt="Beautiful Icon" className="w-15 h-15" />
                     </div>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -296,8 +296,8 @@ export default function AboutUs() {
 
                 <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
                   <div className="mb-6 flex justify-center">
-                    <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
-                      {/* Icon will be added from public images folder */}
+                    <div className="">
+                      <img src="/images/3dicons-heart-dynamic-color.png" alt="Beautiful Icon" className="w-15 h-15" />
                     </div>
                   </div>
                   <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -527,7 +527,7 @@ export default function AboutUs() {
                       <svg className="w-3 h-3 text-gray-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                       </svg>
-                      <span className="text-sm text-gray-700 font-medium">Deckoviz.Com</span>
+                      <span className="text-sm text-gray-700 font-medium">Deckoviz.com</span>
                     </div>
                     
                     <div></div>
@@ -692,7 +692,7 @@ export default function AboutUs() {
               </p>
             </div>
 
-            {/* Three Technology Cards */}
+       {/* Three Technology Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Card 1 - Taste & Preference */}
               <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
@@ -710,8 +710,8 @@ export default function AboutUs() {
                   <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Taste & Preference</span>
                 </div>
 
-                {/* Title with exact line breaks */}
-                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight">
+                {/* Title with exact line breaks - left aligned with Bricolage Grotesque font */}
+                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight text-left" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
                   Your tastes, your preferences,<br />your emotional states.
                 </h3>
 
@@ -738,8 +738,8 @@ export default function AboutUs() {
                   <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Moods</span>
                 </div>
 
-                {/* Title with exact line breaks */}
-                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight">
+                {/* Title with exact line breaks - left aligned with Bricolage Grotesque font */}
+                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight text-left" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
                   Your intentions, your<br />dreams, your moods.
                 </h3>
 
@@ -767,8 +767,8 @@ export default function AboutUs() {
                   <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Connection</span>
                 </div>
 
-                {/* Title with exact line breaks */}
-                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight">
+                {/* Title with exact line breaks - left aligned with Bricolage Grotesque font */}
+                <h3 className="text-xl font-bold text-gray-900 mb-6 leading-tight text-left" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
                   Your desire for beauty, growth,<br />expression, and connection.
                 </h3>
 
@@ -779,14 +779,432 @@ export default function AboutUs() {
               </div>
             </div>
           </div>
+        </div>     
+
+       {/* AI Learning Section */}
+        <div className="relative mt-32 mb-32">
+          <div className="relative z-10 max-w-6xl mx-auto px-4 text-center">
+            {/* Cloud Image */}
+            <div className="flex justify-center mb-8">
+              <img
+                src="/images/cloud.png"
+                alt="AI Cloud"
+                className="w-16 h-16 object-contain"
+              />
+            </div>
+
+            {/* Main Heading */}
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+              Our AI doesn't just recommend. It
+              <br />
+              learns. It grows.
+            </h2>
+
+            {/* Subheading */}
+            <p className="text-lg text-gray-700 leading-relaxed mb-16 max-w-3xl mx-auto">
+              It evolves with you — helping you craft a living environment that
+              <br />
+              feels more alive, more inspiring, more aligned with your true self.
+            </p>
+
+            {/* Systems Description with Bricolage Grotesque font */}
+            <h3 className="text-xl font-semibold text-gray-900 mb-16" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              We leverage multi-layered AI systems to:
+            </h3>
+
+            {/* Four AI Capabilities with enhanced design */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              {/* Capability 1 */}
+              <div className="relative group">
+                {/* Background glow effect */}
+                <div className="absolute -inset-2 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 h-80 flex flex-col"
+                     style={{ background: 'radial-gradient(circle at 30% 20%, rgba(147, 51, 234, 0.05) 0%, rgba(236, 72, 153, 0.03) 40%, rgba(255, 255, 255, 1) 70%)' }}>
+                  {/* Icon with enhanced styling - positioned lower */}
+                  <div className="flex justify-center mb-4 mt-4">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl blur-lg opacity-30"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Text with enhanced styling */}
+                  <div className="flex-1 flex flex-col justify-center">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-purple-700 transition-colors duration-300" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                      Understand and model
+                      <br />
+                      your emotional
+                      <br />
+                      landscape.
+                    </h4>
+                  </div>
+                  
+                  {/* Decorative line */}
+                  <div className="w-12 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+
+              {/* Capability 2 */}
+              <div className="relative group">
+                {/* Background glow effect */}
+                <div className="absolute -inset-2 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 h-80 flex flex-col"
+                     style={{ background: 'radial-gradient(circle at 70% 30%, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.03) 40%, rgba(255, 255, 255, 1) 70%)' }}>
+                  {/* Icon with enhanced styling - positioned lower */}
+                  <div className="flex justify-center mb-4 mt-4">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-400 rounded-2xl blur-lg opacity-30"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a2 2 0 114 0 2 2 0 01-4 0zm8-2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Text with enhanced styling */}
+                  <div className="flex-1 flex flex-col justify-center">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-blue-700 transition-colors duration-300" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                      Curate dynamically
+                      <br />
+                      evolving, personalized
+                      <br />
+                      multisensory art
+                      <br />
+                      experiences.
+                    </h4>
+                  </div>
+                  
+                  {/* Decorative line */}
+                  <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+
+              {/* Capability 3 */}
+              <div className="relative group">
+                {/* Background glow effect */}
+                <div className="absolute -inset-2 bg-gradient-to-br from-pink-200/30 to-red-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-pink-200 h-80 flex flex-col"
+                     style={{ background: 'radial-gradient(circle at 20% 80%, rgba(236, 72, 153, 0.05) 0%, rgba(239, 68, 68, 0.03) 40%, rgba(255, 255, 255, 1) 70%)' }}>
+                  {/* Icon with enhanced styling - positioned lower */}
+                  <div className="flex justify-center mb-4 mt-4">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-pink-400 to-red-400 rounded-2xl blur-lg opacity-30"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-pink-400 to-red-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Text with enhanced styling */}
+                  <div className="flex-1 flex flex-col justify-center">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-pink-700 transition-colors duration-300" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                      Generate original
+                      <br />
+                      visuals tuned to your
+                      <br />
+                      unique aesthetic
+                      <br />
+                      fingerprint.
+                    </h4>
+                  </div>
+                  
+                  {/* Decorative line */}
+                  <div className="w-12 h-1 bg-gradient-to-r from-pink-400 to-red-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+
+              {/* Capability 4 */}
+              <div className="relative group">
+                {/* Background glow effect */}
+                <div className="absolute -inset-2 bg-gradient-to-br from-green-200/30 to-blue-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <div className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-green-200 h-80 flex flex-col"
+                     style={{ background: 'radial-gradient(circle at 80% 60%, rgba(34, 197, 94, 0.05) 0%, rgba(59, 130, 246, 0.03) 40%, rgba(255, 255, 255, 1) 70%)' }}>
+                  {/* Icon with enhanced styling - positioned lower */}
+                  <div className="flex justify-center mb-4 mt-4">
+                    <div className="relative">
+                      <div className="absolute inset-0 bg-gradient-to-br from-green-400 to-blue-400 rounded-2xl blur-lg opacity-30"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-green-400 to-blue-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                        <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Text with enhanced styling */}
+                  <div className="flex-1 flex flex-col justify-center">
+                    <h4 className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-green-700 transition-colors duration-300" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                      Keep your spaces
+                      <br />
+                      vibrant, fresh, and
+                      <br />
+                      deeply reflective of
+                      <br />
+                      your journey.
+                    </h4>
+                  </div>
+                  
+                  {/* Decorative line */}
+                  <div className="w-12 h-1 bg-gradient-to-r from-green-400 to-blue-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>     
+
+
+{/* Our Future Section */}
+        <div className="relative mt-32 mb-32">
+          {/* Radial gradient background glowing from center */}
+          <div
+            className="absolute inset-0 transform"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(255,182,193,0.4) 0%, rgba(221,160,221,0.3) 30%, rgba(230,230,250,0.2) 60%, transparent 100%)",
+              filter: "blur(50px)",
+              zIndex: 1,
+            }}
+          />
+
+          <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+            {/* Top Badge */}
+            <div className="flex justify-center mb-8">
+              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+                Our Future
+              </div>
+            </div>
+
+            {/* Main Heading */}
+            <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-6">Our Future</h2>
+
+            {/* Subheading */}
+            <p className="text-lg text-gray-800 leading-relaxed mb-4 max-w-2xl mx-auto">
+              Deckoviz is just the beginning.
+            </p>
+
+            {/* Description */}
+            <div className="text-gray-800 leading-relaxed mb-16 max-w-3xl mx-auto">
+              <p className="mb-2">
+                We are committed to creating a future where personalization, beauty, technology, and
+                <br />
+                human emotion are not separate realms — but one seamless experience.
+                <br />
+              We are building an ecosystem of products that reimagine:
+              </p>
+              
+            </div>
+
+            {/* Three Future Cards */}
+            <div className="space-y-6 max-w-2xl mx-auto">
+              {/* Card 1 - Home Spaces */}
+              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="flex items-start space-x-6">
+                  {/* Icon */}
+                  <div className="flex-shrink-0">
+                    <img
+                      src="/images/ourfuture1.png"
+                      alt="Home Spaces Icon"
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 text-left">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                      Home Spaces
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed mb-4">
+                      As dynamic expressions of identity and
+                      <br />
+                      mood.
+                    </p>
+                    <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                      Learn More
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 2 - Offices */}
+              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="flex items-start space-x-6">
+                  {/* Icon */}
+                  <div className="flex-shrink-0">
+                    <img
+                      src="/images/ourfuture2.png"
+                      alt="Offices Icon"
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 text-left">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                      Offices
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed mb-4">
+                      As environments that foster creativity,
+                      <br />
+                      alignment, and vitality.
+                    </p>
+                    <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                      Learn More
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3 - Restaurants, hotels, and public spaces */}
+              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+                <div className="flex items-start space-x-6">
+                  {/* Icon */}
+                  <div className="flex-shrink-0">
+                    <img
+                      src="/images/ourfuture3.png"
+                      alt="Public Spaces Icon"
+                      className="w-12 h-12 object-contain"
+                    />
+                  </div>
+                  
+                  {/* Content */}
+                  <div className="flex-1 text-left">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                      Restaurants, hotels, and
+                      <br />
+                      public spaces
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed mb-4">
+                      As immersive emotional experiences.
+                    </p>
+                    <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                      Learn More
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
+{/* Join Our Community Section */}
+        <div className="relative mt-32 mb-32">
+          {/* Main content container - made wider */}
+          <div className="relative max-w-6xl mx-auto px-4">
+            {/* Large Mail Icon - positioned to overlap */}
+            <div className="flex justify-center relative z-50 mb-16">
+              <img
+                src="/images/mailnoti.png"
+                alt="Mail Notification"
+                className="w-32 h-32 object-contain"
+              />
+            </div>
 
+            {/* Purple background section with dotted texture - wider and more faint */}
+            <div className="relative -mt-32 pt-20 pb-16 px-12 rounded-3xl" 
+                 style={{ 
+                   background: '#faf9ff',
+                   backgroundImage: 'radial-gradient(circle, rgba(147,51,234,0.06) 1px, transparent 1px)',
+                   backgroundSize: '20px 20px'
+                 }}>
+              
+              {/* Content positioned below the icon */}
+              <div className="text-center pt-12">
+                {/* Welcome Text */}
+                <div className="mb-6">
+                  <p className="text-lg text-gray-700 leading-relaxed">
+                    Welcome to a more beautiful future.
+                  </p>
+                  <p className="text-lg text-[#6670d8] font-semibold">
+                    Welcome to Deckoviz.
+                  </p>
+                </div>
 
+                {/* Main Heading */}
+                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-8" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+                  Join our community
+                </h2>
 
+                {/* Description */}
+                <div className="text-gray-700 leading-relaxed mb-12 max-w-3xl mx-auto space-y-4">
+                  <p>
+                    If you believe that the spaces where we live and work should inspire us —
+                    <br />
+                    If you dream of living in environments that feel, grow, respond, and reflect
+                    <br />
+                    who you are —
+                  </p>
+                  <p>
+                    If you believe that beauty, art, and technology can and should work together
+                    <br />
+                    to make life more vivid, joyful, and meaningful —
+                  </p>
+                </div>
 
-
-
+                {/* Enhanced Email Signup Form */}
+                <div className="max-w-md mx-auto">
+                  <div className="relative group">
+                    {/* Glow effect */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    
+                    {/* Form container */}
+                    <div className="relative bg-white rounded-2xl p-2 shadow-xl border border-gray-200">
+                      <div className="flex items-center space-x-2">
+                        {/* Email input */}
+                        <div className="flex-1 relative">
+                          <input
+                            type="email"
+                            placeholder="Email address..."
+                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                          />
+                          {/* Subtle icon */}
+                          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                        </div>
+                        
+                        {/* Submit button */}
+                        <button className="bg-gradient-to-r from-[#6670d8] to-purple-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
+                          <span>Submit</span>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Trust indicators */}
+                  <div className="flex items-center justify-center space-x-4 mt-4 text-sm text-gray-500">
+                    <div className="flex items-center space-x-1">
+                      <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>No spam</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                      </svg>
+                      <span>Privacy protected</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
 
