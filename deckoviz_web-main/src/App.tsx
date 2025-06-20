@@ -21,6 +21,7 @@ import ShippingPolicy from './components/ShippingPolicy';
 import ReturnPolicy from './components/ReturnPolicy';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
+import Pricing from './components/Pricing';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -67,9 +68,10 @@ const App: React.FC = () => {
         <Route path="/return-policy" element={<ReturnPolicy />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/features" element={<Features />} />
+        <Route path="/pricing" element={<Pricing />} />
         {/* <Route path="/how-it-works" element={<HowItWorks />} /> */}
         {/* <Route path="/gallery" element={<Gallery />} /> */}
-        {/* <Route path="/pricing" element={<Pricing />} /> */}
+        
         {/* <Route path="/testimonials" element={<Testimonials />} /> */}
         {/* <Route path="/referral" element={<Referral />} /> */}
         {/* <Route path="/faq" element={<FAQ />} /> */}

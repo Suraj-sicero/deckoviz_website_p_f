@@ -82,13 +82,13 @@ const Navbar: React.FC = () => {
               Deckoviz For Businesses
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
             </button>
-            <button
-              onClick={() => handleSectionNav("pricing")}
+            <a
+              href="/pricing"
               className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
             >
               Pricing
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
-            </button>
+            </a>
           </div>
 
           {/* Center Logo with original gradient */}
@@ -159,17 +159,17 @@ const Navbar: React.FC = () => {
                   <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
                 </span>
               </button>
-              <button
-                onClick={() => handleSectionNav("pricing")}
+              
+              <a
+                href="/pricing"
                 className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
+                onClick={() => setIsOpen(false)}
               >
                 <span className="flex items-center">
                   Pricing
                   <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
                 </span>
-              </button>
-
-              <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-4"></div>
+              </a>
 
               <a
                 href="/blog"
@@ -181,6 +181,7 @@ const Navbar: React.FC = () => {
                   <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
                 </span>
               </a>
+
               <a
                 href="/about"
                 className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
