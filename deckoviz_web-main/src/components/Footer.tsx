@@ -119,12 +119,9 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-8">Product</h3>
             <ul className="space-y-4">
               <li>
-                <button
-                  onClick={() => handleSectionNav("features")}
-                  className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
-                >
+                <a href="/features" onClick={() => handleSectionNav("features")} className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
                   Features
-                </button>
+                </a>
               </li>
               <li>
                 <button

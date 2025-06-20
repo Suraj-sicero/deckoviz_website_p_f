@@ -77,17 +77,41 @@ const CountUp = ({
 }
 
 const Hero: React.FC = () => {
+  const [leftImageIndex, setLeftImageIndex] = useState(0)
+  const [rightImageIndex, setRightImageIndex] = useState(0)
+
+  const leftImages = [
+    "/images/lefthero1.png",
+    "/images/lefthero2.png", 
+    "/images/lefthero3.png"
+  ]
+
+  const rightImages = [
+    "/images/righthero1.png",
+    "/images/righthero2.png",
+    "/images/righthero3.png"
+  ]
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLeftImageIndex((prev) => (prev + 1) % leftImages.length)
+      setRightImageIndex((prev) => (prev + 1) % rightImages.length)
+    }, 5000) // Changed to 5 seconds for slower transitions
+
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <section className="py-16 md:py-24 lg:py-32 overflow-hidden relative bg-white">
+    <section className="py-16 md:py-12 lg:py-10 overflow-hidden relative bg-white">
       <div className="absolute inset-0 w-full h-full">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-70"></div>
       </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center">
           {/* Heading */}
-          <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl">
+          <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16">
             <span className="text-gray-900">Transform YourSpace with </span>
-            <span className="bg-[#7c3bec] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#7c3bec] to-[#953bf6] bg-clip-text text-transparent">
               AI-Powered Art
             </span>
           </h1>
@@ -99,21 +123,34 @@ const Hero: React.FC = () => {
 
           {/* Main content with images and stats */}
           <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 mb-10">
-            {/* Left Image */}
+            {/* Left Image - RAW with immersive fade transitions and gradient glow */}
             <div className="relative flex-1 flex justify-center">
+              {/* Gradient glow behind left image */}
               <div
-                className="w-[340px] h-[230px] md:w-[400px] md:h-[260px] overflow-hidden shadow-xl"
-                style={{
-                  clipPath:
-                    'path("M40,0 Q0,0 0,40 L0,220 Q0,260 40,260 L300,260 Q340,260 340,220 L340,40 Q340,0 300,0 Z")',
-                  background: "#222",
-                }}
-              >
-                <img
-                  src="/images/ce3552c2-18fd-471f-90ef-1edb442673ab.png"
-                  alt="Landscape artwork on frame"
-                  className="w-full h-full object-cover"
-                />
+                className="absolute inset-0 transform"
+            style={{
+  background: "radial-gradient(ellipse at center, rgba(147,51,234,0.4) 0%, rgba(236,72,153,0.3) 40%, rgba(168,85,247,0.25) 70%, transparent 100%)",
+  filter: "blur(40px)",
+  zIndex: -1,
+}}
+
+
+              />
+              <div className="relative">
+                {leftImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Left artwork ${index + 1}`}
+                    className={`w-auto h-auto max-w-full transition-all duration-[2500ms] ease-in-out ${
+                      index === leftImageIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 absolute inset-0'
+                    }`}
+                    style={{
+                      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                      transitionProperty: 'opacity, transform',
+                    }}
+                  />
+                ))}
               </div>
             </div>
 
@@ -123,7 +160,8 @@ const Hero: React.FC = () => {
               <div className="flex gap-5 justify-center">
                 <Button
                 variant="primary"
-                className="five-color-gradient border-2 border-gray-300 ring-1 ring-inset ring-sky-200 shadow-lg hover:shadow-xl shadow-purple-200/30 text-gray-700"
+                className="five-color-gradient border-2 ml-10
+                 border-gray-300 ring-1 ring-inset ring-sky-100 shadow-lg hover:shadow-xl shadow-purple-200/30 text-gray-700"
               >
                 Shop Now
               </Button>
@@ -139,58 +177,84 @@ const Hero: React.FC = () => {
             </Button>
               </div>
 
-              {/* Stats Card */}
-              <div className="bg-white rounded-3xl shadow-xl px-10 py-8 border border-gray-100 w-full">
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-[#6C63FF]">
-                      <CountUp from={0} to={1} duration={2} suffix="M+" />
-                    </div>
-                    <div className="text-gray-500 text-sm">Artworks</div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-[#6C63FF]">
-                      <CountUp from={0} to={4.9} duration={2} decimals={1} />
-                    </div>
-                    <div className="text-gray-500 text-sm">Star Rating</div>
-                  </div>
-                  <div className="text-center col-span-1">
-                    <div className="text-gray-500 text-sm">Happy Customers</div>
-                  </div>
-                  <div className="text-center col-span-1">
-                    <div className="text-3xl font-bold text-[#6C63FF]">
-                      <CountUp from={0} to={50} duration={2} suffix="K+" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            {/* Enhanced Stats Card */}
+<div className="relative group ml-8 max-w-md w-full">
+  {/* Subtle glow effect */}
+  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-purple-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
+  
+  <div className="relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl px-6 py-6 border border-gray-200/50 w-full">                 
+    {/* Stats Grid */}
+    <div className="space-y-4">
+      {/* Top Row - Artworks and Star Rating */}
+      <div className="grid grid-cols-2 gap-6">
+        {/* Artworks */}
+        <div className="text-center group/stat hover:scale-105 transition-transform duration-300">
+          <div className="text-4xl font-bold bg-gradient-to-r from-[#6C63FF] to-[#4F46E5] bg-clip-text text-transparent mb-1">
+            <CountUp from={0} to={1} duration={2} suffix="M+" />
+          </div>
+          <div className="text-gray-600 text-md font-medium">Artworks</div>
+          <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
+        </div>
+        
+        {/* Star Rating */}
+        <div className="text-center group/stat hover:scale-105 transition-transform duration-300">
+          <div className="flex items-center justify-center space-x-1 mb-1">
+            <div className="text-4xl font-bold bg-gradient-to-r from-[#6C63FF] to-[#4F46E5] bg-clip-text text-transparent">
+              <CountUp from={0} to={4.9} duration={2} decimals={1} />
+            </div>
+            <div className="text-yellow-400">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+          </div>
+          <div className="text-gray-600 text-md font-medium">Star Rating</div>
+          <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
+        </div>
+      </div>
+      
+      {/* Bottom Row - Happy Customers (centered) */}
+      <div className="flex justify-center">
+        <div className="text-center group/stat hover:scale-105 transition-transform duration-300">
+          <div className="text-4xl font-bold bg-gradient-to-r from-[#6C63FF] to-[#4F46E5] bg-clip-text text-transparent mb-1">
+            <CountUp from={0} to={50} duration={2} suffix="K+" />
+          </div>
+          <div className="text-gray-600 text-md font-medium mr-3">Happy Customers</div>
+          <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+              
             </div>
 
-            {/* Right Image */}
+            {/* Right Image - RAW with immersive fade transitions and gradient glow */}
             <div className="relative flex-1 flex justify-center">
+              {/* Gradient glow behind right image */}
               <div
-                className="w-[340px] h-[230px] md:w-[400px] md:h-[260px] overflow-hidden shadow-xl"
+                className="absolute inset-0 transform"
                 style={{
-                  clipPath:
-                    'path("M0,40 Q0,0 40,0 L300,0 Q340,0 340,40 L340,220 Q340,260 300,260 L40,260 Q0,260 0,220 Z")',
-                  background: "#222",
+                  background: "radial-gradient(ellipse at center, rgba(147,51,234,0.15) 0%, rgba(236,72,153,0.10) 40%, rgba(168,85,247,0.08) 70%, transparent 100%)",
+                  filter: "blur(40px)",
+                  zIndex: -1,
                 }}
-              >
-                <img
-                  src="/images/e3a93562-042f-4040-b463-80b4c2711bf5.png"
-                  alt="Sunset artwork on frame"
-                  className="w-full h-full object-cover"
-                />
-                {/* AI Badge */}
-                <div className="absolute bottom-4 right-4 bg-white shadow-xl rounded-2xl px-3 py-2 flex items-center space-x-2">
-                  <div className="bg-[#6C63FF] text-white rounded-full w-7 h-7 flex items-center justify-center text-xs font-bold">
-                    AI
-                  </div>
-                  <div className="text-left">
-                    <div className="text-xs font-semibold text-gray-900">AI-Powered</div>
-                    <div className="text-xs text-gray-500">Learns your style</div>
-                  </div>
-                </div>
+              />
+              <div className="relative">
+                {rightImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`Right artwork ${index + 1}`}
+                    className={`w-auto h-auto max-w-full transition-all duration-[2500ms] ease-in-out ${
+                      index === rightImageIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 absolute inset-0'
+                    }`}
+                    style={{
+                      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+                      transitionProperty: 'opacity, transform',
+                    }}
+                  />
+                ))}
               </div>
             </div>
           </div>
