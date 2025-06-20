@@ -161,17 +161,17 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <button className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
-                  Careers
-                </button>
-              </li>
-              <li>
-                <button className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
                   Blog
                 </button>
               </li>
               <li>
+                <a href="/contact" className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
+                  Contact Us
+                </a>
+              </li>
+              <li>
                 <button className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
-                  Press
+                 Careers
                 </button>
               </li>
             </ul>
