@@ -160,11 +160,11 @@ const Footer: React.FC = () => {
                   Blog
                 </button>
               </li>
-              <li>
-                <button className="text-gray-500 hover:text-gray-900 transition-colors text-sm text-left">
-                  Press
-                </button>
-              </li>
+             <li>
+  <a href="/contact" className="text-gray-500 hover:text-gray-900 transition-colors text-sm text-left block">
+    Contact Us
+  </a>
+</li>
             </ul>
           </div>
 
