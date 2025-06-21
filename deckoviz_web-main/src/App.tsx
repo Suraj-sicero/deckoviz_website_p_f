@@ -22,6 +22,7 @@ import ReturnPolicy from './components/ReturnPolicy';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Pricing from './components/Pricing';
+import DeckovizLanding from './components/DeckovizForHotels';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -69,12 +70,14 @@ const App: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path ="/deckovizforhotels" element={<DeckovizLanding />} />
         {/* <Route path="/how-it-works" element={<HowItWorks />} /> */}
         {/* <Route path="/gallery" element={<Gallery />} /> */}
         
         {/* <Route path="/testimonials" element={<Testimonials />} /> */}
         {/* <Route path="/referral" element={<Referral />} /> */}
         {/* <Route path="/faq" element={<FAQ />} /> */}
+
       </Routes>
       <Footer />
     </Router>
