@@ -101,7 +101,7 @@ const DeckovizLanding: React.FC = () => {
       </div>
 
       {/* What is Deckoviz Section with White Background */}
-   <div className="bg-white relative py-24 md:py-32">
+   <div className="bg-white relative py-24 md:py-24">
  <div className="relative z-10 max-w-7xl mx-auto px-4">
    {/* Header Section */}
    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
@@ -284,196 +284,400 @@ style={{
 
 
  {/* Why Should Hotels Use Deckoviz Section */}
-<div className="bg-white relative py-24 md:py-32">
+<div className="bg-white relative py-24 md:py-24">
+<div className="relative z-10 max-w-7xl mx-auto px-4">
+  {/* Header Section */}
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
+    {/* Left Column */}
+    <div>
+      {/* Badge */}
+      <div className="flex justify-start mb-8">
+        <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+          What is Deckoviz
+        </div>
+      </div>
+      
+      {/* Main Heading */}
+      <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+        Why Should Hotels
+        <br />
+        Use Deckoviz?
+      </h2>
+    </div>
+
+    {/* Right Column */}
+    <div className="flex items-center justify-between">
+      <div className="flex-1">
+        <p className="text-lg text-gray-800 leading-relaxed mt-14">
+          In hospitality, ambience is currency. How a space
+          <br />
+          makes someone feel is what brings them back.
+          <br />
+          With Deckoviz, you gain a powerful new tool to:
+        </p>
+      </div>
+      <div className="ml-8">
+
+      </div>
+    </div>
+  </div>
+
+{/* Cards Section with Background Gradient */}
+<div className="relative">
+  {/* Subtle, wide-radius circular glow near card area */}
+  <div
+    className="absolute bottom-24 right-16 w-[480px] h-[480px]"
+    style={{
+      background: "radial-gradient(circle at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
+      filter: "blur(120px)",
+      zIndex: 1,
+    }}
+  />
+
+
+
+    {/* Feature Cards Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+      {/* Card 1 */}
+      <div className="relative group">
+        <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+          <div className="mb-6 flex justify-start">
+            
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+            
+          </div>
+          <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+            Set the Emotional Tone of Every Room
+          </h3>
+          <div className="flex-1">
+            <div className="flex items-start mb-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <p className="text-indigo-600 font-medium">
+                Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="text-gray-400 hover:text-gray-600 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Card 2 */}
+      <div className="relative group">
+        <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+          <div className="mb-6 flex justify-start">
+            
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+           
+          </div>
+          <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+            Offer Dynamic, Personal, and Memorable Guest Experiences
+          </h3>
+          <div className="flex-1">
+            <div className="flex items-start mb-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <p className="text-indigo-600 font-medium">
+                Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="text-gray-400 hover:text-gray-600 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Card 3 */}
+      <div className="relative group">
+        <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+          <div className="mb-6 flex justify-start">
+            
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+           
+          </div>
+          <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+            Differentiate Your Property in the Market
+          </h3>
+          <div className="flex-1">
+            <div className="flex items-start mb-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <p className="text-indigo-600 font-medium">
+                Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="text-gray-400 hover:text-gray-600 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Card 4 */}
+      <div className="relative group">
+        <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+          <div className="mb-6 flex justify-start">
+           
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+            
+          </div>
+          <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+            Monetize New Storytelling & Art Channels
+          </h3>
+          <div className="flex-1">
+            <div className="flex items-start mb-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <p className="text-indigo-600 font-medium">
+                Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="text-gray-400 hover:text-gray-600 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Card 5 */}
+      <div className="relative group">
+        <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+          <div className="mb-6 flex justify-start">
+            
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+           
+          </div>
+          <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+            Upgrade Design Without Renovation
+          </h3>
+          <div className="flex-1">
+            <div className="flex items-start mb-3">
+              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+              <p className="text-indigo-600 font-medium">
+                Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-end mt-6">
+            <div className="text-gray-400 hover:text-gray-600 transition-colors">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{/* Use Case Scenarios Section */}
+<div className="bg-white relative py-24 md:py-24">
  <div className="relative z-10 max-w-7xl mx-auto px-4">
    {/* Header Section */}
-   <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
-     {/* Left Column */}
-     <div>
-       {/* Badge */}
-       <div className="flex justify-start mb-8">
-         <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-           What is Deckoviz
-         </div>
-       </div>
-       
-       {/* Main Heading */}
+   <div className="text-center mb-20">
+     <div className="flex justify-center items-center mb-8">
        <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-         Why Should Hotels
+         Use Case Scenarios for
          <br />
-         Use Deckoviz?
+         Deckoviz in Hotels &
+         <br />
+         Resorts
        </h2>
      </div>
-
-     {/* Right Column */}
-     <div className="flex items-center justify-between">
-       <div className="flex-1">
-         <p className="text-lg text-gray-800 leading-relaxed mt-14">
-           In hospitality, ambience is currency. How a space
-           <br />
-           makes someone feel is what brings them back.
-           <br />
-           With Deckoviz, you gain a powerful new tool to:
-         </p>
-       </div>
-       <div className="ml-8">
-
-       </div>
-     </div>
    </div>
+{/* Cards Section with Background Gradient */}
+<div className="relative">
+  {/* Central radial gradient behind all cards */}
+  <div
+    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[50rem]"
+    style={{
+      background:
+        "radial-gradient(ellipse at center, rgba(147,51,234,0.35) 0%, rgba(219,39,119,0.25) 30%, rgba(236,72,153,0.18) 60%, transparent 90%)",
+      filter: "blur(80px)",
+      zIndex: 1,
+    }}
+  />
 
-   {/* Feature Cards Grid */}
-   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-     {/* Card 1 */}
-     <div className="relative group">
-       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-         <div className="mb-6 flex justify-start">
-           
-             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-           
-         </div>
-         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-           Set the Emotional Tone of Every Room
-         </h3>
-         <div className="flex-1">
-           <div className="flex items-start mb-3">
-             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-             <p className="text-indigo-600 font-medium">
-               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-             </p>
+   <div className="space-y-6 relative z-10">
+       {/* Top Row - 2 Wide Cards */}
+       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+         {/* Card 1 - Guest Rooms */}
+         <div className="relative group">
+           <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+             <div className="flex justify-between items-start mb-6">
+               <div>
+                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <h3 className="text-2xl font-semibold text-gray-900">In Guest Rooms</h3>
+               </div>
+               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+             </div>
+             
+             <div className="space-y-3">
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Greet guests with a personalized welcome message or ambient art reflecting their preferences
+                 </p>
+               </div>
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Curate dynamic, time-based visual schedules (calm mornings, energizing afternoons, tranquil evenings)
+                 </p>
+               </div>
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Offer guest mood modes: "Relax," "Focus," "Romance," "Sleep," "Inspiration"
+                 </p>
+               </div>
+             </div>
            </div>
          </div>
-         <div className="flex justify-end mt-6">
-           <div className="text-gray-400 hover:text-gray-600 transition-colors">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-             </svg>
+
+         {/* Card 2 - Lobbies and Lounges */}
+         <div className="relative group">
+           <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+             <div className="flex justify-between items-start mb-6">
+               <div>
+                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <h3 className="text-2xl font-semibold text-gray-900">In Lobbies and Lounges</h3>
+               </div>
+               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+             </div>
+             
+             <div className="space-y-3">
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Display regional art, historical visual narratives, or seasonally themed ambient collections
+                 </p>
+               </div>
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Welcome international guests with visuals from their home country or culture
+                 </p>
+               </div>
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Create a high-design moment that guests photograph, remember, and share
+                 </p>
+               </div>
+             </div>
            </div>
          </div>
        </div>
-     </div>
 
-     {/* Card 2 */}
-     <div className="relative group">
-       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-         <div className="mb-6 flex justify-start">
-           
-             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-          
-         </div>
-         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-           Offer Dynamic, Personal, and Memorable Guest Experiences
-         </h3>
-         <div className="flex-1">
-           <div className="flex items-start mb-3">
-             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-             <p className="text-indigo-600 font-medium">
-               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-             </p>
+       {/* Bottom Row - 3 Narrower Cards */}
+       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+         {/* Card 3 - Restaurants & Bars */}
+         <div className="relative group">
+           <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+             <div className="flex justify-between items-start mb-6">
+               <div>
+                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <h3 className="text-xl font-semibold text-gray-900">In Restaurants & Bars</h3>
+               </div>
+               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+             </div>
+             
+             <div className="space-y-3">
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Match visual ambience to cuisine: Italian vineyard scenes, Tokyo night lights, Mediterranean coastlines
+                 </p>
+               </div>
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Rotate visuals to complement the menu theme, time of day, or music
+                 </p>
+               </div>
+             </div>
            </div>
          </div>
-         <div className="flex justify-end mt-6">
-           <div className="text-gray-400 hover:text-gray-600 transition-colors">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-             </svg>
+
+         {/* Card 4 - Spas & Wellness Areas */}
+         <div className="relative group">
+           <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+             <div className="flex justify-between items-start mb-6">
+               <div>
+                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <h3 className="text-xl font-semibold text-gray-900">In Spas & Wellness Areas</h3>
+               </div>
+               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+             </div>
+             
+             <div className="space-y-3">
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Visualize healing — flowing water, slow-moving clouds, fractal breath animations
+                 </p>
+               </div>
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Use moodscapes and soundscapes to deepen emotional immersion during massage or treatment
+                 </p>
+               </div>
+             </div>
+           </div>
+         </div>
+
+         {/* Card 5 - Event Spaces */}
+         <div className="relative group">
+           <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+             <div className="flex justify-between items-start mb-6">
+               <div>
+                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <h3 className="text-xl font-semibold text-gray-900">In Event Spaces</h3>
+               </div>
+               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+             </div>
+             
+             <div className="space-y-3">
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Offer custom Deckoviz visual modes for weddings, corporate events, or VIP bookings
+                 </p>
+               </div>
+               <div className="flex items-start">
+                 <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                 <p className="text-indigo-600 font-medium">
+                   Set up motion-graphic visuals, ambient loops, or poetic displays matching the event's theme
+                 </p>
+               </div>
+             </div>
            </div>
          </div>
        </div>
-     </div>
+     </div>  
 
-     {/* Card 3 */}
-     <div className="relative group">
-       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-         <div className="mb-6 flex justify-start">
-           
-             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-          
-         </div>
-         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-           Differentiate Your Property in the Market
-         </h3>
-         <div className="flex-1">
-           <div className="flex items-start mb-3">
-             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-             <p className="text-indigo-600 font-medium">
-               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-             </p>
-           </div>
-         </div>
-         <div className="flex justify-end mt-6">
-           <div className="text-gray-400 hover:text-gray-600 transition-colors">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-             </svg>
-           </div>
-         </div>
-       </div>
-     </div>
-
-     {/* Card 4 */}
-     <div className="relative group">
-       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-         <div className="mb-6 flex justify-start">
-          
-             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-           
-         </div>
-         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-           Monetize New Storytelling & Art Channels
-         </h3>
-         <div className="flex-1">
-           <div className="flex items-start mb-3">
-             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-             <p className="text-indigo-600 font-medium">
-               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-             </p>
-           </div>
-         </div>
-         <div className="flex justify-end mt-6">
-           <div className="text-gray-400 hover:text-gray-600 transition-colors">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-             </svg>
-           </div>
-         </div>
-       </div>
-     </div>
-
-     {/* Card 5 */}
-     <div className="relative group">
-       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-         <div className="mb-6 flex justify-start">
-           
-             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-          
-         </div>
-         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-           Upgrade Design Without Renovation
-         </h3>
-         <div className="flex-1">
-           <div className="flex items-start mb-3">
-             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-             <p className="text-indigo-600 font-medium">
-               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-             </p>
-           </div>
-         </div>
-         <div className="flex justify-end mt-6">
-           <div className="text-gray-400 hover:text-gray-600 transition-colors">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-             </svg>
-           </div>
-         </div>
-       </div>
-     </div>
    </div>
  </div>
-</div>    
-
-
-
+</div>
 
       
     </div>
