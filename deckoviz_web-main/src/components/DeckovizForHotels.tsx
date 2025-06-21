@@ -506,7 +506,7 @@ style={{
 <div className="relative">
   {/* Central radial gradient behind all cards */}
   <div
-    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[50rem]"
+    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem]"
     style={{
       background:
         "radial-gradient(ellipse at center, rgba(147,51,234,0.35) 0%, rgba(219,39,119,0.25) 30%, rgba(236,72,153,0.18) 60%, transparent 90%)",
@@ -523,10 +523,14 @@ style={{
            <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
              <div className="flex justify-between items-start mb-6">
                <div>
-                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+              <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+  For Hotel & Resorts
+</span>
+
+
                  <h3 className="text-2xl font-semibold text-gray-900">In Guest Rooms</h3>
                </div>
-               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+               <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
              </div>
              
              <div className="space-y-3">
@@ -557,10 +561,12 @@ style={{
            <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
              <div className="flex justify-between items-start mb-6">
                <div>
-                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+  For Hotel & Resorts
+</span>
                  <h3 className="text-2xl font-semibold text-gray-900">In Lobbies and Lounges</h3>
                </div>
-               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+               <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
              </div>
              
              <div className="space-y-3">
@@ -594,10 +600,12 @@ style={{
            <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
              <div className="flex justify-between items-start mb-6">
                <div>
-                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+  For Hotel & Resorts
+</span>
                  <h3 className="text-xl font-semibold text-gray-900">In Restaurants & Bars</h3>
                </div>
-               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+               <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
              </div>
              
              <div className="space-y-3">
@@ -622,10 +630,12 @@ style={{
            <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
              <div className="flex justify-between items-start mb-6">
                <div>
-                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+  For Hotel & Resorts
+</span>
                  <h3 className="text-xl font-semibold text-gray-900">In Spas & Wellness Areas</h3>
                </div>
-               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+               <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
              </div>
              
              <div className="space-y-3">
@@ -650,10 +660,12 @@ style={{
            <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
              <div className="flex justify-between items-start mb-6">
                <div>
-                 <p className="text-sm text-gray-600 mb-2">For Hotel & Resorts</p>
+                 <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+  For Hotel & Resorts
+</span>
                  <h3 className="text-xl font-semibold text-gray-900">In Event Spaces</h3>
                </div>
-               <img src="images/crown.png" alt="Crown" className="w-8 h-8 object-contain" />
+               <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
              </div>
              
              <div className="space-y-3">
