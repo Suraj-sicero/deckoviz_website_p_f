@@ -280,7 +280,201 @@ style={{
  </div>
 </div>
         
-        
+
+
+
+ {/* Why Should Hotels Use Deckoviz Section */}
+<div className="bg-white relative py-24 md:py-32">
+ <div className="relative z-10 max-w-7xl mx-auto px-4">
+   {/* Header Section */}
+   <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
+     {/* Left Column */}
+     <div>
+       {/* Badge */}
+       <div className="flex justify-start mb-8">
+         <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+           What is Deckoviz
+         </div>
+       </div>
+       
+       {/* Main Heading */}
+       <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+         Why Should Hotels
+         <br />
+         Use Deckoviz?
+       </h2>
+     </div>
+
+     {/* Right Column */}
+     <div className="flex items-center justify-between">
+       <div className="flex-1">
+         <p className="text-lg text-gray-800 leading-relaxed mt-14">
+           In hospitality, ambience is currency. How a space
+           <br />
+           makes someone feel is what brings them back.
+           <br />
+           With Deckoviz, you gain a powerful new tool to:
+         </p>
+       </div>
+       <div className="ml-8">
+
+       </div>
+     </div>
+   </div>
+
+   {/* Feature Cards Grid */}
+   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+     {/* Card 1 */}
+     <div className="relative group">
+       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+         <div className="mb-6 flex justify-start">
+           
+             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+           
+         </div>
+         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+           Set the Emotional Tone of Every Room
+         </h3>
+         <div className="flex-1">
+           <div className="flex items-start mb-3">
+             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+             <p className="text-indigo-600 font-medium">
+               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+             </p>
+           </div>
+         </div>
+         <div className="flex justify-end mt-6">
+           <div className="text-gray-400 hover:text-gray-600 transition-colors">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     {/* Card 2 */}
+     <div className="relative group">
+       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+         <div className="mb-6 flex justify-start">
+           
+             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+          
+         </div>
+         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+           Offer Dynamic, Personal, and Memorable Guest Experiences
+         </h3>
+         <div className="flex-1">
+           <div className="flex items-start mb-3">
+             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+             <p className="text-indigo-600 font-medium">
+               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+             </p>
+           </div>
+         </div>
+         <div className="flex justify-end mt-6">
+           <div className="text-gray-400 hover:text-gray-600 transition-colors">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     {/* Card 3 */}
+     <div className="relative group">
+       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+         <div className="mb-6 flex justify-start">
+           
+             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+          
+         </div>
+         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+           Differentiate Your Property in the Market
+         </h3>
+         <div className="flex-1">
+           <div className="flex items-start mb-3">
+             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+             <p className="text-indigo-600 font-medium">
+               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+             </p>
+           </div>
+         </div>
+         <div className="flex justify-end mt-6">
+           <div className="text-gray-400 hover:text-gray-600 transition-colors">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     {/* Card 4 */}
+     <div className="relative group">
+       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+         <div className="mb-6 flex justify-start">
+          
+             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+           
+         </div>
+         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+           Monetize New Storytelling & Art Channels
+         </h3>
+         <div className="flex-1">
+           <div className="flex items-start mb-3">
+             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+             <p className="text-indigo-600 font-medium">
+               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+             </p>
+           </div>
+         </div>
+         <div className="flex justify-end mt-6">
+           <div className="text-gray-400 hover:text-gray-600 transition-colors">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           </div>
+         </div>
+       </div>
+     </div>
+
+     {/* Card 5 */}
+     <div className="relative group">
+       <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+         <div className="mb-6 flex justify-start">
+           
+             <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+          
+         </div>
+         <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+           Upgrade Design Without Renovation
+         </h3>
+         <div className="flex-1">
+           <div className="flex items-start mb-3">
+             <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+             <p className="text-indigo-600 font-medium">
+               Morning: golden hour visuals, gentle soundscapes, nature-based serenity
+             </p>
+           </div>
+         </div>
+         <div className="flex justify-end mt-6">
+           <div className="text-gray-400 hover:text-gray-600 transition-colors">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+             </svg>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>    
+
+
+
+
       
     </div>
   );
