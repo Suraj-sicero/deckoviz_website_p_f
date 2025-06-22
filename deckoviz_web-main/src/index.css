@@ -140,3 +140,24 @@
   box-shadow: 0 4px 12px rgba(76, 110, 245, 0.15);
 }
 
+@keyframes floatLeft {
+  0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+  33% { transform: translateX(-60px) translateY(-40px) scale(1.15); }
+  66% { transform: translateX(40px) translateY(50px) scale(0.85); }
+}
+
+@keyframes floatRight {
+  0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+  50% { transform: translateX(50px) translateY(-60px) scale(1.2); }
+}
+
+@keyframes floatCenter {
+  0%, 100% { transform: translateX(0) translateY(0) scale(1); }
+  25% { transform: translateX(-45px) translateY(35px) scale(1.1); }
+  75% { transform: translateX(55px) translateY(-30px) scale(0.9); }
+}
+
+@keyframes floatBottom {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-80px) scale(1.25); }
+}

@@ -5,33 +5,33 @@ const DeckovizLanding: React.FC = () => {
     <div className="bg-white">
       {/* Hero Section with Gradient Background */}
       <div className="min-h-screen relative overflow-hidden">
-        {/* Gradient Background Effects - Only for Hero Section */}
-        <div className="absolute inset-0">
-          {/* Single continuous left side gradient with varying widths */}
-          <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/25 via-purple-400/15 to-transparent blur-[40px]"></div>
-          
-          {/* Additional center flow */}
-          <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-500/20 via-purple-400/10 to-transparent blur-[50px]"></div>
-          
-          {/* Additional bottom flow */}
-          <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-indigo-500/15 via-purple-400/8 to-transparent blur-[60px]"></div>
-          
-          {/* Right side vertical gradient - ends much earlier */}
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/25 via-purple-400/15 to-transparent blur-[50px]"></div>
-          
-          {/* Left edge accents for smoothness */}
-          <div className="absolute top-0 left-0 w-1/6 h-1/3 bg-gradient-to-r from-indigo-600/30 via-rose-400/15 to-transparent blur-[30px]"></div>
-          
-          <div className="absolute top-1/3 left-0 w-1/5 h-1/2 bg-gradient-to-r from-indigo-500/20 via-rose-400/17 to-transparent blur-[35px]"></div>
-          
-          <div className="absolute top-2/3 left-0 w-1/4 h-1/3 bg-gradient-to-r from-indigo-600/35 via-rose-400/20 to-transparent blur-[40px]"></div>
-          
-          {/* Right edge vertical accent */}
-          <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-indigo-600/30 via-rose-400/15 to-transparent blur-[35px]"></div>
-          
-          {/* Bottom gradient with more pink/rose */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-purple-300/20 via-pink-300/18 to-transparent blur-[45px]"></div>
-        </div>
+    {/* Gradient Background Effects - Only for Hero Section */}
+<div className="absolute inset-0">
+  {/* Single continuous left side gradient with varying widths */}
+  <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/25 via-purple-400/15 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
+  
+  {/* Additional center flow */}
+  <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-500/20 via-purple-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
+  
+  {/* Additional bottom flow */}
+  <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-indigo-500/15 via-purple-400/8 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
+  
+  {/* Right side vertical gradient - ends much earlier */}
+  <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/25 via-purple-400/15 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
+  
+  {/* Left edge accents for smoothness */}
+  <div className="absolute top-0 left-0 w-1/6 h-1/3 bg-gradient-to-r from-indigo-600/30 via-rose-400/15 to-transparent blur-[30px] animate-[pulse_4s_ease-in-out_infinite]"></div>
+  
+  <div className="absolute top-1/3 left-0 w-1/5 h-1/2 bg-gradient-to-r from-indigo-500/20 via-rose-400/17 to-transparent blur-[35px] animate-[floatLeft_5s_ease-in-out_infinite_1s]"></div>
+  
+  <div className="absolute top-2/3 left-0 w-1/4 h-1/3 bg-gradient-to-r from-indigo-600/35 via-rose-400/20 to-transparent blur-[40px] animate-[floatCenter_6s_ease-in-out_infinite_2s]"></div>
+  
+  {/* Right edge vertical accent */}
+  <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-indigo-600/30 via-rose-400/15 to-transparent blur-[35px] animate-[floatRight_9s_ease-in-out_infinite_1.5s]"></div>
+  
+  {/* Bottom gradient with more pink/rose */}
+  <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-purple-300/20 via-pink-300/18 to-transparent blur-[45px] animate-[floatBottom_8s_ease-in-out_infinite_3s]"></div>
+</div>
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center pt-16">
@@ -691,7 +691,305 @@ style={{
  </div>
 </div>
 
+{/* Features Tailored for Hotels Section */}
+<div className="bg-white relative py-24 md:py-24">
+  <div className="relative z-10 max-w-7xl mx-auto px-4">
+    {/* Header Section */}
+    <div className="mb-16">
+      {/* Badge */}
+      <div className="flex justify-start mb-8">
+        <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+          FEATURES
+        </div>
+      </div>
       
+      {/* Main Heading */}
+      <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+        Features Tailored for Hotels
+      </h2>
+    </div>
+
+    {/* Features Grid */}
+    <div className="relative">
+      {/* Background gradient glow */}
+      <div
+        className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[30rem]"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(147,51,234,0.2) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
+          filter: "blur(100px)",
+          zIndex: 1,
+        }}
+      />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 relative z-10">
+        {/* Feature 1 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☺</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Portrait & Landscape Modes
+            </h3>
+          </div>
+        </div>
+
+        {/* Feature 2 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☻</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Rotating Frame Options (classic wood, modern, bezelless, luxury frame add-ons)
+            </h3>
+          </div>
+        </div>
+
+        {/* Feature 3 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☺</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Android TV Integration — optional smart TV use
+            </h3>
+          </div>
+        </div>
+
+        {/* Feature 4 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☻</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Custom Collection Builder: Create room-specific themes
+            </h3>
+          </div>
+        </div>
+
+        {/* Feature 5 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☺</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Voice & App Control (via mobile)
+            </h3>
+          </div>
+        </div>
+
+        {/* Feature 6 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☻</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Scheduled Display Routines
+            </h3>
+          </div>
+        </div>
+
+        {/* Feature 7 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☺</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Mood-Based Visual Triggers
+            </h3>
+          </div>
+        </div>
+
+        {/* Feature 8 */}
+        <div className="flex items-start space-x-4 group">
+          <div className="flex-shrink-0 mt-1">
+            <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
+              <span className="text-lg">☻</span>
+            </div>
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Personalized Welcome Modes
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* Real Results: Sample Guest Reactions Section */}
+<div className="relative py-24 md:py-32 overflow-hidden">
+  {/* Background Gradient Effect */}
+  <div className="absolute inset-0">
+    {/* Animated gradient layers similar to hero section */}
+    <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-indigo-500/20 via-purple-400/12 to-transparent blur-[50px] animate-[floatLeft_8s_ease-in-out_infinite]"></div>
+    
+    <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/20 via-purple-400/12 to-transparent blur-[50px] animate-[floatRight_9s_ease-in-out_infinite]"></div>
+    
+    <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-600/25 via-rose-400/15 to-transparent blur-[45px] animate-[floatCenter_10s_ease-in-out_infinite]"></div>
+    
+    <div className="absolute top-1/4 right-0 w-1/2 h-1/2 bg-gradient-to-l from-indigo-600/25 via-rose-400/15 to-transparent blur-[45px] animate-[floatCenter_12s_ease-in-out_infinite_2s]"></div>
+    
+    <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-purple-300/15 via-pink-300/12 to-transparent blur-[40px] animate-[floatBottom_11s_ease-in-out_infinite_1s]"></div>
+    
+    {/* Additional center accent */}
+    <div className="absolute top-1/3 left-1/4 w-1/2 h-1/3 bg-gradient-to-r from-indigo-500/15 via-purple-400/8 to-indigo-500/15 blur-[60px] animate-[pulse_6s_ease-in-out_infinite]"></div>
+    
+    {/* Grid pattern that bends toward center */}
+    <div 
+      className="absolute inset-0"
+      style={{
+        backgroundImage: `
+          repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.4) 0px,
+            rgba(255, 255, 255, 0.4) 1px,
+            transparent 1px,
+            transparent 25px
+          ),
+          repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.4) 0px,
+            rgba(255, 255, 255, 0.4) 1px,
+            transparent 1px,
+            transparent 25px
+          )
+        `,
+        transform: 'perspective(800px) rotateX(25deg) scale(1.2)',
+        transformOrigin: 'center center',
+        maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)'
+      }}
+      
+    />
+    
+    {/* Additional curved grid overlay for more pronounced bending */}
+    <div 
+      className="absolute inset-0"
+      style={{
+        backgroundImage: `
+          repeating-conic-gradient(
+            from 0deg at 50% 50%, 
+            rgba(255, 255, 255, 0.2) 0deg, 
+            rgba(255, 255, 255, 0.2) 1deg, 
+            transparent 1deg, 
+            transparent 10deg
+          )
+        `,
+        opacity: 0.3
+      }}
+    />
+    
+    {/* White center overlay to maintain the bright center */}
+    <div 
+      className="absolute inset-0"
+      style={{
+        background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 40%, transparent 70%)"
+      }}
+    />
+  </div>
+
+  <div className="relative z-10 max-w-7xl mx-auto px-4">
+    {/* Header */}
+    <div className="text-center mb-16">
+      <h2 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#6670d8] via-pink-500 to-orange-400 bg-clip-text text-transparent">
+  Real Results: Sample Guest Reactions
+</h2>
+    </div>
+
+    {/* Testimonials Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+      {/* Testimonial 1 */}
+      <div className="group">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
+          <div className="mb-6">
+            <p className="text-gray-800 leading-relaxed text-lg">
+              "The moment I entered my room and saw the frame welcome me with my name and sunset visuals, I literally gasped. Most peaceful sleep I've had in months."
+            </p>
+          </div>
+          
+          <div className="mb-6">
+            <p className="text-gray-900 font-semibold">
+              — Guest at boutique hotel pilot
+            </p>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600 font-medium">Genuine Compliments</span>
+            <span className="text-green-600 text-lg">🌿</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Testimonial 2 */}
+      <div className="group">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
+          <div className="mb-6">
+            <p className="text-gray-800 leading-relaxed text-lg">
+              "Our wedding couple cried seeing their photos reimagined in dreamy AI art and playing on the wall. It was next-level personalization."
+            </p>
+          </div>
+          
+          <div className="mb-6">
+            <p className="text-gray-900 font-semibold">
+              — Events manager at luxury resort
+            </p>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600 font-medium">Our Loved Memories</span>
+            <span className="text-cyan-500 text-lg">🍁</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Testimonial 3 */}
+      <div className="group">
+        <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
+          <div className="mb-6">
+            <p className="text-gray-800 leading-relaxed text-lg">
+              "We've had multiple guests ask where they could buy it. Deckoviz has become a silent ambassador for our design and brand experience."
+            </p>
+          </div>
+          
+          <div className="mb-6">
+            <p className="text-gray-900 font-semibold">
+              — General Manager, design-forward city hotel
+            </p>
+          </div>
+          
+          <div className="flex items-center space-x-2">
+            <span className="text-sm text-gray-600 font-medium">Valuable Experiences</span>
+            <span className="text-blue-600 text-lg">👍</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
     </div>
   );
 };
