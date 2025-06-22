@@ -108,8 +108,8 @@ const Testimonials: React.FC = () => {
             What Our <span className="text-[#7441dd]">Customers Say</span>
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto px-4">
-            Don't just take our word for it. Here's what people love about Deckoviz.
-          </p>
+ Don't just take our word for it. Here's what people <span className="text-red-600 font-semibold">love</span> about Deckoviz.
+</p>
         </div>
 
         {/* Mobile: Single column with proper spacing */}

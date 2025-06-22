@@ -111,15 +111,14 @@ const Hero: React.FC = () => {
           {/* Heading */}
           <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16">
             <span className="text-gray-900">Transform YourSpace with </span>
-            <span className="bg-gradient-to-r from-[#7c3bec] to-[#953bf6] bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-[#9a5ffff9] to-indigo-500 bg-clip-text text-transparent">
               AI-Powered Art
             </span>
           </h1>
           {/* Subheading */}
-          <p className="text-center text-gray-600 text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-            Deckoviz brings your walls to life with a smart art frame that learns your style and evolves with you over
-            time.
-          </p>
+        <p className="text-center text-gray-600 text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+ Deckoviz brings your <span className="text-purple-600 font-semibold">walls to life</span> with a <span className="text-indigo-600 font-semibold">smart art frame</span> that <span className="text-fuchsia-500 font-semibold">learns your style</span> and <span className="text-purple-600 font-semibold">evolves with you</span> over time.
+</p>
 
           {/* Main content with images and stats */}
           <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 mb-10">
