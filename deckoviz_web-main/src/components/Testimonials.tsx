@@ -67,13 +67,40 @@ const Testimonials: React.FC = () => {
     }
   ];
 
-  return (
-    <section className="relative py-12 sm:py-16 lg:py-20 bg-white overflow-hidden">
-      {/* Top fade effect */}
-      <div className="absolute top-0 left-0 right-0 h-16 sm:h-20 bg-gradient-to-b from-white to-transparent z-10"></div>
+  // Split testimonials into three columns
+  const leftColumn = testimonials.filter((_, index) => index % 3 === 0);
+  const centerColumn = testimonials.filter((_, index) => index % 3 === 1);
+  const rightColumn = testimonials.filter((_, index) => index % 3 === 2);
 
-      {/* Bottom fade effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 sm:h-20 bg-gradient-to-t from-white to-transparent z-10"></div>
+  const TestimonialCard = ({ testimonial, index }: { testimonial: any, index: number }) => (
+    <div className="bg-gray-100 rounded-2xl p-4 md:p-6 mb-4 md:mb-6 break-inside-avoid">
+      <p className="text-gray-800 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
+        "{testimonial.quote}"
+      </p>
+      
+      <div className="flex items-center gap-3">
+        <img 
+          src={testimonial.avatar} 
+          alt={testimonial.author}
+          className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover flex-shrink-0"
+        />
+        <div className="min-w-0">
+          <p className="font-light text-gray-900 text-sm md:text-base">{testimonial.author}</p>
+          <p className="text-xs md:text-sm text-gray-900 font-semibold">
+            <span className="font-bold">{testimonial.role}</span> at <span className="font-light">{testimonial.company}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <section className="relative py-12 sm:py-16 lg:py-20 bg-white">
+      {/* External top fade effect */}
+      <div className="absolute top-0 left-0 right-0 h-8 sm:h-10 bg-gradient-to-b from-white to-transparent z-10"></div>
+
+      {/* External bottom fade effect */}
+      <div className="absolute bottom-0 left-0 right-0 h-8 sm:h-10 bg-gradient-to-t from-white to-transparent z-10"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
@@ -113,45 +140,80 @@ const Testimonials: React.FC = () => {
           ))}
         </div>
 
-        {/* Tablet and Desktop: Masonry layout */}
-        <div className="hidden sm:block">
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-4 md:gap-6 space-y-4 md:space-y-6">
-            {testimonials.map((testimonial, index) => (
-              <div 
-                key={index} 
-                className={`bg-gray-100 rounded-2xl p-4 md:p-6 break-inside-avoid mb-4 md:mb-6 ${
-                  index % 3 === 0 ? 'mt-0' : 
-                  index % 3 === 1 ? 'md:mt-8' : 'md:mt-4'
-                }`}
-                style={{
-                  marginTop: window.innerWidth >= 768 ? (
-                    index % 3 === 0 ? '0px' : 
-                    index % 3 === 1 ? '32px' : '16px'
-                  ) : '0px'
-                }}
-              >
-                <p className="text-gray-800 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
-                  "{testimonial.quote}"
-                </p>
-                
-                <div className="flex items-center gap-3">
-                  <img 
-                    src={testimonial.avatar} 
-                    alt={testimonial.author}
-                    className="w-9 h-9 md:w-10 md:h-10 rounded-full object-cover flex-shrink-0"
-                  />
-                  <div className="min-w-0">
-                    <p className="font-light text-gray-900 text-sm md:text-base">{testimonial.author}</p>
-                    <p className="text-xs md:text-sm text-gray-900 font-semibold">
-                      <span className="font-bold">{testimonial.role}</span> at  <span className="font-light">{testimonial.company}</span>
-                    </p>
-                  </div>
-                </div>
+        {/* Desktop: Three animated columns */}
+        <div className="hidden sm:block relative">
+          {/* Container with fixed height and overflow hidden to prevent leakage */}
+          <div className="h-[600px] md:h-[700px] lg:h-[800px] overflow-hidden relative">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 h-full">
+              {/* Left Column - Moving Up */}
+              <div className="animate-slide-up">
+                {leftColumn.map((testimonial, index) => (
+                  <TestimonialCard key={`left-${index}`} testimonial={testimonial} index={index} />
+                ))}
+                {/* Duplicate for seamless loop */}
+                {leftColumn.map((testimonial, index) => (
+                  <TestimonialCard key={`left-dup-${index}`} testimonial={testimonial} index={index} />
+                ))}
               </div>
-            ))}
+
+              {/* Center Column - Moving Down */}
+              <div className="animate-slide-down">
+                {centerColumn.map((testimonial, index) => (
+                  <TestimonialCard key={`center-${index}`} testimonial={testimonial} index={index} />
+                ))}
+                {/* Duplicate for seamless loop */}
+                {centerColumn.map((testimonial, index) => (
+                  <TestimonialCard key={`center-dup-${index}`} testimonial={testimonial} index={index} />
+                ))}
+              </div>
+
+              {/* Right Column - Moving Up */}
+              <div className="animate-slide-up-delayed">
+                {rightColumn.map((testimonial, index) => (
+                  <TestimonialCard key={`right-${index}`} testimonial={testimonial} index={index} />
+                ))}
+                {/* Duplicate for seamless loop */}
+                {rightColumn.map((testimonial, index) => (
+                  <TestimonialCard key={`right-dup-${index}`} testimonial={testimonial} index={index} />
+                ))}
+              </div>
+            </div>
+            
+            {/* Internal top fade to prevent content from showing above container */}
+            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white to-transparent z-20 pointer-events-none"></div>
+            
+            {/* Internal bottom fade to prevent content from showing below container */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent z-20 pointer-events-none"></div>
           </div>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes slideUp {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+          }
+          
+          @keyframes slideDown {
+            0% { transform: translateY(-50%); }
+            100% { transform: translateY(0); }
+          }
+          
+          .animate-slide-up {
+            animation: slideUp 20s linear infinite;
+          }
+          
+          .animate-slide-down {
+            animation: slideDown 20s linear infinite;
+          }
+          
+          .animate-slide-up-delayed {
+            animation: slideUp 20s linear infinite;
+            animation-delay: -10s;
+          }
+        `
+      }} />
     </section>
   );
 };

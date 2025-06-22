@@ -106,24 +106,48 @@ const WhoIsDeckovizFor: React.FC = () => {
           {segments.map((segment, index) => (
             <div
               key={index}
-              className="relative group rounded-2xl p-10 py-14 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden flex flex-col"
+              className="relative group rounded-2xl p-8 py-12 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden flex flex-col h-full"
               style={{
                 background: getComplexGradient(index),
               }}
             >
-              {/* Sparkle effect */}
-              <div className="absolute top-4 right-4 opacity-40 group-hover:opacity-70 transition-opacity duration-300">
-                <Sparkles size={40} className="text-white animate-pulse" />
+              {/* Twinkling sparkle effect */}
+              <div className="absolute top-4 right-4">
+                <Sparkles 
+                  size={40} 
+                  className="text-white"
+                  style={{
+                    animation: 'twinkle 8s ease-in-out infinite'
+                  }}
+                />
               </div>
 
               {/* Icon */}
-              <div className="bg-white bg-opacity-80 w-12 h-12 rounded-full flex items-center justify-center text-purple-700 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm -mt-5">
+              <div className="bg-white bg-opacity-80 w-12 h-12 rounded-full flex items-center justify-center text-purple-700 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm -mt-3">
                 {segment.icon}
               </div>
 
               {/* Content */}
               <h3 className="text-lg font-bold mb-3 text-gray-900 leading-tight">{segment.title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed flex-1">{segment.description}</p>
+              
+           {/* Learn More Link - Bottom Right */}
+<div className="flex justify-end items-end translate-y-4">
+ <div className="group/link cursor-pointer">
+   <span className="text-gray-700 hover:text-purple-700 font-medium text-sm transition-all duration-300 hover:font-semibold">
+     Learn more
+   </span>
+   <span className="ml-2 relative inline-block w-4 h-5 overflow-hidden">
+     <span className="absolute text-gray-600 group-hover/link:text-purple-600 group-hover/link:translate-x-6 group-hover/link:opacity-0 transition-all duration-500 ease-out">
+       →
+     </span>
+     <span className="absolute text-purple-600 -translate-x-6 opacity-0 group-hover/link:translate-x-0 group-hover/link:opacity-100 transition-all duration-500 ease-out delay-200">
+       →
+     </span>
+   </span>
+ </div>
+</div>
+              
             </div>
           ))}
         </div>
@@ -136,6 +160,15 @@ const WhoIsDeckovizFor: React.FC = () => {
           </p>
         </div>
       </div>
+      
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+          }
+        `
+      }} />
     </section>
   )
 }
