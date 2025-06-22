@@ -5,33 +5,58 @@ const DeckovizLanding: React.FC = () => {
     <div className="bg-white">
       {/* Hero Section with Gradient Background */}
       <div className="min-h-screen relative overflow-hidden">
-    {/* Gradient Background Effects - Only for Hero Section */}
+ {/* Gradient Background Effects - Only for Hero Section */}
 <div className="absolute inset-0">
-  {/* Single continuous left side gradient with varying widths */}
+  {/* Animated Gradient Layers */}
   <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/25 via-purple-400/15 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
-  
-  {/* Additional center flow */}
   <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-500/20 via-purple-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
-  
-  {/* Additional bottom flow */}
   <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-indigo-500/15 via-purple-400/8 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
-  
-  {/* Right side vertical gradient - ends much earlier */}
   <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/25 via-purple-400/15 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
-  
-  {/* Left edge accents for smoothness */}
   <div className="absolute top-0 left-0 w-1/6 h-1/3 bg-gradient-to-r from-indigo-600/30 via-rose-400/15 to-transparent blur-[30px] animate-[pulse_4s_ease-in-out_infinite]"></div>
-  
   <div className="absolute top-1/3 left-0 w-1/5 h-1/2 bg-gradient-to-r from-indigo-500/20 via-rose-400/17 to-transparent blur-[35px] animate-[floatLeft_5s_ease-in-out_infinite_1s]"></div>
-  
   <div className="absolute top-2/3 left-0 w-1/4 h-1/3 bg-gradient-to-r from-indigo-600/35 via-rose-400/20 to-transparent blur-[40px] animate-[floatCenter_6s_ease-in-out_infinite_2s]"></div>
-  
-  {/* Right edge vertical accent */}
   <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-indigo-600/30 via-rose-400/15 to-transparent blur-[35px] animate-[floatRight_9s_ease-in-out_infinite_1.5s]"></div>
-  
-  {/* Bottom gradient with more pink/rose */}
   <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-purple-300/20 via-pink-300/18 to-transparent blur-[45px] animate-[floatBottom_8s_ease-in-out_infinite_3s]"></div>
+
+  {/* Curved Grid Pattern - Barrel Distortion Effect */}
+  <svg
+    className="absolute inset-0 w-full h-full opacity-25 pointer-events-none"
+    viewBox="0 0 1000 800"
+    preserveAspectRatio="xMidYMid slice"
+  >
+    <g stroke="white" strokeWidth="1" fill="none">
+      {/* Vertical curved lines (longitude-style) */}
+      {Array.from({ length: 25 }).map((_, i) => {
+        const x = (i / 24) * 1000;
+        const curvature = Math.sin((i / 24) * Math.PI) * 120;
+        return (
+          <path
+            key={`v-${i}`}
+            d={`M ${x} 0 Q ${x + curvature} 400 ${x} 800`}
+          />
+        );
+      })}
+      
+      {/* Horizontal curved lines (latitude-style) */}
+      {Array.from({ length: 20 }).map((_, i) => {
+        const y = (i / 19) * 800;
+        const distanceFromCenter = Math.abs(y - 400) / 400;
+        const compression = 1 - distanceFromCenter * 0.7;
+        const curve = 150 * (1 - compression);
+        
+        return (
+          <path
+            key={`h-${i}`}
+            d={`M 0 ${y} Q ${250 + curve} ${y} 500 ${y} T 1000 ${y}`}
+          />
+        );
+      })}
+    </g>
+  </svg>
+
+
 </div>
+
 
         {/* Hero Content */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center pt-16">
@@ -837,82 +862,187 @@ style={{
     </div>
   </div>
 </div>
+{/* Business Benefit Section */}
+<div className="bg-white relative py-24 md:py-24 overflow-hidden">
+  <div className="relative z-10 max-w-7xl mx-auto px-4">
+    {/* Header Section */}
+    <div className="mb-16">
+      {/* Badge */}
+      <div className="flex justify-start mb-8">
+        <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+          Business Profit
+        </div>
+      </div>
+      
+      {/* Main Heading */}
+      <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+        Business Benefit
+      </h2>
+    </div>
+
+    {/* Benefits Grid */}
+    <div className="relative">
+      {/* Background gradient glow */}
+      <div
+        className="absolute top-1/2 right-1/4 transform translate-x-1/2 -translate-y-1/2 w-[35rem] h-[25rem]"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(147,51,234,0.15) 0%, rgba(219,39,119,0.12) 40%, rgba(236,72,153,0.06) 70%, transparent 90%)",
+          filter: "blur(80px)",
+          zIndex: 1,
+        }}
+      />
+
+      <div className="relative z-10">
+        {/* Top Row - 2 boxes */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          {/* Benefit 1 - Top Left */}
+          <div className="relative group">
+            <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-start mb-4">
+                <div className="flex-shrink-0 mr-3">
+                  <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white text-sm">✧˖</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
+                    Enhanced Guest Experience = Higher Reviews & Loyalty
+                  </h3>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
+                Guests will remember how your rooms made them feel. Deckoviz helps you create "wow" moments, emotional atmosphere, and beauty your guests can't get anywhere else.
+              </p>
+            </div>
+          </div>
+
+          {/* Benefit 2 - Top Right */}
+          <div className="relative group">
+            <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-start mb-4">
+                <div className="flex-shrink-0 mr-3">
+                  <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white text-sm">✧˖</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
+                    Social Media & Content Shareability
+                  </h3>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
+                People love beautiful things. Deckoviz becomes the most Instagrammable spot in the room — generating organic reach and impressions every day.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Row - 2 boxes with offset */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ml-0 md:ml-32">
+          {/* Benefit 3 - Bottom Left */}
+          <div className="relative group">
+            <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-start mb-4">
+                <div className="flex-shrink-0 mr-3">
+                  <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white text-sm">✧˖</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
+                    Enhanced Guest Experience = Higher Reviews & Loyalty
+                  </h3>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
+                Guests will remember how your rooms made them feel. Deckoviz helps you create "wow" moments, emotional atmosphere, and beauty your guests can't get anywhere else.
+              </p>
+            </div>
+          </div>
+
+          {/* Benefit 4 - Bottom Right */}
+          <div className="relative group">
+            <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-start mb-4">
+                <div className="flex-shrink-0 mr-3">
+                  <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-white text-sm">✧˖</span>
+                  </div>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
+                    Social Media & Content Shareability
+                  </h3>
+                </div>
+              </div>
+              <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
+                People love beautiful things. Deckoviz becomes the most Instagrammable spot in the room — generating organic reach and impressions every day.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {/* Real Results: Sample Guest Reactions Section */}
 <div className="relative py-24 md:py-32 overflow-hidden">
   {/* Background Gradient Effect */}
   <div className="absolute inset-0">
-    {/* Animated gradient layers similar to hero section */}
-    <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-indigo-500/20 via-purple-400/12 to-transparent blur-[50px] animate-[floatLeft_8s_ease-in-out_infinite]"></div>
-    
-    <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/20 via-purple-400/12 to-transparent blur-[50px] animate-[floatRight_9s_ease-in-out_infinite]"></div>
-    
-    <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-600/25 via-rose-400/15 to-transparent blur-[45px] animate-[floatCenter_10s_ease-in-out_infinite]"></div>
-    
-    <div className="absolute top-1/4 right-0 w-1/2 h-1/2 bg-gradient-to-l from-indigo-600/25 via-rose-400/15 to-transparent blur-[45px] animate-[floatCenter_12s_ease-in-out_infinite_2s]"></div>
-    
-    <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-purple-300/15 via-pink-300/12 to-transparent blur-[40px] animate-[floatBottom_11s_ease-in-out_infinite_1s]"></div>
-    
-    {/* Additional center accent */}
-    <div className="absolute top-1/3 left-1/4 w-1/2 h-1/3 bg-gradient-to-r from-indigo-500/15 via-purple-400/8 to-indigo-500/15 blur-[60px] animate-[pulse_6s_ease-in-out_infinite]"></div>
-    
-    {/* Grid pattern that bends toward center */}
-    <div 
-      className="absolute inset-0"
-      style={{
-        backgroundImage: `
-          repeating-linear-gradient(
-            0deg,
-            rgba(255, 255, 255, 0.4) 0px,
-            rgba(255, 255, 255, 0.4) 1px,
-            transparent 1px,
-            transparent 25px
-          ),
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.4) 0px,
-            rgba(255, 255, 255, 0.4) 1px,
-            transparent 1px,
-            transparent 25px
-          )
-        `,
-        transform: 'perspective(800px) rotateX(25deg) scale(1.2)',
-        transformOrigin: 'center center',
-        maskImage: 'radial-gradient(ellipse at center, black 60%, transparent 100%)'
-      }}
-      
-    />
-    
-    {/* Additional curved grid overlay for more pronounced bending */}
-    <div 
-      className="absolute inset-0"
-      style={{
-        backgroundImage: `
-          repeating-conic-gradient(
-            from 0deg at 50% 50%, 
-            rgba(255, 255, 255, 0.2) 0deg, 
-            rgba(255, 255, 255, 0.2) 1deg, 
-            transparent 1deg, 
-            transparent 10deg
-          )
-        `,
-        opacity: 0.3
-      }}
-    />
-    
-    {/* White center overlay to maintain the bright center */}
-    <div 
-      className="absolute inset-0"
-      style={{
-        background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.4) 40%, transparent 70%)"
-      }}
-    />
+    {/* Animated Gradient Layers */}
+    <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/25 via-purple-400/15 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
+    <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-500/20 via-purple-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
+    <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-indigo-500/15 via-purple-400/8 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
+    <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/25 via-purple-400/15 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
+    <div className="absolute top-0 left-0 w-1/6 h-1/3 bg-gradient-to-r from-indigo-600/30 via-rose-400/15 to-transparent blur-[30px] animate-[pulse_4s_ease-in-out_infinite]"></div>
+    <div className="absolute top-1/3 left-0 w-1/5 h-1/2 bg-gradient-to-r from-indigo-500/20 via-rose-400/17 to-transparent blur-[35px] animate-[floatLeft_5s_ease-in-out_infinite_1s]"></div>
+    <div className="absolute top-2/3 left-0 w-1/4 h-1/3 bg-gradient-to-r from-indigo-600/35 via-rose-400/20 to-transparent blur-[40px] animate-[floatCenter_6s_ease-in-out_infinite_2s]"></div>
+    <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-indigo-600/30 via-rose-400/15 to-transparent blur-[35px] animate-[floatRight_9s_ease-in-out_infinite_1.5s]"></div>
+    <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-purple-300/20 via-pink-300/18 to-transparent blur-[45px] animate-[floatBottom_8s_ease-in-out_infinite_3s]"></div>
+
+    {/* Curved Grid Pattern - Barrel Distortion Effect */}
+    <svg
+      className="absolute inset-0 w-full h-full opacity-25 pointer-events-none"
+      viewBox="0 0 1000 800"
+      preserveAspectRatio="xMidYMid slice"
+    >
+      <g stroke="white" strokeWidth="1" fill="none">
+        {/* Vertical curved lines (longitude-style) */}
+        {Array.from({ length: 25 }).map((_, i) => {
+          const x = (i / 24) * 1000;
+          const curvature = Math.sin((i / 24) * Math.PI) * 120;
+          return (
+            <path
+              key={`v-${i}`}
+              d={`M ${x} 0 Q ${x + curvature} 400 ${x} 800`}
+            />
+          );
+        })}
+        
+        {/* Horizontal curved lines (latitude-style) */}
+        {Array.from({ length: 20 }).map((_, i) => {
+          const y = (i / 19) * 800;
+          const distanceFromCenter = Math.abs(y - 400) / 400;
+          const compression = 1 - distanceFromCenter * 0.7;
+          const curve = 150 * (1 - compression);
+          
+          return (
+            <path
+              key={`h-${i}`}
+              d={`M 0 ${y} Q ${250 + curve} ${y} 500 ${y} T 1000 ${y}`}
+            />
+          );
+        })}
+      </g>
+    </svg>
   </div>
 
   <div className="relative z-10 max-w-7xl mx-auto px-4">
     {/* Header */}
     <div className="text-center mb-16">
-      <h2 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#6670d8] via-pink-500 to-orange-400 bg-clip-text text-transparent">
+     <h2 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#9ca4f3] via-pink-600 to-indigo-400 bg-clip-text text-transparent">
   Real Results: Sample Guest Reactions
 </h2>
     </div>
@@ -958,7 +1088,7 @@ style={{
           
           <div className="flex items-center space-x-2">
             <span className="text-sm text-gray-600 font-medium">Our Loved Memories</span>
-            <span className="text-cyan-500 text-lg">🍁</span>
+            <span className="text-cyan-500 text-lg">✨</span>
           </div>
         </div>
       </div>
@@ -985,7 +1115,6 @@ style={{
         </div>
       </div>
     </div>
-
   </div>
 </div>
 
