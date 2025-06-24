@@ -1,4 +1,4 @@
-const DeckovizTherapistsLanding = () => {
+const DeckovizSchoolsLanding = () => {
   return (
     <div className="bg-white">
       {/* Hero Section with Gradient Background */}
@@ -65,502 +65,528 @@ const DeckovizTherapistsLanding = () => {
           {/* Main Heading */}
           <div className="mb-8">
             <h1 className="text-5xl md:text-5xl font-semibold text-gray-900 leading-tight">
-              Deckoviz For Therapists, Yoga
+              Deckoviz For Schools,
               <br />
-              Studios & Wellness Spaces
+              Kindergartens & Learning Centers
             </h1>
           </div>
 
           {/* Subtitle */}
           <div className="mb-12 max-w-2xl">
             <p className="text-lg font-medium text-gray-900 leading-relaxed">
-              Design Emotionally Supportive Environments. Guide Healing
+              Inspire Curiosity. Support Focus. Create Emotionally Intelligent
               <br />
-              Through Atmosphere. Create Inner Worlds with Art and AI.
+              Learning Environments.
             </p>
           </div>
 
           {/* Secondary Heading */}
           <div className="mb-8">
             <h2 className="text-2xl md:text-2xl lg:text-3xl font-semibold text-gray-800 leading-tight mb-3">
-              Support Deeper Presence, Emotional Safety, and
+              Redesign Learning Spaces for the Mind, the Heart,
               <br />
-              Healing Through Visual Design
+              and the Senses
             </h2>
           </div>
 
           {/* Description Paragraphs */}
           <div className="max-w-4xl space-y-6 text-gray-900 font-medium leading-relaxed">
             <p className="text-base md:text-lg">
-              Whether you're guiding clients through therapy, holding space for nervous system regulation,
+              In a world of distraction and overstimulation, children and learners need more than just
               <br />
-              or leading people into stillness, your physical environment does more than decorate — it
+              information — they need spaces that invite curiosity, calm, focus, and wonder. They need
               <br />
-              participates.
+              environments that nurture imagination and help them feel safe, seen, and engaged.
             </p>
             
             <p className="text-base md:text-lg">
-              Deckoviz is a revolutionary AI-powered smart art frame that transforms any room into a mood-
+              Deckoviz is an AI-powered Smart Art Frame designed to create living, evolving, emotionally
               <br />
-              responsive, healing-supportive, visually immersive sanctuary. It creates the emotional
+              attuned learning environments. It's not a screen. It's not a poster. It's a window into a world of
               <br />
-              backdrop for your clients, students, or guests to feel safe, held, open, inspired, and grounded.
+              creativity, story, color, mood, and learning.
             </p>
             
             <div className="pt-4 pb-20">
               <p className="text-base md:text-lg font-semibold text-gray-800">
-                It's more than a visual display. It's a co-facilitator. A calming companion. A poetic
+                Deckoviz supports whole-child development — through visuals that teach,
                 <br />
-                mirror. A living ritual.
+                regulate, inspire, and support learning goals.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* What is Deckoviz Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
-            {/* Left Column */}
-            <div>
-              {/* Badge */}
-              <div className="flex justify-start mb-8">
-                <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                  What is Deckoviz
-                </div>
-              </div>
-              
-              {/* Main Heading */}
-              <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-                What is
-                <br />
-                Deckoviz
-              </h2>
-            </div>
 
-            {/* Right Column */}
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <p className="text-lg text-gray-800 leading-relaxed mt-14">
-                  Deckoviz is a Smart Art Frame powered by AI that
-                  <br />
-                  creates and curates evolving ambient visuals
-                  <br />
-                  based on mood, time, energy, or theme.
+{/* What is Deckoviz Section */}
+<div className="bg-white relative py-24 md:py-24">
+  <div className="relative z-10 max-w-7xl mx-auto px-4">
+    {/* Header Section */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
+      {/* Left Column */}
+      <div>
+        {/* Badge */}
+        <div className="flex justify-start mb-8">
+          <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+            What is Deckoviz
+          </div>
+        </div>
+        
+        {/* Main Heading */}
+        <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+          What is
+          <br />
+          Deckoviz
+        </h2>
+      </div>
+
+      {/* Right Column */}
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+          <p className="text-lg text-gray-800 leading-relaxed mt-14">
+            Deckoviz is a smart visual display frame that curates and
+            <br />
+            displays ambient, educational, and emotion-aware visuals —
+            <br />
+            from animated storyscapes to nature scenes, breathing guides
+            <br />
+            to alphabet dreams, inspirational quotes to visual science
+            <br />
+            simulations.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* It's powered by section */}
+    <div className="mb-16 relative">
+      <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-12">
+        It's powered by:
+      </h3>
+
+      {/* Background gradient glow - positioned behind cards */}
+      <div
+        className="absolute -top-8 left-1/2 transform -translate-y-1/4 -translate-x-1/2 w-[70rem] h-[60rem]"
+        style={{
+          background: "radial-gradient(ellipse at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.20) 20%, rgba(236,72,153,0.16) 35%, rgba(168,85,247,0.12) 50%, rgba(168,85,247,0.06) 70%, transparent 85%)",
+          filter: "blur(90px)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Feature Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-10">
+        {/* Card 1 */}
+        <div className="relative group">
+          <div 
+            className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
+            style={{
+              background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
+            }}
+          >
+            <div className="mb-4 flex justify-center">
+              <span className="text-3xl">❤️</span>
+            </div>
+            <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              A vast and
+              <br />
+              growing library
+              <br />
+              of thematic,
+              <br />
+              seasonal, artistic
+            </h4>
+          </div>
+        </div>
+
+        {/* Card 2 */}
+        <div className="relative group">
+          <div 
+            className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
+            style={{
+              background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
+            }}
+          >
+            <div className="mb-4 flex justify-center">
+              <span className="text-3xl">❤️</span>
+            </div>
+            <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Optional
+              <br />
+              soundscapes,
+              <br />
+              animations, and
+              <br />
+              interactive
+              <br />
+              experiences
+            </h4>
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div className="relative group">
+          <div 
+            className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
+            style={{
+              background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
+            }}
+          >
+            <div className="mb-4 flex justify-center">
+              <span className="text-3xl">❤️</span>
+            </div>
+            <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Mood-based
+              <br />
+              scheduling,
+              <br />
+              visual
+              <br />
+              storytelling
+            </h4>
+          </div>
+        </div>
+
+        {/* Card 4 */}
+        <div className="relative group">
+          <div 
+            className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
+            style={{
+              background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
+            }}
+          >
+            <div className="mb-4 flex justify-center">
+              <span className="text-3xl">❤️</span>
+            </div>
+            <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              Voice and app
+              <br />
+              control
+            </h4>
+          </div>
+        </div>
+
+        {/* Card 5 */}
+        <div className="relative group">
+          <div 
+            className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
+            style={{
+              background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
+            }}
+          >
+            <div className="mb-4 flex justify-center">
+              <span className="text-3xl">❤️</span>
+            </div>
+            <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
+              AI-driven curation
+              <br />
+              and
+              <br />
+              personalization
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Bottom Description */}
+    <div className="text-center max-w-6xl mx-auto">
+      <p className="text-lg text-gray-900 font-medium leading-relaxed">
+        With Deckoviz, every classroom becomes a sensory-rich, emotionally aware learning space.
+      </p>
+    </div>
+  </div>
+</div>
+
+{/* Why Schools and Educators Love Deckoviz Section */}
+<div className="bg-white relative py-24 md:py-24">
+  <div className="relative z-10 max-w-7xl mx-auto px-4">
+    {/* Header Section */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
+      {/* Left Column */}
+      <div>
+        {/* Badge */}
+        <div className="flex justify-start mb-8">
+          <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+            What is Deckoviz
+          </div>
+        </div>
+        
+        {/* Main Heading */}
+        <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+          Why Schools and
+          <br />
+          Educators Love Deckoviz
+        </h2>
+      </div>
+
+      {/* Right Column */}
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+        </div>
+      </div>
+    </div>
+
+    {/* Cards Section with Background Gradient */}
+    <div className="relative">
+      {/* Subtle, wide-radius circular glow near card area */}
+      <div
+        className="absolute bottom-24 right-16 w-[480px] h-[480px]"
+        style={{
+          background: "radial-gradient(circle at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
+          filter: "blur(120px)",
+          zIndex: 1,
+        }}
+      />
+
+      {/* Feature Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mb-6">
+        {/* Card 1 */}
+        <div className="relative group">
+          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+            <div className="mb-6 flex justify-start">
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+            </div>
+            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+              Enhance Focus and Emotional Regulation
+            </h3>
+            <div className="flex-1">
+              <div className="flex items-start mb-3">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <p className="text-indigo-600 font-medium">
+                  Visual environments have profound effects on learning, attention, and emotional regulation. Deckoviz creates supportive, calming atmospheres that help students focus and feel safe.
                 </p>
               </div>
             </div>
-          </div>
-
-          {/* It Can section */}
-          <div className="mb-16 relative">
-            <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-12">
-              It Can:
-            </h3>
-
-            {/* Background gradient glow - positioned behind cards */}
-            <div
-              className="absolute -top-8 left-1/2 transform -translate-y-1/4 -translate-x-1/2 w-[70rem] h-[60rem]"
-              style={{
-                background: "radial-gradient(ellipse at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.20) 20%, rgba(236,72,153,0.16) 35%, rgba(168,85,247,0.12) 50%, rgba(168,85,247,0.06) 70%, transparent 85%)",
-                filter: "blur(90px)",
-                zIndex: 1,
-              }}
-            />
-
-            {/* Feature Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-10">
-              {/* Card 1 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Display
-                    <br />
-                    generative art,
-                    <br />
-                    nature visuals
-                    <br />
-                    etc.
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Set the
-                    <br />
-                    emotional tone
-                    <br />
-                    of your room
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 3 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Curates or
-                    <br />
-                    generates visual
-                    <br />
-                    art based on
-                    <br />
-                    mood
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 4 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Help clients feel
-                    <br />
-                    grounded, inspired,
-                    <br />
-                    held, or soothed
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 5 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Display quotes,
-                    <br />
-                    intentions, breathing
-                    <br />
-                    guides, and somatic
-                    <br />
-                    imagery
-                  </h4>
-                </div>
+            <div className="flex justify-end mt-6">
+              <div className="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Bottom Description */}
-          <div className="text-center max-w-6xl mx-auto">
-            <p className="text-lg text-gray-900 font-medium leading-relaxed">
-              It becomes a visual support system — alive, responsive, and deeply aligned with your healing space.
-            </p>
+        {/* Card 2 */}
+        <div className="relative group">
+          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+            <div className="mb-6 flex justify-start">
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+            </div>
+            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+              Support Curriculum and Learning Goals
+            </h3>
+            <div className="flex-1">
+              <div className="flex items-start mb-3">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <p className="text-indigo-600 font-medium">
+                  Display content that reinforces lessons — from alphabet animations to nature cycles, math patterns to historical imagery — making abstract concepts tangible and memorable.
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-end mt-6">
+              <div className="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 3 */}
+        <div className="relative group">
+          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
+            <div className="mb-6 flex justify-start">
+              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+            </div>
+            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
+              Create Wonder and Inspiration
+            </h3>
+            <div className="flex-1">
+              <div className="flex items-start mb-3">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                <p className="text-indigo-600 font-medium">
+                  Transform ordinary classrooms into places of discovery and imagination. Deckoviz helps create the "wow" factor that ignites curiosity and makes learning feel magical.
+                </p>
+              </div>
+            </div>
+            <div className="flex justify-end mt-6">
+              <div className="text-gray-400 hover:text-gray-600 transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
 
-      {/* Why Therapists, Coaches, and Healers Love Deckoviz Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
-            {/* Left Column */}
-            <div>
-              {/* Badge */}
-              <div className="flex justify-start mb-8">
-                <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                  What is Deckoviz
+{/* Educational Use Cases Section */}
+<div className="bg-white relative py-24 md:py-24">
+  <div className="relative z-10 max-w-7xl mx-auto px-4">
+    {/* Header Section */}
+    <div className="text-center mb-20">
+      <div className="flex justify-center items-center mb-8">
+        <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
+          Educational Use
+          <br />
+          Cases
+        </h2>
+      </div>
+    </div>
+
+    {/* Cards Section with Background Gradient */}
+    <div className="relative">
+      {/* Central radial gradient behind all cards */}
+      <div
+        className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem]"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(147,51,234,0.35) 0%, rgba(219,39,119,0.25) 30%, rgba(236,72,153,0.18) 60%, transparent 90%)",
+          filter: "blur(80px)",
+          zIndex: 1,
+        }}
+      />
+
+      <div className="space-y-6 relative z-10">
+        {/* Top Row - 2 Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Card 1 - For Early Learning */}
+          <div className="relative group">
+            <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+                    Educational Use
+                  </span>
+                  <h3 className="text-2xl font-semibold text-gray-900">For Early Learning & Kindergartens</h3>
                 </div>
+                <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
               </div>
               
-              {/* Main Heading */}
-              <h2 className="text-4xl md:text-[2.8rem] font-semibold text-gray-900 leading-tight">
-                Why Therapists, Coaches,
-                <br />
-                and Healers Love Deckoviz
-              </h2>
-            </div>
+              <div className="space-y-3">
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-indigo-600 font-medium">
+                    Display gentle, colorful animations that support letter recognition, number concepts, and shapes
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-indigo-600 font-medium">
+                    Create seasonal learning environments (autumn leaves, winter snowflakes, spring growth)
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-indigo-600 font-medium">
+                    Support emotional regulation with calming nature scenes during rest time
+                  </p>
+                </div>
+              </div>
 
-            {/* Right Column */}
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
+              <div className="mt-6">
+                
               </div>
             </div>
           </div>
 
-          {/* Cards Section with Background Gradient */}
-          <div className="relative">
-            {/* Subtle, wide-radius circular glow near card area */}
-            <div
-              className="absolute bottom-24 right-16 w-[480px] h-[480px]"
-              style={{
-                background: "radial-gradient(circle at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
-                filter: "blur(120px)",
-                zIndex: 1,
-              }}
-            />
-
-            {/* Feature Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mb-6">
-              {/* Card 1 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Create Emotionally Safe & Regulating Environments
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        Trauma-informed design is about more than neutral colors. It's about what your space tells the nervous system. Deckoviz helps by:
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
+          {/* Card 2 - For Elementary Schools */}
+          <div className="relative group">
+            <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+                    Educational Use
+                  </span>
+                  <h3 className="text-2xl font-semibold text-gray-900">For Elementary Schools</h3>
+                </div>
+                <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
+              </div>
+              
+              <div className="space-y-3">
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-indigo-600 font-medium">
+                    Enhance science lessons with visual simulations (water cycle, solar system, plant growth)
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-indigo-600 font-medium">
+                    Display inspirational quotes and growth mindset messages
+                  </p>
+                </div>
+                <div className="flex items-start">
+                  <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                  <p className="text-indigo-600 font-medium">
+                    Create subject-specific moods (calm for reading time, energizing for math, creative for art)
+                  </p>
                 </div>
               </div>
 
-              {/* Card 2 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+              <div className="mt-6">
+                
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Row - 1 Card centered */}
+        <div className="flex justify-center">
+          <div className="w-full md:w-1/2">
+            <div className="relative group">
+              <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
+                <div className="flex justify-between items-start mb-6">
+                  <div>
+                    <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
+                      Educational Use
+                    </span>
+                    <h3 className="text-2xl font-semibold text-gray-900">For Special Education & Therapy Rooms</h3>
                   </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Match Your Space to the Session's Energy
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        Every healing session is different. Deckoviz helps you visually express intention:
-                      </p>
-                    </div>
+                  <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-start">
+                    <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <p className="text-indigo-600 font-medium">
+                      Provide sensory-friendly visuals that support students with autism or sensory processing needs
+                    </p>
                   </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
+                  <div className="flex items-start">
+                    <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <p className="text-indigo-600 font-medium">
+                      Display breathing guides and mindfulness animations for emotional regulation
+                    </p>
+                  </div>
+                  <div className="flex items-start">
+                    <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                    <p className="text-indigo-600 font-medium">
+                      Create predictable, soothing visual routines that support transitions and reduce anxiety
+                    </p>
                   </div>
                 </div>
-              </div>
 
-              {/* Card 3 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Bring Depth and Beauty to Ritual and Practice
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        Deckoviz is not just functional — it's poetic. Whether you're hosting a group breathwork session, guiding a meditation class, or holding intention-setting circles, Deckoviz becomes your atmospheric co-facilitator.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
+                <div className="mt-6">
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>  
+    </div>
+  </div>
+</div>
 
-      {/* Use Cases by Modality Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="text-center mb-20">
-            <div className="flex justify-center items-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-                Use Cases by Modality
-              </h2>
-            </div>
-          </div>
-
-          {/* Cards Section with Background Gradient */}
-          <div className="relative">
-            {/* Central radial gradient behind all cards */}
-            <div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem]"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(147,51,234,0.35) 0%, rgba(219,39,119,0.25) 30%, rgba(236,72,153,0.18) 60%, transparent 90%)",
-                filter: "blur(80px)",
-                zIndex: 1,
-              }}
-            />
-
-            <div className="space-y-6 relative z-10">
-              {/* Top Row - 2 Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Card 1 - For Therapists & Coaches */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          For Modality
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">For Therapists & Coaches</h3>
-                      </div>
-                      <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Create emotional safety with slow, natural imagery
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Reflect themes from the session (e.g., grief, transformation, hope, boundaries)
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 2 - For Yoga Studios */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          For Modality
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">For Yoga Studios</h3>
-                      </div>
-                      <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Match visuals to class energy (Yin, Vinyasa, Restorative, Kundalini, etc.)
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Display slow-moving nature imagery for breathwork sequences
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Row - 1 Card centered */}
-              <div className="flex justify-center">
-                <div className="w-full md:w-1/2">
-                  <div className="relative group">
-                    <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                      <div className="flex justify-between items-start mb-6">
-                        <div>
-                          <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                            For Modality
-                          </span>
-                          <h3 className="text-2xl font-semibold text-gray-900">For Wellness Centers, Spas & Retreats</h3>
-                        </div>
-                        <img src="images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                      </div>
-                      
-                      <div className="space-y-3">
-                        <div className="flex items-start">
-                          <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                          <p className="text-indigo-600 font-medium">
-                            Create a tranquil, deeply immersive waiting area experience
-                          </p>
-                        </div>
-                        <div className="flex items-start">
-                          <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                          <p className="text-indigo-600 font-medium">
-                            Show nature loops, firelight visuals, or water-based art during treatments
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="mt-6">
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>  
-          </div>
-        </div>
-      </div>
-      {/* Features Tailored for Healing Spaces Section */}
+{/* Features Built for Learning Spaces Section */}
 <div className="bg-white relative py-24 md:py-24">
   <div className="relative z-10 max-w-7xl mx-auto px-4">
     {/* Header Section */}
@@ -574,7 +600,7 @@ const DeckovizTherapistsLanding = () => {
       
       {/* Main Heading */}
       <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-        Features Tailored for Healing Spaces
+        Features Built for Learning Spaces
       </h2>
     </div>
 
@@ -600,7 +626,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              App-controlled or scheduled visual transitions
+              Educational content libraries (alphabet, numbers, science, nature)
             </h3>
           </div>
         </div>
@@ -614,7 +640,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Customizable brightness and ambient auto-adjustment
+              Age-appropriate visual complexity and stimulation levels
             </h3>
           </div>
         </div>
@@ -628,7 +654,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Dozens of curated emotional and healing-themed art collections
+              Scheduled content rotation for different subjects and times of day
             </h3>
           </div>
         </div>
@@ -642,7 +668,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Optional ambient soundscapes for deeper immersion
+              Calming modes for rest time, transition periods, and emotional regulation
             </h3>
           </div>
         </div>
@@ -656,7 +682,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Visual breath animations, nature-based flows, and emotion-coded gradients
+              Multi-sensory support with optional ambient soundscapes
             </h3>
           </div>
         </div>
@@ -670,7 +696,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Pre-loaded visual plans for show units or staging
+              Teacher-friendly app control with curriculum integration options
             </h3>
           </div>
         </div>
@@ -684,7 +710,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Offline mode for remote retreats or low-EMF environments
+              Safety features and child-appropriate content filtering
             </h3>
           </div>
         </div>
@@ -698,7 +724,7 @@ const DeckovizTherapistsLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Co-curation available for signature experiences or visual libraries
+              Customizable frame options suitable for classroom environments
             </h3>
           </div>
         </div>
@@ -707,7 +733,7 @@ const DeckovizTherapistsLanding = () => {
   </div>
 </div>
 
-{/* Business & Practice Benefits Section */}
+{/* Benefits for Schools & Learning Centers Section */}
 <div className="bg-white relative py-24 md:py-24 overflow-hidden">
   <div className="relative z-10 max-w-7xl mx-auto px-4">
     {/* Header Section */}
@@ -721,7 +747,7 @@ const DeckovizTherapistsLanding = () => {
       
       {/* Main Heading */}
       <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-        Business & Practice Benefits
+        Benefits for Schools & Learning Centers
       </h2>
     </div>
 
@@ -751,12 +777,12 @@ const DeckovizTherapistsLanding = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                    Enhance the Emotional Quality of Your Space
+                    Improve Learning Outcomes & Student Engagement
                   </h3>
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Deckoviz deepens presence, reduces tension, and elevates the perceived safety and beauty of your practice environment.
+                Studies show that well-designed visual environments can improve focus, reduce behavioral issues, and enhance memory retention. Deckoviz creates optimal learning atmospheres.
               </p>
             </div>
           </div>
@@ -772,12 +798,12 @@ const DeckovizTherapistsLanding = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                    Improve Client Retention & Reputation
+                    Enhance Teacher Effectiveness & Classroom Management
                   </h3>
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Clients remember how they felt. A beautiful, supportive, emotionally intelligent space becomes part of the reason they return — and refer others.
+                Teachers report that Deckoviz helps create calmer, more focused classroom environments, reducing disruptions and making it easier to maintain student attention during lessons.
               </p>
             </div>
           </div>
@@ -796,12 +822,12 @@ const DeckovizTherapistsLanding = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                    Boost Your Brand Story & Professionalism
+                    Support Diverse Learning Needs & Inclusion
                   </h3>
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Deckoviz visually communicates your intention, care, and attention to healing design — elevating your brand identity and perceived quality.
+                Deckoviz provides sensory-friendly options for students with autism, ADHD, or other learning differences, creating more inclusive learning environments for all students.
               </p>
             </div>
           </div>
@@ -817,12 +843,12 @@ const DeckovizTherapistsLanding = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                    Grow Social and Visual Presence
+                    Modernize Learning Spaces Cost-Effectively
                   </h3>
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Your studio becomes instantly more shareable, photogenic, and story-worthy — without any permanent changes to your physical space.
+                Transform any classroom into a 21st-century learning environment without major renovations. Update visual content seasonally and align with curriculum changes instantly.
               </p>
             </div>
           </div>
@@ -832,7 +858,7 @@ const DeckovizTherapistsLanding = () => {
   </div>
 </div>
 
-{/* Options & Packages for Wellness Professionals Section */}
+{/* School-Focused Packages Section */}
 <div className="relative mt-20 mb-20">
   <div className="relative z-10 max-w-6xl mx-auto px-4">
     {/* Top Badge - White bg with gray border */}
@@ -848,9 +874,9 @@ const DeckovizTherapistsLanding = () => {
       <div className="text-left space-y-8">
         <div>
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-            Options & Packages for
+            School-Focused
             <br />
-            Wellness Professionals
+            Packages
           </h2>
           <p className="text-gray-700 leading-relaxed text-lg mb-8">
             We Offer :
@@ -865,16 +891,16 @@ const DeckovizTherapistsLanding = () => {
               <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                 <span className="text-white text-xs">✓</span>
               </div>
-              <p className="text-gray-700">Solo practitioner kits (1-2 frames, preset healing collections)</p>
+              <p className="text-gray-700">Single classroom starter kits with educational content libraries</p>
             </div>
             <div className="flex items-start space-x-3">
               <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                 <span className="text-white text-xs">✓</span>
               </div>
               <p className="text-gray-700">
-                Studio and center bundles with curated
+                Whole-school packages with curriculum integration
                 <br />
-                mood zones
+                and teacher training
               </p>
             </div>
             <div className="flex items-start space-x-3">
@@ -882,9 +908,9 @@ const DeckovizTherapistsLanding = () => {
                 <span className="text-white text-xs">✓</span>
               </div>
               <p className="text-gray-700">
-                Smart homes and tech-integrated
+                Special education bundles with sensory-friendly
                 <br />
-                dwellings
+                content and features
               </p>
             </div>
             <div className="flex items-start space-x-3">
@@ -892,7 +918,9 @@ const DeckovizTherapistsLanding = () => {
                 <span className="text-white text-xs">✓</span>
               </div>
               <p className="text-gray-700">
-                Themed or design-forward properties
+                Custom content creation aligned with your
+                <br />
+                school's curriculum and values
               </p>
             </div>
           </div>
@@ -958,7 +986,7 @@ const DeckovizTherapistsLanding = () => {
   </div>
 </div>
 
-{/* Real-World Feedback Section */}
+{/* Real Educator Reflections Section */}
 <div className="relative py-24 md:py-32 overflow-hidden">
   {/* Background Gradient Effect */}
   <div className="absolute inset-0">
@@ -1014,7 +1042,7 @@ const DeckovizTherapistsLanding = () => {
     {/* Header */}
     <div className="text-center mb-16">
       <h2 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#9ca4f3] via-pink-600 to-indigo-400 bg-clip-text text-transparent">
-        Real-World Feedback
+        Real Educator Reflections
       </h2>
     </div>
 
@@ -1025,13 +1053,13 @@ const DeckovizTherapistsLanding = () => {
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
           <div className="mb-6">
             <p className="text-gray-800 leading-relaxed text-lg">
-              "Clients enter the room and instantly exhale. Deckoviz is like visual sage — it clears and softens the energy for the work to come."
+              "My students are instantly calmer when the nature scenes start playing. It's like visual magic — they settle into learning mode without me having to ask."
             </p>
           </div>
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Somatic Therapist, California
+              — 2nd Grade Teacher, Portland
             </p>
           </div>
           
@@ -1047,13 +1075,13 @@ const DeckovizTherapistsLanding = () => {
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
           <div className="mb-6">
             <p className="text-gray-800 leading-relaxed text-lg">
-              "We use Deckoviz to guide our visual meditations in the final 10 minutes of class. It makes savasana feel like a journey."
+              "We use Deckoviz during our math lessons with geometric patterns and it helps kids visualize concepts they couldn't grasp before. Test scores went up 15%!"
             </p>
           </div>
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Yin Yoga Instructor, London
+              — Elementary Principal, Austin
             </p>
           </div>
           
@@ -1069,13 +1097,13 @@ const DeckovizTherapistsLanding = () => {
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
           <div className="mb-6">
             <p className="text-gray-800 leading-relaxed text-lg">
-              "It's not just a screen. It's a visual prayer, a reminder, a ritual. My clients often stop and just stare — breathing, reflecting, arriving."
+              "For our special needs students, Deckoviz is a game-changer. The sensory-friendly modes help reduce meltdowns and create safe, predictable visual routines."
             </p>
           </div>
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Breathwork Guide, Bali
+              — Special Education Coordinator, Denver
             </p>
           </div>
           
@@ -1089,8 +1117,11 @@ const DeckovizTherapistsLanding = () => {
   </div>
 </div>
 
+
+
+
     </div>
   );
 };
 
-export default DeckovizTherapistsLanding;
+export default DeckovizSchoolsLanding;
