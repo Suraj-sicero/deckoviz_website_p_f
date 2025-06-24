@@ -1,5 +1,3 @@
-import React from 'react';
-
 const DeckovizArchitectsLanding = () => {
   return (
     <div className="bg-white">

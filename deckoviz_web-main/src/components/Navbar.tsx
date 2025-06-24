@@ -222,14 +222,16 @@ const Navbar: React.FC = () => {
           <a href="/" className="flex items-center gap-1">
             <img src="/images/logo.png" alt="Deckoviz Logo" className="h-12 w-12 rounded-full object-contain" />
             <span
-              className="text-3xl font-semibold bg-clip-text text-transparent leading-none"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to right, #05286d, #2da370, #c8d188, #e3aa4b, #ff9100, #602377, #2f1086)",
-              }}
-            >
-              Deckoviz
-            </span>
+  className="text-3xl font-semibold bg-clip-text text-transparent leading-none [text-shadow:0_1px_1px_rgba(0,0,0,0.15)]"
+  style={{
+    backgroundImage:
+      "linear-gradient(to right, #05286d, #2da370, #c8d188, #e3aa4b, #ff9100, #602377, #2f1086)",
+  }}
+>
+  Deckoviz
+</span>
+
+
           </a>
 
           {/* Right Navigation */}
