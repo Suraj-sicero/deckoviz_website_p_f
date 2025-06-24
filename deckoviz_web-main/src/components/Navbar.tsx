@@ -68,54 +68,68 @@ const Navbar: React.FC = () => {
     console.log("Buy Now clicked")
   }
 
+  const handleBusinessNavigation = (route: string): void => {
+    window.location.href = route
+    setIsBusinessDropdownOpen(false)
+    setIsOpen(false)
+  }
+
   const businessCategories = [
     {
       title: "Hotels & Resorts",
       description: "Elevate guest experiences",
       icon: "🏨",
-      gradient: "from-blue-500 to-cyan-500"
+      gradient: "from-blue-500 to-cyan-500",
+      route: "/deckovizforhotels"
     },
     {
       title: "Restaurants & Cafés",
       description: "Create dining ambiance",
       icon: "🍽️",
-      gradient: "from-orange-500 to-red-500"
+      gradient: "from-orange-500 to-red-500",
+      route: "/deckovizforrestaurants"
     },
     {
       title: "Architects & Designers",
       description: "Design living spaces",
       icon: "🏗️",
-      gradient: "from-purple-500 to-pink-500"
+      gradient: "from-purple-500 to-pink-500",
+      route: "/deckovizforarchitects"
     },
     {
       title: "Offices & Workspaces",
       description: "Inspire productivity",
       icon: "💼",
-      gradient: "from-green-500 to-emerald-500"
+      gradient: "from-green-500 to-emerald-500",
+      route: "/deckovizforoffices"
     },
     {
       title: "Real Estate",
       description: "Showcase properties",
       icon: "🏡",
-      gradient: "from-indigo-500 to-blue-500"
+      gradient: "from-indigo-500 to-blue-500",
+      route: "/deckovizforrealestate"
     },
     {
       title: "Wellness & Therapy",
       description: "Healing environments",
       icon: "🧘",
-      gradient: "from-teal-500 to-cyan-500"
+      gradient: "from-teal-500 to-cyan-500",
+      route: "/deckovizfortherapists"
     },
     {
       title: "Schools & Learning",
       description: "Educational spaces",
       icon: "📚",
-      gradient: "from-yellow-500 to-orange-500"
+      gradient: "from-yellow-500 to-orange-500",
+      route: "/deckovizforschools"
     },
     {
       title: "Retail & Showrooms",
       description: "Shopping experiences",
       icon: "🛍️",
-      gradient: "from-pink-500 to-rose-500"
+      gradient: "from-pink-500 to-rose-500",
+      route: "/deckovizforretailstores"
     }
   ]
 
@@ -161,11 +175,7 @@ const Navbar: React.FC = () => {
                     {businessCategories.map((category, index) => (
                       <button
                         key={index}
-                        onClick={() => {
-                          // Handle navigation to specific business page
-                          console.log(`Navigate to ${category.title}`)
-                          setIsBusinessDropdownOpen(false)
-                        }}
+                        onClick={() => handleBusinessNavigation(category.route)}
                         className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden"
                         style={{
                           background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)'
@@ -218,20 +228,19 @@ const Navbar: React.FC = () => {
             </a>
           </div>
 
-          {/* Center Logo with original gradient */}
-          <a href="/" className="flex items-center gap-1">
-            <img src="/images/logo.png" alt="Deckoviz Logo" className="h-12 w-12 rounded-full object-contain" />
+          {/* Center Logo with Comfortaa font */}
+          <a href="/" className="flex items-center ">
+            <img src="/images/logo.png" alt="Deckoviz Logo" className="h-12 w-12 rounded-full object-contain mt-1" />
             <span
-  className="text-3xl font-semibold bg-clip-text text-transparent leading-none [text-shadow:0_1px_1px_rgba(0,0,0,0.15)]"
-  style={{
-    backgroundImage:
-      "linear-gradient(to right, #05286d, #2da370, #c8d188, #e3aa4b, #ff9100, #602377, #2f1086)",
-  }}
->
-  Deckoviz
-</span>
-
-
+              className="text-3xl font-extrabold bg-clip-text text-transparent leading-none [text-shadow:0_1px_1px_rgba(0,0,0,0.15)]"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, #05286d, #2da370, #c8d188, #e3aa4b, #ff9100, #602377, #2f1086)",
+                fontFamily: 'Comfortaa, cursive'
+              }}
+            >
+              Deckoviz
+            </span>
           </a>
 
           {/* Right Navigation */}
@@ -275,57 +284,70 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Navigation with cool animations */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+          className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"}`}
         >
           <div className="bg-white/95 backdrop-blur-md shadow-2xl rounded-2xl mt-4 p-6 border border-gray-100 mx-2 transform transition-all duration-500">
             <div className="flex flex-col space-y-1">
-              <button
-                onClick={() => handleSectionNav("deckoviz-for-businesses")}
-                className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
-              >
-                <span className="flex items-center">
-                  Deckoviz For Businesses
-                  <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
-                </span>
-              </button>
+              {/* Mobile Business Dropdown */}
+              <div className="mb-2">
+                <p className="text-xs text-gray-500 uppercase tracking-wide mb-2 px-4">Business Solutions</p>
+                <div className="grid grid-cols-1 gap-2">
+                  {businessCategories.map((category, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleBusinessNavigation(category.route)}
+                      className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-2 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group flex items-center space-x-3"
+                    >
+                      <span className="text-lg">{category.icon}</span>
+                      <div className="flex-1">
+                        <span className="text-sm font-medium">{category.title}</span>
+                        <p className="text-xs text-gray-500">{category.description}</p>
+                      </div>
+                      <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
               
-              <a
-                href="/pricing"
-                className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
-                onClick={() => setIsOpen(false)}
-              >
-                <span className="flex items-center">
-                  Pricing
-                  <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
-                </span>
-              </a>
+              <div className="border-t border-gray-200 pt-4 mt-4">
+                <a
+                  href="/pricing"
+                  className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="flex items-center">
+                    Pricing
+                    <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
+                  </span>
+                </a>
 
-              <a
-                href="/blog"
-                className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
-                onClick={() => setIsOpen(false)}
-              >
-                <span className="flex items-center">
-                  Blog
-                  <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
-                </span>
-              </a>
+                <a
+                  href="/blog"
+                  className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="flex items-center">
+                    Blog
+                    <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
+                  </span>
+                </a>
 
-              <a
-                href="/about"
-                className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
-                onClick={() => setIsOpen(false)}
-              >
-                <span className="flex items-center">
-                  About us
-                  <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
-                </span>
-              </a>
+                <a
+                  href="/about"
+                  className="text-left text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-300 font-medium py-3 px-4 rounded-xl transform hover:translate-x-2 hover:scale-105 group"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="flex items-center">
+                    About us
+                    <span className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">→</span>
+                  </span>
+                </a>
 
-              <div className="pt-4">
-                <Button variant="primary" className="w-full" onClick={handleBuyNow}>
-                  Buy Now
-                </Button>
+                <div className="pt-4">
+                  <Button variant="primary" className="w-full" onClick={handleBuyNow}>
+                    Buy Now
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
