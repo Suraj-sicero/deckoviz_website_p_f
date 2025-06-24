@@ -61,10 +61,11 @@ const Footer: React.FC = () => {
           <div className="lg:col-span-2">
             <div className="mb-8">
               <span
-                className="text-4xl font-bold bg-clip-text text-transparent leading-none"
+                className="text-4xl font-black bg-clip-text text-transparent leading-none"
                 style={{
                   backgroundImage:
                     "linear-gradient(to right, #05286d, #2da370, #c8d188, #e3aa4b, #ff9100, #602377, #2f1086)",
+                     fontFamily: 'Comfortaa, cursive'
                 }}
               >
                 Deckoviz
