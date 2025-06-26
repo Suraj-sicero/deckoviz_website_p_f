@@ -110,7 +110,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col items-center">
           {/* Heading */}
           <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16">
-            <span className="text-gray-900">Transform YourSpace with </span>
+            <span className="text-gray-900">Transform Your Space with </span>
             <span className="bg-gradient-to-r from-[#9a5ffff9] to-indigo-500 bg-clip-text text-transparent">
               AI-Powered Art
             </span>
