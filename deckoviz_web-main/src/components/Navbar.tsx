@@ -14,20 +14,92 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", children, ...props }) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg px-8 py-2.5 text-sm tracking-wide"
+    "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg px-8 py-2.5 text-sm tracking-wide relative z-10"
 
   const variantClasses = {
     primary:
-      "bg-gradient-to-r from-[#8345EE] via-[#7239D3] to-[#6B2FD6] hover:from-[#7239D3] hover:via-[#6B2FD6] hover:to-[#5A28C4] text-white shadow-lg hover:shadow-xl border border-purple-500/20 hover:border-purple-400/30 transform hover:scale-[1.02] hover:-translate-y-0.5",
+      "text-white transform hover:scale-[1.05] hover:-translate-y-1",
     secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
   }
 
   const classes = `${baseClasses} ${variantClasses[variant]} ${className}`
 
+  if (variant === "primary") {
+    return (
+      <div className="relative inline-block">
+        {/* Animated Border Glow - Colors flow around perimeter */}
+        <div 
+          className="absolute -inset-0.5 rounded-lg opacity-100"
+          style={{
+            background: `linear-gradient(90deg, 
+              #8A2BE2, #FF1493, #9932CC, #FF69B4, 
+              #8A2BE2, #FF1493, #9932CC, #FF69B4, 
+              #8A2BE2, #FF1493)`,
+            backgroundSize: '300% 100%',
+            filter: 'blur(2px)',
+            zIndex: -1,
+            animation: 'flowColors 3s linear infinite'
+          }}
+        />
+        
+        <button 
+          className={classes}
+          style={{
+            background: `linear-gradient(135deg, 
+              #B19CD9 0%, #DDA0DD 25%, #DA70D6 50%, #C8A2C8 75%, #B19CD9 100%)`,
+            boxShadow: `
+              inset 0 0 30px rgba(138, 43, 226, 0.8),
+              inset 0 0 20px rgba(255, 20, 147, 0.6),
+              inset 0 0 40px rgba(186, 85, 211, 0.4),
+              0 0 15px rgba(138, 43, 226, 0.3),
+              0 0 25px rgba(255, 20, 147, 0.2)
+            `,
+            textShadow: `
+              0 0 15px rgba(255, 255, 255, 1),
+              0 0 25px rgba(138, 43, 226, 0.8),
+              0 0 35px rgba(255, 20, 147, 0.6)
+            `,
+            border: '1px solid rgba(186, 85, 211, 0.3)'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = `
+              inset 0 0 40px rgba(138, 43, 226, 1),
+              inset 0 0 30px rgba(255, 20, 147, 0.8),
+              inset 0 0 50px rgba(186, 85, 211, 0.6),
+              0 0 20px rgba(138, 43, 226, 0.5),
+              0 0 35px rgba(255, 20, 147, 0.4)
+            `
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = `
+              inset 0 0 30px rgba(138, 43, 226, 0.8),
+              inset 0 0 20px rgba(255, 20, 147, 0.6),
+              inset 0 0 40px rgba(186, 85, 211, 0.4),
+              0 0 15px rgba(138, 43, 226, 0.3),
+              0 0 25px rgba(255, 20, 147, 0.2)
+            `
+          }}
+          {...props}
+        >
+          {children}
+        </button>
+        
+        {/* Keyframes for color flow */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes flowColors {
+              0% { background-position: 0% 0%; }
+              100% { background-position: 100% 0%; }
+            }
+          `
+        }} />
+      </div>
+    )
+  }
+
   return (
     <button className={classes} {...props}>
-      <span className="relative z-10">{children}</span>
-      <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-white/0 via-white/10 to-white/0 opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+      {children}
     </button>
   )
 }

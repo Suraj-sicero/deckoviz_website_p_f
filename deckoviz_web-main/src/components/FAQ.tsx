@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Sparkles, HelpCircle } from 'lucide-react';
 
 interface FAQItem {
   question: string;
@@ -64,22 +64,22 @@ const FAQ: React.FC = () => {
     },
     {
       question: "What is emotional curation?",
-      answer: "Emotional curation is the heart of Deckoviz. Rather than simply showing random beautiful images, Deckoviz selects and arranges visuals, moods, and experiences that resonate with your emotional landscape. It aims to uplift you when you need energy, calm you when you seek peace, spark wonder when you feel curious, and nurture awe when you crave inspiration. It’s about matching art and atmosphere to the invisible moments and feelings that shape your daily life.",
+      answer: "Emotional curation is the heart of Deckoviz. Rather than simply showing random beautiful images, Deckoviz selects and arranges visuals, moods, and experiences that resonate with your emotional landscape. It aims to uplift you when you need energy, calm you when you seek peace, spark wonder when you feel curious, and nurture awe when you crave inspiration. It's about matching art and atmosphere to the invisible moments and feelings that shape your daily life.",
       category: "Advanced"
     },
     {
       question: "Why is personalization so important for spaces?",
-      answer: "We design our spaces, and then, they influence - and design us. Spaces shape our emotions, thoughts, creativity, and well-being — often more than we consciously realize. A truly personalized space doesn’t just look good — it feels alive, inspiring, grounding, or energizing, depending on what your soul needs. Deckoviz exists to help you reclaim your environment as an extension of your inner self — dynamic, evolving, uniquely yours.",
+      answer: "We design our spaces, and then, they influence - and design us. Spaces shape our emotions, thoughts, creativity, and well-being — often more than we consciously realize. A truly personalized space doesn't just look good — it feels alive, inspiring, grounding, or energizing, depending on what your soul needs. Deckoviz exists to help you reclaim your environment as an extension of your inner self — dynamic, evolving, uniquely yours.",
       category: "Advanced"
     },
      {
       question: "Can Deckoviz create art specifically for me?",
-      answer: "Yes — and it gets better the longer you live with it. Deckoviz’s creative AI engines can generate unique artworks inspired by your style, mood, and preferences. Over time, you’ll see not just curated images, but wholly new, original creations that feel like they were dreamed up just for you — because in a way, they are.",
+      answer: "Yes — and it gets better the longer you live with it. Deckoviz's creative AI engines can generate unique artworks inspired by your style, mood, and preferences. Over time, you'll see not just curated images, but wholly new, original creations that feel like they were dreamed up just for you — because in a way, they are.",
       category: "Advanced"
     },
      {
       question: "How is Deckoviz different from a digital photo frame or smart TV?",
-      answer: "While digital frames simply rotate pictures, Deckoviz uses our powerful proprietary AI architecture to curate, create, personalize, and even evolve your art over time. It's not just a display — it’s an emotionally intelligent art companion that brings true atmosphere and storytelling into your space.",
+      answer: "While digital frames simply rotate pictures, Deckoviz uses our powerful proprietary AI architecture to curate, create, personalize, and even evolve your art over time. It's not just a display — it's an emotionally intelligent art companion that brings true atmosphere and storytelling into your space.",
       category: "Product"
     }
   ];
@@ -88,65 +88,156 @@ const FAQ: React.FC = () => {
   const filteredFAQs = faqItems.filter(item => item.category === activeCategory);
 
   return (
-    <section className="section-padding bg-white">
-      <div className="container-custom">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">
-            Frequently Asked <span className="text-primary-600">Questions</span>
+    <section className="relative py-20 bg-white overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 w-full h-full">
+        {/* Subtle dot pattern overlay */}
+        <div
+          className="absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+
+        {/* Gradient glow in the background */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full bg-gradient-to-br from-blue-200/20 via-purple-200/15 to-pink-200/20 blur-3xl"></div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Header Section */}
+        <div className="text-center mb-16">
+
+          {/* Main Heading */}
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+            Frequently Asked{' '}
+            <span className="bg-gradient-to-r from-[#7d39ec] to-[#6366f1] bg-clip-text text-transparent">
+              Questions
+            </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Find answers to common questions about Deckoviz and how it can transform your space.
+
+          {/* Subheading */}
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Find answers to common questions about{' '}
+            <span className="text-purple-600 font-semibold">Deckoviz</span> and how it can{' '}
+            <span className="text-indigo-600 font-semibold">transform your space</span>.
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {/* Category Tabs */}
-          <div className="flex justify-center gap-4 mb-8">
-            {categories.map((category) => (
+          <div className="flex justify-center gap-6 mb-12">
+            {categories.map((category, index) => (
               <button
                 key={category}
                 onClick={() => {
                   setActiveCategory(category);
                   setActiveIndex(null);
                 }}
-                className={`px-6 py-2 rounded-full transition-colors ${
+                className={`relative px-8 py-3 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 ${
                   activeCategory === category
-                    ? 'bg-primary-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'text-white shadow-lg'
+                    : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:bg-white shadow-md border border-gray-200/50'
                 }`}
+                style={
+                  activeCategory === category
+                    ? {
+                        background: index === 0 
+                          ? 'linear-gradient(135deg, #9333ea 0%, #7c3aed 100%)'
+                          : index === 1
+                          ? 'linear-gradient(135deg, #3b82f6 0%, #6366f1 100%)'
+                          : 'linear-gradient(135deg, #ec4899 0%, #f97316 100%)'
+                      }
+                    : {}
+                }
               >
+                {activeCategory === category && (
+                  <div className="absolute -top-1 -right-1">
+                    <Sparkles size={16} className="text-white opacity-80 animate-pulse" />
+                  </div>
+                )}
                 {category}
               </button>
             ))}
           </div>
 
           {/* FAQ Accordion */}
-          <div className="space-y-4">
+          <div className="space-y-6">
             {filteredFAQs.map((item, index) => (
               <div
                 key={index}
-                className="border border-gray-200 rounded-xl overflow-hidden"
+                className="group relative bg-white/60 backdrop-blur-sm border border-gray-200/50 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:scale-[1.02]"
               >
+                {/* Gradient accent line */}
+                <div 
+                  className={`absolute left-0 top-0 w-1 h-full transition-all duration-300 ${
+                    activeIndex === index ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  style={{
+                    background: activeCategory === 'General' 
+                      ? 'linear-gradient(180deg, #9333ea 0%, #7c3aed 100%)'
+                      : activeCategory === 'Product'
+                      ? 'linear-gradient(180deg, #3b82f6 0%, #6366f1 100%)'
+                      : 'linear-gradient(180deg, #ec4899 0%, #f97316 100%)'
+                  }}
+                />
+
                 <button
-                  className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  className="w-full px-8 py-6 text-left flex items-center justify-between hover:bg-gray-50/50 transition-all duration-300 group"
                   onClick={() => setActiveIndex(activeIndex === index ? null : index)}
                 >
-                  <span className="text-lg font-semibold text-gray-800">
+                  <span className="text-lg font-bold text-gray-900 pr-4 group-hover:text-purple-700 transition-colors duration-300">
                     {item.question}
                   </span>
-                  {activeIndex === index ? (
-                    <ChevronUp className="text-primary-600" size={20} />
-                  ) : (
-                    <ChevronDown className="text-gray-400" size={20} />
-                  )}
-                </button>
-                {activeIndex === index && (
-                  <div className="px-6 py-4 bg-gray-50">
-                    <p className="text-gray-600">{item.answer}</p>
+                  <div className={`transition-all duration-300 ${activeIndex === index ? 'rotate-180' : ''}`}>
+                    {activeIndex === index ? (
+                      <ChevronUp 
+                        className="text-purple-600" 
+                        size={24} 
+                      />
+                    ) : (
+                      <ChevronDown 
+                        className="text-gray-400 group-hover:text-purple-500" 
+                        size={24} 
+                      />
+                    )}
                   </div>
-                )}
+                </button>
+
+                {/* Answer Section with smooth animation */}
+                <div 
+                  className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                    activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="px-8 py-6 bg-gradient-to-r from-gray-50/80 to-purple-50/30 border-t border-gray-100">
+                    <p className="text-gray-700 leading-relaxed text-base">
+                      {item.answer}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
+          </div>
+
+          {/* Bottom CTA Section */}
+          <div className="mt-20 text-center">
+            <div className="relative group">
+              {/* Glow effect */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+              
+              <div className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-200">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  Still have questions?
+                </h3>
+                <p className="text-gray-600 mb-6">
+                  Our team is here to help you discover how Deckoviz can transform your space.
+                </p>
+                <button className="bg-gradient-to-r from-[#7d39ec] to-[#6366f1] text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300">
+                  Contact Support
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -154,4 +245,4 @@ const FAQ: React.FC = () => {
   );
 };
 
-export default FAQ; 
+export default FAQ;
