@@ -1,6 +1,6 @@
 export default function AboutUs() {
   return (
-    <div className="relative min-h-screen bg-white">
+    <div id="about" className="relative min-h-screen bg-white">
       {/* Background gradient section */}
       <div className="absolute inset-0 z-0">
         {/* Base white background with subtle pattern */}

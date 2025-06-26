@@ -60,9 +60,10 @@ const App: React.FC = () => {
             <Features />
             <WhoIsDeckovizFor />
             {/* <HowItWorks />
-            <Gallery />
-            <Pricing /> */}
+            <Gallery /> */}
+           
             <Testimonials />
+             {/* <Pricing /> */}
              <FAQ /> 
              {/* <Referral />
            

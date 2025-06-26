@@ -124,14 +124,28 @@
 
 .five-color-gradient {
   background: linear-gradient(135deg, #76a4ee 13%, #7389ed 25%, #a76edc 55%, #b67eeb 75%, #587dd3 100%);
+  background-size: 200% 200%;
   transition: all 0.3s ease-in-out;
 }
 
 .five-color-gradient:hover {
   background: linear-gradient(135deg, #76a4ee 13%, #7389ed 25%, #a76edc 55%, #b67eeb 75%, #587dd3 100%);
+  background-size: 200% 200%;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(76, 110, 245, 0.15);
+  animation: gradient-flow-right 5s linear infinite;
 }
+
+@keyframes gradient-flow-right {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+
 .learn-more-hover {
   transition: all 0.3s ease-in-out;
 }

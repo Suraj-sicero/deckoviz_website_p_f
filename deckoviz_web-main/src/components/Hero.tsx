@@ -157,13 +157,15 @@ const Hero: React.FC = () => {
             <div className="flex flex-col items-center gap-8 max-w-md">
               {/* Buttons */}
               <div className="flex gap-5 justify-center">
-                <Button
-                variant="primary"
-                className="five-color-gradient border-2 ml-10
-                 border-gray-300 ring-1 ring-inset ring-sky-100 shadow-lg hover:shadow-xl shadow-purple-200/30 text-gray-700"
-              >
-                Shop Now
-              </Button>
+               <button className="group relative five-color-gradient border-2 ml-10 border-gray-500 ring-1 ring-inset ring-blue-300 shadow-lg hover:shadow-xl shadow-purple-200/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 overflow-hidden text-base min-w-[140px]">
+  {/* Shimmer effect overlay */}
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+  
+  <span className="relative z-10 flex items-center justify-center gap-2">
+    Shop Now
+    
+  </span>
+</button>
               <Button 
               variant="outline" 
               className="bg-transparent text-gray-700 hover:bg-gray-50 group learn-more-hover"

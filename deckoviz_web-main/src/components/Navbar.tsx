@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", ch
 
   const classes = `${baseClasses} ${variantClasses[variant]} ${className}`
 
-  if (variant === "primary") {
+    if (variant === "primary") {
     return (
       <div className="relative inline-block">
         {/* Animated Border Glow - Colors flow around perimeter */}
@@ -103,7 +103,6 @@ const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", ch
     </button>
   )
 }
-
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
@@ -357,82 +356,86 @@ const Navbar: React.FC = () => {
             </button>
           </div>
         </div>
-      </nav>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Fixed position under navbar */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-out ${isOpen ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}
+          className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${
+            isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
+          }`}
+          style={{ 
+            maxHeight: isOpen ? 'calc(100vh - 4rem)' : '0',
+            overflowY: 'auto'
+          }}
         >
-          <div className="bg-white shadow-lg border-t border-gray-100">
-            <div className="px-4 pt-20 pb-6 space-y-0">
-              {/* Mobile Business Dropdown */}
-              <div className="mb-4">
-                <button
-                  onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
-                  className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-purple-50 flex items-center justify-between"
-                >
-                  <span>Deckoviz For Business</span>
-                  <ChevronDown 
-                    size={16} 
-                    className={`transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                
-                {/* Business Categories Dropdown */}
-                <div className={`overflow-hidden transition-all duration-200 ${isBusinessDropdownOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                  <div className="pl-4 space-y-1 mt-2 max-h-[350px] overflow-y-auto">
-                    {businessCategories.map((category, index) => (
-                      <button
-                        key={index}
-                        onClick={() => handleBusinessNavigation(category.route)}
-                        className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
-                      >
-                        <span className="text-base flex-shrink-0">{category.icon}</span>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium truncate">{category.title}</div>
-                          <p className="text-xs text-gray-500 truncate">{category.description}</p>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
+          <div className="px-4 py-6 space-y-0">
+            {/* Mobile Business Dropdown */}
+            <div className="mb-4">
+              <button
+                onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
+                className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-purple-50 flex items-center justify-between"
+              >
+                <span>Deckoviz For Business</span>
+                <ChevronDown 
+                  size={16} 
+                  className={`transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+              
+              {/* Business Categories Dropdown */}
+              <div className={`overflow-hidden transition-all duration-200 ${isBusinessDropdownOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
+                <div className="pl-4 space-y-1 mt-2 max-h-[350px] overflow-y-auto">
+                  {businessCategories.map((category, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleBusinessNavigation(category.route)}
+                      className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
+                    >
+                      <span className="text-base flex-shrink-0">{category.icon}</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium truncate">{category.title}</div>
+                        <p className="text-xs text-gray-500 truncate">{category.description}</p>
+                      </div>
+                    </button>
+                  ))}
                 </div>
               </div>
-              
-              {/* Other Navigation Items */}
-              <div className="border-t border-gray-200 pt-4 space-y-0">
-                <a
-                  href="/pricing"
-                  className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Pricing
-                </a>
+            </div>
+            
+            {/* Other Navigation Items */}
+            <div className="border-t border-gray-200 pt-4 space-y-0">
+              <a
+                href="/pricing"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                Pricing
+              </a>
 
-                <a
-                  href="/blog"
-                  className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Blog
-                </a>
+              <a
+                href="/blog"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                Blog
+              </a>
 
-                <a
-                  href="/about"
-                  className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                  onClick={() => setIsOpen(false)}
-                >
-                  About us
-                </a>
+              <a
+                href="/about"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                About us
+              </a>
 
-                <div className="pt-4">
-                  <Button variant="primary" className="w-full" onClick={handleBuyNow}>
-                    Buy Now
-                  </Button>
-                </div>
+              <div className="pt-4">
+                <Button variant="primary" className="w-full" onClick={handleBuyNow}>
+                  Buy Now
+                </Button>
               </div>
             </div>
           </div>
         </div>
+      </nav>
     </>
   )
 }

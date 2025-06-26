@@ -129,7 +129,7 @@ const FAQ: React.FC = () => {
   const activeIndex2 = categories.findIndex((cat) => cat.name === activeCategory)
 
   return (
-    <section className="relative py-24 bg-white overflow-hidden">
+    <section id="faq" className="relative py-20 bg-white overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 w-full h-full">
         <div
