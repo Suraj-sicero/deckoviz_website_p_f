@@ -45,10 +45,12 @@ const Footer: React.FC = () => {
     }
   }
 
-  const handleSectionNav = (sectionId: string) => {
+  const handleNavigation = (sectionId: string, fallbackUrl: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
+    } else {
+      window.location.href = fallbackUrl
     }
   }
 
@@ -121,7 +123,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li>
                 <button
-                  onClick={() => handleSectionNav("features")}
+                  onClick={() => handleNavigation("features", "/features")}
                   className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
                 >
                   Features
@@ -129,7 +131,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <button
-                  onClick={() => handleSectionNav("how-it-works")}
+                  onClick={() => handleNavigation("how-it-works", "#")}
                   className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
                 >
                   How It Works
@@ -137,14 +139,17 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <button
-                  onClick={() => handleSectionNav("pricing")}
+                  onClick={() => handleNavigation("pricing", "/pricing")}
                   className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
                 >
                   Pricing
                 </button>
               </li>
               <li>
-                <button className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
+                <button
+                  onClick={() => handleNavigation("faq", "/faq")}
+                  className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
+                >
                   FAQ
                 </button>
               </li>
@@ -156,7 +161,10 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-8">Company</h3>
             <ul className="space-y-4">
               <li>
-                <button className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
+                <button
+                  onClick={() => handleNavigation("about", "/aboutus")}
+                  className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
+                >
                   About Us
                 </button>
               </li>
@@ -166,14 +174,20 @@ const Footer: React.FC = () => {
                 </button>
               </li>
               <li>
-                <button className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
+                <button
+                  onClick={() => handleNavigation("blog", "/blog")}
+                  className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
+                >
                   Blog
                 </button>
               </li>
                 <li>
-  <a href="/contact" className="text-gray-500 hover:text-gray-900 transition-colors text-sm text-left block">
+  <button 
+    onClick={() => handleNavigation("contact", "/contact")}
+    className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
+  >
     Contact Us
-  </a>
+  </button>
 </li>
             </ul>
           </div>

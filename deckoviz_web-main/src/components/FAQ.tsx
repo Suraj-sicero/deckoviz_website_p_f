@@ -107,21 +107,21 @@ const FAQ: React.FC = () => {
       icon: Home,
       color: "from-violet-500 via-purple-500 to-fuchsia-500",
       bgColor: "from-violet-50 to-purple-50",
-      description: "Getting started",
+      description: "Get Started",
     },
     {
       name: "Product",
       icon: Package,
       color: "from-blue-500 via-indigo-500 to-cyan-500",
       bgColor: "from-blue-50 to-indigo-50",
-      description: "Features & specs",
+      description: "Features & Specs",
     },
     {
       name: "Advanced",
       icon: Rocket,
       color: "from-pink-500 via-rose-500 to-orange-500",
       bgColor: "from-pink-50 to-rose-50",
-      description: "AI & technology",
+      description: "AI & Technology",
     },
   ]
 

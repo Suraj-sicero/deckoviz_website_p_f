@@ -151,7 +151,7 @@ const Features: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div id="features"  className="min-h-screen bg-white relative overflow-hidden">
       {/* Purple to pink spiral gradient background */}
       <div className="absolute inset-0" style={{
         background: `radial-gradient(circle at 50% 60%, 
