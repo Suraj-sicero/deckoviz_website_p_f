@@ -162,3 +162,46 @@
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-80px) scale(1.25); }
 }
+
+.glow-button {
+  background-color: #2d0033;
+  border: none;
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 10px #e100ff,
+    0 0 20px #a900ff,
+    0 0 40px #a900ff;
+  transition: transform 0.3s ease;
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.glow-button:hover {
+  transform: scale(1.05);
+  box-shadow:
+    0 0 15px #ff4fff,
+    0 0 30px #d000ff,
+    0 0 60px #a900ff;
+}
+
+@keyframes pulse-glow {
+  0% {
+    box-shadow:
+      0 0 10px #e100ff,
+      0 0 20px #a900ff,
+      0 0 40px #a900ff;
+  }
+  50% {
+    box-shadow:
+      0 0 20px #ff4fff,
+      0 0 35px #d000ff,
+      0 0 70px #a900ff;
+  }
+  100% {
+    box-shadow:
+      0 0 10px #e100ff,
+      0 0 20px #a900ff,
+      0 0 40px #a900ff;
+  }
+}

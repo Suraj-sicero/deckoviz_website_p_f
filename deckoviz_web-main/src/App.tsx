@@ -30,6 +30,7 @@ import DeckovizForRealEstate from './components/DeckovizForRealestate';
 import DeckovizTherapistsLanding from './components/DeckovizForTherapists';
 import DeckovizSchoolsLanding from './components/DeckovizForSchools';
 import DeckovizForRetail from './components/DeckovizForStores';
+import FAQ from './components/FAQ';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -56,14 +57,15 @@ const App: React.FC = () => {
         <Route path="/" element={
           <>
             <Hero/>
-            {/* <Features /> */}
+            <Features />
             <WhoIsDeckovizFor />
             {/* <HowItWorks />
             <Gallery />
             <Pricing /> */}
             <Testimonials />
+             <FAQ /> 
              {/* <Referral />
-            <FAQ /> 
+           
             <Contact /> */}
           </>
         } />
