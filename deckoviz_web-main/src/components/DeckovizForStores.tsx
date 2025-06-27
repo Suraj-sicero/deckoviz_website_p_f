@@ -307,9 +307,10 @@ const DeckovizForRetail = () => {
               
               {/* Main Heading */}
               <h2 className="text-4xl md:text-[2.8rem] font-semibold text-gray-900 leading-tight">
-                Why Schools and
+                 Why Deckoviz Is
+
                 <br />
-                Educators Love Deckoviz
+                a Game-Changer for Retail
               </h2>
             </div>
 
@@ -341,14 +342,17 @@ const DeckovizForRetail = () => {
                     <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
                   </div>
                   <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Create Emotionally Safe & Regulating Environments
+                    Make Your Store Visually Magnetic
+
                   </h3>
                   <div className="flex-1">
                     <div className="flex items-start mb-3">
                       <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                       <p className="text-indigo-600 font-medium">
-                        Trauma-informed design is about more than neutral colors. It's about what your space tells the nervous system. Deckoviz helps by:
+                       Dynamic visuals spark curiosity. With Deckoviz, your store becomes an emotional magnet — drawing people in through:
+
                       </p>
+                      <p></p>
                     </div>
                   </div>
                   <div className="flex justify-end mt-6">
