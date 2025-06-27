@@ -328,102 +328,230 @@ const DeckovizRestaurantLanding = () => {
       </div>
     </div>
 
-    {/* Cards Section with Background Gradient */}
-    <div className="relative">
-      {/* Subtle, wide-radius circular glow near card area */}
+{/* Cards Section with Background Gradient */}
+<div className="relative">
+  {/* Enhanced Background Effects */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {/* Primary glow */}
+    <div
+      className="absolute top-20 right-20 w-[600px] h-[600px] opacity-30"
+      style={{
+        background: "radial-gradient(circle at center, rgba(147,51,234,0.4) 0%, rgba(219,39,119,0.25) 40%, rgba(236,72,153,0.15) 70%, transparent 90%)",
+        filter: "blur(140px)",
+      }}
+    />
+    {/* Secondary glow */}
+    <div
+      className="absolute bottom-20 left-20 w-[500px] h-[500px] opacity-20"
+      style={{
+        background: "radial-gradient(circle at center, rgba(59,130,246,0.3) 0%, rgba(147,51,234,0.2) 50%, transparent 80%)",
+        filter: "blur(120px)",
+      }}
+    />
+  </div>
+
+  {/* Feature Cards Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+    {/* Card 1 - Emotionally Elevate */}
+    <div className="relative group cursor-pointer">
       <div
-        className="absolute bottom-24 right-16 w-[480px] h-[480px]"
-        style={{
-          background: "radial-gradient(circle at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
-          filter: "blur(120px)",
-          zIndex: 1,
-        }}
+        className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
       />
-
-      {/* Feature Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-        {/* Card 1 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        {/* Icon and Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Emotionally Elevate Your Space
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Food is emotional. So is music. So is lighting. Why not your visuals? With Deckoviz, your restaurant becomes:
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-amber-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-amber-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
         </div>
 
-        {/* Card 2 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Instantly Curated Vibes for Any Hour
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Emotionally Elevate Your Space
+        </h3>
+
+        <div className="flex-1 space-y-4">
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              A moody, elegant, candle-lit jazz lounge after dark
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              A breezy, bright, Mediterranean escape at brunch
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              A curated art experience for every season and menu cycle
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              A living mural that feels like your story
+            </p>
           </div>
         </div>
 
-        {/* Card 3 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Match the Mood to Your Cuisine
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
         </div>
       </div>
     </div>
+
+    {/* Card 2 - Curated Vibes */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v6m0 6v6"/>
+                <path d="M21 12h-6m-6 0H3"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-purple-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-purple-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Instantly Curated Vibes for Any Hour
+        </h3>
+
+        <div className="flex-1 space-y-4">
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              <strong>Morning/Brunch:</strong> sunshine-lit still life, European cafés, crisp florals
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              <strong>Afternoon/Midday:</strong> bright, clean visuals with ambient motion to energize
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              <strong>Dinner:</strong> low-lit moody visuals, abstract textures, romantic scenery
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              <strong>Late Night:</strong> deep ambient tones, neon reflections, sultry animations
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 3 - Match Cuisine */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-emerald-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Match the Mood to Your Cuisine
+        </h3>
+
+        <div className="flex-1 space-y-4">
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Japanese ryokan-style visuals, sakura blossoms, minimal brush art
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Italian vineyard sunrises, rustic tablescapes, terra-cotta countryside
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              French bistro-style pastels and rainy Parisian streets
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Latin American rhythm-themed color bursts and festival scenes
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Artisan bakery vibes with soft, dreamy food art and light play
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   </div>
 </div>
 
