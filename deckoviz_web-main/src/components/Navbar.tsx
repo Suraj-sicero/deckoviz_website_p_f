@@ -303,18 +303,13 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Center Logo with Comfortaa font */}
-            <a href="/" className="flex items-center ">
-              <img src="/images/logo.png" alt="Deckoviz Logo" className="h-12 w-12 rounded-full object-contain mt-1" />
-              <span
-                className="text-3xl font-extrabold bg-clip-text text-transparent leading-none [text-shadow:0_1px_1px_rgba(0,0,0,0.15)]"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to right, #05286d, #2da370, #c8d188, #e3aa4b, #ff9100, #602377, #2f1086)",
-                  fontFamily: 'Comfortaa, cursive'
-                }}
-              >
-                Deckoviz
-              </span>
+            <a href="/" className="flex items-center">
+              <img src="/images/deckovizlogo.png" alt="Deckoviz Logo" className="h-12 w-12 rounded-full object-contain mt-1" />
+              <img 
+                src="/images/deckospacelabs.png" 
+                alt="Space Labs Logo" 
+                className="h-14 w-auto object-contain ml-1 mb-2"
+              />
             </a>
 
             {/* Right Navigation */}

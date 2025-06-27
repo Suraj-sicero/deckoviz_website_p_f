@@ -62,16 +62,15 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div className="lg:col-span-2">
             <div className="mb-8">
-              <span
-                className="text-4xl font-black bg-clip-text text-transparent leading-none"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(to right, #05286d, #2da370, #c8d188, #e3aa4b, #ff9100, #602377, #2f1086)",
-                     fontFamily: 'Comfortaa, cursive'
-                }}
-              >
-                Deckoviz
-              </span>
+             
+            {/* Center Logo with Comfortaa font */}
+            <a href="/" className="flex items-center">
+              <img 
+                src="/images/deckospacelabs.png" 
+                alt="Space Labs Logo" 
+                className="h-16 w-auto object-contain ml-1 mb-2"
+              />
+            </a>
             </div>
             <p className="text-gray-600 leading-relaxed mb-8 max-w-md">
               Transform your space with AI-powered art that evolves with your style. Create personalized artwork that
