@@ -323,7 +323,8 @@ const DeckovizForRealEstate = () => {
       </div>
     </div>
 
-    {/* Cards Section with Background Gradient */}
+    
+     {/* Cards Section with Background Gradient */}
     <div className="relative">
       {/* Subtle, wide-radius circular glow near card area */}
       <div
@@ -335,119 +336,179 @@ const DeckovizForRealEstate = () => {
         }}
       />
 
-      {/* Feature Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mb-6">
-        {/* Card 1 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+  {/* Feature Cards Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+    {/* Card 1 - Property Value */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        {/* Icon and Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Increase Perceived Property Value Instantly
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Deckoviz adds aura, elegance, sophistication, and emotional warmth without requiring costly design interventions.
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-amber-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-amber-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
         </div>
 
-        {/* Card 2 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Differentiate Your Property in a Competitive Market
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Imagine showing prospects a unit where the living room wall responds to mood. Where bedrooms shift energy from focus to romance.
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 leading-tight group-hover:text-gray-800">
+          Increase Perceived Property Value Instantly
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed">
+            A home that comes alive feels worth more. Deckoviz adds <strong>aura, design sophistication, and emotional warmth</strong> without costly interventions.
+          </p>
         </div>
 
-        {/* Card 3 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Sell a Lifestyle, Not Just Square Footage
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Buyers want to feel something. Deckoviz helps you show homes that feel lived-in, warm, aspirational, and dynamic.
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Row - 1 Card left-aligned */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Offer a Customization Layer for High-End Buyers
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  With Deckoviz, every buyer gets the ability to create their perfect ambient environment and visual story.
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
+        <div className="mt-6 pt-3 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
         </div>
       </div>
     </div>
+
+    {/* Card 2 - Market Differentiation */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M6 9l6 6 6-6"/>
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 1v6m0 6v6"/>
+                <path d="M21 12h-6m-6 0H3"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-purple-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-purple-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 leading-tight group-hover:text-gray-800">
+          Differentiate Your Property in a Competitive Market
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed">
+            Living room walls that respond to mood. Bedrooms that shift energy. Children's rooms with ambient dreamscapes. Deckoviz becomes your <strong>signature visual differentiator</strong> that competitors don't offer.
+          </p>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 3 - Lifestyle Sales */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9,22 9,12 15,12 15,22"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-blue-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 leading-tight group-hover:text-gray-800">
+          Sell a Lifestyle, Not Just Square Footage
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed">
+            Buyers want to feel something. Deckoviz helps show homes feel lived-in, warm, and dynamic. Instead of asking buyers to imagine how they'll live there… you can <strong>show them.</strong>
+          </p>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 4 - Customization for Luxury */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-emerald-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 leading-tight group-hover:text-gray-800">
+          Offer a Customization Layer for High-End Buyers
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-3">
+            Every buyer gets personalized aesthetic identity, seasonal mood changes, and room transformations with zero renovation. This level of personalization sets luxury developments apart — without added labor or materials.
+          </p>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
   </div>
 </div>
 

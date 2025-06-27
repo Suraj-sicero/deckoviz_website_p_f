@@ -308,7 +308,7 @@ const DeckovizOfficesLanding = () => {
             </div>
           </div>
 
-          {/* Cards Section with Background Gradient */}
+      {/* Cards Section with Background Gradient */}
           <div className="relative">
             {/* Subtle, wide-radius circular glow near card area */}
             <div
@@ -320,90 +320,222 @@ const DeckovizOfficesLanding = () => {
               }}
             />
 
-            {/* Feature Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-              {/* Card 1 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Set the Right Emotional Tone
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        Every room has a job. Deckoviz sets the mood to match it — whether that's deep focus, vibrant creativity, team celebration, or meditative calm.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Card 2 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Enhance Culture & Internal Communication
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        Your walls can communicate your values. Deckoviz lets you.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 3 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Support Focus, Wellness, and Mental Flow
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        The modern workplace doesn't just need open space — they need emotional design. Deckoviz provides.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
+  {/* Feature Cards Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+    {/* Card 1 - Emotional Tone */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        {/* Icon and Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4l3 3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1l-3 3"/>
+                <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
             </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-amber-400 transition-colors duration-300" />
           </div>
+          
+          <div className="text-gray-400 group-hover:text-amber-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Set the Right Emotional Tone
+        </h3>
+
+        <div className="flex-1 space-y-4">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
+            Every room has a job. Deckoviz sets the mood to match it — whether that's deep focus, vibrant creativity, team celebration, or meditative calm.
+          </p>
+          
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Use calming visuals in quiet zones or lounges
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Use vibrant, abstract motion art in brainstorming rooms
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Use elegant, minimalist themes in executive suites
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Use motivational quotes or rituals in team areas
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 2 - Culture & Communication */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <path d="M8 10h.01"/>
+                <path d="M12 10h.01"/>
+                <path d="M16 10h.01"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-purple-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-purple-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Enhance Culture & Internal Communication
+        </h3>
+
+        <div className="flex-1 space-y-4">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
+            Your walls can communicate your values. Deckoviz lets you:
+          </p>
+          
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Display your <strong>company mission</strong>, vision, and brand principles
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Highlight <strong>team wins</strong>, birthdays, and work anniversaries
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Celebrate <strong>employee stories</strong> and internal milestones
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Reinforce a culture of <strong>creativity, excellence, and emotional intelligence</strong>
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 3 - Focus & Wellness */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-emerald-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Support Focus, Wellness, and Mental Flow
+        </h3>
+
+        <div className="flex-1 space-y-4">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
+            The modern team doesn't just need open space — they need <strong>emotional design</strong>. Deckoviz provides:
+          </p>
+          
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Focus-supporting visuals in deep work zones
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Nature-based calm in rest areas or meditation pods
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Gentle sunrise themes in the morning
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Soothing transitions in between meetings
+            </p>
+          </div>
+          <div className="flex items-start group/bullet">
+            <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+            <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+              Mental reset visuals during afternoon slumps
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+
         </div>
       </div>
 

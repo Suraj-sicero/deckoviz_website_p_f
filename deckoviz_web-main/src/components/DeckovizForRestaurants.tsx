@@ -1,4 +1,3 @@
-import React from 'react';
 
 const DeckovizRestaurantLanding = () => {
   return (
@@ -328,28 +327,17 @@ const DeckovizRestaurantLanding = () => {
       </div>
     </div>
 
-{/* Cards Section with Background Gradient */}
-<div className="relative">
-  {/* Enhanced Background Effects */}
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Primary glow */}
-    <div
-      className="absolute top-20 right-20 w-[600px] h-[600px] opacity-30"
-      style={{
-        background: "radial-gradient(circle at center, rgba(147,51,234,0.4) 0%, rgba(219,39,119,0.25) 40%, rgba(236,72,153,0.15) 70%, transparent 90%)",
-        filter: "blur(140px)",
-      }}
-    />
-    {/* Secondary glow */}
-    <div
-      className="absolute bottom-20 left-20 w-[500px] h-[500px] opacity-20"
-      style={{
-        background: "radial-gradient(circle at center, rgba(59,130,246,0.3) 0%, rgba(147,51,234,0.2) 50%, transparent 80%)",
-        filter: "blur(120px)",
-      }}
-    />
-  </div>
-
+ {/* Cards Section with Background Gradient */}
+    <div className="relative">
+      {/* Subtle, wide-radius circular glow near card area */}
+      <div
+        className="absolute bottom-24 right-16 w-[480px] h-[480px]"
+        style={{
+          background: "radial-gradient(circle at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
+          filter: "blur(120px)",
+          zIndex: 1,
+        }}
+      />
   {/* Feature Cards Grid */}
   <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
     {/* Card 1 - Emotionally Elevate */}

@@ -321,7 +321,8 @@ const DeckovizForRetail = () => {
             </div>
           </div>
 
-          {/* Cards Section with Background Gradient */}
+         
+     {/* Cards Section with Background Gradient */}
           <div className="relative">
             {/* Subtle, wide-radius circular glow near card area */}
             <div
@@ -333,93 +334,195 @@ const DeckovizForRetail = () => {
               }}
             />
 
-            {/* Feature Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mb-6">
-              {/* Card 1 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Make Your Store Visually Magnetic
+  {/* Feature Cards Grid */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+    {/* Card 1 - Visual Magnetism */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-pink-500 to-rose-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        {/* Icon and Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="7.5,8 12,5 16.5,8"/>
+                <polyline points="7.5,16 12,19 16.5,16"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-pink-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-pink-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
 
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                       Dynamic visuals spark curiosity. With Deckoviz, your store becomes an emotional magnet — drawing people in through:
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 leading-tight group-hover:text-gray-800">
+          Make Your Store Visually Magnetic
+        </h3>
 
-                      </p>
-                      <p></p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Match Your Space to the Session's Energy
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        Every healing session is different. Deckoviz helps you visually express intention:
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 3 */}
-              <div className="relative group">
-                <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-                  <div className="mb-6 flex justify-start">
-                    <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-                  </div>
-                  <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-                    Bring Depth and Beauty to Ritual and Practice
-                  </h3>
-                  <div className="flex-1">
-                    <div className="flex items-start mb-3">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                      <p className="text-indigo-600 font-medium">
-                        Deckoviz is not just functional — it's poetic. Whether you're hosting a group breathwork session, guiding a meditation class, or holding intention-setting circles, Deckoviz becomes your atmospheric co-facilitator.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex justify-end mt-6">
-                    <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div className="flex-1 space-y-3">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-3">
+            Dynamic visuals spark curiosity. With Deckoviz, your store becomes <strong>an emotional magnet</strong> that stops customers in their tracks:
+          </p>
+          
+          <div className="grid grid-cols-1 gap-2">
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full mt-2 mr-3 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Changing art installations and evolving window displays
+              </p>
+            </div>
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full mt-2 mr-3 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Unexpected visual moods and Instagram-worthy moments
+              </p>
             </div>
           </div>
+        </div>
+
+        <div className="mt-6 pt-3 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-pink-500 to-rose-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 2 - Shopping Experience */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-purple-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-purple-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 leading-tight group-hover:text-gray-800">
+          Elevate the Shopping Experience
+        </h3>
+
+        <div className="flex-1 space-y-3">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-3">
+            Deckoviz enhances your store's <strong>sensory journey</strong>, making the shopping experience <strong>memorable, emotionally resonant, and beautifully choreographed</strong>:
+          </p>
+          
+          <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mt-2 mr-2 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Atmosphere control
+              </p>
+            </div>
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mt-2 mr-2 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Brand storytelling
+              </p>
+            </div>
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mt-2 mr-2 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Seasonal alignment
+              </p>
+            </div>
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full mt-2 mr-2 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Multi-sensory experiences
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 pt-3 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 3 - Product Enhancement */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <path d="M16 10a4 4 0 0 1-8 0"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-amber-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-amber-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-lg font-semibold text-gray-900 mb-4 leading-tight group-hover:text-gray-800">
+          Make Your Products Pop
+        </h3>
+
+        <div className="flex-1 space-y-3">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-3">
+            Deckoviz isn't just about ambience — it's about <strong>merchandising magic</strong>. Reinforce value perception through elegant ambient design:
+          </p>
+          
+          <div className="grid grid-cols-1 gap-2">
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-3 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Motion visuals and backdrops for immersive product displays
+              </p>
+            </div>
+            <div className="flex items-start group/bullet">
+              <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-3 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+              <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
+                Visual alignment with materials, colors, and collections
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6 pt-3 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
         </div>
       </div>
 

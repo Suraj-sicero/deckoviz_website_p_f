@@ -308,7 +308,7 @@ const DeckovizArchitectsLanding = () => {
       </div>
     </div>
 
-    {/* Cards Section with Background Gradient */}
+  {/* Cards Section with Background Gradient */}
     <div className="relative">
       {/* Subtle, wide-radius circular glow near card area */}
       <div
@@ -320,147 +320,194 @@ const DeckovizArchitectsLanding = () => {
         }}
       />
 
-      {/* Feature Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mb-6">
-        {/* Card 1 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
+
+  {/* Top Row - 3 Cards */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 mb-6">
+    {/* Card 1 - Add Soul */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        {/* Icon and Header */}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+              </svg>
             </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Add Soul to Modern Spaces
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-amber-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-amber-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </div>
         </div>
 
-        {/* Card 2 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Dynamic Walls = Timeless Design
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Add Soul to Modern Spaces
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed">
+            Minimalism. Neutral tones. Clean lines. But where's the <strong>emotion</strong>? Deckoviz gives you a way to inject feeling, seasonality, story, and change — without clutter, over-design, or compromise.
+          </p>
         </div>
 
-        {/* Card 3 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Personalized Design at Scale
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Row - 2 Cards aligned to left */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10" style={{maxWidth: '66.666667%'}}>
-        {/* Card 4 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Smart Meets Soulful
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Card 5 */}
-        <div className="relative group">
-          <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full flex flex-col hover:bg-purple-100">
-            <div className="mb-6 flex justify-start">
-              <img src="images/bullethotel.png" alt="" className="w-12 h-8 object-contain" />
-            </div>
-            <h3 className="text-xl font-medium text-gray-900 mb-4 leading-tight">
-              Dynamic Walls = Timeless Design
-            </h3>
-            <div className="flex-1">
-              <div className="flex items-start mb-3">
-                <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                <p className="text-indigo-600 font-medium">
-                  Morning: golden hour visuals, gentle soundscapes, nature-based serenity
-                </p>
-              </div>
-            </div>
-            <div className="flex justify-end mt-6">
-              <div className="text-gray-400 hover:text-gray-600 transition-colors">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
-            </div>
-          </div>
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
         </div>
       </div>
     </div>
+
+    {/* Card 2 - Dynamic Walls */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+                <line x1="12" y1="22.08" x2="12" y2="12"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-purple-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-purple-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Dynamic Walls = Timeless Design
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed">
+            Your clients won't outgrow their spaces if the space can evolve with them. Deckoviz enables aesthetic fluidity: one room, infinite moods, memories, and styles.
+          </p>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Card 3 - Personalized Design */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-blue-500 to-cyan-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-blue-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-blue-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Personalized Design at Scale
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed">
+            Whether you're designing a single luxury residence or a commercial tower, Deckoviz allows you to offer <strong>bespoke visual identity</strong> to each room, zone, or user — powered by AI.
+          </p>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Bottom Row - 2 Cards aligned to left */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10" style={{maxWidth: '66.666667%'}}>
+    {/* Card 4 - Smart Meets Soulful */}
+    <div className="relative group cursor-pointer">
+      <div
+        className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+      />
+      
+      <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
+        
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M21 12c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1"/>
+                <path d="M3 12c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1"/>
+                <path d="M12 21c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1"/>
+                <path d="M12 3c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1"/>
+                <circle cx="12" cy="12" r="7"/>
+              </svg>
+            </div>
+            <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-emerald-400 transition-colors duration-300" />
+          </div>
+          
+          <div className="text-gray-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
+          Smart Meets Soulful
+        </h3>
+
+        <div className="flex-1">
+          <p className="text-indigo-700 font-medium text-sm leading-relaxed">
+            Unlike most "smart" displays that are cold and utilitarian, Deckoviz is <strong>art-driven</strong>, deeply aesthetic, and made to blend into high-end interiors.
+          </p>
+        </div>
+
+        <div className="mt-8 pt-4 border-t border-gray-100">
+          <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+        </div>
+      </div>
+    </div>
+
+    {/* Empty space to maintain 2/3 width alignment */}
+    <div></div>
+  </div>
+</div>
+
+
+
   </div>
 </div>
 
