@@ -362,6 +362,134 @@ const FAQ: React.FC = () => {
           </div>
         </div>
       </div>
+        {/* Join Our Community Section */}
+        <div className="relative mt-32 mb-32">
+          {/* Main content container - made wider */}
+          <div className="relative max-w-6xl mx-auto px-4">
+            {/* Large Mail Icon - positioned to overlap */}
+            <div className="flex justify-center relative z-50 mb-16">
+              <img src="/images/mailnoti.png" alt="Mail Notification" className="w-32 h-32 object-contain" />
+            </div>
+
+            {/* Purple background section with dotted texture - wider and more faint */}
+            <div
+              className="relative -mt-32 pt-20 pb-16 px-12 rounded-3xl"
+              style={{
+                background: "#faf9ff",
+                backgroundImage: "radial-gradient(circle, rgba(147,51,234,0.06) 1px, transparent 1px)",
+                backgroundSize: "20px 20px",
+              }}
+            >
+              {/* Content positioned below the icon */}
+              <div className="text-center pt-12">
+                {/* Welcome Text */}
+                <div className="mb-6">
+                  <p className="text-lg text-gray-700 leading-relaxed">Welcome to a more beautiful future.</p>
+                  <p className="text-lg text-[#6670d8] font-semibold">Welcome to Deckoviz.</p>
+                </div>
+
+                {/* Main Heading */}
+                <h2
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-8"
+                  style={{ fontFamily: "Bricolage Grotesque, sans-serif" }}
+                >
+                  Join our community
+                </h2>
+
+                {/* Description */}
+                <div className="text-gray-700 leading-relaxed mb-12 max-w-3xl mx-auto space-y-4">
+                  <p>
+                    If you believe that the spaces where we live and work should inspire us —
+                    <br />
+                    If you dream of living in environments that feel, grow, respond, and reflect
+                    <br />
+                    who you are —
+                  </p>
+                  <p>
+                    If you believe that beauty, art, and technology can and should work together
+                    <br />
+                    to make life more vivid, joyful, and meaningful —
+                  </p>
+                </div>
+
+                {/* Enhanced Email Signup Form */}
+                <div className="max-w-sm sm:max-w-md mx-auto">
+                  <div className="relative group">
+                    {/* Glow effect */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+
+                    {/* Form container */}
+                    <div className="relative bg-white rounded-2xl p-2 shadow-xl border border-gray-200">
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                        {/* Email input */}
+                        <div className="flex-1 relative">
+                          <input
+                            type="email"
+                            placeholder="Email address..."
+                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                          />
+                          {/* Subtle icon */}
+                          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                            <svg
+                              className="w-5 h-5 text-gray-400"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                              />
+                            </svg>
+                          </div>
+                        </div>
+
+                        {/* Submit button */}
+                        <button className="bg-gradient-to-r from-[#6670d8] to-purple-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
+                          <span>Submit</span>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Trust indicators */}
+                  <div className="flex items-center justify-center space-x-4 mt-4 text-sm text-gray-500">
+                    <div className="flex items-center space-x-1">
+                      <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span>No spam</span>
+                    </div>
+                    <div className="flex items-center space-x-1">
+                      <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path
+                          fillRule="evenodd"
+                          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      <span>Privacy protected</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </section>
   )
 }
