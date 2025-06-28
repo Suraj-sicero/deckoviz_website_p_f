@@ -1,159 +1,155 @@
-import React, { useState } from 'react';
-import { ChevronDown, ArrowRight, Clock, Filter, Search } from 'lucide-react';
+"use client"
+
+import type React from "react"
+import { useState } from "react"
+import { ChevronDown, ArrowRight, Clock, Search } from "lucide-react"
 
 const blogPosts = [
   {
     id: 1,
-    tag: 'Announcements',
-    tagColor: 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700',
-    title: 'Introducing New AI-Powered Art Analysis',
-    description: 'This release marks the end of traditional art analysis. Our AI workflows and nodes let anyone analyze artworks with AI writing all the insights for you.',
-    readTime: '5 min read',
-    date: 'March 16, 2025',
-    image: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop',
-    gradient: 'from-purple-400 via-pink-400 to-orange-400',
-    size: 'large'
+    tag: "Announcements",
+    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
+    title: "Introducing New AI-Powered Art Analysis",
+    description:
+      "This release marks the end of traditional art analysis. Our AI workflows and nodes let anyone analyze artworks with AI writing all the insights for you.",
+    readTime: "5 min read",
+    date: "March 16, 2025",
+    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-purple-400 via-pink-400 to-orange-400",
+    size: "large",
   },
   {
     id: 2,
-    tag: 'Guides',
-    tagColor: 'bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700',
-    title: 'Complete Guide to Digital Art Preservation',
-    description: 'Compare traditional vs digital methods to find the right preservation technique for your collection. Built for museums, galleries, and collectors.',
-    readTime: '8 min read',
-    date: 'March 15, 2025',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop',
-    gradient: 'from-blue-400 via-purple-400 to-pink-400',
-    size: 'medium'
+    tag: "Guides",
+    tagColor: "bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700",
+    title: "Complete Guide to Digital Art Preservation",
+    description:
+      "Compare traditional vs digital methods to find the right preservation technique for your collection. Built for museums, galleries, and collectors.",
+    readTime: "8 min read",
+    date: "March 15, 2025",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-blue-400 via-purple-400 to-pink-400",
+    size: "medium",
   },
   {
     id: 3,
-    tag: 'Case Studies',
-    tagColor: 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700',
-    title: 'How MoMA Revolutionized Their Archive System',
-    description: 'Discover how major museums are adopting digital workflows: a structured, technology-based approach to art curation that\'s more efficient and scalable.',
-    readTime: '6 min read',
-    date: 'March 14, 2025',
-    image: 'https://images.unsplash.com/photo-1578321272176-b7bbc0679853?q=80&w=1000&auto=format&fit=crop',
-    gradient: 'from-green-400 via-blue-400 to-purple-400',
-    size: 'medium'
+    tag: "Case Studies",
+    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
+    title: "How MoMA Revolutionized Their Archive System",
+    description:
+      "Discover how major museums are adopting digital workflows: a structured, technology-based approach to art curation that's more efficient and scalable.",
+    readTime: "6 min read",
+    date: "March 14, 2025",
+    image: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-green-400 via-blue-400 to-purple-400",
+    size: "medium",
   },
   {
     id: 4,
-    tag: 'Use Cases',
-    tagColor: 'bg-gradient-to-r from-orange-100 to-red-100 text-orange-700',
-    title: 'AI in Archaeological Discovery',
-    description: 'Beauty and atmosphere that evolves with archaeological findings through advanced AI analysis and pattern recognition.',
-    readTime: '4 min read',
-    date: 'March 13, 2025',
-    image: 'https://images.unsplash.com/photo-1682281796273-1617bd6f4f1a?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=crop',
-    gradient: 'from-orange-400 via-red-400 to-pink-400',
-    size: 'small'
+    tag: "Use Cases",
+    tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
+    title: "AI in Archaeological Discovery",
+    description:
+      "Beauty and atmosphere that evolves with archaeological findings through advanced AI analysis and pattern recognition.",
+    readTime: "4 min read",
+    date: "March 13, 2025",
+    image:
+      "https://images.unsplash.com/photo-1682281796273-1617bd6f4f1a?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=crop",
+    gradient: "from-orange-400 via-red-400 to-pink-400",
+    size: "small",
   },
   {
     id: 5,
-    tag: 'Guides',
-    tagColor: 'bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700',
-    title: 'Ancient Civilizations Through Modern Eyes',
-    description: 'A quiet moment of presence in a chaotic world, exploring how technology helps us understand our past.',
-    readTime: '7 min read',
-    date: 'March 12, 2025',
-    image: 'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=1000&auto=format&fit=crop',
-    gradient: 'from-cyan-400 via-blue-400 to-purple-400',
-    size: 'small'
+    tag: "Guides",
+    tagColor: "bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700",
+    title: "Ancient Civilizations Through Modern Eyes",
+    description:
+      "A quiet moment of presence in a chaotic world, exploring how technology helps us understand our past.",
+    readTime: "7 min read",
+    date: "March 12, 2025",
+    image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-cyan-400 via-blue-400 to-purple-400",
+    size: "small",
   },
   {
     id: 6,
-    tag: 'Announcements',
-    tagColor: 'bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700',
-    title: 'New Partnership with Getty Images',
-    description: 'Creative inspiration that grows every day through our expanded image library and AI-powered recommendations.',
-    readTime: '3 min read',
-    date: 'March 11, 2025',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop',
-    gradient: 'from-pink-400 via-purple-400 to-orange-400',
-    size: 'medium'
+    tag: "Announcements",
+    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
+    title: "New Partnership with Getty Images",
+    description:
+      "Creative inspiration that grows every day through our expanded image library and AI-powered recommendations.",
+    readTime: "3 min read",
+    date: "March 11, 2025",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-pink-400 via-purple-400 to-orange-400",
+    size: "medium",
   },
   {
     id: 7,
-    tag: 'Case Studies',
-    tagColor: 'bg-gradient-to-r from-green-100 to-emerald-100 text-green-700',
-    title: 'Digital Restoration Success Stories',
-    description: 'An ever-changing window into imagination, emotion, and art through cutting-edge restoration techniques.',
-    readTime: '9 min read',
-    date: 'March 10, 2025',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop',
-    gradient: 'from-emerald-400 via-green-400 to-blue-400',
-    size: 'large'
+    tag: "Case Studies",
+    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
+    title: "Digital Restoration Success Stories",
+    description:
+      "An ever-changing window into imagination, emotion, and art through cutting-edge restoration techniques.",
+    readTime: "9 min read",
+    date: "March 10, 2025",
+    image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-emerald-400 via-green-400 to-blue-400",
+    size: "large",
   },
   {
     id: 8,
-    tag: 'Use Cases',
-    tagColor: 'bg-gradient-to-r from-orange-100 to-red-100 text-orange-700',
-    title: 'Virtual Museum Experiences',
-    description: 'A sense of connection to their memories, their loved ones, and themselves through immersive digital experiences.',
-    readTime: '5 min read',
-    date: 'March 9, 2025',
-    image: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop',
-    gradient: 'from-red-400 via-orange-400 to-yellow-400',
-    size: 'medium'
-  }
-];
+    tag: "Use Cases",
+    tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
+    title: "Virtual Museum Experiences",
+    description:
+      "A sense of connection to their memories, their loved ones, and themselves through immersive digital experiences.",
+    readTime: "5 min read",
+    date: "March 9, 2025",
+    image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-red-400 via-orange-400 to-yellow-400",
+    size: "medium",
+  },
+]
 
-const tags = ['View all', 'Announcements', 'Guides', 'Use cases', 'Case studies'];
+const tags = ["View all", "Announcements", "Guides", "Use Cases", "Case Studies"]
 
 const Blog: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [activeTag, setActiveTag] = useState('View all');
-  const [showAllHero, setShowAllHero] = useState(false);
-  const [expandedSections, setExpandedSections] = useState<{[key: string]: boolean}>({
-    announcements: false,
-    guides: false,
-    usecases: false,
-    casestudies: false
-  });
+  const [email, setEmail] = useState("")
+  const [activeTag, setActiveTag] = useState("View all")
+  const [showAllHero, setShowAllHero] = useState(false)
 
-  const filteredPosts = activeTag === 'View all' 
-    ? blogPosts 
-    : blogPosts.filter(post => post.tag === activeTag);
+  // Fixed filter logic
+  const filteredPosts = activeTag === "View all" ? blogPosts : blogPosts.filter((post) => post.tag === activeTag)
 
-  const heroPostsToShow = showAllHero ? blogPosts.slice(0, 8) : blogPosts.slice(0, 5);
+  const heroPostsToShow = showAllHero ? blogPosts.slice(0, 8) : blogPosts.slice(0, 5)
 
-  const getPostsByTag = (tag: string) => {
-    return blogPosts.filter(post => post.tag === tag);
-  };
+  const BlogCard = ({ post }: { post: (typeof blogPosts)[0] }) => {
+    const isLarge = post.size === "large"
+    const isMedium = post.size === "medium"
 
-  const toggleSection = (section: string) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [section]: !prev[section]
-    }));
-  };
-
-  const BlogCard = ({ post, index }: { post: typeof blogPosts[0], index: number }) => {
-    const isLarge = post.size === 'large';
-    const isMedium = post.size === 'medium';
-    
     return (
-      <div 
+      <div
         className={`group relative overflow-hidden rounded-3xl transition-all duration-700 hover:scale-[1.02] hover:shadow-2xl cursor-pointer ${
-          isLarge ? 'md:col-span-2 md:row-span-2' : 
-          isMedium ? 'md:col-span-1 md:row-span-2' : 
-          'md:col-span-1 md:row-span-1'
+          isLarge
+            ? "md:col-span-2 md:row-span-2"
+            : isMedium
+              ? "md:col-span-1 md:row-span-2"
+              : "md:col-span-1 md:row-span-1"
         }`}
         style={{
-          background: `linear-gradient(135deg, rgba(147, 51, 234, 0.9), rgba(219, 39, 119, 0.8), rgba(251, 146, 60, 0.7))`
+          background: `linear-gradient(135deg, rgba(147, 51, 234, 0.9), rgba(219, 39, 119, 0.8), rgba(251, 146, 60, 0.7))`,
         }}
       >
         {/* Background Image with Overlay */}
         <div className="absolute inset-0">
-          <img 
-            src={post.image} 
+          <img
+            src={post.image || "/placeholder.svg"}
             alt={post.title}
             className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-90 group-hover:opacity-70 transition-opacity duration-700" />
-          
+
           {/* Animated gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse" />
         </div>
@@ -165,20 +161,24 @@ const Blog: React.FC = () => {
           </div>
         </div>
 
-          {/* Content */}
+        {/* Content */}
         <div className="relative z-10 p-6 h-full flex flex-col justify-end">
           {/* Tag with glassmorphism */}
           <div className="mb-4">
-            <span className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-lg ${post.tagColor} border border-white/30 shadow-xl`}>
+            <span
+              className={`px-4 py-2 rounded-full text-xs font-bold backdrop-blur-lg ${post.tagColor} border border-white/30 shadow-xl`}
+            >
               {post.tag}
             </span>
           </div>
 
           {/* Title with 3D text effect */}
-          <h3 className="text-xl md:text-2xl font-bold text-white mb-4 transition-all duration-500 group-hover:transform group-hover:translate-y-[-4px]"
-          style={{
-            textShadow: '0 4px 8px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.2)'
-          }}>
+          <h3
+            className="text-xl md:text-2xl font-bold text-white mb-4 transition-all duration-500 group-hover:transform group-hover:translate-y-[-4px]"
+            style={{
+              textShadow: "0 4px 8px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.2)",
+            }}
+          >
             {post.title}
           </h3>
 
@@ -197,7 +197,7 @@ const Blog: React.FC = () => {
               <div className="w-1 h-1 bg-white/60 rounded-full"></div>
               <span className="text-sm">{post.date}</span>
             </div>
-            
+
             <div className="flex items-center text-white bg-white/20 backdrop-blur-lg px-4 py-2 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 group-hover:translate-x-2 shadow-lg">
               <span className="text-sm font-medium mr-2">Read more</span>
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -206,67 +206,288 @@ const Blog: React.FC = () => {
         </div>
 
         {/* Hover glow effect */}
-        <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" 
-             style={{
-               background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(219, 39, 119, 0.2), rgba(251, 146, 60, 0.1))',
-               filter: 'blur(20px)',
-             }}>
-        </div>
+        <div
+          className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(219, 39, 119, 0.2), rgba(251, 146, 60, 0.1))",
+            filter: "blur(20px)",
+          }}
+        ></div>
       </div>
-    );
-  };
+    )
+  }
 
-  const SectionGrid = ({ title, posts, sectionKey }: { title: string, posts: typeof blogPosts, sectionKey: string }) => {
-    const isExpanded = expandedSections[sectionKey];
-    const postsToShow = isExpanded ? posts : posts.slice(0, 3);
+  // Reorder posts for better layout balance
+  const getReorderedPosts = () => {
+    const reorderedPosts = [...blogPosts]
+    // Move Digital Restoration (id: 7) before New Partnership (id: 6)
+    const digitalRestoration = reorderedPosts.find((post) => post.id === 7)
+    const newPartnership = reorderedPosts.find((post) => post.id === 6)
+    const virtualMuseum = reorderedPosts.find((post) => post.id === 8)
 
-    return (
-      <div className="mb-16">
-        <div className="flex items-center justify-between mb-8">
-          <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
-            {title}
-          </h3>
-          {posts.length > 3 && (
-            <button
-              onClick={() => toggleSection(sectionKey)}
-              className="flex items-center px-6 py-3 text-purple-600 hover:text-purple-700 transition-all duration-300 hover:scale-105 group"
-            >
-              <span className="mr-2 font-medium">
-                {isExpanded ? 'Show less' : `View all ${posts.length}`}
-              </span>
-              <ChevronDown className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${isExpanded ? 'rotate-180' : ''}`} />
-            </button>
+    if (digitalRestoration && newPartnership && virtualMuseum) {
+      // Remove these posts from their current positions
+      const filtered = reorderedPosts.filter((post) => ![6, 7, 8].includes(post.id))
+      // Insert them in the desired order
+      filtered.splice(5, 0, digitalRestoration, newPartnership, virtualMuseum)
+      return filtered
+    }
+    return reorderedPosts
+  }
+
+  return (
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Light Background with Subtle Gradients */}
+      <div className="absolute inset-0">
+        {/* Pure white base */}
+        <div className="absolute inset-0 bg-white"></div>
+
+        {/* Light gradient overlays */}
+        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-purple-100/40 via-pink-50/30 to-transparent blur-3xl"></div>
+        <div className="absolute top-1/4 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-pink-100/40 via-orange-50/30 to-transparent blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-100/40 via-purple-50/30 to-transparent blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/4 h-1/4 bg-gradient-to-r from-pink-100/30 via-purple-100/30 to-orange-100/30 blur-2xl rounded-full"></div>
+
+        {/* Very subtle dot pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-20">
+        {/* Enhanced Header */}
+        <div className="flex flex-col items-center mb-16">
+          {/* Badge with About Us style */}
+          <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
+            <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
+              Blog Sections
+            </div>
+          </div>
+
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black leading-tight">
+            Blog And Articles
+          </h1>
+          <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
+            Discover <span className="text-purple-600 font-semibold">insights</span>,{" "}
+            <span className="text-pink-600 font-semibold">guides</span>, and{" "}
+            <span className="text-orange-600 font-semibold">stories</span> that inspire{" "}
+            <span className="text-blue-600 font-semibold">creativity</span> and{" "}
+            <span className="text-purple-600 font-semibold">innovation</span> in art and{" "}
+            <span className="text-indigo-600 font-semibold">technology</span>.
+          </p>
+        </div>
+
+        {/* Enhanced Hero Section - 2x3 Grid Layout */}
+        <div className="mb-20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {heroPostsToShow.map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+
+          {/* Enhanced Show More Button */}
+          {!showAllHero && blogPosts.length > 5 && (
+            <div className="flex justify-center mt-12">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full opacity-30 blur-sm group-hover:opacity-50 transition-opacity duration-300"></div>
+                <button
+                  onClick={() => setShowAllHero(true)}
+                  className="relative flex items-center px-8 py-4 bg-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 border border-purple-200 hover:border-purple-300 group"
+                >
+                  <span className="mr-3 font-bold text-gray-700 group-hover:text-purple-600 transition-colors duration-300">
+                    Show more articles
+                  </span>
+                  <ChevronDown className="w-6 h-6 text-gray-700 group-hover:text-purple-600 transition-all duration-300 group-hover:translate-y-1 group-hover:scale-110" />
+                </button>
+              </div>
+            </div>
           )}
         </div>
 
+        {/* Hide Articles Button - Moved above category filter */}
+        {showAllHero && (
+          <div className="flex justify-center mb-8">
+            <button
+              onClick={() => setShowAllHero(false)}
+              className="flex items-center px-8 py-3 bg-white text-gray-700 rounded-full transition-all duration-300 hover:scale-105 group border border-gray-200 shadow-md hover:shadow-lg"
+            >
+              <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180" />
+              <span className="font-medium">Hide articles</span>
+            </button>
+          </div>
+        )}
+
+        {/* Revolutionary Card-Based Category Filter System */}
+        <div className="mb-16">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+              Explore by Category
+            </h2>
+
+            {/* Interactive Category Cards Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {tags.map((tag) => {
+                const categoryPosts = tag === "View all" ? blogPosts : blogPosts.filter((post) => post.tag === tag)
+                const previewPost = categoryPosts[0]
+                const isActive = activeTag === tag
+
+                return (
+                  <div
+                    key={tag}
+                    onClick={() => setActiveTag(tag)}
+                    className={`group relative cursor-pointer transition-all duration-500 ${
+                      isActive ? "md:col-span-2 lg:col-span-2 scale-105 z-10" : "hover:scale-105 hover:z-20"
+                    }`}
+                  >
+                    {/* Main Card */}
+                    <div
+                      className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
+                        isActive
+                          ? "bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 p-1 shadow-2xl"
+                          : "bg-white shadow-lg hover:shadow-xl"
+                      }`}
+                    >
+                      {/* Inner Content */}
+                      <div className={`relative overflow-hidden rounded-xl ${isActive ? "bg-white" : ""}`}>
+                        {/* Background Image */}
+                        {previewPost && (
+                          <div
+                            className={`relative overflow-hidden transition-all duration-500 ${
+                              isActive ? "h-32" : "h-24"
+                            }`}
+                          >
+                            <img
+                              src={previewPost.image || "/placeholder.svg"}
+                              alt={tag}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                            <div
+                              className={`absolute inset-0 transition-all duration-500 ${
+                                isActive
+                                  ? "bg-gradient-to-t from-black/60 via-black/20 to-transparent"
+                                  : "bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+                              }`}
+                            />
+                          </div>
+                        )}
+
+                        {/* Content Overlay */}
+                        <div className={`absolute inset-0 flex flex-col justify-end p-4 transition-all duration-500`}>
+                          {/* Category Title */}
+                          <div className="mb-2">
+                            <h3
+                              className={`font-bold transition-all duration-300 ${
+                                isActive ? "text-white text-lg" : "text-white text-sm group-hover:text-base"
+                              }`}
+                            >
+                              {tag}
+                            </h3>
+
+                            {/* Post Count Badge */}
+                            <div
+                              className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium transition-all duration-300 ${
+                                isActive
+                                  ? "bg-white/20 text-white backdrop-blur-sm"
+                                  : "bg-white/30 text-white/90 backdrop-blur-sm"
+                              }`}
+                            >
+                              {categoryPosts.length} {categoryPosts.length === 1 ? "post" : "posts"}
+                            </div>
+                          </div>
+
+                          {/* Active State: Show Preview Info */}
+                          {isActive && previewPost && (
+                            <div className="mt-2 opacity-0 animate-fadeIn">
+                              <p className="text-white/90 text-xs line-clamp-2 mb-2">{previewPost.title}</p>
+                              <div className="flex items-center text-white/80 text-xs">
+                                <Clock className="w-3 h-3 mr-1" />
+                                <span>{previewPost.readTime}</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Active State Indicator */}
+                        {isActive && (
+                          <div className="absolute top-3 right-3">
+                            <div className="w-3 h-3 bg-white rounded-full animate-pulse shadow-lg" />
+                          </div>
+                        )}
+
+                        {/* Hover Effect for Non-Active Cards */}
+                        {!isActive && (
+                          <div className="absolute inset-0 bg-gradient-to-t from-purple-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Active Card: Extended Preview */}
+                    {isActive && categoryPosts.length > 1 && (
+                      <div className="absolute -bottom-2 left-2 right-2 bg-white rounded-lg shadow-lg p-3 opacity-0 animate-slideUp">
+                        <div className="flex items-center justify-between text-xs text-gray-600">
+                          <span>Latest: {categoryPosts[1]?.title.substring(0, 30)}...</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Active Category Info Bar */}
+            {activeTag !== "View all" && (
+              <div className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 mb-1">Viewing: {activeTag}</h3>
+                    <p className="text-gray-600 text-sm">{filteredPosts.length} articles in this category</p>
+                  </div>
+                  <button
+                    onClick={() => setActiveTag("View all")}
+                    className="flex items-center px-4 py-2 bg-white text-gray-700 rounded-full hover:bg-gray-50 transition-all duration-300 shadow-sm hover:shadow-md group"
+                  >
+                    <span className="text-sm font-medium mr-2">View All</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Filtered Content with improved layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {postsToShow.map((post, index) => (
+          {(activeTag === "View all" ? getReorderedPosts() : filteredPosts).map((post) => (
             <div
               key={post.id}
               className="group relative overflow-hidden rounded-3xl bg-white shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:-rotate-1"
             >
-              {/* Image section with parallax effect */}
               <div className="h-56 overflow-hidden relative">
-                <img 
-                  src={post.image} 
+                <img
+                  src={post.image || "/placeholder.svg"}
                   alt={post.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                
-                {/* Floating tag */}
+
                 <div className="absolute top-4 left-4 transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md ${post.tagColor} border border-white/30`}>
+                  <span
+                    className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md ${post.tagColor} border border-white/30`}
+                  >
                     {post.tag}
                   </span>
                 </div>
               </div>
 
-              {/* Content section */}
               <div className="p-6 relative">
-                {/* Gradient background effect */}
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-orange-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-3xl"></div>
-                
+
                 <div className="relative z-10">
                   <h4 className="font-bold text-gray-900 mb-3 text-xl group-hover:text-purple-600 transition-colors duration-300 leading-tight">
                     {post.title}
@@ -274,7 +495,7 @@ const Blog: React.FC = () => {
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
                     {post.description}
                   </p>
-                  
+
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3 text-gray-500">
                       <Clock className="w-4 h-4" />
@@ -290,223 +511,10 @@ const Blog: React.FC = () => {
                 </div>
               </div>
 
-              {/* Hover glow effect */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm -z-10"></div>
             </div>
           ))}
         </div>
-      </div>
-    );
-  };
-
-  return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50"></div>
-        
-        {/* Animated gradient layers */}
-        <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/10 via-purple-400/5 to-transparent blur-[40px] animate-[floatLeft_8s_ease-in-out_infinite]"></div>
-        <div className="absolute top-1/4 right-0 w-1/3 h-1/2 bg-gradient-to-l from-pink-500/10 via-orange-400/5 to-transparent blur-[50px] animate-[floatRight_10s_ease-in-out_infinite]"></div>
-        <div className="absolute bottom-0 left-1/4 w-1/2 h-1/3 bg-gradient-to-t from-purple-400/8 via-pink-300/4 to-transparent blur-[60px] animate-[floatBottom_12s_ease-in-out_infinite]"></div>
-        
-        {/* Dot pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
-            backgroundSize: "30px 30px",
-          }}
-        />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-20">
-        {/* Enhanced Header */}
-        <div className="flex flex-col items-center mb-16">
-          {/* Badge with About Us style */}
-          <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
-            <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
-              Blog Sections
-            </div>
-          </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black leading-tight">
-            Blog And Articles
-          </h1>
-          <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
-            Discover <span className="text-purple-600 font-semibold">insights</span>, <span className="text-pink-600 font-semibold">guides</span>, and <span className="text-orange-600 font-semibold">stories</span> that inspire <span className="text-blue-600 font-semibold">creativity</span> and <span className="text-purple-600 font-semibold">innovation</span> in art and <span className="text-indigo-600 font-semibold">technology</span>.
-          </p>
-        </div>
-
-        {/* Enhanced Hero Section - 2x3 Grid Layout */}
-        <div className="mb-20">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {heroPostsToShow.map((post, index) => (
-              <BlogCard key={post.id} post={post} index={index} />
-            ))}
-          </div>
-
-          {/* Enhanced Show More Button */}
-          {!showAllHero && blogPosts.length > 5 && (
-            <div className="flex justify-center mt-12">
-              <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full opacity-30 blur-sm group-hover:opacity-50 transition-opacity duration-300"></div>
-                <button
-                  onClick={() => setShowAllHero(true)}
-                  className="relative flex items-center px-8 py-4 bg-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 border border-purple-200 hover:border-purple-300 group"
-                >
-                  <span className="mr-3 font-bold text-gray-700 group-hover:text-purple-600 transition-colors duration-300">Show more articles</span>
-                  <ChevronDown className="w-6 h-6 text-gray-700 group-hover:text-purple-600 transition-all duration-300 group-hover:translate-y-1 group-hover:scale-110" />
-                </button>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Modern Tab-style Category Filter */}
-        <div className="mb-16">
-          <div className="bg-white rounded-2xl shadow-lg p-2 max-w-4xl mx-auto border border-gray-100">
-            <div className="flex flex-wrap justify-center gap-1">
-              {tags.map((tag) => (
-                <button
-                  key={tag}
-                  onClick={() => setActiveTag(tag)}
-                  className={`px-6 py-3 text-sm font-medium transition-all duration-300 rounded-xl relative overflow-hidden ${
-                    activeTag === tag
-                      ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg transform scale-105'
-                      : 'text-gray-600 hover:text-gray-800 hover:bg-gray-50'
-                  }`}
-                >
-                  <span className="relative z-10">{tag}</span>
-                  {activeTag === tag && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-90" />
-                  )}
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          {/* Hide Articles Button - Only show when hero is expanded */}
-          {showAllHero && (
-            <div className="flex justify-center mt-8">
-              <button
-                onClick={() => setShowAllHero(false)}
-                className="flex items-center px-8 py-3 bg-white text-gray-700 rounded-full transition-all duration-300 hover:scale-105 group border border-gray-200 shadow-md hover:shadow-lg"
-              >
-                <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180" />
-                <span className="font-medium">Hide articles</span>
-              </button>
-            </div>
-          )}
-        </div>
-
-        {/* Filtered Content */}
-        {activeTag === 'View all' ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
-              <div
-                key={post.id}
-                className="group relative overflow-hidden rounded-3xl bg-white shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:-rotate-1"
-              >
-                <div className="h-56 overflow-hidden relative">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  <div className="absolute top-4 left-4 transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md ${post.tagColor} border border-white/30`}>
-                      {post.tag}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-orange-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-3xl"></div>
-                  
-                  <div className="relative z-10">
-                    <h4 className="font-bold text-gray-900 mb-3 text-xl group-hover:text-purple-600 transition-colors duration-300 leading-tight">
-                      {post.title}
-                    </h4>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                      {post.description}
-                    </p>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3 text-gray-500">
-                        <Clock className="w-4 h-4" />
-                        <span className="text-sm font-medium">{post.readTime}</span>
-                        <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                        <span className="text-xs">{post.date}</span>
-                      </div>
-                      <button className="flex items-center text-purple-600 hover:text-purple-700 transition-all duration-300 group-hover:translate-x-2">
-                        <span className="text-sm font-medium mr-2">Read more</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm -z-10"></div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {filteredPosts.map((post) => (
-              <div
-                key={post.id}
-                className="group relative overflow-hidden rounded-3xl bg-white shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:-rotate-1"
-              >
-                <div className="h-56 overflow-hidden relative">
-                  <img 
-                    src={post.image} 
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  <div className="absolute top-4 left-4 transform -translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md ${post.tagColor} border border-white/30`}>
-                      {post.tag}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="p-6 relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-orange-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-3xl"></div>
-                  
-                  <div className="relative z-10">
-                    <h4 className="font-bold text-gray-900 mb-3 text-xl group-hover:text-purple-600 transition-colors duration-300 leading-tight">
-                      {post.title}
-                    </h4>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">
-                      {post.description}
-                    </p>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3 text-gray-500">
-                        <Clock className="w-4 h-4" />
-                        <span className="text-sm font-medium">{post.readTime}</span>
-                        <div className="w-1 h-1 bg-gray-400 rounded-full"></div>
-                        <span className="text-xs">{post.date}</span>
-                      </div>
-                      <button className="flex items-center text-purple-600 hover:text-purple-700 transition-all duration-300 group-hover:translate-x-2">
-                        <span className="text-sm font-medium mr-2">Read more</span>
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm -z-10"></div>
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* Enhanced Newsletter Section */}
         <div className="mt-24 relative overflow-hidden rounded-3xl">
@@ -514,21 +522,20 @@ const Blog: React.FC = () => {
           <div className="absolute inset-0">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-100 via-pink-50 to-orange-50"></div>
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent"></div>
-            
+
             {/* Subtle floating elements */}
             <div className="absolute top-8 left-8 w-12 h-12 bg-purple-200/30 rounded-full blur-xl"></div>
             <div className="absolute bottom-8 right-8 w-16 h-16 bg-pink-200/30 rounded-full blur-xl"></div>
             <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-orange-200/30 rounded-full blur-xl"></div>
           </div>
-          
+
           <div className="relative z-10 p-12 md:p-16 text-center">
-            <h3 className="text-4xl font-bold mb-6 text-gray-900">
-              Stay Updated with the Future
-            </h3>
+            <h3 className="text-4xl font-bold mb-6 text-gray-900">Stay Updated with the Future</h3>
             <p className="text-gray-700 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
-              Get the latest insights on art, technology, and digital preservation delivered to your inbox with exclusive content and early access to new features.
+              Get the latest insights on art, technology, and digital preservation delivered to your inbox with
+              exclusive content and early access to new features.
             </p>
-            
+
             <div className="flex flex-col md:flex-row gap-6 max-w-lg mx-auto">
               <div className="relative flex-1">
                 <input
@@ -548,13 +555,17 @@ const Blog: React.FC = () => {
                 Subscribe Now
               </button>
             </div>
-            
+
             {/* Trust indicators */}
             <div className="flex items-center justify-center space-x-8 mt-8 text-gray-600">
               <div className="flex items-center space-x-2">
                 <div className="w-5 h-5 bg-green-400 rounded-full flex items-center justify-center">
                   <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <path
+                      fillRule="evenodd"
+                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </div>
                 <span className="text-sm font-medium">No spam, ever</span>
@@ -562,7 +573,11 @@ const Blog: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <div className="w-5 h-5 bg-blue-400 rounded-full flex items-center justify-center">
                   <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+                    <path
+                      fillRule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                 </div>
                 <span className="text-sm font-medium">Privacy protected</span>
@@ -579,10 +594,8 @@ const Blog: React.FC = () => {
           </div>
         </div>
       </div>
-
-    
     </div>
-  );
-};
+  )
+}
 
-export default Blog;
+export default Blog
