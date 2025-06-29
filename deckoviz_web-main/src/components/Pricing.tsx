@@ -193,7 +193,7 @@ export default function Pricing() {
         href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
         rel="stylesheet"
       />
-      <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-white relative overflow-hidden">
+      <section id="pricing" className="py-12 sm:py-16 lg:py-16 bg-white relative overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />

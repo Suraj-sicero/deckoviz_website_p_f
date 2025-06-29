@@ -129,7 +129,7 @@ const FAQ: React.FC = () => {
   const activeIndex2 = categories.findIndex((cat) => cat.name === activeCategory)
 
   return (
-    <section id="faq" className="relative py-20 bg-white overflow-hidden">
+    <section id="faq" className="relative py-14 bg-white overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 w-full h-full">
         <div
@@ -146,13 +146,13 @@ const FAQ: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+          <h2 className="text-4xl md:text-4xl font-bold mb-6 text-gray-900 leading-tight">
             Questions?{" "}
             <span className="bg-gradient-to-r from-[#7d39ec] via-[#6366f1] to-[#ec4899] bg-clip-text text-transparent">
-              We've got answers
+              We've got answers.
             </span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
             Everything you need to know about <span className="text-purple-600 font-semibold">Deckoviz</span> and how it
             can <span className="text-indigo-600 font-semibold">revolutionize your space</span> with{" "}
             <span className="text-fuchsia-500 font-semibold">AI-powered art</span>.

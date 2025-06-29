@@ -136,12 +136,12 @@ const DeckovizSetup: React.FC = () => {
           <h1 className="text-4xl md:text-5xl lg:text-4xl font-bold mb-6 text-slate-900 leading-tight">
             How to Set Up{" "}
             <span className="bg-gradient-to-r from-indigo-500 via-fuchsia-600 to-purple-600 bg-clip-text text-transparent">
-              Deckoviz
+              Deckoviz?
             </span>
           </h1>
 
-          <p className="text-lg text-slate-600 leading-relaxed max-w-3xl mx-auto">
-            Transform your space in minutes with our simple setup process.
+          <p className="text-lg font-medium text-slate-600 leading-relaxed max-w-3xl mx-auto">
+            Transform your space <span className="bg-gradient-to-r from-pink-500 via-fuchsia-600 to-orange-600 bg-clip-text text-transparent">in minutes</span> with our simple setup process.
           </p>
         </div>
 
