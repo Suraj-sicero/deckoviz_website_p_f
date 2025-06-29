@@ -1,40 +1,25 @@
 "use client"
 
-import type React from "react"
+import { useState, ReactNode } from "react"
+import { Check, Sparkles, Gift, Star, Zap } from "lucide-react"
 
-import { useState } from "react"
-import { Check, X, Sparkles } from "lucide-react"
-
-interface PricingPlan {
-  name: string
-  price: number
-  description: string
-  features: string[]
-  isPopular?: boolean
-  buttonText: string
+// Custom Button component
+interface ButtonProps {
+  children: ReactNode;
+  className?: string;
+  variant?: "default" | "outline" | "ghost";
+  onClick?: () => void;
+  [key: string]: any;
 }
 
-// Custom Button component to avoid import issues
-const CustomButton = ({
-  children,
-  className = "",
-  variant = "default",
-  onClick,
-  ...props
-}: {
-  children: React.ReactNode
-  className?: string
-  variant?: "default" | "outline"
-  onClick?: () => void
-  [key: string]: any
-}) => {
+const Button = ({ children, className = "", variant = "default", onClick, ...props }: ButtonProps) => {
   const baseClasses =
-    "inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2"
+    "inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 px-6 py-3"
   const variantClasses = {
     default: "bg-gray-900 hover:bg-gray-800 text-white focus:ring-gray-500",
     outline: "border-2 border-gray-300 bg-white hover:bg-gray-50 text-gray-900 focus:ring-gray-500",
+    ghost: "bg-transparent hover:bg-gray-100 text-gray-900",
   }
-
   return (
     <button className={`${baseClasses} ${variantClasses[variant]} ${className}`} onClick={onClick} {...props}>
       {children}
@@ -42,84 +27,151 @@ const CustomButton = ({
   )
 }
 
-const Pricing = () => {
+// Custom Card components
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+  [key: string]: any;
+}
+
+const Card = ({ children, className = "", ...props }: CardProps) => (
+  <div className={`rounded-2xl border bg-white shadow-lg ${className}`} {...props}>
+    {children}
+  </div>
+)
+
+const CardHeader = ({ children, className = "", ...props }: CardProps) => (
+  <div className={`p-6 ${className}`} {...props}>
+    {children}
+  </div>
+)
+
+const CardTitle = ({ children, className = "", ...props }: CardProps) => (
+  <h3 className={`text-2xl font-bold ${className}`} {...props}>
+    {children}
+  </h3>
+)
+
+const CardDescription = ({ children, className = "", ...props }: CardProps) => (
+  <p className={`text-gray-600 ${className}`} {...props}>
+    {children}
+  </p>
+)
+
+const CardContent = ({ children, className = "", ...props }: CardProps) => (
+  <div className={`p-6 pt-0 ${className}`} {...props}>
+    {children}
+  </div>
+)
+
+const CardFooter = ({ children, className = "", ...props }: CardProps) => (
+  <div className={`p-6 pt-0 ${className}`} {...props}>
+    {children}
+  </div>
+)
+
+// Custom Badge component
+const Badge = ({ children, className = "", ...props }: CardProps) => (
+  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${className}`} {...props}>
+    {children}
+  </span>
+)
+
+interface PricingPlan {
+  name: string
+  price: number
+  originalPrice?: number
+  gbpPrice?: number
+  description: string
+  features: string[]
+  isPopular?: boolean
+  buttonText: string
+}
+
+const pricingTiers: PricingPlan[] = [
+  {
+    name: "Starter",
+    price: 699,
+    originalPrice: 749,
+    gbpPrice: 499,
+    description: "Your gateway to a smarter, more beautiful world.",
+    features: [
+      "43-inch HD Smart Display",
+      "Basic AI features for smart curation",
+      "Advanced AI learning and personalization",
+      "Unlimited and expanding art library",
+      "Wi-Fi connectivity",
+      "6 months of Advanced Subscription included",
+      "Perfect for your first immersive art experience",
+      "Ideal for bedrooms, cozy living rooms, and home offices",
+    ],
+    buttonText: "Buy Now",
+  },
+  {
+    name: "Premium",
+    price: 949,
+    originalPrice: 999,
+    gbpPrice: 699,
+    description: "Our most loved choice for art, personalization, and storytelling.",
+    features: [
+      "55-inch Full HD Smart Display",
+      "Advanced AI features with dynamic learning",
+      "Expanded storage and customization features",
+      "Unlimited and expanding art library",
+      "Wi-Fi + Bluetooth connectivity",
+      "Motion and light sensors",
+      "Get 3 frame options, including 1 fully customized frame",
+      "12 months of Advanced Subscription or 6 months of Elite Subscription included",
+      "Ideal for living rooms, creative spaces, offices, cafes, and more",
+    ],
+    isPopular: true,
+    buttonText: "Buy Now",
+  },
+  {
+    name: "Professional",
+    price: 1199,
+    originalPrice: 1299,
+    gbpPrice: 899,
+    description: "The ultimate Deckoviz experience — breathtaking, personal, extraordinary.",
+    features: [
+      "55-inch 4K UHD Premium Display",
+      "Superior visual quality with advanced color calibration",
+      "Premium finish options and custom frame designs",
+      "Advanced AI learning, recommendations, curation, and personalization",
+      "Priority access to new releases and special collections",
+      "Unlimited and expanding art library",
+      "Much greater storage for your creations, memories, and curated collections",
+      "Wi-Fi + Bluetooth + motion and light sensors",
+      "Get 6 frame options, including 1 fully customized frame",
+      "24 months of Advanced or 12 months of Elite Subscription included",
+      "Marketplace discounts for art, collections, and commissions",
+      "Branded content options for businesses and spaces",
+    ],
+    buttonText: "Buy Now",
+  },
+  {
+    name: "Enterprise",
+    price: 0,
+    description: "Custom solutions crafted for businesses, galleries, and larger spaces.",
+    features: [
+      "Multiple frame network management",
+      "Branded content creation and display",
+      "API integration capabilities",
+      "Dedicated account manager",
+      "Custom sizing options",
+      "Bulk order discounts",
+      "Smart art and ambience solutions tailored for your brand and space",
+      "Priority technical support and training",
+      "Custom integration and deployment services",
+      "Advanced analytics and reporting dashboard",
+    ],
+    buttonText: "Contact Sales",
+  },
+]
+
+export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<PricingPlan | null>(null)
   const [showModal, setShowModal] = useState(false)
-
-  const pricingTiers: PricingPlan[] = [
-    {
-      name: "Starter",
-      price: 699,
-      description: "Your gateway to a smarter, more beautiful world.",
-      features: [
-        "43-inch HD Smart Display",
-        "Basic AI features for smart curation",
-        "Advanced AI learning and personalization",
-        "Unlimited and expanding art library",
-        "Wi-Fi connectivity",
-        "6 months of Advanced Subscription included",
-        "Perfect for your first immersive art experience",
-        "Ideal for bedrooms, cozy living rooms, and home offices",
-      ],
-      buttonText: "Buy Now",
-    },
-    {
-      name: "Premium",
-      price: 949,
-      description: "Our most loved choice for art, personalization, and storytelling.",
-      features: [
-        "55-inch Full HD Smart Display",
-        "Advanced AI features with dynamic learning",
-        "Expanded storage and customization features",
-        "Unlimited and expanding art library",
-        "Wi-Fi + Bluetooth connectivity",
-        "Motion and light sensors",
-        "Get 3 frame options, including 1 fully customized frame",
-        "12 months of Advanced Subscription or 6 months of Elite Subscription included",
-        "Ideal for living rooms, creative spaces, offices, cafes, and more",
-      ],
-      isPopular: true,
-      buttonText: "Buy Now",
-    },
-    {
-      name: "Professional",
-      price: 1199,
-      description: "The ultimate Deckoviz experience — breathtaking, personal, extraordinary.",
-      features: [
-        "55-inch 4K UHD Premium Display",
-        "Superior visual quality with advanced color calibration",
-        "Premium finish options and custom frame designs",
-        "Advanced AI learning, recommendations, curation, and personalization",
-        "Priority access to new releases and special collections",
-        "Unlimited and expanding art library",
-        "Much greater storage for your creations, memories, and curated collections",
-        "Wi-Fi + Bluetooth + motion and light sensors",
-        "Get 6 frame options, including 1 fully customized frame",
-        "24 months of Advanced or 12 months of Elite Subscription included",
-        "Marketplace discounts for art, collections, and commissions",
-        "Branded content options for businesses and spaces",
-      ],
-      buttonText: "Buy Now",
-    },
-    {
-      name: "Enterprise",
-      price: 0,
-      description: "Custom solutions crafted for businesses, galleries, and larger spaces.",
-      features: [
-        "Multiple frame network management",
-        "Branded content creation and display",
-        "API integration capabilities",
-        "Dedicated account manager",
-        "Custom sizing options",
-        "Bulk order discounts",
-        "Smart art and ambience solutions tailored for your brand and space",
-        "Priority technical support and training",
-        "Custom integration and deployment services",
-        "Advanced analytics and reporting dashboard",
-      ],
-      buttonText: "Contact Sales",
-    },
-  ]
 
   const handleBuyNow = (tier: PricingPlan) => {
     console.log("Navigating to place order with tier:", tier)
@@ -135,286 +187,246 @@ const Pricing = () => {
     setSelectedTier(null)
   }
 
-  const FeaturesModal = () => {
-    if (!selectedTier) return null
-
-    return (
-      <div  id="pricing" className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-        <div id="pricing" className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[95vh] overflow-hidden">
-          <div
-            className="p-4 sm:p-6 text-white"
-            style={{
-              background: "linear-gradient(135deg, #7d39ec 0%, #9d5aff 100%)",
-            }}
-          >
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-              <div className="flex-1">
-                <h3
-                  className="text-2xl sm:text-3xl font-bold mb-2"
-                  style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                >
-                  {selectedTier.name}
-                </h3>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                  {selectedTier.price === 0 ? (
-                    <span className="text-xl sm:text-2xl font-bold">Custom Pricing</span>
-                  ) : (
-                    <>
-                      <span className="text-2xl sm:text-3xl font-bold">${selectedTier.price}</span>
-                      <span className="text-white/80 text-base sm:text-lg">/frame</span>
-                    </>
-                  )}
-                </div>
-              </div>
-              <button
-                onClick={closeModal}
-                className="self-end sm:self-auto p-2 rounded-full hover:bg-white/20 transition-colors duration-200"
-              >
-                <X size={24} />
-              </button>
-            </div>
-          </div>
-
-          <div className="p-4 sm:p-6 overflow-y-auto max-h-[calc(95vh-200px)]">
-            <p className="text-gray-600 text-base sm:text-lg mb-6 leading-relaxed">{selectedTier.description}</p>
-
-            <div className="border-t border-gray-200 pt-6">
-              <h4
-                className="font-bold text-lg sm:text-xl mb-4 text-gray-900 flex items-center"
-                style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-              >
-                <Sparkles className="mr-2 text-[#7d39ec] flex-shrink-0" size={24} />
-                Complete Feature List ({selectedTier.features.length} features)
-              </h4>
-              <div className="grid gap-3 sm:gap-4">
-                {selectedTier.features.map((feature, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-                  >
-                    <div
-                      className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5"
-                      style={{ backgroundColor: "#7d39ec" }}
-                    >
-                      <Check size={14} className="text-white" />
-                    </div>
-                    <span className="text-gray-700 leading-relaxed text-sm sm:text-base">{feature}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-8 flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200">
-              <CustomButton variant="outline" className="flex-1 py-3 px-4 font-medium" onClick={closeModal}>
-                Close
-              </CustomButton>
-              <CustomButton
-                className="flex-1 py-3 px-4 font-medium text-white"
-                style={{
-                  background: "linear-gradient(135deg, #7d39ec 0%, #9d5aff 100%)",
-                }}
-                onClick={() => {
-                  closeModal()
-                  handleBuyNow(selectedTier)
-                }}
-              >
-                {selectedTier.buttonText}
-              </CustomButton>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <>
       <link
         href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
         rel="stylesheet"
       />
+      <section id="pricing" className="py-12 sm:py-16 lg:py-20 bg-white relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-white" />
+          
+          {/* Subtle dot pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.08]"
+            style={{
+              backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+            }}
+          />
 
-      <section
-        id="pricing"
-        className="py-12 sm:py-16 lg:py-20"
-        style={{
-          background: "linear-gradient(180deg, #f9fafb 0%, #ffffff 100%)",
-        }}
-      >
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-          <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-12 mb-4 sm:mb-6">
-              Simple{" "}
-              <span className="relative" style={{ color: "#7d39ec" }}>
-                Pricing
-                <div
-                  className="absolute -bottom-1 sm:-bottom-2 left-0 right-0 h-1 rounded-full"
-           
-                ></div>
-              </span>
+          {/* Gradient decorative elements */}
+          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-indigo-200/25 via-fuchsia-200/15 to-orange-200/25 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-indigo-200/20 via-fuchsia-200/25 to-pink-200/15 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-indigo-100/25 via-fuchsia-100/15 to-orange-100/25 rounded-full blur-3xl"></div>
+        </div>
+
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+          {/* Header */}
+          <div className="text-center mb-12 sm:mb-16 relative">
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-to-r from-violet-400 to-fuchsia-400 rounded-full opacity-20 blur-2xl"></div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-12 mb-4 sm:mb-6 relative">
+              Simple <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Pricing</span>
             </h2>
-            <p className="text-lg sm:text-lg text-gray-800 max-w-4xl mx-auto leading-relaxed px-4">
+
+            {/* Special Offer Banner */}
+            <div className="mb-8 flex justify-center">
+              <div className="relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-orange-400 via-fuchsia-500 to-orange-500 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-gradient-to-r from-orange-400 via-fuchsia-500 to-orange-400 text-white px-7 py-2.5 rounded-lg leading-none flex items-center">
+                  <Gift className="w-5 h-5 mr-2" />
+                  <span className="text-sm sm:text-base font-semibold">
+                    Special $50 discount for our first 5000 customers - grab it while you can!
+                  </span>
+                  <Zap className="w-5 h-5 ml-2" />
+                </div>
+              </div>
+            </div>
+
+            <p className="text-lg text-gray-800 max-w-4xl mx-auto leading-relaxed px-4">
               Choose the perfect Deckoviz frame to match your space, your dreams, and your lifestyle.
-              <span className="font-semibold" style={{ color: "#7d39ec" }}>
-                {" "}
-                Enjoy early bird discounts of 20% off
-              </span>{" "}
-              while discounts still apply!
+              <span className="font-semibold text-violet-600"> Enjoy early bird discounts of 20% off</span> while
+              discounts still apply!
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 sm:mb-12 mt-8">
+          {/* Pricing Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 sm:mb-12">
             {pricingTiers.map((tier, index) => (
-              <div
+              <Card
                 key={index}
-                className={`rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 flex flex-col relative overflow-visible group ${
+                className={`relative transition-all duration-500 hover:-translate-y-2 flex flex-col backdrop-blur-sm border-2 ${
                   tier.isPopular
-                    ? "border-2 shadow-xl"
-                    : "bg-white border border-gray-200 shadow-lg hover:shadow-xl hover:shadow-gray-200/50"
+                    ? "border-violet-300 shadow-2xl bg-gradient-to-br from-white via-violet-50 to-fuchsia-50 shadow-violet-200/50"
+                    : "border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200"
                 }`}
-                style={
-                  tier.isPopular
-                    ? {
-                        background:
-                          "linear-gradient(135deg, rgba(125, 57, 236, 0.05) 0%, rgba(157, 90, 255, 0.05) 100%)",
-                        borderColor: "rgba(125, 57, 236, 0.3)",
-                        boxShadow: "0 25px 50px -12px rgba(125, 57, 236, 0.1)",
-                      }
-                    : {}
-                }
               >
                 {tier.isPopular && (
-                  <>
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-                      <div
-                        className="text-white px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm font-bold shadow-lg flex items-center whitespace-nowrap"
-                        style={{
-                          background: "linear-gradient(135deg, #7d39ec 0%, #9d5aff 100%)",
-                        }}
-                      >
-                        <Sparkles size={14} className="mr-1 sm:mr-2" />
-                        Most Popular
-                      </div>
-                    </div>
-                    <div
-                      className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"
-                      style={{
-                        background: "linear-gradient(135deg, rgba(125, 57, 236, 0.1) 0%, transparent 100%)",
-                      }}
-                    ></div>
-                  </>
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
+                    <Badge className="bg-violet-600 text-white px-4 py-2 text-xs font-bold shadow-lg whitespace-nowrap">
+                      <Star size={12} className="mr-1" />
+                      Most Popular
+                    </Badge>
+                  </div>
                 )}
 
-                <div className="text-center mb-6 sm:mb-8 relative z-10">
-                  <h3
-                    className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 group-hover:text-[#7d39ec] transition-colors duration-300"
-                    style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                  >
+                <CardHeader className="text-center pb-4">
+                  <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-violet-600 transition-colors duration-300">
                     {tier.name}
-                  </h3>
-                  <div className="mb-4 sm:mb-6">
+                  </CardTitle>
+
+                  <div className="mb-4">
                     {tier.price === 0 ? (
-                      <div
-                        className="text-3xl sm:text-4xl font-bold group-hover:text-[#7d39ec] transition-colors duration-300"
-                        style={{ fontFamily: "'Bricolage Grotesque', sans-serif" }}
-                      >
+                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
                         Custom
                       </div>
                     ) : (
-                      <div className="flex items-baseline justify-center flex-wrap">
-                        <span
-                          className="text-4xl sm:text-5xl font-bold group-hover:text-[#7d39ec] transition-colors duration-300"
-                          style={{ fontFamily: "'Inter', sans-serif" }}
-                        >
-                          ${tier.price}
-                        </span>
-                        <span className="text-gray-500 ml-2 text-base sm:text-lg">/frame</span>
+                      <div className="flex flex-col items-center justify-center space-y-2">
+                        {/* Original crossed out price */}
+                        <div className="flex items-baseline justify-center">
+                          <span className="text-xl sm:text-2xl font-bold text-gray-400 relative">
+                            ${tier.originalPrice}
+                            <div className="absolute inset-0 bg-red-500 h-0.5 top-1/2 transform -translate-y-1/2 rotate-12"></div>
+                          </span>
+                        </div>
+
+                        {/* Current price with pounds */}
+                        <div className="flex items-baseline justify-center flex-wrap">
+                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">${tier.price}</span>
+                          <span className="text-2xl sm:text-3xl font-semibold text-gray-700 ml-2">
+                            (£{tier.gbpPrice})
+                          </span>
+                          <span className="text-gray-500 ml-2 text-base sm:text-lg">/frame</span>
+                        </div>
                       </div>
                     )}
                   </div>
-                  <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300 text-sm sm:text-base">
+
+                  <CardDescription className="text-gray-600 leading-relaxed text-sm sm:text-base">
                     {tier.description}
-                  </p>
-                </div>
+                  </CardDescription>
+                </CardHeader>
 
-                <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow">
-                  {tier.features.slice(0, 5).map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-start group/item">
-                      <div
-                        className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center mr-3 mt-0.5 group-hover/item:scale-110 transition-transform duration-300"
-                        style={{ backgroundColor: "#7d39ec" }}
-                      >
-                        <Check size={12} className="text-white" />
+                <CardContent className="flex-grow">
+                  <div className="space-y-3 sm:space-y-4">
+                    {tier.features.slice(0, 5).map((feature, featureIndex) => (
+                      <div key={featureIndex} className="flex items-start">
+                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-600 flex items-center justify-center mr-3 mt-0.5">
+                          <Check size={12} className="text-white" />
+                        </div>
+                        <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
                       </div>
-                      <span className="text-gray-700 text-sm leading-relaxed group-hover/item:text-gray-900 transition-colors duration-300">
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
 
-                {tier.features.length > 5 && (
-                  <button
-                    onClick={() => openModal(tier)}
-                    className="font-semibold text-sm mb-4 sm:mb-6 flex items-center justify-center w-full group/button py-2 rounded-lg transition-all duration-300"
-                    style={{
-                      color: "#7d39ec",
-                      backgroundColor: "rgba(125, 57, 236, 0.05)",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "rgba(125, 57, 236, 0.1)"
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "rgba(125, 57, 236, 0.05)"
-                    }}
-                  >
-                    <span className="group-hover/button:underline">See all {tier.features.length} features</span>
-                  </button>
-                )}
+                  {tier.features.length > 5 && (
+                    <Button
+                      variant="ghost"
+                      onClick={() => openModal(tier)}
+                      className="w-full mt-4 text-violet-600 hover:text-violet-700 hover:bg-violet-50"
+                    >
+                      See all {tier.features.length} features
+                    </Button>
+                  )}
+                </CardContent>
 
-                <div className="mt-auto">
-                  <CustomButton
-                    className={`w-full py-3 sm:py-4 font-semibold text-base sm:text-lg rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-lg ${
-                      tier.isPopular ? "text-white" : "bg-gray-900 hover:bg-gray-800 text-white"
-                    }`}
-                    style={
+                <CardFooter>
+                  <Button
+                    className={`w-full py-3 sm:py-4 font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] border-0 ${
                       tier.isPopular
-                        ? {
-                            background: "linear-gradient(135deg, #7d39ec 0%, #9d5aff 100%)",
-                            boxShadow: "0 10px 25px -5px rgba(125, 57, 236, 0.25)",
-                          }
-                        : {}
-                    }
+                        ? "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 hover:from-violet-700 hover:via-fuchsia-700 hover:to-orange-600 text-white shadow-2xl hover:shadow-violet-500/50"
+                        : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-violet-600 hover:to-fuchsia-600 text-white shadow-xl hover:shadow-2xl"
+                    }`}
                     onClick={() => handleBuyNow(tier)}
                   >
                     {tier.buttonText}
-                  </CustomButton>
-                </div>
-              </div>
+                  </Button>
+                </CardFooter>
+              </Card>
             ))}
           </div>
 
+          {/* Feature Comparison Link */}
           <div className="text-center">
-            <button
-              className="font-semibold text-base sm:text-lg hover: transition-all duration-300 inline-flex items-center group px-4 py-2"
-              style={{ color: "#7d39ec" }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#6d2bd4"
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "#7d39ec"
-              }}
-            >
+            <Button variant="ghost" className="text-violet-600 hover:text-violet-700 text-base sm:text-lg group">
               View complete feature comparison
-              <div className="ml-2 w-0 group-hover:w-4 transition-all duration-300 overflow-hidden">→</div>
-            </button>
+              <span className="ml-2 transition-all duration-300 group-hover:translate-x-1">→</span>
+            </Button>
           </div>
         </div>
 
-        {showModal && <FeaturesModal />}
+        {/* Features Modal */}
+        {showModal && selectedTier && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 py-6 text-white">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                      <Sparkles className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold">{selectedTier.name} Plan</h3>
+                      <p className="text-violet-100 text-sm">Complete feature overview</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    {selectedTier.price === 0 ? (
+                      <div className="text-xl font-bold">Custom Pricing</div>
+                    ) : (
+                      <div>
+                        <div className="text-3xl font-bold">${selectedTier.price}</div>
+                        <div className="text-violet-200 text-sm">per frame</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Content */}
+              <div className="p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
+                <div className="mb-6">
+                  <p className="text-gray-600 text-lg leading-relaxed">{selectedTier.description}</p>
+                </div>
+
+                <div className="border-t border-gray-200 pt-6">
+                  <div className="flex items-center mb-6">
+                    <div className="w-8 h-8 bg-violet-100 rounded-full flex items-center justify-center mr-3">
+                      <Check className="w-5 h-5 text-violet-600" />
+                    </div>
+                    <h4 className="text-xl font-bold text-gray-900">
+                      {selectedTier.features.length} Premium Features Included
+                    </h4>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {selectedTier.features.map((feature, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-violet-50 transition-colors duration-200 group"
+                      >
+                        <div className="flex-shrink-0 w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center mr-4 mt-0.5 group-hover:bg-violet-700 transition-colors">
+                          <Check size={14} className="text-white" />
+                        </div>
+                        <span className="text-gray-700 leading-relaxed font-medium">{feature}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="bg-gray-50 px-8 py-6 flex flex-col sm:flex-row gap-4 border-t border-gray-200">
+                <Button variant="outline" className="flex-1 bg-transparent" onClick={closeModal}>
+                  Close Details
+                </Button>
+                <Button
+                  className="flex-1 bg-violet-600 hover:bg-violet-700 text-white"
+                  onClick={() => {
+                    closeModal()
+                    handleBuyNow(selectedTier)
+                  }}
+                >
+                  {selectedTier.buttonText}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
     </>
   )
 }
-
-export default Pricing

@@ -32,6 +32,7 @@ import DeckovizSchoolsLanding from './components/DeckovizForSchools';
 import DeckovizForRetail from './components/DeckovizForStores';
 import FAQ from './components/FAQ';
 import WallOfLove from './components/WallOfLove';
+import HowItWorks from './components/HowItWorks';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -60,8 +61,8 @@ const App: React.FC = () => {
             <Hero/>
             <Features />
             <WhoIsDeckovizFor />
-            {/* <HowItWorks />
-            <Gallery /> */}
+            {/* <HowItWorks /> */}
+            {/* <Gallery /> */}
            
             <Testimonials />
              <Pricing />
