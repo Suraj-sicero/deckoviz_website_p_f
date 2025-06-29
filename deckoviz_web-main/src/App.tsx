@@ -61,7 +61,7 @@ const App: React.FC = () => {
             <Hero/>
             <Features />
             <WhoIsDeckovizFor />
-            {/* <HowItWorks /> */}
+            <HowItWorks />
             {/* <Gallery /> */}
            
             <Testimonials />
@@ -74,6 +74,7 @@ const App: React.FC = () => {
         } />
         <Route path="/blog" element={<Blog />} />
          <Route path="/FAQ" element={<FAQ />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
