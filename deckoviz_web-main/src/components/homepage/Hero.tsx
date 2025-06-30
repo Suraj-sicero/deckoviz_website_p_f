@@ -155,28 +155,33 @@ const Hero: React.FC = () => {
 
             {/* Center content - Buttons and Stats */}
             <div className="flex flex-col items-center gap-8 max-w-md">
+
               {/* Buttons */}
-              <div className="flex gap-5 justify-center">
-               <button className="group relative five-color-gradient border-2 ml-10 border-gray-500 ring-1 ring-inset ring-blue-300 shadow-lg hover:shadow-xl shadow-purple-200/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 overflow-hidden text-base min-w-[140px]">
-  {/* Shimmer effect overlay */}
-  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-  
-  <span className="relative z-10 flex items-center justify-center gap-2">
-    Shop Now
+<div className="flex gap-5 justify-center">
+  <button 
+    onClick={() => window.location.href = '/place-order'}
+    className="group relative five-color-gradient border-2 ml-10 border-gray-500 ring-1 ring-inset ring-blue-300 shadow-lg hover:shadow-xl shadow-purple-200/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 overflow-hidden text-base min-w-[140px]"
+  >
+    {/* Shimmer effect overlay */}
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
     
-  </span>
-</button>
-              <Button 
-              variant="outline" 
-              className="bg-transparent text-gray-700 hover:bg-gray-50 group learn-more-hover"
-            >
-              Learn More 
-              <ArrowRight 
-                size={18} 
-                className="ml-2 transition-transform duration-300 group-hover:translate-x-1" 
-              />
-            </Button>
-              </div>
+    <span className="relative z-10 flex items-center justify-center gap-2">
+      Shop Now
+    </span>
+  </button>
+  
+  <Button 
+    variant="outline" 
+    className="bg-transparent text-gray-700 hover:bg-gray-50 group learn-more-hover"
+    onClick={() => window.location.href = '/about'}
+  >
+    Learn More 
+    <ArrowRight 
+      size={18} 
+      className="ml-2 transition-transform duration-300 group-hover:translate-x-1" 
+    />
+  </Button>
+</div>
 
             {/* Enhanced Stats Card */}
 <div className="relative group ml-8 max-w-md w-full">
