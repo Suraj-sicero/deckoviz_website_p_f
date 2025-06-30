@@ -173,8 +173,9 @@ export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<PricingPlan | null>(null)
   const [showModal, setShowModal] = useState(false)
 
-  const handleBuyNow = (tier: PricingPlan) => {
-    console.log("Navigating to place order with tier:", tier)
+  const handleBuyNow = (): void => {
+    window.location.href = "/place-order"
+    console.log("Buy Now clicked")
   }
 
   const openModal = (tier: PricingPlan) => {
@@ -186,6 +187,7 @@ export default function Pricing() {
     setShowModal(false)
     setSelectedTier(null)
   }
+  
 
   return (
     <>
@@ -329,7 +331,7 @@ export default function Pricing() {
                         ? "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 hover:from-violet-700 hover:via-fuchsia-700 hover:to-orange-600 text-white shadow-2xl hover:shadow-violet-500/50"
                         : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-violet-600 hover:to-fuchsia-600 text-white shadow-xl hover:shadow-2xl"
                     }`}
-                    onClick={() => handleBuyNow(tier)}
+                    onClick={() => handleBuyNow()}
                   >
                     {tier.buttonText}
                   </Button>
@@ -417,7 +419,7 @@ export default function Pricing() {
                   className="flex-1 bg-violet-600 hover:bg-violet-700 text-white"
                   onClick={() => {
                     closeModal()
-                    handleBuyNow(selectedTier)
+                    handleBuyNow()
                   }}
                 >
                   {selectedTier.buttonText}

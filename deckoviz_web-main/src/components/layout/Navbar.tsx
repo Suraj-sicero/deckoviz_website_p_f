@@ -103,11 +103,13 @@ const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", ch
     </button>
   )
 }
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
   const [currentPath, setCurrentPath] = useState("")
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState<boolean>(false)
+  const [isWallLeaderDropdownOpen, setIsWallLeaderDropdownOpen] = useState<boolean>(false)
 
   useEffect(() => {
     setCurrentPath(window.location.pathname)
@@ -121,8 +123,6 @@ const Navbar: React.FC = () => {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-
 
   const handleSectionNav = (sectionId: string): void => {
     if (currentPath !== "/") {
@@ -211,9 +211,82 @@ const Navbar: React.FC = () => {
       <nav
         className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"}`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          {/* Desktop Left Corner - Wall/Leader Hamburger Menu - Extreme Left */}
+          <div className="hidden md:block fixed left-4 top-3.5 z-50">
+            <button
+              onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
+              onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
+              className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-purple-50 transform hover:scale-110 bg-white/90 backdrop-blur-sm shadow-sm border border-gray-100"
+            >
+              <Menu size={20} />
+            </button>
+
+            {/* Wall Of Love & Leaderboard Dropdown - Enhanced Design */}
+            <div 
+              className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
+                isWallLeaderDropdownOpen 
+                  ? 'opacity-100 visible translate-y-0' 
+                  : 'opacity-0 invisible -translate-y-4'
+              }`}
+              onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
+              onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
+            >
+              <div className="w-64 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-[#8345EE]/10 via-[#7239D3]/5 to-[#6B2FD6]/10 px-4 py-3 border-b border-gray-100">
+                  <h3 className="text-sm font-semibold text-gray-800">Community</h3>
+                  <p className="text-xs text-gray-600 mt-1">Connect with our community</p>
+                </div>
+                
+                {/* Menu Items */}
+                <div className="p-3 space-y-1">
+                  <a
+                    href="/Wall-Of-Love"
+                    className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50"
+                  >
+                    <div className="text-lg">💝</div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300">
+                        Wall Of Love
+                      </h4>
+                      <p className="text-xs text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
+                        Customer testimonials
+                      </p>
+                    </div>
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="/Leaderboard"
+                    className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50"
+                  >
+                    <div className="text-lg">🏆</div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300">
+                        Leaderboard
+                      </h4>
+                      <p className="text-xs text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
+                        Top performers
+                      </p>
+                    </div>
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="flex items-center justify-between h-16">
-            {/* Left Navigation */}
+            {/* Desktop Main Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <div 
                 className="relative"
@@ -398,6 +471,22 @@ const Navbar: React.FC = () => {
             
             {/* Other Navigation Items */}
             <div className="border-t border-gray-200 pt-4 space-y-0">
+              <a
+                href="/Wall-Of-Love"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                Wall Of Love
+              </a>
+
+              <a
+                href="/Leaderboard"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                Leaderboard
+              </a>
+
               <a
                 href="/pricing"
                 className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
