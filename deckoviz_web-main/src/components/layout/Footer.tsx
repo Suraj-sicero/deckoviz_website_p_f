@@ -254,10 +254,32 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Bottom Copyright */}
-        <div className="border-t border-purple-200/50 pt-8 text-center">
-          <p className="text-gray-700 text-sm">© {new Date().getFullYear()} Deckoviz. All rights reserved.</p>
-        </div>
+       {/* Bottom Copyright */}
+<div className="border-t border-purple-200/50 pt-8">
+ <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+   <p className="text-gray-700 text-sm">© {new Date().getFullYear()} Deckoviz. All rights reserved.</p>
+   <div className="flex space-x-6">
+     <button
+       onClick={() => handleNavigation("privacy", "/privacy-policy")}
+       className="text-gray-600 hover:text-purple-700 transition-colors text-sm"
+     >
+       Privacy Policy
+     </button>
+     <button
+       onClick={() => handleNavigation("terms", "/terms-conditions")}
+       className="text-gray-600 hover:text-purple-700 transition-colors text-sm"
+     >
+       Terms & Conditions
+     </button>
+     <button
+       onClick={() => handleNavigation("shipping", "/shipping-policy")}
+       className="text-gray-600 hover:text-purple-700 transition-colors text-sm"
+     >
+       Shipping Policy
+     </button>
+   </div>
+ </div>
+</div>
       </div>
     </footer>
   )
