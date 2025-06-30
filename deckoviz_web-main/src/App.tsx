@@ -33,6 +33,7 @@ import DeckovizForRetail from './components/deckovizForBusinesses/DeckovizForSto
 import FAQ from './components/homepage/FAQ';
 import WallOfLove from './components/WallOfLove';
 import HowItWorks from './components/homepage/HowItWorks';
+import Leaderboard from './components/Leaderboard';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -93,6 +94,7 @@ const App: React.FC = () => {
         <Route path ="/deckovizforschools" element={<DeckovizSchoolsLanding />} />
         <Route path ="/deckovizforretailstores" element={<DeckovizForRetail />} />
          <Route path ="Wall-Of-Love" element={<WallOfLove/>} />
+           <Route path ="/Leaderboard" element={<Leaderboard/>} />
 
 
 
