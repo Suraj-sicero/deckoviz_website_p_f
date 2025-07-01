@@ -54,6 +54,10 @@ const Footer: React.FC = () => {
     }
   }
 
+  function handleOnClick(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void {
+    event.preventDefault()
+    window.location.href = "/place-order"
+  }
   return (
     <footer className="bg-gradient-to-br from-white via-purple-50/30 to-violet-50/40">
       <div className="max-w-7xl mx-auto px-6 py-20">
@@ -241,7 +245,7 @@ const Footer: React.FC = () => {
             <p className="text-gray-600 text-lg mb-10 max-w-2xl mx-auto leading-relaxed">
               Join thousands of happy customers who've brought their walls to life with Deckoviz.
             </p>
-          <button className="group relative px-8 py-3 text-white font-medium rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/20 hover:scale-105 overflow-hidden text-base border border-white/20">
+          <button  onClick = {handleOnClick}className="group relative px-8 py-3 text-white font-medium rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/20 hover:scale-105 overflow-hidden text-base border border-white/20">
             <div className="absolute inset-0 bg-gradient-to-r from-orange-300 via-pink-400 to-violet-500 transition-all duration-300 group-hover:from-orange-400 group-hover:via-pink-500 group-hover:to-violet-600"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
             <span className="relative z-10 flex items-center justify-center gap-2 font-light">

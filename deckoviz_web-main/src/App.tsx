@@ -34,6 +34,7 @@ import FAQ from './components/homepage/FAQ';
 import WallOfLove from './components/WallOfLove';
 import HowItWorks from './components/homepage/HowItWorks';
 import Leaderboard from './components/Leaderboard';
+import TransformWalls from './components/homepage/Transform';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -60,6 +61,7 @@ const App: React.FC = () => {
         <Route path="/" element={
           <>
             <Hero/>
+            {/* <TransformWalls /> */}
             <Features />
             <WhoIsDeckovizFor />
             <HowItWorks />
@@ -73,6 +75,7 @@ const App: React.FC = () => {
             <Contact /> */}
           </>
         } />
+        
         <Route path="/blog" element={<Blog />} />
          <Route path="/FAQ" element={<FAQ />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
@@ -95,6 +98,7 @@ const App: React.FC = () => {
         <Route path ="/deckoviz-for-retailstores" element={<DeckovizForRetail />} />
          <Route path ="/Wall-Of-Love" element={<WallOfLove/>} />
            <Route path ="/Leaderboard" element={<Leaderboard/>} />
+           <Route path ="/Transform-Walls" element={<TransformWalls/>} />
 
 
 
