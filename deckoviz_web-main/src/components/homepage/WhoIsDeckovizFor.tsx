@@ -11,6 +11,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       description:
         "For those who want to infuse their homes with the magic of generative AI and deeply personal art. Whether you're craving tranquility, inspiration, or vibrant energy—Deckoviz transforms your space to match your inner world.",
       gradient: "bg-gradient-to-br from-pink-200 via-purple-100 to-pink-300",
+      route: "/deckoviz-for-realestate"
     },
     {
       icon: <Hotel size={24} />,
@@ -18,6 +19,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       description:
         "Elevate lobbies, suites, lounges, and premium experiences with dynamic, ever-evolving visuals that captivate guests, spark conversation, and express your brand's essence.",
       gradient: "bg-gradient-to-br from-purple-200 via-blue-100 to-purple-300",
+      route: "/deckoviz-for-hotels"
     },
     {
       icon: <Building2 size={24} />,
@@ -25,6 +27,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       description:
         "Bring showrooms and model homes to life with smart art that adapts to buyer personas, elevates staging, and showcases the future of elegant, tech-forward living.",
       gradient: "bg-gradient-to-br from-pink-200 via-rose-100 to-pink-300",
+      route: "/deckoviz-for-realestate"
     },
     {
       icon: <Sofa size={24} />,
@@ -32,6 +35,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       description:
         "Add an irresistible edge to your showroom. Demo how tech and decor beautifully blend—and sell more by showing what's possible.",
       gradient: "bg-gradient-to-br from-orange-200 via-pink-100 to-orange-300",
+      route: "/deckoviz-for-retailstores"
     },
     {
       icon: <Coffee size={24} />,
@@ -39,6 +43,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       description:
         "Create an unforgettable vibe. Use AI-powered visual storytelling to enhance ambiance, reinforce brand identity, and shape customer moods—from cozy to high-energy.",
       gradient: "bg-gradient-to-br from-purple-200 via-pink-100 to-purple-300",
+      route: "/deckoviz-for-restaurants"
     },
     {
       icon: <ShoppingBag size={24} />,
@@ -46,6 +51,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       description:
         "Design your atmosphere like a pro—whether it's minimalist chic or artsy and vibrant. Enhance customer experience and stay memorable with every glance.",
       gradient: "bg-gradient-to-br from-pink-200 via-orange-100 to-pink-300",
+      route: "/deckoviz-for-retailstores"
     },
     {
       icon: <Briefcase size={24} />,
@@ -53,13 +59,15 @@ const WhoIsDeckovizFor: React.FC = () => {
       description:
         "Boost creativity, calm, and clarity. From focused productivity modes to ambient inspiration, Deckoviz supports emotional and mental wellness at work.",
       gradient: "bg-gradient-to-br from-blue-200 via-purple-100 to-blue-300",
+      route: "/deckoviz-for-offices"
     },
     {
       icon: <Heart size={24} />,
-      title: "Studios, Clinics & Schools",
+      title: "Therapists & Wellness Centers",
       description:
-        "Whether you're running a yoga studio, a therapy office, or a classroom—Deckoviz helps set the right tone. Calm, uplift, or energize your space, naturally and beautifully.",
+        "Whether you're running a therapy office, wellness center, or healing space—Deckoviz helps set the right tone. Calm, uplift, or energize your space, naturally and beautifully.",
       gradient: "bg-gradient-to-br from-green-200 via-teal-100 to-green-300",
+      route: "/deckoviz-for-therapists"
     },
   ]
 
@@ -86,11 +94,18 @@ const WhoIsDeckovizFor: React.FC = () => {
       // Offices - Blue to purple with cool tones
       "radial-gradient(ellipse at left, #dbeafe 0%, #e9d5ff 45%, #dbeafe 75%, #93c5fd 100%)",
 
-      // Studios - Green to teal with fresh, calming colors
+      // Therapists - Green to teal with fresh, calming colors
       "radial-gradient(ellipse at right, #bbf7d0 0%, #a7f3d0 35%, #5eead4 70%, #2dd4bf 100%)",
     ]
 
     return gradients[index] || gradients[0]
+  }
+
+  const handleLearnMore = (route: string) => {
+    // For React Router
+    window.location.href = route;
+    // Or if using React Router's navigate:
+    // navigate(route);
   }
 
   return (
@@ -131,35 +146,38 @@ const WhoIsDeckovizFor: React.FC = () => {
               <h3 className="text-lg font-bold mb-3 text-gray-900 leading-tight">{segment.title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed flex-1">{segment.description}</p>
               
-           {/* Learn More Link - Bottom Right */}
-<div className="flex justify-end items-end translate-y-4">
- <div className="group/link cursor-pointer">
-   <span className="text-gray-700 hover:text-purple-700 font-medium text-sm transition-all duration-300 hover:font-semibold">
-     Learn more
-   </span>
-   <span className="ml-2 relative inline-block w-4 h-5 overflow-hidden">
-     <span className="absolute text-gray-600 group-hover/link:text-purple-600 group-hover/link:translate-x-6 group-hover/link:opacity-0 transition-all duration-500 ease-out">
-       →
-     </span>
-     <span className="absolute text-purple-600 -translate-x-6 opacity-0 group-hover/link:translate-x-0 group-hover/link:opacity-100 transition-all duration-500 ease-out delay-200">
-       →
-     </span>
-   </span>
- </div>
-</div>
+              {/* Learn More Link - Bottom Right */}
+              <div className="flex justify-end items-end translate-y-4">
+                <div 
+                  className="group/link cursor-pointer"
+                  onClick={() => handleLearnMore(segment.route)}
+                >
+                  <span className="text-gray-700 hover:text-purple-700 font-medium text-sm transition-all duration-300 hover:font-semibold">
+                    Learn more
+                  </span>
+                  <span className="ml-2 relative inline-block w-4 h-5 overflow-hidden">
+                    <span className="absolute text-gray-600 group-hover/link:text-purple-600 group-hover/link:translate-x-6 group-hover/link:opacity-0 transition-all duration-500 ease-out">
+                      →
+                    </span>
+                    <span className="absolute text-purple-600 -translate-x-6 opacity-0 group-hover/link:translate-x-0 group-hover/link:opacity-100 transition-all duration-500 ease-out delay-200">
+                      →
+                    </span>
+                  </span>
+                </div>
+              </div>
               
             </div>
           ))}
         </div>
 
         <div className="text-center mt-16 space-y-4">
- <p className="text-xl text-gray-600 font-semibold">
-   Deckoviz is for spaces that want to feel <span className="text-purple-600 font-bold">alive</span>.
- </p>
- <p className="text-lg text-gray-500">
-   For people who value <span className="text-indigo-600 font-semibold">beauty</span>, <span className="text-purple-600 font-semibold">emotion</span>, and <span className="text-rose-500 font-semibold">expression</span>. For environments that deserve more than <span className="text-gray-700 font-semibold">static walls</span> and spaces.
- </p>
-</div>
+          <p className="text-xl text-gray-600 font-semibold">
+            Deckoviz is for spaces that want to feel <span className="text-purple-600 font-bold">alive</span>.
+          </p>
+          <p className="text-lg text-gray-500">
+            For people who value <span className="text-indigo-600 font-semibold">beauty</span>, <span className="text-purple-600 font-semibold">emotion</span>, and <span className="text-rose-500 font-semibold">expression</span>. For environments that deserve more than <span className="text-gray-700 font-semibold">static walls</span> and spaces.
+          </p>
+        </div>
       </div>
       
       <style dangerouslySetInnerHTML={{

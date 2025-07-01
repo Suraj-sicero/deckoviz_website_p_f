@@ -153,56 +153,56 @@ const Navbar: React.FC = () => {
       description: "Elevate guest experiences",
       icon: "🏨",
       gradient: "from-blue-500 to-cyan-500",
-      route: "/deckovizforhotels"
+      route: "/deckoviz-for-hotels"
     },
     {
       title: "Restaurants & Cafés",
       description: "Create dining ambiance",
       icon: "🍽️",
       gradient: "from-orange-500 to-red-500",
-      route: "/deckovizforrestaurants"
+      route: "/deckoviz-for-restaurants"
     },
     {
       title: "Architects & Designers",
       description: "Design living spaces",
       icon: "🏗️",
       gradient: "from-purple-500 to-pink-500",
-      route: "/deckovizforarchitects"
+      route: "/deckoviz-for-architects"
     },
     {
       title: "Offices & Workspaces",
       description: "Inspire productivity",
       icon: "💼",
       gradient: "from-green-500 to-emerald-500",
-      route: "/deckovizforoffices"
+      route: "/deckoviz-for-offices"
     },
     {
       title: "Real Estate",
       description: "Showcase properties",
       icon: "🏡",
       gradient: "from-indigo-500 to-blue-500",
-      route: "/deckovizforrealestate"
+      route: "/deckoviz-for-realestate"
     },
     {
       title: "Wellness & Therapy",
       description: "Healing environments",
       icon: "🧘",
       gradient: "from-teal-500 to-cyan-500",
-      route: "/deckovizfortherapists"
+      route: "/deckoviz-for-therapists"
     },
     {
       title: "Schools & Learning",
       description: "Educational spaces",
       icon: "📚",
       gradient: "from-yellow-500 to-orange-500",
-      route: "/deckovizforschools"
+      route: "/deckoviz-for-schools"
     },
     {
       title: "Retail & Showrooms",
       description: "Shopping experiences",
       icon: "🛍️",
       gradient: "from-pink-500 to-rose-500",
-      route: "/deckovizforretailstores"
+      route: "/deckoviz-for-retailstores"
     }
   ]
 

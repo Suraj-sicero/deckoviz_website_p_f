@@ -85,14 +85,14 @@ const App: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
-        <Route path ="/deckovizforhotels" element={<DeckovizLanding />} />
-        <Route path ="/deckovizforrestaurants" element={<DeckovizRestaurantLanding />} />
-        <Route path ="/deckovizforarchitects" element={<DeckovizArchitectsLanding />} />
-        <Route path ="/deckovizforoffices" element={<DeckovizOfficesLanding />} />
-        <Route path ="/deckovizforrealestate" element={<DeckovizForRealEstate />} />
-        <Route path ="/deckovizfortherapists" element={<DeckovizTherapistsLanding />} />
-        <Route path ="/deckovizforschools" element={<DeckovizSchoolsLanding />} />
-        <Route path ="/deckovizforretailstores" element={<DeckovizForRetail />} />
+        <Route path ="/deckoviz-for-hotels" element={<DeckovizLanding />} />
+        <Route path ="/deckoviz-for-restaurants" element={<DeckovizRestaurantLanding />} />
+        <Route path ="/deckoviz-for-architects" element={<DeckovizArchitectsLanding />} />
+        <Route path ="/deckoviz-for-offices" element={<DeckovizOfficesLanding />} />
+        <Route path ="/deckoviz-for-realestate" element={<DeckovizForRealEstate />} />
+        <Route path ="/deckoviz-for-therapists" element={<DeckovizTherapistsLanding />} />
+        <Route path ="/deckoviz-for-schools" element={<DeckovizSchoolsLanding />} />
+        <Route path ="/deckoviz-for-retailstores" element={<DeckovizForRetail />} />
          <Route path ="/Wall-Of-Love" element={<WallOfLove/>} />
            <Route path ="/Leaderboard" element={<Leaderboard/>} />
 
