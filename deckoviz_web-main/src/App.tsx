@@ -61,7 +61,7 @@ const App: React.FC = () => {
         <Route path="/" element={
           <>
             <Hero/>
-            {/* <TransformWalls /> */}
+            <TransformWalls />
             <Features />
             <WhoIsDeckovizFor />
             <HowItWorks />

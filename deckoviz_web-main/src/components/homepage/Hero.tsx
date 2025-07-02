@@ -102,7 +102,7 @@ const Hero: React.FC = () => {
   }, [])
 
   return (
-    <section className="py-16 md:py-12 lg:py-10 overflow-hidden relative bg-white">
+    <section className="py-14 md:py-12 lg:py-10 overflow-hidden relative bg-white">
       <div className="absolute inset-0 w-full h-full">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-70"></div>
       </div>
