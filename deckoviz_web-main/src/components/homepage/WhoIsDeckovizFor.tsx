@@ -1,17 +1,17 @@
 "use client"
 
 import type React from "react"
-import { Home, Hotel, Building2, Sofa, Coffee, ShoppingBag, Briefcase, Heart, Sparkles } from "lucide-react"
+import { GraduationCap, Hotel, Building2, Sofa, Coffee, ShoppingBag, Briefcase, Heart, Sparkles } from "lucide-react"
 
 const WhoIsDeckovizFor: React.FC = () => {
   const segments = [
     {
-      icon: <Home size={24} />,
-      title: "Homeowners and Renters",
+      icon: <GraduationCap size={24} />,
+      title: "Learning Centres & Schools",
       description:
-        "For those who want to infuse their homes with the magic of generative AI and deeply personal art. Whether you're craving tranquility, inspiration, or vibrant energy—Deckoviz transforms your space to match your inner world.",
-      gradient: "bg-gradient-to-br from-pink-200 via-purple-100 to-pink-300",
-      route: "/deckoviz-for-realestate"
+        "Transform educational spaces with inspiring, dynamic visuals that enhance learning environments. Create focused study atmospheres, spark creativity, and support different learning modes—from calm concentration to energetic collaboration.",
+      gradient: "bg-gradient-to-br from-blue-200 via-indigo-100 to-blue-300",
+      route: "/deckoviz-for-schools"
     },
     {
       icon: <Hotel size={24} />,
@@ -73,8 +73,8 @@ const WhoIsDeckovizFor: React.FC = () => {
 
   const getComplexGradient = (index: number): string => {
     const gradients = [
-      // Homeowners - Pink to purple with soft transitions
-      "radial-gradient(ellipse at top left, #fce7f3 0%, #f3e8ff 30%, #fce7f3 60%, #f9a8d4 100%)",
+      // Learning Centres - Blue to indigo with educational tones
+      "radial-gradient(ellipse at top left, #dbeafe 0%, #e0e7ff 30%, #dbeafe 60%, #93c5fd 100%)",
 
       // Hotels - Purple to blue with light tones
       "radial-gradient(ellipse at top right, #e9d5ff 0%, #dbeafe 40%, #e9d5ff 70%, #c4b5fd 100%)",
