@@ -129,7 +129,7 @@ export default function TransformWalls() {
                 {/* Small sculpture - top left */}
                 <div className="w-32 h-32 mt-12 ml-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                   <img
-                    src="https://images.unsplash.com/photo-1637666505754-7416ebd70cbf?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                    src="https://i.pinimg.com/736x/fb/bb/e5/fbbbe5647d09714446678a646001b982.jpg"
                     alt="Classical Sculpture"
                     className="w-full h-full object-cover"
                   />
