@@ -105,7 +105,7 @@ const App: React.FC = () => {
 
 
 
-        {/* <Route path="/how-it-works" element={<HowItWorks />} /> */}
+        <Route path="/how-it-works" element={<HowItWorks />} />
         {/* <Route path="/gallery" element={<Gallery />} /> */}
         
         {/* <Route path="/testimonials" element={<Testimonials />} /> */}

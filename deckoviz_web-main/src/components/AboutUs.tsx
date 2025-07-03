@@ -68,7 +68,7 @@ export default function AboutUs() {
         </div>
 
         {/* Heading with gradient text */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-b from-gray-900 to-violet-500 bg-clip-text text-transparent leading-tight">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-b from-violet-900 to-violet-500 bg-clip-text text-transparent leading-tight">
           About Us
         </h1>
 

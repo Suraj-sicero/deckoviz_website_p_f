@@ -119,7 +119,7 @@ const DeckovizSetup: React.FC = () => {
   const displayStep = hoveredStep !== null ? hoveredStep : activeStep
 
   return (
-    <section className="relative bg-white py-16 overflow-hidden">
+    <section id="how-it-works" className="relative bg-white py-16 overflow-hidden">
       {/* Subtle Background Glow */}
       <div className="absolute inset-0">
         {/* Left side glow */}

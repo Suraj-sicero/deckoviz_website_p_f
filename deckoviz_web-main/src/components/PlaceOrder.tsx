@@ -122,7 +122,9 @@ const PlaceOrder: React.FC = () => {
        {/* Header */}
        <div className="mb-8 sm:mb-12">
          <div className="text-center mb-6 sm:mb-8">
-           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-gray-900 mt-10 sm:mt-20 mb-4 sm:mb-6">Get Your Deckoviz</h1>
+           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium mt-10 sm:mt-20 mb-4 sm:mb-6 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-pink-500 to-indigo-600">
+             Get Your Deckoviz
+           </h1>
            <p className="text-gray-800 text-sm sm:text-base">Bring your walls to life with the world's most advanced AI-powered</p>
            <p className="text-gray-800 mb-8 sm:mb-14 text-sm sm:text-base">Smart Art Frame.</p>
          </div>

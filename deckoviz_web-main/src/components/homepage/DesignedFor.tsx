@@ -215,12 +215,12 @@ const DesignedFor: React.FC = () => {
             <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
               And so, in essence, we have designed Deckoviz to be for those who want more{" "}
               <span className="text-purple-600 font-semibold">life in their life</span>, more{" "}
-              <span className="text-pink-600 font-semibold">magic in their moments</span>
+              <span className="text-pink-600 font-semibold">magic in their moments.</span>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-lg font-semibold">
               <span className="text-indigo-600">Deckoviz for You,</span>
-              <span className="text-purple-600">Deckoviz for All</span>
+              <span className="text-purple-600">Deckoviz for All.</span>
             </div>
           </div>
         </div>

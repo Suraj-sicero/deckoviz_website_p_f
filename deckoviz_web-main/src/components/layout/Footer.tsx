@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState } from "react"
-import { Instagram, Linkedin, Twitter, Facebook, Send } from "lucide-react"
+import { Instagram, Linkedin, Facebook, Send } from "lucide-react"
 
 const Footer: React.FC = () => {
   const [email, setEmail] = useState("")
@@ -81,42 +81,44 @@ const Footer: React.FC = () => {
               reflects your unique taste and brings your walls to life.
             </p>
             <div className="flex space-x-4">
-              <a
-                href="https://www.instagram.com/deckoviz/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-violet-600 transition-all shadow-sm"
-                aria-label="Instagram"
-              >
-                <Instagram size={18} />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-violet-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-violet-600 transition-all shadow-sm"
-                aria-label="Twitter"
-              >
-                <Twitter size={18} />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-violet-600 transition-all shadow-sm"
-                aria-label="Facebook"
-              >
-                <Facebook size={18} />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/deckoviz/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-violet-600 transition-all shadow-sm"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
+            <a
+  href="https://www.instagram.com/deckoviz/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-gradient-to-bl hover:from-violet-500 hover:via-pink-500 hover:to-yellow-500 transition-all shadow-sm"
+  aria-label="Instagram"
+>
+  <Instagram size={18} />
+</a>
+<a
+  href="#"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-black transition-all shadow-sm"
+  aria-label="X"
+>
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+</a>
+<a
+  href="#"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-blue-600 transition-all shadow-sm"
+  aria-label="Facebook"
+>
+  <Facebook size={18} />
+</a>
+<a
+  href="https://www.linkedin.com/company/deckoviz/"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-gray-600 hover:text-white hover:bg-blue-700 transition-all shadow-sm"
+  aria-label="LinkedIn"
+>
+  <Linkedin size={18} />
+</a>
             </div>
           </div>
 
@@ -134,7 +136,7 @@ const Footer: React.FC = () => {
               </li>
               <li>
                 <button
-                  onClick={() => handleNavigation("how-it-works", "#")}
+                  onClick={() => handleNavigation("how-it-works", "/how-it-works")}
                   className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
                 >
                   How It Works
@@ -165,7 +167,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li>
                 <button
-                  onClick={() => handleNavigation("about", "/aboutus")}
+                  onClick={() => handleNavigation("about", "/about")}
                   className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
                 >
                   About Us
