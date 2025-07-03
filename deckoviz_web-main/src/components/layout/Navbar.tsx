@@ -151,56 +151,56 @@ const Navbar: React.FC = () => {
     {
       title: "Hotels & Resorts",
       description: "Elevate guest experiences",
-      icon: "🏨",
+      image: "/images/hotelnavbar.png",
       gradient: "from-blue-500 to-cyan-500",
       route: "/deckoviz-for-hotels"
     },
     {
       title: "Restaurants & Cafés",
       description: "Create dining ambiance",
-      icon: "🍽️",
+      image: "/images/restaurantnavbar.png",
       gradient: "from-orange-500 to-red-500",
       route: "/deckoviz-for-restaurants"
     },
     {
       title: "Architects & Designers",
       description: "Design living spaces",
-      icon: "🏗️",
+      image: "/images/architectnavbar.png",
       gradient: "from-purple-500 to-pink-500",
       route: "/deckoviz-for-architects"
     },
     {
       title: "Offices & Workspaces",
       description: "Inspire productivity",
-      icon: "💼",
+      image: "/images/officenavbar.png",
       gradient: "from-green-500 to-emerald-500",
       route: "/deckoviz-for-offices"
     },
     {
       title: "Real Estate",
       description: "Showcase properties",
-      icon: "🏡",
+      image: "/images/realestatenavbar.png",
       gradient: "from-indigo-500 to-blue-500",
       route: "/deckoviz-for-realestate"
     },
     {
       title: "Wellness & Therapy",
       description: "Healing environments",
-      icon: "🧘",
+      image: "/images/therapistnavbar.png",
       gradient: "from-teal-500 to-cyan-500",
       route: "/deckoviz-for-therapists"
     },
     {
       title: "Schools & Learning",
       description: "Educational spaces",
-      icon: "📚",
+      image: "/images/schoolnavbar.png",
       gradient: "from-yellow-500 to-orange-500",
       route: "/deckoviz-for-schools"
     },
     {
       title: "Retail & Showrooms",
       description: "Shopping experiences",
-      icon: "🛍️",
+      image: "/images/retailnavbar.png",
       gradient: "from-pink-500 to-rose-500",
       route: "/deckoviz-for-retailstores"
     }
@@ -245,7 +245,11 @@ const Navbar: React.FC = () => {
                     href="/Wall-Of-Love"
                     className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50"
                   >
-                    <div className="text-lg">💝</div>
+                    <div className="w-6 h-6 flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                      </svg>
+                    </div>
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300">
                         Wall Of Love
@@ -265,13 +269,44 @@ const Navbar: React.FC = () => {
                     href="/Leaderboard"
                     className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50"
                   >
-                    <div className="text-lg">🏆</div>
+                    <div className="w-6 h-6 flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M14 9h1.5a2.5 2.5 0 0 0 0-5H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6 9v12l6-3 6 3V9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
                     <div className="flex-1">
                       <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300">
                         Leaderboard
                       </h4>
                       <p className="text-xs text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
                         Top performers
+                      </p>
+                    </div>
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </div>
+                  </a>
+                  
+                  <a
+                    href="/contact"
+                    className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50"
+                  >
+                    <div className="w-6 h-6 flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2"/>
+                        <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2"/>
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300">
+                        Contact Us
+                      </h4>
+                      <p className="text-xs text-gray-500 group-hover:text-gray-600 transition-colors duration-300">
+                        Get in touch
                       </p>
                     </div>
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -313,8 +348,8 @@ const Navbar: React.FC = () => {
                   <div className="w-[640px] bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden">
                     {/* Header */}
                     <div className="bg-gradient-to-r from-[#8345EE]/10 via-[#7239D3]/5 to-[#6B2FD6]/10 px-6 py-4 border-b border-gray-100">
-                      <h3 className="text-lg font-semibold text-gray-800">Choose Your Industry</h3>
-                      <p className="text-sm text-gray-600 mt-1">Discover how Deckoviz transforms your space</p>
+                      <h3 className="text-lg font-semibold text-gray-800">Choose Your Industry</h3> 
+                      <p className="text-sm text-gray-600 mt-1">Discover how Deckoviz transforms your space </p>
                     </div>
                     
                     {/* Grid of Categories */}
@@ -333,8 +368,12 @@ const Navbar: React.FC = () => {
                           
                           {/* Content */}
                           <div className="relative z-10 flex items-start space-x-3">
-                            <div className="text-2xl transform group-hover:scale-110 transition-transform duration-300">
-                              {category.icon}
+                            <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
+                              <img 
+                                src={category.image} 
+                                alt={category.title}
+                                className="w-full h-full object-cover rounded-lg"
+                              />
                             </div>
                             <div className="flex-1 min-w-0">
                               <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300 leading-tight">
@@ -359,7 +398,7 @@ const Navbar: React.FC = () => {
                     {/* Footer */}
                     <div className="bg-gray-50/50 px-6 py-4 border-t border-gray-100">
                       <p className="text-xs text-gray-500 text-center">
-                        Can't find your industry? <span className="text-[#8345EE] hover:underline cursor-pointer font-medium">Contact us</span> for custom solutions
+                        Can't find your industry? <a href="/contact" className="text-[#8345EE] hover:underline cursor-pointer font-medium">Contact Us</a> for custom solutions.
                       </p>
                     </div>
                   </div>
@@ -458,7 +497,13 @@ const Navbar: React.FC = () => {
                       onClick={() => handleBusinessNavigation(category.route)}
                       className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
                     >
-                      <span className="text-base flex-shrink-0">{category.icon}</span>
+                      <div className="w-6 h-6 flex-shrink-0">
+                        <img 
+                          src={category.image} 
+                          alt={category.title}
+                          className="w-full h-full object-cover rounded"
+                        />
+                      </div>
                       <div className="flex-1 min-w-0">
                         <div className="font-medium truncate">{category.title}</div>
                         <p className="text-xs text-gray-500 truncate">{category.description}</p>
@@ -485,6 +530,14 @@ const Navbar: React.FC = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Leaderboard
+              </a>
+
+              <a
+                href="/contact"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                onClick={() => setIsOpen(false)}
+              >
+                Contact Us
               </a>
 
               <a
