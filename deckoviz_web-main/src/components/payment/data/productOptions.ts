@@ -1,29 +1,29 @@
 export const frameSizeOptions = [
   { 
     name: "Starter Unit (43 inches)", 
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop", 
+    image: "images/Gemini_Generated_Image_7awqtl7awqtl7awq.jpeg", 
     price: 649,
     description: "Perfect for small to medium rooms"
   },
   { 
     name: "Premium Unit (55 inches)", 
-    image: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=400&h=300&fit=crop", 
+    image: "images/Gemini_Generated_Image_3gz8oz3gz8oz3gz8.jpeg", 
     price: 849,
     description: "Ideal for living rooms and offices"
   },
   { 
     name: "Ultra Unit (65 inches)", 
-    image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop", 
+    image: "images/Gemini_Generated_Image_nkwnr0nkwnr0nkwn.jpg", 
     price: 1049,
     description: "Premium choice for large spaces"
   }
 ];
 
 export const frameTypeOptions = [
-  { name: "Classic Wood", image: "https://images.unsplash.com/photo-1513519245088-0e12902e35a6?w=200&h=150&fit=crop" },
-  { name: "Modern Metal", image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=200&h=150&fit=crop" },
-  { name: "Vintage Ornate", image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=200&h=150&fit=crop" },
-  { name: "Minimalist", image: "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=200&h=150&fit=crop" }
+  { name: "Classic Wood", image: "https://t4.ftcdn.net/jpg/09/59/36/87/360_F_959368717_FGNtAD4EemvvQGp9ihmwNvFX1Zvr480l.jpg" },
+  { name: "Modern Metal", image: "https://us.123rf.com/450wm/zarahmad/zarahmad2502/zarahmad250212662/241665182-old-vintage-picture-frame-on-wooden-table-and-dark-background-3d-rendering.jpg?ver=6" },
+  { name: "Vintage Ornate", image: "https://www.harpgallery.com/blog/wp-content/uploads/2022/04/art-16-2-1024x682.jpg" },
+  { name: "Minimalist", image: "https://easysuger.com/cdn/shop/files/il_fullxfull.3532824556_hhpd.jpg?v=1717403765&width=1946" }
 ];
 
 export const unitOptions = Array.from({ length: 15 }, (_, i) => `${i + 1} Unit${i === 0 ? '' : 's'}`);

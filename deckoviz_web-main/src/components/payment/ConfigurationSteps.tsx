@@ -73,23 +73,23 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
               placeholder="Choose Size"
               options={[
                 { 
-                  name: "Starter Unit (43 inches)", 
-                  image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop", 
-                  price: 649,
-                  description: "Perfect for small to medium rooms"
-                },
-                { 
-                  name: "Premium Unit (55 inches)", 
-                  image: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=400&h=300&fit=crop", 
-                  price: 849,
-                  description: "Ideal for living rooms and offices"
-                },
-                { 
-                  name: "Ultra Unit (65 inches)", 
-                  image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop", 
-                  price: 1049,
-                  description: "Premium choice for large spaces"
-                }
+    name: "Starter Unit (43 inches)", 
+    image: "images/Gemini_Generated_Image_7awqtl7awqtl7awq.jpeg", 
+    price: 649,
+    description: "Perfect for small to medium rooms"
+  },
+  { 
+    name: "Premium Unit (55 inches)", 
+    image: "images/Gemini_Generated_Image_3gz8oz3gz8oz3gz8.jpeg", 
+    price: 849,
+    description: "Ideal for living rooms and offices"
+  },
+  { 
+    name: "Ultra Unit (65 inches)", 
+    image: "images/Gemini_Generated_Image_nkwnr0nkwnr0nkwn.jpg", 
+    price: 1049,
+    description: "Premium choice for large spaces"
+  }
               ]}
             />
           )}
