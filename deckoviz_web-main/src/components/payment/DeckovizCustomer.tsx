@@ -3,6 +3,7 @@ import { ShoppingCart, Sparkles } from 'lucide-react';
 import { ConfigurationSteps } from './ConfigurationSteps';
 import { VisualPreview } from './VisualPreview';
 import { frameSizeOptions, frameTypeOptions } from './data/productOptions';
+import { subscriptionPlans } from './data/subscriptionPlans';
 
 const DeckovizCustomizer = () => {
   const [selectedFrameSize, setSelectedFrameSize] = useState("");
@@ -26,11 +27,14 @@ const DeckovizCustomizer = () => {
 
   const calculateTotal = () => {
     const basePrice = getSelectedSize()?.price || 0;
-    const subscriptionCost = 9;
+    const selectedPlan = subscriptionPlans.find(plan => plan.name === subscriptionType);
+    let subscriptionCost = 0;
+    if (selectedPlan && subscriptionPeriod) {
+      subscriptionCost = subscriptionPeriod === 'Yearly' ? selectedPlan.yearlyPrice : selectedPlan.monthlyPrice;
+    }
     const deliveryCost = deliveryType === "Express Delivery" ? 19 : 9;
     const packagingCost = packagingType === "Eco-Friendly" ? 5 : 0;
     const units = parseInt(selectedUnits?.split(' ')[0]) || 1;
-    
     return (basePrice * units) + subscriptionCost + deliveryCost + packagingCost;
   };
 
