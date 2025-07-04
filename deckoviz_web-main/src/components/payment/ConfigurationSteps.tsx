@@ -520,6 +520,11 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                     Choose your options according to your needs.
                   </p>
                 )}
+                {step.id === "0.8" && (
+                  <p className="text-gray-600 text-sm mt-4">
+                    Review your total cost before proceeding to payment.
+                  </p>
+                )}
                 {step.id === "0.9" && (
                   <p className="text-gray-600 text-sm mt-4">
                     Your payment is secure and encrypted.

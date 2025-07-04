@@ -107,15 +107,15 @@ const DeckovizCustomizer = () => {
               <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-20 pb-8 text-center">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium mb-3 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium mb-3 bg-clip-text text-transparent bg-gray-700">
                     Get Your Deckoviz
                   </h1>
-                  <p className="text-gray-800  font-normal text-sm sm:text-base mb-2">
+                  <p className="text-gray-600  font-medium text-sm sm:text-base mb-2">
                     Bring your walls to life with the world's most advanced AI-powered Smart Art Frame.
-                  </p>
-                  <p className="text-gray-900 font-normal text-sm sm:text-base">
+                    <br />
                     Follow the simple steps below to customize and place your order.
                   </p>
+                  
                 </div>
 
                 {/* Configuration Content */}
@@ -154,15 +154,15 @@ const DeckovizCustomizer = () => {
             <div className="max-w-4xl mx-auto">
               {/* Header - now scrollable */}
               <div className="relative z-10 text-center pt-20 pb-3">
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium mb-4 bg-clip-text text-transparent bg-gradient-to-b from-indigo-500 via-pink-400 to-blue-400">
+                <h1 className="text-3xl sm:text-4xl lg:text-4xl font-medium mb-4 bg-clip-text text-transparent bg-gray-700">
                   Get Your Deckoviz
                 </h1>
-                <p className="text-gray-800  font-normal text-sm sm:text-base mb-2">
+                <p className="text-gray-800  font-medium text-sm sm:text-base mb-2">
                   Bring your walls to life with the world's most advanced AI-powered Smart Art Frame.
+                  <br  />
+                  Please select a frame size to begin customizing your order.
                 </p>
-                <p className="text-gray-900 font-normal text-sm sm:text-base max-w-2xl mx-auto">
-                  Follow the simple steps below to customize and place your order.
-                </p>
+                
               </div>
 
               {/* Content */}
