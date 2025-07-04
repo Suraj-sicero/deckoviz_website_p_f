@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import AboutUs from './components/AboutUs';
-import PlaceOrder from './components/PlaceOrder';
+import PlaceOrder from './components/payment/PlaceOrder';
 import ScrollToTop from './components/ScrollToTop';
 import Hero from './components/homepage/Hero';
 import Features from './components/homepage/Features';
@@ -18,7 +18,7 @@ import WhoIsDeckovizFor from './components/homepage/WhoIsDeckovizFor';
 import PrivacyPolicy from './components/policies/PrivacyPolicy';
 import TermsOfService from './components/policies/TermsOfService';
 import ShippingPolicy from './components/policies/ShippingPolicy';
-import ReturnPolicy from './components/ReturnPolicy';
+import ReturnPolicy from './components/policies/ReturnPolicy';
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Pricing from './components/homepage/Pricing';
