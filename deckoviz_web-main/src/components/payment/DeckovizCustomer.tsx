@@ -98,16 +98,15 @@ const DeckovizCustomizer = () => {
         {selectedFrameSize ? (
           // Split Screen Layout - Visual Preview touches top
           <>
-            {/* Left Side - Everything scrollable with hover */}
-            <div className="flex-1 min-w-0 group">
-              <div className="h-full overflow-y-hidden group-hover:overflow-y-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-4xl mx-auto">
+            {/* Left Side - Scrollable with stable scrollbar */}
+            <div className="flex-1 min-w-0 overflow-y-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-20 pb-8 text-center">
                   <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium mb-3 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500">
                     Get Your Deckoviz
                   </h1>
-                  <p className="text-gray-800 text-sm sm:text-base mb-2">
+                  <p className="text-gray-800  font-normal text-sm sm:text-base mb-2">
                     Bring your walls to life with the world's most advanced AI-powered Smart Art Frame.
                   </p>
                   <p className="text-gray-900 font-normal text-sm sm:text-base">
@@ -137,7 +136,6 @@ const DeckovizCustomizer = () => {
                     </span>
                   </button>
                 </div>
-                              </div>
               </div>
             </div>
 
@@ -152,10 +150,10 @@ const DeckovizCustomizer = () => {
             <div className="max-w-4xl mx-auto">
               {/* Header - now scrollable */}
               <div className="relative z-10 text-center pt-20 pb-3">
-                <h1 className="text-3xl sm:text-4xl lg:text-4xl font-medium mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 via-pink-500 to-indigo-600">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium mb-4 bg-clip-text text-transparent bg-gradient-to-b from-indigo-500 via-pink-400 to-blue-400">
                   Get Your Deckoviz
                 </h1>
-                <p className="text-gray-800 text-sm sm:text-base mb-2">
+                <p className="text-gray-800  font-normal text-sm sm:text-base mb-2">
                   Bring your walls to life with the world's most advanced AI-powered Smart Art Frame.
                 </p>
                 <p className="text-gray-900 font-normal text-sm sm:text-base max-w-2xl mx-auto">
@@ -167,8 +165,6 @@ const DeckovizCustomizer = () => {
               <div className="space-y-6 py-4">
                 <ConfigurationSteps formData={formData} showOnlyFirstTwo={true} />
               </div>
-              
-             
             </div>
           </div>
         )}
@@ -183,26 +179,22 @@ const DeckovizCustomizer = () => {
             100% { opacity: 1; transform: translateY(0); }
           }
 
-          /* Custom scrollbar styling */
-          .overflow-y-auto::-webkit-scrollbar,
-          .group:hover .group-hover\\:overflow-y-auto::-webkit-scrollbar {
+          /* Custom scrollbar styling - Always visible and stable */
+          .overflow-y-auto::-webkit-scrollbar {
             width: 6px;
           }
           
-          .overflow-y-auto::-webkit-scrollbar-track,
-          .group:hover .group-hover\\:overflow-y-auto::-webkit-scrollbar-track {
+          .overflow-y-auto::-webkit-scrollbar-track {
             background: rgba(243, 244, 246, 0.3);
             border-radius: 3px;
           }
           
-          .overflow-y-auto::-webkit-scrollbar-thumb,
-          .group:hover .group-hover\\:overflow-y-auto::-webkit-scrollbar-thumb {
+          .overflow-y-auto::-webkit-scrollbar-thumb {
             background: rgba(156, 163, 175, 0.5);
             border-radius: 3px;
           }
           
-          .overflow-y-auto::-webkit-scrollbar-thumb:hover,
-          .group:hover .group-hover\\:overflow-y-auto::-webkit-scrollbar-thumb:hover {
+          .overflow-y-auto::-webkit-scrollbar-thumb:hover {
             background: rgba(156, 163, 175, 0.7);
           }
           

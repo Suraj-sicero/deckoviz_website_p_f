@@ -51,21 +51,6 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
   showOnlyFirstTwo = false,
   stepFilter
 }) => {
-  const getStepGradient = (stepNumber: string) => {
-    const gradients: Record<string, string> = {
-      "0.1": "radial-gradient(ellipse at top left, #dbeafe 0%, #e0e7ff 30%, #dbeafe 60%, #93c5fd 100%)",
-      "0.2": "radial-gradient(ellipse at top right, #e9d5ff 0%, #dbeafe 40%, #e9d5ff 70%, #c4b5fd 100%)",
-      "0.3": "radial-gradient(ellipse at bottom left, #fce7f3 0%, #ffe4e6 35%, #fce7f3 65%, #f9a8d4 100%)",
-      "0.4": "radial-gradient(ellipse at center, #fed7aa 0%, #fce7f3 45%, #fed7aa 75%, #fb923c 100%)",
-      "0.5": "radial-gradient(ellipse at top, #e9d5ff 0%, #fce7f3 40%, #e9d5ff 70%, #c084fc 100%)",
-      "0.6": "radial-gradient(ellipse at bottom right, #fce7f3 0%, #fed7aa 35%, #fce7f3 65%, #f472b6 100%)",
-      "0.7": "radial-gradient(ellipse at left, #dbeafe 0%, #e9d5ff 45%, #dbeafe 75%, #93c5fd 100%)",
-      "0.8": "radial-gradient(ellipse at right, #bbf7d0 0%, #a7f3d0 35%, #5eead4 70%, #2dd4bf 100%)",
-      "0.9": "radial-gradient(ellipse at center, #e9d5ff 0%, #fce7f3 40%, #e9d5ff 70%, #c084fc 100%)",
-    };
-    return gradients[stepNumber] || gradients["0.1"];
-  };
-
   const allSteps = [
     // Step 1 - Frame Size
     {
@@ -140,26 +125,29 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             onChange={(e) => formData.setCustomFrameRequest(e.target.value)}
             placeholder="Describe your Custom Frame request..."
             rows={3}
-            className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 resize-none transition-all duration-300 mb-3 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+            className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600"
           />
           <button
             type="button"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl font-medium transition-all duration-300 hover:from-indigo-600 hover:to-violet-600 hover:shadow-lg transform hover:scale-105 text-sm sm:text-base group"
+            onClick={() => {
+              console.log('Upload button clicked!');
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl font-medium hover:from-indigo-600 hover:to-violet-600 text-sm sm:text-base mt-3 cursor-pointer"
           >
-            <Upload className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
+            <Upload className="w-4 h-4" />
             Upload Reference Image
           </button>
         </div>
       )
     },
-    // Step 4 - Number of Units
+    // Step 4 - Number of Units  
     {
       id: "0.4",
       title: "Select Number of Units",
       icon: Package,
       color: "orange",
       content: (
-        <div className="w-full relative z-50">
+        <div className="w-full">
           <SimpleDropdown
             value={formData.selectedUnits}
             onChange={formData.setSelectedUnits}
@@ -176,39 +164,37 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       icon: Calendar,
       color: "purple",
       content: (
-        <div className="w-full max-w-2xl">
-          <div className="space-y-4">
-            <div className="relative z-40">
-              <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Type</label>
-              <EnhancedDropdown
-                value={formData.subscriptionType}
-                onChange={formData.setSubscriptionType}
-                placeholder="Select Type"
-                options={[
-                  { name: "Basic Plan", description: "Essential features for personal use" },
-                  { name: "Premium Plan", description: "Advanced features for professionals" },
-                  { name: "Pro Plan", description: "Complete solution for businesses" }
-                ]}
-              />
-            </div>
-            <div className="relative z-30">
-              <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Period</label>
-              <EnhancedDropdown
-                value={formData.subscriptionPeriod}
-                onChange={formData.setSubscriptionPeriod}
-                placeholder="Select Period"
-                options={[
-                  { name: "Monthly", description: "Billed every month" },
-                  { name: "Quarterly", description: "Billed every 3 months" },
-                  { name: "Yearly", description: "Billed annually with savings" }
-                ]}
-              />
-            </div>
+        <div className="w-full max-w-2xl space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Type</label>
+            <EnhancedDropdown
+              value={formData.subscriptionType}
+              onChange={formData.setSubscriptionType}
+              placeholder="Select Type"
+              options={[
+                { name: "Basic Plan", description: "Essential features for personal use" },
+                { name: "Premium Plan", description: "Advanced features for professionals" },
+                { name: "Pro Plan", description: "Complete solution for businesses" }
+              ]}
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Period</label>
+            <EnhancedDropdown
+              value={formData.subscriptionPeriod}
+              onChange={formData.setSubscriptionPeriod}
+              placeholder="Select Period"
+              options={[
+                { name: "Monthly", description: "Billed every month" },
+                { name: "Quarterly", description: "Billed every 3 months" },
+                { name: "Yearly", description: "Billed annually with savings" }
+              ]}
+            />
           </div>
         </div>
       )
     },
-    // Step 6 - Contact & Shipping
+    // Remaining steps 6-9 (same as before)
     {
       id: "0.6",
       title: "Contact & Shipping Information",
@@ -224,7 +210,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.name}
                 onChange={(e) => formData.setName(e.target.value)}
                 placeholder="Your Full Name"
-                className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 transition-all duration-300 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
               />
             </div>
             <div>
@@ -234,7 +220,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.email}
                 onChange={(e) => formData.setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 transition-all duration-300 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
               />
             </div>
             <div>
@@ -244,14 +230,13 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 onChange={(e) => formData.setShippingAddress(e.target.value)}
                 placeholder="Enter Your Full Shipping Address"
                 rows={3}
-                className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 resize-none transition-all duration-300 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600"
               />
             </div>
           </div>
         </div>
       )
     },
-    // Step 7 - Delivery Options
     {
       id: "0.7",
       title: "Delivery Options",
@@ -263,29 +248,29 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-3">Delivery Type</label>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                <label className="flex items-center cursor-pointer group/radio">
+                <label className="flex items-center cursor-pointer">
                   <input
                     type="radio"
                     name="deliveryType"
                     value="Standard Delivery"
                     checked={formData.deliveryType === "Standard Delivery"}
                     onChange={(e) => formData.setDeliveryType(e.target.value)}
-                    className="mr-3 accent-violet-500 transition-transform duration-200 checked:scale-125"
+                    className="mr-3 accent-violet-500"
                   />
-                  <span className="text-gray-700 font-medium text-sm sm:text-base group-hover/radio:text-violet-600 transition-colors duration-200">
+                  <span className="text-gray-700 font-medium text-sm sm:text-base">
                     Standard Delivery
                   </span>
                 </label>
-                <label className="flex items-center cursor-pointer group/radio">
+                <label className="flex items-center cursor-pointer">
                   <input
                     type="radio"
                     name="deliveryType"
                     value="Express Delivery"
                     checked={formData.deliveryType === "Express Delivery"}
                     onChange={(e) => formData.setDeliveryType(e.target.value)}
-                    className="mr-3 accent-red-600 transition-transform duration-200 checked:scale-125"
+                    className="mr-3 accent-red-600"
                   />
-                  <span className="text-gray-700 font-medium text-sm sm:text-base group-hover/radio:text-red-600 transition-colors duration-200">
+                  <span className="text-gray-700 font-medium text-sm sm:text-base">
                     Express Delivery
                   </span>
                 </label>
@@ -294,29 +279,29 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-3">Packaging Options</label>
               <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                <label className="flex items-center cursor-pointer group/radio">
+                <label className="flex items-center cursor-pointer">
                   <input
                     type="radio"
                     name="packagingType"
                     value="Standard"
                     checked={formData.packagingType === "Standard"}
                     onChange={(e) => formData.setPackagingType(e.target.value)}
-                    className="mr-3 accent-violet-500 transition-transform duration-200 checked:scale-125"
+                    className="mr-3 accent-violet-500"
                   />
-                  <span className="text-gray-700 font-medium text-sm sm:text-base group-hover/radio:text-violet-600 transition-colors duration-200">
+                  <span className="text-gray-700 font-medium text-sm sm:text-base">
                     Standard
                   </span>
                 </label>
-                <label className="flex items-center cursor-pointer group/radio">
+                <label className="flex items-center cursor-pointer">
                   <input
                     type="radio"
                     name="packagingType"
                     value="Eco-Friendly"
                     checked={formData.packagingType === "Eco-Friendly"}
                     onChange={(e) => formData.setPackagingType(e.target.value)}
-                    className="mr-3 accent-green-500 transition-transform duration-200 checked:scale-125"
+                    className="mr-3 accent-green-500"
                   />
-                  <span className="text-gray-700 font-medium text-sm sm:text-base group-hover/radio:text-green-600 transition-colors duration-200 inline-flex items-center gap-2">
+                  <span className="text-gray-700 font-medium text-sm sm:text-base inline-flex items-center gap-2">
                     Eco-Friendly
                     <Leaf className="w-4 h-4" />
                   </span>
@@ -327,7 +312,6 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
         </div>
       )
     },
-    // Step 8 - Review Total
     {
       id: "0.8",
       title: "Review Your Total",
@@ -335,7 +319,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       color: "green",
       content: (
         <div className="w-full">
-          <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 space-y-3 border border-gray-100/50">
+          <div className="bg-white rounded-xl p-4 space-y-3 border border-gray-100">
             <div className="flex justify-between items-center">
               <span className="text-gray-900 text-sm sm:text-base">Frame Cost:</span>
               <span className="font-semibold text-gray-900 text-sm sm:text-base">
@@ -370,7 +354,6 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
         </div>
       )
     },
-    // Step 9 - Payment Details
     {
       id: "0.9",
       title: "Payment Details",
@@ -386,7 +369,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.cardNumber}
                 onChange={(e) => formData.setCardNumber(e.target.value)}
                 placeholder="1234 567 8910 1234"
-                className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 transition-all duration-300 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -397,7 +380,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                   value={formData.expiryDate}
                   onChange={(e) => formData.setExpiryDate(e.target.value)}
                   placeholder="MM/YYYY"
-                  className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 transition-all duration-300 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
                 />
               </div>
               <div>
@@ -407,7 +390,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                   value={formData.cvv}
                   onChange={(e) => formData.setCvv(e.target.value)}
                   placeholder="123"
-                  className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 transition-all duration-300 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
                 />
               </div>
             </div>
@@ -418,7 +401,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.cardHolderName}
                 onChange={(e) => formData.setCardHolderName(e.target.value)}
                 placeholder="Your Name"
-                className="w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 transition-all duration-300 text-gray-700 placeholder-gray-600 hover:bg-white/90 hover:shadow-md"
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
               />
             </div>
           </div>
@@ -437,31 +420,26 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
   }
 
   const getColorClasses = (color: string) => {
-    const colorMap: Record<string, { badge: string, hover: string, icon: string }> = {
+    const colorMap: Record<string, { badge: string, icon: string }> = {
       blue: {
-        badge: "bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700 border-blue-200 group-hover:from-blue-200 group-hover:to-indigo-200",
-        hover: "group-hover:text-blue-700",
-        icon: "text-blue-600 group-hover:text-blue-700"
+        badge: "bg-blue-100 text-blue-700 border-blue-200",
+        icon: "text-blue-600"
       },
       purple: {
-        badge: "bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 border-purple-200 group-hover:from-purple-200 group-hover:to-blue-200",
-        hover: "group-hover:text-purple-700",
-        icon: "text-purple-600 group-hover:text-purple-700"
+        badge: "bg-purple-100 text-purple-700 border-purple-200",
+        icon: "text-purple-600"
       },
       pink: {
-        badge: "bg-gradient-to-r from-pink-100 to-rose-100 text-pink-700 border-pink-200 group-hover:from-pink-200 group-hover:to-rose-200",
-        hover: "group-hover:text-pink-700",
-        icon: "text-pink-600 group-hover:text-pink-700"
+        badge: "bg-pink-100 text-pink-700 border-pink-200",
+        icon: "text-pink-600"
       },
       orange: {
-        badge: "bg-gradient-to-r from-orange-100 to-pink-100 text-orange-700 border-orange-200 group-hover:from-orange-200 group-hover:to-pink-200",
-        hover: "group-hover:text-orange-700",
-        icon: "text-orange-600 group-hover:text-orange-700"
+        badge: "bg-orange-100 text-orange-700 border-orange-200",
+        icon: "text-orange-600"
       },
       green: {
-        badge: "bg-gradient-to-r from-green-100 to-teal-100 text-green-700 border-green-200 group-hover:from-green-200 group-hover:to-teal-200",
-        hover: "group-hover:text-green-700",
-        icon: "text-green-600 group-hover:text-green-700"
+        badge: "bg-green-100 text-green-700 border-green-200",
+        icon: "text-green-600"
       }
     };
     return colorMap[color] || colorMap.blue;
@@ -469,28 +447,21 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
 
   return (
     <div className="space-y-6">
-      {steps.map((step) => {
+      {steps.map((step, index) => {
         const colors = getColorClasses(step.color);
         const IconComponent = step.icon;
         
         return (
           <div
             key={step.id}
-            className="group bg-white/95 backdrop-blur-sm rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-gray-100 relative transition-all duration-500 hover:shadow-2xl hover:scale-[1.01] hover:border-purple-200/50"
-            style={{
-              background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%)",
-              zIndex: step.id === "0.4" ? 50 : step.id === "0.5" ? 40 : 10
-            }}
-            onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.background = getStepGradient(step.id);
-            }}
-            onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.background =
-                "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%)";
+            className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-gray-100 relative"
+            style={{ 
+              // Simple z-index that increases for later steps
+              zIndex: 20 - index
             }}
           >
             <div className="mb-4 sm:mb-6">
-              <div className={`text-sm font-medium px-3 py-1 rounded-full w-fit mb-4 transition-all duration-300 ${colors.badge}`}>
+              <div className={`text-sm font-medium px-3 py-1 rounded-full w-fit mb-4 ${colors.badge}`}>
                 {step.id}
               </div>
             </div>
@@ -498,11 +469,22 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             <div className="flex flex-col gap-6">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <IconComponent className={`w-6 h-6 transition-colors duration-300 ${colors.icon}`} />
-                  <h3 className={`text-xl sm:text-2xl font-semibold text-gray-900 leading-tight transition-colors duration-300 ${colors.hover}`}>
+                  <IconComponent className={`w-6 h-6 ${colors.icon}`} />
+                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-tight">
                     {step.title}
                   </h3>
                 </div>
+                {step.id === "0.1" && (
+                  <p className="text-gray-600 text-sm mt-4">
+                    Choose the size that best fits your space.
+                  </p>
+                )}
+                {step.id === "0.2" && (
+                  <p className="text-gray-600 text-sm mt-4">
+                    Choose from our curated collection of premium
+                    frame options.
+                  </p>
+                )}
                 {step.id === "0.3" && (
                   <p className="text-gray-600 text-sm mt-4">
                     Want something truly unique?
