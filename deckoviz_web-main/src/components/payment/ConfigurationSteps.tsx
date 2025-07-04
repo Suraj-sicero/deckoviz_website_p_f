@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Upload, Truck, CreditCard, Package, Calendar, MapPin, Sparkles, Star, Leaf } from 'lucide-react';
 import { EnhancedDropdown } from './EnhancedDropdown';
 import { SimpleDropdown } from './SimpleDropdown';
 import { SizeSelector } from './SizeSelector';
 import { frameTypeOptions, unitOptions } from './data/productOptions';
+import { subscriptionPlans } from "./data/subscriptionPlans";
 
 interface FormData {
   selectedFrameSize: string;
@@ -164,32 +165,34 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       icon: Calendar,
       color: "purple",
       content: (
-        <div className="w-full max-w-2xl space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Type</label>
-            <EnhancedDropdown
-              value={formData.subscriptionType}
-              onChange={formData.setSubscriptionType}
-              placeholder="Select Type"
-              options={[
-                { name: "Basic Plan", description: "Essential features for personal use" },
-                { name: "Premium Plan", description: "Advanced features for professionals" },
-                { name: "Pro Plan", description: "Complete solution for businesses" }
-              ]}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Period</label>
-            <EnhancedDropdown
-              value={formData.subscriptionPeriod}
-              onChange={formData.setSubscriptionPeriod}
-              placeholder="Select Period"
-              options={[
-                { name: "Monthly", description: "Billed every month" },
-                { name: "Quarterly", description: "Billed every 3 months" },
-                { name: "Yearly", description: "Billed annually with savings" }
-              ]}
-            />
+        <div className="w-full max-w-2xl">
+          <div className="space-y-4">
+            <div className="relative z-40">
+              <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Type</label>
+              <EnhancedDropdown
+                value={formData.subscriptionType}
+                onChange={formData.setSubscriptionType}
+                placeholder="Select Type"
+                options={[
+                  { name: "Basic Plan", description: "Essential features for personal use" },
+                  { name: "Premium Plan", description: "Advanced features for professionals" },
+                  { name: "Pro Plan", description: "Complete solution for businesses" }
+                ]}
+              />
+            </div>
+            <div className="relative z-30">
+              <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Period</label>
+              <EnhancedDropdown
+                value={formData.subscriptionPeriod}
+                onChange={formData.setSubscriptionPeriod}
+                placeholder="Select Period"
+                options={[
+                  { name: "Monthly", description: "Billed every month" },
+                  { name: "Quarterly", description: "Billed every 3 months" },
+                  { name: "Yearly", description: "Billed annually with savings" }
+                ]}
+              />
+            </div>
           </div>
         </div>
       )
@@ -328,7 +331,14 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-900 text-sm sm:text-base">Subscription Cost:</span>
-              <span className="font-semibold text-gray-900 text-sm sm:text-base">$9.00</span>
+              <span className="font-semibold text-gray-900 text-sm sm:text-base">
+                {(() => {
+                  const selectedPlan = subscriptionPlans.find(plan => plan.name === formData.subscriptionType);
+                  if (!selectedPlan || !formData.subscriptionPeriod) return "$0.00";
+                  const price = formData.subscriptionPeriod === 'Yearly' ? selectedPlan.yearlyPrice : selectedPlan.monthlyPrice;
+                  return `$${price}.00`;
+                })()}
+              </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-gray-900 text-sm sm:text-base">Delivery Cost:</span>
