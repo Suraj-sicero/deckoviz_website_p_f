@@ -71,7 +71,6 @@ export const EnhancedDropdown: React.FC<EnhancedDropdownProps> = ({
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-100/40 to-transparent opacity-0 group-hover:opacity-100 group-hover:translate-x-full transition-all duration-500 -skew-x-12"></div>
-                  
                   <div className="flex items-center gap-4 relative z-10">
                     {option.image && (
                       <img 
