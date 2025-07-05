@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ShoppingCart, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { ShoppingCart} from 'lucide-react';
 import { ConfigurationSteps } from './ConfigurationSteps';
 import { VisualPreview } from './VisualPreview';
 import { frameSizeOptions, frameTypeOptions } from './data/productOptions';
@@ -73,6 +73,11 @@ const DeckovizCustomizer = () => {
     getSelectedType,
     calculateTotal
   };
+  const confirmOrder = () => {
+    // go to order-confirmed
+    window.location.href = '/order-confirmed';
+  }
+
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -107,12 +112,10 @@ const DeckovizCustomizer = () => {
               <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-20 pb-8 text-center">
-                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-medium mb-3 bg-clip-text text-transparent bg-gray-700">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl mt-4 font-medium mb-3 bg-clip-text text-transparent bg-gray-700">
                     Get Your Deckoviz
                   </h1>
-                  <p className="text-gray-600  font-medium text-sm sm:text-base mb-2">
-                    Bring your walls to life with the world's most advanced AI-powered Smart Art Frame.
-                    <br />
+                  <p className="text-gray-600  font-medium text-sm sm:text-base  mt-6 mb-2">
                     Follow the simple steps below to customize and place your order.
                   </p>
                   
@@ -125,21 +128,27 @@ const DeckovizCustomizer = () => {
                 
                 {/* Bottom Button - now scrollable */}
                 <div className="py-8 flex justify-center">
-                  <button
+                  <button onClick={confirmOrder}
                     type="button"
-                    className="group relative overflow-hidden text-white py-3 sm:py-2 px-6 sm:px-5 rounded-2xl font-medium text-base sm:text-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-200/50 hover:scale-105 w-full sm:w-auto"
+                    className="group relative overflow-hidden text-white py-3 sm:py-2 px-6 sm:px-5 rounded-2xl font-medium text-base sm:text-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-200/50 hover:scale-[1.02] transition-all duration-300 w-full sm:w-auto backdrop-blur-sm border border-white/20"
                     style={{
                       background: "linear-gradient(135deg, #ea580c 0%, #7c3aed 35%, #4338ca 70%, #1e1b4b 100%)",
                       boxShadow: "0 8px 32px rgba(124, 58, 237, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                     }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100"></div>
+                    {/* Glass shimmer effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out"></div>
+                    
+                    {/* Subtle glass overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    
                     <span className="relative z-10 flex items-center justify-center gap-2">
                       <ShoppingCart className="w-5 h-5" />
                       Check out
                     </span>
                   </button>
                 </div>
+
               </div>
             </div>
 

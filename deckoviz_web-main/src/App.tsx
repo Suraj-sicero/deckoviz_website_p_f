@@ -36,6 +36,7 @@ import HowItWorks from './components/homepage/HowItWorks';
 import Leaderboard from './components/Leaderboard';
 import TransformWalls from './components/homepage/Transform';
 import DesignedFor from './components/homepage/DesignedFor';
+import OrderConfirmed from './components/payment/OrderConfirmed';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -99,13 +100,11 @@ const App: React.FC = () => {
         <Route path ="/deckoviz-for-therapists" element={<DeckovizTherapistsLanding />} />
         <Route path ="/deckoviz-for-schools" element={<DeckovizSchoolsLanding />} />
         <Route path ="/deckoviz-for-retailstores" element={<DeckovizForRetail />} />
-         <Route path ="/Wall-Of-Love" element={<WallOfLove/>} />
-           <Route path ="/Leaderboard" element={<Leaderboard/>} />
-           <Route path ="/Transform-Walls" element={<TransformWalls/>} />
-
-
-
+        <Route path ="/Wall-Of-Love" element={<WallOfLove/>} />
+        <Route path ="/Leaderboard" element={<Leaderboard/>} />
+        <Route path ="/Transform-Walls" element={<TransformWalls/>} />
         <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/order-confirmed" element={<OrderConfirmed />} />
         {/* <Route path="/gallery" element={<Gallery />} /> */}
         
         {/* <Route path="/testimonials" element={<Testimonials />} /> */}
