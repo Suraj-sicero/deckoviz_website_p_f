@@ -73,35 +73,35 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
               placeholder="Choose Size"
               options={[
                 { 
-                  name: "Starter Unit (43 inches)", 
-                  image: "images/Gemini_Generated_Image_7awqtl7awqtl7awq.jpeg", 
-                  price: 649,
-                  description: "Perfect for small to medium rooms"
-                },
-                { 
-                  name: "Premium Unit (55 inches)", 
-                  image: "images/Gemini_Generated_Image_3gz8oz3gz8oz3gz8.jpeg", 
-                  price: 849,
-                  description: "Ideal for living rooms and offices"
-                },
-                { 
-                  name: "Ultra Unit (65 inches)", 
-                  image: "images/Gemini_Generated_Image_nkwnr0nkwnr0nkwn.jpg", 
-                  price: 1049,
-                  description: "Premium choice for large spaces"
-                },
-                { 
-                  name: "Pro Unit (75 inches)",
-                  image: "images/Gemini_Generated_Image_7awqtl7awqtl7awq.jpeg",
-                  price: 1249,
-                  description: "Professional grade for executive spaces"
-                },
-                {
-                  name: "Elite Unit (85 inches)",
-                  image: "images/Gemini_Generated_Image_3gz8oz3gz8oz3gz8.jpeg",
-                  price: 1549,
-                  description: "Ultimate luxury for premium installations"
-                }
+    name: "Starter Unit (43 inches)", 
+    image: "images/framesize1.avif", 
+    price: 649,
+    description: "Perfect for small to medium rooms"
+  },
+  { 
+    name: "Premium Unit (55 inches)", 
+    image: "images/framesize2.webp", 
+    price: 849,
+    description: "Ideal for living rooms and offices"
+  },
+  { 
+    name: "Ultra Unit (65 inches)", 
+    image: "images/framesize3.jpg", 
+    price: 1049,
+    description: "Premium choice for large spaces"
+  },
+  { 
+    name: "Pro Unit (75 inches)", 
+    image: "images/framesize4.png", 
+    price: 1249,
+    description: "Professional grade for executive spaces"
+  },
+  { 
+    name: "Elite Unit (85 inches)", 
+    image: "images/framesize5.avif", 
+    price: 1549,
+    description: "Ultimate luxury for premium installations"
+  }
               ]}
             />
           )}

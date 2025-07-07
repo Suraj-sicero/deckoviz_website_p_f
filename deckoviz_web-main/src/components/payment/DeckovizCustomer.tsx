@@ -192,12 +192,13 @@ const DeckovizCustomizer = () => {
             <div className="max-w-4xl mx-auto">
               {/* Header - now scrollable */}
               <div className="relative z-10 text-center pt-12 sm:pt-16 md:pt-20 pb-3">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-medium mb-3 sm:mb-4 bg-clip-text text-transparent bg-gray-700">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl mt-6 font-medium mb-3 sm:mb-4 bg-clip-text text-transparent bg-gray-700">
                   Get Your Deckoviz
                 </h1>
                 <p className="text-gray-800 font-medium text-xs sm:text-sm md:text-base mb-2 px-4">
                   Bring your walls to life with the world's most advanced AI-powered Smart Art Frame.
-                  <br className="hidden sm:block" />
+                <br />
+                <br />
                   Please select a frame size to begin customizing your order.
                 </p>
                 
