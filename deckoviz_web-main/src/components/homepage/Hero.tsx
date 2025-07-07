@@ -83,20 +83,24 @@ const Hero: React.FC = () => {
   const leftImages = [
     "/images/lefthero1.png",
     "/images/lefthero2.png", 
-    "/images/lefthero3.png"
+    "/images/lefthero3.png",
+    "/images/lefthero4.png",
+    "/images/lefthero5.png"
+
   ]
 
   const rightImages = [
     "/images/righthero1.png",
     "/images/righthero2.png",
     "/images/righthero3.png"
+    
   ]
 
   useEffect(() => {
     const interval = setInterval(() => {
       setLeftImageIndex((prev) => (prev + 1) % leftImages.length)
       setRightImageIndex((prev) => (prev + 1) % rightImages.length)
-    }, 5000) // Changed to 5 seconds for slower transitions
+    }, 4000) // Changed to 4 seconds for slower transitions
 
     return () => clearInterval(interval)
   }, [])
@@ -122,7 +126,7 @@ const Hero: React.FC = () => {
 
           {/* Main content with images and stats */}
           <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 mb-10">
-            {/* Left Image - RAW with immersive fade transitions and gradient glow */}
+            {/* Left Image - Fixed container with smooth transitions */}
             <div className="relative flex-1 flex justify-center">
               {/* Gradient glow behind left image */}
               <div
@@ -132,22 +136,17 @@ const Hero: React.FC = () => {
   filter: "blur(40px)",
   zIndex: -1,
 }}
-
-
               />
-              <div className="relative">
+              {/* Fixed size container to prevent layout shifts */}
+              <div className="relative w-96 h-96 flex items-center justify-center">
                 {leftImages.map((image, index) => (
                   <img
                     key={index}
                     src={image}
                     alt={`Left artwork ${index + 1}`}
-                    className={`w-auto h-auto max-w-full transition-all duration-[2500ms] ease-in-out ${
-                      index === leftImageIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 absolute inset-0'
+                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ease-in-out ${
+                      index === leftImageIndex ? 'opacity-100' : 'opacity-0'
                     }`}
-                    style={{
-                      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-                      transitionProperty: 'opacity, transform',
-                    }}
                   />
                 ))}
               </div>
@@ -235,8 +234,8 @@ const Hero: React.FC = () => {
               
             </div>
 
-            {/* Right Image - RAW with immersive fade transitions and gradient glow */}
-            <div className="relative flex-1 flex justify-center">
+            {/* Right Image - Fixed container with smooth transitions */}
+            <div className="relative flex-1 flex justify-end">
               {/* Gradient glow behind right image */}
               <div
                 className="absolute inset-0 transform"
@@ -246,19 +245,16 @@ const Hero: React.FC = () => {
                   zIndex: -1,
                 }}
               />
-              <div className="relative">
+              {/* Fixed size container to prevent layout shifts */}
+              <div className="relative w-96 h-96 flex items-center justify-center">
                 {rightImages.map((image, index) => (
                   <img
                     key={index}
                     src={image}
                     alt={`Right artwork ${index + 1}`}
-                    className={`w-auto h-auto max-w-full transition-all duration-[2500ms] ease-in-out ${
-                      index === rightImageIndex ? 'opacity-100 scale-100' : 'opacity-0 scale-105 absolute inset-0'
+                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ease-in-out ${
+                      index === rightImageIndex ? 'opacity-100' : 'opacity-0'
                     }`}
-                    style={{
-                      transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
-                      transitionProperty: 'opacity, transform',
-                    }}
                   />
                 ))}
               </div>

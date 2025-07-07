@@ -60,7 +60,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       icon: Package,
       color: "blue",
       content: (
-        <div className="w-full lg:w-[40rem]">
+        <div className="w-full">
           {formData.selectedFrameSize ? (
             <SizeSelector 
               selectedFrameSize={formData.selectedFrameSize}
@@ -73,23 +73,35 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
               placeholder="Choose Size"
               options={[
                 { 
-    name: "Starter Unit (43 inches)", 
-    image: "images/Gemini_Generated_Image_7awqtl7awqtl7awq.jpeg", 
-    price: 649,
-    description: "Perfect for small to medium rooms"
-  },
-  { 
-    name: "Premium Unit (55 inches)", 
-    image: "images/Gemini_Generated_Image_3gz8oz3gz8oz3gz8.jpeg", 
-    price: 849,
-    description: "Ideal for living rooms and offices"
-  },
-  { 
-    name: "Ultra Unit (65 inches)", 
-    image: "images/Gemini_Generated_Image_nkwnr0nkwnr0nkwn.jpg", 
-    price: 1049,
-    description: "Premium choice for large spaces"
-  }
+                  name: "Starter Unit (43 inches)", 
+                  image: "images/Gemini_Generated_Image_7awqtl7awqtl7awq.jpeg", 
+                  price: 649,
+                  description: "Perfect for small to medium rooms"
+                },
+                { 
+                  name: "Premium Unit (55 inches)", 
+                  image: "images/Gemini_Generated_Image_3gz8oz3gz8oz3gz8.jpeg", 
+                  price: 849,
+                  description: "Ideal for living rooms and offices"
+                },
+                { 
+                  name: "Ultra Unit (65 inches)", 
+                  image: "images/Gemini_Generated_Image_nkwnr0nkwnr0nkwn.jpg", 
+                  price: 1049,
+                  description: "Premium choice for large spaces"
+                },
+                { 
+                  name: "Pro Unit (75 inches)",
+                  image: "images/Gemini_Generated_Image_7awqtl7awqtl7awq.jpeg",
+                  price: 1249,
+                  description: "Professional grade for executive spaces"
+                },
+                {
+                  name: "Elite Unit (85 inches)",
+                  image: "images/Gemini_Generated_Image_3gz8oz3gz8oz3gz8.jpeg",
+                  price: 1549,
+                  description: "Ultimate luxury for premium installations"
+                }
               ]}
             />
           )}
@@ -103,7 +115,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       icon: Star,
       color: "purple",
       content: (
-        <div className="w-full lg:w-[40rem]">
+        <div className="w-full">
           <EnhancedDropdown
             value={formData.selectedFrameType}
             onChange={formData.setSelectedFrameType}
@@ -126,14 +138,14 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             onChange={(e) => formData.setCustomFrameRequest(e.target.value)}
             placeholder="Describe your Custom Frame request..."
             rows={3}
-            className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600"
+            className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600 text-sm sm:text-base"
           />
           <button
             type="button"
             onClick={() => {
               console.log('Upload button clicked!');
             }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl font-medium hover:from-indigo-600 hover:to-violet-600 text-sm sm:text-base mt-3 cursor-pointer"
+            className="inline-flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-gradient-to-r from-indigo-500 to-violet-500 text-white rounded-xl font-medium hover:from-indigo-600 hover:to-violet-600 text-xs sm:text-sm md:text-base mt-3 cursor-pointer w-full sm:w-auto justify-center sm:justify-start"
           >
             <Upload className="w-4 h-4" />
             Upload Reference Image
@@ -165,8 +177,8 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       icon: Calendar,
       color: "purple",
       content: (
-        <div className="w-full max-w-2xl">
-          <div className="space-y-4">
+        <div className="w-full">
+          <div className="space-y-4 sm:space-y-6">
             <div className="relative z-40">
               <label className="block text-sm font-medium text-gray-600 mb-2">Subscription Type</label>
               <EnhancedDropdown
@@ -197,7 +209,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
         </div>
       )
     },
-    // Remaining steps 6-9 (same as before)
+    // Step 6 - Contact & Shipping Information
     {
       id: "0.6",
       title: "Contact & Shipping Information",
@@ -205,7 +217,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       color: "pink",
       content: (
         <div className="w-full">
-          <div className="space-y-4">
+          <div className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
               <input
@@ -213,7 +225,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.name}
                 onChange={(e) => formData.setName(e.target.value)}
                 placeholder="Your Full Name"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
             <div>
@@ -223,7 +235,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.email}
                 onChange={(e) => formData.setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
             <div>
@@ -233,13 +245,14 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 onChange={(e) => formData.setShippingAddress(e.target.value)}
                 placeholder="Enter Your Full Shipping Address"
                 rows={3}
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
           </div>
         </div>
       )
     },
+    // Step 7 - Delivery Options
     {
       id: "0.7",
       title: "Delivery Options",
@@ -247,11 +260,11 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       color: "blue",
       content: (
         <div className="w-full">
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-3">Delivery Type</label>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                <label className="flex items-center cursor-pointer">
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <label className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
                   <input
                     type="radio"
                     name="deliveryType"
@@ -264,7 +277,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                     Standard Delivery
                   </span>
                 </label>
-                <label className="flex items-center cursor-pointer">
+                <label className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
                   <input
                     type="radio"
                     name="deliveryType"
@@ -281,8 +294,8 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-600 mb-3">Packaging Options</label>
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8">
-                <label className="flex items-center cursor-pointer">
+              <div className="flex flex-col gap-3 sm:gap-4">
+                <label className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
                   <input
                     type="radio"
                     name="packagingType"
@@ -295,7 +308,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                     Standard
                   </span>
                 </label>
-                <label className="flex items-center cursor-pointer">
+                <label className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-gray-50 transition-colors">
                   <input
                     type="radio"
                     name="packagingType"
@@ -315,6 +328,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
         </div>
       )
     },
+    // Step 8 - Review Your Total
     {
       id: "0.8",
       title: "Review Your Total",
@@ -322,16 +336,16 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       color: "green",
       content: (
         <div className="w-full">
-          <div className="bg-white rounded-xl p-4 space-y-3 border border-gray-100">
+          <div className="bg-white rounded-xl p-3 sm:p-4 md:p-6 space-y-3 border border-gray-100">
             <div className="flex justify-between items-center">
-              <span className="text-gray-900 text-sm sm:text-base">Frame Cost:</span>
-              <span className="font-semibold text-gray-900 text-sm sm:text-base">
+              <span className="text-gray-900 text-xs sm:text-sm md:text-base">Frame Cost:</span>
+              <span className="font-semibold text-gray-900 text-xs sm:text-sm md:text-base">
                 ${formData.getSelectedSize()?.price || 0}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-900 text-sm sm:text-base">Subscription Cost:</span>
-              <span className="font-semibold text-gray-900 text-sm sm:text-base">
+              <span className="text-gray-900 text-xs sm:text-sm md:text-base">Subscription Cost:</span>
+              <span className="font-semibold text-gray-900 text-xs sm:text-sm md:text-base">
                 {(() => {
                   const selectedPlan = subscriptionPlans.find(plan => plan.name === formData.subscriptionType);
                   if (!selectedPlan || !formData.subscriptionPeriod) return "$0.00";
@@ -341,21 +355,21 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-900 text-sm sm:text-base">Delivery Cost:</span>
-              <span className="font-semibold text-gray-900 text-sm sm:text-base">
+              <span className="text-gray-900 text-xs sm:text-sm md:text-base">Delivery Cost:</span>
+              <span className="font-semibold text-gray-900 text-xs sm:text-sm md:text-base">
                 {formData.deliveryType === "Express Delivery" ? "$19.00" : "$9.00"}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-900 text-sm sm:text-base">Packaging:</span>
-              <span className="font-semibold text-gray-900 text-sm sm:text-base">
+              <span className="text-gray-900 text-xs sm:text-sm md:text-base">Packaging:</span>
+              <span className="font-semibold text-gray-900 text-xs sm:text-sm md:text-base">
                 {formData.packagingType === "Eco-Friendly" ? "+$5.00" : "$0.00"}
               </span>
             </div>
             <hr className="border-gray-200" />
             <div className="flex justify-between items-center">
-              <span className="text-lg font-bold text-gray-900">Total Price</span>
-              <span className="text-lg font-bold text-gray-900">
+              <span className="text-base sm:text-lg md:text-xl font-bold text-gray-900">Total Price</span>
+              <span className="text-base sm:text-lg md:text-xl font-bold text-gray-900">
                 ${formData.calculateTotal()}
               </span>
             </div>
@@ -364,6 +378,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
         </div>
       )
     },
+    // Step 9 - Payment Details
     {
       id: "0.9",
       title: "Payment Details",
@@ -371,36 +386,36 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       color: "purple",
       content: (
         <div className="w-full">
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3">Card Number</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">Card Number</label>
               <input
                 type="text"
                 value={formData.cardNumber}
                 onChange={(e) => formData.setCardNumber(e.target.value)}
                 placeholder="1234 567 8910 1234"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">Expiry Date</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">Expiry Date</label>
                 <input
                   type="text"
                   value={formData.expiryDate}
                   onChange={(e) => formData.setExpiryDate(e.target.value)}
                   placeholder="MM/YYYY"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-3">CVV</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2 sm:mb-3">CVV</label>
                 <input
                   type="text"
                   value={formData.cvv}
                   onChange={(e) => formData.setCvv(e.target.value)}
                   placeholder="123"
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
                 />
               </div>
             </div>
@@ -411,7 +426,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.cardHolderName}
                 onChange={(e) => formData.setCardHolderName(e.target.value)}
                 placeholder="Your Name"
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
           </div>
@@ -456,7 +471,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {steps.map((step, index) => {
         const colors = getColorClasses(step.color);
         const IconComponent = step.icon;
@@ -464,69 +479,68 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
         return (
           <div
             key={step.id}
-            className="bg-white rounded-2xl p-4 sm:p-6 lg:p-8 shadow-lg border border-gray-100 relative"
+            className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 lg:p-8 shadow-lg border border-gray-100 relative"
             style={{ 
               // Simple z-index that increases for later steps
               zIndex: 20 - index
             }}
           >
-            <div className="mb-4 sm:mb-6">
-              <div className={`text-sm font-medium px-3 py-1 rounded-full w-fit mb-4 ${colors.badge}`}>
+            <div className="mb-3 sm:mb-4 md:mb-6">
+              <div className={`text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 rounded-full w-fit mb-3 sm:mb-4 ${colors.badge}`}>
                 {step.id}
               </div>
             </div>
             
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-4 sm:gap-6">
               <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <IconComponent className={`w-6 h-6 ${colors.icon}`} />
-                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-900 leading-tight">
+                <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                  <IconComponent className={`w-5 h-5 sm:w-6 sm:h-6 ${colors.icon}`} />
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-900 leading-tight">
                     {step.title}
                   </h3>
                 </div>
                 {step.id === "0.1" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Choose the size that best fits your space.
                   </p>
                 )}
                 {step.id === "0.2" && (
-                  <p className="text-gray-600 text-sm mt-4">
-                    Choose from our curated collection of premium
-                    frame options.
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
+                    Choose from our curated collection of premium frame options.
                   </p>
                 )}
                 {step.id === "0.3" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Want something truly unique?
                   </p>
                 )}
                 {step.id === "0.4" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Need multiple Deckoviz frames? We've got you covered.
                   </p>
                 )}
                 {step.id === "0.5" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Choose your plan, which is best for you.
                   </p>
                 )}
                 {step.id === "0.6" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Please ensure your information is accurate to avoid delivery issues.
                   </p>
                 )}
                 {step.id === "0.7" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Choose your options according to your needs.
                   </p>
                 )}
                 {step.id === "0.8" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Review your total cost before proceeding to payment.
                   </p>
                 )}
                 {step.id === "0.9" && (
-                  <p className="text-gray-600 text-sm mt-4">
+                  <p className="text-gray-600 text-xs sm:text-sm mt-2 sm:mt-4">
                     Your payment is secure and encrypted.
                   </p>
                 )}
