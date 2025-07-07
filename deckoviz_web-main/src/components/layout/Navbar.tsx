@@ -104,6 +104,83 @@ const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", ch
   )
 }
 
+// OPTIMIZATION 1: Preload Component for Images
+const ImagePreloader: React.FC = () => {
+  useEffect(() => {
+    // List of all images used in dropdowns
+    const imagesToPreload = [
+      "/images/hotelnavbar.png",
+      "/images/restaurantnavbar.png", 
+      "/images/architectnavbar.png",
+      "/images/officenavbar.png",
+      "/images/realestatenavbar.png",
+      "/images/therapistnavbar.png",
+      "/images/schoolnavbar.png",
+      "/images/retailnavbar.png"
+    ]
+
+    // Preload all images
+    imagesToPreload.forEach(src => {
+      const img = new Image()
+      img.src = src
+      // Optional: Add to cache with specific loading attributes
+      img.loading = 'eager'
+    })
+  }, [])
+
+  return null // This component doesn't render anything
+}
+
+// OPTIMIZATION 2: Optimized Image Component with Fallback
+interface OptimizedImageProps {
+  src: string
+  alt: string
+  className?: string
+  fallbackColor?: string
+}
+
+const OptimizedImage: React.FC<OptimizedImageProps> = ({ 
+  src, 
+  alt, 
+  className = "", 
+  fallbackColor = "bg-gradient-to-br from-purple-100 to-purple-200" 
+}) => {
+  const [imageLoaded, setImageLoaded] = useState(false)
+  const [imageError, setImageError] = useState(false)
+
+  return (
+    <div className={`relative ${className}`}>
+      {/* Fallback/Loading state */}
+      {(!imageLoaded || imageError) && (
+        <div className={`absolute inset-0 ${fallbackColor} rounded-lg flex items-center justify-center`}>
+          {imageError ? (
+            // Error state - show first letter of alt text
+            <span className="text-white font-semibold text-xs">
+              {alt.charAt(0)}
+            </span>
+          ) : (
+            // Loading state - simple animation
+            <div className="w-3 h-3 bg-white/50 rounded-full animate-pulse"></div>
+          )}
+        </div>
+      )}
+      
+      {/* Actual image */}
+      <img 
+        src={src} 
+        alt={alt}
+        className={`w-full h-full object-cover rounded-lg transition-opacity duration-200 ${
+          imageLoaded ? 'opacity-100' : 'opacity-0'
+        }`}
+        onLoad={() => setImageLoaded(true)}
+        onError={() => setImageError(true)}
+        loading="eager" // Load immediately, don't wait for viewport
+        decoding="async" // Non-blocking decode
+      />
+    </div>
+  )
+}
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isScrolled, setIsScrolled] = useState<boolean>(false)
@@ -147,67 +224,79 @@ const Navbar: React.FC = () => {
     setIsOpen(false)
   }
 
+  // OPTIMIZATION 3: Move business categories to top level to avoid recreation
   const businessCategories = [
     {
       title: "Hotels & Resorts",
       description: "Elevate guest experiences",
       image: "/images/hotelnavbar.png",
       gradient: "from-blue-500 to-cyan-500",
-      route: "/deckoviz-for-hotels"
+      route: "/deckoviz-for-hotels",
+      fallbackColor: "bg-gradient-to-br from-blue-100 to-cyan-100"
     },
     {
       title: "Restaurants & Cafés",
       description: "Create dining ambiance",
       image: "/images/restaurantnavbar.png",
       gradient: "from-orange-500 to-red-500",
-      route: "/deckoviz-for-restaurants"
+      route: "/deckoviz-for-restaurants",
+      fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100"
     },
     {
       title: "Architects & Designers",
       description: "Design living spaces",
       image: "/images/architectnavbar.png",
       gradient: "from-purple-500 to-pink-500",
-      route: "/deckoviz-for-architects"
+      route: "/deckoviz-for-architects",
+      fallbackColor: "bg-gradient-to-br from-purple-100 to-pink-100"
     },
     {
       title: "Offices & Workspaces",
       description: "Inspire productivity",
       image: "/images/officenavbar.png",
       gradient: "from-green-500 to-emerald-500",
-      route: "/deckoviz-for-offices"
+      route: "/deckoviz-for-offices",
+      fallbackColor: "bg-gradient-to-br from-green-100 to-emerald-100"
     },
     {
       title: "Real Estate",
       description: "Showcase properties",
       image: "/images/realestatenavbar.png",
       gradient: "from-indigo-500 to-blue-500",
-      route: "/deckoviz-for-realestate"
+      route: "/deckoviz-for-realestate",
+      fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100"
     },
     {
       title: "Wellness & Therapy",
       description: "Healing environments",
       image: "/images/therapistnavbar.png",
       gradient: "from-teal-500 to-cyan-500",
-      route: "/deckoviz-for-therapists"
+      route: "/deckoviz-for-therapists",
+      fallbackColor: "bg-gradient-to-br from-teal-100 to-cyan-100"
     },
     {
       title: "Schools & Learning",
       description: "Educational spaces",
       image: "/images/schoolnavbar.png",
       gradient: "from-yellow-500 to-orange-500",
-      route: "/deckoviz-for-schools"
+      route: "/deckoviz-for-schools",
+      fallbackColor: "bg-gradient-to-br from-yellow-100 to-orange-100"
     },
     {
       title: "Retail & Showrooms",
       description: "Shopping experiences",
       image: "/images/retailnavbar.png",
       gradient: "from-pink-500 to-rose-500",
-      route: "/deckoviz-for-retailstores"
+      route: "/deckoviz-for-retailstores",
+      fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100"
     }
   ]
 
   return (
     <>
+      {/* OPTIMIZATION 1: Add Image Preloader */}
+      <ImagePreloader />
+      
       <nav
         className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"}`}
       >
@@ -339,7 +428,7 @@ const Navbar: React.FC = () => {
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
                 </button>
 
-                {/* Beautiful Dropdown */}
+                {/* Beautiful Dropdown with Optimized Images */}
                 <div className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
                   isBusinessDropdownOpen 
                     ? 'opacity-100 visible translate-y-0' 
@@ -369,10 +458,12 @@ const Navbar: React.FC = () => {
                           {/* Content */}
                           <div className="relative z-10 flex items-start space-x-3">
                             <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
-                              <img 
+                              {/* OPTIMIZATION 2: Use OptimizedImage component */}
+                              <OptimizedImage 
                                 src={category.image} 
                                 alt={category.title}
-                                className="w-full h-full object-cover rounded-lg"
+                                className="w-8 h-8"
+                                fallbackColor={category.fallbackColor}
                               />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -464,7 +555,7 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation - Fixed position under navbar */}
+        {/* Mobile Navigation with Optimized Images */}
         <div
           className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${
             isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
@@ -498,10 +589,12 @@ const Navbar: React.FC = () => {
                       className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
                     >
                       <div className="w-6 h-6 flex-shrink-0">
-                        <img 
+                        {/* OPTIMIZATION 2: Use OptimizedImage in mobile too */}
+                        <OptimizedImage 
                           src={category.image} 
                           alt={category.title}
-                          className="w-full h-full object-cover rounded"
+                          className="w-6 h-6"
+                          fallbackColor={category.fallbackColor}
                         />
                       </div>
                       <div className="flex-1 min-w-0">
