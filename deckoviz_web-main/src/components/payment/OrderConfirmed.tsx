@@ -1,5 +1,5 @@
-import React from 'react';
-import { Check, Package, Truck, Mail, Calendar, MapPin, Phone, ArrowRight } from 'lucide-react';
+
+import { Check, Package, Truck, Mail, Phone, ArrowRight } from 'lucide-react';
 
 const OrderConfirmed = () => {
   return (
@@ -190,11 +190,11 @@ const OrderConfirmed = () => {
               You've just unlocked your portal into the future
             </h2>
             <p className="text-gray-300 text-xl font-light max-w-4xl mx-auto leading-relaxed mb-8">
-              Deckoviz isn't just a frame—it's a living window into your evolving world. 
-              Every wall it touches becomes more alive, more you.
+              Deckoviz isn't just a frame, it's a living window into your evolving world. 
+              Every wall it touches becomes more alive, more YOU.
             </p>
             <p className="text-gray-400 font-light">
-              Welcome to the revolution of space and self-expression
+              Welcome to the revolution of space and self-expression.
             </p>
           </div>
 

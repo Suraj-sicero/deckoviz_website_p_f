@@ -219,13 +219,13 @@ const Hero: React.FC = () => {
         </div>
       </div>
       
-      {/* Bottom Row - Happy Customers (centered) */}
+      {/* Bottom Row - Ways of Exploring (centered) */}
       <div className="flex justify-center">
         <div className="text-center group/stat hover:scale-105 transition-transform duration-300">
-          <div className="text-4xl font-bold bg-gradient-to-r from-[#6C63FF] to-[#4F46E5] bg-clip-text text-transparent mb-1">
-            <CountUp from={0} to={50} duration={2} suffix="K+" />
+          <div className="text-6xl font-bold bg-gradient-to-r from-[#6C63FF] to-[#4F46E5] bg-clip-text text-transparent mb-1">
+            ∞
           </div>
-          <div className="text-gray-600 text-md font-medium mr-3">Happy Customers</div>
+          <div className="text-gray-600 text-md font-medium mr-3">Ways of Exploring</div>
           <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
         </div>
       </div>
