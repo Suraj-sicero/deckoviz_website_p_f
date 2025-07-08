@@ -367,7 +367,7 @@ const FAQ: React.FC = () => {
           {/* Main content container - made wider */}
           <div className="relative max-w-6xl mx-auto px-4">
             {/* Large Mail Icon - positioned to overlap */}
-            <div className="flex justify-center relative z-50 mb-16">
+            <div className="flex justify-center relative z-20 mb-16">
               <img src="/images/mailnoti.png" alt="Mail Notification" className="w-32 h-32 object-contain" />
             </div>
 

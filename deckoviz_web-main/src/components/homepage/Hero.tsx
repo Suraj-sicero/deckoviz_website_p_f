@@ -82,28 +82,52 @@ const Hero: React.FC = () => {
 
   const leftImages = [
     "/images/lefthero1.png",
-    "/images/lefthero2.png", 
-    "/images/lefthero3.png",
+    "/images/lefthero7.png",
+    "/images/lefthero8.png",
+    "/images/lefthero9.png",
     "/images/lefthero4.png",
-    "/images/lefthero5.png"
+    "/images/lefthero5.png",
+    "/images/lefthero6.png",
+    "/images/lefthero2.png",
+    "/images/lefthero3.png",
+  
 
   ]
 
   const rightImages = [
     "/images/righthero1.png",
+    "/images/righthero7.png",
+    "/images/righthero8.png",
+    "/images/righthero4.png",
+    "/images/righthero5.png",
+    "/images/righthero6.png",
     "/images/righthero2.png",
     "/images/righthero3.png"
     
   ]
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLeftImageIndex((prev) => (prev + 1) % leftImages.length)
-      setRightImageIndex((prev) => (prev + 1) % rightImages.length)
-    }, 4000) // Changed to 4 seconds for slower transitions
+ useEffect(() => {
+  const interval = setInterval(() => {
+    // Generate random indices, ensuring they're different from current ones
+    setLeftImageIndex((prev) => {
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * leftImages.length);
+      } while (newIndex === prev && leftImages.length > 1);
+      return newIndex;
+    });
+    
+    setRightImageIndex((prev) => {
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * rightImages.length);
+      } while (newIndex === prev && rightImages.length > 1);
+      return newIndex;
+    });
+  }, 4000);
 
-    return () => clearInterval(interval)
-  }, [])
+  return () => clearInterval(interval);
+}, []);
 
   return (
     <section className="py-14 md:py-12 lg:py-10 overflow-hidden relative bg-white">
@@ -235,7 +259,7 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Right Image - Fixed container with smooth transitions */}
-            <div className="relative flex-1 flex justify-end">
+            <div className="relative flex-1 flex justify-end ml">
               {/* Gradient glow behind right image */}
               <div
                 className="absolute inset-0 transform"
