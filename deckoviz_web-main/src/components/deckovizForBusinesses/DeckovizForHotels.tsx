@@ -1,4 +1,5 @@
 import React from 'react';
+import { InstagramEmbed } from 'react-social-media-embed';
 
 const DeckovizLanding: React.FC = () => {
   return (
@@ -53,21 +54,19 @@ const DeckovizLanding: React.FC = () => {
       })}
     </g>
   </svg>
-
-
 </div>
 
 
-        {/* Hero Content */}
+        {/* hero content */}
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center pt-16">
-          {/* Top Badge */}
+       
           <div className="mt-28 mb-10 shadow-lg hover:shadow-xl ">
             <span className="inline-flex items-center px-3 py-1 bg-[#6670d8] text-white text-sm font-medium rounded-md">
               Deckoviz For All
             </span>
           </div>
 
-          {/* Main Heading */}
+          {/* main heading */}
           <div className="mb-8">
             <h1 className="text-5xl md:text-5xl font-semibold text-gray-900 leading-tight">
               Transform Your Guest
@@ -124,6 +123,103 @@ const DeckovizLanding: React.FC = () => {
           </div>
         </div>
       </div>
+
+ {/* YT and Instagram */}
+<div className="bg-white py-12 md:py-12">
+    <div className="max-w-7xl mx-auto px-4">
+        {/* Enhanced Heading Section */}
+        <div className="text-center mb-10">
+          
+            {/* Main Heading */}
+            <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight mb-7">
+                Learn More About
+                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent"> Deckoviz</span>
+            </h2>
+            
+            {/* Subheading */}
+            <p className="text-sm mb-16 md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Dive deeper into the world of AI-powered smart art frames and discover how Deckoviz is 
+                revolutionizing hospitality experiences through immersive visual storytelling.
+            </p>
+        </div>
+
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left Side - YouTube Video */}
+            <div className="relative group -mt-36">
+                {/* Outer glow container */}
+                <div className="relative p-8">
+                    {/* Bleeding gradient background */}
+                    <div 
+                        className="absolute -inset-12 opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+                        style={{
+                            background: "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(147,51,234,0.3) 15%, rgba(124,58,237,0.35) 30%, rgba(168,85,247,0.3) 45%, rgba(251,146,60,0.25) 60%, rgba(219,39,119,0.2) 75%, rgba(139,69,19,0.1) 90%, transparent 100%)",
+                            filter: "blur(40px)"
+                        }}
+                    />
+                    
+                    {/* Pretty container */}
+                    <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl border border-white/50 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
+                        {/* Title above video */}
+                        <div className="text-center mb-4">
+                            <h3 className="text-lg font-semibold text-gray-800">Watch Deckoviz Transform Spaces</h3>
+                        </div>
+                        
+                        {/* Video container */}
+                        <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
+                            <iframe
+                                src="https://www.youtube.com/embed/Rxms0gWUmMs"
+                                title="Deckoviz Demo"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="w-full h-full"
+                            ></iframe>
+                        </div>
+                        <p className="text-center text-gray-600 mt-4">
+                            Experience the magic of Deckoviz and see how it can transform your space.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {/* Right Side - Instagram Post */}
+            <div className="relative group">
+                {/* Outer glow container */}
+                <div className="relative p-8">
+                    {/* Sunset gradient background bleeding outwards */}
+                    <div 
+                        className="absolute -inset-12 opacity-70 group-hover:opacity-90 transition-opacity duration-500"
+                        style={{
+                            background: "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(147,51,234,0.3) 15%, rgba(124,58,237,0.35) 30%, rgba(168,85,247,0.3) 45%, rgba(251,146,60,0.25) 60%, rgba(219,39,119,0.2) 75%, rgba(139,69,19,0.1) 90%, transparent 100%)",
+                            filter: "blur(40px)"
+                        }}
+                    />
+                    
+                    {/* Pretty container for Instagram */}
+                    <div className="relative bg-white/95 backdrop-blur-sm max-w-sm -mt-12 ml-10 rounded-3xl p-3 shadow-2xl border border-white/60 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
+                        {/* Instagram embed container with scaling */}
+                        <div className="flex justify-center overflow-hidden">
+                            <div className="transform scale-90 origin-center">
+                                <InstagramEmbed 
+                                    url="https://www.instagram.com/p/DLM9TrnSibN/" 
+                                    width={400}
+                                    height={500}
+                                />
+                            </div>
+                        </div>
+                        
+                        {/* Instagram caption */}
+                        <div className=" -mt-4 text-center">
+                            <h3 className="text-lg font-semibold text-gray-800 mb-1">Follow Our Journey</h3>
+                            <p className="text-sm text-gray-600">Daily inspiration & updates.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
       {/* What is Deckoviz Section with White Background */}
    <div className="bg-white relative py-24 md:py-24">

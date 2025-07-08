@@ -488,7 +488,7 @@ export default function AboutUs() {
                     world.
                   </p>
 
-                  <button className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
+                  <button onClick={() => (window.location.href = "/transform-walls")} className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300 mb-8">
                     Find Out More
                   </button>
 
@@ -1111,7 +1111,8 @@ export default function AboutUs() {
                       <br />
                       mood.
                     </p>
-                    <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                    <button onClick={() => (window.location.href = "/features")}
+                      className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
                       Learn More
                     </button>
                   </div>
@@ -1139,7 +1140,8 @@ export default function AboutUs() {
                       <br />
                       alignment, and vitality.
                     </p>
-                    <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                    <button onClick={() => (window.location.href = "/deckoviz-for-offices")}
+                      className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
                       Learn More
                     </button>
                   </div>
@@ -1165,7 +1167,8 @@ export default function AboutUs() {
                       public spaces
                     </h3>
                     <p className="text-gray-700 leading-relaxed mb-4">As immersive emotional experiences.</p>
-                    <button className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                    <button onClick={() => (window.location.href = "/deckoviz-for-restaurants")}
+                      className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
                       Learn More
                     </button>
                   </div>

@@ -174,7 +174,9 @@ const Footer: React.FC = () => {
                 </button>
               </li>
               <li>
-                <button className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
+                <button 
+                onClick={() => window.location.href = "https://www.linkedin.com/company/deckoviz-space/jobs/"}
+                className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block">
                   Careers
                 </button>
               </li>
