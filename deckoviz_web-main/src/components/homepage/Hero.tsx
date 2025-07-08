@@ -19,7 +19,7 @@ const Button = ({
 
   // Both buttons: same height, width, font, border-radius, shadow
   const baseClasses =
-  "inline-flex items-center justify-center font-medium transition-all duration-300 px-6 py-3 text-base rounded-xl shadow-sm border focus:outline-none focus:ring-2 focus:ring-offset-2 min-w-[140px]"
+  "inline-flex items-center justify-center font-medium transition-all duration-300 px-5 py-3 text-base rounded-xl shadow-sm border focus:outline-none focus:ring-2 focus:ring-offset-2 min-w-[140px]"
   // Variant-specific
   const variantClasses = {
     primary:
@@ -144,12 +144,12 @@ const Hero: React.FC = () => {
             </span>
           </h1>
           {/* Subheading */}
-        <p className="text-center text-gray-600 text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-center text-gray-600 text-xl mb-3 max-w-2xl mx-auto leading-relaxed">
  Deckoviz brings your <span className="text-purple-600 font-semibold">walls to life</span> with a <span className="text-indigo-600 font-semibold">smart art frame</span> that <span className="text-fuchsia-500 font-semibold">learns your style</span> and <span className="text-purple-600 font-semibold">evolves with you</span> over time.
 </p>
 
           {/* Main content with images and stats */}
-          <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-8 mb-10">
+          <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-6 mb-10 ml-4">
             {/* Left Image - Fixed container with smooth transitions */}
             <div className="relative flex-1 flex justify-center">
               {/* Gradient glow behind left image */}
@@ -259,7 +259,7 @@ const Hero: React.FC = () => {
             </div>
 
             {/* Right Image - Fixed container with smooth transitions */}
-            <div className="relative flex-1 flex justify-end ml">
+            <div className="relative flex-1 flex justify-end ml-8">
               {/* Gradient glow behind right image */}
               <div
                 className="absolute inset-0 transform"
