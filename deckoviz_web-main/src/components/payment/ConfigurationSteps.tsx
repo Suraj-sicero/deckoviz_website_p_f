@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Upload, Truck, CreditCard, Package, Calendar, MapPin, Sparkles, Star, Leaf } from 'lucide-react';
 import { EnhancedDropdown } from './EnhancedDropdown';
 import { SimpleDropdown } from './SimpleDropdown';

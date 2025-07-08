@@ -201,18 +201,7 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  const handleSectionNav = (sectionId: string): void => {
-    if (currentPath !== "/") {
-      window.location.href = `/#${sectionId}`
-    } else {
-      const element = document.getElementById(sectionId)
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" })
-      }
-    }
-    setIsOpen(false)
-  }
-
+  
   const handleBuyNow = (): void => {
     window.location.href = "/place-order"
     console.log("Buy Now clicked")
