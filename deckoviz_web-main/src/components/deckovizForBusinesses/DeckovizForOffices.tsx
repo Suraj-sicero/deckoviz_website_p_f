@@ -116,6 +116,92 @@ const DeckovizOfficesLanding = () => {
           </div>
         </div>
       </div>
+{/* YT and Instagram */}
+<div className="bg-white py-12 md:py-12">
+  <div className="max-w-7xl mx-auto px-4">
+    {/* Enhanced Heading Section */}
+    <div className="text-center mb-10">
+      <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight mb-7">
+        Learn More About
+        <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          {" "}Deckoviz
+        </span>
+      </h2>
+      <p className="text-sm mb-16 md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        Dive deeper into the world of AI-powered smart art frames and discover how Deckoviz is 
+        revolutionizing hospitality experiences through immersive visual storytelling.
+      </p>
+    </div>
+
+    {/* Content Grid */}
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      {/* Left Side - YouTube Video */}
+      <div className="relative group mt-0 md:mt-[-3rem]">
+        <div className="relative p-10 sm:p-6 md:p-8">
+          <div 
+            className="absolute -inset-12 opacity-60 group-hover:opacity-80 transition-opacity duration-500"
+            style={{
+              background: "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(147,51,234,0.3) 15%, rgba(124,58,237,0.35) 30%, rgba(168,85,247,0.3) 45%, rgba(251,146,60,0.25) 60%, rgba(219,39,119,0.2) 75%, rgba(139,69,19,0.1) 90%, transparent 100%)",
+              filter: "blur(40px)"
+            }}
+          />
+          <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-4 shadow-2xl border border-white/50 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-800">Watch Deckoviz Transform Spaces</h3>
+            </div>
+            <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
+              <iframe
+                src="https://www.youtube.com/embed/Rxms0gWUmMs"
+                title="Deckoviz Demo"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              ></iframe>
+            </div>
+            <p className="text-center text-gray-600 mt-4">
+              Experience the magic of Deckoviz and see how it can transform your space.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    <div className="relative group mt-0">
+  <div className="relative p-4 sm:p-6 md:p-8">
+    {/* Background Glow */}
+    <div 
+      className="absolute -inset-12 opacity-70 group-hover:opacity-90 transition-opacity duration-500"
+      style={{
+        background: "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(147,51,234,0.3) 15%, rgba(124,58,237,0.35) 30%, rgba(168,85,247,0.3) 45%, rgba(251,146,60,0.25) 60%, rgba(219,39,119,0.2) 75%, rgba(139,69,19,0.1) 90%, transparent 100%)",
+        filter: "blur(40px)"
+      }}
+    />
+
+    {/* Instagram Container */}
+    <div className="relative bg-white/95 backdrop-blur-sm w-full max-w-md mx-auto rounded-3xl p-3 shadow-2xl border border-white/60 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
+      
+      {/* Responsive Instagram Embed */}
+      <div className="w-full aspect-[4/5] overflow-hidden rounded-2xl">
+        <iframe
+          src="https://www.instagram.com/p/DLM9TrnSibN/embed"
+          className="w-full h-full"
+          frameBorder="0"
+          allowTransparency={true}
+          allow="encrypted-media"
+          title="Instagram Post"
+        ></iframe>
+      </div>
+
+      {/* Caption */}
+      <div className="mt-4 text-center">
+        <h3 className="text-lg font-semibold text-gray-800 mb-1">Follow Our Journey</h3>
+        <p className="text-sm text-gray-600">Daily inspiration & updates.</p>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
 
       {/* What is Deckoviz Section with White Background */}
       <div className="bg-white relative py-24 md:py-24">

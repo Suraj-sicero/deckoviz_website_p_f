@@ -145,7 +145,7 @@ const DeckovizLanding: React.FC = () => {
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
       {/* Left Side - YouTube Video */}
       <div className="relative group mt-0 md:mt-[-3rem]">
-        <div className="relative p-4 sm:p-6 md:p-8">
+        <div className="relative p-10 sm:p-6 md:p-8">
           <div 
             className="absolute -inset-12 opacity-60 group-hover:opacity-80 transition-opacity duration-500"
             style={{
@@ -153,7 +153,7 @@ const DeckovizLanding: React.FC = () => {
               filter: "blur(40px)"
             }}
           />
-          <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-2xl border border-white/50 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
+          <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-4 shadow-2xl border border-white/50 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
             <div className="text-center mb-4">
               <h3 className="text-lg font-semibold text-gray-800">Watch Deckoviz Transform Spaces</h3>
             </div>
