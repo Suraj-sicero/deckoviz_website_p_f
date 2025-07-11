@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Building2, Users, Hotel, Briefcase, GraduationCap, Palette, CheckCircle, Mail, Phone, ArrowRight, Package, Shield, Headphones, Truck, Zap, Clock, Sparkles, ChevronDown, ChevronUp } from 'lucide-react';
+import { CheckCircle, Mail, Phone, ArrowRight, Clock, ChevronDown, ChevronUp } from 'lucide-react';
 
 const BulkOrder = () => {
   const [formData, setFormData] = useState({
@@ -31,38 +31,38 @@ const BulkOrder = () => {
     console.log('Form submitted:', formData);
   };
 
-  const perfectForData = [
-    {
-      icon: '🎨',
-      title: "Interior designers & architects",
-      description: "Transform client spaces with dynamic art that evolves with their lifestyle and preferences."
-    },
-    {
-      icon: '🏨',
-      title: "Hospitality chains & boutique hotels",
-      description: "Create memorable guest experiences with art that adapts to different moods and occasions."
-    },
-    {
-      icon: '🏢',
-      title: "Offices & co-working spaces",
-      description: "Boost creativity and productivity with inspiring visuals that change throughout the day."
-    },
-    {
-      icon: '🏛️',
-      title: "Art curators & institutions",
-      description: "Showcase collections in new ways with interactive and educational art experiences."
-    },
-    {
-      icon: '👥',
-      title: "Developers & real estate showrooms",
-      description: "Bring showrooms to life and help buyers envision their future homes with smart art."
-    },
-    {
-      icon: '🎓',
-      title: "Schools, wellness centers, and creative spaces",
-      description: "Create inspiring educational environments that adapt to different learning activities."
-    }
-  ];
+ const perfectForData = [
+  {
+    icon: 'https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/user-group.svg',
+    title: "Interior designers & architects",
+    description: "Transform client spaces with dynamic art that evolves with their lifestyle and preferences."
+  },
+  {
+    icon: 'https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/building-office-2.svg',
+    title: "Hospitality chains & boutique hotels",
+    description: "Create memorable guest experiences with art that adapts to different moods and occasions."
+  },
+  {
+    icon: 'https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/building-office.svg',
+    title: "Offices & co-working spaces",
+    description: "Boost creativity and productivity with inspiring visuals that change throughout the day."
+  },
+  {
+    icon: 'https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/building-library.svg',
+    title: "Art curators & institutions",
+    description: "Showcase collections in new ways with interactive and educational art experiences."
+  },
+  {
+    icon: 'https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/home-modern.svg',
+    title: "Developers & real estate showrooms",
+    description: "Bring showrooms to life and help buyers envision their future homes with smart art."
+  },
+  {
+    icon: 'https://cdn.jsdelivr.net/npm/heroicons@2.0.18/24/outline/academic-cap.svg',
+    title: "Schools, wellness centers, and creative spaces",
+    description: "Create inspiring educational environments that adapt to different learning activities."
+  }
+];
 
   const mainBenefits = [
     {
@@ -202,9 +202,9 @@ const BulkOrder = () => {
     <div className="min-h-screen bg-white">
       {/* Light background similar to your existing components */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-purple-100/40 via-pink-50/30 to-transparent blur-3xl"></div>
-        <div className="absolute top-1/4 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-pink-100/40 via-orange-50/30 to-transparent blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-100/40 via-purple-50/30 to-transparent blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent blur-3xl"></div>
+        <div className="absolute top-1/4 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-pink-300 via-orange-100 to-transparent blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-200 via-purple-200 to-transparent blur-3xl"></div>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
@@ -213,12 +213,12 @@ const BulkOrder = () => {
         <div className="text-center mb-16">
           {/* Badge */}
           <div className="flex justify-center mb-6">
-            <div className="bg-[#7d39ec] text-white px-3 py-1 rounded-lg text-sm mt-7 font-medium shadow-lg">
+            <div className="bg-[#935fe6] text-white px-3 py-1 rounded-lg text-sm mt-7 font-medium shadow-lg">
               Bulk Orders Portal
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 leading-tight">
+          <h1 className="text-4xl md:text-4xl font-bold mt-10 mb-6 text-gray-900 leading-tight">
             Bulk Orders – Transform Spaces at Scale with <span className="bg-gradient-to-r from-[#793ae7] to-[#be37b1] bg-clip-text text-transparent">Deckoviz</span>
           </h1>
           
@@ -227,25 +227,39 @@ const BulkOrder = () => {
               <span className="text-purple-600 font-semibold">Deckoviz</span> is the world's first <span className="text-indigo-600 font-semibold">AI-powered dynamic art frame</span> — a powerful, beautiful blend of <span className="text-fuchsia-500 font-semibold">technology</span>, <span className="text-rose-500 font-semibold">creativity</span>, and <span className="text-purple-600 font-semibold">personalization</span>. Whether you're designing for homes, hotels, offices, or commercial spaces, Deckoviz helps you transform walls into <span className="text-indigo-600 font-semibold">living, evolving experiences</span>.
             </p>
             <p className="text-lg text-gray-800 font-medium">
-              Order in bulk and enjoy <span className="text-emerald-600 font-bold">exclusive pricing</span>, <span className="text-blue-600 font-bold">dedicated support</span>, and <span className="text-purple-600 font-bold">seamless customization</span>.
+              Order in bulk and enjoy <span className="text-pink-600 font-bold">exclusive pricing</span>, <span className="text-blue-600 font-bold">dedicated support</span>, and <span className="text-purple-600 font-bold">seamless customization</span>.
             </p>
           </div>
 
           {/* Perfect for Section */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">
-              Perfect for:
-            </h2>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {perfectForData.map((item, index) => (
-                <div key={index} className="text-center p-4 rounded-xl hover:bg-gray-50 transition-colors duration-300">
-                  <div className="text-3xl mb-3">{item.icon}</div>
-                  <h3 className="font-semibold text-gray-900 text-sm leading-tight">{item.title}</h3>
-                </div>
-              ))}
-            </div>
-          </div>
+<div className="bg-white rounded-2xl p-6 md:p-10 shadow-sm border border-gray-200 mb-12">
+  <h2 className="text-2xl md:text-2xl font-semibold text-gray-900 mb-6">
+    Perfect for :
+  </h2>
+
+  <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+    {perfectForData.map((item, index) => (
+      <div
+        key={index}
+        className="flex flex-col items-center text-center p-4 md:p-6 rounded-xl border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-300 bg-white"
+      >
+        <div className="w-12 h-12 md:w-14 md:h-14 bg-gray-50 rounded-full flex items-center justify-center mb-3 border border-gray-200">
+          <img
+            src={item.icon}
+            alt={item.title}
+            className="w-6 h-6 md:w-7 md:h-7 text-gray-700 filter brightness-0 invert-0"
+          />
+        </div>
+        <span className="text-sm md:text-base text-gray-800 font-medium">
+          {item.title}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>
+
+
+
         </div>
 
         {/* Why Bulk Order Section */}
@@ -291,7 +305,7 @@ const BulkOrder = () => {
         {/* How It Works */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12">
-            How It <span className="text-purple-600">Works</span>
+            How It <span className="text-purple-600">Works?</span>
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -430,6 +444,8 @@ const BulkOrder = () => {
                     <option value="43-inch">43" (Starter)</option>
                     <option value="55-inch">55" (Premium)</option>
                     <option value="65-inch">65" (Ultra)</option>
+                    <option value="75-inch">75" (Pro)</option>
+                    <option value="85-inch">85" (Elite)</option>
                     <option value="custom">Custom sizes</option>
                   </select>
                 </div>
@@ -480,9 +496,9 @@ const BulkOrder = () => {
               </div>
 
               <div className="text-center">
-                <button
+                <button onClick={() => (window.location.href = "/bulk-confirm")}
                   type="submit"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
+                  className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-lg font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
                 >
                   <Mail className="w-5 h-5" />
                   Submit Bulk Order Request

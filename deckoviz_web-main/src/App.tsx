@@ -38,6 +38,7 @@ import TransformWalls from './components/homepage/Transform';
 import DesignedFor from './components/homepage/DesignedFor';
 import OrderConfirmed from './components/payment/OrderConfirmed';
 import BulkOrder from './components/payment/BulkOrder';
+import BulkConfirm from './components/payment/BulkConfirm';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -107,6 +108,7 @@ const App: React.FC = () => {
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/order-confirmed" element={<OrderConfirmed />} />
         <Route path ="bulk-orders" element={<BulkOrder />} />
+        <Route path ="/bulk-confirm" element={<BulkConfirm />} />
         {/* <Route path="/gallery" element={<Gallery />} /> */}
         
         {/* <Route path="/testimonials" element={<Testimonials />} /> */}

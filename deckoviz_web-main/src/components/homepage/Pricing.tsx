@@ -165,7 +165,7 @@ const pricingTiers: PricingPlan[] = [
       "Custom integration and deployment services",
       "Advanced analytics and reporting dashboard",
     ],
-    buttonText: "Contact Sales",
+    buttonText: "Bulk Order",
   },
 ]
 
@@ -173,10 +173,14 @@ export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<PricingPlan | null>(null)
   const [showModal, setShowModal] = useState(false)
 
-  const handleBuyNow = (): void => {
+  const handleBuyNow = (tier?: PricingPlan): void => {
+  if (tier?.name === "Enterprise") {
+    window.location.href = "/bulk-orders"
+  } else {
     window.location.href = "/place-order"
-    console.log("Buy Now clicked")
   }
+  console.log("Buy Now clicked")
+}
 
   const openModal = (tier: PricingPlan) => {
     setSelectedTier(tier)
@@ -331,7 +335,7 @@ export default function Pricing() {
                         ? "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 hover:from-violet-700 hover:via-fuchsia-700 hover:to-orange-600 text-white shadow-2xl hover:shadow-violet-500/50"
                         : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-violet-600 hover:to-fuchsia-600 text-white shadow-xl hover:shadow-2xl"
                     }`}
-                    onClick={() => handleBuyNow()}
+                    onClick={() => handleBuyNow(tier)}
                   >
                     {tier.buttonText}
                   </Button>
