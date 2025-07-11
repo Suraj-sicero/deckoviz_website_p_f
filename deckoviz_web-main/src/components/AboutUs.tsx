@@ -149,8 +149,6 @@ export default function AboutUs() {
         {/* Additional Content Section */}
         <div className="mt-20 max-w-6xl mx-auto px-4">
 
-
-          
           {/* Company Description Section - Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
             <div className="text-left space-y-12 lg:space-y-20">

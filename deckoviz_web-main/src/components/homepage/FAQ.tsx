@@ -239,12 +239,7 @@ const FAQ: React.FC = () => {
                                 <Icon size={20} />
                               </div>
 
-                              {/* Active Sparkle Effect */}
-                              {isActive && (
-                                <div className="absolute -top-1 -right-1">
-                                  <Sparkles size={16} className="text-yellow-400 animate-pulse" />
-                                </div>
-                              )}
+                        
                             </div>
 
                             {/* Text Content */}
