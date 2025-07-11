@@ -1,3 +1,5 @@
+import InteractiveParticleGraphic from "./other/InteractiveParticleGraphic";
+
 export default function AboutUs() {
   return (
     <div id="about" className="relative min-h-screen bg-white">
@@ -146,8 +148,11 @@ export default function AboutUs() {
 
         {/* Additional Content Section */}
         <div className="mt-20 max-w-6xl mx-auto px-4">
+
+
+          
           {/* Company Description Section - Two Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
             <div className="text-left space-y-12 lg:space-y-20">
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
                 We are a next-generation
@@ -156,7 +161,7 @@ export default function AboutUs() {
                 <br />
                 the frontier.
               </h2>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">Our flagship product —</h3>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl  font-bold text-gray-900">Our flagship product —</h3>
             </div>
             <div className="text-left space-y-6">
               <p className="text-gray-500 leading-relaxed text-base sm:text-lg">
@@ -172,9 +177,14 @@ export default function AboutUs() {
             </div>
           </div>
 
+
+{/* Interactive Particle Graphic */}
+<InteractiveParticleGraphic />
+
+
           {/* Flagship Products Container with Border and Separator */}
           <div className="mb-20">
-            <div className="border border-gray-200 rounded-3xl p-6 sm:p-8 lg:p-12 relative">
+            <div className="border border-gray-200 rounded-3xl p-6 mt-8 sm:p-8 lg:p-12 relative">
               {/* Vertical separator line - hidden on mobile */}
               <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gray-200 transform -translate-x-1/2 hidden lg:block"></div>
 
