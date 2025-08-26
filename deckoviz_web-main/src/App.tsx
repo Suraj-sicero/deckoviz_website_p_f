@@ -30,6 +30,7 @@ import DeckovizForRealEstate from './components/deckovizForBusinesses/DeckovizFo
 import DeckovizTherapistsLanding from './components/deckovizForBusinesses/DeckovizForTherapists';
 import DeckovizSchoolsLanding from './components/deckovizForBusinesses/DeckovizForSchools';
 import DeckovizForRetail from './components/deckovizForBusinesses/DeckovizForStores';
+import DeckovizForEnterprise from './components/deckovizForBusinesses/DeckovizForEnterprise';
 import FAQ from './components/homepage/FAQ';
 import WallOfLove from './components/WallOfLove';
 import HowItWorks from './components/homepage/HowItWorks';
@@ -39,6 +40,8 @@ import DesignedFor from './components/homepage/DesignedFor';
 import OrderConfirmed from './components/payment/OrderConfirmed';
 import BulkOrder from './components/payment/BulkOrder';
 import BulkConfirm from './components/payment/BulkConfirm';
+import GuestReactionsTestimonials from './components/homepage/GuestReactionsTestimonials';
+import { i } from 'framer-motion/client';
 
 const ScrollToSectionOnHome: React.FC = () => {
   const location = useLocation();
@@ -72,7 +75,8 @@ const App: React.FC = () => {
             <HowItWorks />
             {/* <Gallery /> */}
            
-            <Testimonials />
+             {/* <Testimonials /> */}
+              <GuestReactionsTestimonials /> 
              <Pricing />
              <FAQ /> 
              {/* <Referral />
@@ -102,6 +106,7 @@ const App: React.FC = () => {
         <Route path ="/deckoviz-for-therapists" element={<DeckovizTherapistsLanding />} />
         <Route path ="/deckoviz-for-schools" element={<DeckovizSchoolsLanding />} />
         <Route path ="/deckoviz-for-retailstores" element={<DeckovizForRetail />} />
+        <Route path ="/deckoviz-for-enterprises" element={<DeckovizForEnterprise />} />
         <Route path ="/Wall-Of-Love" element={<WallOfLove/>} />
         <Route path ="/Leaderboard" element={<Leaderboard/>} />
         <Route path ="/Transform-Walls" element={<TransformWalls/>} />

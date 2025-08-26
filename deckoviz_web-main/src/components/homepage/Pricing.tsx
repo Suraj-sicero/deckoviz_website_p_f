@@ -5,11 +5,11 @@ import { Check, Sparkles, Gift, Star, Zap } from "lucide-react"
 
 // Custom Button component
 interface ButtonProps {
-  children: ReactNode;
-  className?: string;
-  variant?: "default" | "outline" | "ghost";
-  onClick?: () => void;
-  [key: string]: any;
+  children: ReactNode
+  className?: string
+  variant?: "default" | "outline" | "ghost"
+  onClick?: () => void
+  [key: string]: any
 }
 
 const Button = ({ children, className = "", variant = "default", onClick, ...props }: ButtonProps) => {
@@ -29,9 +29,9 @@ const Button = ({ children, className = "", variant = "default", onClick, ...pro
 
 // Custom Card components
 interface CardProps {
-  children: ReactNode;
-  className?: string;
-  [key: string]: any;
+  children: ReactNode
+  className?: string
+  [key: string]: any
 }
 
 const Card = ({ children, className = "", ...props }: CardProps) => (
@@ -169,18 +169,85 @@ const pricingTiers: PricingPlan[] = [
   },
 ]
 
+// New data for the second row of pricing tiers
+const largeFormatTiers: PricingPlan[] = [
+  {
+    name: "Grand",
+    price: 1899,
+    originalPrice: 1999,
+    gbpPrice: 1449,
+    description: "A stunning, oversized centrepiece for immersive living spaces.",
+    features: [
+      "75-inch 4K UHD Premium Display",
+      "Exceptional scale and detail for maximum impact",
+      "Advanced AI learning, recommendations, and deep personalization",
+      "Premium finish options and custom frame designs",
+      "Unlimited and expanding art & storytelling library",
+      "Priority access to new art drops and exclusive collections",
+      "Wi-Fi + Bluetooth + optional Ethernet for ultra-stable connectivity",
+      "Enhanced ambient halo lighting system",
+      "Gesture and voice control compatibility",
+      "12 months of Elite Subscription included",
+    ],
+    buttonText: "Buy Now",
+  },
+  {
+    name: "Masterpiece",
+    price: 2399,
+    originalPrice: 2499,
+    gbpPrice: 1799,
+    description: "For those who want art to truly dominate their space — bold, beautiful, and unforgettable.",
+    features: [
+      "85-inch 4K UHD Premium Display",
+      "Immense wall presence with gallery-grade visuals",
+      "Ultra-accurate colour calibration for lifelike artwork",
+      "AI-powered dynamic curation & mood-based transformation",
+      "Premium finish options and bespoke frame craftsmanship",
+      "Unlimited, expanding art & memory experiences",
+      "Multi-sensory pairing with music and ambient effects",
+      "Priority access to unreleased collections and features",
+      "Wi-Fi + Bluetooth + Ethernet connectivity",
+      "Enhanced pro-grade ambient lighting",
+      "Dedicated art concierge service",
+    ],
+    buttonText: "Buy Now",
+  },
+  {
+    name: "Monument",
+    price: 3399,
+    originalPrice: 3499,
+    gbpPrice: 2599,
+    description: "The ultimate Deckoviz — a full-wall digital canvas that redefines how spaces feel, live, and breathe.",
+    features: [
+      "95-inch 4K UHD Premium Display",
+      "Largest and most immersive Deckoviz available",
+      "Edge-to-edge ultra-HD performance with cinematic clarity",
+      "AI-curated multi-panel storytelling and ambient modes",
+      "Premium, hand-crafted frame options and finishes",
+      "Unlimited, evolving art & storytelling library",
+      "Enterprise-grade performance for high-traffic spaces",
+      "Custom content scheduling for business or residential use",
+      "Wi-Fi + Bluetooth + Ethernet connectivity",
+      "Advanced lighting choreography with colour and motion sync",
+      "Priority access to elite art commissions & custom AI features",
+      "Bespoke content creation services available",
+    ],
+    buttonText: "Buy Now",
+  },
+]
+
 export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<PricingPlan | null>(null)
   const [showModal, setShowModal] = useState(false)
 
   const handleBuyNow = (tier?: PricingPlan): void => {
-  if (tier?.name === "Enterprise") {
-    window.location.href = "/bulk-orders"
-  } else {
-    window.location.href = "/place-order"
+    if (tier?.name === "Enterprise") {
+      window.location.href = "/bulk-orders"
+    } else {
+      window.location.href = "/place-order"
+    }
+    console.log("Buy Now clicked")
   }
-  console.log("Buy Now clicked")
-}
 
   const openModal = (tier: PricingPlan) => {
     setSelectedTier(tier)
@@ -191,7 +258,6 @@ export default function Pricing() {
     setShowModal(false)
     setSelectedTier(null)
   }
-  
 
   return (
     <>
@@ -203,7 +269,7 @@ export default function Pricing() {
         {/* Background Elements */}
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
-          
+
           {/* Subtle dot pattern */}
           <div
             className="absolute inset-0 opacity-[0.08]"
@@ -248,7 +314,7 @@ export default function Pricing() {
             </p>
           </div>
 
-          {/* Pricing Cards */}
+          {/* Pricing Cards - Row 1 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 sm:mb-12">
             {pricingTiers.map((tier, index) => (
               <Card
@@ -344,8 +410,84 @@ export default function Pricing() {
             ))}
           </div>
 
+          
+
+          {/* Horizontally Scrollable Pricing Cards - Row 2 */}
+          <div className="flex overflow-x-auto space-x-6 lg:space-x-8 pb-8 -mx-4 px-4 scrollbar-thin scrollbar-thumb-violet-200 scrollbar-track-gray-100">
+            {largeFormatTiers.map((tier, index) => (
+              <div key={index} className="flex-shrink-0 w-full max-w-sm sm:w-80">
+                <Card
+                  className={`relative transition-all duration-500 hover:-translate-y-2 flex flex-col h-full backdrop-blur-sm border-2 border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200`}
+                >
+                  <CardHeader className="text-center pb-4">
+                    <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-violet-600 transition-colors duration-300">
+                      {tier.name}
+                    </CardTitle>
+
+                    <div className="mb-4">
+                      <div className="flex flex-col items-center justify-center space-y-2">
+                        {/* Original crossed out price */}
+                        <div className="flex items-baseline justify-center">
+                          <span className="text-xl sm:text-2xl font-bold text-gray-400 relative">
+                            ${tier.originalPrice}
+                            <div className="absolute inset-0 bg-red-500 h-0.5 top-1/2 transform -translate-y-1/2 rotate-12"></div>
+                          </span>
+                        </div>
+
+                        {/* Current price with pounds */}
+                        <div className="flex items-baseline justify-center flex-wrap">
+                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">${tier.price}</span>
+                          <span className="text-2xl sm:text-3xl font-semibold text-gray-700 ml-2">
+                            (£{tier.gbpPrice})
+                          </span>
+                          <span className="text-gray-500 ml-2 text-base sm:text-lg">/frame</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <CardDescription className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                      {tier.description}
+                    </CardDescription>
+                  </CardHeader>
+
+                  <CardContent className="flex-grow">
+                    <div className="space-y-3 sm:space-y-4">
+                      {tier.features.slice(0, 5).map((feature, featureIndex) => (
+                        <div key={featureIndex} className="flex items-start">
+                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-600 flex items-center justify-center mr-3 mt-0.5">
+                            <Check size={12} className="text-white" />
+                          </div>
+                          <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {tier.features.length > 5 && (
+                      <Button
+                        variant="ghost"
+                        onClick={() => openModal(tier)}
+                        className="w-full mt-4 text-violet-600 hover:text-violet-700 hover:bg-violet-50"
+                      >
+                        See all {tier.features.length} features
+                      </Button>
+                    )}
+                  </CardContent>
+
+                  <CardFooter>
+                    <Button
+                      className={`w-full py-3 sm:py-4 font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] border-0 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-violet-600 hover:to-fuchsia-600 text-white shadow-xl hover:shadow-2xl`}
+                      onClick={() => handleBuyNow(tier)}
+                    >
+                      {tier.buttonText}
+                    </Button>
+                  </CardFooter>
+                </Card>
+              </div>
+            ))}
+          </div>
+
           {/* Feature Comparison Link */}
-          <div className="text-center">
+          <div className="text-center mt-8">
             <Button variant="ghost" className="text-violet-600 hover:text-violet-700 text-base sm:text-lg group">
               View complete feature comparison
               <span className="ml-2 transition-all duration-300 group-hover:translate-x-1">→</span>

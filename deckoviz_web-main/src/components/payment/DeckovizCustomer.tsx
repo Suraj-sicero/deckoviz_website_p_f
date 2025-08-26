@@ -1,3 +1,5 @@
+"use client"
+
 import { useState } from 'react';
 import { ShoppingCart, Eye, X } from 'lucide-react';
 import { ConfigurationSteps } from './ConfigurationSteps';
@@ -208,7 +210,8 @@ const DeckovizCustomizer = () => {
 
               {/* Content */}
               <div className="space-y-4 sm:space-y-6 py-2 sm:py-4">
-                <ConfigurationSteps formData={formData} showOnlyFirstTwo={true} />
+                {/* THIS IS THE FIX: Removed showOnlyFirstTwo={true} */}
+                <ConfigurationSteps formData={formData} />
               </div>
             </div>
           </div>
