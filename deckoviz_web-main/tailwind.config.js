@@ -1,12 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
         primary: {
           50: '#f5f3ff',
-          100: '#ede9fe', 
+          100: '#ede9fe',
           200: '#ddd6fe',
           300: '#c4b5fd',
           400: '#a78bfa',
@@ -43,7 +43,7 @@ export default {
         center: true,
         padding: {
           DEFAULT: '1rem',
-          sm: '1.5rem', 
+          sm: '1.5rem',
           lg: '2rem',
         },
         screens: {
@@ -54,7 +54,19 @@ export default {
           '2xl': '1400px',
         },
       },
+      // --- ADDED FOR SCROLLING GALLERY ---
+      animation: {
+        scroll: 'scroll 40s linear infinite',
+      },
+      keyframes: {
+        scroll: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
+      // --- END OF ADDED CODE ---
     },
   },
-  plugins: [],
+  // --- UPDATED PLUGINS ---
+  plugins: [require('tailwindcss-animate')],
 };

@@ -219,3 +219,100 @@
       0 0 40px #a900ff;
   }
 }
+
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+/* For Modal Animation */
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* For Hero Background Animation */
+@keyframes floatLeft {
+  0%, 100% { transform: translateX(-10%) translateY(-10%) rotate(-5deg); }
+  50% { transform: translateX(10%) translateY(10%) rotate(5deg); }
+}
+
+@keyframes floatCenter {
+  0%, 100% { transform: translateY(-5%) scale(1); }
+  50% { transform: translateY(5%) scale(1.05); }
+}
+
+@keyframes floatBottom {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-10%) rotate(3deg); }
+}
+
+@keyframes floatRight {
+  0%, 100% { transform: translateX(10%) translateY(10%) rotate(5deg); }
+  50% { transform: translateX(-10%) translateY(-10%) rotate(-5deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+/* For Modal Animation */
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* For Hero Background Animation */
+@keyframes floatLeft {
+  0%, 100% { transform: translateX(-10%) translateY(-10%) rotate(-5deg); }
+  50% { transform: translateX(10%) translateY(10%) rotate(5deg); }
+}
+
+@keyframes floatCenter {
+  0%, 100% { transform: translateY(-5%) scale(1); }
+  50% { transform: translateY(5%) scale(1.05); }
+}
+
+@keyframes floatBottom {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-10%) rotate(3deg); }
+}
+
+@keyframes floatRight {
+  0%, 100% { transform: translateX(10%) translateY(10%) rotate(5deg); }
+  50% { transform: translateX(-10%) translateY(-10%) rotate(-5deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}

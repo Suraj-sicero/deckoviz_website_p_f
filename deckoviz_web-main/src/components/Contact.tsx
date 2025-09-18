@@ -135,9 +135,8 @@ export default function Contact() {
             {/* Description */}
             <p className="text-gray-700 text-left mb-6">
               Ready to chat? Give us a call and let's
-              <br />
+              
               discuss how we can help bring your
-              <br />
               vision to life.
             </p>
 
@@ -212,7 +211,6 @@ export default function Contact() {
 
             {/* Form Container - NO WHITE BOX */}
             <div className="space-y-8">
-              {/* Name Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div className="group">
                   <label className="block text-sm font-semibold text-gray-700 mb-3">

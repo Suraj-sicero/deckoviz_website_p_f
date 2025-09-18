@@ -3,6 +3,50 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 
+// REFINED: Component for the scrolling image gallery
+const ScrollingImageGallery: React.FC = () => {
+  const images = [
+    { src: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80", alt: "Abstract art piece" },
+    
+    { src: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=600&q=80", alt: "Gradient paint strokes" },
+    
+    { src: "https://images.unsplash.com/photo-1574169208507-84376144848b?w=600&q=80", alt: "Close-up of a textured painting" },
+    { src: "https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=600&q=80", alt: "Surreal digital art composition" },
+    { src: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=600&q=80", alt: "Abstract geometric pattern" },
+  ];
+
+  // Duplicate images for a seamless loop
+  const extendedImages = [...images, ...images];
+
+  return (
+    <div className="mt-20 text-center">
+      <h2 className="text-2xl md:text-3xl font-bold mb-10 text-gray-800">A Glimpse into the Possibilities</h2>
+      
+      {/* This container hides the overflow and applies the fade effect */}
+      <div 
+        className="w-full overflow-hidden"
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0, black 10%, black 90%, transparent 100%)"
+        }}
+      >
+        {/* This container holds and animates the images */}
+        <div className="flex flex-nowrap animate-scroll group-hover:[animation-play-state:paused]">
+          {extendedImages.map((image, index) => (
+            <div key={index} className="flex-shrink-0 w-64 h-80 mx-4">
+              <img
+                src={image.src}
+                alt={image.alt}
+                className="w-full h-full object-cover rounded-xl shadow-lg transition-transform duration-500 hover:scale-105"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 const DesignedFor: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
 
@@ -102,37 +146,28 @@ const DesignedFor: React.FC = () => {
       className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer border border-gray-100`}
       style={{ height: '380px' }}
     >
-      {/* Image Section */}
       <div className="relative h-52 overflow-hidden rounded-t-2xl">
         <img 
           src={image}
           alt="Inspiration"
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
-        {/* Subtle overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
       </div>
-
-      {/* Content Section */}
       <div className="p-6 h-32 flex items-center justify-center">
         <p className="text-lg leading-relaxed text-center bg-gradient-to-r from-gray-700 via-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:from-purple-600 group-hover:via-pink-500 group-hover:to-orange-500 transition-all duration-500 font-medium">
           {title}
         </p>
       </div>
-
-      {/* Subtle hover border */}
       <div className="absolute inset-0 rounded-2xl border-2 border-purple-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </div>
   );
 
   return (
     <section className="relative py-16 bg-white overflow-hidden">
-      {/* Subtle background gradient effects */}
       <div className="absolute inset-0">
         <div className="absolute left-1/3 top-1/3 w-[40%] h-[30%] bg-gradient-to-br from-purple-100/30 via-pink-100/20 to-blue-100/30 rounded-full blur-3xl opacity-50"></div>
         <div className="absolute right-1/4 bottom-1/3 w-[35%] h-[25%] bg-gradient-to-br from-pink-100/25 via-purple-100/15 to-orange-100/25 rounded-full blur-3xl opacity-40"></div>
-        
-        {/* Central gradient splash - like your other components */}
         <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] h-[60%] rounded-full blur-3xl opacity-70" 
              style={{
                background: "radial-gradient(ellipse at center, rgba(244, 114, 182, 0.6) 0%, rgba(251, 207, 232, 0.4) 30%, rgba(253, 186, 116, 0.3) 60%, rgba(255, 255, 255, 0.1) 85%, transparent 100%)"
@@ -140,7 +175,6 @@ const DesignedFor: React.FC = () => {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
-        {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 leading-tight">
             Who have we designed{" "}
@@ -151,7 +185,6 @@ const DesignedFor: React.FC = () => {
           </h1>
         </div>
 
-        {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {mainDesignedFor.map((item, index) => (
             <DesignedCard
@@ -164,7 +197,6 @@ const DesignedFor: React.FC = () => {
           ))}
         </div>
 
-        {/* See More Button - only show when not expanded */}
         {!showMore && (
           <div className="text-center mb-8">
             <button
@@ -179,7 +211,6 @@ const DesignedFor: React.FC = () => {
           </div>
         )}
 
-        {/* Additional Cards (Expandable) */}
         {showMore && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in slide-in-from-top-4 duration-500 mb-12">
             {additionalDesignedFor.map((item, index) => (
@@ -194,7 +225,6 @@ const DesignedFor: React.FC = () => {
           </div>
         )}
 
-        {/* See Less Button - only show when expanded */}
         {showMore && (
           <div className="text-center mb-8">
             <button
@@ -208,8 +238,7 @@ const DesignedFor: React.FC = () => {
             </button>
           </div>
         )}
-
-        {/* Bottom Message */}
+        
         <div className="text-center mt-16">
           <div className="space-y-4">
             <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
@@ -224,6 +253,10 @@ const DesignedFor: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Horizontal scrolling gallery added here */}
+        <ScrollingImageGallery />
+
       </div>
     </section>
   );
