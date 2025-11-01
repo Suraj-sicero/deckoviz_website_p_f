@@ -91,7 +91,7 @@ const DeckovizCustomizer = () => {
   };
   const confirmOrder = () => {
     // go to order-confirmed
-    window.location.href = '/order-confirmed';
+    window.location.href = 'https://buy.stripe.com/fZu9AU03lfWs3r85Lj5kk00';
   }
 
 
