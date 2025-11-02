@@ -116,7 +116,8 @@ const ImagePreloader: React.FC = () => {
       "/images/realestatenavbar.png",
       "/images/therapistnavbar.png",
       "/images/schoolnavbar.png",
-      "/images/retailnavbar.png"
+      "/images/retailnavbar.png",
+      "/images/newenterprisenavbar.png"
     ]
 
     // Preload all images
@@ -231,6 +232,7 @@ const Navbar: React.FC = () => {
       route: "/deckoviz-for-restaurants",
       fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100"
     },
+    
     {
       title: "Architects & Designers",
       description: "Design living spaces",
@@ -278,8 +280,19 @@ const Navbar: React.FC = () => {
       gradient: "from-pink-500 to-rose-500",
       route: "/deckoviz-for-retailstores",
       fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100"
+    },{
+      title: "Enterprises",
+      description: "Crafting exquisite spaces",
+      image: "/images/newenterpriselogo.png",
+      gradient: "from-pink-500 to-rose-500",
+      route: "/deckoviz-for-enterprises",
+      fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100"
     }
   ]
+
+  // Separate Enterprise from other categories for custom layout
+  const enterpriseCategory = businessCategories.find(cat => cat.title === "Enterprises");
+  const otherCategories = businessCategories.filter(cat => cat.title !== "Enterprises");
 
   return (
     <>
@@ -398,7 +411,7 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 md:pl-16">
             {/* Desktop Main Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <div 
@@ -423,56 +436,94 @@ const Navbar: React.FC = () => {
                     ? 'opacity-100 visible translate-y-0' 
                     : 'opacity-0 invisible -translate-y-4'
                 }`}>
-                  <div className="w-[640px] bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden">
+                  <div className="w-[640px] bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden flex flex-col">
                     {/* Header */}
                     <div className="bg-gradient-to-r from-[#8345EE]/10 via-[#7239D3]/5 to-[#6B2FD6]/10 px-6 py-4 border-b border-gray-100">
                       <h3 className="text-lg font-semibold text-gray-800">Choose Your Industry</h3> 
                       <p className="text-sm text-gray-600 mt-1">Discover how Deckoviz transforms your space </p>
                     </div>
                     
-                    {/* Grid of Categories */}
-                    <div className="grid grid-cols-2 gap-3 p-6">
-                      {businessCategories.map((category, index) => (
-                        <button
-                          key={index}
-                          onClick={() => handleBusinessNavigation(category.route)}
-                          className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden"
-                          style={{
-                            background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)'
-                          }}
-                        >
-                          {/* Gradient overlay on hover */}
-                          <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}></div>
-                          
-                          {/* Content */}
-                          <div className="relative z-10 flex items-start space-x-3">
-                            <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
-                              {/* OPTIMIZATION 2: Use OptimizedImage component */}
-                              <OptimizedImage 
-                                src={category.image} 
-                                alt={category.title}
-                                className="w-8 h-8"
-                                fallbackColor={category.fallbackColor}
-                              />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300 leading-tight">
-                                {category.title}
-                              </h4>
-                              <p className="text-xs text-gray-500 mt-1 group-hover:text-gray-600 transition-colors duration-300">
-                                {category.description}
-                              </p>
-                            </div>
+                    {/* Scrollable content area */}
+                    <div className="overflow-y-auto max-h-[60vh]">
+                      <div className="p-6">
+                        {/* Grid of other categories */}
+                        <div className="grid grid-cols-2 gap-3">
+                          {otherCategories.map((category, index) => (
+                            <button
+                              key={index}
+                              onClick={() => handleBusinessNavigation(category.route)}
+                              className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden"
+                              style={{
+                                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)'
+                              }}
+                            >
+                              <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}></div>
+                              <div className="relative z-10 flex items-start space-x-3">
+                                <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
+                                  <OptimizedImage 
+                                    src={category.image} 
+                                    alt={category.title}
+                                    className="w-8 h-8"
+                                    fallbackColor={category.fallbackColor}
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300 leading-tight">
+                                    {category.title}
+                                  </h4>
+                                  <p className="text-xs text-gray-500 mt-1 group-hover:text-gray-600 transition-colors duration-300">
+                                    {category.description}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* MODIFICATION: Centered Enterprise button at the bottom */}
+                        {enterpriseCategory && (
+                          <div className="flex justify-center mt-3">
+                            <button
+                              key="enterprises"
+                              onClick={() => handleBusinessNavigation(enterpriseCategory.route)}
+                              className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden w-full max-w-xs"
+                              style={{
+                                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)'
+                              }}
+                            >
+                              <div className={`absolute inset-0 bg-gradient-to-br ${enterpriseCategory.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}></div>
+                              <div className="relative z-10 flex items-start space-x-3">
+                                <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
+                                  <OptimizedImage 
+                                    src={enterpriseCategory.image} 
+                                    alt={enterpriseCategory.title}
+                                    className="w-8 h-8"
+                                    fallbackColor={enterpriseCategory.fallbackColor}
+                                  />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300 leading-tight">
+                                    {enterpriseCategory.title}
+                                  </h4>
+                                  <p className="text-xs text-gray-500 mt-1 group-hover:text-gray-600 transition-colors duration-300">
+                                    {enterpriseCategory.description}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                              </div>
+                            </button>
                           </div>
-                          
-                          {/* Hover arrow */}
-                          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                          </div>
-                        </button>
-                      ))}
+                        )}
+                      </div>
                     </div>
                     
                     {/* Footer */}

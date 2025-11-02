@@ -10,7 +10,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Learning Centres & Schools",
       description:
         "Transform educational spaces with inspiring, dynamic visuals that enhance learning environments. Create focused study atmospheres, spark creativity, and support different learning modes—from calm concentration to energetic collaboration.",
-      gradient: "bg-gradient-to-br from-blue-200 via-indigo-100 to-blue-300",
+      haloColorRgb: "96, 165, 250", // Blue glow
       route: "/deckoviz-for-schools"
     },
     {
@@ -18,7 +18,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Hotels and Hospitality Spaces",
       description:
         "Elevate lobbies, suites, lounges, and premium experiences with dynamic, ever-evolving visuals that captivate guests, spark conversation, and express your brand's essence.",
-      gradient: "bg-gradient-to-br from-purple-200 via-blue-100 to-purple-300",
+      haloColorRgb: "192, 132, 252", // Purple glow
       route: "/deckoviz-for-hotels"
     },
     {
@@ -26,7 +26,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Real Estate Developers",
       description:
         "Bring showrooms and model homes to life with smart art that adapts to buyer personas, elevates staging, and showcases the future of elegant, tech-forward living.",
-      gradient: "bg-gradient-to-br from-pink-200 via-rose-100 to-pink-300",
+      haloColorRgb: "244, 114, 182", // Pink glow
       route: "/deckoviz-for-realestate"
     },
     {
@@ -34,7 +34,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Electronics & Home Decor Stores",
       description:
         "Add an irresistible edge to your showroom. Demo how tech and decor beautifully blend—and sell more by showing what's possible.",
-      gradient: "bg-gradient-to-br from-orange-200 via-pink-100 to-orange-300",
+      haloColorRgb: "251, 146, 60", // Orange glow
       route: "/deckoviz-for-retailstores"
     },
     {
@@ -42,7 +42,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Restaurants & Cafes",
       description:
         "Create an unforgettable vibe. Use AI-powered visual storytelling to enhance ambiance, reinforce brand identity, and shape customer moods—from cozy to high-energy.",
-      gradient: "bg-gradient-to-br from-purple-200 via-pink-100 to-purple-300",
+      haloColorRgb: "216, 180, 254", // Lavender glow
       route: "/deckoviz-for-restaurants"
     },
     {
@@ -50,7 +50,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Shops and Boutiques",
       description:
         "Design your atmosphere like a pro—whether it's minimalist chic or artsy and vibrant. Enhance customer experience and stay memorable with every glance.",
-      gradient: "bg-gradient-to-br from-pink-200 via-orange-100 to-pink-300",
+      haloColorRgb: "249, 115, 22", // Amber glow
       route: "/deckoviz-for-retailstores"
     },
     {
@@ -58,7 +58,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Offices & Co-Working Spaces",
       description:
         "Boost creativity, calm, and clarity. From focused productivity modes to ambient inspiration, Deckoviz supports emotional and mental wellness at work.",
-      gradient: "bg-gradient-to-br from-blue-200 via-purple-100 to-blue-300",
+      haloColorRgb: "129, 140, 248", // Indigo glow
       route: "/deckoviz-for-offices"
     },
     {
@@ -66,46 +66,27 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Therapists & Wellness Centers",
       description:
         "Whether you're running a therapy office, wellness center, or healing space—Deckoviz helps set the right tone. Calm, uplift, or energize your space, naturally and beautifully.",
-      gradient: "bg-gradient-to-br from-green-200 via-teal-100 to-green-300",
+      haloColorRgb: "52, 211, 153", // Emerald glow
       route: "/deckoviz-for-therapists"
     },
   ]
 
   const getComplexGradient = (index: number): string => {
     const gradients = [
-      // Learning Centres - Blue to indigo with educational tones
       "radial-gradient(ellipse at top left, #dbeafe 0%, #e0e7ff 30%, #dbeafe 60%, #93c5fd 100%)",
-
-      // Hotels - Purple to blue with light tones
       "radial-gradient(ellipse at top right, #e9d5ff 0%, #dbeafe 40%, #e9d5ff 70%, #c4b5fd 100%)",
-
-      // Real Estate - Pink to rose with gentle blending
       "radial-gradient(ellipse at bottom left, #fce7f3 0%, #ffe4e6 35%, #fce7f3 65%, #f9a8d4 100%)",
-
-      // Electronics - Orange to pink with warm tones
       "radial-gradient(ellipse at center, #fed7aa 0%, #fce7f3 45%, #fed7aa 75%, #fb923c 100%)",
-
-      // Restaurants - Purple to pink with vibrant colors
       "radial-gradient(ellipse at top, #e9d5ff 0%, #fce7f3 40%, #e9d5ff 70%, #c084fc 100%)",
-
-      // Shops - Pink to orange with warm transitions
       "radial-gradient(ellipse at bottom right, #fce7f3 0%, #fed7aa 35%, #fce7f3 65%, #f472b6 100%)",
-
-      // Offices - Blue to purple with cool tones
       "radial-gradient(ellipse at left, #dbeafe 0%, #e9d5ff 45%, #dbeafe 75%, #93c5fd 100%)",
-
-      // Therapists - Green to teal with fresh, calming colors
-      "radial-gradient(ellipse at right, #bbf7d0 0%, #a7f3d0 35%, #5eead4 70%, #2dd4bf 100%)",
+      "radial-gradient(ellipse at right, #dcfce7 0%, #d1fae5 35%, #a7f3d0 70%, #6ee7b7 100%)",
     ]
-
     return gradients[index] || gradients[0]
   }
 
   const handleLearnMore = (route: string) => {
-    // For React Router
     window.location.href = route;
-    // Or if using React Router's navigate:
-    // navigate(route);
   }
 
   return (
@@ -121,10 +102,11 @@ const WhoIsDeckovizFor: React.FC = () => {
           {segments.map((segment, index) => (
             <div
               key={index}
-              className="relative group rounded-2xl p-8 py-12 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl overflow-hidden flex flex-col h-full"
+              className="relative group rounded-2xl p-8 py-12 transition-all duration-300 shadow-lg overflow-hidden flex flex-col h-full static-halo-card"
               style={{
                 background: getComplexGradient(index),
-              }}
+                '--halo-color-rgb': segment.haloColorRgb,
+              } as React.CSSProperties}
             >
               {/* Twinkling sparkle effect */}
               <div className="absolute top-4 right-4">
@@ -185,6 +167,18 @@ const WhoIsDeckovizFor: React.FC = () => {
           @keyframes twinkle {
             0%, 100% { opacity: 0; }
             50% { opacity: 1; }
+          }
+
+          .static-halo-card {
+            /* This is the default, fixed glow */
+            box-shadow: 0 0 25px 3px rgba(var(--halo-color-rgb), 0.4);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+          }
+
+          .static-halo-card:hover {
+            /* On hover, we intensify the glow and scale the card */
+            transform: scale(1.05);
+            box-shadow: 0 0 35px 8px rgba(var(--halo-color-rgb), 0.5);
           }
         `
       }} />

@@ -1,3 +1,15 @@
+import { DynamicImageGrid } from "../other/DynamicImageGrid"; // ADDED
+
+// ADDED: A specific image array for this page
+const restarauntImages = [
+  { src: '/images/hotel1.png', tag: 'Lobby Ambiance' },
+  { src: '/images/hotel2.png', tag: 'Luxury Suites' },
+  { src: '/images/hotel3.png', tag: 'Restaurant Atmosphere' },
+  { src: '/images/hotel4.png', tag: 'Spa & Wellness' },
+  { src: '/images/hotel5.png', tag: 'Personalized Welcome' },
+  { src: '/images/hotel6.png', tag: 'Event Spaces' },
+];
+
 const DeckovizForRetail = () => {
   return (
     <div className="bg-white">
@@ -197,6 +209,16 @@ const DeckovizForRetail = () => {
     </div>
   </div>
 </div>
+
+
+
+
+ {/* ===== DYNAMIC IMAGE GRID ADDED HERE ===== */}
+          <DynamicImageGrid 
+            imageSources={restarauntImages}
+            sectionTitle="Transforming Hospitality Spaces"
+            sectionDescription="From welcoming lobbies to serene suites, see how Deckoviz creates unforgettable guest experiences."
+          />
 
 
       {/* What is Deckoviz Section */}
