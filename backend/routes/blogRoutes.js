@@ -1,40 +1,89 @@
+// ===== routes/blogRoutes.js =====
 import express from "express";
 import Blog from "../models/Blog.js";
 
 const router = express.Router();
 
-// ===== FRONTEND API =====
-router.get("/", async (req, res) => {
+// ===================================================================
+// ======================= FRONTEND API ===============================
+// ===================================================================
+
+// ✅ GET: All blogs (for API / frontend)
+router.get("/api/blog", async (req, res) => {
   try {
-    const blogs = await Blog.find().sort({ _id: -1 });
+    const blogs = await Blog.findAll({
+      order: [["id", "DESC"]],
+    });
     res.json(blogs);
   } catch (err) {
+    console.error("❌ Error fetching blogs:", err);
     res.status(500).json({ error: err.message });
   }
 });
 
-// ===== ADMIN DASHBOARD =====
+// ===================================================================
+// ======================= ADMIN DASHBOARD ============================
+// ===================================================================
+
+// ✅ Render all blogs (EJS view)
 router.get("/blogs", async (req, res) => {
-  const blogs = await Blog.find().sort({ _id: -1 });
-  res.render("blog", { title: "All Blogs", blogs });
+  try {
+    const blogs = await Blog.findAll({ order: [["id", "DESC"]] });
+    res.render("blogs", { title: "All Blogs", blogs });
+  } catch (err) {
+    console.error("❌ Error rendering blogs:", err);
+    res.status(500).send("Error loading blogs");
+  }
 });
 
-// Add Blog Form
+// ✅ Render add-blog form
 router.get("/add", (req, res) => {
   res.render("addBlog", { title: "Add Blog" });
 });
 
-// Save Blog
+// ✅ Add new blog post
 router.post("/add", async (req, res) => {
-  const { tag, tagColor, title, description, readTime, date, image, gradient, size } = req.body;
-  await Blog.create({ tag, tagColor, title, description, readTime, date, image, gradient, size });
-  res.redirect("/blogs");
+  try {
+    const {
+      tag,
+      tagColor,
+      title,
+      description,
+      readTime,
+      date,
+      image,
+      gradient,
+      size,
+    } = req.body;
+
+    await Blog.create({
+      tag,
+      tagColor,
+      title,
+      description,
+      readTime,
+      date,
+      image,
+      gradient,
+      size,
+    });
+
+    res.redirect("/blogs");
+  } catch (err) {
+    console.error("❌ Error adding blog:", err);
+    res.status(500).send("Error adding blog");
+  }
 });
 
-// Delete Blog
+// ✅ Delete a blog post
 router.delete("/delete/:id", async (req, res) => {
-  await Blog.findByIdAndDelete(req.params.id);
-  res.redirect("/blogs");
+  try {
+    await Blog.destroy({ where: { id: req.params.id } });
+    res.redirect("/blogs");
+  } catch (err) {
+    console.error("❌ Error deleting blog:", err);
+    res.status(500).send("Error deleting blog");
+  }
 });
 
 export default router;

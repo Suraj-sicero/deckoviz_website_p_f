@@ -1,56 +1,72 @@
 // ===== server.js =====
 
-// Core Imports
+// ===== Core Imports =====
 import express from "express";
 import bodyParser from "body-parser";
 import methodOverride from "method-override";
 import expressLayouts from "express-ejs-layouts";
 import dotenv from "dotenv";
 import cors from "cors";
-import connectDB from "./config/db.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import { sequelize } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
 import blogRoutes from "./routes/blogRoutes.js";
 import Stripe from "stripe";
 
 dotenv.config();
-
 const app = express();
 
-// ===== Connect to MongoDB =====
-connectDB();
+// ===== Resolve __dirname (for ES modules) =====
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// ===== Connect to PostgreSQL (Sequelize) =====
+try {
+  await sequelize.authenticate();
+  console.log("✅ PostgreSQL connected via Sequelize.");
+  await sequelize.sync(); // Optional: { alter: true } during dev
+} catch (error) {
+  console.error("❌ Database connection failed:", error);
+  process.exit(1);
+}
 
 // ===== Stripe Configuration =====
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "sk_test_51S2RGMJ8RKkMEZ712u787r6VLZMz1XL7ZfjarZSFaU1Yat2ZjToH7D9pcV5iO5h4rA6DtxV5F2QbGxa7nr5b9iCG00B5k1Gdsa");
+const stripe = new Stripe(
+  process.env.STRIPE_SECRET_KEY ||
+    "sk_test_51S2RGMJ8RKkMEZ712u787r6VLZMz1XL7ZfjarZSFaU1Yat2ZjToH7D9pcV5iO5h4rA6DtxV5F2QbGxa7nr5b9iCG00B5k1Gdsa"
+);
 
 // ===== Middlewares =====
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
 
 // ===== Enable CORS for Frontend =====
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5173", // ✅ your frontend origin
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   })
 );
 
-// ===== View Engine =====
+// ===== View Engine (EJS) =====
 app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set("views", path.join(__dirname, "views")); // ✅ Fixed path
 app.set("layout", "layout");
 
-// ===== Routes =====
-// Blog & CMS
-app.use("/api/blog", blogRoutes);
-app.use("/", blogRoutes);
+// ===== ROUTES =====
+// ✅ API routes (for frontend JSON calls)
+app.use("/api", blogRoutes); // Example: http://localhost:5000/api/blog
 
-// ===== Root Redirect =====
+// ✅ EJS routes (for admin panel / UI)
+app.use("/", blogRoutes); // Example: http://localhost:5000/blogs or /add
+
+// ===== Root Message =====
 app.get("/", (req, res) => {
-  res.redirect("/blogs");
+  res.redirect("/blogs"); // 👈 automatically go to blogs page
 });
-
 
 // ======================================================================
 // ===================== STRIPE PAYMENT ENDPOINTS =======================
@@ -81,16 +97,17 @@ app.post("/create-checkout-session", async (req, res) => {
       line_items: [
         {
           price_data: {
-            currency: "usd", // Change to 'inr' if needed
+            currency: "usd",
             product_data: { name: productName },
-            unit_amount: Math.round(amount * 100), // Convert to cents
+            unit_amount: Math.round(amount * 100),
           },
           quantity: 1,
         },
       ],
       metadata: metadata || {},
       mode: "payment",
-      success_url: "http://localhost:5173/order-confirmed?session_id={CHECKOUT_SESSION_ID}",
+      success_url:
+        "http://localhost:5173/order-confirmed?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: "http://localhost:5173/",
     });
 
@@ -121,7 +138,9 @@ app.get("/order-details", async (req, res) => {
       orderDate: new Date(session.created * 1000).toLocaleDateString(),
       total: (session.amount_total / 100).toFixed(2),
       productName: session.line_items.data[0].price.product.name,
-      productDescription: `${session.metadata?.frameType || ""} ${session.metadata?.subscription || ""}`,
+      productDescription: `${session.metadata?.frameType || ""} ${
+        session.metadata?.subscription || ""
+      }`,
     });
   } catch (error) {
     console.error("Error retrieving session:", error);
@@ -133,4 +152,6 @@ app.get("/order-details", async (req, res) => {
 // ========================== SERVER START ==============================
 // ======================================================================
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Unified server running on http://localhost:${PORT}`));
+app.listen(PORT, () =>
+  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
+);
