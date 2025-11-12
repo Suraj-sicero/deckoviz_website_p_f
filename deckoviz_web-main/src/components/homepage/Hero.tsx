@@ -161,7 +161,7 @@ const Hero: React.FC = () => {
           <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16">
             <span className="text-gray-900">Transform Your Space with </span>
             <span className="bg-gradient-to-r from-[#9a5ffff9] to-indigo-500 bg-clip-text text-transparent">
-              AI-Powered Art
+              AI-Powered Dynamic Art Frames
             </span>
           </h1>
           {/* Subheading */}
@@ -242,7 +242,7 @@ Deckoviz brings your <span className="text-purple-600 font-semibold">walls to li
           <div className="text-4xl font-bold bg-gradient-to-r from-[#6C63FF] to-[#4F46E5] bg-clip-text text-transparent mb-1">
             <CountUp from={0} to={1} duration={2} suffix="M+" />
           </div>
-          <div className="text-gray-600 text-md font-medium">Artworks</div>
+          <div className="text-gray-600 text-md font-medium">Artworks and Items in Library</div>
           <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
         </div>
         
