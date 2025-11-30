@@ -240,9 +240,9 @@ Deckoviz brings your <span className="text-purple-600 font-semibold">walls to li
         {/* Artworks */}
         <div className="text-center group/stat hover:scale-105 transition-transform duration-300">
           <div className="text-4xl font-bold bg-gradient-to-r from-[#6C63FF] to-[#4F46E5] bg-clip-text text-transparent mb-1">
-            <CountUp from={0} to={1} duration={2} suffix="M+" />
+            <CountUp from={0} to={2.5} duration={2} suffix="M+" />
           </div>
-          <div className="text-gray-600 text-md font-medium">Artworks and Items in Library</div>
+          <div className="text-gray-600 text-md font-medium">Items in Library</div>
           <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
         </div>
         
@@ -258,7 +258,7 @@ Deckoviz brings your <span className="text-purple-600 font-semibold">walls to li
               </svg>
             </div>
           </div>
-          <div className="text-gray-600 text-md font-medium">Star Rating</div>
+          <div className="text-gray-600 text-md font-medium">Star <br> Rating</div>
           <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
         </div>
       </div>
