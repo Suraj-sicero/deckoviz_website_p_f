@@ -4,11 +4,275 @@ import type React from "react"
 import { useState } from "react"
 import { useRef, useEffect } from "react"
 import { ChevronDown, ArrowRight, Clock, Search } from "lucide-react"
-import { blogPosts } from "@/data/blogs"
-import type { BlogPost } from "@/data/blogs"
+
+const blogPosts = [
+
+  {
+    id: 1,
+    tag: "Announcements",
+    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
+    title: "Introducing New AI-Powered Art Analysis",
+    description:
+      "This release marks the end of traditional art analysis. Our AI workflows and nodes let anyone analyze artworks with AI writing all the insights for you.",
+    readTime: "5 min read",
+    date: "March 16, 2025",
+    image:
+      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-purple-400 via-pink-400 to-orange-400",
+    size: "large",
+    pinned: false,
+    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+  },
+  {
+    id: 2,
+    tag: "Guides",
+    tagColor: "bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700",
+    title: "Complete Guide to Digital Art Preservation",
+    description:
+      "Compare traditional vs digital methods to find the right preservation technique for your collection.",
+    readTime: "8 min read",
+    date: "March 15, 2025",
+    image:
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-blue-400 via-purple-400 to-pink-400",
+    size: "medium",
+    pinned: false,
+  },
+  {
+    id: 3,
+    tag: "Case Studies",
+    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
+    title: "How MoMA Revolutionized Their Archive System",
+    description:
+      "Discover how major museums are adopting digital workflows.",
+    readTime: "6 min read",
+    date: "March 14, 2025",
+    image:
+      "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-green-400 via-blue-400 to-purple-400",
+    size: "medium",
+    pinned: false,
+  },
+  {
+    id: 4,
+    tag: "Use Cases",
+    tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
+    title: "AI in Archaeological Discovery",
+    description:
+      "Beauty and atmosphere that evolves with archaeological findings.",
+    readTime: "4 min read",
+    date: "March 13, 2025",
+    image:
+      "https://images.unsplash.com/photo-1682281796273-1617bd6f4f1a?q=80&w=1171&auto=format&fit=crop",
+    gradient: "from-orange-400 via-red-400 to-pink-400",
+    size: "small",
+    pinned: false,
+  },
+  {
+    id: 5,
+    tag: "Guides",
+    tagColor: "bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700",
+    title: "Ancient Civilizations Through Modern Eyes",
+    description:
+      "Exploring how technology helps us understand our past.",
+    readTime: "7 min read",
+    date: "March 12, 2025",
+    image:
+      "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-cyan-400 via-blue-400 to-purple-400",
+    size: "small",
+    pinned: false,
+  },
+  {
+    id: 6,
+    tag: "Announcements",
+    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
+    title: "New Partnership with Getty Images",
+    description:
+      "Creative inspiration that grows every day through our expanded image library.",
+    readTime: "3 min read",
+    date: "March 11, 2025",
+    image:
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-pink-400 via-purple-400 to-orange-400",
+    size: "medium",
+    pinned: false,
+  },
+  {
+    id: 7,
+    tag: "Case Studies",
+    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
+    title: "Digital Restoration Success Stories",
+    description:
+      "Cutting-edge restoration techniques transforming art.",
+    readTime: "9 min read",
+    date: "March 10, 2025",
+    image:
+      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-emerald-400 via-green-400 to-blue-400",
+    size: "large",
+    pinned: false,
+  },
+  {
+    id: 8,
+    tag: "Use Cases",
+    tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
+    title: "Virtual Museum Experiences",
+    description:
+      "Immersive digital experiences connecting people to art.",
+    readTime: "5 min read",
+    date: "March 9, 2025",
+    image:
+      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-red-400 via-orange-400 to-yellow-400",
+    size: "medium",
+    pinned: false,
+  },
+  {
+    id: 9,
+    tag: "Innovation",
+    tagColor: "bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700",
+    title: "Deckoviz SmartArtFrame: Reimagining Living Spaces",
+    description:"Introducing SmartArtFrame — an intelligent, adaptive display that transforms walls into living experiences, blending generative art, ambient intelligence, and spatial awareness to evolve with your space, mood, and moments.",
+    readTime: "6 min read",
+    date: "April 2, 2025",
+    image:"https://media.licdn.com/dms/image/v2/D5612AQE-9y62pzhBkw/article-cover_image-shrink_720_1280/B56ZsO5YhcJUAI-/0/1765481487539?e=1767830400&v=beta&t=EliHzvlM0U6CLyDLonBZ-MwssdfjbOAkcl1VukfLahU",
+    gradient: "from-purple-400 via-indigo-400 to-blue-400",
+    size: "medium",
+    pinned: true,
+    link: "https://www.linkedin.com/pulse/future-restaurant-experience-deckoviz-space-labs-awmsc",
+  },
+  {
+    id: 10,
+    tag: "Use Case",
+    tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
+    title: "Deckoviz e-DASP: Giving Spaces a Soul",
+    description:"Why static screens are no longer enough. Deckoviz e-DASP transforms enterprise spaces into living, adaptive environments—where dynamic art, brand storytelling, and emotional intelligence evolve in real time to create unforgettable experiences.",
+    readTime: "5 min read",
+    date: "April 5, 2025",
+    image:"https://media.licdn.com/dms/image/v2/D5612AQGG3NL196kPgg/article-cover_image-shrink_720_1280/B56Zr_1WFSI4AI-/0/1765228770724?e=1767830400&v=beta&t=J3qY3sW0q3xDHNItsgh02M_wWoWlKE20OSgmhSWiWIY",
+    gradient: "from-orange-400 via-red-400 to-pink-400",
+    size: "small",
+    pinned: true,
+    link: "https://www.linkedin.com/pulse/power-visual-storytelling-custom-art-enterprises-deckoviz-6o8fc",
+  },
+
+  {
+    id: 11,
+    tag: "Innovation",
+    tagColor: "bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700",
+    title: "Building the Lovable or Cursor for Personal Art and Storytelling",
+    description:
+      "How AI helps curate adaptive art experiences in real-time environments.",
+    readTime: "7 min read",
+    date: "April 24, 2025",
+    image:"https://media.licdn.com/dms/image/v2/D5612AQFcKXTiFdry2A/article-cover_image-shrink_423_752/B56ZrLX8Y9HQAU-/0/1764348649155?e=1767830400&v=beta&t=h15kXnbddhO6HVkVIpT9jSh36rZI3VZMK3TkvMKXfZ0",
+    gradient: "from-indigo-400 via-purple-400 to-pink-400",
+    size: "medium",
+    pinned: true,
+    link: "https://www.linkedin.com/posts/deckoviz-space-labs_building-the-lovable-or-cursor-for-personal-activity-7400218079865106432-M8yk?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFYj040BBJJce17vMSZ0bn9MW00hJnWq2SM",
+  },
+  {
+    id: 12,
+    tag: "Use Cases",
+    tagColor: "bg-gradient-to-r from-orange-100 to-yellow-100 text-orange-700",
+    title: "Why Deckoviz E-DASP Is a Game-Changer for Businesses",
+    description:
+      "Static decor and looping screens no longer move the needle. Discover how Deckoviz E-DASP transforms walls into adaptive, intelligent experience layers—boosting customer engagement, brand identity, and business performance in real time.",
+    readTime: "6 min read",
+    date: "April 10, 2025",
+    image:"https://media.licdn.com/dms/image/v2/D5612AQGyE-WI4n661w/article-cover_image-shrink_423_752/B56Zqy.M8XJwAU-/0/1763939249630?e=1767830400&v=beta&t=oFLoxsZ-jyLhYg7oSqi-xvZh5f1ibRglPM6Od3wsqm0",
+    gradient: "from-orange-400 via-yellow-400 to-red-400",
+    size: "medium",
+    pinned: true,
+    link: "https://www.linkedin.com/posts/deckoviz-space-labs_deckoviz-customerexperience-cxinnovation-activity-7398501629513129984-6DT3?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFYj040BBJJce17vMSZ0bn9MW00hJnWq2SM",
+  },
+  {
+    id: 13,
+    tag: "Technology",
+    tagColor: "bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700",
+    title: "Behind the Tech: Deckoviz Smart Display System",
+    description:
+      "A deep dive into the architecture powering Deckoviz smart displays.",
+    readTime: "7 min read",
+    date: "April 12, 2025",
+    image:
+      "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-blue-400 via-indigo-400 to-purple-400",
+    size: "large",
+    pinned: true,
+    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+  },
+  {
+    id: 14,
+    tag: "Branding",
+    tagColor: "bg-gradient-to-r from-pink-100 to-red-100 text-pink-700",
+    title: "How Visual Identity Shapes Brand Perception",
+    description:
+      "Why visual storytelling plays a critical role in brand recall.",
+    readTime: "5 min read",
+    date: "April 14, 2025",
+    image:
+      "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-pink-400 via-red-400 to-orange-400",
+    size: "small",
+    pinned: true,
+    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+  },
+  {
+    id: 15,
+    tag: "Innovation",
+    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
+    title: "The Future of Adaptive Digital Art",
+    description:
+      "Exploring how adaptive art evolves with space, time, and audience.",
+    readTime: "6 min read",
+    date: "April 16, 2025",
+    image:
+      "https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-green-400 via-emerald-400 to-blue-400",
+    size: "medium",
+    pinned: true,
+    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+  },
+  {
+    id: 16,
+    tag: "Use Cases",
+    tagColor: "bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-700",
+    title: "Digital Art in Corporate Workspaces",
+    description:
+      "How intelligent art improves productivity and workplace culture.",
+    readTime: "5 min read",
+    date: "April 18, 2025",
+    image:
+      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-yellow-400 via-orange-400 to-red-400",
+    size: "medium",
+    pinned: true,
+    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+  },
+  {
+    id: 17,
+    tag: "Announcements",
+    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
+    title: "Deckoviz Vision: The Next Era of Smart Visuals",
+    description:
+      "A look ahead at Deckoviz’s roadmap and vision for immersive art tech.",
+    readTime: "6 min read",
+    date: "April 20, 2025",
+    image:
+      "https://images.unsplash.com/photo-1500534314209-a26db0f5c14b?q=80&w=1000&auto=format&fit=crop",
+    gradient: "from-purple-400 via-pink-400 to-indigo-400",
+    size: "large",
+    pinned: true,
+    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+  },
+]
 
 
 const pinnedBlogs = blogPosts.filter((post) => post.pinned)
+const infinitePinnedBlogs = [...pinnedBlogs, ...pinnedBlogs]
+
 const tags = ["View all", "Announcements", "Guides", "Use Cases", "Case Studies"]
 
 const Blog: React.FC = () => {
@@ -144,34 +408,37 @@ const Blog: React.FC = () => {
     return reorderedPosts;
   };
 
-  const scrollPinned = (direction: "next" | "prev") => {
-    if (!pinnedContainerRef.current) return
+const scrollPinned = (direction: "next" | "prev") => {
+  if (!pinnedContainerRef.current) return
 
-    const container = pinnedContainerRef.current
-    const cards = container.children
-    if (!cards.length) return
+  const container = pinnedContainerRef.current
+  const cardWidth = 320 + 32 // card width + gap (min-w + gap-8)
+  const loopPoint = container.scrollWidth / 2
 
-    if (direction === "next") {
-      pinnedIndexRef.current =
-        (pinnedIndexRef.current + 1) % cards.length
-    } else {
-      pinnedIndexRef.current =
-        (pinnedIndexRef.current - 1 + cards.length) % cards.length
+  if (direction === "next") {
+    container.scrollBy({ left: cardWidth, behavior: "smooth" })
+
+    if (container.scrollLeft + cardWidth >= loopPoint) {
+      setTimeout(() => {
+        container.scrollLeft = 0
+      }, 700)
     }
+  } else {
+    container.scrollBy({ left: -cardWidth, behavior: "smooth" })
 
-    const target = cards[pinnedIndexRef.current] as HTMLElement
-
-    target.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    })
+    if (container.scrollLeft <= 0) {
+      setTimeout(() => {
+        container.scrollLeft = loopPoint
+      }, 700)
+    }
   }
+}
+
 
   useEffect(() => {
     const interval = setInterval(() => {
       scrollPinned("next")
-    }, 8000)
+    }, 5000)
 
     return () => clearInterval(interval)
   }, [])
@@ -253,12 +520,12 @@ const Blog: React.FC = () => {
 
   {/* SCROLL CONTAINER */}
   <div
-    ref={pinnedContainerRef}
-    className="flex gap-8 overflow-hidden px-14 scroll-smooth"
-  >
-    {pinnedBlogs.map((post) => (
+  ref={pinnedContainerRef}
+  className="flex gap-8 overflow-hidden px-14 scroll-smooth whitespace-nowrap"
+>
+    {infinitePinnedBlogs.map((post, index) => (
       <a
-        key={post.id}
+        key={`${post.id}-${index}`}
         href={post.link || "#"}
         target="_blank"
         rel="noopener noreferrer"
