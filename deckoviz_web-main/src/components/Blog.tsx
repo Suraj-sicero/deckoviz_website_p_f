@@ -1,164 +1,22 @@
 "use client";
 
-import type React from "react";
-import { useState, useEffect } from "react";
-import { ChevronDown, ArrowRight, Clock, Search } from "lucide-react";
-/*const blogPosts = [
-  {
-    id: 1,
-    tag: "Announcements",
-    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
-    title: "Introducing New AI-Powered Art Analysis",
-    description:
-      "This release marks the end of traditional art analysis. Our AI workflows and nodes let anyone analyze artworks with AI writing all the insights for you.",
-    readTime: "5 min read",
-    date: "March 16, 2025",
-    image:
-      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-purple-400 via-pink-400 to-orange-400",
-    size: "large",
-  },
-  {
-    id: 2,
-    tag: "Guides",
-    tagColor: "bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700",
-    title: "Complete Guide to Digital Art Preservation",
-    description:
-      "Compare traditional vs digital methods to find the right preservation technique for your collection. Built for museums, galleries, and collectors.",
-    readTime: "8 min read",
-    date: "March 15, 2025",
-    image:
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-blue-400 via-purple-400 to-pink-400",
-    size: "medium",
-  },
-  {
-    id: 3,
-    tag: "Case Studies",
-    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
-    title: "How MoMA Revolutionized Their Archive System",
-    description:
-      "Discover how major museums are adopting digital workflows: a structured, technology-based approach to art curation that's more efficient and scalable.",
-    readTime: "6 min read",
-    date: "March 14, 2025",
-    image:
-      "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-green-400 via-blue-400 to-purple-400",
-    size: "medium",
-  },
-  {
-    id: 4,
-    tag: "Use Cases",
-    tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
-    title: "AI in Archaeological Discovery",
-    description:
-      "Beauty and atmosphere that evolves with archaeological findings through advanced AI analysis and pattern recognition.",
-    readTime: "4 min read",
-    date: "March 13, 2025",
-    image:
-      "https://images.unsplash.com/photo-1682281796273-1617bd6f4f1a?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D=crop",
-    gradient: "from-orange-400 via-red-400 to-pink-400",
-    size: "small",
-  },
-  {
-    id: 5,
-    tag: "Guides",
-    tagColor: "bg-gradient-to-r from-blue-100 to-cyan-100 text-blue-700",
-    title: "Ancient Civilizations Through Modern Eyes",
-    description:
-      "A quiet moment of presence in a chaotic world, exploring how technology helps us understand our past.",
-    readTime: "7 min read",
-    date: "March 12, 2025",
-    image:
-      "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-cyan-400 via-blue-400 to-purple-400",
-    size: "small",
-  },
-  {
-    id: 6,
-    tag: "Announcements",
-    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
-    title: "New Partnership with Getty Images",
-    description:
-      "Creative inspiration that grows every day through our expanded image library and AI-powered recommendations.",
-    readTime: "3 min read",
-    date: "March 11, 2025",
-    image:
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-pink-400 via-purple-400 to-orange-400",
-    size: "medium",
-  },
-  {
-    id: 7,
-    tag: "Case Studies",
-    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
-    title: "Digital Restoration Success Stories",
-    description:
-      "An ever-changing window into imagination, emotion, and art through cutting-edge restoration techniques.",
-    readTime: "9 min read",
-    date: "March 10, 2025",
-    image:
-      "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-emerald-400 via-green-400 to-blue-400",
-    size: "large",
-  },
-  {
-    id: 8,
-    tag: "Use Cases",
-    tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
-    title: "Virtual Museum Experiences",
-    description:
-      "A sense of connection to their memories, their loved ones, and themselves through immersive digital experiences.",
-    readTime: "5 min read",
-    date: "March 9, 2025",
-    image:
-      "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-red-400 via-orange-400 to-yellow-400",
-    size: "medium",
-  },
-];*/
-const tags = [
-  "View all",
-  "Announcements",
-  "Guides",
-  "Use Cases",
-  "Case Studies",
-];
+import type React from "react"
+import { useState } from "react"
+import { useRef, useEffect } from "react"
+import { ChevronDown, ArrowRight, Clock, Search } from "lucide-react"
+import { blogPosts } from "@/data/blogs"
+import type { BlogPost } from "@/data/blogs"
+
+
+const pinnedBlogs = blogPosts.filter((post) => post.pinned)
+const tags = ["View all", "Announcements", "Guides", "Use Cases", "Case Studies"]
 
 const Blog: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [activeTag, setActiveTag] = useState("View all");
-  const [showAllHero, setShowAllHero] = useState(false);
-  const [blogPosts, setBlogPosts] = useState<any[]>([]); // dynamic posts
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-  const fetchPosts = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/") // adjust endpoint
-      if (!response.ok) throw new Error("Failed to fetch posts")
-      const data = await response.json()
-      
-      // Reverse the order
-      const reversedData = data.reverse()
-
-      setBlogPosts(reversedData)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-  fetchPosts()
-}, [])
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-600 text-lg">Loading blog posts...</p>
-      </div>
-    );
-  }
+  const [email, setEmail] = useState("")
+  const [activeTag, setActiveTag] = useState("View all")
+  const [showAllHero, setShowAllHero] = useState(false)
+  const pinnedContainerRef = useRef<HTMLDivElement | null>(null)
+  const pinnedIndexRef = useRef(0)
 
   // Fixed filter logic
   const filteredPosts =
@@ -170,7 +28,8 @@ const Blog: React.FC = () => {
     ? blogPosts.slice(0, 8)
     : blogPosts.slice(0, 5);
 
-  const BlogCard = ({ post }: { post: (typeof blogPosts)[0] }) => {
+  const BlogCard = ({ post }: { post: BlogPost }) => {
+
     const isLarge = post.size === "large";
     const isMedium = post.size === "medium";
 
@@ -285,6 +144,39 @@ const Blog: React.FC = () => {
     return reorderedPosts;
   };
 
+  const scrollPinned = (direction: "next" | "prev") => {
+    if (!pinnedContainerRef.current) return
+
+    const container = pinnedContainerRef.current
+    const cards = container.children
+    if (!cards.length) return
+
+    if (direction === "next") {
+      pinnedIndexRef.current =
+        (pinnedIndexRef.current + 1) % cards.length
+    } else {
+      pinnedIndexRef.current =
+        (pinnedIndexRef.current - 1 + cards.length) % cards.length
+    }
+
+    const target = cards[pinnedIndexRef.current] as HTMLElement
+
+    target.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    })
+  }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      scrollPinned("next")
+    }, 8000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Light Background with Subtle Gradients */}
@@ -333,6 +225,111 @@ const Blog: React.FC = () => {
             art and{" "}
             <span className="text-indigo-600 font-semibold">technology</span>.
           </p>
+
+{pinnedBlogs.length > 0 && (
+  <div className="mt-16 mb-24 w-full">
+    {/* Section Header */}
+    <div className="flex items-center justify-between mb-6">
+      <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+              📍Pinned Blogs
+      </h2>
+      <span className="text-sm text-gray-500">
+        Featured & highlighted posts
+      </span>
+    </div>
+
+    {/* Horizontal Scroll Container */}
+    <div className="relative">
+  {/* PREVIOUS BUTTON */}
+  <button
+    onClick={() => scrollPinned("prev")}
+    className="absolute left-0 top-1/2 -translate-y-1/2 z-20
+               w-12 h-12 rounded-full bg-white shadow-lg
+               flex items-center justify-center
+               hover:scale-110 transition-all duration-300"
+  >
+    <ChevronDown className="rotate-90 w-5 h-5 text-gray-700" />
+  </button>
+
+  {/* SCROLL CONTAINER */}
+  <div
+    ref={pinnedContainerRef}
+    className="flex gap-8 overflow-hidden px-14 scroll-smooth"
+  >
+    {pinnedBlogs.map((post) => (
+      <a
+        key={post.id}
+        href={post.link || "#"}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="min-w-[320px] max-w-[320px]
+           group bg-white rounded-2xl
+           shadow-lg transition-all duration-700
+           hover:-translate-y-3 hover:scale-[1.03]
+           hover:shadow-[0_20px_50px_rgba(236,72,153,0.35)]
+           hover:bg-gradient-to-br hover:from-pink-50 hover:via-rose-50 hover:to-white"
+
+      >
+        {/* Image */}
+        <div className="relative h-48 overflow-hidden rounded-t-2xl">
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-full object-cover
+                       transition-transform duration-700
+                       group-hover:scale-110"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+          <span
+            className={`absolute top-4 left-4 px-3 py-1 rounded-full
+                        text-xs font-semibold backdrop-blur-md ${post.tagColor}`}
+          >
+            {post.tag}
+          </span>
+
+          <span className="absolute top-4 right-4 bg-white/90
+                           text-purple-600 text-xs font-bold
+                           px-3 py-1 rounded-full shadow">
+            PINNED
+          </span>
+        </div>
+
+        {/* Content */}
+        <div className="p-5">
+          <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+            {post.title}
+          </h3>
+          <p className="text-sm text-gray-600 line-clamp-2 mb-4">
+            {post.description}
+          </p>
+          <div className="flex items-center justify-between text-sm text-gray-500">
+            <span>{post.readTime}</span>
+            <span className="flex items-center gap-1 text-purple-600 font-medium">
+              Read
+              <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  {/* NEXT BUTTON */}
+  <button
+    onClick={() => scrollPinned("next")}
+    className="absolute right-0 top-1/2 -translate-y-1/2 z-20
+               w-12 h-12 rounded-full bg-white shadow-lg
+               flex items-center justify-center
+               hover:scale-110 transition-all duration-300"
+  >
+    <ChevronDown className="-rotate-90 w-5 h-5 text-gray-700" />
+  </button>
+</div>
+
+  </div>
+)}
+
         </div>
 
         {/* Enhanced Hero Section - 2x3 Grid Layout */}

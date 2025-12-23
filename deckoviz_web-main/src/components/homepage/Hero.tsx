@@ -258,7 +258,7 @@ Deckoviz brings your <span className="text-purple-600 font-semibold">walls to li
               </svg>
             </div>
           </div>
-          <div className="text-gray-600 text-md font-medium">Star <br> Rating</div>
+          <div className="text-gray-600 text-md font-medium">Star <br/> Rating</div>
           <div className="w-6 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 mx-auto mt-2 opacity-0 group-hover/stat:opacity-100 transition-opacity duration-300"></div>
         </div>
       </div>
