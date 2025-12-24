@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 "use client";
 
 import type React from "react"
+=======
+"use client"
+import React from "react"
+>>>>>>> b427bc8 (Update conveyor belt scroll)
 import { useState } from "react"
 import { useRef, useEffect } from "react"
 import { ChevronDown, ArrowRight, Clock, Search } from "lucide-react"
@@ -191,81 +196,94 @@ const blogPosts = [
     id: 13,
     tag: "Technology",
     tagColor: "bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700",
-    title: "Behind the Tech: Deckoviz Smart Display System",
+    title: "AI, Art, and the Future of Human Expression",
     description:
-      "A deep dive into the architecture powering Deckoviz smart displays.",
+      "An exploration of how AI is reshaping humanity’s relationship with art, creativity, and storytelling—and how Deckoviz and Vizzy are building a future where personal, emotionally intelligent art becomes accessible to everyone.",
     readTime: "7 min read",
-    date: "April 12, 2025",
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop",
+    date: "November 17, 2025",
+    image:"https://media.licdn.com/dms/image/v2/D5612AQFknVumutx4zQ/article-cover_image-shrink_720_1280/B56ZqOZq94JwAI-/0/1763325692202?e=1768435200&v=beta&t=fxvq7lC5LzyFi09xQUmGR3OEGOKGfZ86W1bqiXxfcbM",
     gradient: "from-blue-400 via-indigo-400 to-purple-400",
     size: "large",
     pinned: true,
-    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+    link: "https://www.linkedin.com/pulse/how-we-think-ai-art-creative-companion-deckoviz-deckoviz-space-labs-217fc",
   },
   {
     id: 14,
-    tag: "Branding",
+    tag: "Technology",
     tagColor: "bg-gradient-to-r from-pink-100 to-red-100 text-pink-700",
-    title: "How Visual Identity Shapes Brand Perception",
+    title: "Vizzy: The Emotionally Intelligent AI Bringing Spaces to Life",
     description:
-      "Why visual storytelling plays a critical role in brand recall.",
+      "Meet Vizzy — the emotionally intelligent AI at the heart of Deckoviz. From living, breathing home companions to brand-aware enterprise storytellers, Vizzy blends art, ambience, memory, and intelligence to transform spaces into experiences people feel and remember.",
     readTime: "5 min read",
-    date: "April 14, 2025",
-    image:
-      "https://images.unsplash.com/photo-1492724441997-5dc865305da7?q=80&w=1000&auto=format&fit=crop",
+    date: "November 13, 2025",
+    image: "https://media.licdn.com/dms/image/v2/D5612AQHtcpXxznN3Ig/article-cover_image-shrink_720_1280/B56Zp.G0RnHQBQ-/0/1763052314622?e=1768435200&v=beta&t=GaWD7yPUbpxy2wq9IxqaGV69tNikKwFIqp-yOSn1S_M",
     gradient: "from-pink-400 via-red-400 to-orange-400",
     size: "small",
     pinned: true,
-    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+    link: "https://www.linkedin.com/pulse/vizzy-magic-homes-businesses-deckoviz-space-labs-u5vmc",
   },
   {
     id: 15,
     tag: "Innovation",
     tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
-    title: "The Future of Adaptive Digital Art",
+    title: "Why Deckoviz Is Building Expressive Robots, Not Blank Humanoids",
     description:
-      "Exploring how adaptive art evolves with space, time, and audience.",
+      "As robotics trends toward minimal, blank-slate humanoids, Deckoviz takes a different path. This piece explores why emotionally expressive, joyful space companions—not sterile machines—represent the future of robots designed to live among us",
     readTime: "6 min read",
-    date: "April 16, 2025",
+    date: "October 30, 2025",
     image:
-      "https://images.unsplash.com/photo-1497032205916-ac775f0649ae?q=80&w=1000&auto=format&fit=crop",
+      "https://media.licdn.com/dms/image/v2/D5612AQEkBERLpWSk0Q/article-cover_image-shrink_720_1280/B56ZoxqwoxJwAI-/0/1761769895562?e=1768435200&v=beta&t=Ifg8VKebCtViOtaaJRbp-anHFLygWECLSxtVzU7pXA0",
     gradient: "from-green-400 via-emerald-400 to-blue-400",
     size: "medium",
     pinned: true,
-    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+    link: "https://www.linkedin.com/pulse/why-we-believe-next-generation-robots-needs-soul-zpkic",
   },
   {
     id: 16,
-    tag: "Use Cases",
-    tagColor: "bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-700",
-    title: "Digital Art in Corporate Workspaces",
-    description:
-      "How intelligent art improves productivity and workplace culture.",
-    readTime: "5 min read",
-    date: "April 18, 2025",
+     tag: "Use Case",
+  tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700",
+  title: "What Types of Spaces Are Perfect for Deckoviz DASP?",
+  description:
+    "From restaurants and hotels to retail, wellness, and workplaces, Deckoviz DASP transforms environments into emotionally intelligent, generative spaces that adapt in real time—setting moods, telling stories, and creating unforgettable experiences.",
+  readTime: "5 min read",
+    date: "October 23, 2025",
     image:
-      "https://images.unsplash.com/photo-1524758631624-e2822e304c36?q=80&w=1000&auto=format&fit=crop",
+      "https://media.licdn.com/dms/image/v2/D5612AQGt0fMYV-FNIg/article-cover_image-shrink_720_1280/B56ZoSCAZXJoAM-/0/1761239116650?e=1768435200&v=beta&t=q4x5OzBTZA2tLWknFs-B_kHEkVI4-wcp9ytsntvDRHE",
     gradient: "from-yellow-400 via-orange-400 to-red-400",
     size: "medium",
     pinned: true,
-    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+    link: "https://www.linkedin.com/pulse/what-spaces-businesses-deckoviz-dasp-perfect-fit-mzgxc",
   },
   {
     id: 17,
-    tag: "Announcements",
-    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
-    title: "Deckoviz Vision: The Next Era of Smart Visuals",
-    description:
-      "A look ahead at Deckoviz’s roadmap and vision for immersive art tech.",
-    readTime: "6 min read",
-    date: "April 20, 2025",
+     tag: "Innovation",
+  tagColor: "bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700",
+  title: "Why Imagination — Not Intelligence — Defines Humanity",
+  description:
+    "Art and storytelling aren’t luxuries—they’re how humans create meaning. As AGI automates repetition, the next era of humanity will be generative, emotional, and creative. This is the philosophy behind Deckoviz.",
+  readTime: "4 min read",
+    date: "October 11, 2025",
     image:
-      "https://images.unsplash.com/photo-1500534314209-a26db0f5c14b?q=80&w=1000&auto=format&fit=crop",
+      "https://media.licdn.com/dms/image/v2/D5612AQGR08CrPzdBnw/article-cover_image-shrink_720_1280/B56ZnTLuFtHUBY-/0/1760184695669?e=1768435200&v=beta&t=lsdvPomG-2pa6_PtDrytOk6ufIAdZitlbK1BLab64jE",
     gradient: "from-purple-400 via-pink-400 to-indigo-400",
     size: "large",
     pinned: true,
-    link: "https://www.linkedin.com/company/deckoviz-space-labs/posts/",
+    link: "https://www.linkedin.com/pulse/power-art-storytelling-creativity-everyone-deckoviz-space-labs-ifoac",
+  },
+  {
+    id: 18,
+    tag: "Use Case",
+    tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700",
+    title: "The golden age of bootstrapped startups is about to begin",
+    description:"How emotionally intelligent, AI-powered art transforms workplaces into calm, creative, and connected environments—giving employees agency, reducing stress, and shaping a more human future of work.",
+  readTime: "5 min read",
+    date: "June 01, 2024",
+    image:
+      "https://media.licdn.com/dms/image/v2/D5612AQGM-G3-JpVTyQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721177601152?e=1768435200&v=beta&t=5buWTakn9hThwJJejRQhlisE2cJkvTWxh9hkDPh2C-U",
+    gradient: "from-purple-400 via-pink-400 to-indigo-400",
+    size: "large",
+    pinned: true,
+    link: "https://www.linkedin.com/pulse/power-art-storytelling-creativity-everyone-deckoviz-space-labs-ifoac",
   },
 ]
 
@@ -279,8 +297,43 @@ const Blog: React.FC = () => {
   const [email, setEmail] = useState("")
   const [activeTag, setActiveTag] = useState("View all")
   const [showAllHero, setShowAllHero] = useState(false)
-  const pinnedContainerRef = useRef<HTMLDivElement | null>(null)
-  const pinnedIndexRef = useRef(0)
+  const pinnedTrackRef = useRef<HTMLDivElement | null>(null)
+const conveyorX = useRef(0)
+
+useEffect(() => {
+  const track = pinnedTrackRef.current
+  if (!track) return
+
+  const SPEED = 0.35
+  let rafId: number
+
+  const animate = () => {
+    conveyorX.current -= SPEED
+
+    if (conveyorX.current <= -track.scrollWidth / 2) {
+      conveyorX.current += track.scrollWidth / 2
+    }
+
+    track.style.transform = `translateX(${conveyorX.current}px)`
+    rafId = requestAnimationFrame(animate)
+  }
+
+  rafId = requestAnimationFrame(animate)
+  return () => cancelAnimationFrame(rafId)
+}, [])
+
+const moveConveyor = (dir: "next" | "prev") => {
+  const track = pinnedTrackRef.current
+  if (!track) return
+
+  const cardWidth = 320 + 32
+  conveyorX.current += dir === "next" ? -cardWidth : cardWidth
+
+  if (Math.abs(conveyorX.current) >= track.scrollWidth / 2) {
+    conveyorX.current = 0
+  }
+}
+
 
   // Fixed filter logic
   const filteredPosts =
@@ -408,40 +461,6 @@ const Blog: React.FC = () => {
     return reorderedPosts;
   };
 
-const scrollPinned = (direction: "next" | "prev") => {
-  if (!pinnedContainerRef.current) return
-
-  const container = pinnedContainerRef.current
-  const cardWidth = 320 + 32 // card width + gap (min-w + gap-8)
-  const loopPoint = container.scrollWidth / 2
-
-  if (direction === "next") {
-    container.scrollBy({ left: cardWidth, behavior: "smooth" })
-
-    if (container.scrollLeft + cardWidth >= loopPoint) {
-      setTimeout(() => {
-        container.scrollLeft = 0
-      }, 700)
-    }
-  } else {
-    container.scrollBy({ left: -cardWidth, behavior: "smooth" })
-
-    if (container.scrollLeft <= 0) {
-      setTimeout(() => {
-        container.scrollLeft = loopPoint
-      }, 700)
-    }
-  }
-}
-
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      scrollPinned("next")
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
 
 
   return (
@@ -471,27 +490,30 @@ const scrollPinned = (direction: "next" | "prev") => {
       <div className="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-20">
         {/* Enhanced Header */}
         <div className="flex flex-col items-center mb-16">
-          {/* Badge with About Us style */}
-          <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
-            <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
-              Blog Sections
-            </div>
-          </div>
+  
+    {/* Badge */}
+    <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
+      <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
+        Blog Sections
+      </div>
+    </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black leading-tight">
-            Blog And Articles
-          </h1>
-          <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
-            Discover{" "}
-            <span className="text-purple-600 font-semibold">insights</span>,{" "}
-            <span className="text-pink-600 font-semibold">guides</span>, and{" "}
-            <span className="text-orange-600 font-semibold">stories</span> that
-            inspire{" "}
-            <span className="text-blue-600 font-semibold">creativity</span> and{" "}
-            <span className="text-purple-600 font-semibold">innovation</span> in
-            art and{" "}
-            <span className="text-indigo-600 font-semibold">technology</span>.
-          </p>
+    <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black leading-tight">
+      Blog And Articles
+    </h1>
+
+    <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
+      Discover <span className="text-purple-600 font-semibold">insights</span>,{" "}
+      <span className="text-pink-600 font-semibold">guides</span>, and{" "}
+      <span className="text-orange-600 font-semibold">stories</span> that inspire{" "}
+      <span className="text-blue-600 font-semibold">creativity</span> and{" "}
+      <span className="text-purple-600 font-semibold">innovation</span> in art and{" "}
+      <span className="text-indigo-600 font-semibold">technology</span>.
+    </p>
+
+
+</div>
+
 
 {pinnedBlogs.length > 0 && (
   <div className="mt-16 mb-24 w-full">
@@ -504,12 +526,13 @@ const scrollPinned = (direction: "next" | "prev") => {
         Featured & highlighted posts
       </span>
     </div>
+    
 
     {/* Horizontal Scroll Container */}
     <div className="relative">
   {/* PREVIOUS BUTTON */}
   <button
-    onClick={() => scrollPinned("prev")}
+  onClick={() => moveConveyor("prev")}
     className="absolute left-0 top-1/2 -translate-y-1/2 z-20
                w-12 h-12 rounded-full bg-white shadow-lg
                flex items-center justify-center
@@ -519,10 +542,12 @@ const scrollPinned = (direction: "next" | "prev") => {
   </button>
 
   {/* SCROLL CONTAINER */}
+  <div className="overflow-hidden px-14">
   <div
-  ref={pinnedContainerRef}
-  className="flex gap-8 overflow-hidden px-14 scroll-smooth whitespace-nowrap"
->
+    ref={pinnedTrackRef}
+    className="flex gap-8 whitespace-nowrap will-change-transform"
+  >
+
     {infinitePinnedBlogs.map((post, index) => (
       <a
         key={`${post.id}-${index}`}
@@ -584,7 +609,8 @@ const scrollPinned = (direction: "next" | "prev") => {
 
   {/* NEXT BUTTON */}
   <button
-    onClick={() => scrollPinned("next")}
+onClick={() => moveConveyor("next")}
+
     className="absolute right-0 top-1/2 -translate-y-1/2 z-20
                w-12 h-12 rounded-full bg-white shadow-lg
                flex items-center justify-center
@@ -595,9 +621,10 @@ const scrollPinned = (direction: "next" | "prev") => {
 </div>
 
   </div>
-)}
+
 
         </div>
+)}      
 
         {/* Enhanced Hero Section - 2x3 Grid Layout */}
         <div className="mb-20">
@@ -625,19 +652,23 @@ const scrollPinned = (direction: "next" | "prev") => {
             </div>
           )}
         </div>
+  
+{/* Hide Articles Button - Moved above category filter */}
+{showAllHero && (
+  <>
+    {/* Hide Articles Button - Moved above category filter */}
+    <div className="flex justify-center mb-8">
+      <button
+        onClick={() => setShowAllHero(false)}
+        className="flex items-center px-8 py-3 bg-white text-gray-700 rounded-full transition-all duration-300 hover:scale-105 group border border-gray-200 shadow-md hover:shadow-lg"
+      >
+        <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180" />
+        <span className="font-medium">Hide articles</span>
+      </button>
+    </div>
+  </>
+)}
 
-        {/* Hide Articles Button - Moved above category filter */}
-        {showAllHero && (
-          <div className="flex justify-center mb-8">
-            <button
-              onClick={() => setShowAllHero(false)}
-              className="flex items-center px-8 py-3 bg-white text-gray-700 rounded-full transition-all duration-300 hover:scale-105 group border border-gray-200 shadow-md hover:shadow-lg"
-            >
-              <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180" />
-              <span className="font-medium">Hide articles</span>
-            </button>
-          </div>
-        )}
 
         {/* Revolutionary Card-Based Category Filter System */}
         <div className="mb-16">
