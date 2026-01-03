@@ -36,10 +36,11 @@ import OrderConfirmed from './components/payment/OrderConfirmed';
 import BulkOrder from './components/payment/BulkOrder';
 import BulkConfirm from './components/payment/BulkConfirm';
 import GuestReactionsTestimonials from './components/homepage/GuestReactionsTestimonials';
+import BlogDetail from "./components/BlogDetail"
+
 import { i } from 'framer-motion/client';
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
-import BlogPostPage from './components/blog/BlogPostPage';
 
 
 const ScrollToSectionOnHome: React.FC = () => {
@@ -81,7 +82,8 @@ const App: React.FC = () => {
         
         <Route path="/blog" element={<Blog />} />
         {/* ## 2. ADD THE NEW DYNAMIC ROUTE FOR SINGLE POSTS ## */}
-        <Route path="/blog/:postSlug" element={<BlogPostPage />} />
+<Route path="/blog/:slug" element={<BlogDetail />} />
+
 
         <Route path="/designed-for" element={<DesignedFor />} />
         <Route path="/FAQ" element={<FAQ />} />

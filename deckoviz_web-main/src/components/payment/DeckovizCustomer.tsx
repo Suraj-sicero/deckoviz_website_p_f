@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ShoppingCart, Eye, X } from 'lucide-react';
 import { ConfigurationSteps } from './ConfigurationSteps';
-import { VisualPreview } from './VisualPreview';
+//import { VisualPreview } from './VisualPreview';
 import { frameSizeOptions, frameTypeOptions } from './data/productOptions';
 import { subscriptionPlans } from './data/subscriptionPlans';
 
@@ -21,8 +21,8 @@ interface frameTypeOptions {
 
 const DeckovizCustomizer = () => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
-  const [selectedFrameSize, setSelectedFrameSize] = useState("");
-  const [selectedFrameType, setSelectedFrameType] = useState("");
+const [selectedFrameSize, setSelectedFrameSize] = useState("Default Frame");
+const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
   const [customFrameRequest, setCustomFrameRequest] = useState("");
   const [selectedUnits, setSelectedUnits] = useState("");
   const [subscriptionType, setSubscriptionType] = useState("");
@@ -136,12 +136,13 @@ const DeckovizCustomizer = () => {
                   </p>
                   
                 </div>
+                {/*}
 
-                {/* Configuration Content */}
+                {/* Configuration Content **
                 <div className="space-y-4 sm:space-y-6 py-2 sm:py-4">
                   <ConfigurationSteps formData={formData} />
                 </div>
-                
+                */}
                 {/* Bottom Button - now scrollable */}
                 <div className="py-6 sm:py-8 flex justify-center px-4">
                   <button onClick={confirmOrder}
@@ -169,9 +170,11 @@ const DeckovizCustomizer = () => {
             </div>
 
             {/* Right Side - Visual Preview touches full top */}
+            {/*}
             <div className="hidden lg:block w-80 lg:w-96 xl:w-[32rem] bg-white/95 backdrop-blur-sm flex-shrink-0">
               <VisualPreview formData={formData} />
             </div>
+            */}
 
             {/* Mobile Preview Button - Only show when frame is selected and on smaller screens */}
             <button
@@ -216,11 +219,13 @@ const DeckovizCustomizer = () => {
       </div>
 
       {/* Mobile Preview Modal */}
+      {/*
       {showPreviewModal && (
         <div className="lg:hidden fixed inset-0 z-[200] bg-black/50 backdrop-blur-sm">
           <div className="absolute inset-0 flex items-end sm:items-center justify-center p-4">
             <div className="bg-white rounded-t-3xl sm:rounded-3xl w-full max-w-md h-[85vh] sm:h-[80vh] flex flex-col shadow-2xl border border-gray-200/50 overflow-hidden">
-              {/* Modal Header */}
+              {/* Modal Header **
+              
               <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200/30 bg-gradient-to-r from-gray-50/80 to-white/60">
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900">Your Selection</h3>
                 <button
@@ -231,10 +236,10 @@ const DeckovizCustomizer = () => {
                 </button>
               </div>
 
-              {/* Modal Content - Scrollable */}
+              {/* Modal Content - Scrollable **
               <div className="flex-1 overflow-y-auto p-4 sm:p-6">
                 <div className="space-y-4 sm:space-y-5">
-                  {/* Product Image */}
+                  {/* Product Image **
                   <div className="relative aspect-[4/3] bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl overflow-hidden shadow-sm border border-gray-200/50">
                     {getSelectedSize() && (
                       <img 
@@ -252,7 +257,7 @@ const DeckovizCustomizer = () => {
                     )}
                   </div>
                   
-                  {/* Configuration Summary */}
+                  {/* Configuration Summary **
                   <div className="bg-gray-50/80 backdrop-blur-sm rounded-xl border border-gray-200/40 overflow-hidden">
                     <div className="px-4 py-3 bg-gray-100/50 border-b border-gray-200/30">
                       <h4 className="font-semibold text-gray-900 text-base">Configuration</h4>
@@ -298,7 +303,7 @@ const DeckovizCustomizer = () => {
                     </div>
                   </div>
                   
-                  {/* Price Breakdown */}
+                  {/* Price Breakdown **
                   <div className="bg-gray-50/80 backdrop-blur-sm rounded-xl border border-gray-200/40 overflow-hidden">
                     <div className="px-4 py-3 bg-gray-100/50 border-b border-gray-200/30">
                       <h4 className="font-semibold text-gray-900 text-base">Price Breakdown</h4>
@@ -345,7 +350,7 @@ const DeckovizCustomizer = () => {
                 </div>
               </div>
               
-              {/* Modal Footer */}
+              {/* Modal Footer **
               <div className="flex-shrink-0 bg-gray-50/60 px-4 sm:px-6 py-3 border-t border-gray-200/30">
                 <div className="text-center text-xs text-gray-500 space-y-1">
                   <p className="font-medium">30-day Satisfaction Guarantee</p>
@@ -355,7 +360,9 @@ const DeckovizCustomizer = () => {
             </div>
           </div>
         </div>
+        
       )}
+      */}
       {/* Custom Styles - FIXED SCROLLBAR */}
       <style
         dangerouslySetInnerHTML={{
@@ -400,5 +407,4 @@ const DeckovizCustomizer = () => {
     </div>
   );
 };
-
 export default DeckovizCustomizer;
