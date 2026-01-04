@@ -51,117 +51,192 @@ const DesignedFor: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
 
   const mainDesignedFor = [
-    {
-      title: "For those seeking more beauty and meaning, more wonder and joy",
-      gradient: "from-pink-200 via-purple-100 to-pink-300",
-      image: "https://i.pinimg.com/736x/e8/28/11/e828112ea1446c27a69ce9fd789804ac.jpg"
-    },
-    {
-      title: "For those who want a personal painter to paint their inner worlds and dreams, their hopes and their journeys",
-      gradient: "from-purple-200 via-blue-100 to-indigo-300",
-      image: "https://i.pinimg.com/736x/13/ab/dc/13abdc4a9b6360c442aba267f4d53386.jpg"
-    },
-    {
-      title: "For those who want to write odes to their memories",
-      gradient: "from-orange-200 via-pink-100 to-purple-300",
-      image: "https://i.pinimg.com/736x/d3/2d/cb/d32dcb7469c4b31f7979eb98dbdb557c.jpg"
-    },
-    {
-      title: "For those who see the art in their photos, and those who want to see more of it",
-      gradient: "from-green-200 via-emerald-100 to-teal-300",
-      image: "https://i.pinimg.com/736x/97/da/5c/97da5c3d3494613f730da795965b3d87.jpg"
-    },
-    {
-      title: "For those who want more dynamism, novelty, vividity, animation, in their spaces",
-      gradient: "from-purple-200 via-pink-100 to-rose-300",
-      image: "https://i.pinimg.com/736x/ed/3d/1f/ed3d1f63878a4f606ef8ed170834b330.jpg"
-    },
-    {
-      title: "For those who want spaces that transform and evolve, according to moods and states, times and dates",
-      gradient: "from-blue-200 via-purple-100 to-pink-300",
-      image: "https://www.istitutomarangoni.com/marangoni/entities/course/Digital_art_direction.png"
-    }
-  ];
+  {
+    title: "For those seeking more beauty and meaning",
+    description:
+      "Spaces that do more than exist — they move you, ground you, and quietly inspire wonder every day.",
+    gradient: "from-pink-200 via-purple-100 to-pink-300",
+    image: "https://i.pinimg.com/736x/e8/28/11/e828112ea1446c27a69ce9fd789804ac.jpg"
+  },
+  {
+    title: "For those who want a personal painter",
+    description:
+      "An AI artist that translates dreams, moods, memories, and inner worlds into living visual stories.",
+    gradient: "from-purple-200 via-blue-100 to-indigo-300",
+    image: "https://i.pinimg.com/736x/13/ab/dc/13abdc4a9b6360c442aba267f4d53386.jpg"
+  },
+  {
+    title: "For those who want to honor their memories",
+    description:
+      "Moments that deserve more than storage — made visible, alive, and meaningfully revisited.",
+    gradient: "from-orange-200 via-pink-100 to-purple-300",
+    image: "https://i.pinimg.com/736x/d3/2d/cb/d32dcb7469c4b31f7979eb98dbdb557c.jpg"
+  },
+  {
+    title: "For those who see art inside their photos",
+    description:
+      "Reveal what already exists — elevate everyday images into expressive, emotional art.",
+    gradient: "from-green-200 via-emerald-100 to-teal-300",
+    image: "https://i.pinimg.com/736x/97/da/5c/97da5c3d3494613f730da795965b3d87.jpg"
+  },
+  {
+    title: "For those who want movement in their spaces",
+    description:
+      "Visuals that evolve, breathe, and shift — bringing novelty without chaos, energy without noise.",
+    gradient: "from-purple-200 via-pink-100 to-rose-300",
+    image: "https://i.pinimg.com/736x/ed/3d/1f/ed3d1f63878a4f606ef8ed170834b330.jpg"
+  },
+  {
+    title: "For spaces that respond to life itself",
+    description:
+      "Art that adapts to moods, rituals, seasons, and moments — never static, always intentional.",
+    gradient: "from-blue-200 via-purple-100 to-pink-300",
+    image: "https://www.istitutomarangoni.com/marangoni/entities/course/Digital_art_direction.png"
+  }
+];
 
   const additionalDesignedFor = [
-    {
-      title: "For those who want more soul, more spirit, in their spaces",
-      gradient: "from-indigo-200 via-purple-100 to-blue-300",
-      image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For lovers of beauty, for lovers of art",
-      gradient: "from-pink-200 via-rose-100 to-red-300",
-      image: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For those who love exploring and painting around the possibilities of AI and tech",
-      gradient: "from-cyan-200 via-blue-100 to-purple-300",
-      image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For those seeking more intentionality, depth and love",
-      gradient: "from-purple-200 via-pink-100 to-orange-300",
-      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For parents and families who want to infuse family time family rituals",
-      gradient: "from-yellow-200 via-orange-100 to-pink-300",
-      image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For couples who want to infuse their relationship with more joy, intimacy, growth, beauty, passion, and romance",
-      gradient: "from-rose-200 via-pink-100 to-purple-300",
-      image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For those seeking more groundedness or passion, more joy and love, more calm and inspiration",
-      gradient: "from-green-200 via-teal-100 to-blue-300",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For those who want every room in their home, every space, to be evolving and sacred in its own special way",
-      gradient: "from-purple-200 via-indigo-100 to-blue-300",
-      image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For those into personal growth and journalling, vision boards and goal setting",
-      gradient: "from-orange-200 via-yellow-100 to-pink-300",
-      image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=400&fit=crop"
-    },
-    {
-      title: "For minimalists who want to pack a thousand things in one frame",
-      gradient: "from-gray-200 via-purple-100 to-gray-300",
-      image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&h=400&fit=crop"
-    }
-  ];
+  {
+    title: "For those who want more soul, more spirit in their spaces",
+    description:
+      "More presence. More intention. Less dead space. A home that feels alive and meaningful.",
+    gradient: "from-indigo-200 via-purple-100 to-blue-300",
+    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For lovers of beauty, for lovers of art",
+    description:
+      "Especially for those who never quite found themselves reflected in traditional art.",
+    gradient: "from-pink-200 via-rose-100 to-red-300",
+    image: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For the curious and the creative",
+    description:
+      "Those who explore how AI becomes art — when guided by taste, restraint, and human sensitivity.",
+    gradient: "from-cyan-200 via-blue-100 to-purple-300",
+    image: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For those seeking more intentionality, depth, and love",
+    description:
+      "More mindful living. More meaning. More presence in everyday moments.",
+    gradient: "from-purple-200 via-pink-100 to-orange-300",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For parents and families who want shared rituals",
+    description:
+      "Moments that happen naturally. Visuals that bring people together without demanding attention.",
+    gradient: "from-yellow-200 via-orange-100 to-pink-300",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For couples who want their space to support intimacy and growth",
+    description:
+      "Romance that evolves. Environments that reflect the relationship — not just the furniture.",
+    gradient: "from-rose-200 via-pink-100 to-purple-300",
+    image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For those oscillating between calm and ambition",
+    description:
+      "Between grounding and passion. Between rest and creation. Between stillness and drive.",
+    gradient: "from-green-200 via-teal-100 to-blue-300",
+    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For those who believe every room carries meaning",
+    description:
+      "Each space deserves its own character, rhythm, and emotional tone.",
+    gradient: "from-purple-200 via-indigo-100 to-blue-300",
+    image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For people invested in personal growth",
+    description:
+      "Reflection. Journaling. Vision boards. Goals that stay visible, alive, and motivating.",
+    gradient: "from-orange-200 via-yellow-100 to-pink-300",
+    image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=400&fit=crop"
+  },
+  {
+    title: "For minimalists who want less clutter, not less richness",
+    description:
+      "A thousand expressions. One elegant frame.",
+    gradient: "from-gray-200 via-purple-100 to-gray-300",
+    image: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&h=400&fit=crop"
+  }
+];
 
-  const DesignedCard: React.FC<{ title: string; gradient: string; image: string; index: number }> = ({ 
-    title, 
-    gradient, 
-    image, 
-    index 
-  }) => (
-    <div 
-      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer border border-gray-100`}
-      style={{ height: '380px' }}
-    >
-      <div className="relative h-52 overflow-hidden rounded-t-2xl">
-        <img 
-          src={image}
-          alt="Inspiration"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-      </div>
-      <div className="p-6 h-32 flex items-center justify-center">
-        <p className="text-lg leading-relaxed text-center bg-gradient-to-r from-gray-700 via-purple-600 to-pink-600 bg-clip-text text-transparent group-hover:from-purple-600 group-hover:via-pink-500 group-hover:to-orange-500 transition-all duration-500 font-medium">
-          {title}
-        </p>
-      </div>
-      <div className="absolute inset-0 rounded-2xl border-2 border-purple-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+  const DesignedCard: React.FC<{
+  title: string;
+  description: string;
+  gradient: string;
+  image: string;
+  index: number;
+}> = ({ title, description, image }) => (
+  <div
+  className="
+    group relative rounded-2xl cursor-pointer overflow-hidden
+    bg-white
+    border border-gray-100
+    shadow-md
+    transition-all duration-500
+    hover:shadow-xl hover:scale-[1.03]
+    hover:bg-gradient-to-br 
+    hover:from-purple-50/60 
+    hover:via-pink-50/40 
+    hover:to-white
+  "
+>
+
+    {/* Image */}
+    <div className="relative h-52 overflow-hidden rounded-t-2xl">
+      <img
+        src={image}
+        alt="Inspiration"
+        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
     </div>
-  );
+
+    {/* Text */}
+    <div className="p-6 flex flex-col gap-3 text-center">
+      <h3 className="text-lg font-semibold leading-snug bg-gradient-to-r from-gray-800 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+        {title}
+      </h3>
+<p className="
+  text-sm 
+  leading-relaxed 
+  text-gray-500 
+  group-hover:text-transparent
+  bg-gradient-to-r 
+  from-gray-500 
+  via-purple-500/80 
+  to-pink-500/80
+  bg-clip-text
+  transition-all 
+  duration-500
+">
+  {description}
+</p>
+
+
+    </div>
+
+    {/* Soft hover outline */}
+     <div
+      className="
+        pointer-events-none
+        absolute inset-0 rounded-2xl
+        ring-1 ring-purple-200/0
+        group-hover:ring-purple-300/40
+        transition-all duration-500
+      "
+    />
+  </div>
+);
 
   return (
     <section className="relative py-16 bg-white overflow-hidden">
@@ -184,18 +259,19 @@ const DesignedFor: React.FC = () => {
             for
           </h1>
         </div>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+  {mainDesignedFor.map((item, index) => (
+    <DesignedCard
+      key={index}
+      title={item.title}
+      description={item.description}
+      gradient={item.gradient}
+      image={item.image}
+      index={index}
+    />
+  ))}
+</div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {mainDesignedFor.map((item, index) => (
-            <DesignedCard
-              key={index}
-              title={item.title}
-              gradient={item.gradient}
-              image={item.image}
-              index={index}
-            />
-          ))}
-        </div>
 
         {!showMore && (
           <div className="text-center mb-8">
@@ -211,19 +287,20 @@ const DesignedFor: React.FC = () => {
           </div>
         )}
 
-        {showMore && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in slide-in-from-top-4 duration-500 mb-12">
-            {additionalDesignedFor.map((item, index) => (
-              <DesignedCard
-                key={`additional-${index}`}
-                title={item.title}
-                gradient={item.gradient}
-                image={item.image}
-                index={index + 6}
-              />
-            ))}
-          </div>
-        )}
+       {showMore && (
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in slide-in-from-top-4 duration-500 mb-12">
+    {additionalDesignedFor.map((item, index) => (
+      <DesignedCard
+        key={`additional-${index}`}
+        title={item.title}
+        description={item.description}
+        gradient={item.gradient}
+        image={item.image}
+        index={index + 6}
+      />
+    ))}
+  </div>
+)}
 
         {showMore && (
           <div className="text-center mb-8">

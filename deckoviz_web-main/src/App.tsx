@@ -29,6 +29,8 @@ import DeckovizForEnterprise from './components/deckovizForBusinesses/DeckovizFo
 import FAQ from './components/homepage/FAQ';
 import WallOfLove from './components/WallOfLove';
 import HowItWorks from './components/homepage/HowItWorks';
+import AboutDeckoviz from "./components/homepage/AboutDeckoviz";
+import AllFeatures from "./components/homepage/AllFeatures";
 import Leaderboard from './components/Leaderboard';
 import TransformWalls from './components/homepage/Transform';
 import DesignedFor from './components/homepage/DesignedFor';
@@ -36,6 +38,9 @@ import OrderConfirmed from './components/payment/OrderConfirmed';
 import BulkOrder from './components/payment/BulkOrder';
 import BulkConfirm from './components/payment/BulkConfirm';
 import GuestReactionsTestimonials from './components/homepage/GuestReactionsTestimonials';
+import Referral from './components/Referral';
+
+
 import BlogDetail from "./components/BlogDetail"
 
 import { i } from 'framer-motion/client';
@@ -75,6 +80,7 @@ const App: React.FC = () => {
             <HowItWorks />
             <GuestReactionsTestimonials /> 
             <Youtube />
+             <Referral />
             <Pricing />
             <FAQ /> 
           </>
@@ -97,6 +103,8 @@ const App: React.FC = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/about-deckoviz" element={<AboutDeckoviz />} />
+        <Route path="/all-features" element={<AllFeatures />} />
         <Route path ="/deckoviz-for-hotels" element={<DeckovizLanding />} />
         <Route path ="/deckoviz-for-restaurants" element={<DeckovizRestaurantLanding />} />
         <Route path ="/deckoviz-for-architects" element={<DeckovizArchitectsLanding />} />

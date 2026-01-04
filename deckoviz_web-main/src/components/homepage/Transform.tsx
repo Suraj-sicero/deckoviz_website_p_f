@@ -1,4 +1,5 @@
 export default function TransformWalls() {
+   
   return (
     <section className="py-12 md:py-16 lg:py-20 overflow-hidden relative bg-gradient-to-br from-gray-50 via-white to-purple-50/30">
       {/* Background gradient effects */}
@@ -73,36 +74,45 @@ export default function TransformWalls() {
             </div>
 
             {/* CTA Button */}
-            <div className="pt-4">
-              <button 
-                onClick={() => window.location.href = '/place-order'}
-                className="group relative bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-400 hover:from-indigo-700 hover:via-purple-700 hover:to-fuchsia-700 text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full font-bold transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-purple-500/25 text-sm border border-white/20"
-              >
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-full"></div>
-                
-                {/* Inner glow */}
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-400/20 via-purple-400/20 to-pink-400/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                <span className="relative z-10 flex items-center gap-2">
-                  Pre Order Now
-                  {/* Cart SVG */}
-                  <svg 
-                    className="w-4 h-4 group-hover:scale-110 transition-transform duration-300" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      strokeWidth={2} 
-                      d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0L17 18m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z" 
-                    />
-                  </svg>
-                </span>
-              </button>
-            </div>
+            {/* CTA Buttons */}
+          <div className="pt-4 flex flex-wrap gap-4 items-center">
+            
+            {/* Pre Order */}
+            <button 
+              onClick={() => window.location.href = '/place-order'}
+              className="group relative bg-gradient-to-r from-indigo-500 via-purple-500 to-fuchsia-400 hover:from-indigo-700 hover:via-purple-700 hover:to-fuchsia-700 text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full font-bold transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-purple-500/25 text-sm border border-white/20"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 rounded-full"></div>
+              <span className="relative z-10 flex items-center gap-2">
+                Pre Order Now
+              </span>
+            </button>
+
+            {/* Learn More */}
+            <button
+  onClick={() => window.location.href = "/about-deckoviz"}
+  className="group relative bg-gradient-to-r from-blue-500 via-sky-500 to-cyan-400 
+             hover:from-blue-700 hover:via-sky-700 hover:to-cyan-600
+             text-white px-5 py-2.5 md:px-6 md:py-3 rounded-full font-bold 
+             transition-all duration-300 hover:scale-105 shadow-2xl 
+             hover:shadow-blue-500/30 text-sm border border-white/20"
+>
+  {/* Shimmer */}
+  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
+                  -skew-x-12 -translate-x-full group-hover:translate-x-full 
+                  transition-transform duration-1000 rounded-full"></div>
+
+  {/* Inner glow */}
+  <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-sky-400/20 to-cyan-400/20 
+                  rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+  <span className="relative z-10 flex items-center gap-2">
+    Learn More about Deckoviz
+  </span>
+</button>
+
+
+          </div>
           </div>
 
           {/* Right Content - Clean Grid Layout */}
@@ -199,6 +209,8 @@ export default function TransformWalls() {
           </div>
         </div>
       </div>
+      {/* About Deckoviz Modal */}
+
     </section>
   );
 }

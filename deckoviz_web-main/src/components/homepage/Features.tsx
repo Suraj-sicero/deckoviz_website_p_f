@@ -8,35 +8,111 @@ interface FeatureCardProps {
 }
 
 const Features: React.FC = () => {
-  const [showMore, setShowMore] = useState(false);
 
   const mainFeatures = [
-    {
-      title: "Reimagine Your Photos",
-      description: "Transform your personal photos into the style of your favorite artists — from Van Gogh to Studio Ghibli."
-    },
-    {
-      title: "Personal Iconic Art", 
-      description: "Transform your personal photos into the style of your favorite artists — from Van Gogh to Studio Ghibli."
-    },
-    {
-      title: "Your Personal Painter",
-      description: "Transform your personal photos into the style of your favorite artists — from Van Gogh to Studio Ghibli."
-    },
-    {
-      title: "AI style Transfer + Image to Gif/ Video",
-      description: "Turn static images into animations, gifs, or cinematic loops."
-    },
-    {
-      title: "Intelligent Art Search",
-      description: "Transform your personal photos into the style of your favorite artists — from Van Gogh to Studio Ghibli."
-    },
-    {
-      title: "Create Your Own Collection",
-      description: "Curate themed collections, set display preferences, attach music, and crafts."
-    }
-  ];
+  {
+    title: "Your Personal Painter",
+    description:
+      "An AI artist that paints your dreams, moods, memories, and inner worlds into living art."
+  },
+  {
+    title: "Reimagine Your Photos",
+    description:
+      "Turn everyday photos into timeless artworks in iconic and custom styles."
+  },
+  {
+    title: "Iconic, Personalized Art",
+    description:
+      "Place yourself and your loved ones inside legendary masterpieces."
+  },
+  {
+    title: "Living Animations",
+    description:
+      "Bring still images to life with subtle motion, loops, and cinematic magic."
+  },
+  {
+    title: "Dream Visualizer",
+    description:
+      "See your dreams, thoughts, and subconscious landscapes as expressive art."
+  },
+  {
+    title: "Sketch to Masterpiece",
+    description:
+      "Transform your sketches or your child’s drawings into gallery-worthy creations."
+  },
+  {
+    title: "Prompt to Art",
+    description:
+      "Create stunning visuals from a thought, a chat, or your voice."
+  },
+  {
+    title: "Innerscape Art",
+    description:
+      "Paint emotional and inner landscapes that reflect how you truly feel."
+  },
+  {
+    title: "Dynamic Abstracts",
+    description:
+      "Ever-evolving abstract art that subtly changes, like a living canvas."
+  },
+  {
+    title: "Symbolic Art Engine",
+    description:
+      "Personal symbols and meanings woven into generative, shifting artworks."
+  },
+  {
+    title: "Create Collections",
+    description:
+      "Curate themed journeys of art, music, and memories for every mood."
+  },
+  {
+    title: "Multisensory Moodscapes",
+    description:
+      "Perfectly synced art, music, and soundscapes for deep immersion."
+  },
+  {
+    title: "Smart Display Engine",
+    description:
+      "Your wall adapts to time, weather, season, mood, and life moments."
+  },
+  {
+    title: "Daily Curator Vizzy",
+    description:
+      "Your personal AI curator that learns your taste and surprises you daily."
+  },
+  {
+    title: "Mood & Vibe Search",
+    description:
+      "Find art by feeling. Calm, joy, mystery, romance, wonder."
+  },
+  {
+    title: "Vision Boards",
+    description:
+      "Set your tone with evolving moodboards and intention walls."
+  },
+  {
+    title: "Ritual Moments",
+    description:
+      "Design morning, evening, family, couple, and life rituals with art and light."
+  },
+  {
+    title: "Storytelling for Kids",
+    description:
+      "Turn stories into magical visual journeys for learning and bonding."
+  },
+  {
+    title: "Co-Create Together",
+    description:
+      "Create art with your partner, family, and friends in shared moments."
+  },
+  {
+    title: "Halo Backlights",
+    description:
+      "Soft ambient glow that syncs with visuals and transforms your space."
+  }
+];
 
+{/*}
   const additionalFeatures = [
     {
       title: "Multimodal Art Experiences",
@@ -107,7 +183,7 @@ const Features: React.FC = () => {
       description: "Deckoviz runs on Google/Android TV. So yes, you can use your favourite TV apps like YouTube and Netflix when you're not art-scape dreaming."
     }
   ];
-
+*/}
   const getIconForFeature = (index: number) => {
     const icons = [
       '3dicons-picture-dynamic-color.png',
@@ -198,35 +274,32 @@ const Features: React.FC = () => {
         </div>
 
         {/* See More Button */}
-        <div className="text-center mb-8">
-          <button
-            onClick={() => setShowMore(!showMore)}
-            className="group inline-flex items-center gap-3 text-gray-900 font-semibold hover:text-purple-700 transition-all duration-300 text-lg"
-          >
-            <span
-              className={`transform transition-transform duration-300 ${
-                showMore ? 'group-hover:-translate-y-1' : 'group-hover:translate-y-1'
-              }`}
-            >
-              {showMore ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
-            </span>
-            {showMore ? 'See Less' : 'See More'}
-          </button>
-        </div>
+        <div className="text-center mt-16">
+  <button
+    onClick={() => window.location.href = "/all-features"}
+    className="group relative inline-flex items-center gap-4 px-10 py-4
+               rounded-full font-bold text-white text-lg
+               bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+               hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700
+               shadow-xl hover:shadow-purple-500/40
+               transition-all duration-300 hover:scale-105"
+  >
+    <span className="relative z-10"> See More Magic 🌟</span>
+
+    <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
+      <ChevronDown size={22} />
+    </span>
+
+    {/* shimmer */}
+    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent
+                    -skew-x-12 -translate-x-full group-hover:translate-x-full
+                    transition-transform duration-1000 rounded-full"></div>
+  </button>
+</div>
+
 
         {/* Additional Features (Expandable) */}
-        {showMore && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-16 animate-in slide-in-from-top-4 duration-500">
-            {additionalFeatures.map((feature, index) => (
-              <FeatureCard
-                key={`additional-${index}`}
-                index={index}
-                title={feature.title}
-                description={feature.description}
-              />
-            ))}
-          </div>
-        )}
+        
       </div>
     </div>
   );

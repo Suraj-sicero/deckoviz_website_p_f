@@ -1301,7 +1301,7 @@ const DeckovizLanding: React.FC = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#9ca4f3] via-pink-600 to-indigo-400 bg-clip-text text-transparent">
-              Real Results: Sample Guest Reactions
+              Testimonials From our users💥
             </h2>
           </div>
 
