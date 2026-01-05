@@ -40,10 +40,14 @@ import BulkConfirm from './components/payment/BulkConfirm';
 import GuestReactionsTestimonials from './components/homepage/GuestReactionsTestimonials';
 import Referral from './components/Referral';
 
+import Sitemap from "./components/Sitemap";
 
 import BlogDetail from "./components/BlogDetail"
 
 import { i } from 'framer-motion/client';
+import Benefits from "./components/homepage/Benefits";
+import AllBenefits from "./components/homepage/AllBenefits";
+
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -75,6 +79,8 @@ const App: React.FC = () => {
             <Hero/>
             <TransformWalls />
             <Features />
+<Benefits />
+
             <WhoIsDeckovizFor />
             <DesignedFor />
             <HowItWorks />
@@ -104,6 +110,9 @@ const App: React.FC = () => {
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/about-deckoviz" element={<AboutDeckoviz />} />
+        <Route path="/benefits" element={<AllBenefits />} />
+<Route path="/sitemap" element={<Sitemap />} />
+
         <Route path="/all-features" element={<AllFeatures />} />
         <Route path ="/deckoviz-for-hotels" element={<DeckovizLanding />} />
         <Route path ="/deckoviz-for-restaurants" element={<DeckovizRestaurantLanding />} />
