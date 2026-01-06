@@ -1,9 +1,11 @@
 "use client"
-
+import { useNavigate } from "react-router-dom";
 import type React from "react"
 import { GraduationCap, Hotel, Building2, Sofa, Coffee, ShoppingBag, Briefcase, Heart, Sparkles } from "lucide-react"
 
 const WhoIsDeckovizFor: React.FC = () => {
+  const navigate = useNavigate();
+
   const segments = [
     {
       icon: <GraduationCap size={24} />,
@@ -92,11 +94,39 @@ const WhoIsDeckovizFor: React.FC = () => {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-gray-900">
-            Who is <span className="bg-[#7634e0] bg-clip-text text-transparent">Deckoviz</span> For?
-          </h2>
-        </div>
+        <div className="relative text-center mb-16 flex items-center justify-center">
+  
+  {/* Floating Philosophy Bubble */}
+  <button
+    onClick={() => navigate("/your-life-played-back-gently")}
+    className="
+      hidden lg:flex
+      absolute left-0 -top-6
+      z-20
+      px-6 py-3
+      rounded-full
+      bg-gradient-to-r from-rose-400 via-red-400 to-pink-500
+      text-white
+      text-sm font-medium
+      shadow-[0_18px_50px_rgba(244,63,94,0.45)]
+      hover:shadow-[0_28px_70px_rgba(244,63,94,0.6)]
+      transition-all duration-500
+      animate-[float_7s_ease-in-out_infinite]
+      backdrop-blur
+    "
+  >
+    Your Life, Played Back Gently ⚽
+  </button>
+
+  {/* Title */}
+  <h2 className="text-4xl font-bold text-gray-900">
+    Who is{" "}
+    <span className="bg-[#7634e0] bg-clip-text text-transparent">
+      Deckoviz
+    </span>{" "}
+    For?
+  </h2>
+</div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {segments.map((segment, index) => (
@@ -180,8 +210,19 @@ const WhoIsDeckovizFor: React.FC = () => {
             transform: scale(1.05);
             box-shadow: 0 0 35px 8px rgba(var(--halo-color-rgb), 0.5);
           }
+
+          
         `
       }} />
+      <style dangerouslySetInnerHTML={{
+  __html: `
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  `
+}} />
+
     </section>
   )
 }

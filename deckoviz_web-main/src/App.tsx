@@ -7,12 +7,13 @@ import PlaceOrder from './components/payment/PlaceOrder';
 import ScrollToTop from './components/ScrollToTop';
 import Hero from './components/homepage/Hero';
 import Features from './components/homepage/Features';
-import Testimonials from './components/homepage/Testimonials';
 import WhoIsDeckovizFor from './components/homepage/WhoIsDeckovizFor';
 import PrivacyPolicy from './components/policies/PrivacyPolicy';
 import TermsOfService from './components/policies/TermsOfService';
 import ShippingPolicy from './components/policies/ShippingPolicy';
 import ReturnPolicy from './components/policies/ReturnPolicy';
+import ForHomesThatMeanSomething from "./components/homepage/ForHomesThatMeanSomething";
+import HomeMeansSomething from "./components/homepage/HomeMeansSomething";
 import Blog from './components/Blog';
 import Contact from './components/Contact';
 import Pricing from './components/homepage/Pricing';
@@ -39,10 +40,14 @@ import BulkOrder from './components/payment/BulkOrder';
 import BulkConfirm from './components/payment/BulkConfirm';
 import GuestReactionsTestimonials from './components/homepage/GuestReactionsTestimonials';
 import Referral from './components/Referral';
-
+import DesignedForHumans from './components/homepage/DesignedForHumans';
 import Sitemap from "./components/Sitemap";
+import YourLifePlayedBackGently from "./components/homepage/YourLifePlayedBackGently";
 
 import BlogDetail from "./components/BlogDetail"
+import MessageForVisitors from "./components/homepage/MessageForVisitors";
+import MinimalistScreen from "./components/homepage/MinimalistScreen";
+import InfinitePortal from "./components/homepage/InfinitePortal";
 
 import { i } from 'framer-motion/client';
 import Benefits from "./components/homepage/Benefits";
@@ -99,6 +104,25 @@ const App: React.FC = () => {
 
         <Route path="/designed-for" element={<DesignedFor />} />
         <Route path="/FAQ" element={<FAQ />} />
+        <Route
+  path="/homes-that-mean-something"
+  element={<ForHomesThatMeanSomething />}
+/>
+<Route
+  path="/infinite-portal"
+  element={<InfinitePortal />}
+/>
+
+<Route path="/minimalist" element={<HomeMeansSomething />} />
+<Route
+  path="/designed-for-humans"
+  element={<DesignedForHumans />}
+/>
+<Route
+  path="/your-life-played-back-gently"
+  element={<YourLifePlayedBackGently />}
+/>
+
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/place-order" element={<PlaceOrder />} />
@@ -112,6 +136,11 @@ const App: React.FC = () => {
         <Route path="/about-deckoviz" element={<AboutDeckoviz />} />
         <Route path="/benefits" element={<AllBenefits />} />
 <Route path="/sitemap" element={<Sitemap />} />
+<Route
+  path="/a-message-for-our-visitors"
+  element={<MessageForVisitors />}
+/>
+<Route path="/minimalist" element={<MinimalistScreen />} />
 
         <Route path="/all-features" element={<AllFeatures />} />
         <Route path ="/deckoviz-for-hotels" element={<DeckovizLanding />} />

@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from "react-router-dom"
 
 // --- Type Definition ---
 interface Testimonial {
@@ -54,6 +55,8 @@ const testimonialsData: Testimonial[] = [
 
 // --- The Main Testimonials Component ---
 const GuestReactionsTestimonials: React.FC = () => {
+  const navigate = useNavigate();
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: 'start',
@@ -103,6 +106,41 @@ const GuestReactionsTestimonials: React.FC = () => {
 <div className="relative bg-primary-50/50 py-16 md:py-24 text-center overflow-x-clip">
 
       <div className="max-w-7xl mx-auto px-6">
+         {/* 🫧 BUBBLY CTA */}
+<div className="relative flex justify-start">
+
+    <button
+      onClick={() => navigate("/designed-for-humans")}
+      className="
+        relative
+        px-8 py-2.5
+        rounded-full
+        text-sm font-medium
+        text-teal-900
+- bg-gradient-to-r from-teal-200 via-cyan-200 to-sky-200
++ bg-gradient-to-r from-teal-300 via-cyan-300 to-sky-300
+
+        shadow-[0_12px_30px_rgba(34,211,238,0.45)]
+        hover:shadow-[0_20px_50px_rgba(34,211,238,0.65)]
+        transition-all duration-500
+        hover:-translate-y-1
+        animate-bubble-float
+      "
+    >
+      <span className="relative z-10">
+        Designed for Humans, Not Attention 👱
+      </span>
+
+      {/* soft glow bubble */}
+      <span
+        className="
+          absolute inset-0 rounded-full
+          bg-gradient-to-r from-teal-300 via-cyan-300 to-sky-300
+          blur-xl opacity-40
+        "
+      />
+    </button>
+  </div>
         <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
           Testimonials from our Users 😊
         </h2>
@@ -191,5 +229,18 @@ const GuestReactionsTestimonials: React.FC = () => {
     </div>
   );
 };
+<style>
+{`
+  @keyframes bubbleFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+  }
+
+  .animate-bubble-float {
+    animation: bubbleFloat 5s ease-in-out infinite;
+  }
+`}
+</style>
 
 export default GuestReactionsTestimonials;

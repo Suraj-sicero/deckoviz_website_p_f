@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 /* ================= BENEFITS DATA ================= */
 
@@ -172,8 +173,45 @@ export const benefitsData = [
 /* ================= COMPONENT ================= */
 
 const Benefits = () => {
+  const navigate = useNavigate();
+
   return (
-    <section className="py-20 bg-white">
+<section className="relative py-20 bg-white overflow-visible">
+
+      {/* 🌸 Infinite Portal Button */}
+{/* 🌸 Infinite Portal Button */}
+<button
+  onClick={() => navigate("/infinite-portal")}
+  className="
+    hidden lg:flex
+    absolute right-8 top-6
+    z-30
+    max-w-[460px]
+    px-6 py-3
+    rounded-full
+    text-left
+
+    /* 🍊 Dark Peach / Soft Orange */
+    bg-gradient-to-r 
+    from-[#ffb088] 
+    via-[#ff9966] 
+    to-[#ff874d]
+
+    text-[#6b2f16]
+
+    shadow-[0_18px_45px_rgba(255,135,77,0.45)]
+    hover:shadow-[0_28px_70px_rgba(255,135,77,0.65)]
+
+    transition-all duration-500
+    animate-[float_7s_ease-in-out_infinite]
+  "
+>
+  <span className="text-sm font-medium leading-snug">
+    A Portal of Infinite Goodness, Endless Memories,  
+    and a Frame That Will Never Be Finished 
+  </span>
+</button>
+
       <div className="max-w-7xl mx-auto px-6">
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-4">
@@ -243,6 +281,14 @@ const Benefits = () => {
           </Link>
         </div>
       </div>
+      <style>{`
+  @keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+  }
+`}</style>
+
     </section>
   );
 };

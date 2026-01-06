@@ -1,6 +1,21 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function TransformWalls() {
+  const [showBubble, setShowBubble] = useState(false);
+const navigate = useNavigate();
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setShowBubble(true);
+  }, 2000); // 2 seconds
+
+  return () => clearTimeout(timer);
+}, []);
+
    
   return (
+    
     <section className="py-12 md:py-16 lg:py-20 overflow-hidden relative bg-gradient-to-br from-gray-50 via-white to-purple-50/30">
       {/* Background gradient effects */}
       <div className="absolute inset-0 w-full h-full">
@@ -111,12 +126,59 @@ export default function TransformWalls() {
   </span>
 </button>
 
+{/* Conversation Cloud Button */}
+<div className="absolute top-16 right-8 lg:right-14 z-30 hidden lg:block">
+  <button
+    onClick={() => window.location.href = "/a-message-for-our-visitors"}
+    className="relative animate-float group"
+  >
+    {/* Bubble */}
+    <div
+      className="
+bg-gradient-to-br from-indigo-500/80 via-purple-600/80 to-blue-600/80
+backdrop-blur-xl
+border border-indigo-400/40
+rounded-[28px]
+px-6 py-4
+max-w-[260px]
+shadow-[0_20px_45px_rgba(79,70,229,0.45)]
+hover:shadow-[0_30px_70px_rgba(124,58,237,0.55)]
+transition-all duration-500
+
+      "
+    >
+<p className="text-sm font-semibold text-white group-hover:text-indigo-100 transition">
+  💬 A Message For Our Visitors
+</p>
+
+<p className="text-xs text-indigo-100/90 mt-1">
+  From the heart of Deckoviz
+</p>
+
+    </div>
+
+    {/* Bubble Tail */}
+    <span
+      className="
+        absolute -bottom-2 right-10
+        w-4 h-4
+        bg-white/80
+        border-r border-b border-purple-200
+        rotate-45
+        backdrop-blur-xl
+      "
+    ></span>
+  </button>
+</div>
 
           </div>
           </div>
+
+
 
           {/* Right Content - Clean Grid Layout */}
           <div className="relative flex justify-center lg:justify-end order-1 lg:order-2 mb-8 lg:mb-0">
+            
             {/* Gradient glow behind artwork */}
             <div
               className="absolute inset-0 transform scale-110"
@@ -210,6 +272,8 @@ export default function TransformWalls() {
         </div>
       </div>
       {/* About Deckoviz Modal */}
+ 
+
 
     </section>
   );
