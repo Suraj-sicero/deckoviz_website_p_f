@@ -7,7 +7,7 @@ tagColor: "bg-purple-100 text-purple-700"
 date: "March 26, 2025"
 readTime: "10 min read"
 pinned: false
-image: "/blogs/personal-painter-inspiration.jpg"
+image: "/blogs/personal-painter-ideal-life.jpg"
 size: "large"
 ---
 

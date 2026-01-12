@@ -203,7 +203,17 @@ const Footer: React.FC = () => {
   >
     Sitemap
   </button>
+
 </li>
+<li>
+  <button 
+    onClick={() => handleNavigation("partnership", "/partnership")}
+    className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
+  >
+    Partnership
+  </button>
+</li>
+
             </ul>
           </div>
 

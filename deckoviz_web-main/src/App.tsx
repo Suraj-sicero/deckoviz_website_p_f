@@ -48,6 +48,7 @@ import BlogDetail from "./components/BlogDetail"
 import MessageForVisitors from "./components/homepage/MessageForVisitors";
 import MinimalistScreen from "./components/homepage/MinimalistScreen";
 import InfinitePortal from "./components/homepage/InfinitePortal";
+import Partnership from "./components/Partnership"
 
 import { i } from 'framer-motion/client';
 import Benefits from "./components/homepage/Benefits";
@@ -152,6 +153,8 @@ const App: React.FC = () => {
         <Route path ="/deckoviz-for-schools" element={<DeckovizSchoolsLanding />} />
         <Route path ="/deckoviz-for-retailstores" element={<DeckovizForRetail />} />
         <Route path ="/deckoviz-for-enterprises" element={<DeckovizForEnterprise />} />
+        <Route path="/partnership" element={<Partnership />} />
+
         <Route path ="/Wall-Of-Love" element={<WallOfLove/>} />
         <Route path ="/Leaderboard" element={<Leaderboard/>} />
         <Route path ="/Transform-Walls" element={<TransformWalls/>} />
