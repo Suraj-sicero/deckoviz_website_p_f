@@ -43,6 +43,8 @@ import Referral from './components/Referral';
 import DesignedForHumans from './components/homepage/DesignedForHumans';
 import Sitemap from "./components/Sitemap";
 import YourLifePlayedBackGently from "./components/homepage/YourLifePlayedBackGently";
+import NervousSystem from "./components/homepage/NervousSystem";
+
 
 import BlogDetail from "./components/BlogDetail"
 import MessageForVisitors from "./components/homepage/MessageForVisitors";
@@ -109,6 +111,8 @@ const App: React.FC = () => {
   path="/homes-that-mean-something"
   element={<ForHomesThatMeanSomething />}
 />
+<Route path="/nervous-system" element={<NervousSystem />} />
+
 <Route
   path="/infinite-portal"
   element={<InfinitePortal />}

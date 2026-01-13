@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 const Sitemap: React.FC = () => {
   return (
     <section className="py-24 bg-gradient-to-br from-white via-purple-50/50 to-pink-50/50">
@@ -53,7 +55,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* SUPPORT */}
-          <SitemapBox title="Support" emoji="🛠️">
+          <SitemapBox title="Support" emoji="🛠️" to="/FAQ">
             <BoxSection title="FAQ">
               <li>General Questions</li>
               <li>Technical Support</li>
@@ -85,7 +87,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* HOME */}
-          <SitemapBox title="Home" emoji="🏠">
+          <SitemapBox title="Home" emoji="🏠" to="/AboutDeckoviz">
             <SimpleItem>Hero Header Section</SimpleItem>
             <SimpleItem>Key Features & Capabilities</SimpleItem>
             <SimpleItem>Testimonials Preview</SimpleItem>
@@ -93,7 +95,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* LEGAL */}
-          <SitemapBox title="Legal" emoji="⚖️">
+          <SitemapBox title="Legal" emoji="⚖️" to="/PrivacyPolicy">
             <SimpleItem>Privacy Policy</SimpleItem>
             <SimpleItem>Terms of Service</SimpleItem>
             <SimpleItem>Cookie Policy</SimpleItem>
@@ -103,7 +105,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* BLOG & RESOURCES */}
-          <SitemapBox title="Blog & Resources" emoji="📝">
+          <SitemapBox title="Blog & Resources" emoji="📝" to="/Blog">
             <BoxSection title="Navbar" />
 
             <BoxSection title="All Blog Posts">
@@ -138,7 +140,7 @@ const Sitemap: React.FC = () => {
 
 
           {/* ORDER */}
-          <SitemapBox title="Order" emoji="🛒">
+          <SitemapBox title="Order" emoji="🛒" to="/Pricing">
             <SimpleItem>Navbar</SimpleItem>
             <SimpleItem>Pricing Tiers</SimpleItem>
             <SimpleItem>Customize Your Order</SimpleItem>
@@ -149,7 +151,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* ABOUT */}
-          <SitemapBox title="About Us" emoji="ℹ️">
+          <SitemapBox title="About Us" emoji="ℹ️" to="/about-deckoviz">
             <SimpleItem>Navbar</SimpleItem>
 
             <BoxSection title="About Deckoviz">
@@ -173,7 +175,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* WEB APP */}
-          <SitemapBox title="WebApp & Companion App" emoji="💻">
+          <SitemapBox title="WebApp & Companion App" emoji="💻" to="/HowItWorks">
             <BoxSection title="Dashboard">
               <li>Art Collections</li>
               <li>Upload & Transform</li>
@@ -188,7 +190,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* COMMUNITY */}
-          <SitemapBox title="Community" emoji="🤝">
+          <SitemapBox title="Community" emoji="🤝" to="/GuestReactionsTestimonials">
             <BoxSection title="Wall of Love">
               <li>User Photos, Videos, Stories</li>
               <li>Submit Your Story (Form)</li>
@@ -211,7 +213,7 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* AI TECH */}
-          <SitemapBox title="AI Technology" emoji="🤖">
+          <SitemapBox title="AI Technology" emoji="🤖" to="/Features">
             <BoxSection title="AI Capabilities">
               <li>Machine Learning Features</li>
               <li>Image Recognition</li>
@@ -248,15 +250,16 @@ const Sitemap: React.FC = () => {
   );
 };
 
-/* ===================== UI HELPERS ===================== */
 
 const SitemapBox = ({
   title,
   emoji,
+  to,
   children,
 }: {
   title: string;
   emoji: string;
+  to?: string; // ✅ ADD THIS
   children: React.ReactNode;
 }) => (
   <motion.div
@@ -276,13 +279,6 @@ const SitemapBox = ({
       overflow-hidden
     "
   >
-    {/* ✨ Stars */}
-    <div className="absolute inset-0 pointer-events-none">
-      <div className="absolute top-6 right-8 w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-      <div className="absolute bottom-10 left-10 w-1 h-1 bg-white rounded-full animate-ping" />
-    </div>
-
-    {/* 🔮 Heading */}
     <motion.h2
       whileHover={{ scale: 1.08 }}
       className="
@@ -295,13 +291,26 @@ const SitemapBox = ({
         flex items-center justify-center gap-2
       "
     >
-      <span className="text-2xl">{emoji}</span>
-      {title}
+      {to ? (
+        <Link
+          to={to}
+          className="flex items-center justify-center gap-2 hover:underline"
+        >
+          <span className="text-2xl">{emoji}</span>
+          {title}
+        </Link>
+      ) : (
+        <>
+          <span className="text-2xl">{emoji}</span>
+          {title}
+        </>
+      )}
     </motion.h2>
 
     <div className="space-y-6 relative z-10">{children}</div>
   </motion.div>
 );
+
 
 const BoxSection = ({
   title,

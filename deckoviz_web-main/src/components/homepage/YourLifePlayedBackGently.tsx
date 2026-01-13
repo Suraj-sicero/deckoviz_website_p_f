@@ -1,7 +1,17 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
+type Spark = {
+  id: number;
+  x: number;
+  y: number;
+  size: number;
+  color: string;
+  dx: number;
+  dy: number;
+};
 
 const content = [
   "Your life is not a folder.",
@@ -75,51 +85,145 @@ const content = [
   "“You were here. You lived this. And it mattered.”",
 
   "Your life,",
-  "played back gently."
+  "played back gently.",
 ];
 
 const YourLifePlayedBackGently: React.FC = () => {
+  const [sparks, setSparks] = useState<Spark[]>([]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (Math.random() > 0.65) return;
+
+      setSparks((prev) => [
+        ...prev,
+        {
+          id: Date.now() + Math.random(),
+          x: e.clientX,
+          y: e.clientY,
+          size: Math.random() * 7 + 4,
+          color: ["#34d399", "#a3e635", "#facc15"][Math.floor(Math.random() * 3)],
+          dx: (Math.random() - 0.5) * 8,
+          dy: (Math.random() - 0.5) * 8,
+        },
+      ]);
+
+      setTimeout(() => {
+        setSparks((prev) => prev.slice(1));
+      }, 900);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <section className="
-      min-h-screen flex items-center justify-center
-      bg-gradient-to-br from-rose-50 via-pink-50 to-red-50
-      px-6 py-24
-    ">
+    <motion.section
+      initial={{ opacity: 0, y: 50, scale: 0.985 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 1.15, ease: "easeOut" }}
+      className="
+        relative min-h-screen w-full overflow-hidden
+        flex items-center justify-center
+        px-6 py-20 md:py-28
+        bg-gradient-to-br from-[#d9f99d] via-[#a7f3d0] to-[#bfdbfe]
+      "
+    >
+      {/* Background */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-white/10" />
+
+        <div className="absolute -top-24 -left-24 h-[340px] w-[340px] rounded-full bg-emerald-200/40 blur-[40px]" />
+        <div className="absolute -top-16 -left-10 h-[170px] w-[170px] rounded-full bg-lime-200/45 blur-[35px]" />
+
+        <div className="absolute -top-16 right-10 h-[280px] w-[280px] rounded-full bg-yellow-100/50 blur-[45px]" />
+        <div className="absolute top-24 right-44 h-[160px] w-[160px] rounded-full bg-emerald-100/50 blur-[35px]" />
+
+        <div className="absolute -bottom-20 left-10 h-[240px] w-[240px] rounded-full bg-teal-200/45 blur-[45px]" />
+        <div className="absolute -bottom-24 right-8 h-[320px] w-[320px] rounded-full bg-lime-100/45 blur-[55px]" />
+
+        {/* Dots */}
+        <div className="absolute left-12 top-16 hidden md:block">
+          <div className="grid grid-cols-4 gap-2 opacity-60">
+            {Array.from({ length: 16 }).map((_, i) => (
+              <span key={i} className="h-1.5 w-1.5 rounded-full bg-white/70" />
+            ))}
+          </div>
+        </div>
+
+        <div className="absolute right-14 bottom-16 hidden md:block">
+          <div className="grid grid-cols-4 gap-2 opacity-60">
+            {Array.from({ length: 16 }).map((_, i) => (
+              <span key={i} className="h-1.5 w-1.5 rounded-full bg-white/70" />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Mouse sparks */}
+      <div className="pointer-events-none fixed inset-0 z-40">
+        {sparks.map((spark) => (
+          <span
+            key={spark.id}
+            className="absolute rounded-full"
+            style={{
+              left: spark.x,
+              top: spark.y,
+              width: spark.size,
+              height: spark.size,
+              background: spark.color,
+              boxShadow: `0 0 18px ${spark.color}`,
+              transform: `translate(${spark.dx}px, ${spark.dy}px)`,
+              opacity: 0.7,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Main glass panel */}
       <motion.div
-        initial={{ opacity: 0, y: 50, scale: 0.96 }}
+        initial={{ opacity: 0, y: 40, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
+        transition={{ duration: 1.05, ease: "easeOut" }}
         className="
-          max-w-4xl w-full
-          rounded-3xl
-          bg-white/70 backdrop-blur-xl
-          border border-rose-200/60
-          px-10 md:px-16 py-16
-          shadow-[0_40px_120px_rgba(244,63,94,0.25)]
+          relative z-10
+          w-full max-w-5xl
+          rounded-[34px]
+          bg-white/22 backdrop-blur-2xl
+          border border-white/40
+          shadow-[0_45px_140px_rgba(16,185,129,0.22)]
+          px-10 md:px-16 py-14 md:py-16
         "
       >
-        <h1 className="
-          text-3xl md:text-4xl font-semibold mb-12 text-center
-          bg-gradient-to-r from-rose-500 via-red-500 to-pink-500
-          bg-clip-text text-transparent
-        ">
-          Your Life, Played Back Gently
-        </h1>
+        <div className="pointer-events-none absolute inset-0 rounded-[34px] border border-white/25" />
+        <div className="pointer-events-none absolute inset-0 rounded-[34px] bg-gradient-to-b from-white/30 via-transparent to-white/10" />
 
-        <div className="space-y-4 text-gray-700 text-[17px] leading-relaxed text-center">
+        {/* Title + Subtitle CENTER */}
+        <div className="text-center">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+            Your Life,
+            <br/>
+             Played Back Gently
+          </h1>
+
+        </div>
+
+        {/* CONTENT CENTER + DARKER TEXT */}
+        <div className="mt-12 space-y-4 text-center text-slate-800 text-[15px] md:text-[16px] leading-relaxed">
           {content.map((line, i) => (
             <motion.p
               key={i}
               initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.03 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.02, duration: 0.45 }}
             >
               {line}
             </motion.p>
           ))}
         </div>
       </motion.div>
-    </section>
+    </motion.section>
   );
 };
 

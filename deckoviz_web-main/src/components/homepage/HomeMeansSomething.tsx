@@ -74,23 +74,30 @@ const manifesto = [
 
   "A home that feels alive.",
   "A home that grows with you.",
-  "A home that means something."
+  "A home that means something.",
 ];
+
 const HomeMeansSomething: React.FC = () => {
   const sparkLayer = useRef<HTMLDivElement>(null);
 
-  /* 🌸 Soft pink mouse particles */
+  /* Mouse particles (theme match: cyan + purple + pink) */
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
       if (!sparkLayer.current) return;
+      if (Math.random() > 0.7) return;
 
       const dot = document.createElement("span");
-      dot.className = "pink-spark";
+      dot.className = "theme-spark";
       dot.style.left = `${e.clientX}px`;
       dot.style.top = `${e.clientY}px`;
 
+      const colors = ["#67e8f9", "#a78bfa", "#fb7185"];
+      const picked = colors[Math.floor(Math.random() * colors.length)];
+      dot.style.background = picked;
+      dot.style.boxShadow = `0 0 18px ${picked}`;
+
       sparkLayer.current.appendChild(dot);
-      setTimeout(() => dot.remove(), 1200);
+      setTimeout(() => dot.remove(), 1100);
     };
 
     window.addEventListener("mousemove", handleMove);
@@ -100,33 +107,61 @@ const HomeMeansSomething: React.FC = () => {
   return (
     <section
       className="
-        relative min-h-screen flex items-center justify-center px-6
-        bg-gradient-to-br from-pink-50 via-rose-50 to-fuchsia-50
+        relative min-h-screen flex items-center justify-center px-6 py-20
         overflow-hidden
+        bg-gradient-to-br from-[#53bdd5] via-[#a08edc] to-[#f2a1c5]
       "
     >
-      {/* Floating particles */}
-      <div ref={sparkLayer} className="absolute inset-0 pointer-events-none z-0" />
+      {/* Mouse Spark Layer */}
+      <div ref={sparkLayer} className="absolute inset-0 pointer-events-none z-20" />
+
+      {/* Background fog */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/10" />
+        <div className="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full bg-white/30 blur-[75px]" />
+        <div className="absolute top-20 left-28 h-[360px] w-[360px] rounded-full bg-purple-200/35 blur-[85px]" />
+        <div className="absolute -top-20 right-0 h-[520px] w-[520px] rounded-full bg-sky-200/35 blur-[90px]" />
+        <div className="absolute -bottom-40 left-10 h-[520px] w-[520px] rounded-full bg-pink-200/35 blur-[95px]" />
+      </div>
+
+      {/* Floating translucent shapes */}
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute left-16 top-24 h-[220px] w-[220px] rounded-full bg-white/25 blur-[1px]" />
+        <div className="absolute left-[45%] top-24 h-[90px] w-[90px] rounded-full bg-white/20 blur-[1px]" />
+        <div className="absolute left-24 top-[52%] h-[120px] w-[120px] rotate-12 rounded-[36px] bg-white/15 blur-[2px]" />
+        <div className="absolute right-20 top-[38%] h-[130px] w-[130px] rounded-full bg-white/18 blur-[2px]" />
+        <div className="absolute right-28 top-40 h-[55px] w-[55px] rounded-full bg-pink-400/40 blur-[0.5px]" />
+      </div>
 
       {/* Glass manifesto card */}
       <div
         className="
           relative z-10
-          max-w-4xl
-          rounded-3xl
-          px-8 py-14 md:px-14
-          bg-white/70 backdrop-blur-xl
-          border border-pink-300/60
-          shadow-[0_30px_80px_rgba(236,72,153,0.25)]
+          w-full max-w-4xl
+          rounded-[26px]
+          px-10 md:px-16 py-14 md:py-16
+          bg-white/18 backdrop-blur-[22px]
+          border border-white/35
+          shadow-[0_60px_160px_rgba(0,0,0,0.14)]
         "
       >
+        {/* subtle glass overlay */}
+        <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-white/25" />
+        <div className="pointer-events-none absolute inset-0 rounded-[26px] bg-gradient-to-b from-white/25 via-transparent to-white/10" />
+
+        {/* Top dots */}
+        <div className="mb-8 flex gap-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-white/70" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/60" />
+          <span className="h-2.5 w-2.5 rounded-full bg-white/50" />
+        </div>
+
         {/* Heading */}
         <h1
           className="
             text-center mb-12
-            text-3xl md:text-5xl font-semibold tracking-wide
-            bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-500
-            bg-clip-text text-transparent
+            text-3xl md:text-5xl font-extrabold tracking-tight
+            text-slate-900/90
           "
           style={{ fontFamily: "Bricolage Grotesque, sans-serif" }}
         >
@@ -138,10 +173,8 @@ const HomeMeansSomething: React.FC = () => {
           {manifesto.map((line, index) => (
             <p
               key={index}
-              className={`text-gray-700 ${
-                line.length < 30
-                  ? "text-lg font-medium"
-                  : "text-base opacity-90"
+              className={`text-slate-800/90 ${
+                line.length < 30 ? "text-lg font-semibold" : "text-base opacity-90"
               }`}
             >
               {line}
@@ -153,50 +186,19 @@ const HomeMeansSomething: React.FC = () => {
       {/* Inline styles */}
       <style>
         {`
-          .pink-spark {
+          .theme-spark {
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: rgba(236,72,153,0.7);
-            box-shadow: 0 0 10px rgba(236,72,153,0.6);
-            animation: sparkFade 1.2s ease-out forwards;
+            opacity: 0.8;
+            animation: sparkFade 1.1s ease-out forwards;
           }
 
           @keyframes sparkFade {
-            from { transform: scale(1); opacity: 1; }
-            to { transform: scale(3); opacity: 0; }
+            from { transform: scale(1); opacity: 0.85; }
+            to { transform: scale(3.2); opacity: 0; }
           }
-
-          @keyframes softFloat {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-          }
-
-          .animate-soft-float {
-            animation: softFloat 6s ease-in-out infinite;
-          }
-            
-  @keyframes softFloatInner {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-14px); }
-    100% { transform: translateY(0); }
-  }
-
-  .animate-soft-float-inner {
-    animation: softFloatInner 7s ease-in-out infinite;
-  }
-    @keyframes glowBreathe {
-  0% { box-shadow: 0 30px 80px rgba(236,72,153,0.18); }
-  50% { box-shadow: 0 40px 100px rgba(236,72,153,0.32); }
-  100% { box-shadow: 0 30px 80px rgba(236,72,153,0.18); }
-}
-
-.animate-glow-breathe {
-  animation: glowBreathe 6s ease-in-out infinite;
-}
-
         `}
       </style>
     </section>
