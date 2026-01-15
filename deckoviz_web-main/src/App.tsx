@@ -87,8 +87,7 @@ const App: React.FC = () => {
             <Hero/>
             <TransformWalls />
             <Features />
-<Benefits />
-
+            <Benefits />
             <WhoIsDeckovizFor />
             <DesignedFor />
             <HowItWorks />
