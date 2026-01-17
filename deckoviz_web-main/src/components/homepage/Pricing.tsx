@@ -2,6 +2,8 @@
 
 import { useState, ReactNode } from "react"
 import { Check, Sparkles, Gift, Star, Zap } from "lucide-react"
+import { useNavigate } from "react-router-dom"
+import { Tv } from "lucide-react"
 
 // Custom Button component
 interface ButtonProps {
@@ -239,6 +241,7 @@ const largeFormatTiers: PricingPlan[] = [
 export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<PricingPlan | null>(null)
   const [showModal, setShowModal] = useState(false)
+ const navigate = useNavigate()
 
   const handleBuyNow = (tier?: PricingPlan): void => {
     if (tier?.name === "Enterprise") {
@@ -267,6 +270,41 @@ export default function Pricing() {
       />
       <section id="pricing" className="py-12 sm:py-16 lg:py-16 bg-white relative overflow-hidden">
         {/* Background Elements */}
+
+        {/* 📺 Floating TV Bubble Button */}
+<button
+  onClick={() => navigate("/tv")}
+  className="
+    hidden lg:flex
+    absolute left-6 top-[3%] -translate-y-1/2
+    z-10
+    max-w-[510px]
+    px-10 py-1
+    rounded-[999px]
+    text-left
+  bg-gradient-to-br from-[#b7f3f0] via-[#6fd6d4] to-[#1fa9b1]
+    shadow-[0_16px_40px_rgba(31,169,177,0.35)]
+    hover:shadow-[0_24px_60px_rgba(31,169,177,0.55)]
+    transition-all duration-500
+    animate-[float_6s_ease-in-out_infinite]
+  "
+>
+  <div className="flex flex-col gap-0.5">
+    <span className="text-xs uppercase tracking-widest text-amber-700">
+      TV Guide
+    </span>
+
+    <span className="text-sm font-medium text-amber-900 leading-snug flex items-center gap-2">
+      <Tv className="w-4 h-4" />
+      Looking to buy a TV?
+    </span>
+
+    <span className="text-xs text-amber-800 opacity-80">
+      Here’s why Deckoviz DASP might be the smartest screen you’ll ever bring home.
+    </span>
+  </div>
+</button>
+
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
 
@@ -574,6 +612,14 @@ export default function Pricing() {
             </div>
           </div>
         )}
+        <style>{`
+  @keyframes float {
+    0% { transform: translateY(-50%) translateX(0); }
+    50% { transform: translateY(-55%) translateX(0); }
+    100% { transform: translateY(-50%) translateX(0); }
+  }
+`}</style>
+
       </section>
     </>
   )

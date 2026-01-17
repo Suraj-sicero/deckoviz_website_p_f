@@ -44,7 +44,7 @@ import DesignedForHumans from './components/homepage/DesignedForHumans';
 import Sitemap from "./components/Sitemap";
 import YourLifePlayedBackGently from "./components/homepage/YourLifePlayedBackGently";
 import NervousSystem from "./components/homepage/NervousSystem";
-
+import TVPage from "./components/homepage/TVPage"
 
 import BlogDetail from "./components/BlogDetail"
 import MessageForVisitors from "./components/homepage/MessageForVisitors";
@@ -116,7 +116,7 @@ const App: React.FC = () => {
   path="/infinite-portal"
   element={<InfinitePortal />}
 />
-
+<Route path="/tv" element={<TVPage />} />
 <Route path="/minimalist" element={<HomeMeansSomething />} />
 <Route
   path="/designed-for-humans"
