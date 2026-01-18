@@ -198,234 +198,10 @@ export default function DeckovizForEnterprise() {
 
                     {/* Subtitle */}
                     <div className="mb-12 max-w-2xl">
-                        <p className="text-lg font-medium text-gray-900 leading-relaxed">
-                           The AI-powered visual and experiential layer for modern spaces
+                       <p className="text-lg font-medium text-gray-800 leading-relaxed max-w-3xl mx-auto">
+  The AI-powered ambience, storytelling, and personalization layer for modern enterprise spaces.
+</p>
 
-                    Attention is fragmented. Expectations are higher. Differentiation is harder. Screens are everywhere, yet most spaces still feel the same - they feel forgettable.
-            
-                    Deckoviz was built for this exact problem.
-            
-                    Deckoviz is an AI-powered Dynamic Art, Storytelling, and Spatial Experience Platform designed for enterprises that understand one thing clearly: 
-                                        the future of business is experiential, emotional, and adaptive.
-            
-                    Not static signage, passive screens, or one-size-fits-all content.
-            
-                    Deckoviz turns walls into living, intelligent canvases that respond to context, brand, time, audience, and intent. It brings narrative, mood, 
-                                        personalization, and generative intelligence into physical spaces, at scale.
-            
-                    For businesses, Deckoviz becomes the missing layer between brand strategy and real-world experience and customer delight.
-                    The layer customers actually feel.
-
-                            What Deckoviz is, at its core
-                    
-                    Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal, paired with a premium Smart Display system.
-                    
-                    It functions simultaneously as:
-                    
-                    A generative visual engine
-                    
-                    A brand storytelling system
-                    
-                    A dynamic signage and merchandising platform
-                    
-                    A multisensory ambience controller
-                    
-                    An adaptive, learning companion for physical spaces
-                    
-                    All managed centrally. All evolving continuously. All designed to feel intentional rather than technical.
-                    
-                    This is not a device you “install and forget”.
-                    It is a platform that learns your business and grows with it.
-                    
-                    Core Enterprise Features & Highlights
-                    Generative, Brand-aware Visual Intelligence
-                    
-                    Deckoviz generates visuals, art, layouts, posters, menus, and ambient scenes that are natively aligned with your brand identity.
-                    
-                    Colors, tone, themes, typography, mood, cultural context, and narrative style are learned and applied consistently across every screen and every location.
-                    
-                    Your space stops looking templated.
-                    It starts feeling authored.
-                    
-                    Dynamic Product & Menu Visualization
-                    
-                    Static images become dynamic, animated, and narrative-driven visuals.
-                    
-                    Products, dishes, collections, and offerings can be:
-                    
-                    Animated subtly or cinematically
-                    
-                    Contextualized by time of day, season, or event
-                    
-                    Paired with generative backgrounds and story cues
-                    
-                    Updated instantly across locations
-                    
-                    This transforms walls into silent salespeople that feel refined, not promotional.
-                    
-                    AI-powered Posters, Menus & Signage
-                    
-                    Deckoviz generates and adapts:
-                    
-                    Menus
-                    
-                    Promotional posters
-                    
-                    Announcements
-                    
-                    Offers
-                    
-                    Event visuals
-                    
-                    In-store messaging
-                    
-                    Content updates no longer require design cycles, printing, or manual coordination.
-                    They happen dynamically, intelligently, and on-brand.
-                    
-                    Multisensory Moodscapes
-                    
-                    Deckoviz orchestrates visuals, music, halo lighting, and optional scent systems to create cohesive atmospheric experiences.
-                    
-                    Morning, evening, festive, calm, energetic, romantic, celebratory.
-                    Each mode feels intentional, not gimmicky.
-                    
-                    Spaces stop feeling flat.
-                    They start carrying emotional tone.
-                    
-                    Guest & Context Awareness
-                    
-                    Deckoviz adapts to:
-                    
-                    Time of day
-                    
-                    Day of week
-                    
-                    Seasonality
-                    
-                    Events
-                    
-                    Audience patterns
-                    
-                    Returning guests or loyalty segments
-                    
-                    Without being intrusive.
-                    Without being creepy.
-                    Without breaking the flow of the space.
-                    
-                    Collections with Voice & Narrative
-                    
-                    Businesses can create curated visual collections paired with AI narration or brand voice.
-                    
-                    This allows spaces to:
-                    
-                    Tell product stories
-                    
-                    Share origin stories
-                    
-                    Highlight craftsmanship
-                    
-                    Introduce concepts
-                    
-                    Create guided visual journeys
-                    
-                    Storytelling moves from brochures to the environment itself.
-                    
-                    Social Proof & Living Feeds
-                    
-                    Deckoviz can surface:
-                    
-                    Customer visuals
-                    
-                    Reviews
-                    
-                    Testimonials
-                    
-                    Social moments
-                    
-                    Community highlights
-                    
-                    All presented tastefully, within a designed visual language, rather than raw feeds.
-                    
-                    The brand feels alive and socially validated without feeling noisy.
-                    
-                    Smart Scheduling & Orchestration
-                    
-                    Content, ambience, and experiences can be scheduled intelligently:
-                    
-                    By hour
-                    
-                    By day
-                    
-                    By season
-                    
-                    By event
-                    
-                    By location
-                    
-                    By campaign
-                    
-                    Deckoviz supports centralized orchestration with localized nuance.
-                    Global consistency without local rigidity.
-                    
-                    Enterprise-ready Hardware & Design
-                    
-                    Landscape or portrait orientation
-                    
-                    Premium wooden frames with custom finishes
-                    
-                    Curved, minimal edges
-                    
-                    Synced halo backlighting
-                    
-                    Optional scent diffuser add-ons
-                    
-                    Ultra-low maintenance design
-                    
-                    Smart TV mode when needed
-                    
-                    The hardware is designed to disappear into the space, not dominate it.
-                    
-                    Vizzy for Business
-                    
-                    Your AI Brand Companion
-                    
-                    Vizzy is the intelligence layer behind Deckoviz.
-                    
-                    For enterprises, Vizzy acts as:
-                    
-                    Brand storyteller
-                    
-                    Visual curator
-                    
-                    Experience designer
-                    
-                    Campaign assistant
-                    
-                    Ambience orchestrator
-                    
-                    It understands your brand, your offerings, your audience, and your goals.
-                    And it improves continuously.
-                    
-                    A platform, not a screen
-                    
-                    Deckoviz is not a one-time purchase or a static system.
-                    
-                    It is a living platform that:
-                    
-                    Updates weekly
-                    
-                    Expands capabilities continuously
-                    
-                    Learns from usage patterns
-                    
-                    Adapts to your business over time
-                    
-                    As your brand evolves, your spaces evolve with it.
-                    
-                    No reinstallation.
-                    No redesign cycles.
-                    No obsolescence.
-                        </p>
                     </div>
 
                     <div className="flex justify-center gap-4">
@@ -442,6 +218,228 @@ export default function DeckovizForEnterprise() {
                     {/* Description Paragraphs */}
                 </div>
             </div>
+            {/* ================= SECTION 1: FULL ENTERPRISE OVERVIEW (Your old content structured) ================= */}
+<section className="bg-white py-20">
+  <div className="max-w-6xl mx-auto px-6">
+    <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 leading-tight mb-8">
+      Deckoviz for Enterprises — Full Overview
+    </h2>
+
+    <div className="space-y-8 text-[17px] text-gray-700 leading-relaxed text-justify">
+      <p>
+        Attention is fragmented. Expectations are higher. Differentiation is harder. Screens are everywhere, yet most spaces still feel the same — they feel forgettable.
+      </p>
+
+      <p>
+        Deckoviz was built for this exact problem. Deckoviz is an AI-powered Dynamic Art, Storytelling, and Spatial Experience Platform designed for enterprises that understand one thing clearly:
+        <span className="font-semibold text-gray-900"> the future of business is experiential, emotional, and adaptive.</span>
+      </p>
+
+      <p>
+        Not static signage, passive screens, or one-size-fits-all content. Deckoviz turns walls into living, intelligent canvases that respond to context, brand, time, audience, and intent.
+        It brings narrative, mood, personalization, and generative intelligence into physical spaces — at scale.
+      </p>
+
+      <p>
+        For businesses, Deckoviz becomes the missing layer between brand strategy and real-world experience and customer delight — the layer customers actually feel.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+{/* ================= SECTION 2: WHAT DECKOVIZ IS AT ITS CORE ================= */}
+<section className="bg-gray-50 py-20">
+  <div className="max-w-6xl mx-auto px-6">
+    <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 leading-tight mb-8">
+      What Deckoviz is, at its Core
+    </h2>
+
+    <p className="text-[17px] text-gray-700 leading-relaxed text-justify mb-10">
+      Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal, paired with a premium Smart Display system.
+      It functions simultaneously as:
+    </p>
+
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {[
+        "A generative visual engine",
+        "A brand storytelling system",
+        "A dynamic signage and merchandising platform",
+        "A multisensory ambience controller",
+        "An adaptive, learning companion for physical spaces",
+      ].map((item, i) => (
+        <div key={i} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
+          <p className="text-gray-900 font-semibold">{item}</p>
+        </div>
+      ))}
+    </div>
+
+    <p className="mt-10 text-[17px] text-gray-700 leading-relaxed text-justify">
+      This is not a device you “install and forget”. It is a platform that learns your business and grows with it.
+    </p>
+  </div>
+</section>
+
+
+{/* ================= SECTION 3: CORE ENTERPRISE FEATURES (Your previous list content in sections) ================= */}
+<section className="bg-white py-20">
+  <div className="max-w-6xl mx-auto px-6">
+    <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 leading-tight mb-10">
+      Core Enterprise Features
+    </h2>
+
+    <div className="space-y-10">
+      {[
+        {
+          title: "Generative, Brand-aware Visual Intelligence",
+          content:
+            "Deckoviz generates visuals, art, layouts, posters, menus, and ambient scenes that are natively aligned with your brand identity. Colors, tone, themes, typography, mood, cultural context, and narrative style are learned and applied consistently across every screen and every location."
+        },
+        {
+          title: "Dynamic Product & Menu Visualization",
+          content:
+            "Static images become dynamic, animated, and narrative-driven visuals. Products, dishes, collections, and offerings can be animated subtly or cinematically, contextualized by time of day, season, or event, paired with generative backgrounds and story cues, and updated instantly across locations."
+        },
+        {
+          title: "AI-powered Posters, Menus & Signage",
+          content:
+            "Deckoviz generates and adapts menus, promotional posters, announcements, offers, event visuals, in-store messaging. Content updates no longer require design cycles, printing, or manual coordination — they happen dynamically and intelligently."
+        },
+        {
+          title: "Multisensory Moodscapes",
+          content:
+            "Deckoviz orchestrates visuals, music, halo lighting, and optional scent systems to create cohesive atmospheric experiences. Morning, evening, festive, calm, energetic, romantic — each mode feels intentional, not gimmicky."
+        },
+        {
+          title: "Guest & Context Awareness",
+          content:
+            "Deckoviz adapts to time of day, day of week, seasonality, events, audience patterns, returning guests or loyalty segments — without being intrusive or creepy."
+        },
+        {
+          title: "Collections with Voice & Narrative",
+          content:
+            "Businesses can create curated visual collections paired with AI narration or brand voice. Spaces can tell product stories, share origin stories, highlight craftsmanship, and create guided visual journeys."
+        },
+        {
+          title: "Social Proof & Living Feeds",
+          content:
+            "Deckoviz can surface customer visuals, reviews, testimonials, and community highlights — all presented tastefully within a designed visual language."
+        },
+        {
+          title: "Smart Scheduling & Orchestration",
+          content:
+            "Content, ambience, and experiences can be scheduled intelligently by hour, day, season, event, location, and campaign. Global consistency without local rigidity."
+        },
+        {
+          title: "Enterprise-ready Hardware & Design",
+          content:
+            "Landscape or portrait orientation, premium wooden frames, curved minimal edges, synced halo backlighting, optional scent diffuser add-ons, ultra-low maintenance design, Smart TV mode when needed."
+        },
+        {
+          title: "Vizzy for Business — Your AI Brand Companion",
+          content:
+            "Vizzy is the intelligence layer behind Deckoviz. It acts as brand storyteller, visual curator, experience designer, campaign assistant, and ambience orchestrator. It learns continuously from real-world usage."
+        },
+        {
+          title: "A platform, not a screen",
+          content:
+            "Deckoviz is not a one-time purchase or a static system. It updates weekly, expands capabilities continuously, learns from usage patterns, and adapts to your business over time."
+        }
+      ].map((sec, i) => (
+        <div key={i} className="bg-gray-50 rounded-3xl border border-gray-200 p-8 shadow-sm">
+          <h3 className="text-xl md:text-2xl font-semibold text-gray-900 mb-4">
+            {sec.title}
+          </h3>
+          <p className="text-[16px] text-gray-700 leading-relaxed text-justify">
+            {sec.content}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+
+{/* ================= SECTION 4: BROCHURE INTRO (Pic content) ================= */}
+<section className="bg-white py-20 border-t border-gray-100">
+  <div className="max-w-6xl mx-auto px-6">
+    <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 leading-tight">
+      The Intelligent Ambience & Storytelling Layer for Enterprise Spaces
+    </h2>
+
+    <p className="mt-6 text-[17px] text-gray-700 leading-relaxed text-justify">
+      Most enterprise spaces still rely on static frames, static screens, static signage, and static moods.
+      Deckoviz replaces that with a living system.
+    </p>
+
+    <p className="mt-5 text-[17px] text-gray-700 leading-relaxed text-justify">
+      Deckoviz for Enterprise is an{" "}
+      <span className="font-semibold text-gray-900">
+        AI-powered ambience, storytelling, and personalization platform
+      </span>{" "}
+      that transforms physical spaces into adaptive, expressive, revenue-supporting environments. It blends generative visuals,
+      sound, lighting, memory, and intelligence to help businesses tell better stories, create stronger emotional connections,
+      and deliver experiences that evolve over time.
+    </p>
+
+    <p className="mt-5 text-[17px] text-gray-700 leading-relaxed text-justify">
+      Below are some of the core, general-purpose capabilities that power Deckoviz across retail, hospitality,
+      real estate, wellness, offices, and public spaces.
+    </p>
+  </div>
+</section>
+
+
+{/* ================= SECTION 5: BROCHURE TABLE FEATURES (Pic content) ================= */}
+<section className="bg-white pb-24">
+  <div className="max-w-6xl mx-auto px-6">
+    <div className="flex items-center gap-4 mb-10">
+      <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">
+        Core Enterprise Features & Highlights
+      </h2>
+      <div className="w-3 h-10 bg-[#6670d8] rounded-sm"></div>
+    </div>
+
+    <div className="overflow-hidden rounded-3xl border border-gray-200 shadow-sm">
+      <div className="grid grid-cols-12 bg-gray-50 border-b border-gray-200">
+        <div className="col-span-4 px-6 py-4 text-sm font-semibold text-gray-900">Feature</div>
+        <div className="col-span-8 px-6 py-4 text-sm font-semibold text-gray-900">Description</div>
+      </div>
+
+      <div className="divide-y divide-gray-200">
+        {[
+          ["Dynamic Product Display Enhancer", "Turn static product images into animated visuals, artistic loops, or short videos. Showcase products in motion, in use, or reimagined through high-production generative visuals."],
+          ["AI Brand-Themed Artwork Engine", "Generate living artworks inspired by your brand identity, location, history, and values. Every space gains a unique visual language that evolves with time and context."],
+          ["Generative Marketing & Signage Suite", "Instantly create menus, posters, signage, promotions, and announcements in your brand style. Update content dynamically without design bottlenecks."],
+          ["Multisensory Moodscapes Engine", "Sync visuals with music, adaptive backlighting, and future scent modules to create deeply immersive, emotionally resonant environments."],
+          ["Guest & Visitor Personalization", "Remember frequent guests, customer personas, or visitor types. Adapt visuals and ambience subtly to make people feel recognized, not tracked."],
+          ["Collections with AI Narration", "Turn products, menus, stories, or spaces into narrated visual collections. Voice adds trust, warmth, and clarity without feeling salesy."],
+          ["AI Music & Sound Generator", "Create brand-themed music, product-specific soundscapes, or ambient audio that aligns with time of day, energy, and context."],
+          ["Smart Display Scheduling", "Automate displays by time, season, event, audience type, or business rhythm. Morning, evening, weekday, festive, or campaign-specific modes run automatically."],
+          ["Customer Visual Keepsakes", "Create personalized visuals for guests or customers during special moments and let them take it home digitally. Experiences turn into shareable memories."],
+          ["Vizzy for Business (AI Brand Companion)", "Vizzy acts as a brand ambassador, storyteller, and guide. It answers questions, introduces offerings, and shapes experiences with personality and restraint."],
+          ["AI Montage & Memory Creator", "Instantly generate artistic montages from photos or events. Ideal for hospitality, celebrations, retail milestones, or real estate walkthroughs."],
+          ["Dynamic Visual Menus & Catalogs", "Replace static menus or catalogs with living visual systems that rotate items, highlight specials, and tell stories visually."],
+          ["Social Proof & Testimonial Displays", "Curate reviews, testimonials, and customer moments into ambient, trust-building visual loops without turning the space into a feed."],
+          ["Marketplace & Commerce Layer", "Use Deckoviz as a visual commerce surface. Showcase products, experiences, or digital items directly within the environment."],
+          ["Enterprise Control & Admin Suite", "Centralized dashboard for multi-location control, scheduling, approvals, branding consistency, and future CRM or POS integrations."],
+          ["Adaptive Intelligence Engine", "Over time, Deckoviz learns what works in each space. Displays, moods, and stories improve continuously based on real-world interaction patterns."]
+        ].map(([feature, desc], i) => (
+          <div key={i} className="grid grid-cols-12 bg-white hover:bg-gray-50 transition-colors duration-300">
+            <div className="col-span-4 px-6 py-6 text-sm font-semibold text-gray-900">
+              {feature}
+            </div>
+            <div className="col-span-8 px-6 py-6 text-[15px] text-gray-700 leading-relaxed text-justify">
+              {desc}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+        
 
             {/* YT and Instagram */}
             <div className="bg-white py-12 md:py-12">
@@ -530,6 +528,36 @@ export default function DeckovizForEnterprise() {
                 </div>
             </div>
             
+            {/* ================= SECTION 6: EXPLORE FURTHER ================= */}
+<section className="bg-white py-20 border-t border-gray-100">
+  <div className="max-w-6xl mx-auto px-6">
+    
+    {/* Heading with highlight */}
+    <div className="inline-block mb-8">
+      <h2 className="text-3xl md:text-4xl font-semibold text-gray-900">
+        <span className="bg-emerald-200/60 px-3 py-1 rounded-md">
+          Explore Further
+        </span>
+      </h2>
+    </div>
+
+    {/* Content */}
+    <div className="space-y-6 text-[17px] text-gray-700 leading-relaxed text-justify max-w-5xl">
+      <p>
+        Not every conversation fits on one page.
+        Below are deeper dives into how Deckoviz is used across industries, how Vizzy powers enterprise
+        intelligence, and why dynamic, generative environments are becoming foundational to modern
+        customer-facing spaces.
+      </p>
+
+      <p>
+        Whether you are exploring use cases, evaluating ROI, or shaping a long-term experience strategy,
+        these resources are designed to be practical, thoughtful, and grounded in real deployments.
+      </p>
+    </div>
+  </div>
+</section>
+
             <DynamicImageGrid 
                 imageSources={enterpriseImages}
                 sectionTitle="A Canvas for Every Environment, Every Moment"
@@ -571,31 +599,76 @@ export default function DeckovizForEnterprise() {
             </section>
 
             
-                <div className="container mx-auto px-6 text-center">
-                    <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4">
-                        Some other benefits 
-                    </h2>
-                    <p className="text-lg text-gray-900 font-medium mb-8 max-w-2xl mx-auto leading-relaxed">
-                        Beyond these core benefits, Deckoviz delivers enterprise-grade advantages that matter at scale.
+                {/* ================= SECTION: OTHER ENTERPRISE BENEFITS ================= */}
+<section className="relative py-20 bg-white overflow-hidden border-t border-gray-100">
+  <div className="absolute inset-0 pointer-events-none">
+    <div className="absolute -top-20 left-10 w-[450px] h-[450px] rounded-full bg-pink-200/25 blur-[110px]" />
+    <div className="absolute bottom-0 right-10 w-[420px] h-[420px] rounded-full bg-purple-200/25 blur-[110px]" />
+  </div>
 
-                        Deckoviz is built to manage one screen or one thousand from a single, intuitive dashboard. Content, experiences, and ambience can be orchestrated centrally while still allowing local nuance across locations.
-                        
-                        Brand consistency is preserved without sacrificing flexibility. Visuals, color systems, tone, and narrative style remain aligned everywhere your brand shows up.
-                        
-                        Deckoviz integrates cleanly into existing enterprise systems through APIs and structured controls, allowing automated updates, inventory-aware visuals, and campaign coordination without operational overhead.
-                        
-                        Enterprises also gain access to advanced analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals, helping teams move beyond guesswork and toward measurable impact.
-                        
-                        Finally, Deckoviz is designed with enterprise-grade security, reliability, and support. From onboarding to ongoing expansion, the platform is built to be dependable, low-maintenance, and future-proof.
-                        
-                        Deckoviz does not replace your brand strategy.
-                        It gives it a living, intelligent body inside your space.
-                                                
-                    </p>
-                    <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-                        Schedule Your Enterprise Demo
-                    </Button>
-                </div>
+  <div className="relative z-10 max-w-6xl mx-auto px-6">
+    {/* Heading */}
+    <div className="text-center mb-14">
+      <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4">
+        Other Enterprise Benefits
+      </h2>
+      <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+        Beyond the core features, Deckoviz delivers enterprise-grade advantages that matter at scale —
+        operationally, strategically, and experientially.
+      </p>
+    </div>
+
+    {/* Benefits Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {[
+        {
+          title: "Multi-location orchestration",
+          desc: "Manage one screen or one thousand from a single intuitive dashboard. Orchestrate content, experiences, and ambience centrally while still enabling local nuance across locations."
+        },
+        {
+          title: "Brand consistency at scale",
+          desc: "Preserve your visual identity everywhere your brand exists — visuals, color systems, tone, narrative style, and experience design remain aligned without sacrificing flexibility."
+        },
+        {
+          title: "Clean enterprise integrations",
+          desc: "Integrate into existing enterprise systems through APIs and structured controls. Automate updates, enable inventory-aware visuals, and coordinate campaigns without operational overhead."
+        },
+        {
+          title: "Analytics & measurable impact",
+          desc: "Move beyond guesswork using analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals — enabling teams to optimize for real-world outcomes."
+        },
+        {
+          title: "Enterprise security & reliability",
+          desc: "Deckoviz is built with enterprise-grade security, reliability, and support. From onboarding to expansion, it remains dependable, low-maintenance, and future-proof."
+        },
+        {
+          title: "A living body for your brand",
+          desc: "Deckoviz does not replace your brand strategy — it gives it a living, intelligent body inside your space, continuously evolving with your business."
+        }
+      ].map((item, i) => (
+        <div
+          key={i}
+          className="bg-white/55 backdrop-blur-xl border border-white/40 rounded-3xl p-8 shadow-[0_20px_70px_rgba(236,72,153,0.10)] hover:shadow-[0_30px_90px_rgba(168,85,247,0.16)] transition-all duration-500 hover:-translate-y-1"
+        >
+          <h3 className="text-xl font-semibold text-gray-900 mb-3">
+            {item.title}
+          </h3>
+          <p className="text-[15px] text-gray-700 leading-relaxed text-justify">
+            {item.desc}
+          </p>
+        </div>
+      ))}
+    </div>
+
+    {/* CTA */}
+    <div className="text-center mt-14">
+      <Button variant="primary" onClick={() => setIsModalOpen(true)}>
+        Schedule Your Enterprise Demo
+      </Button>
+    </div>
+  </div>
+</section>
+
             
             {/* Bottom CTA Section */}
             <section className="py-20 md:py-28 bg-white">

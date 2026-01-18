@@ -17,7 +17,7 @@ export default function AboutUs() {
             backgroundSize: "30px 30px",
           }}
         />
-
+ 
         {/* Enhanced gradient with more depth and animation - extended height */}
         <div className="absolute left-0 right-0" style={{ top: "260px", height: "480px" }}>
           <div

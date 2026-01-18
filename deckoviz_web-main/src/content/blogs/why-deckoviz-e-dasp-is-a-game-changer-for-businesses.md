@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-orange-100 to-yellow-100 text-orange-700"
 date: "November 24, 2025"
 readTime: "6 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQGyE-WI4n661w/article-cover_image-shrink_423_752/B56Zqy.M8XJwAU-/0/1763939249630?e=1767830400&v=beta&t=oFLoxsZ-jyLhYg7oSqi-xvZh5f1ibRglPM6Od3wsqm0"
+image: "/blogs/game-changer.png"
 size: "medium"
 ---
 

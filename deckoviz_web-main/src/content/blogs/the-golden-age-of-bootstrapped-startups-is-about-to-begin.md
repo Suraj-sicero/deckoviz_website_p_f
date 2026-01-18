@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700"
 date: "June 01, 2024"
 readTime: "5 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQGM-G3-JpVTyQ/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721177601152?e=1768435200&v=beta&t=5buWTakn9hThwJJejRQhlisE2cJkvTWxh9hkDPh2C-U"
+image: "/blogs/golden-age.jpg"
 size: "large"
 ---
 

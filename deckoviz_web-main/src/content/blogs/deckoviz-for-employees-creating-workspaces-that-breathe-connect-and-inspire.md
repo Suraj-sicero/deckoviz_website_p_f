@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700"
 date: "October 06, 2024"
 readTime: "5 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQHBQ7-KYm55tQ/article-cover_image-shrink_720_1280/B56Zm6pGfFI4AM-/0/1759772965373?e=1768435200&v=beta&t=Q9blEIWrMmf3z0CdrgJLJRoUV_abJzIRiucDZJg31D0"
+image: "/blogs/employees.png"
 size: "large"
 ---
 

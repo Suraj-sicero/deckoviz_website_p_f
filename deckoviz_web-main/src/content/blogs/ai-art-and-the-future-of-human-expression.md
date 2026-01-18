@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-700"
 date: "November 17, 2025"
 readTime: "7 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQFknVumutx4zQ/article-cover_image-shrink_720_1280/B56ZqOZq94JwAI-/0/1763325692202?e=1768435200&v=beta&t=fxvq7lC5LzyFi09xQUmGR3OEGOKGfZ86W1bqiXxfcbM"
+image: "/blogs/ai-and-art.png"
 size: "large"
 ---
 

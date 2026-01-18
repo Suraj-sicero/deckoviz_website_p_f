@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700"
 date: "October 11, 2025"
 readTime: "4 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQGR08CrPzdBnw/article-cover_image-shrink_720_1280/B56ZnTLuFtHUBY-/0/1760184695669?e=1768435200&v=beta&t=lsdvPomG-2pa6_PtDrytOk6ufIAdZitlbK1BLab64jE"
+image: "/blogs/art-of-storytelling.png"
 size: "large"
 ---
 

@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700"
 date: "October 23, 2025"
 readTime: "5 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQGt0fMYV-FNIg/article-cover_image-shrink_720_1280/B56ZoSCAZXJoAM-/0/1761239116650?e=1768435200&v=beta&t=q4x5OzBTZA2tLWknFs-B_kHEkVI4-wcp9ytsntvDRHE"
+image: "/blogs/space-and-buss.png"
 size: "medium"
 ---
 

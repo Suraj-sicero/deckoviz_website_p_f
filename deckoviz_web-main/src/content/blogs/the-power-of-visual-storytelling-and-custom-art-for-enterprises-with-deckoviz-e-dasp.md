@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-orange-100 to-red-100 text-orange-700"
 date: "December 9, 2025"
 readTime: "5 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQGG3NL196kPgg/article-cover_image-shrink_720_1280/B56Zr_1WFSI4AI-/0/1765228770724?e=1768435200&v=beta&t=Hk9T9U_GwqSMinM0gV8kyxvyUvCq0pVw0LjuMxikG4Q"
+image: "/blogs/visual-story.png"
 size: "small"
 ---
 

@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-pink-100 to-red-100 text-pink-700"
 date: "November 13, 2025"
 readTime: "5 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQHtcpXxznN3Ig/article-cover_image-shrink_720_1280/B56Zp.G0RnHQBQ-/0/1763052314622?e=1768435200&v=beta&t=GaWD7yPUbpxy2wq9IxqaGV69tNikKwFIqp-yOSn1S_M"
+image: "/blogs/vizzy.png"
 size: "small"
 ---
 

@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700"
 date: "December 12, 2025"
 readTime: "6 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQE-9y62pzhBkw/article-cover_image-shrink_720_1280/B56ZsO5YhcJUAI-/0/1765481487539?e=1767830400&v=beta&t=EliHzvlM0U6CLyDLonBZ-MwssdfjbOAkcl1VukfLahU"
+image: "/blogs/future_restaurant.png"
 size: "medium"
 ---
 

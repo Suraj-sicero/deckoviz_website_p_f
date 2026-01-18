@@ -7,11 +7,11 @@ const Sitemap: React.FC = () => {
     <section className="py-24 bg-gradient-to-br from-white via-purple-50/50 to-pink-50/50">
       <div className="w-full px-6 xl:px-12 2xl:px-20">
         {/* Header */}
-        <div className="relative mb-16">
-  <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-pink-300/40 via-purple-300/40 to-indigo-300/40"></div>
+        <div className="relative mb-14">
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-pink-200/30 via-purple-200/30 to-indigo-200/30"></div>
 
-  <h1
-    className="
+          <h1
+            className="
       relative z-10
       text-5xl md:text-6xl
       font-extrabold
@@ -19,19 +19,38 @@ const Sitemap: React.FC = () => {
       bg-clip-text text-transparent
       bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600
     "
-  >
-    Main Pages
-  </h1>
-</div>
+          >
+            Site Map
+          </h1>
 
+          {/* ✅ Description (like the screenshot) */}
+          <div className="relative z-15 max-w-5xl mx-auto mt-8">
+            <div className="bg-white/70 backdrop-blur-xl border border-white/60 shadow-lg rounded-3xl px-8 py-7">
+              <p className="text-[15px] md:text-[16px] text-gray-700 leading-relaxed text-justify">
+                Welcome to the{" "}
+                <span className="font-semibold text-gray-900">
+                  Deckoviz Sitemap
+                </span>{" "}
+                — your treasure map to all the good stuff. Think of this as your
+                behind-the-scenes guide, minus the dusty corridors. Whether
+                you’re hunting for product deep dives, enterprise insights,
+                creative tools, or that one page you swear you saw last week,
+                this sitemap has your back.
+                <br />
+                <br />
+                It’s the calm, organized friend who always knows where
+                everything is, so you can skip the wandering and get straight to
+                what inspires you. Dive in — every click here leads somewhere
+                worth exploring.
+              </p>
+            </div>
+          </div>
+        </div>
 
         {/* FIRST ROW */}
-<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16">
-
-
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16">
           {/* PRODUCT */}
-<SitemapBox title="Product" emoji="🖼️">
-
+          <SitemapBox title="Product" emoji="🖼️">
             <BoxSection title="Product Overview">
               <li>Hardware & Specs</li>
               <li>Setup Guide</li>
@@ -51,7 +70,6 @@ const Sitemap: React.FC = () => {
               <li>For Therapy & Wellness Spaces</li>
               <li>For Schools / Education</li>
             </BoxSection>
- 
           </SitemapBox>
 
           {/* SUPPORT */}
@@ -83,7 +101,6 @@ const Sitemap: React.FC = () => {
               <li>Reset Instructions</li>
               <li>Performance Optimization</li>
             </BoxSection>
- 
           </SitemapBox>
 
           {/* HOME */}
@@ -91,7 +108,7 @@ const Sitemap: React.FC = () => {
             <SimpleItem>Hero Header Section</SimpleItem>
             <SimpleItem>Key Features & Capabilities</SimpleItem>
             <SimpleItem>Testimonials Preview</SimpleItem>
-            <SimpleItem>Call to Action (CTA)</SimpleItem> 
+            <SimpleItem>Call to Action (CTA)</SimpleItem>
           </SitemapBox>
 
           {/* LEGAL */}
@@ -101,7 +118,7 @@ const Sitemap: React.FC = () => {
             <SimpleItem>Cookie Policy</SimpleItem>
             <SimpleItem>Community Guidelines</SimpleItem>
             <SimpleItem>Accessibility Statement</SimpleItem>
-            <SimpleItem>Return Policy</SimpleItem> 
+            <SimpleItem>Return Policy</SimpleItem>
           </SitemapBox>
 
           {/* BLOG & RESOURCES */}
@@ -130,15 +147,11 @@ const Sitemap: React.FC = () => {
               <li>Artist Resource Kits</li>
               <li>Meditation Visuals Help</li>
             </BoxSection>
- 
           </SitemapBox>
-
         </div>
 
         {/* SECOND ROW */}
-<div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16">
-
-
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16">
           {/* ORDER */}
           <SitemapBox title="Order" emoji="🛒" to="/Pricing">
             <SimpleItem>Navbar</SimpleItem>
@@ -147,7 +160,7 @@ const Sitemap: React.FC = () => {
             <SimpleItem>Add-ons</SimpleItem>
             <SimpleItem>Finalize Order + Checkout</SimpleItem>
             <SimpleItem>Shipping & Delivery Info</SimpleItem>
-            <SimpleItem>Warranty & Returns Policy</SimpleItem> 
+            <SimpleItem>Warranty & Returns Policy</SimpleItem>
           </SitemapBox>
 
           {/* ABOUT */}
@@ -171,11 +184,14 @@ const Sitemap: React.FC = () => {
               <li>For Aligned Investors</li>
               <li>Contact Email & Pitch Info</li>
             </BoxSection>
- 
           </SitemapBox>
 
           {/* WEB APP */}
-          <SitemapBox title="WebApp & Companion App" emoji="💻" to="/HowItWorks">
+          <SitemapBox
+            title="WebApp & Companion App"
+            emoji="💻"
+            to="/HowItWorks"
+          >
             <BoxSection title="Dashboard">
               <li>Art Collections</li>
               <li>Upload & Transform</li>
@@ -186,11 +202,15 @@ const Sitemap: React.FC = () => {
             </BoxSection>
 
             <SimpleItem>Forum / Community Discussion</SimpleItem>
-            <SimpleItem>Artist Upload Portal</SimpleItem> 
+            <SimpleItem>Artist Upload Portal</SimpleItem>
           </SitemapBox>
 
           {/* COMMUNITY */}
-          <SitemapBox title="Community" emoji="🤝" to="/GuestReactionsTestimonials">
+          <SitemapBox
+            title="Community"
+            emoji="🤝"
+            to="/GuestReactionsTestimonials"
+          >
             <BoxSection title="Wall of Love">
               <li>User Photos, Videos, Stories</li>
               <li>Submit Your Story (Form)</li>
@@ -209,7 +229,6 @@ const Sitemap: React.FC = () => {
               <li>Contact Form</li>
               <li>Email Support</li>
             </BoxSection>
- 
           </SitemapBox>
 
           {/* AI TECH */}
@@ -241,15 +260,12 @@ const Sitemap: React.FC = () => {
               <li>Connectivity Standards</li>
               <li>Software Requirements</li>
             </BoxSection>
- 
           </SitemapBox>
-
         </div>
       </div>
     </section>
   );
 };
-
 
 const SitemapBox = ({
   title,
@@ -311,7 +327,6 @@ const SitemapBox = ({
   </motion.div>
 );
 
-
 const BoxSection = ({
   title,
   children,
@@ -320,9 +335,7 @@ const BoxSection = ({
   children?: React.ReactNode;
 }) => (
   <div className="bg-white/70 rounded-2xl px-5 py-4">
-    <h3 className="font-medium mb-2 text-gray-800">
-      {title}
-    </h3>
+    <h3 className="font-medium mb-2 text-gray-800">{title}</h3>
 
     {children && (
       <ul className="text-sm text-gray-600 space-y-1 leading-relaxed">
@@ -337,6 +350,5 @@ const SimpleItem = ({ children }: { children: React.ReactNode }) => (
     {children}
   </div>
 );
-
 
 export default Sitemap;

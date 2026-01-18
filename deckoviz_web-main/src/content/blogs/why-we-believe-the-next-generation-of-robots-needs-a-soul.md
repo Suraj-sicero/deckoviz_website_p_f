@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-green-100 to-emerald-100 text-green-700"
 date: "October 30, 2025"
 readTime: "6 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQEkBERLpWSk0Q/article-cover_image-shrink_720_1280/B56ZoxqwoxJwAI-/0/1761769895562?e=1768435200&v=beta&t=Ifg8VKebCtViOtaaJRbp-anHFLygWECLSxtVzU7pXA0"
+image: "/blogs/next-gen-soul.png"
 size: "medium"
 ---
 
