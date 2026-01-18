@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
-import { caption } from 'framer-motion/client';
 
 /* ================= FLOATING NERVOUS SYSTEM BUTTON (LEFT near gallery) ================= */
 
