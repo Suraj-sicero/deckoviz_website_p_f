@@ -214,6 +214,16 @@ const Footer: React.FC = () => {
   </button>
 </li>
 
+<li>
+  <button 
+    onClick={() => window.location.href = "/support"}
+    className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
+  >
+    Support
+  </button>
+</li>
+
+
             </ul>
           </div>
 

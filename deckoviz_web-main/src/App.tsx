@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useRef } from "react";
+
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
@@ -55,6 +57,7 @@ import Partnership from "./components/Partnership"
 import { i } from 'framer-motion/client';
 import Benefits from "./components/homepage/Benefits";
 import AllBenefits from "./components/homepage/AllBenefits";
+import Support from "./components/Support";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -76,6 +79,38 @@ const ScrollToSectionOnHome: React.FC = () => {
 };
 
 const App: React.FC = () => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+useEffect(() => {
+  if (!audioRef.current) {
+    audioRef.current = new Audio("/sounds/ambient.mp3");
+    audioRef.current.loop = true;
+    audioRef.current.volume = 0.25;
+  }
+
+  const startAudio = async () => {
+    try {
+      await audioRef.current?.play();
+      localStorage.setItem("deckovizAudioStarted", "true");
+    } catch (e) {
+      console.log("Autoplay blocked");
+    }
+
+    window.removeEventListener("click", startAudio);
+  };
+
+  // If already played before, resume automatically
+  if (localStorage.getItem("deckovizAudioStarted")) {
+    audioRef.current.play().catch(() => {});
+  } else {
+    window.addEventListener("click", startAudio);
+  }
+
+  return () => {
+    window.removeEventListener("click", startAudio);
+  };
+}, []);
+
   return (
     <Router>
       <ScrollToTop />
@@ -110,6 +145,7 @@ const App: React.FC = () => {
   path="/homes-that-mean-something"
   element={<ForHomesThatMeanSomething />}
 />
+
 <Route path="/nervous-system" element={<NervousSystem />} />
 
 <Route
@@ -157,6 +193,7 @@ const App: React.FC = () => {
         <Route path ="/deckoviz-for-retailstores" element={<DeckovizForRetail />} />
         <Route path ="/deckoviz-for-enterprises" element={<DeckovizForEnterprise />} />
         <Route path="/partnership" element={<Partnership />} />
+<Route path="/support" element={<Support />} />
 
         <Route path ="/Wall-Of-Love" element={<WallOfLove/>} />
         <Route path ="/Leaderboard" element={<Leaderboard/>} />

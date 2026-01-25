@@ -23,29 +23,30 @@ const Partnership: React.FC = () => {
           <div className="absolute bottom-[-280px] right-[-220px] h-[520px] w-[520px] rounded-full bg-white/10 blur-2xl" />
 
           {/* inner padding */}
-          <div className="relative px-6 py-10 sm:px-12 sm:py-14">
+          <div className="relative px-6 py-10 sm:px-12 sm:py-14 text-gray-900">
+
             {/* Page container */}
             <div className="max-w-5xl mx-auto">
               {/* Top section */}
               <div className="space-y-3">
-                <p className="text-white/80 text-sm font-semibold tracking-wide">
+                <p className="text-gray-900/80 text-sm font-semibold tracking-wide">
                   Let’s Learn ✨
                 </p>
 
-                <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow leading-tight">
+                <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 drop-shadow leading-tight">
                   Partner with Deckoviz
                 </h1>
 
-                <p className="text-lg sm:text-xl text-white/90 font-semibold">
+                <p className="text-lg sm:text-xl text-gray-700 font-semibold">
                   Bring Life to Spaces. Get Rewarded.
                 </p>
 
                 {/* light sass */}
-                <p className="text-white/75 text-sm sm:text-base italic">
+                <p className="text-gray-600 text-sm sm:text-base italic">
                   (You bring the taste. We bring the wow.)
                 </p>
 
-                <div className="pt-5 space-y-4 text-[16px] sm:text-[18px] leading-8 text-white/95 text-justify">
+                <div className="pt-5 space-y-4 text-[16px] sm:text-[18px] leading-8 text-gray-800 text-justify">
                   <p>
                     Deckoviz is the world’s first AI-powered dynamic art frame. A portal
                     of expression. A window into soul and space. We’re partnering with
@@ -65,22 +66,22 @@ const Partnership: React.FC = () => {
 
               {/* Interior Designers */}
               <section className="space-y-6">
-                <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
                   <span>🎨</span> Interior Designers, Architects & Decorators
                 </h2>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   Bring something truly unforgettable into the homes and projects you craft.
                 </p>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   Recommend Deckoviz to your clients - post or present - and receive generous
                   referral rewards for every purchase made through you. It’s a win-win: your
                   clients get the most unique design feature on the market, and you get
                   ongoing commission without needing to lift a finger after recommending.
                 </p>
 
-                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-white/95 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
+                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-gray-800 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
                   <li>Earn commission on each sale made by your referred clients</li>
                   <li>Custom ordering links and tracking for effortless referral</li>
                   <li>
@@ -94,10 +95,10 @@ const Partnership: React.FC = () => {
                 </ul>
 
                 <div className="pt-2">
-                  <p className="text-[16px] sm:text-[18px] font-bold text-white">
+                  <p className="text-[16px] sm:text-[18px] font-bold text-gray-900">
                     Perfect for:
                   </p>
-                  <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-white/95 space-y-3 mt-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
+                  <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-gray-800 space-y-3 mt-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
                     <li>Interior Designers</li>
                     <li>Architects</li>
                     <li>Home Decorators</li>
@@ -105,7 +106,7 @@ const Partnership: React.FC = () => {
                   </ul>
                 </div>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify pt-2">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify pt-2">
                   Bring Deckoviz into the spaces you help shape - and make them truly unforgettable.
                 </p>
               </section>
@@ -115,27 +116,27 @@ const Partnership: React.FC = () => {
 
               {/* Independent Sales Partners */}
               <section className="space-y-6">
-                <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
                   <span>💡</span> Independent Sales Partners
                 </h2>
 
-                <p className="text-[16px] sm:text-[18px] text-white font-semibold leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-900 font-semibold leading-8 text-justify">
                   Be your own boss. Earn unlimited commissions.
                 </p>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   This is for the natural connectors, the relationship-builders, the people who love
                   talking about products that wow.
                 </p>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   As a Deckoviz Independent Sales Partner, you’ll earn high-value commissions for
                   every sale you close. Whether you’re selling to hotels, homes, offices, cafes, or
                   wellness spaces - we give you the tools and freedom to build your pipeline and
                   unlock real earnings.
                 </p>
 
-                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-white/95 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
+                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-gray-800 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
                   <li>Up to $15k+ in commissions/month or more — no caps</li>
                   <li>$15-40K base salary for full-time roles, or uncapped earnings as a contractor</li>
                   <li>
@@ -145,16 +146,16 @@ const Partnership: React.FC = () => {
                 </ul>
 
                 <div className="pt-2">
-                  <p className="text-[16px] sm:text-[18px] font-bold text-white text-justify">
+                  <p className="text-[16px] sm:text-[18px] font-bold text-gray-900 text-justify">
                     Perfect for freelancers, hustlers, lifestyle sellers, or creative professionals with a strong network
                   </p>
                 </div>
 
                 <div className="pt-2">
-                  <p className="text-[16px] sm:text-[18px] font-bold text-white">
+                  <p className="text-[16px] sm:text-[18px] font-bold text-gray-900">
                     Your job:
                   </p>
-                  <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-white/95 space-y-3 mt-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
+                  <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-gray-800 space-y-3 mt-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
                     <li>Find leads</li>
                     <li>Build relationships</li>
                     <li>Close sales</li>
@@ -162,12 +163,13 @@ const Partnership: React.FC = () => {
                   </ul>
                 </div>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify pt-2">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify pt-2">
                   Start part-time or go all in. The opportunity is wide open.
                 </p>
 
                 {/* sass */}
-                <p className="text-white/80 text-sm sm:text-base italic">
+                <p className="text-gray-600
+ text-sm sm:text-base italic">
                   (Translation: if you’re ambitious, you’ll LOVE this.)
                 </p>
               </section>
@@ -177,20 +179,20 @@ const Partnership: React.FC = () => {
 
               {/* Retail Partners */}
               <section className="space-y-6">
-                <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
                   <span>🛍️</span> Retail Partners (Home Decor, Electronics & Lifestyle Stores)
                 </h2>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   Deckoviz is a head-turner. In-store, it stops people in their tracks.
                 </p>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   Our Retail Partner Program is for forward-thinking store owners who want to offer
                   something unlike anything else.
                 </p>
 
-                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-white/95 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
+                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-gray-800 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
                   <li>Bulk margins and resale opportunities</li>
                   <li>Custom in-store displays available</li>
                   <li>Marketing and training support</li>
@@ -198,7 +200,7 @@ const Partnership: React.FC = () => {
                   <li>Strong post-sale support for your customers</li>
                 </ul>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify pt-2">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify pt-2">
                   Add cutting-edge, design-forward tech to your inventory - and watch footfall and
                   margins rise.
                 </p>
@@ -209,27 +211,27 @@ const Partnership: React.FC = () => {
 
               {/* Influencers */}
               <section className="space-y-6">
-                <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
                   <span>📣</span> Influencers & Content Creators
                 </h2>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   If you’re in the lifestyle, home, luxury, tech, or design space - Deckoviz is made for your audience.
                 </p>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   Join our affiliate program or create branded collaborations to introduce Deckoviz
                   to your community and get rewarded.
                 </p>
 
-                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-white/95 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
+                <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-gray-800 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
                   <li>Generous affiliate commissions for every tracked sale</li>
                   <li>Surprise & delight campaigns</li>
                   <li>Launch features, content kits, and co-branded collabs</li>
                   <li>Creative freedom to tell the Deckoviz story your way</li>
                 </ul>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify pt-2">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify pt-2">
                   Deckoviz is made to be seen - and felt. Let’s show your audience something
                   they’ve never seen before.
                 </p>
@@ -240,19 +242,19 @@ const Partnership: React.FC = () => {
 
               {/* Apply */}
               <section className="space-y-4">
-                <h2 className="text-lg sm:text-xl font-bold text-white">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900">
                   Apply to Partner
                 </h2>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   We’re building a world of immersive, intentional spaces. Join us.
                 </p>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   👉 [Partner Application Form Link]
                 </p>
 
-                <p className="text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <p className="text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   Let’s create something unforgettable - together.
                 </p>
               </section>
@@ -262,11 +264,11 @@ const Partnership: React.FC = () => {
 
               {/* Blurb Content */}
               <section className="space-y-6">
-                <h2 className="text-lg sm:text-xl font-bold text-white">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900">
                   Blurb Content, Pitch/Description Content
                 </h2>
 
-                <div className="space-y-2 text-[16px] sm:text-[18px] text-white/95 text-justify">
+                <div className="space-y-2 text-[16px] sm:text-[18px] text-gray-800 text-justify">
                   <p>Deckoviz pitch</p>
                   <p>Problem</p>
                   <p>Solution</p>
@@ -274,9 +276,9 @@ const Partnership: React.FC = () => {
                   <p>Mission</p>
                 </div>
 
-                <div className="space-y-7 text-[16px] sm:text-[18px] text-white/95 leading-8 text-justify">
+                <div className="space-y-7 text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
                   <div>
-                    <h3 className="font-bold text-white">Problem</h3>
+                    <h3 className="font-bold text-gray-900">Problem</h3>
                     <p className="mt-2">
                       We love art, and that’s why we fill our homes with it. It helps us make sense of the world.
                     </p>
@@ -296,7 +298,7 @@ const Partnership: React.FC = () => {
                   </p>
 
                   <div>
-                    <h3 className="font-bold text-white">Solution</h3>
+                    <h3 className="font-bold text-gray-900">Solution</h3>
                     <p className="mt-2">
                       Our lives are all about designing moments and spaces intentionally, curating moments.
                     </p>
@@ -309,7 +311,7 @@ const Partnership: React.FC = () => {
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-white">Product</h3>
+                    <h3 className="font-bold text-gray-900">Product</h3>
                     <p className="mt-2">What we have built is</p>
                     <p className="mt-2">It does quite a few things</p>
                     <p className="mt-2">Firstly, our AI understands you, your</p>
@@ -321,21 +323,21 @@ const Partnership: React.FC = () => {
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-white">Mission</h3>
+                    <h3 className="font-bold text-gray-900">Mission</h3>
                     <p className="mt-2">
                       Our mission is to infuse people’s homes and spaces with the beauty, magic, creativity, dynamism, love, connection, joy, spark, that we all want more of in our lives.
                     </p>
                   </div>
 
                   <div>
-                    <h3 className="font-bold text-white">Additional notes</h3>
+                    <h3 className="font-bold text-gray-900">Additional notes</h3>
                     <p className="mt-2">
                       Beyond homeowners, we also see restaurants, real estate developers, yoga studios, offices, therapist offices, wellness centers, etc being significant users for this product, in different ways, for different uses and features.
                     </p>
                   </div>
 
                   <div className="pt-6">
-                    <h3 className="font-bold text-white">Blurb</h3>
+                    <h3 className="font-bold text-gray-900">Blurb</h3>
                     <p className="mt-2">
                       Deckoviz is a next-generation company innovating at the frontier of AI personalization, smart home decor, and intelligent space enhancement.
                     </p>
@@ -356,7 +358,7 @@ const Partnership: React.FC = () => {
               </section>
 
               {/* Footer */}
-              <div className="mt-12 flex items-center justify-between text-white/70 text-xs">
+              <div className="mt-12 flex items-center justify-between text-gray-500 text-xs">
                 <p>@deckoviz</p>
                 <div className="flex items-center gap-3">
                   <span className="h-2 w-2 rounded-full bg-white/70" />

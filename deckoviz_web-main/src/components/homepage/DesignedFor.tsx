@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 
+
 /* ================= FLOATING NERVOUS SYSTEM BUTTON (LEFT near gallery) ================= */
 
 const FloatingNervousSystemButton: React.FC = () => {
@@ -14,7 +15,7 @@ const FloatingNervousSystemButton: React.FC = () => {
       <button
         onClick={() => navigate("/nervous-system")}
         className="
-          px-10 py-3
+          px-50 py-3
           rounded-[36px]
           bg-gradient-to-br from-green-400 via-olive-500 to-emerald-500
           text-white text-sm font-semibold
@@ -22,7 +23,7 @@ const FloatingNervousSystemButton: React.FC = () => {
           hover:shadow-[0_0_35px_rgba(217,70,239,0.85)]
           transition-all duration-500
           backdrop-blur-md
-          max-w-[340px]
+          max-w-[350px]
         "
       >
         <div className="flex items-center gap-3 text-left leading-tight">
@@ -37,7 +38,7 @@ const FloatingNervousSystemButton: React.FC = () => {
   );
 };
 
-const FloatingMinimalistButton: React.FC = () => { const navigate = useNavigate(); return ( <div className=" absolute right-6 top-24 z-20 animate-float " > <button onClick={() => navigate("/minimalist")} className=" px-6 py-4 rounded-[36px] bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500 text-white text-sm font-semibold shadow-[0_0_20px_rgba(168,85,247,0.7)] hover:shadow-[0_0_35px_rgba(236,72,153,0.9)] transition-all duration-500 backdrop-blur-md " > <div className="flex items-center gap-2 text-left leading-tight"> <span className="text-xl">📱</span> <div> <p className="text-xs opacity-90"> If This Is the Only Screen You Keep </p> <p className="text-[11px] font-light opacity-80"> — For the Minimalists </p> </div> </div> </button> </div> ); };
+const FloatingMinimalistButton: React.FC = () => { const navigate = useNavigate(); return ( <div className=" absolute right-6 top-15 z-20 animate-float " > <button onClick={() => navigate("/minimalist")} className=" px-6 py-4 rounded-[36px] bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500 text-white text-sm font-semibold shadow-[0_0_20px_rgba(168,85,247,0.7)] hover:shadow-[0_0_35px_rgba(236,72,153,0.9)] transition-all duration-500 backdrop-blur-md " > <div className="flex items-center gap-2 text-left leading-tight"> <span className="text-xl">📱</span> <div> <p className="text-xs opacity-90"> If This Is the Only Screen You Keep </p> <p className="text-[11px] font-light opacity-80"> — For the Minimalists </p> </div> </div> </button> </div> ); };
 // REFINED: Component for the scrolling image gallery
 const ScrollingImageGallery: React.FC = () => {
   const images = [
@@ -211,7 +212,7 @@ const DesignedFor: React.FC = () => {
     {title}
   </p>
 
-  <p className="text-sm text-green-500 leading-relaxed opacity-90">
+  <p className="text-sm text-slate-800 leading-relaxed opacity-90">
     {caption}
   </p>
 </div>

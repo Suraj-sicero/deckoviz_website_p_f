@@ -11,104 +11,64 @@ const Features: React.FC = () => {
 
   const mainFeatures = [
   {
-    title: "Your Personal Painter",
+    title: "Generative Art Engine",
     description:
-      "An AI artist that paints your dreams, moods, memories, and inner worlds into living art."
+      "Create deeply personal, evolving art from photos, sketches, music, memories, journals, poems, and even inner states."
   },
   {
-    title: "Reimagine Your Photos",
+    title: "Visual Storytelling",
     description:
-      "Turn everyday photos into timeless artworks in iconic and custom styles."
+      "Transform books, poems, stories, and ideas into narrated cinematic visual journeys and magical everyday moments."
   },
   {
-    title: "Iconic, Personalized Art",
+    title: "Poster & Vision Studio",
     description:
-      "Place yourself and your loved ones inside legendary masterpieces."
+      "Create affirmation boards, learning posters, moodboards, reminders, movie-style posters, and evolving vision walls."
   },
   {
-    title: "Living Animations",
+    title: "Moodscapes & Music",
     description:
-      "Bring still images to life with subtle motion, loops, and cinematic magic."
+      "Sync visuals with music to generate calming, energizing, romantic, or reflective multisensory environments."
   },
   {
-    title: "Dream Visualizer",
+    title: "Smart Photo Frame",
     description:
-      "See your dreams, thoughts, and subconscious landscapes as expressive art."
+      "Display memories as they are or reimagined artistically. Create intelligent photo montages for life moments."
   },
   {
-    title: "Sketch to Masterpiece",
+    title: "Rituals & Modes",
     description:
-      "Transform your sketches or your child’s drawings into gallery-worthy creations."
+      "Design daily, weekly, or monthly rituals with adaptive visuals that learn your routines and create intention."
   },
   {
-    title: "Prompt to Art",
+    title: "Vizzy Home Companion",
     description:
-      "Create stunning visuals from a thought, a chat, or your voice."
+      "Your intelligent home presence that curates art, stories, quotes, and experiences based on mood, time, and life."
   },
   {
-    title: "Innerscape Art",
+    title: "Social & Shared Creativity",
     description:
-      "Paint emotional and inner landscapes that reflect how you truly feel."
+      "Share collections with friends and family and co-create artworks together in real time."
   },
   {
-    title: "Dynamic Abstracts",
+    title: "Learning & Kids Experiences",
     description:
-      "Ever-evolving abstract art that subtly changes, like a living canvas."
+      "Visual learning with storytelling, posters, creative games, and educational explorations for kids and adults."
   },
   {
-    title: "Symbolic Art Engine",
+    title: "Games & Interactive Play",
     description:
-      "Personal symbols and meanings woven into generative, shifting artworks."
+      "Creative and social games built around imagination, storytelling, collaboration, and shared moments."
   },
   {
-    title: "Create Collections",
+    title: "Narrated Experiences",
     description:
-      "Curate themed journeys of art, music, and memories for every mood."
+      "Add voice narration to artworks, poems, meditations, learning journeys, and immersive story experiences."
   },
   {
-    title: "Multisensory Moodscapes",
+    title: "Marketplace & Personalization",
     description:
-      "Perfectly synced art, music, and soundscapes for deep immersion."
-  },
-  {
-    title: "Smart Display Engine",
-    description:
-      "Your wall adapts to time, weather, season, mood, and life moments."
-  },
-  {
-    title: "Daily Curator Vizzy",
-    description:
-      "Your personal AI curator that learns your taste and surprises you daily."
-  },
-  {
-    title: "Mood & Vibe Search",
-    description:
-      "Find art by feeling. Calm, joy, mystery, romance, wonder."
-  },
-  {
-    title: "Vision Boards",
-    description:
-      "Set your tone with evolving moodboards and intention walls."
-  },
-  {
-    title: "Ritual Moments",
-    description:
-      "Design morning, evening, family, couple, and life rituals with art and light."
-  },
-  {
-    title: "Storytelling for Kids",
-    description:
-      "Turn stories into magical visual journeys for learning and bonding."
-  },
-  {
-    title: "Co-Create Together",
-    description:
-      "Create art with your partner, family, and friends in shared moments."
-  },
-  {
-    title: "Halo Backlights",
-    description:
-      "Soft ambient glow that syncs with visuals and transforms your space."
+      "Discover art packs, trade creations, personalize dashboards, and build individual profiles for every household member."
   }
 ];
 

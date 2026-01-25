@@ -23,6 +23,70 @@ const getIconForFeature = (index: number) => {
 
   const mainFeatures: Feature[] = [
   {
+    title: "Generative Art Engine",
+    description:
+      "Create deeply personal, evolving art from photos, sketches, music, memories, journals, poems, and even inner states."
+  },
+  {
+    title: "Visual Storytelling",
+    description:
+      "Transform books, poems, stories, and ideas into narrated cinematic visual journeys and magical everyday moments."
+  },
+  {
+    title: "Poster & Vision Studio",
+    description:
+      "Create affirmation boards, learning posters, moodboards, reminders, movie-style posters, and evolving vision walls."
+  },
+  {
+    title: "Moodscapes & Music",
+    description:
+      "Sync visuals with music to generate calming, energizing, romantic, or reflective multisensory environments."
+  },
+  {
+    title: "Smart Photo Frame",
+    description:
+      "Display memories as they are or reimagined artistically. Create intelligent photo montages for life moments."
+  },
+  {
+    title: "Rituals & Modes",
+    description:
+      "Design daily, weekly, or monthly rituals with adaptive visuals that learn your routines and create intention."
+  },
+  {
+    title: "Vizzy Home Companion",
+    description:
+      "Your intelligent home presence that curates art, stories, quotes, and experiences based on mood, time, and life."
+  },
+  {
+    title: "Social & Shared Creativity",
+    description:
+      "Share collections with friends and family and co-create artworks together in real time."
+  },
+  {
+    title: "Learning & Kids Experiences",
+    description:
+      "Visual learning with storytelling, posters, creative games, and educational explorations for kids and adults."
+  },
+  {
+    title: "Games & Interactive Play",
+    description:
+      "Creative and social games built around imagination, storytelling, collaboration, and shared moments."
+  },
+  {
+    title: "Narrated Experiences",
+    description:
+      "Add voice narration to artworks, poems, meditations, learning journeys, and immersive story experiences."
+  },
+  {
+    title: "Marketplace & Personalization",
+    description:
+      "Discover art packs, trade creations, personalize dashboards, and build individual profiles for every household member."
+  }
+];
+
+
+const ADDITIONAL_FEATURES : Feature[] = [
+  {
     title: "Your Personal Painter",
     description:
       "An AI artist that paints your dreams, moods, memories, and inner worlds into living art."
@@ -121,10 +185,7 @@ const getIconForFeature = (index: number) => {
     title: "Halo Backlights",
     description:
       "Soft ambient glow that syncs with visuals and transforms your space."
-  }
-];
-
-const ADDITIONAL_FEATURES : Feature[] = [
+  },
   {
     title: "Animated Stories",
     description: "Turn photos and ideas into cinematic story sequences."
