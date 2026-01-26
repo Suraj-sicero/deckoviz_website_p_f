@@ -53,11 +53,15 @@ import MessageForVisitors from "./components/homepage/MessageForVisitors";
 import MinimalistScreen from "./components/homepage/MinimalistScreen";
 import InfinitePortal from "./components/homepage/InfinitePortal";
 import Partnership from "./components/Partnership"
+import CoreReading from "./components/CoreReading";
 
 import { i } from 'framer-motion/client';
 import Benefits from "./components/homepage/Benefits";
 import AllBenefits from "./components/homepage/AllBenefits";
 import Support from "./components/Support";
+import MoreInfo from "./components/MoreInfo";
+
+import StartHere from "./components/homepage/StartHere";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -129,6 +133,7 @@ useEffect(() => {
             <GuestReactionsTestimonials /> 
             <Youtube />
              <Referral />
+             <StartHere />
             <Pricing />
             <FAQ /> 
           </>
@@ -145,6 +150,7 @@ useEffect(() => {
   path="/homes-that-mean-something"
   element={<ForHomesThatMeanSomething />}
 />
+<Route path="/more-info" element={<MoreInfo />} />
 
 <Route path="/nervous-system" element={<NervousSystem />} />
 
@@ -180,6 +186,8 @@ useEffect(() => {
   path="/a-message-for-our-visitors"
   element={<MessageForVisitors />}
 />
+<Route path="/core-reading" element={<CoreReading />} />
+
 <Route path="/minimalist" element={<MinimalistScreen />} />
 
         <Route path="/all-features" element={<AllFeatures />} />

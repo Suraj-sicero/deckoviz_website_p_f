@@ -364,3 +364,14 @@
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
+
+@keyframes spark {
+  to {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0);
+  }
+}
+
+.animate-spark {
+  animation: spark 0.6s ease-out forwards;
+}
