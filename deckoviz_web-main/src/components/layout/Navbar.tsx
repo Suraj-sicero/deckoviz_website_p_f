@@ -3,6 +3,10 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { Menu, X, ChevronDown } from "lucide-react"
+import { Volume2, VolumeX } from "lucide-react";
+import { useAudio } from "../AudioProvider";
+
+
 
 // Button component with proper types
 interface ButtonProps {
@@ -188,7 +192,10 @@ const Navbar: React.FC = () => {
   const [currentPath, setCurrentPath] = useState("")
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState<boolean>(false)
   const [isWallLeaderDropdownOpen, setIsWallLeaderDropdownOpen] = useState<boolean>(false)
+  const { isPlaying, toggle } = useAudio();
 
+
+  
   useEffect(() => {
     setCurrentPath(window.location.pathname)
   }, [])
@@ -413,7 +420,7 @@ const Navbar: React.FC = () => {
 
           <div className="flex items-center justify-between h-16 md:pl-16">
             {/* Desktop Main Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-4">
               <div 
                 className="relative"
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
@@ -556,7 +563,7 @@ const Navbar: React.FC = () => {
             </a>
 
             {/* Right Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-4">
               <a
                 href="/blog"
                 className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
@@ -574,6 +581,30 @@ const Navbar: React.FC = () => {
               <Button variant="primary" onClick={handleBuyNow}>
                 Buy Now
               </Button>
+              <div className="relative group flex items-center">
+  <button
+    onClick={toggle}
+    className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm border border-gray-100
+               hover:bg-purple-50 hover:shadow-md transition-all duration-300
+               transform hover:scale-110"
+  >
+    {isPlaying ? (
+      <Volume2 size={20} className="text-[#8345EE]" />
+    ) : (
+      <VolumeX size={20} className="text-gray-400" />
+    )}
+  </button>
+
+  {/* Tooltip */}
+  <span
+    className="absolute right-full mr-3 whitespace-nowrap opacity-0 group-hover:opacity-100
+               transition-all duration-300 text-xs font-medium text-gray-700
+               bg-white px-3 py-1 rounded-full shadow border border-gray-100"
+  >
+    {isPlaying ? "Pause music" : "Play music"}
+  </span>
+</div>
+
             </div>
 
             {/* Mobile Menu Button with cool animation */}

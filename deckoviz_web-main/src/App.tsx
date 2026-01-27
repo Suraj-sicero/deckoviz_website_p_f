@@ -83,37 +83,7 @@ const ScrollToSectionOnHome: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-useEffect(() => {
-  if (!audioRef.current) {
-    audioRef.current = new Audio("/sounds/ambient.mp3");
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.25;
-  }
-
-  const startAudio = async () => {
-    try {
-      await audioRef.current?.play();
-      localStorage.setItem("deckovizAudioStarted", "true");
-    } catch (e) {
-      console.log("Autoplay blocked");
-    }
-
-    window.removeEventListener("click", startAudio);
-  };
-
-  // If already played before, resume automatically
-  if (localStorage.getItem("deckovizAudioStarted")) {
-    audioRef.current.play().catch(() => {});
-  } else {
-    window.addEventListener("click", startAudio);
-  }
-
-  return () => {
-    window.removeEventListener("click", startAudio);
-  };
-}, []);
 
   return (
     <Router>
