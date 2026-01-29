@@ -5,71 +5,119 @@ interface FeatureCardProps {
   title: string;
   description: string;
   index: number;
+  onClick: () => void;
 }
 
 const Features: React.FC = () => {
+const [activeFeature, setActiveFeature] = useState<any>(null);
 
   const mainFeatures = [
-  {
-    title: "Generative Art Engine",
-    description:
-      "Create deeply personal, evolving art from photos, sketches, music, memories, journals, poems, and even inner states."
-  },
-  {
-    title: "Visual Storytelling",
-    description:
-      "Transform books, poems, stories, and ideas into narrated cinematic visual journeys and magical everyday moments."
-  },
-  {
-    title: "Poster & Vision Studio",
-    description:
-      "Create affirmation boards, learning posters, moodboards, reminders, movie-style posters, and evolving vision walls."
-  },
-  {
-    title: "Moodscapes & Music",
-    description:
-      "Sync visuals with music to generate calming, energizing, romantic, or reflective multisensory environments."
-  },
-  {
-    title: "Smart Photo Frame",
-    description:
-      "Display memories as they are or reimagined artistically. Create intelligent photo montages for life moments."
-  },
-  {
-    title: "Rituals & Modes",
-    description:
-      "Design daily, weekly, or monthly rituals with adaptive visuals that learn your routines and create intention."
-  },
-  {
-    title: "Vizzy Home Companion",
-    description:
-      "Your intelligent home presence that curates art, stories, quotes, and experiences based on mood, time, and life."
-  },
-  {
-    title: "Social & Shared Creativity",
-    description:
-      "Share collections with friends and family and co-create artworks together in real time."
-  },
-  {
-    title: "Learning & Kids Experiences",
-    description:
-      "Visual learning with storytelling, posters, creative games, and educational explorations for kids and adults."
-  },
-  {
-    title: "Games & Interactive Play",
-    description:
-      "Creative and social games built around imagination, storytelling, collaboration, and shared moments."
-  },
-  {
-    title: "Narrated Experiences",
-    description:
-      "Add voice narration to artworks, poems, meditations, learning journeys, and immersive story experiences."
-  },
-  {
-    title: "Marketplace & Personalization",
-    description:
-      "Discover art packs, trade creations, personalize dashboards, and build individual profiles for every household member."
-  }
+{
+title: "Generative Art Engine",
+description: "Create deeply personal evolving art.",
+longDescription: `Create deeply personal art, endlessly.
+
+Deckoviz acts as your personal painter, dream visualizer, and creative engine, generating abstract, symbolic, emotional, and dynamic artworks and more.
+
+Turn photos, sketches, music, memories, books, journals, poems, or even inner states into living visuals that evolve over time.`
+},
+{
+title: "Visual Storytelling",
+description: "Stories brought to life visually.",
+longDescription: `Stories, brought to life.
+
+Transform books, poems, short stories, or ideas into rich visual sequences with narration, music, and cinematic flow.
+
+From bedtime stories for kids to visual audiobooks, storyboards, personalized short films, and story visualizations, Deckoviz turns everyday into magical moments.`
+},
+{
+title: "Poster & Vision Studio",
+description: "Design inspiring posters and vision boards.",
+longDescription: `Design posters that inspire you, guide your life, and add charm to your walls.
+
+Create quote posters, affirmation boards, vision boards, moodboards, learning posters, reminders, movie-style posters, or personal rules for living.
+
+Dynamic, beautiful, and context-aware, these posters evolve with your goals, moods, and seasons.`
+},
+{
+title: "Moodscapes & Music",
+description: "Create immersive visual music moods.",
+longDescription: `Enter the state you want to be in.
+
+Sync visuals with music to create calming, energizing, romantic, or reflective moodscapes.
+
+Add your own music or let Vizzy guide you into gratitude, focus, calm, or inspiration.`
+},
+{
+title: "Smart Photo Frame",
+description: "Bring memories beautifully alive.",
+longDescription: `Your memories, beautifully alive.
+
+Display your photos as they are or reimagined in artistic styles.
+
+Vizzy surfaces memories on birthdays, anniversaries, or unexpected moments and creates intelligent photo montages.`
+},
+{
+title: "Rituals & Modes",
+description: "Design meaningful daily rituals.",
+longDescription: `Design rhythm into your life.
+
+Set daily, weekly, or monthly rituals and use your DASP in modes like creativity, study, celebration, romance, energy, calm, gratitude, and more.
+
+Vizzy can even activate modes automatically.`
+},
+{
+title: "Vizzy Home Companion",
+description: "Your intelligent home presence.",
+longDescription: `Your home, curated intelligently.
+
+Vizzy learns your preferences, taste, lifestyle, beliefs, vibes, and family members.
+
+From Art of the Day to Memory Moments, Vizzy makes your home feel alive.`
+},
+{
+title: "Social & Shared Creativity",
+description: "Create art together in real time.",
+longDescription: `Art is better together.
+
+Share collections with friends and family, gift art, and co-create artworks in real time.
+
+Deckoviz transforms connection into shared creativity.`
+},
+{
+title: "Learning & Kids Experiences",
+description: "Magical visual learning for all.",
+longDescription: `Learning that feels magical.
+
+Storytelling, concept visualizers, educational posters, creative games, and interactive experiences.
+
+Designed to spark curiosity and imagination.`
+},
+{
+title: "Games & Interactive Play",
+description: "Creative play that connects people.",
+longDescription: `Play that connects, not consumes.
+
+Enjoy creative and generative games built around imagination, storytelling, collaboration, stimulating challenge, and shared moments.`
+},
+{
+title: "Narrated Experiences",
+description: "Stories with voice and emotion.",
+longDescription: `See, hear, and feel the story.
+
+Add narration to artworks, stories, poems, meditations, and visual journeys.
+
+Perfect for immersive storytelling.`
+},
+{
+title: "Marketplace & Personalization",
+description: "A living personalized ecosystem.",
+longDescription: `Experience a living ecosystem.
+
+Discover and trade art, personalize dashboards, and create profiles for every household member.
+
+It grows with you.`
+}
 ];
 
 {/*}
@@ -156,8 +204,8 @@ const Features: React.FC = () => {
     return icons[index % 6];
   };
 
-  const FeatureCard: React.FC<FeatureCardProps & { index: number }> = ({ title, description, index }) => (
-    <div className="group relative bg-white rounded-2xl p-8 pt-16 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, index, onClick }) => (
+   <div onClick={onClick} className="group relative bg-white rounded-2xl p-8 pt-16 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
       {/* Gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-blue-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
       
@@ -201,36 +249,75 @@ const Features: React.FC = () => {
       }}></div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
+        
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
             Features & <span className="bg-gradient-to-r from-[#793ae7] to-[#be37b1] bg-clip-text text-transparent">Highlights</span>
           </h1>
-          <p className="text-xl max-w-4xl mx-auto leading-relaxed">
-            <span className="text-gray-800">What can </span>
-            <span className="text-purple-600 font-semibold">Deckoviz</span>
-            <span className="text-gray-800"> do? A whole lot. And it's only getting </span>
-            <span className="text-indigo-600 font-semibold">better with time</span>
-            <span className="text-gray-800">, as we keep shipping new features in the pursuit of creating the greatest </span>
-            <span className="text-fuchsia-500 font-semibold">emotionally intelligent</span>
-            <span className="text-gray-800">, </span>
-            <span className="text-purple-600 font-semibold">dynamic</span>
-            <span className="text-gray-800">, and </span>
-            <span className="text-rose-500 font-semibold">personalized art experience</span>
-            <span className="text-gray-800">.</span>
+                  </div>
+        {/* Intro Card */}
+<div className="mb-20">
+  <div className="relative overflow-hidden rounded-[32px] p-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 shadow-2xl">
+
+    <div className="bg-white rounded-[30px] p-12 md:p-16 relative">
+
+      {/* soft glow blobs */}
+      <div className="absolute -top-24 -left-24 w-64 h-64 bg-purple-200 rounded-full blur-3xl opacity-40"></div>
+      <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40"></div>
+
+      <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+
+
+        <p className="text-lg text-gray-700 leading-relaxed">
+          A whole lot. We set out to build the ultimate art and storytelling
+          platform for living spaces — one that naturally creates abundance of
+          features and experiences. If a feature can deepen emotion, spark
+          imagination, personalize a moment, or turn a wall into a living
+          experience, it belongs here.
+        </p>
+
+        <p className="text-gray-600 leading-relaxed">
+          Today, Deckoviz includes{" "}
+          <span className="font-semibold text-purple-600">
+            hundreds of individual features
+          </span>
+          , spanning art, creation, storytelling, music, learning, rituals,
+          family moments, play, and ambient intelligence — organized into{" "}
+          <span className="font-semibold text-pink-500">12 core themes</span>.
+        </p>
+
+        <p className="text-gray-600 leading-relaxed">
+          Each theme represents a feature suite, bringing together related
+          capabilities and experiences so you can quickly understand how
+          Deckoviz fits into your life.
+        </p>
+
+        <div className="pt-6 border-t border-gray-100">
+          <p className="text-gray-700 italic">
+            Deckoviz is becoming a living platform — emotionally intelligent,
+            deeply personalized, and evolving every single week.
           </p>
         </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 
         {/* Main Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 gap-y-16 mb-12">
           {mainFeatures.map((feature, index) => (
-            <FeatureCard
-              key={index}
-              index={index}
-              title={feature.title}
-              description={feature.description}
-            />
-          ))}
+  <FeatureCard
+    key={index}
+    index={index}
+    title={feature.title}
+    description={feature.description}
+    onClick={() => setActiveFeature(feature)}
+  />
+))}
+
         </div>
 
         {/* See More Button */}
@@ -259,6 +346,71 @@ const Features: React.FC = () => {
 
 
         {/* Additional Features (Expandable) */}
+        {activeFeature && (
+<div
+  className="fixed inset-0 z-[999] bg-black/60 backdrop-blur-md flex items-center justify-center px-6"
+  onMouseMove={(e) => {
+    const spark = document.getElementById("spark");
+    if (spark) {
+      spark.style.left = `${e.clientX}px`;
+      spark.style.top = `${e.clientY}px`;
+    }
+  }}
+>
+
+{/* Firework sparkle */}
+<div
+  id="spark"
+  className="pointer-events-none fixed w-6 h-6 rounded-full
+             bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500
+             blur-sm animate-ping -translate-x-1/2 -translate-y-1/2"
+/>
+
+{/* Fancy Border Wrapper */}
+<div className="relative p-[3px] rounded-[32px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 animate-gradient">
+
+<div className="bg-white max-w-3xl w-full rounded-[28px] p-12 shadow-2xl relative overflow-hidden">
+
+{/* Decorative corners */}
+<div className="absolute top-3 left-3 w-6 h-6 border-l-4 border-t-4 border-purple-400 rounded-tl-xl"></div>
+<div className="absolute top-3 right-3 w-6 h-6 border-r-4 border-t-4 border-pink-400 rounded-tr-xl"></div>
+<div className="absolute bottom-3 left-3 w-6 h-6 border-l-4 border-b-4 border-indigo-400 rounded-bl-xl"></div>
+<div className="absolute bottom-3 right-3 w-6 h-6 border-r-4 border-b-4 border-purple-400 rounded-br-xl"></div>
+
+{/* Close */}
+<button
+onClick={() => setActiveFeature(null)}
+className="absolute top-6 right-6 text-xl text-gray-400 hover:text-black transition"
+>
+✕
+</button>
+
+{/* Heading */}
+<h2 className="text-4xl font-bold text-center mb-6 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
+{activeFeature.title}
+</h2>
+
+{/* Description */}
+<p className="whitespace-pre-line text-center text-gray-700 leading-relaxed text-lg max-w-2xl mx-auto">
+{activeFeature.longDescription}
+</p>
+
+{/* Back */}
+<div className="flex justify-center mt-10">
+<button
+onClick={() => setActiveFeature(null)}
+className="px-10 py-3 rounded-full bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-semibold hover:scale-105 transition"
+>
+← Back
+</button>
+</div>
+
+</div>
+</div>
+</div>
+)}
+
+
         
       </div>
     </div>

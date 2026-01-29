@@ -143,6 +143,109 @@ const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
                   <ConfigurationSteps formData={formData} />
                 </div>
                 */}
+
+                {/* ================= FULL PRE-CHECKOUT NOTES ================= */}
+<div className="group relative mt-12 mb-10">
+
+{/* Glow border */}
+<div className="absolute -inset-[2px] rounded-[32px]
+bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400
+opacity-70 blur-md group-hover:opacity-100 transition" />
+
+{/* Glass card */}
+<div className="
+relative rounded-[30px]
+bg-white/85 backdrop-blur-xl
+shadow-[0_30px_90px_rgba(168,85,247,0.25)]
+border border-white/50
+p-8 sm:p-10
+space-y-6
+text-[15px]
+leading-relaxed
+text-gray-700
+font-[450]
+">
+<h3 className="text-2xl font-semibold mb-2
+bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600
+bg-clip-text text-transparent">
+Pre-checkout notes ✨
+</h3>
+
+<div className="space-y-4">
+
+<p><strong>Free subscription included with every Deckoviz purchase</strong><br/>
+As a thank you for choosing Deckoviz, your device comes with a complimentary subscription based on screen size:</p>
+
+<ul className="list-disc pl-5 space-y-1">
+<li>43 inch Deckoviz – 2 months of Silver Sub</li>
+<li>55 inch Deckoviz DASP – 2 months of Gold Sub</li>
+<li>65 inch Deckoviz DASP – 2 months of Diamond Sub</li>
+<li>75 inch Deckoviz DASP – 3 months of Diamond Sub</li>
+<li>85 inch Deckoviz DASP – 4 months of Diamond Sub</li>
+<li>95 inch Deckoviz DASP – 6 months of Diamond Sub</li>
+</ul>
+
+<p><strong>Learn more about subscriptions</strong><br/>
+You can explore what each subscription tier includes on our Subscriptions page.</p>
+
+<p><strong>Lifetime subscriptions coming soon</strong><br/>
+We are actively working on lifetime subscription options and will share updates as they become available.</p>
+
+<p><strong>Order confirmation and delivery timeline</strong><br/>
+After placing your order, you will receive an order confirmation and receipt via email. Once we finalize any custom configuration and shipping details, you will receive a follow-up email within 24 hours confirming your estimated delivery date.</p>
+
+<p><strong>Bulk orders and special pricing</strong><br/>
+Bulk discounts are available and referenced on our landing pages. If you would like to place more than 5 orders, please email vizzy@deckoviz.com to access exclusive bulk pricing and discounted shipping rates.</p>
+
+<p><strong>Getting started with Deckoviz</strong><br/>
+After your Deckoviz DASP is delivered, you will receive a detailed onboarding email with a simple, step-by-step guide to help you get the most out of your device.</p>
+
+<p><strong>We’re here to help</strong><br/>
+If you have any questions at any point, or need assistance before or after your purchase, feel free to reach out to us at support@deckoviz.com. We’re always happy to help.</p>
+
+<p><strong>Shipping Costs</strong><br/>
+For now, shipping is estimated at £200–300, depending on the size of your Deckoviz unit.</p>
+
+<p>
+We’re actively working on optimizing our shipping options, and this range represents the maximum you’ll be charged. If the final shipping cost is lower, we’ll automatically refund the difference to your card. If it’s higher, we’ll cover it.
+</p>
+
+<p>
+We’ve set a range because we’re currently comparing multiple carriers to ensure you get the best possible rate.
+</p>
+
+<p>
+Thank you for your patience — and for joining the Deckoviz mission to make the world more wondrous, joyous, and beautiful.
+</p>
+
+<div className="border-t border-purple-200 pt-4 space-y-3">
+
+<p className="font-medium text-gray-900">
+A note for our early believers 💜
+</p>
+
+<p>
+If you’re excited about bringing Deckoviz into your home but feel that cost might be the only thing holding you back, we’d love to help.
+</p>
+
+<p>
+For our early customers, those who share our vision of what homes could be like, we’re happy to offer an additional discount when needed. Just email us at vizzy@deckoviz.com with the subject line “Discount”, and we’ll send you a personal discount code.
+</p>
+
+<p>
+We’re building Deckoviz for people who care about beauty, meaning, and living with intention. If that’s you, we’d hate for price alone to stand in the way of a little more magic in your space.
+</p>
+
+<p className="italic text-gray-600">
+— Team Deckoviz
+</p>
+
+</div>
+
+</div>
+</div>
+</div>
+
                 {/* Bottom Button - now scrollable */}
                 <div className="py-6 sm:py-8 flex justify-center px-4">
                   <button onClick={confirmOrder}

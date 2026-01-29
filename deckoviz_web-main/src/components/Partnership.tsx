@@ -30,7 +30,7 @@ const Partnership: React.FC = () => {
               {/* Top section */}
               <div className="space-y-3">
                 <p className="text-gray-900/80 text-sm font-semibold tracking-wide">
-                  Let’s Learn ✨
+                  Let’s Partner Up ✨
                 </p>
 
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-900 drop-shadow leading-tight">
@@ -262,101 +262,7 @@ const Partnership: React.FC = () => {
               {/* Divider */}
               <div className="my-12 h-px w-full bg-white/35" />
 
-              {/* Blurb Content */}
-              <section className="space-y-6">
-                <h2 className="text-lg sm:text-xl font-bold text-gray-900">
-                  Blurb Content, Pitch/Description Content
-                </h2>
-
-                <div className="space-y-2 text-[16px] sm:text-[18px] text-gray-800 text-justify">
-                  <p>Deckoviz pitch</p>
-                  <p>Problem</p>
-                  <p>Solution</p>
-                  <p>Product</p>
-                  <p>Mission</p>
-                </div>
-
-                <div className="space-y-7 text-[16px] sm:text-[18px] text-gray-800 leading-8 text-justify">
-                  <div>
-                    <h3 className="font-bold text-gray-900">Problem</h3>
-                    <p className="mt-2">
-                      We love art, and that’s why we fill our homes with it. It helps us make sense of the world.
-                    </p>
-                    <p className="mt-2">
-                      But art is limited in many ways - one is static art in homes stops having any effect on you after a few days
-                    </p>
-                    <p className="mt-2">
-                      Second is the most impactful art for you would be art displayed when you need it - art is most useful when
-                    </p>
-                    <p className="mt-2">
-                      Third is art that is displayed when you need or want it is much more
-                    </p>
-                  </div>
-
-                  <p>
-                    Art is also been underutilized as a means to deepen bonds between people. This was due to the expensive, and thus inaccessible, nature of it
-                  </p>
-
-                  <div>
-                    <h3 className="font-bold text-gray-900">Solution</h3>
-                    <p className="mt-2">
-                      Our lives are all about designing moments and spaces intentionally, curating moments.
-                    </p>
-                    <p className="mt-2">
-                      What we thought was to enhance the art experience, make it personalized, immersive, transformational, and connecting.
-                    </p>
-                    <p className="mt-2">
-                      With generative AI and LLMs that can understand you deeply, your values, desires, hopes, beliefs, states, moods, visual taste, your being, in a nutshell,
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-gray-900">Product</h3>
-                    <p className="mt-2">What we have built is</p>
-                    <p className="mt-2">It does quite a few things</p>
-                    <p className="mt-2">Firstly, our AI understands you, your</p>
-                    <p className="mt-2">Then, we have a suite of AI features to enhance</p>
-                    <p className="mt-2">
-                      Everyone loves the Smart TV experience - so we thought we’d blend the two, to create a device that can, when you so choose, double up as a smart TV
-                    </p>
-                    <p className="mt-2">Multisensory art</p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-gray-900">Mission</h3>
-                    <p className="mt-2">
-                      Our mission is to infuse people’s homes and spaces with the beauty, magic, creativity, dynamism, love, connection, joy, spark, that we all want more of in our lives.
-                    </p>
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-gray-900">Additional notes</h3>
-                    <p className="mt-2">
-                      Beyond homeowners, we also see restaurants, real estate developers, yoga studios, offices, therapist offices, wellness centers, etc being significant users for this product, in different ways, for different uses and features.
-                    </p>
-                  </div>
-
-                  <div className="pt-6">
-                    <h3 className="font-bold text-gray-900">Blurb</h3>
-                    <p className="mt-2">
-                      Deckoviz is a next-generation company innovating at the frontier of AI personalization, smart home decor, and intelligent space enhancement.
-                    </p>
-                    <p className="mt-2">
-                      We blend cutting-edge AI with beauty, intentionality, and emotional resonance to redefine how people experience personal and professional spaces.
-                    </p>
-                    <p className="mt-2">
-                      Our flagship product — an AI-powered Smart Art Frame — brings dynamic, evolving, and deeply personalized art and ambient experiences into homes, offices, hotels, and businesses worldwide.
-                    </p>
-                    <p className="mt-2">
-                      We believe technology should not just function - it should inspire awe, creativity, peace, and personal connection.
-                    </p>
-                    <p className="mt-2">
-                      Join us on our mission to transform everyday spaces into intentional, expressive, and extraordinary environments.
-                    </p>
-                  </div>
-                </div>
-              </section>
-
+             
               {/* Footer */}
               <div className="mt-12 flex items-center justify-between text-gray-500 text-xs">
                 <p>@deckoviz</p>

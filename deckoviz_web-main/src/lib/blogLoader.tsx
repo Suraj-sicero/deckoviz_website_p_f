@@ -13,6 +13,7 @@ export type MarkdownBlog = {
   size: "small" | "medium" | "large"
   description?: string
   content: string
+  enterpriseCategory?: string  
 }
 
 export async function loadBlogs(): Promise<MarkdownBlog[]> {
@@ -42,7 +43,9 @@ export async function loadBlogs(): Promise<MarkdownBlog[]> {
       image: String(data.image ?? ""),
       size: (data.size as "small" | "medium" | "large") ?? "small",
       description: String(data.description ?? ""),
-      content: body,
+enterpriseCategory: String(data.enterpriseCategory ?? "Core Industry Pages"),
+content: body,
+
     })
   }
 

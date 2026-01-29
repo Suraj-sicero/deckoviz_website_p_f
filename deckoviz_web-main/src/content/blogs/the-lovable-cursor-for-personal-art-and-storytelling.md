@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700"
 date: "November 28, 2025"
 readTime: "7 min read"
 pinned: true
-image: "https://media.licdn.com/dms/image/v2/D5612AQFcKXTiFdry2A/article-cover_image-shrink_720_1280/B56ZrLX8Y9HQAI-/0/1764348649155?e=1769644800&v=beta&t=Jzu3ciacBYgkdtyQCUmh0pc2dSJRujbTsgJfXRJTRvI"
+image: "/blogs/lovable.png"
 size: "medium"
 ---
 
