@@ -11,27 +11,63 @@ const FloatingNervousSystemButton: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute left-0 -top-20 z-20">
+    <div className="absolute left-0 -top-24 z-30 animate-float">
       <button
         onClick={() => navigate("/nervous-system")}
         className="
-          px-50 py-3
-          rounded-[36px]
-          bg-gradient-to-br from-green-400 via-olive-500 to-emerald-500
-          text-white text-sm font-semibold
-          shadow-[0_0_20px_rgba(139,92,246,0.65)]
-          hover:shadow-[0_0_35px_rgba(217,70,239,0.85)]
+          relative group
+          px-8 py-4
+          rounded-full
+          bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400
+          text-white
+          shadow-[0_15px_40px_rgba(34,197,94,0.45)]
+          hover:shadow-[0_25px_60px_rgba(16,185,129,0.7)]
           transition-all duration-500
-          backdrop-blur-md
-          max-w-[350px]
+          backdrop-blur-xl
+          max-w-[360px]
+          overflow-hidden
         "
       >
-        <div className="flex items-center gap-3 text-left leading-tight">
-          <span className="text-xl">🧠</span>
-          <div>
-            <p className="text-xs opacity-95">What If Your Home Had a</p>
-            <p className="text-[13px] font-bold">Nervous System?</p>
+
+        {/* glow aura */}
+        <div className="
+          absolute inset-0
+          bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300
+          opacity-40 blur-xl
+          group-hover:opacity-70
+          transition
+        " />
+
+        {/* shimmer */}
+        <div className="
+          absolute inset-0
+          bg-gradient-to-r from-transparent via-white/40 to-transparent
+          -translate-x-full group-hover:translate-x-full
+          transition-transform duration-1000
+        " />
+
+        <div className="relative flex items-center gap-3 text-left">
+
+          {/* Brain bubble */}
+          <div className="
+            w-10 h-10 rounded-full
+            bg-white/25 backdrop-blur-md
+            flex items-center justify-center
+            shadow-inner
+          ">
+            <span className="text-xl">🧠</span>
           </div>
+
+          {/* Text */}
+          <div className="leading-tight">
+            <p className="text-xs opacity-90 tracking-wide">
+              What If Your Home Had a
+            </p>
+            <p className="text-sm font-bold tracking-wide">
+              Nervous System?
+            </p>
+          </div>
+
         </div>
       </button>
     </div>

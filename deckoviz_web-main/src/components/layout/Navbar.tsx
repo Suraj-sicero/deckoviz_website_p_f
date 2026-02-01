@@ -1,52 +1,54 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect } from "react"
-import { Menu, X, ChevronDown } from "lucide-react"
-import { Volume2, VolumeX } from "lucide-react";
+import type React from "react";
+import { useState, useEffect } from "react";
+import { Menu, X, ChevronDown } from "lucide-react";
+import { Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
 import { useAudio } from "../AudioProvider";
-
-
 
 // Button component with proper types
 interface ButtonProps {
-  variant?: "primary" | "secondary"
-  className?: string
-  children: React.ReactNode
-  onClick?: () => void
+  variant?: "primary" | "secondary";
+  className?: string;
+  children: React.ReactNode;
+  onClick?: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", children, ...props }) => {
+const Button: React.FC<ButtonProps> = ({
+  variant = "primary",
+  className = "",
+  children,
+  ...props
+}) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg px-8 py-2.5 text-sm tracking-wide relative z-10"
+    "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg px-8 py-2.5 text-sm tracking-wide relative z-10";
 
   const variantClasses = {
-    primary:
-      "text-white transform hover:scale-[1.05] hover:-translate-y-1",
+    primary: "text-white transform hover:scale-[1.05] hover:-translate-y-1",
     secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
-  }
+  };
 
-  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`
+  const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;
 
-    if (variant === "primary") {
+  if (variant === "primary") {
     return (
       <div className="relative inline-block">
         {/* Animated Border Glow - Colors flow around perimeter */}
-        <div 
+        <div
           className="absolute -inset-0.5 rounded-lg opacity-100"
           style={{
             background: `linear-gradient(90deg, 
               #8A2BE2, #FF1493, #9932CC, #FF69B4, 
               #8A2BE2, #FF1493, #9932CC, #FF69B4, 
               #8A2BE2, #FF1493)`,
-            backgroundSize: '300% 100%',
-            filter: 'blur(2px)',
+            backgroundSize: "300% 100%",
+            filter: "blur(2px)",
             zIndex: -1,
-            animation: 'flowColors 3s linear infinite'
+            animation: "flowColors 3s linear infinite",
           }}
         />
-        
-        <button 
+
+        <button
           className={classes}
           style={{
             background: `linear-gradient(135deg, 
@@ -63,7 +65,7 @@ const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", ch
               0 0 25px rgba(138, 43, 226, 0.8),
               0 0 35px rgba(255, 20, 147, 0.6)
             `,
-            border: '1px solid rgba(186, 85, 211, 0.3)'
+            border: "1px solid rgba(186, 85, 211, 0.3)",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow = `
@@ -72,7 +74,7 @@ const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", ch
               inset 0 0 50px rgba(186, 85, 211, 0.6),
               0 0 20px rgba(138, 43, 226, 0.5),
               0 0 35px rgba(255, 20, 147, 0.4)
-            `
+            `;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = `
@@ -81,32 +83,34 @@ const Button: React.FC<ButtonProps> = ({ variant = "primary", className = "", ch
               inset 0 0 40px rgba(186, 85, 211, 0.4),
               0 0 15px rgba(138, 43, 226, 0.3),
               0 0 25px rgba(255, 20, 147, 0.2)
-            `
+            `;
           }}
           {...props}
         >
           {children}
         </button>
-        
+
         {/* Keyframes for color flow */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
             @keyframes flowColors {
               0% { background-position: 0% 0%; }
               100% { background-position: 100% 0%; }
             }
-          `
-        }} />
+          `,
+          }}
+        />
       </div>
-    )
+    );
   }
 
   return (
     <button className={classes} {...props}>
       {children}
     </button>
-  )
-}
+  );
+};
 
 // OPTIMIZATION 1: Preload Component for Images
 const ImagePreloader: React.FC = () => {
@@ -114,50 +118,52 @@ const ImagePreloader: React.FC = () => {
     // List of all images used in dropdowns
     const imagesToPreload = [
       "/images/hotelnavbar.png",
-      "/images/restaurantnavbar.png", 
+      "/images/restaurantnavbar.png",
       "/images/architectnavbar.png",
       "/images/officenavbar.png",
       "/images/realestatenavbar.png",
       "/images/therapistnavbar.png",
       "/images/schoolnavbar.png",
       "/images/retailnavbar.png",
-      "/images/newenterprisenavbar.png"
-    ]
+      "/images/newenterprisenavbar.png",
+    ];
 
     // Preload all images
-    imagesToPreload.forEach(src => {
-      const img = new Image()
-      img.src = src
+    imagesToPreload.forEach((src) => {
+      const img = new Image();
+      img.src = src;
       // Optional: Add to cache with specific loading attributes
-      img.loading = 'eager'
-    })
-  }, [])
+      img.loading = "eager";
+    });
+  }, []);
 
-  return null // This component doesn't render anything
-}
+  return null; // This component doesn't render anything
+};
 
 // OPTIMIZATION 2: Optimized Image Component with Fallback
 interface OptimizedImageProps {
-  src: string
-  alt: string
-  className?: string
-  fallbackColor?: string
+  src: string;
+  alt: string;
+  className?: string;
+  fallbackColor?: string;
 }
 
-const OptimizedImage: React.FC<OptimizedImageProps> = ({ 
-  src, 
-  alt, 
-  className = "", 
-  fallbackColor = "bg-gradient-to-br from-purple-100 to-purple-200" 
+const OptimizedImage: React.FC<OptimizedImageProps> = ({
+  src,
+  alt,
+  className = "",
+  fallbackColor = "bg-gradient-to-br from-purple-100 to-purple-200",
 }) => {
-  const [imageLoaded, setImageLoaded] = useState(false)
-  const [imageError, setImageError] = useState(false)
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   return (
     <div className={`relative ${className}`}>
       {/* Fallback/Loading state */}
       {(!imageLoaded || imageError) && (
-        <div className={`absolute inset-0 ${fallbackColor} rounded-lg flex items-center justify-center`}>
+        <div
+          className={`absolute inset-0 ${fallbackColor} rounded-lg flex items-center justify-center`}
+        >
           {imageError ? (
             // Error state - show first letter of alt text
             <span className="text-white font-semibold text-xs">
@@ -169,13 +175,13 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
           )}
         </div>
       )}
-      
+
       {/* Actual image */}
-      <img 
-        src={src} 
+      <img
+        src={src}
         alt={alt}
         className={`w-full h-full object-cover rounded-lg transition-opacity duration-200 ${
-          imageLoaded ? 'opacity-100' : 'opacity-0'
+          imageLoaded ? "opacity-100" : "opacity-0"
         }`}
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageError(true)}
@@ -183,43 +189,42 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
         decoding="async" // Non-blocking decode
       />
     </div>
-  )
-}
+  );
+};
 
 const Navbar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [isScrolled, setIsScrolled] = useState<boolean>(false)
-  const [currentPath, setCurrentPath] = useState("")
-  const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] = useState<boolean>(false)
-  const [isWallLeaderDropdownOpen, setIsWallLeaderDropdownOpen] = useState<boolean>(false)
-  const { isPlaying, toggle } = useAudio();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const [currentPath, setCurrentPath] = useState("");
+  const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] =
+    useState<boolean>(false);
+  const [isWallLeaderDropdownOpen, setIsWallLeaderDropdownOpen] =
+    useState<boolean>(false);
+  const { isPlaying, toggle, next, prev } = useAudio();
 
-
-  
   useEffect(() => {
-    setCurrentPath(window.location.pathname)
-  }, [])
+    setCurrentPath(window.location.pathname);
+  }, []);
 
   useEffect(() => {
     const handleScroll = (): void => {
-      setIsScrolled(window.scrollY > 0)
-    }
+      setIsScrolled(window.scrollY > 0);
+    };
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  
   const handleBuyNow = (): void => {
-    window.location.href = "/place-order"
-    console.log("Buy Now clicked")
-  }
+    window.location.href = "/place-order";
+    console.log("Buy Now clicked");
+  };
 
   const handleBusinessNavigation = (route: string): void => {
-    window.location.href = route
-    setIsBusinessDropdownOpen(false)
-    setIsOpen(false)
-  }
+    window.location.href = route;
+    setIsBusinessDropdownOpen(false);
+    setIsOpen(false);
+  };
 
   // OPTIMIZATION 3: Move business categories to top level to avoid recreation
   const businessCategories = [
@@ -229,7 +234,7 @@ const Navbar: React.FC = () => {
       image: "/images/hotelnavbar.png",
       gradient: "from-blue-500 to-cyan-500",
       route: "/deckoviz-for-hotels",
-      fallbackColor: "bg-gradient-to-br from-blue-100 to-cyan-100"
+      fallbackColor: "bg-gradient-to-br from-blue-100 to-cyan-100",
     },
     {
       title: "Restaurants & Cafés",
@@ -237,16 +242,16 @@ const Navbar: React.FC = () => {
       image: "/images/restaurantnavbar.png",
       gradient: "from-orange-500 to-red-500",
       route: "/deckoviz-for-restaurants",
-      fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100"
+      fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100",
     },
-    
+
     {
       title: "Architects & Designers",
       description: "Design living spaces",
       image: "/images/architectnavbar.png",
       gradient: "from-purple-500 to-pink-500",
       route: "/deckoviz-for-architects",
-      fallbackColor: "bg-gradient-to-br from-purple-100 to-pink-100"
+      fallbackColor: "bg-gradient-to-br from-purple-100 to-pink-100",
     },
     {
       title: "Offices & Workspaces",
@@ -254,7 +259,7 @@ const Navbar: React.FC = () => {
       image: "/images/officenavbar.png",
       gradient: "from-green-500 to-emerald-500",
       route: "/deckoviz-for-offices",
-      fallbackColor: "bg-gradient-to-br from-green-100 to-emerald-100"
+      fallbackColor: "bg-gradient-to-br from-green-100 to-emerald-100",
     },
     {
       title: "Real Estate",
@@ -262,7 +267,7 @@ const Navbar: React.FC = () => {
       image: "/images/realestatenavbar.png",
       gradient: "from-indigo-500 to-blue-500",
       route: "/deckoviz-for-realestate",
-      fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100"
+      fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
     },
     {
       title: "Wellness & Therapy",
@@ -270,7 +275,7 @@ const Navbar: React.FC = () => {
       image: "/images/therapistnavbar.png",
       gradient: "from-teal-500 to-cyan-500",
       route: "/deckoviz-for-therapists",
-      fallbackColor: "bg-gradient-to-br from-teal-100 to-cyan-100"
+      fallbackColor: "bg-gradient-to-br from-teal-100 to-cyan-100",
     },
     {
       title: "Schools & Learning",
@@ -278,7 +283,7 @@ const Navbar: React.FC = () => {
       image: "/images/schoolnavbar.png",
       gradient: "from-yellow-500 to-orange-500",
       route: "/deckoviz-for-schools",
-      fallbackColor: "bg-gradient-to-br from-yellow-100 to-orange-100"
+      fallbackColor: "bg-gradient-to-br from-yellow-100 to-orange-100",
     },
     {
       title: "Retail & Showrooms",
@@ -286,26 +291,31 @@ const Navbar: React.FC = () => {
       image: "/images/retailnavbar.png",
       gradient: "from-pink-500 to-rose-500",
       route: "/deckoviz-for-retailstores",
-      fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100"
-    },{
+      fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100",
+    },
+    {
       title: "Enterprises",
       description: "Crafting exquisite spaces",
       image: "/images/newenterpriselogo.png",
       gradient: "from-pink-500 to-rose-500",
       route: "/deckoviz-for-enterprises",
-      fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100"
-    }
-  ]
+      fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100",
+    },
+  ];
 
   // Separate Enterprise from other categories for custom layout
-  const enterpriseCategory = businessCategories.find(cat => cat.title === "Enterprises");
-  const otherCategories = businessCategories.filter(cat => cat.title !== "Enterprises");
+  const enterpriseCategory = businessCategories.find(
+    (cat) => cat.title === "Enterprises",
+  );
+  const otherCategories = businessCategories.filter(
+    (cat) => cat.title !== "Enterprises",
+  );
 
   return (
     <>
       {/* OPTIMIZATION 1: Add Image Preloader */}
       <ImagePreloader />
-      
+
       <nav
         className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"}`}
       >
@@ -321,11 +331,11 @@ const Navbar: React.FC = () => {
             </button>
 
             {/* Wall Of Love & Leaderboard Dropdown - Enhanced Design */}
-            <div 
+            <div
               className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
-                isWallLeaderDropdownOpen 
-                  ? 'opacity-100 visible translate-y-0' 
-                  : 'opacity-0 invisible -translate-y-4'
+                isWallLeaderDropdownOpen
+                  ? "opacity-100 visible translate-y-0"
+                  : "opacity-0 invisible -translate-y-4"
               }`}
               onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
@@ -333,10 +343,14 @@ const Navbar: React.FC = () => {
               <div className="w-64 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-[#8345EE]/10 via-[#7239D3]/5 to-[#6B2FD6]/10 px-4 py-3 border-b border-gray-100">
-                  <h3 className="text-sm font-semibold text-gray-800">Community</h3>
-                  <p className="text-xs text-gray-600 mt-1">Connect with our community</p>
+                  <h3 className="text-sm font-semibold text-gray-800">
+                    Community
+                  </h3>
+                  <p className="text-xs text-gray-600 mt-1">
+                    Connect with our community
+                  </p>
                 </div>
-                
+
                 {/* Menu Items */}
                 <div className="p-3 space-y-1">
                   <a
@@ -344,8 +358,21 @@ const Navbar: React.FC = () => {
                     className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50"
                   >
                     <div className="w-6 h-6 flex items-center justify-center">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          fill="none"
+                        />
                       </svg>
                     </div>
                     <div className="flex-1">
@@ -357,21 +384,57 @@ const Navbar: React.FC = () => {
                       </p>
                     </div>
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7 17L17 7M17 7H7M17 7V17"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
                   </a>
-                  
+
                   <a
                     href="/Leaderboard"
                     className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-orange-50"
                   >
                     <div className="w-6 h-6 flex items-center justify-center">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M14 9h1.5a2.5 2.5 0 0 0 0-5H14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M6 9v12l6-3 6 3V9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M14 9h1.5a2.5 2.5 0 0 0 0-5H14"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M6 9v12l6-3 6 3V9"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
                     <div className="flex-1">
@@ -383,20 +446,46 @@ const Navbar: React.FC = () => {
                       </p>
                     </div>
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7 17L17 7M17 7H7M17 7V17"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
                   </a>
-                  
+
                   <a
                     href="/contact"
                     className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50"
                   >
                     <div className="w-6 h-6 flex items-center justify-center">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="2"/>
-                        <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="2"/>
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
+                        <polyline
+                          points="22,6 12,13 2,6"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
                       </svg>
                     </div>
                     <div className="flex-1">
@@ -408,8 +497,20 @@ const Navbar: React.FC = () => {
                       </p>
                     </div>
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7 17L17 7M17 7H7M17 7V17"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
                       </svg>
                     </div>
                   </a>
@@ -421,35 +522,39 @@ const Navbar: React.FC = () => {
           <div className="flex items-center justify-between h-16 md:pl-16">
             {/* Desktop Main Navigation */}
             <div className="hidden md:flex items-center space-x-4">
-              <div 
+              <div
                 className="relative"
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
                 onMouseLeave={() => setIsBusinessDropdownOpen(false)}
               >
-                <button
-                  className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group flex items-center space-x-1"
-                >
+                <button className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group flex items-center space-x-1">
                   <span>Deckoviz For Businesses</span>
-                  <ChevronDown 
-                    size={16} 
-                    className={`transition-transform duration-300 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`}
+                  <ChevronDown
+                    size={16}
+                    className={`transition-transform duration-300 ${isBusinessDropdownOpen ? "rotate-180" : ""}`}
                   />
                   <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
                 </button>
 
                 {/* Beautiful Dropdown with Optimized Images */}
-                <div className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
-                  isBusinessDropdownOpen 
-                    ? 'opacity-100 visible translate-y-0' 
-                    : 'opacity-0 invisible -translate-y-4'
-                }`}>
+                <div
+                  className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
+                    isBusinessDropdownOpen
+                      ? "opacity-100 visible translate-y-0"
+                      : "opacity-0 invisible -translate-y-4"
+                  }`}
+                >
                   <div className="w-[640px] bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden flex flex-col">
                     {/* Header */}
                     <div className="bg-gradient-to-r from-[#8345EE]/10 via-[#7239D3]/5 to-[#6B2FD6]/10 px-6 py-4 border-b border-gray-100">
-                      <h3 className="text-lg font-semibold text-gray-800">Choose Your Industry</h3> 
-                      <p className="text-sm text-gray-600 mt-1">Discover how Deckoviz transforms your space </p>
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        Choose Your Industry
+                      </h3>
+                      <p className="text-sm text-gray-600 mt-1">
+                        Discover how Deckoviz transforms your space{" "}
+                      </p>
                     </div>
-                    
+
                     {/* Scrollable content area */}
                     <div className="overflow-y-auto max-h-[60vh]">
                       <div className="p-6">
@@ -458,17 +563,22 @@ const Navbar: React.FC = () => {
                           {otherCategories.map((category, index) => (
                             <button
                               key={index}
-                              onClick={() => handleBusinessNavigation(category.route)}
+                              onClick={() =>
+                                handleBusinessNavigation(category.route)
+                              }
                               className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden"
                               style={{
-                                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)'
+                                background:
+                                  "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)",
                               }}
                             >
-                              <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}></div>
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}
+                              ></div>
                               <div className="relative z-10 flex items-start space-x-3">
                                 <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
-                                  <OptimizedImage 
-                                    src={category.image} 
+                                  <OptimizedImage
+                                    src={category.image}
                                     alt={category.title}
                                     className="w-8 h-8"
                                     fallbackColor={category.fallbackColor}
@@ -484,8 +594,20 @@ const Navbar: React.FC = () => {
                                 </div>
                               </div>
                               <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M7 17L17 7M17 7H7M17 7V17"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
                                 </svg>
                               </div>
                             </button>
@@ -497,20 +619,29 @@ const Navbar: React.FC = () => {
                           <div className="flex justify-center mt-3">
                             <button
                               key="enterprises"
-                              onClick={() => handleBusinessNavigation(enterpriseCategory.route)}
+                              onClick={() =>
+                                handleBusinessNavigation(
+                                  enterpriseCategory.route,
+                                )
+                              }
                               className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden w-full max-w-xs"
                               style={{
-                                background: 'linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)'
+                                background:
+                                  "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)",
                               }}
                             >
-                              <div className={`absolute inset-0 bg-gradient-to-br ${enterpriseCategory.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}></div>
+                              <div
+                                className={`absolute inset-0 bg-gradient-to-br ${enterpriseCategory.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}
+                              ></div>
                               <div className="relative z-10 flex items-start space-x-3">
                                 <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
-                                  <OptimizedImage 
-                                    src={enterpriseCategory.image} 
+                                  <OptimizedImage
+                                    src={enterpriseCategory.image}
                                     alt={enterpriseCategory.title}
                                     className="w-8 h-8"
-                                    fallbackColor={enterpriseCategory.fallbackColor}
+                                    fallbackColor={
+                                      enterpriseCategory.fallbackColor
+                                    }
                                   />
                                 </div>
                                 <div className="flex-1 min-w-0">
@@ -523,8 +654,20 @@ const Navbar: React.FC = () => {
                                 </div>
                               </div>
                               <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M7 17L17 7M17 7H7M17 7V17"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  />
                                 </svg>
                               </div>
                             </button>
@@ -532,17 +675,24 @@ const Navbar: React.FC = () => {
                         )}
                       </div>
                     </div>
-                    
+
                     {/* Footer */}
                     <div className="bg-gray-50/50 px-6 py-4 border-t border-gray-100">
                       <p className="text-xs text-gray-500 text-center">
-                        Can't find your industry? <a href="/contact" className="text-[#8345EE] hover:underline cursor-pointer font-medium">Contact Us</a> for custom solutions.
+                        Can't find your industry?{" "}
+                        <a
+                          href="/contact"
+                          className="text-[#8345EE] hover:underline cursor-pointer font-medium"
+                        >
+                          Contact Us
+                        </a>{" "}
+                        for custom solutions.
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               <a
                 href="/pricing"
                 className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
@@ -554,10 +704,14 @@ const Navbar: React.FC = () => {
 
             {/* Center Logo with Comfortaa font */}
             <a href="/" className="flex items-center">
-              <img src="/images/deckovizlogo.png" alt="Deckoviz Logo" className="h-12 w-12 rounded-full object-contain mt-1" />
-              <img 
-                src="/images/deckospacelabs.png" 
-                alt="Space Labs Logo" 
+              <img
+                src="/images/deckovizlogo.png"
+                alt="Deckoviz Logo"
+                className="h-12 w-12 rounded-full object-contain mt-1"
+              />
+              <img
+                src="/images/deckospacelabs.png"
+                alt="Space Labs Logo"
                 className="h-14 w-auto object-contain ml-1 mb-2"
               />
             </a>
@@ -581,12 +735,20 @@ const Navbar: React.FC = () => {
               <Button variant="primary" onClick={handleBuyNow}>
                 Buy Now
               </Button>
-              <div className="relative group flex items-center">
+           <div className="flex items-center space-x-2">
+
+  {/* Previous */}
+  <button
+    onClick={prev}
+    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
+  >
+    <SkipBack size={18} className="text-[#8345EE]" />
+  </button>
+
+  {/* Play / Pause */}
   <button
     onClick={toggle}
-    className="p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm border border-gray-100
-               hover:bg-purple-50 hover:shadow-md transition-all duration-300
-               transform hover:scale-110"
+    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
   >
     {isPlaying ? (
       <Volume2 size={20} className="text-[#8345EE]" />
@@ -595,14 +757,14 @@ const Navbar: React.FC = () => {
     )}
   </button>
 
-  {/* Tooltip */}
-  <span
-    className="absolute right-full mr-3 whitespace-nowrap opacity-0 group-hover:opacity-100
-               transition-all duration-300 text-xs font-medium text-gray-700
-               bg-white px-3 py-1 rounded-full shadow border border-gray-100"
+  {/* Next */}
+  <button
+    onClick={next}
+    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
   >
-    {isPlaying ? "Pause music" : "Play music"}
-  </span>
+    <SkipForward size={18} className="text-[#8345EE]" />
+  </button>
+
 </div>
 
             </div>
@@ -631,27 +793,31 @@ const Navbar: React.FC = () => {
           className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${
             isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
           }`}
-          style={{ 
-            maxHeight: isOpen ? 'calc(100vh - 4rem)' : '0',
-            overflowY: 'auto'
+          style={{
+            maxHeight: isOpen ? "calc(100vh - 4rem)" : "0",
+            overflowY: "auto",
           }}
         >
           <div className="px-4 py-6 space-y-0">
             {/* Mobile Business Dropdown */}
             <div className="mb-4">
               <button
-                onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
+                onClick={() =>
+                  setIsBusinessDropdownOpen(!isBusinessDropdownOpen)
+                }
                 className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-purple-50 flex items-center justify-between"
               >
                 <span>Deckoviz For Business</span>
-                <ChevronDown 
-                  size={16} 
-                  className={`transition-transform duration-200 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`}
+                <ChevronDown
+                  size={16}
+                  className={`transition-transform duration-200 ${isBusinessDropdownOpen ? "rotate-180" : ""}`}
                 />
               </button>
-              
+
               {/* Business Categories Dropdown */}
-              <div className={`overflow-hidden transition-all duration-200 ${isBusinessDropdownOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              <div
+                className={`overflow-hidden transition-all duration-200 ${isBusinessDropdownOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}
+              >
                 <div className="pl-4 space-y-1 mt-2 max-h-[350px] overflow-y-auto">
                   {businessCategories.map((category, index) => (
                     <button
@@ -661,23 +827,27 @@ const Navbar: React.FC = () => {
                     >
                       <div className="w-6 h-6 flex-shrink-0">
                         {/* OPTIMIZATION 2: Use OptimizedImage in mobile too */}
-                        <OptimizedImage 
-                          src={category.image} 
+                        <OptimizedImage
+                          src={category.image}
                           alt={category.title}
                           className="w-6 h-6"
                           fallbackColor={category.fallbackColor}
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">{category.title}</div>
-                        <p className="text-xs text-gray-500 truncate">{category.description}</p>
+                        <div className="font-medium truncate">
+                          {category.title}
+                        </div>
+                        <p className="text-xs text-gray-500 truncate">
+                          {category.description}
+                        </p>
                       </div>
                     </button>
                   ))}
                 </div>
               </div>
             </div>
-            
+
             {/* Other Navigation Items */}
             <div className="border-t border-gray-200 pt-4 space-y-0">
               <a
@@ -729,7 +899,11 @@ const Navbar: React.FC = () => {
               </a>
 
               <div className="pt-4">
-                <Button variant="primary" className="w-full" onClick={handleBuyNow}>
+                <Button
+                  variant="primary"
+                  className="w-full"
+                  onClick={handleBuyNow}
+                >
                   Buy Now
                 </Button>
               </div>
@@ -738,7 +912,7 @@ const Navbar: React.FC = () => {
         </div>
       </nav>
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

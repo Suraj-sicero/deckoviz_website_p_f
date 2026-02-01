@@ -73,8 +73,9 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* SUPPORT */}
-          <SitemapBox title="Support" emoji="🛠️" to="/FAQ">
-            <BoxSection title="FAQ">
+<SitemapBox title="Support" emoji="🛠️" to="/FAQ">
+  <BoxSection title="FAQ" to="/FAQ">
+
               <li>General Questions</li>
               <li>Technical Support</li>
               <li>Billing Questions</li>
@@ -103,6 +104,7 @@ const Sitemap: React.FC = () => {
             </BoxSection>
           </SitemapBox>
 
+
           {/* HOME */}
           <SitemapBox title="Home" emoji="🏠" to="/AboutDeckoviz">
             <SimpleItem>Hero Header Section</SimpleItem>
@@ -113,13 +115,15 @@ const Sitemap: React.FC = () => {
 
           {/* LEGAL */}
           <SitemapBox title="Legal" emoji="⚖️" to="/PrivacyPolicy">
-            <SimpleItem>Privacy Policy</SimpleItem>
-            <SimpleItem>Terms of Service</SimpleItem>
+              <BoxSection title="Privacy Policy" to="/PrivacyPolicy" />
+              <BoxSection title="Terms of Service" to="/TermsOfService" />
             <SimpleItem>Cookie Policy</SimpleItem>
             <SimpleItem>Community Guidelines</SimpleItem>
             <SimpleItem>Accessibility Statement</SimpleItem>
-            <SimpleItem>Return Policy</SimpleItem>
-          </SitemapBox>
+            <BoxSection title="Return Policy" to="/ReturnPolicy" />
+  <BoxSection title="Shipping Policy" to="/ShippingPolicy" />
+</SitemapBox>
+
 
           {/* BLOG & RESOURCES */}
           <SitemapBox title="Blog & Resources" emoji="📝" to="/Blog">
@@ -153,7 +157,8 @@ const Sitemap: React.FC = () => {
         {/* SECOND ROW */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16">
           {/* ORDER */}
-          <SitemapBox title="Order" emoji="🛒" to="/Pricing">
+<SitemapBox title="Order" emoji="🛒" to="/Pricing">
+
             <SimpleItem>Navbar</SimpleItem>
             <SimpleItem>Pricing Tiers</SimpleItem>
             <SimpleItem>Customize Your Order</SimpleItem>
@@ -164,7 +169,10 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* ABOUT */}
-          <SitemapBox title="About Us" emoji="ℹ️" to="/about-deckoviz">
+{/* ABOUT */}
+<SitemapBox title="About Us" emoji="ℹ️" to="/AboutDeckoviz">
+
+
             <SimpleItem>Navbar</SimpleItem>
 
             <BoxSection title="About Deckoviz">
@@ -232,8 +240,9 @@ const Sitemap: React.FC = () => {
           </SitemapBox>
 
           {/* AI TECH */}
-          <SitemapBox title="AI Technology" emoji="🤖" to="/Features">
-            <BoxSection title="AI Capabilities">
+<SitemapBox title="AI Technology" emoji="🤖" to="/Features">
+  <BoxSection title="AI Capabilities" to="/Features">
+
               <li>Machine Learning Features</li>
               <li>Image Recognition</li>
               <li>Smart Curation</li>
@@ -329,13 +338,24 @@ const SitemapBox = ({
 
 const BoxSection = ({
   title,
+  to,
   children,
 }: {
   title: string;
+  to?: string;
   children?: React.ReactNode;
 }) => (
   <div className="bg-white/70 rounded-2xl px-5 py-4">
-    <h3 className="font-medium mb-2 text-gray-800">{title}</h3>
+    {to ? (
+      <Link
+        to={to}
+        className="block font-medium mb-2 text-gray-800 hover:text-purple-600 transition"
+      >
+        {title}
+      </Link>
+    ) : (
+      <h3 className="font-medium mb-2 text-gray-800">{title}</h3>
+    )}
 
     {children && (
       <ul className="text-sm text-gray-600 space-y-1 leading-relaxed">

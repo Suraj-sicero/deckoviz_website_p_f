@@ -1,98 +1,245 @@
-import React from 'react';
+import React from "react";
 
 const TermsOfService: React.FC = () => {
   return (
-    <section className="section-padding bg-white">
-      <div className="container-custom">
-        <div className="max-w-4xl mx-auto">
+    <section className="relative py-24 bg-gradient-to-br from-pink-500 via-purple-600 to-fuchsia-600 overflow-hidden">
+      {/* Lock Pattern */}
+      <div className="absolute inset-0 pointer-events-none z-0 grid grid-cols-12 gap-8 opacity-20 text-white text-3xl">
+        {Array.from({ length: 400 }).map((_, i) => (
+          <span key={i} className="flex justify-center">
+            📃
+          </span>
+        ))}
+      </div>
+
+      {/* Glow blobs */}
+      <div className="absolute -top-40 -left-40 w-96 h-96 bg-pink-400 rounded-full blur-3xl opacity-40" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-400 rounded-full blur-3xl opacity-40" />
+
+      <div className="container-custom relative z-10">
+        <div className="relative max-w-5xl mx-auto bg-white/50 backdrop-blur-2xl rounded-3xl shadow-2xl p-14 border border-white/40">
+          {/* Big Lock */}
+          <div className="absolute inset-0 flex justify-center items-center opacity-10 pointer-events-none">
+            <span className="text-[300px]">🔐</span>
+          </div>
+
           <h1 className="text-4xl font-bold mb-8 text-center">
             Terms of <span className="text-primary-600">Service</span>
           </h1>
-          
-          <div className="prose prose-lg max-w-none">
-            <p className="text-gray-600 mb-8">
-              Last updated: {new Date().toLocaleDateString()}
+
+          <div className="prose prose-lg max-w-none relative z-10 text-justify">
+            <p>
+              <strong>Last updated:</strong> 31st January, 2026
             </p>
-
-            <div className="space-y-8">
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">1. Agreement to Terms</h2>
-                <p className="text-gray-600">
-                  By accessing or using Deckoviz's products and services, you agree to be bound by these Terms of Service. If you disagree with any part of these terms, you may not access our services.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">2. Use of Services</h2>
-                <div className="space-y-4">
-                  <p className="text-gray-600">
-                    Our services are designed for personal and commercial use, subject to the following conditions:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600">
-                    <li>You must be at least 18 years old to use our services</li>
-                    <li>You must provide accurate and complete information</li>
-                    <li>You are responsible for maintaining the security of your account</li>
-                    <li>You agree not to misuse or attempt to manipulate our services</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">3. Intellectual Property</h2>
-                <p className="text-gray-600">
-                  All content, features, and functionality of our services, including but not limited to text, graphics, logos, images, and software, are the exclusive property of Deckoviz and are protected by international copyright, trademark, and other intellectual property laws.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">4. User Content</h2>
-                <p className="text-gray-600">
-                  By using our services, you retain ownership of any content you create or upload. However, you grant Deckoviz a worldwide, non-exclusive license to use, reproduce, and display your content in connection with providing and improving our services.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">5. Payment Terms</h2>
-                <div className="space-y-4">
-                  <p className="text-gray-600">
-                    For paid services:
-                  </p>
-                  <ul className="list-disc pl-6 text-gray-600">
-                    <li>All payments are processed securely through our payment providers</li>
-                    <li>Prices are subject to change with notice</li>
-                    <li>Subscriptions will automatically renew unless cancelled</li>
-                    <li>Refunds are subject to our refund policy</li>
-                  </ul>
-                </div>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">6. Limitation of Liability</h2>
-                <p className="text-gray-600">
-                  Deckoviz shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use our services.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">7. Changes to Terms</h2>
-                <p className="text-gray-600">
-                  We reserve the right to modify these terms at any time. We will notify users of any material changes via email or through our website.
-                </p>
-              </section>
-
-              <section>
-                <h2 className="text-2xl font-semibold mb-4">8. Contact Information</h2>
-                <p className="text-gray-600">
-                  For questions about these Terms of Service, please contact us at:
-                </p>
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                  <p className="text-gray-600">
-                    Email: legal@deckoviz.com<br />
-                    Address: 123 Innovation Street, Tech Valley, CA 94043
-                  </p>
-                </div>
-              </section>
-            </div>
+            <p>
+              These Terms of Service (“Terms”) govern your access to and use of
+              Deckoviz’s website, applications, hardware products, software, and
+              services (collectively, the “Services”).
+            </p>
+            <p>
+              By accessing or using Deckoviz, you agree to these Terms. If you
+              do not agree, do not use the Services.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>1. Who Can Use Deckoviz</h2>
+            <p>
+              You must be at least 13 years old, or the minimum age required by
+              law in your jurisdiction, to use Deckoviz.
+            </p>
+            <p>
+              If you are using Deckoviz on behalf of a company or organization,
+              you represent that you have authority to bind that entity to these
+              Terms.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>2. Accounts and Access</h2>
+            <p>You are responsible for:</p>
+            <ul>
+              <li>
+                Maintaining the confidentiality of your account credentials
+              </li>
+              <li>All activity that occurs under your account</li>
+              <li>Providing accurate and up-to-date information</li>
+            </ul>
+            <p>
+              Deckoviz may suspend or terminate accounts that violate these
+              Terms or pose security or legal risks.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>3. Use of the Services</h2>
+            <p>
+              You agree to use Deckoviz only for lawful purposes and in
+              accordance with these Terms.
+            </p>
+            <p>You may not:</p>
+            <ul>
+              <li>° Misuse the Services</li>
+              <li>° Attempt to access systems or data without authorization</li>
+              <li>° Interfere with or disrupt the Services</li>
+              <li>
+                ° Reverse engineer, copy, or resell the Services without
+                permission
+              </li>
+              <li>
+                ° Use the Services to generate or distribute illegal or harmful
+                content
+              </li>
+            </ul>
+            <p>
+              Enterprise users may use the Services internally and commercially,
+              subject to any additional agreements.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>4. User Content</h2>
+            <p>
+              You retain ownership of any content you upload, create, or
+              generate through Deckoviz.
+            </p>
+            <p>
+              By using the Services, you grant Deckoviz a limited, non-exclusive
+              license to process and display your content solely for the purpose
+              of providing the Services.
+            </p>
+            <p>We do not claim ownership over your content.</p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>5. AI and Generated Content</h2>
+            <p>
+              Deckoviz may generate content using AI systems at your request.
+            </p>
+            <p>Generated content:</p>
+            <ul>
+              <li>Is provided “as is”</li>
+              <li>May vary in output and quality</li>
+              <li>Should be reviewed before commercial or critical use</li>
+            </ul>
+            <p>You are responsible for how you use generated content.</p>
+            <p>
+              Deckoviz does not guarantee that AI-generated content is
+              error-free, unique, or suitable for any specific purpose.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>6. Payments, Subscriptions, and Hardware</h2>
+            <p>Certain Services require payment.</p>
+            <ul>
+              <li>
+                Prices and billing terms will be disclosed before purchase
+              </li>
+              <li>Payments are processed through third-party providers</li>
+              <li>
+                Hardware products may have separate warranty and return terms
+              </li>
+            </ul>
+            <p>
+              Failure to pay may result in suspension or termination of access.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>7. Intellectual Property</h2>
+            <p>
+              All Deckoviz software, designs, trademarks, and branding are owned
+              by Deckoviz or its licensors.
+            </p>
+            <p>
+              You may not use Deckoviz intellectual property except as permitted
+              under these Terms.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>8. Enterprise Use</h2>
+            <p>
+              Enterprise customers may be subject to additional terms,
+              service-level agreements, or contracts.
+            </p>
+            <p>In the event of a conflict, those agreements take precedence.</p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>9. Disclaimers</h2>
+            <p>
+              The Services are provided on an “as is” and “as available” basis.
+            </p>
+            <p>
+              To the maximum extent permitted by law, Deckoviz disclaims all
+              warranties, including implied warranties of merchantability,
+              fitness for a particular purpose, and non-infringement.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>10. Limitation of Liability</h2>
+            <p>
+              Deckoviz will not be liable for indirect, incidental,
+              consequential, or special damages.
+            </p>
+            <p>
+              Our total liability will not exceed the amount you paid to
+              Deckoviz in the 12 months preceding the claim.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>11. Indemnification</h2>
+            <p>
+              You agree to indemnify and hold Deckoviz harmless from claims
+              arising out of:
+            </p>
+            <ul>
+              <li>Your use of the Services</li>
+              <li>Your content</li>
+              <li>Your violation of these Terms</li>
+            </ul>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>12. Termination</h2>
+            <p>You may stop using Deckoviz at any time.</p>
+            <p>
+              We may suspend or terminate access if you violate these Terms or
+              if required by law.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>13. Governing Law</h2>
+            <p>
+              These Terms are governed by the laws of the United Kingdom,
+              without regard to conflict-of-law principles, unless otherwise
+              required by local law.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>14. Changes to These Terms</h2>
+            <p>
+              We may update these Terms from time to time. Continued use of the
+              Services after updates constitutes acceptance.
+            </p>
+            <br />
+            <br /> <br />
+            <br />
+            <h2>15. Contact</h2>
+            <p>If you have questions about these Terms, contact us at:</p>
+            <br />
+            <br />
+            <p>
+              legal@deckoviz.com
+              <br />
+              https://www.deckoviz.com
+            </p>
           </div>
         </div>
       </div>
@@ -100,4 +247,4 @@ const TermsOfService: React.FC = () => {
   );
 };
 
-export default TermsOfService; 
+export default TermsOfService;

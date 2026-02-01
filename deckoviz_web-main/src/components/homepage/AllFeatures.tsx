@@ -9,16 +9,61 @@ interface Feature {
   title: string;
   description: string;
 }
-const getIconForFeature = (index: number) => {
-  const icons = [
-    "3dicons-picture-dynamic-color.png",
-    "3dicons-paint-kit-dynamic-color.png",
-    "3dicons-brush-dynamic-color.png",
-    "3dicons-video-camera-dynamic-color.png",
-    "3dicons-zoom-dynamic-color.png",
-    "3dicons-magic-trick-dynamic-color.png",
-  ];
-  return icons[index % icons.length];
+const getIconForFeature = (title: string) => {
+  const map: Record<string, string> = {
+    // Art / Creation
+    "Your Personal Painter": "3dicons-brush-dynamic-color.png",
+    "Reimagine Your Photos": "3dicons-camera-dynamic-color.png",
+    "Iconic, Personalized Art": "3dicons-picture-dynamic-color.png",
+    "Living Animations": "3dicons-video-camera-dynamic-color.png",
+    "Dream Visualizer": "3dicons-magic-trick-dynamic-color.png",
+    "Sketch to Masterpiece": "3dicons-paint-kit-dynamic-color.png",
+    "Prompt to Art": "3dicons-brush-dynamic-color.png",
+    "Innerscape Art": "3dicons-heart-dynamic-color.png",
+
+    // Mood / Music
+    "Multisensory Moodscapes": "3dicons-music-dynamic-color.png",
+    "Music Generator": "3dicons-music-dynamic-color.png",
+    "Music from Art": "3dicons-music-dynamic-color.png",
+
+    // Home / Lifestyle
+    "Smart Display Engine": "3dicons-home-dynamic-color.png",
+    "Daily Curator Vizzy": "3dicons-home-dynamic-color.png",
+    "Halo Backlights": "3dicons-home-dynamic-color.png",
+    "Multi-Space Magic": "3dicons-home-dynamic-color.png",
+
+    // Social
+    "Co-Create Together": "3dicons-users-dynamic-color.png",
+    "Family Co-Creation": "3dicons-users-dynamic-color.png",
+    "Social Art Feed": "3dicons-users-dynamic-color.png",
+    "Private Sharing": "3dicons-users-dynamic-color.png",
+    "Social Art Universe": "3dicons-users-dynamic-color.png",
+
+    // Kids / Learning
+    "Storytelling for Kids": "3dicons-book-dynamic-color.png",
+    "Kids’ Creative Suite": "3dicons-book-dynamic-color.png",
+    "Learning Visuals": "3dicons-book-dynamic-color.png",
+    "Book to Frames": "3dicons-book-dynamic-color.png",
+
+    // Voice / Audio
+    "Voice Control": "3dicons-microphone-dynamic-color.png",
+    "Voice to Art": "3dicons-microphone-dynamic-color.png",
+    "Narrated Collections": "3dicons-microphone-dynamic-color.png",
+    "Visual Chat": "3dicons-microphone-dynamic-color.png",
+
+    // Games
+    "Games & Play": "3dicons-controller-dynamic-color.png",
+
+    // Marketplace
+    "Marketplace": "3dicons-shop-dynamic-color.png",
+    "Creator Packs": "3dicons-shop-dynamic-color.png",
+
+    // Defaults
+    "Memory of the Day": "3dicons-heart-dynamic-color.png",
+    "Event Visuals": "3dicons-notify-heart-dynamic-color.png",
+  };
+
+  return map[title] || "3dicons-picture-dynamic-color.png";
 };
 
   const mainFeatures: Feature[] = [
@@ -327,7 +372,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
     {/* Icon */}
     <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 z-20">
-        <img src={`/images/${getIconForFeature(index)}`} 
+        <img src={`/images/${getIconForFeature(title)}`} 
 
         alt="Feature Icon"
         className="w-16 h-16 object-contain transform -rotate-12
