@@ -735,7 +735,9 @@ const Navbar: React.FC = () => {
               <Button variant="primary" onClick={handleBuyNow}>
                 Buy Now
               </Button>
-           <div className="flex items-center space-x-2">
+
+              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
+           <div className="fixed right-4 top-3.5 flex items-center space-x-2 z-50">
 
   {/* Previous */}
   <button

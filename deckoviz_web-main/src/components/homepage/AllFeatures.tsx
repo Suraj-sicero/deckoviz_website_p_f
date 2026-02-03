@@ -412,10 +412,11 @@ export default function AllFeatures() {
     const [sparks, setSparks] = useState<Spark[]>([]);
 
 
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       // optional throttle for premium feel
-      if (Math.random() > 0.5) return;
+      if (Math.random() > 0.7) return;
 
       const id = Date.now();
 

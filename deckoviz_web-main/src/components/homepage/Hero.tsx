@@ -77,6 +77,25 @@ const CountUp = ({
 }
 
 const Hero: React.FC = () => {
+  const rotatingTexts = [
+  "personal art frame",
+  "dynamic storyteller",
+  "smart photo frame",
+  "mood-and-ambiance-setter",
+  "creative home companion",
+  "Google TV",
+];
+
+const [rotatingIndex, setRotatingIndex] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setRotatingIndex((prev) => (prev + 1) % rotatingTexts.length);
+  }, 2500);
+
+  return () => clearInterval(interval);
+}, []);
+
   const [leftImageIndex, setLeftImageIndex] = useState(0)
   const [rightImageIndex, setRightImageIndex] = useState(0)
 
@@ -167,6 +186,15 @@ const Hero: React.FC = () => {
           {/* Subheading */}
         <p className="text-center text-gray-600 text-xl mb-3 max-w-2xl mx-auto leading-relaxed">
 Deckoviz brings your <span className="text-purple-600 font-semibold">walls to life</span> with a <span className="text-indigo-600 font-semibold">smart art frame</span> that <span className="text-fuchsia-500 font-semibold">learns your style</span> and <span className="text-purple-600 font-semibold">evolves with you</span> over time.
+</p>
+<p className="text-center text-gray-600 text-lg mt-2 max-w-2xl mx-auto leading-relaxed">
+
+  With Deckoviz DAS Portal, your{" "}
+
+  <span className="inline-block min-w-[200px] font-semibold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent transition-all duration-500">
+    {rotatingTexts[rotatingIndex]}
+  </span>, all in one package, the one frame to infuse magic and wonder into your space.
+
 </p>
 
           {/* Main content with images and stats */}

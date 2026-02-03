@@ -93,9 +93,9 @@ interface PricingPlan {
 const pricingTiers: PricingPlan[] = [
   {
     name: "Starter",
-    price: 699,
-    originalPrice: 749,
-    gbpPrice: 499,
+    price: 499,
+    originalPrice: 649,
+    gbpPrice: 399,
     description: "Your gateway to a smarter, more beautiful world.",
     features: [
       "43-inch HD Smart Display",
@@ -111,9 +111,9 @@ const pricingTiers: PricingPlan[] = [
   },
   {
     name: "Premium",
-    price: 949,
-    originalPrice: 999,
-    gbpPrice: 699,
+    price: 749,
+    originalPrice: 899,
+    gbpPrice: 599,
     description: "Our most loved choice for art, personalization, and storytelling.",
     features: [
       "55-inch Full HD Smart Display",
@@ -131,9 +131,9 @@ const pricingTiers: PricingPlan[] = [
   },
   {
     name: "Professional",
-    price: 1199,
-    originalPrice: 1299,
-    gbpPrice: 899,
+    price: 999,
+    originalPrice: 1199,
+    gbpPrice: 699,
     description: "The ultimate Deckoviz experience — breathtaking, personal, extraordinary.",
     features: [
       "55-inch 4K UHD Premium Display",
@@ -175,9 +175,9 @@ const pricingTiers: PricingPlan[] = [
 const largeFormatTiers: PricingPlan[] = [
   {
     name: "Grand",
-    price: 1899,
-    originalPrice: 1999,
-    gbpPrice: 1449,
+    price: 1249,
+    originalPrice: 1499,
+    gbpPrice: 999,
     description: "A stunning, oversized centrepiece for immersive living spaces.",
     features: [
       "75-inch 4K UHD Premium Display",
@@ -195,9 +195,9 @@ const largeFormatTiers: PricingPlan[] = [
   },
   {
     name: "Masterpiece",
-    price: 2399,
-    originalPrice: 2499,
-    gbpPrice: 1799,
+    price: 1599,
+    originalPrice: 1899,
+    gbpPrice: 1299,
     description: "For those who want art to truly dominate their space — bold, beautiful, and unforgettable.",
     features: [
       "85-inch 4K UHD Premium Display",
@@ -216,9 +216,9 @@ const largeFormatTiers: PricingPlan[] = [
   },
   {
     name: "Monument",
-    price: 3399,
-    originalPrice: 3499,
-    gbpPrice: 2599,
+    price: 1999,
+    originalPrice: 2349,
+    gbpPrice: 1649,
     description: "The ultimate Deckoviz — a full-wall digital canvas that redefines how spaces feel, live, and breathe.",
     features: [
       "95-inch 4K UHD Premium Display",

@@ -98,7 +98,7 @@ const Referral: React.FC = () => {
 
         <div className="text-center">
           <a
-            href="https://hpanel.hostinger.com/referrals"
+            href="mailto:referrals@deckoviz.com?subject=Deckoviz Referral&body=Hi Deckoviz Team,%0D%0A%0D%0AI would like to start referring Deckoviz.%0D%0A%0D%0AThanks!"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors"
@@ -106,7 +106,7 @@ const Referral: React.FC = () => {
             Start Referring Now
           </a>
           <p className="mt-4 text-gray-500">
-            <a href="#" className="text-primary-600 hover:underline">Terms of Service</a>
+            <a href="terms-conditions" className="text-primary-600 hover:underline">Terms of Service</a>
           </p>
         </div>
       </div>

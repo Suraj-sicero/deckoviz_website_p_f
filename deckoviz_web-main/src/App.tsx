@@ -54,6 +54,7 @@ import MinimalistScreen from "./components/homepage/MinimalistScreen";
 import InfinitePortal from "./components/homepage/InfinitePortal";
 import Partnership from "./components/Partnership"
 import CoreReading from "./components/CoreReading";
+import MouseSparkles from "./components/MouseSparkles";
 
 import { i } from 'framer-motion/client';
 import Benefits from "./components/homepage/Benefits";
@@ -89,6 +90,8 @@ const App: React.FC = () => {
     <Router>
       <ScrollToTop />
       <ScrollToSectionOnHome />
+      <MouseSparkles />
+
       <Navbar />
       <Routes>
         <Route path="/" element={
