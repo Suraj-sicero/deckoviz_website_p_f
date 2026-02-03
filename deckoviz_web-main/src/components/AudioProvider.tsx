@@ -5,6 +5,11 @@ const tracks = [
   "/sounds/ambient.mp3",
   "/sounds/ambient2.mp3",
   "/sounds/ambient3.mp3",
+  "/sounds/ambient4.mp3",
+  "/sounds/ambient5.mp3",
+  "/sounds/ambient6.mp3",
+  "/sounds/ambient7.mp3",
+  "/sounds/ambient8.mp3",
   // add more here later
 ];
 
@@ -17,7 +22,9 @@ interface AudioContextType {
 
 const AudioContext = createContext<AudioContextType | null>(null);
 
-export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const audioRef = useRef<HTMLAudioElement>(new Audio(tracks[0]));
   const [index, setIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);

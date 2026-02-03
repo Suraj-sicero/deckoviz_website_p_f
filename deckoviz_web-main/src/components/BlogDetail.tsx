@@ -165,7 +165,6 @@ const BlogDetail = () => {
       {headings.length > 0 && (
         <aside className="hidden lg:block sticky top-28 self-start">
           <div className="bg-white/70 backdrop-blur-xl border border-white/60 shadow-lg rounded-3xl p-6">
-
             <p className="text-sm font-semibold text-gray-800 mb-4">
               Table of contents
             </p>
