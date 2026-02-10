@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react"
 
 export default function TVPage() {
+  
   const sparkLayer = useRef<HTMLDivElement>(null)
 
   // Mouse sparks (cyan/sky/teal theme)

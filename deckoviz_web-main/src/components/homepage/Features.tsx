@@ -197,7 +197,7 @@ const getIconForFeature = (title: string) => {
     "Visual Storytelling": "3dicons-video-camera-dynamic-color.png", // already png
     "Poster & Vision Studio": "3dicons-picture-dynamic-color.png",   // already png
     "Moodscapes & Music": "3dicons-music-dynamic-color.png",
-    "Smart Photo Frame": "3dicons-camera-dynamic-color.png",
+    "Smart Photo Frame": "3dicons-smart-photo-frame.png",
     "Rituals & Modes": "3dicons-magic-trick-dynamic-color.png",      // already png
     "Vizzy Home Companion": "3dicons-home-dynamic-color.png",
     "Social & Shared Creativity": "3dicons-users-dynamic-color.png",
@@ -267,7 +267,15 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
       ></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        {/* Header */}
+       
+        {/* Intro Card */}
+        <div className="mb-20">
+          <div className="relative overflow-hidden rounded-[32px] p-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 shadow-2xl">
+            <div className="bg-white rounded-[30px] p-12 md:p-16 relative">
+              {/* soft glow blobs */}
+              <div className="absolute -top-24 -left-24 w-64 h-64 bg-purple-200 rounded-full blur-3xl opacity-40"></div>
+              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40"></div>
+ {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
             Features &{" "}
@@ -276,14 +284,6 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
             </span>
           </h1>
         </div>
-        {/* Intro Card */}
-        <div className="mb-20">
-          <div className="relative overflow-hidden rounded-[32px] p-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 shadow-2xl">
-            <div className="bg-white rounded-[30px] p-12 md:p-16 relative">
-              {/* soft glow blobs */}
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-purple-200 rounded-full blur-3xl opacity-40"></div>
-              <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40"></div>
-
               <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
                 {/* Gradient Heading */}
                 <h2

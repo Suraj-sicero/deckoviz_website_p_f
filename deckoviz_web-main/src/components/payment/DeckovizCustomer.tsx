@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { ShoppingCart, Eye, X } from 'lucide-react';
-import { ConfigurationSteps } from './ConfigurationSteps';
+import { useState } from "react";
+import { ShoppingCart, Eye, X } from "lucide-react";
+import { ConfigurationSteps } from "./ConfigurationSteps";
 //import { VisualPreview } from './VisualPreview';
-import { frameSizeOptions, frameTypeOptions } from './data/productOptions';
-import { subscriptionPlans } from './data/subscriptionPlans';
+import { frameSizeOptions, frameTypeOptions } from "./data/productOptions";
+import { subscriptionPlans } from "./data/subscriptionPlans";
 
 // Define types for the options
 interface frameSizeOptions {
@@ -21,8 +21,8 @@ interface frameTypeOptions {
 
 const DeckovizCustomizer = () => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
-const [selectedFrameSize, setSelectedFrameSize] = useState("Default Frame");
-const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
+  const [selectedFrameSize, setSelectedFrameSize] = useState("Default Frame");
+  const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
   const [customFrameRequest, setCustomFrameRequest] = useState("");
   const [selectedUnits, setSelectedUnits] = useState("");
   const [subscriptionType, setSubscriptionType] = useState("");
@@ -37,21 +37,27 @@ const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
   const [cvv, setCvv] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
 
-
-  const getSelectedSize = () => frameSizeOptions.find(opt => opt.name === selectedFrameSize);
-  const getSelectedType = () => frameTypeOptions.find(opt => opt.name === selectedFrameType);
+  const getSelectedSize = () =>
+    frameSizeOptions.find((opt) => opt.name === selectedFrameSize);
+  const getSelectedType = () =>
+    frameTypeOptions.find((opt) => opt.name === selectedFrameType);
 
   const calculateTotal = () => {
     const basePrice = getSelectedSize()?.price || 0;
-    const selectedPlan = subscriptionPlans.find(plan => plan.name === subscriptionType);
+    const selectedPlan = subscriptionPlans.find(
+      (plan) => plan.name === subscriptionType,
+    );
     let subscriptionCost = 0;
     if (selectedPlan && subscriptionPeriod) {
-      subscriptionCost = subscriptionPeriod === 'Yearly' ? selectedPlan.yearlyPrice : selectedPlan.monthlyPrice;
+      subscriptionCost =
+        subscriptionPeriod === "Yearly"
+          ? selectedPlan.yearlyPrice
+          : selectedPlan.monthlyPrice;
     }
     const deliveryCost = deliveryType === "Express Delivery" ? 19 : 9;
     const packagingCost = packagingType === "Eco-Friendly" ? 5 : 0;
-    const units = parseInt(selectedUnits?.split(' ')[0]) || 1;
-    return (basePrice * units) + subscriptionCost + deliveryCost + packagingCost;
+    const units = parseInt(selectedUnits?.split(" ")[0]) || 1;
+    return basePrice * units + subscriptionCost + deliveryCost + packagingCost;
   };
 
   const formData = {
@@ -87,13 +93,12 @@ const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
     setCardHolderName,
     getSelectedSize,
     getSelectedType,
-    calculateTotal
+    calculateTotal,
   };
   const confirmOrder = () => {
     // go to order-confirmed
-    window.location.href = 'https://buy.stripe.com/fZu9AU03lfWs3r85Lj5kk00';
-  }
-
+    window.location.href = "https://buy.stripe.com/fZu9AU03lfWs3r85Lj5kk00";
+  };
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -119,12 +124,12 @@ const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
       <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/20 pointer-events-none"></div>
 
       {/* FULL SCREEN LAYOUT */}
-      <div className="h-screen flex">
+      <div className="min-h-screen flex">
         {selectedFrameSize ? (
           // Split Screen Layout - Visual Preview touches top
           <>
             {/* Left Side - Scrollable with stable scrollbar */}
-            <div className="flex-1 min-w-0 overflow-y-auto px-3 sm:px-4 md:px-6 lg:px-8">
+            <div className="flex-1 min-w-0 overflow-y-auto px-3 sm:px-4 md:px-6 lg:px-8 smooth-enter smooth-enter-active">
               <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 text-center">
@@ -132,9 +137,9 @@ const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
                     Get Your Deckoviz
                   </h1>
                   <p className="text-gray-600 font-medium text-xs sm:text-sm md:text-base mt-3 sm:mt-4 md:mt-6 mb-2 px-4">
-                    Follow the simple steps below to customize and place your order.
+                    Follow the simple steps below to customize and place your
+                    order.
                   </p>
-                  
                 </div>
                 {/*}
 
@@ -145,17 +150,20 @@ const [selectedFrameType, setSelectedFrameType] = useState("Default Type");
                 */}
 
                 {/* ================= FULL PRE-CHECKOUT NOTES ================= */}
-<div className="group relative mt-12 mb-10">
-
-{/* Glow border */}
-<div className="absolute -inset-[2px] rounded-[32px]
+                <div className="group relative mt-12 mb-10 smooth-enter smooth-enter-active">
+                  {/* Glow border */}
+                  <div
+                    className="absolute -inset-[2px] rounded-[32px]
 bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400
-opacity-70 blur-md group-hover:opacity-100 transition" />
+opacity-70 blur-md group-hover:opacity-100 transition"
+                  />
 
-{/* Glass card */}
-<div className="
+                  {/* Glass card */}
+                  <div
+                    className="
 relative rounded-[30px]
 bg-white/85 backdrop-blur-xl
+will-change-[opacity,transform,backdrop-filter] translate-z-0
 shadow-[0_30px_90px_rgba(168,85,247,0.25)]
 border border-white/50
 p-8 sm:p-10
@@ -164,111 +172,172 @@ text-[15px]
 leading-relaxed
 text-gray-700
 font-[450]
-">
-<h3 className="text-2xl font-semibold mb-2
+"
+                  >
+                    <h3
+                      className="text-2xl font-semibold mb-2
 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600
-bg-clip-text text-transparent">
-Pre-checkout notes ✨
-</h3>
+bg-clip-text text-transparent"
+                    >
+                      Pre-checkout notes ✨
+                    </h3>
 
-<div className="space-y-4">
+                    <div className="space-y-4">
+                      <p>
+                        <strong>
+                          Free subscription included with every Deckoviz
+                          purchase
+                        </strong>
+                        <br />
+                        As a thank you for choosing Deckoviz, your device comes
+                        with a complimentary subscription based on screen size:
+                      </p>
 
-<p><strong>Free subscription included with every Deckoviz purchase</strong><br/>
-As a thank you for choosing Deckoviz, your device comes with a complimentary subscription based on screen size:</p>
+                      <ul className="list-disc pl-5 space-y-1">
+                        <li>43 inch Deckoviz – 2 months of Silver Sub</li>
+                        <li>55 inch Deckoviz DASP – 2 months of Gold Sub</li>
+                        <li>65 inch Deckoviz DASP – 2 months of Diamond Sub</li>
+                        <li>75 inch Deckoviz DASP – 3 months of Diamond Sub</li>
+                        <li>85 inch Deckoviz DASP – 4 months of Diamond Sub</li>
+                        <li>95 inch Deckoviz DASP – 6 months of Diamond Sub</li>
+                      </ul>
 
-<ul className="list-disc pl-5 space-y-1">
-<li>43 inch Deckoviz – 2 months of Silver Sub</li>
-<li>55 inch Deckoviz DASP – 2 months of Gold Sub</li>
-<li>65 inch Deckoviz DASP – 2 months of Diamond Sub</li>
-<li>75 inch Deckoviz DASP – 3 months of Diamond Sub</li>
-<li>85 inch Deckoviz DASP – 4 months of Diamond Sub</li>
-<li>95 inch Deckoviz DASP – 6 months of Diamond Sub</li>
-</ul>
+                      <p>
+                        <strong>Learn more about subscriptions</strong>
+                        <br />
+                        You can explore what each subscription tier includes on
+                        our Subscriptions page.
+                      </p>
 
-<p><strong>Learn more about subscriptions</strong><br/>
-You can explore what each subscription tier includes on our Subscriptions page.</p>
+                      <p>
+                        <strong>Lifetime subscriptions coming soon</strong>
+                        <br />
+                        We are actively working on lifetime subscription options
+                        and will share updates as they become available.
+                      </p>
 
-<p><strong>Lifetime subscriptions coming soon</strong><br/>
-We are actively working on lifetime subscription options and will share updates as they become available.</p>
+                      <p>
+                        <strong>
+                          Order confirmation and delivery timeline
+                        </strong>
+                        <br />
+                        After placing your order, you will receive an order
+                        confirmation and receipt via email. Once we finalize any
+                        custom configuration and shipping details, you will
+                        receive a follow-up email within 24 hours confirming
+                        your estimated delivery date.
+                      </p>
 
-<p><strong>Order confirmation and delivery timeline</strong><br/>
-After placing your order, you will receive an order confirmation and receipt via email. Once we finalize any custom configuration and shipping details, you will receive a follow-up email within 24 hours confirming your estimated delivery date.</p>
+                      <p>
+                        <strong>Bulk orders and special pricing</strong>
+                        <br />
+                        Bulk discounts are available and referenced on our
+                        landing pages. If you would like to place more than 5
+                        orders, please email vizzy@deckoviz.com to access
+                        exclusive bulk pricing and discounted shipping rates.
+                      </p>
 
-<p><strong>Bulk orders and special pricing</strong><br/>
-Bulk discounts are available and referenced on our landing pages. If you would like to place more than 5 orders, please email vizzy@deckoviz.com to access exclusive bulk pricing and discounted shipping rates.</p>
+                      <p>
+                        <strong>Getting started with Deckoviz</strong>
+                        <br />
+                        After your Deckoviz DASP is delivered, you will receive
+                        a detailed onboarding email with a simple, step-by-step
+                        guide to help you get the most out of your device.
+                      </p>
 
-<p><strong>Getting started with Deckoviz</strong><br/>
-After your Deckoviz DASP is delivered, you will receive a detailed onboarding email with a simple, step-by-step guide to help you get the most out of your device.</p>
+                      <p>
+                        <strong>We’re here to help</strong>
+                        <br />
+                        If you have any questions at any point, or need
+                        assistance before or after your purchase, feel free to
+                        reach out to us at support@deckoviz.com. We’re always
+                        happy to help.
+                      </p>
 
-<p><strong>We’re here to help</strong><br/>
-If you have any questions at any point, or need assistance before or after your purchase, feel free to reach out to us at support@deckoviz.com. We’re always happy to help.</p>
+                      <p>
+                        <strong>Shipping Costs</strong>
+                        <br />
+                        For now, shipping is estimated at £200–300, depending on
+                        the size of your Deckoviz unit.
+                      </p>
 
-<p><strong>Shipping Costs</strong><br/>
-For now, shipping is estimated at £200–300, depending on the size of your Deckoviz unit.</p>
+                      <p>
+                        We’re actively working on optimizing our shipping
+                        options, and this range represents the maximum you’ll be
+                        charged. If the final shipping cost is lower, we’ll
+                        automatically refund the difference to your card. If
+                        it’s higher, we’ll cover it.
+                      </p>
 
-<p>
-We’re actively working on optimizing our shipping options, and this range represents the maximum you’ll be charged. If the final shipping cost is lower, we’ll automatically refund the difference to your card. If it’s higher, we’ll cover it.
-</p>
+                      <p>
+                        We’ve set a range because we’re currently comparing
+                        multiple carriers to ensure you get the best possible
+                        rate.
+                      </p>
 
-<p>
-We’ve set a range because we’re currently comparing multiple carriers to ensure you get the best possible rate.
-</p>
+                      <p>
+                        Thank you for your patience — and for joining the
+                        Deckoviz mission to make the world more wondrous,
+                        joyous, and beautiful.
+                      </p>
 
-<p>
-Thank you for your patience — and for joining the Deckoviz mission to make the world more wondrous, joyous, and beautiful.
-</p>
+                      <div className="border-t border-purple-200 pt-4 space-y-3">
+                        <p className="font-medium text-gray-900">
+                          A note for our early believers 💜
+                        </p>
 
-<div className="border-t border-purple-200 pt-4 space-y-3">
+                        <p>
+                          If you’re excited about bringing Deckoviz into your
+                          home but feel that cost might be the only thing
+                          holding you back, we’d love to help.
+                        </p>
 
-<p className="font-medium text-gray-900">
-A note for our early believers 💜
-</p>
+                        <p>
+                          For our early customers, those who share our vision of
+                          what homes could be like, we’re happy to offer an
+                          additional discount when needed. Just email us at
+                          vizzy@deckoviz.com with the subject line “Discount”,
+                          and we’ll send you a personal discount code.
+                        </p>
 
-<p>
-If you’re excited about bringing Deckoviz into your home but feel that cost might be the only thing holding you back, we’d love to help.
-</p>
+                        <p>
+                          We’re building Deckoviz for people who care about
+                          beauty, meaning, and living with intention. If that’s
+                          you, we’d hate for price alone to stand in the way of
+                          a little more magic in your space.
+                        </p>
 
-<p>
-For our early customers, those who share our vision of what homes could be like, we’re happy to offer an additional discount when needed. Just email us at vizzy@deckoviz.com with the subject line “Discount”, and we’ll send you a personal discount code.
-</p>
-
-<p>
-We’re building Deckoviz for people who care about beauty, meaning, and living with intention. If that’s you, we’d hate for price alone to stand in the way of a little more magic in your space.
-</p>
-
-<p className="italic text-gray-600">
-— Team Deckoviz
-</p>
-
-</div>
-
-</div>
-</div>
-</div>
+                        <p className="italic text-gray-600">— Team Deckoviz</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 {/* Bottom Button - now scrollable */}
-                <div className="py-6 sm:py-8 flex justify-center px-4">
-                  <button onClick={confirmOrder}
+                <div className="py-6 sm:py-8 flex justify-center px-4 smooth-enter smooth-enter-active">
+                  <button
+                    onClick={confirmOrder}
                     type="button"
-                    className="group relative overflow-hidden text-white py-3 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-medium text-sm sm:text-base md:text-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-200/50 hover:scale-[1.02] transition-all duration-300 w-full sm:w-auto backdrop-blur-sm border border-white/20"
+                    className="group relative overflow-hidden text-white py-3 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-medium text-sm sm:text-base md:text-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-200/50 transition-[transform,box-shadow,opacity] duration-500 ease-out will-change-transform w-full sm:w-auto backdrop-blur-sm border border-white/20"
                     style={{
-                      background: "linear-gradient(135deg, #ea580c 0%, #7c3aed 35%, #4338ca 70%, #1e1b4b 100%)",
-                      boxShadow: "0 8px 32px rgba(124, 58, 237, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                      background:
+                        "linear-gradient(135deg, #ea580c 0%, #7c3aed 35%, #4338ca 70%, #1e1b4b 100%)",
+                      boxShadow:
+                        "0 8px 32px rgba(124, 58, 237, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                     }}
                   >
                     {/* Glass shimmer effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out"></div>
-                    
+
                     {/* Subtle glass overlay */}
                     <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    
+
                     <span className="relative z-10 flex items-center justify-center gap-2">
                       <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
                       Check out
                     </span>
                   </button>
                 </div>
-
               </div>
             </div>
 
@@ -284,8 +353,10 @@ We’re building Deckoviz for people who care about beauty, meaning, and living 
               onClick={() => setShowPreviewModal(true)}
               className="lg:hidden fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-purple-500/25 hover:scale-105 transition-all duration-300 border border-white/20 backdrop-blur-sm flex items-center gap-2"
               style={{
-                background: "linear-gradient(135deg, #7c3aed 0%, #4338ca 50%, #1e1b4b 100%)",
-                boxShadow: "0 8px 32px rgba(124, 58, 237, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                background:
+                  "linear-gradient(135deg, #7c3aed 0%, #4338ca 50%, #1e1b4b 100%)",
+                boxShadow:
+                  "0 8px 32px rgba(124, 58, 237, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
               }}
             >
               <Eye className="w-6 h-6" />
@@ -293,8 +364,6 @@ We’re building Deckoviz for people who care about beauty, meaning, and living 
             </button>
           </>
         ) : (
-
-          
           // Original Single Column Layout - also fully scrollable
           <div className="flex-1 overflow-y-auto px-3 sm:px-4 md:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
@@ -304,17 +373,20 @@ We’re building Deckoviz for people who care about beauty, meaning, and living 
                   Get Your Deckoviz
                 </h1>
                 <p className="text-gray-800 font-medium text-xs sm:text-sm md:text-base mb-2 px-4">
-                  Bring your walls to life with the world's most advanced AI-powered Smart Art Frame.
-                <br />
-                <br />
+                  Bring your walls to life with the world's most advanced
+                  AI-powered Smart Art Frame.
+                  <br />
+                  <br />
                   Please select a frame size to begin customizing your order.
                 </p>
-                
               </div>
 
               {/* Content */}
               <div className="space-y-4 sm:space-y-6 py-2 sm:py-4">
-                <ConfigurationSteps formData={formData} showOnlyFirstTwo={true} />
+                <ConfigurationSteps
+                  formData={formData}
+                  showOnlyFirstTwo={true}
+                />
               </div>
             </div>
           </div>
@@ -503,7 +575,20 @@ We’re building Deckoviz for people who care about beauty, meaning, and living 
           /* Prevent horizontal overflow */
           .min-w-0 {
             min-width: 0;
-          }
+          
+            }
+
+            .smooth-enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.smooth-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 400ms ease-out, transform 400ms ease-out;
+}
+
         `,
         }}
       />

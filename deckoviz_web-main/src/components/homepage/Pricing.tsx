@@ -88,6 +88,7 @@ interface PricingPlan {
   features: string[]
   isPopular?: boolean
   buttonText: string
+  image?: string  
 }
 
 const pricingTiers: PricingPlan[] = [
@@ -96,6 +97,7 @@ const pricingTiers: PricingPlan[] = [
     price: 499,
     originalPrice: 649,
     gbpPrice: 399,
+    image: "/images/45-inch-dasp.png",
     description: "Your gateway to a smarter, more beautiful world.",
     features: [
       "43-inch HD Smart Display",
@@ -304,6 +306,39 @@ export default function Pricing() {
     </span>
   </div>
 </button>
+{/* 📘 Floating DASP Guide Button (RIGHT) */}
+<button
+  onClick={() => navigate("/dasp-guide")}
+  className="
+    hidden lg:flex
+    absolute right-6 top-[3%] -translate-y-1/2
+    z-10
+    max-w-[520px]
+    px-10 py-1
+    rounded-[999px]
+    text-left
+    bg-gradient-to-br from-violet-300 via-fuchsia-400 to-pink-400
+    shadow-[0_16px_40px_rgba(168,85,247,0.35)]
+    hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
+    transition-all duration-500
+    animate-[float_6s_ease-in-out_infinite]
+  "
+>
+  <div className="flex flex-col gap-0.5">
+    <span className="text-xs uppercase tracking-widest text-purple-900">
+      Ultimate Guide
+    </span>
+
+    <span className="text-sm font-medium text-purple-950 leading-snug flex items-center gap-2">
+      <Sparkles className="w-4 h-4" />
+      Your Ultimate Deckoviz DASP Guide
+    </span>
+
+    <span className="text-xs text-purple-900 opacity-80">
+      Everything you need to know before choosing your perfect smart art frame.
+    </span>
+  </div>
+</button>
 
         <div className="absolute inset-0">
           <div className="absolute inset-0 bg-white" />
@@ -356,23 +391,32 @@ export default function Pricing() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 sm:mb-12">
             {pricingTiers.map((tier, index) => (
               <Card
-                key={index}
-                className={`relative transition-all duration-500 hover:-translate-y-2 flex flex-col backdrop-blur-sm border-2 ${
-                  tier.isPopular
-                    ? "border-violet-300 shadow-2xl bg-gradient-to-br from-white via-violet-50 to-fuchsia-50 shadow-violet-200/50"
-                    : "border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200"
-                }`}
-              >
-                {tier.isPopular && (
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-20">
-                    <Badge className="bg-violet-600 text-white px-4 py-2 text-xs font-bold shadow-lg whitespace-nowrap">
-                      <Star size={12} className="mr-1" />
-                      Most Popular
-                    </Badge>
-                  </div>
-                )}
+  className={`group relative transition-all duration-500 hover:-translate-y-2 flex flex-col backdrop-blur-sm border-2 ${
+    tier.isPopular
+      ? "border-violet-300 shadow-2xl bg-gradient-to-br from-white via-violet-50 to-fuchsia-50 shadow-violet-200/50"
+      : "border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200"
+  }`}
+>
+  {/* ✅ IMAGE */}
+  <div className="relative overflow-hidden rounded-t-2xl">
+    <img
+      src={tier.image}
+      alt={tier.name}
+      className="w-full h-44 object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+  </div>
 
-                <CardHeader className="text-center pb-4">
+  {/* Popular badge */}
+  {tier.isPopular && (
+    <div className="absolute top-4 left-4 z-20">
+      <Badge className="bg-violet-600 text-white px-3 py-1 text-xs font-bold shadow-lg">
+        <Star size={12} className="mr-1" />
+        Most Popular
+      </Badge>
+    </div>
+  )}
+  <CardHeader className="text-center pb-4">
                   <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-violet-600 transition-colors duration-300">
                     {tier.name}
                   </CardTitle>
@@ -454,9 +498,33 @@ export default function Pricing() {
           <div className="flex overflow-x-auto space-x-6 lg:space-x-8 pb-8 -mx-4 px-4 scrollbar-thin scrollbar-thumb-violet-200 scrollbar-track-gray-100">
             {largeFormatTiers.map((tier, index) => (
               <div key={index} className="flex-shrink-0 w-full max-w-sm sm:w-80">
-                <Card
-                  className={`relative transition-all duration-500 hover:-translate-y-2 flex flex-col h-full backdrop-blur-sm border-2 border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200`}
-                >
+             <Card
+  className={`group relative transition-all duration-500 hover:-translate-y-2 flex flex-col backdrop-blur-sm border-2 ${
+    tier.isPopular
+      ? "border-violet-300 shadow-2xl bg-gradient-to-br from-white via-violet-50 to-fuchsia-50 shadow-violet-200/50"
+      : "border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200"
+  }`}
+>
+  {/* ✅ IMAGE */}
+  <div className="relative overflow-hidden rounded-t-2xl">
+    <img
+      src={tier.image}
+      alt={tier.name}
+      className="w-full h-44 object-cover transition-transform duration-700 group-hover:scale-105"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+  </div>
+
+  {/* Popular badge */}
+  {tier.isPopular && (
+    <div className="absolute top-4 left-4 z-20">
+      <Badge className="bg-violet-600 text-white px-3 py-1 text-xs font-bold shadow-lg">
+        <Star size={12} className="mr-1" />
+        Most Popular
+      </Badge>
+    </div>
+  )}
+
                   <CardHeader className="text-center pb-4">
                     <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-violet-600 transition-colors duration-300">
                       {tier.name}

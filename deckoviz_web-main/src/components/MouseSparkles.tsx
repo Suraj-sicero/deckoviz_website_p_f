@@ -15,7 +15,7 @@ export default function MouseSparkles() {
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (Math.random() > 0.5) return;
+      if (Math.random() > 0.7) return;
 
       setSparks((prev) => [
         ...prev,

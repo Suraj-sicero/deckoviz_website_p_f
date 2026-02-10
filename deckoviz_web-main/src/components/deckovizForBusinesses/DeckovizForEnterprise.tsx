@@ -443,6 +443,7 @@ const renderPost = (post: MarkdownBlog) => (
 
   return (
     <div className="bg-white">
+      
       <div className="pointer-events-none fixed inset-0 z-[999]">
 {sparks.map(spark => (
 <span
@@ -995,6 +996,10 @@ const renderPost = (post: MarkdownBlog) => (
 
       {/* ================= SECTION 6: EXPLORE FURTHER ================= */}
 
+
+{/* 📘 Floating Business DASP Guide Button */}
+
+
       <DynamicImageGrid
         imageSources={enterpriseImages}
         sectionTitle="A Canvas for Every Environment, Every Moment"
@@ -1167,7 +1172,43 @@ const renderPost = (post: MarkdownBlog) => (
       )}
       <section className="bg-white py-20 border-t border-gray-100">
         {/* ================= EXPLORE FURTHER ================= */}
-<section className="py-28 bg-white border-t border-gray-100">
+<section className="relative py-28 bg-white border-t border-gray-100">
+
+
+{/* 📘 Business DASP Guide Button — ONLY for Explore Further */}
+<button
+  onClick={() => navigate("/dasp-business-guide")}
+  className="
+    hidden lg:flex
+    absolute
+    right-10
+    top-16
+    z-20
+    max-w-[560px]
+    px-10 py-2
+    rounded-[999px]
+    text-left
+    bg-gradient-to-br from-violet-300 via-fuchsia-400 to-pink-400
+    shadow-[0_16px_40px_rgba(168,85,247,0.35)]
+    hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
+    transition-all duration-500
+  "
+>
+  <div className="flex flex-col gap-0.5">
+    <span className="text-xs uppercase tracking-widest text-purple-900">
+      Business Guide
+    </span>
+
+    <span className="text-sm font-medium text-purple-950 leading-snug">
+      The Ultimate Guide for Deckoviz DASP For Business
+    </span>
+
+    <span className="text-xs text-purple-900 opacity-80">
+      Strategy, platform intelligence, enterprise use-cases & scale.
+    </span>
+  </div>
+</button>
+
 
 <div className="max-w-7xl mx-auto px-6">
 

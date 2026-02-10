@@ -99,17 +99,16 @@ useEffect(() => {
   const [leftImageIndex, setLeftImageIndex] = useState(0)
   const [rightImageIndex, setRightImageIndex] = useState(0)
 
-  const leftImages = [
-    "/images/lefthero1.png",
-    "/images/lefthero7.png",
-    "/images/lefthero8.png",
-    "/images/lefthero9.png",
-    "/images/lefthero4.png",
-    "/images/lefthero5.png",
-    "/images/lefthero6.png",
-    "/images/lefthero2.png",
-    "/images/lefthero3.png",
-  ]
+  const frameImages = [
+  "/images/imgleft1.png",
+  "/images/imgleft3.png",
+  "/images/imgleft5.png",
+  "/images/imgleft6.png",
+  "/images/imgleft7.png",
+  "/images/imgleft8.png",
+  "/images/imgleft9.png",
+]
+
 
   const rightImages = [
     "/images/righthero1.png",
@@ -126,12 +125,13 @@ useEffect(() => {
   const interval = setInterval(() => {
     // Generate random indices, ensuring they're different from current ones
     setLeftImageIndex((prev) => {
-      let newIndex;
-      do {
-        newIndex = Math.floor(Math.random() * leftImages.length);
-      } while (newIndex === prev && leftImages.length > 1);
-      return newIndex;
-    });
+  let next;
+  do {
+    next = Math.floor(Math.random() * frameImages.length);
+  } while (next === prev);
+  return next;
+});
+
     
     setRightImageIndex((prev) => {
       let newIndex;
@@ -189,11 +189,12 @@ Deckoviz brings your <span className="text-purple-600 font-semibold">walls to li
 </p>
 <p className="text-center text-gray-600 text-lg mt-2 max-w-2xl mx-auto leading-relaxed">
 
-  With Deckoviz DAS Portal, your{" "}
+With Deckoviz DAS Portal, your{" "}
+<span className="inline-block font-semibold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent transition-all duration-500 whitespace-nowrap">
+  {rotatingTexts[rotatingIndex]}
+</span>
+, all in one package—the one frame to infuse magic and wonder into your space.
 
-  <span className="inline-block min-w-[200px] font-semibold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent transition-all duration-500">
-    {rotatingTexts[rotatingIndex]}
-  </span>, all in one package, the one frame to infuse magic and wonder into your space.
 
 </p>
 
@@ -211,19 +212,43 @@ Deckoviz brings your <span className="text-purple-600 font-semibold">walls to li
 }}
               />
               {/* Fixed size container to prevent layout shifts */}
-              <div className="relative w-96 h-96 flex items-center justify-center">
-                {leftImages.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Left artwork ${index + 1}`}
-                    className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ease-in-out ${
-                      index === leftImageIndex ? 'opacity-100' : 'opacity-0'
-                    }`}
-                  />
-                ))}
+              <div className="relative w-[520px] h-[520px]">
+
+  {/* 1️⃣ Furniture / room (STATIC) */}
+<img
+  src="/images/furniture-left.png"
+  alt="Living room"
+  className="absolute top-[90px] left-1/2 -translate-x-1/2 w-[120%] h-auto object-contain z-0"
+ />
+
+
+  {/* 2️⃣ Artwork inside frame (CHANGES) */}
+<div className="absolute top-[121px] left-1/2 translate-x-[-45%] w-[48%] h-[33%] z-10 overflow-hidden rounded-sm">
+
+
+
+    {frameImages.map((img, index) => (
+      <img
+        key={index}
+        src={img}
+        alt={`Frame artwork ${index + 1}`}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
+          index === leftImageIndex ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    ))}
+  </div>
+
+  {/* 3️⃣ Frame border overlay (STATIC) */}
+<img
+  src="/images/frame-static.png"
+  alt="Frame"
+  className="absolute top-[95px] left-1/2 translate-x-[-45%] w-[70%] h-auto object-contain z-20 pointer-events-none"
+/>
+
+</div>
+
               </div>
-            </div>
 
             {/* Center content - Buttons and Stats */}
             <div className="flex flex-col items-center gap-8 max-w-md">

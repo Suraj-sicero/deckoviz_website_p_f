@@ -1,14 +1,32 @@
 import React from 'react';
 import { Gift, Send, CheckCircle, CreditCard } from 'lucide-react';
+import StarSparkles from "./StarSparkles";
 
 const Referral: React.FC = () => {
   return (
-    <section className="section-padding bg-gray-50">
+    <section className="section-padding relative overflow-hidden">
+        <StarSparkles />
+
+      {/* Ambient gradient background */}
+<div className="absolute inset-0">
+  <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-purple-300/30 rounded-full blur-3xl" />
+  <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-pink-300/30 rounded-full blur-3xl" />
+  <div className="absolute bottom-0 left-1/3 w-[700px] h-[700px] bg-indigo-300/20 rounded-full blur-[100px]" />
+</div>
+
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">
-            Referral <span className="text-primary-600">Bonus</span>
-          </h2>
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-6">
+  <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent drop-shadow-sm">
+    Referral Bonus ✨
+  </span>
+</h2>
+<div className="absolute top-20 left-20 w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+<div className="absolute bottom-24 right-32 w-2 h-2 bg-pink-400 rounded-full animate-pulse delay-300"></div>
+
+
+<div className="mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-70 mb-6"></div>
+
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             If you refer Deckoviz to friends, family, or anyone else who might be interested, we'll send a neat $20 into your bank account.
           </p>
@@ -18,9 +36,21 @@ const Referral: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-          <div className="bg-white p-8 rounded-xl shadow-sm">
+          <div className="
+relative p-8 rounded-2xl
+bg-white/80 backdrop-blur-xl
+border border-white/50
+shadow-[0_20px_60px_rgba(168,85,247,0.2)]
+hover:shadow-[0_30px_90px_rgba(168,85,247,0.35)]
+transition-all duration-500
+hover:-translate-y-1
+">
+
             <div className="flex items-center mb-4">
-              <Gift className="text-primary-600 mr-3" size={24} />
+              <Gift
+  className="text-purple-600 mr-3 drop-shadow-md group-hover:scale-110 transition-transform duration-300"
+  size={26}
+/>
               <h3 className="text-xl font-semibold">Referral Rewards</h3>
             </div>
             <p className="text-gray-600 mb-4">
@@ -45,7 +75,16 @@ const Referral: React.FC = () => {
             </ul>
           </div>
 
-          <div className="bg-white p-8 rounded-xl shadow-sm">
+          <div className="
+relative p-8 rounded-2xl
+bg-white/80 backdrop-blur-xl
+border border-white/50
+shadow-[0_20px_60px_rgba(168,85,247,0.2)]
+hover:shadow-[0_30px_90px_rgba(168,85,247,0.35)]
+transition-all duration-500
+hover:-translate-y-1
+">
+
             <h3 className="text-xl font-semibold mb-6">How do referrals work?</h3>
             <div className="space-y-6">
               <div className="flex items-start">
@@ -98,10 +137,15 @@ const Referral: React.FC = () => {
 
         <div className="text-center">
           <a
-            href="mailto:referrals@deckoviz.com?subject=Deckoviz Referral&body=Hi Deckoviz Team,%0D%0A%0D%0AI would like to start referring Deckoviz.%0D%0A%0D%0AThanks!"
+            href="mailto:referrals@deckoviz.com?subject=Deckoviz Referral&body=Hi Deckoviz Team,%0D%0A%0D%0AI would like to start referring Deckoviz.%0D%0A%0D%0AThanks!  "
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg hover:bg-primary-700 transition-colors"
+            className="group relative inline-flex items-center justify-center
+px-10 py-4 rounded-full font-semibold text-lg text-white
+bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600
+shadow-xl hover:shadow-purple-500/40
+transition-all duration-300 hover:scale-105 overflow-hidden"
+
           >
             Start Referring Now
           </a>
