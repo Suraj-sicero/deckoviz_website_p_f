@@ -69,6 +69,7 @@ import MoreInfo from "./components/MoreInfo";
 import DASPGuide from "./components/homepage/DASPGuide";
 import StartHere from "./components/homepage/StartHere";
 import DASPBusinessGuide from "./components/deckovizForBusinesses/DASPBusinessGuide";
+import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -109,6 +110,7 @@ const App: React.FC = () => {
               <DesignedFor />
               <HowItWorks />
               <GuestReactionsTestimonials />
+              <ToggleGallerySection />
               <Youtube />
               <Referral />
               <StartHere />

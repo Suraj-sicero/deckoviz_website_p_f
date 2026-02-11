@@ -116,6 +116,7 @@ const pricingTiers: PricingPlan[] = [
     price: 749,
     originalPrice: 899,
     gbpPrice: 599,
+        image: "/images/55-inch-dasp.png",
     description: "Our most loved choice for art, personalization, and storytelling.",
     features: [
       "55-inch Full HD Smart Display",
@@ -136,6 +137,7 @@ const pricingTiers: PricingPlan[] = [
     price: 999,
     originalPrice: 1199,
     gbpPrice: 699,
+        image: "/images/55-inch-dasp.png",
     description: "The ultimate Deckoviz experience — breathtaking, personal, extraordinary.",
     features: [
       "55-inch 4K UHD Premium Display",
@@ -156,6 +158,7 @@ const pricingTiers: PricingPlan[] = [
   {
     name: "Enterprise",
     price: 0,
+        image: "/images/45-inch-dasp.png",
     description: "Custom solutions crafted for businesses, galleries, and larger spaces.",
     features: [
       "Multiple frame network management",
@@ -180,6 +183,7 @@ const largeFormatTiers: PricingPlan[] = [
     price: 1249,
     originalPrice: 1499,
     gbpPrice: 999,
+        image: "/images/75-inch-dasp.png",
     description: "A stunning, oversized centrepiece for immersive living spaces.",
     features: [
       "75-inch 4K UHD Premium Display",
@@ -200,6 +204,7 @@ const largeFormatTiers: PricingPlan[] = [
     price: 1599,
     originalPrice: 1899,
     gbpPrice: 1299,
+        image: "/images/85-inch-dasp.png",
     description: "For those who want art to truly dominate their space — bold, beautiful, and unforgettable.",
     features: [
       "85-inch 4K UHD Premium Display",
@@ -221,6 +226,7 @@ const largeFormatTiers: PricingPlan[] = [
     price: 1999,
     originalPrice: 2349,
     gbpPrice: 1649,
+        image: "/images/95-inch-dasp.png",
     description: "The ultimate Deckoviz — a full-wall digital canvas that redefines how spaces feel, live, and breathe.",
     features: [
       "95-inch 4K UHD Premium Display",
@@ -278,7 +284,7 @@ export default function Pricing() {
   onClick={() => navigate("/tv")}
   className="
     hidden lg:flex
-    absolute left-6 top-[3%] -translate-y-1/2
+    absolute left-6 top-[4%] -translate-y-1/2
     z-10
     max-w-[510px]
     px-10 py-1
@@ -311,7 +317,7 @@ export default function Pricing() {
   onClick={() => navigate("/dasp-guide")}
   className="
     hidden lg:flex
-    absolute right-6 top-[3%] -translate-y-1/2
+    absolute right-6 top-[4%] -translate-y-1/2
     z-10
     max-w-[520px]
     px-10 py-1
