@@ -12,6 +12,12 @@ import { fileURLToPath } from "url";
 import { sequelize } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
 import blogRoutes from "./routes/blogRoutes.js";
 import Stripe from "stripe";
+import client from "./redisClient.js";
+
+
+
+await client.set("hello", "Dekoviz");
+console.log(await client.get("hello"));
 
 dotenv.config();
 const app = express();

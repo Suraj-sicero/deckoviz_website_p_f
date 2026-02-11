@@ -19,8 +19,10 @@
     "method-override": "^3.0.0",
     "mongoose": "^8.19.2",
     "multer": "^2.0.2",
+    "node-cache": "^5.1.2",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
+    "redis": "^5.10.0",
     "sequelize": "^6.37.7",
     "stripe": "^19.3.0"
   },
