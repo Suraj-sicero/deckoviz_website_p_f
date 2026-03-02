@@ -28,19 +28,19 @@ const FAQ: React.FC = () => {
     {
       question: "How do I use it?",
       answer:
-        "Everything happens through the Deckoviz mobile app — upload images, create collections, use AI features, set preferences, and manage your display.",
+        "Everything happens through the Deckoviz mobile app   upload images, create collections, use AI features, set preferences, and manage your display.",
       category: "General",
     },
     {
       question: "Is it also a smart TV?",
       answer:
-        "Yes! While the core purpose is art, it's built on Android TV — so you can still access Netflix, YouTube, and all your usual apps.",
+        "Yes! While the core purpose is art, it's built on Android TV   so you can still access Netflix, YouTube, and all your usual apps.",
       category: "General",
     },
     {
       question: "Who is Deckoviz for?",
       answer:
-        "Anyone who wants more beauty, personality, and magic in their spaces. Whether you're a homeowner, a hotelier, a designer, a therapist, or a restaurateur — Deckoviz brings life to your walls.",
+        "Anyone who wants more beauty, personality, and magic in their spaces. Whether you're a homeowner, a hotelier, a designer, a therapist, or a restaurateur   Deckoviz brings life to your walls.",
       category: "General",
     },
     {
@@ -64,7 +64,7 @@ const FAQ: React.FC = () => {
     {
       question: "What sizes are available?",
       answer:
-        "Deckoviz comes in three sizes — 32 inches (Starter), 43 inches (Premium), and 55 inches (Exquisite) — each crafted to fit different spaces, aesthetics, and budgets.",
+        "Deckoviz comes in three sizes   32 inches (Starter), 43 inches (Premium), and 55 inches (Exquisite)   each crafted to fit different spaces, aesthetics, and budgets.",
       category: "Product",
     },
     {
@@ -76,7 +76,7 @@ const FAQ: React.FC = () => {
     {
       question: "How does Deckoviz personalize art for me?",
       answer:
-        "Deckoviz uses a proprietary AI that learns from your preferences, moods, feedback, and interaction patterns over time. It doesn't just react to what you like — it actively evolves alongside you, recognizing subtleties in your taste, emotional states, rhythms of your life, and even the aspirations you express.",
+        "Deckoviz uses a proprietary AI that learns from your preferences, moods, feedback, and interaction patterns over time. It doesn't just react to what you like   it actively evolves alongside you, recognizing subtleties in your taste, emotional states, rhythms of your life, and even the aspirations you express.",
       category: "Advanced",
     },
     {
@@ -88,19 +88,19 @@ const FAQ: React.FC = () => {
     {
       question: "Why is personalization so important for spaces?",
       answer:
-        "We design our spaces, and then, they influence - and design us. Spaces shape our emotions, thoughts, creativity, and well-being — often more than we consciously realize. A truly personalized space doesn't just look good — it feels alive, inspiring, grounding, or energizing, depending on what your soul needs. Deckoviz exists to help you reclaim your environment as an extension of your inner self — dynamic, evolving, uniquely yours.",
+        "We design our spaces, and then, they influence - and design us. Spaces shape our emotions, thoughts, creativity, and well-being   often more than we consciously realize. A truly personalized space doesn't just look good   it feels alive, inspiring, grounding, or energizing, depending on what your soul needs. Deckoviz exists to help you reclaim your environment as an extension of your inner self   dynamic, evolving, uniquely yours.",
       category: "Advanced",
     },
     {
       question: "Can Deckoviz create art specifically for me?",
       answer:
-        "Yes — and it gets better the longer you live with it. Deckoviz's creative AI engines can generate unique artworks inspired by your style, mood, and preferences. Over time, you'll see not just curated images, but wholly new, original creations that feel like they were dreamed up just for you — because in a way, they are.",
+        "Yes   and it gets better the longer you live with it. Deckoviz's creative AI engines can generate unique artworks inspired by your style, mood, and preferences. Over time, you'll see not just curated images, but wholly new, original creations that feel like they were dreamed up just for you   because in a way, they are.",
       category: "Advanced",
     },
     {
       question: "How is Deckoviz different from a digital photo frame or smart TV?",
       answer:
-        "While digital frames simply rotate pictures, Deckoviz uses our powerful proprietary AI architecture to curate, create, personalize, and even evolve your art over time. It's not just a display — it's an emotionally intelligent art companion that brings true atmosphere and storytelling into your space.",
+        "While digital frames simply rotate pictures, Deckoviz uses our powerful proprietary AI architecture to curate, create, personalize, and even evolve your art over time. It's not just a display   it's an emotionally intelligent art companion that brings true atmosphere and storytelling into your space.",
       category: "Product",
     },
   ]
@@ -433,16 +433,16 @@ const FAQ: React.FC = () => {
                 {/* Description */}
                 <div className="text-gray-700 leading-relaxed mb-12 max-w-3xl mx-auto space-y-4">
                   <p>
-                    If you believe that the spaces where we live and work should inspire us —
+                    If you believe that the spaces where we live and work should inspire us  
                     <br />
                     If you dream of living in environments that feel, grow, respond, and reflect
                     <br />
-                    who you are —
+                    who you are  
                   </p>
                   <p>
                     If you believe that beauty, art, and technology can and should work together
                     <br />
-                    to make life more vivid, joyful, and meaningful —
+                    to make life more vivid, joyful, and meaningful  
                   </p>
                 </div>
 

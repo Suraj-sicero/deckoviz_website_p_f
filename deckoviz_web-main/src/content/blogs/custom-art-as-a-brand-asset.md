@@ -1,7 +1,7 @@
 ---
 id: 31
 title: "Custom Art as a Brand Asset"
-description: "Artwork Creation Ideas & Inspiration — exploring identity, memory, emotion, and meaning through deeply personal generative art."
+description: "Artwork Creation Ideas & Inspiration   exploring identity, memory, emotion, and meaning through deeply personal generative art."
 tag: "Enterprise"
 tagColor: "bg-fuchsia-100 text-fuchsia-700"
 date: "January 2026"
@@ -11,7 +11,7 @@ image: "/blogs/custom-arts.jpg"
 size: "large"
 ---
 
-Artwork Creation Ideas & Inspiration — Volume I  
+Artwork Creation Ideas & Inspiration   Volume I  
 Personal Symbolic, and Abstract Art for Inner and Outer Worlds
 
 Most art we live with is decorative.
@@ -144,7 +144,7 @@ Create a wide, expansive scene viewed from a high vantage point. The human prese
 
 ---
 
-Artwork Creation Ideas & Inspiration — Volume II  
+Artwork Creation Ideas & Inspiration   Volume II  
 Identity, Time, Transformation, and the Art of Becoming
 
 Some artworks comfort you.  
@@ -164,7 +164,7 @@ Below are 12 deeply developed artwork ideas, each with a long-form prompt meant 
 
 ---
 
-Artwork Creation Ideas & Inspiration — Volume III  
+Artwork Creation Ideas & Inspiration   Volume III  
 Love, Memory, Legacy, and the Art That Outlives the Moment
 
 Some artworks are mirrors.  

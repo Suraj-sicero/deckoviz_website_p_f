@@ -24,7 +24,7 @@ export default function AboutDeckoviz() {
         <div className="relative rounded-[32px] bg-white/50 backdrop-blur-xl border border-white/40 shadow-[0_20px_80px_rgba(0,0,0,0.12)] p-6 md:p-10 space-y-6 text-gray-700 leading-relaxed">
 
           <p className="text-lg">
-            If we were to answer in a nutshell — we wouldn’t.  
+            If we were to answer in a nutshell   we wouldn’t.  
             Because Deckoviz isn’t a nutshell, it’s a universe.
           </p>
 
@@ -32,7 +32,7 @@ export default function AboutDeckoviz() {
             Deckoviz is the world’s first{" "}
             <span className="font-semibold text-blue-700">
               AI-powered Dynamic Art Frame
-            </span>, built on Google TV — designed to bring your moods,
+            </span>, built on Google TV   designed to bring your moods,
             memories, and stories into living, glowing form.
           </p>
 
@@ -67,7 +67,7 @@ export default function AboutDeckoviz() {
             <span className="font-semibold text-indigo-700">
               emotionally intelligent home companion
             </span>{" "}
-            — powered by VizzyAI.
+              powered by VizzyAI.
           </p>
 
           <p>
@@ -76,7 +76,7 @@ export default function AboutDeckoviz() {
           </p>
 
           <p className="font-semibold text-gray-900">
-            Deckoviz turns static into something alive — deeply personal,
+            Deckoviz turns static into something alive   deeply personal,
             meaningful, and beautiful.
           </p>
 

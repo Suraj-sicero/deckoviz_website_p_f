@@ -117,7 +117,7 @@ return (
         	  </p>
         	  
         	  <p className="text-base md:text-lg">
-        	    Deckoviz gives you that power — through a living, AI-powered smart art frame that curates
+        	    Deckoviz gives you that power   through a living, AI-powered smart art frame that curates
         	    <br />
         	    the emotion, focus, culture, and story of your space.
         	  </p>
@@ -127,7 +127,7 @@ return (
         	      No more cold corporate walls. No more lifeless break rooms.
         	    </p>
         	    <p className="text-base md:text-lg font-semibold text-gray-800">
-        	      Deckoviz brings your workspace to life — dynamically, beautifully, and intelligently.
+        	      Deckoviz brings your workspace to life   dynamically, beautifully, and intelligently.
         	    </p>
         	  </div>
         	</div>
@@ -376,7 +376,7 @@ return (
           {/* Bottom Description */}
           <div className="text-center max-w-6xl mx-auto">
             <p className="text-lg text-gray-900 font-medium leading-relaxed">
-              It blends seamlessly into any office environment — and adds energy, identity, and emotion to every wall.
+              It blends seamlessly into any office environment   and adds energy, identity, and emotion to every wall.
             </p>
           </div>
         </div>
@@ -460,7 +460,7 @@ return (
 
                   <div className="flex-1 space-y-4">
                     <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
-                      Every room has a job. Deckoviz sets the mood to match it — whether that's deep focus, vibrant creativity, team celebration, or meditative calm.
+                      Every room has a job. Deckoviz sets the mood to match it   whether that's deep focus, vibrant creativity, team celebration, or meditative calm.
                     </p>
                     
                     <div className="flex items-start group/bullet">
@@ -595,7 +595,7 @@ return (
 
                   <div className="flex-1 space-y-4">
                     <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
-                      The modern team doesn't just need open space — they need <strong>emotional design</strong>. Deckoviz provides:
+                      The modern team doesn't just need open space   they need <strong>emotional design</strong>. Deckoviz provides:
                     </p>
                     
                     <div className="flex items-start group/bullet">
@@ -930,7 +930,7 @@ return (
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Offer clients an evolving personal gallery — powered by their mood, story, and memories.
+                          Offer clients an evolving personal gallery   powered by their mood, story, and memories.
                         </p>
                       </div>
                       <div className="flex items-start">
@@ -978,7 +978,7 @@ return (
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Use Deckoviz to reflect transitions — sunrise light, sunset warmth, rainy introspection
+                          Use Deckoviz to reflect transitions   sunrise light, sunset warmth, rainy introspection
                         </p>
                       </div>
                     </div>
@@ -1047,7 +1047,7 @@ return (
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Design team-specific mood zones — creative inspiration rooms, calm break zones, client welcome lobbies
+                          Design team-specific mood zones   creative inspiration rooms, calm break zones, client welcome lobbies
                         </p>
                       </div>
                       <div className="flex items-start">
@@ -1312,7 +1312,7 @@ return (
                       </div>
                     </div>
                     <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      Deckoviz adds a layer of intelligent, emotionally tuned design that clients and partners will notice — instantly positioning your company as innovative, thoughtful, and design-forward.
+                      Deckoviz adds a layer of intelligent, emotionally tuned design that clients and partners will notice   instantly positioning your company as innovative, thoughtful, and design-forward.
                     </p>
                   </div>
                 </div>
@@ -1333,7 +1333,7 @@ return (
                       </div>
                     </div>
                     <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      Want a seasonal mood change? A different vibe by department? A design update for Q3? No problem — just update the visual programming.
+                      Want a seasonal mood change? A different vibe by department? A design update for Q3? No problem   just update the visual programming.
                     </p>
                   </div>
                 </div>
@@ -1410,13 +1410,13 @@ return (
               <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
                 <div className="mb-6">
                   <p className="text-gray-800 leading-relaxed text-lg">
-                    "We use Deckoviz in our UX studio to rotate mood visuals — from conceptual design metaphors to kinetic energy pieces. It makes the entire floor feel alive."
+                    "We use Deckoviz in our UX studio to rotate mood visuals   from conceptual design metaphors to kinetic energy pieces. It makes the entire floor feel alive."
                   </p>
                 </div>
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — Creative Director, Design Agency
+                      Creative Director, Design Agency
                   </p>
                 </div>
                 
@@ -1438,7 +1438,7 @@ return (
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — People Ops Lead, SaaS startup
+                      People Ops Lead, SaaS startup
                   </p>
                 </div>
                 
@@ -1460,7 +1460,7 @@ return (
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — Wellness Coordinator, Fortune 500 HQ
+                      Wellness Coordinator, Fortune 500 HQ
                   </p>
                 </div>
                 

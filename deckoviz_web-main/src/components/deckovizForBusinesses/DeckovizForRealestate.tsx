@@ -102,7 +102,7 @@ const DeckovizForRealEstate = () => {
           {/* Secondary Heading */}
           <div className="mb-8">
             <h2 className="text-2xl md:text-2xl lg:text-3xl font-semibold text-gray-800 leading-tight mb-3">
-              Sell More Than Spaces — Sell Emotion, Atmosphere,
+              Sell More Than Spaces   Sell Emotion, Atmosphere,
               <br />
             	and Imagination
           	</h2>
@@ -119,7 +119,7 @@ const DeckovizForRealEstate = () => {
       	  </p>
       	  
       	  <p className="text-base md:text-lg">
-      	    With Deckoviz, you give buyers and tenants something extraordinary — a living, evolving
+      	    With Deckoviz, you give buyers and tenants something extraordinary   a living, evolving
       	    <br />
       	    visual presence in the home or property that brings art, story, and soul into every room.
     	  </p>
@@ -253,7 +253,7 @@ const DeckovizForRealEstate = () => {
               <br />
               and context-sensitive art and visual storytelling
               <br />
-              experiences — turning blank walls into dynamic
+              experiences   turning blank walls into dynamic
               <br />
               reflections of personality, style, and season.
             </p>
@@ -393,7 +393,7 @@ const DeckovizForRealEstate = () => {
       {/* Bottom Description */}
       <div className="text-center max-w-6xl mx-auto">
         <p className="text-lg text-gray-900 font-medium leading-relaxed">
-          It's a plug-and-play tool to elevate your property's value, presence, and emotional appeal — instantly.
+          It's a plug-and-play tool to elevate your property's value, presence, and emotional appeal   instantly.
         </p>
       </div>
     </div>
@@ -603,7 +603,7 @@ const DeckovizForRealEstate = () => {
 
               <div className="flex-1">
                 <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-3">
-                  Every buyer gets personalized aesthetic identity, seasonal mood changes, and room transformations with zero renovation. This level of personalization sets luxury developments apart — without added labor or materials.
+                  Every buyer gets personalized aesthetic identity, seasonal mood changes, and room transformations with zero renovation. This level of personalization sets luxury developments apart   without added labor or materials.
                 </p>
               </div>
 
@@ -967,7 +967,7 @@ const DeckovizForRealEstate = () => {
                   </div>
                 </div>
                 <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                  Deckoviz dramatically enhances a property's perceived value and sensory impact — with minimal cost and no structural changes.
+                  Deckoviz dramatically enhances a property's perceived value and sensory impact   with minimal cost and no structural changes.
                 </p>
               </div>
             </div>
@@ -1012,7 +1012,7 @@ const DeckovizForRealEstate = () => {
                   </div>
                 </div>
                 <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                  When buyers emotionally connect to a space — when they feel inspired — conversion rates soar. Deckoviz speaks that silent language of emotional design.
+                  When buyers emotionally connect to a space   when they feel inspired   conversion rates soar. Deckoviz speaks that silent language of emotional design.
                 </p>
               </div>
             </div>
@@ -1033,7 +1033,7 @@ const DeckovizForRealEstate = () => {
                   </div>
                 </div>
                 <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                  Need to update showrooms, seasonal appeal, or visual identity? Just update the visuals in your Deckoviz — no painting, no construction, no redesign fees.
+                  Need to update showrooms, seasonal appeal, or visual identity? Just update the visuals in your Deckoviz   no painting, no construction, no redesign fees.
                 </p>
               </div>
             </div>
@@ -1370,7 +1370,7 @@ const DeckovizForRealEstate = () => {
             
             <div className="mb-6">
               <p className="text-gray-900 font-semibold">
-                — Project Director, Urban Luxury Living
+                  Project Director, Urban Luxury Living
               </p>
             </div>
             
@@ -1386,13 +1386,13 @@ const DeckovizForRealEstate = () => {
           <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
             <div className="mb-6">
               <p className="text-gray-800 leading-relaxed text-lg">
-                "It gave our team a new way to tell our brand story. Deckoviz helped us go from 'high-tech interiors' to 'emotionally intelligent homes' — and it landed."
+                "It gave our team a new way to tell our brand story. Deckoviz helped us go from 'high-tech interiors' to 'emotionally intelligent homes'   and it landed."
               </p>
             </div>
             
             <div className="mb-6">
               <p className="text-gray-900 font-semibold">
-                — Marketing Lead, Premium High-Rise Developer
+                  Marketing Lead, Premium High-Rise Developer
               </p>
             </div>
             
@@ -1414,7 +1414,7 @@ const DeckovizForRealEstate = () => {
             
             <div className="mb-6">
               <p className="text-gray-900 font-semibold">
-                — Principal Architect, Design+Build Firm
+                  Principal Architect, Design+Build Firm
               </p>
             </div>
             

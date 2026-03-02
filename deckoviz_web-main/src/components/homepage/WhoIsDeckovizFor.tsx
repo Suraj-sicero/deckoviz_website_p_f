@@ -11,7 +11,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <GraduationCap size={24} />,
       title: "Learning Centres & Schools",
       description:
-        "Transform educational spaces with inspiring, dynamic visuals that enhance learning environments. Create focused study atmospheres, spark creativity, and support different learning modes—from calm concentration to energetic collaboration.",
+        "Transform educational spaces with inspiring, dynamic visuals that enhance learning environments. Create focused study atmospheres, spark creativity, and support different learning modes from calm concentration to energetic collaboration.",
       haloColorRgb: "96, 165, 250", // Blue glow
       route: "/deckoviz-for-schools"
     },
@@ -35,7 +35,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <Sofa size={24} />,
       title: "Electronics & Home Decor Stores",
       description:
-        "Add an irresistible edge to your showroom. Demo how tech and decor beautifully blend—and sell more by showing what's possible.",
+        "Add an irresistible edge to your showroom. Demo how tech and decor beautifully blend and sell more by showing what's possible.",
       haloColorRgb: "251, 146, 60", // Orange glow
       route: "/deckoviz-for-retailstores"
     },
@@ -43,7 +43,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <Coffee size={24} />,
       title: "Restaurants & Cafes",
       description:
-        "Create an unforgettable vibe. Use AI-powered visual storytelling to enhance ambiance, reinforce brand identity, and shape customer moods—from cozy to high-energy.",
+        "Create an unforgettable vibe. Use AI-powered visual storytelling to enhance ambiance, reinforce brand identity, and shape customer moods from cozy to high-energy.",
       haloColorRgb: "216, 180, 254", // Lavender glow
       route: "/deckoviz-for-restaurants"
     },
@@ -51,7 +51,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <ShoppingBag size={24} />,
       title: "Shops and Boutiques",
       description:
-        "Design your atmosphere like a pro—whether it's minimalist chic or artsy and vibrant. Enhance customer experience and stay memorable with every glance.",
+        "Design your atmosphere like a pro whether it's minimalist chic or artsy and vibrant. Enhance customer experience and stay memorable with every glance.",
       haloColorRgb: "249, 115, 22", // Amber glow
       route: "/deckoviz-for-retailstores"
     },
@@ -67,7 +67,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <Heart size={24} />,
       title: "Therapists & Wellness Centers",
       description:
-        "Whether you're running a therapy office, wellness center, or healing space—Deckoviz helps set the right tone. Calm, uplift, or energize your space, naturally and beautifully.",
+        "Whether you're running a therapy office, wellness center, or healing space Deckoviz helps set the right tone. Calm, uplift, or energize your space, naturally and beautifully.",
       haloColorRgb: "52, 211, 153", // Emerald glow
       route: "/deckoviz-for-therapists"
     },

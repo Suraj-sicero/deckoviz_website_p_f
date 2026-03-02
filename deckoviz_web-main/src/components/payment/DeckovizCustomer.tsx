@@ -276,7 +276,7 @@ bg-clip-text text-transparent"
                       </p>
 
                       <p>
-                        Thank you for your patience — and for joining the
+                        Thank you for your patience   and for joining the
                         Deckoviz mission to make the world more wondrous,
                         joyous, and beautiful.
                       </p>
@@ -307,7 +307,7 @@ bg-clip-text text-transparent"
                           a little more magic in your space.
                         </p>
 
-                        <p className="italic text-gray-600">— Team Deckoviz</p>
+                        <p className="italic text-gray-600">  Team Deckoviz</p>
                       </div>
                     </div>
                   </div>

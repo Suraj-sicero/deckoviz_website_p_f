@@ -15,7 +15,7 @@ size: "large"
 
 ## Deckoviz: Accessing Joy, Inspiration, and Hope Through Personalized Art
 
-Art has the power to move us, to lift us, and to shape our emotions in profound ways. With **Deckoviz’s Personal Painter**, you don’t just generate images — you engage in a **meaningful conversation with AI**, allowing it to create visuals that evoke the emotions and states you want to experience.
+Art has the power to move us, to lift us, and to shape our emotions in profound ways. With **Deckoviz’s Personal Painter**, you don’t just generate images   you engage in a **meaningful conversation with AI**, allowing it to create visuals that evoke the emotions and states you want to experience.
 
 Whether you seek **joy, calm, motivation, hope, or a deep connection to your dreams and ideals**, Deckoviz helps you manifest these feelings in stunning, personalized art.
 
@@ -23,7 +23,7 @@ Whether you seek **joy, calm, motivation, hope, or a deep connection to your dre
 
 ## Speak, Envision, and See Your Inspiration Come to Life
 
-Deckoviz’s AI-powered Personal Painter isn’t just about prompts — **it’s about dialogue**. Engage in a conversation — through text or voice — sharing your **aspirations**, your **vision for the future**, the **emotions you want to cultivate**, and the **dreams you hold dear**.
+Deckoviz’s AI-powered Personal Painter isn’t just about prompts   **it’s about dialogue**. Engage in a conversation   through text or voice   sharing your **aspirations**, your **vision for the future**, the **emotions you want to cultivate**, and the **dreams you hold dear**.
 
 Let the AI translate those thoughts into **breathtaking images that remind you of who you are and who you want to become**.
 
@@ -35,7 +35,7 @@ Imagine being able to visualize:
 - **A breathtaking landscape that evokes freedom, adventure, and possibility.**  
 - **A piece that reminds you of love, connection, and the people who matter most.**
 
-These images aren’t just decoration — **they are emotional anchors**, visual reminders of the states and feelings you want to embody.
+These images aren’t just decoration   **they are emotional anchors**, visual reminders of the states and feelings you want to embody.
 
 ---
 
@@ -43,7 +43,7 @@ These images aren’t just decoration — **they are emotional anchors**, visual
 
 Art is not just a reflection of the past or the present; **it is a tool for shaping the future**. The right visuals can evoke powerful emotions, reinforcing **positivity, resilience, and motivation**.
 
-When you immerse yourself in an image designed just for you — one that resonates with your deepest desires — **it becomes more than art; it becomes a portal to your ideal state of mind**.
+When you immerse yourself in an image designed just for you   one that resonates with your deepest desires   **it becomes more than art; it becomes a portal to your ideal state of mind**.
 
 Deckoviz’s Personal Painter helps you:
 
@@ -57,8 +57,8 @@ Deckoviz’s Personal Painter helps you:
 
 ## Art as a Guide to Your Best Self
 
-Every great vision starts in the mind, but **when you give it form — when you make it tangible through art — you bring it closer to reality**.
+Every great vision starts in the mind, but **when you give it form   when you make it tangible through art   you bring it closer to reality**.
 
 Deckoviz’s Personal Painter is not just about capturing what *is*; **it’s about envisioning what *could be***. Whether you want to elevate your mindset, bring more positivity into your daily life, or simply immerse yourself in uplifting beauty, Deckoviz becomes **your personal guide to inspiration**.
 
-**Let Deckoviz help you visualize, believe, and feel — one image at a time.**
+**Let Deckoviz help you visualize, believe, and feel   one image at a time.**

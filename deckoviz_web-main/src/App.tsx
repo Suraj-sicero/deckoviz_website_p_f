@@ -37,6 +37,7 @@ import DeckovizForEnterprise from "./components/deckovizForBusinesses/DeckovizFo
 import FAQ from "./components/homepage/FAQ";
 import WallOfLove from "./components/WallOfLove";
 import HowItWorks from "./components/homepage/HowItWorks";
+import MoreInfo from "./components/homepage/MoreInfo"
 import AboutDeckoviz from "./components/homepage/AboutDeckoviz";
 import AllFeatures from "./components/homepage/AllFeatures";
 import Leaderboard from "./components/Leaderboard";
@@ -123,7 +124,7 @@ const App: React.FC = () => {
         <Route path="/blog" element={<Blog />} />
         {/* ## 2. ADD THE NEW DYNAMIC ROUTE FOR SINGLE POSTS ## */}
         <Route path="/blog/:slug" element={<BlogDetail />} />
-
+<Route path="/blog/:slug" element={<Blog />} />
         <Route path="/designed-for" element={<DesignedFor />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route
@@ -155,7 +156,6 @@ const App: React.FC = () => {
         <Route path="/dasp-guide" element={<DASPGuide />} />
         <Route path="/features" element={<Features />} />
         <Route path="/pricing" element={<Pricing />} />
-        <Route path="/about-deckoviz" element={<AboutDeckoviz />} />
         <Route path="/benefits" element={<AllBenefits />} />
         <Route path="/sitemap" element={<Sitemap />} />
         <Route

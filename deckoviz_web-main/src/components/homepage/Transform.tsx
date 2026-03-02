@@ -42,52 +42,68 @@ useEffect(() => {
               </h3>
             </div>
 
-            {/* Description */}
-            <div className="space-y-4 md:space-y-6 text-gray-600 text-base md:text-lg leading-relaxed">
-              <p>
-                Introducing The World's First AI-Powered Dynamic Art Frame. Deckoviz turns your space into a living
-                canvas — a smart art experience that evolves with you. It brings the power of generative AI,
-                personalized design, and immersive visuals into your home, workspace, or hospitality space.
-              </p>
+{/* Description */}
+<div className="space-y-4 md:space-y-6 text-gray-600 text-base md:text-lg leading-relaxed">
+  <p>
+    Deckoviz Dynamic Art and Storytelling Portal is the world’s first emotionally intelligent dynamic art frame  
+    a new category of living canvas that learns from you, understands you, creates with you, and evolves alongside you,
+    transforming your space into an ever-changing experience.
+  </p>
 
-              <p className="text-purple-600 font-medium">
-                Infuse your life with joy, inspiration, calm, and wonder — every single day.
-              </p>
+  <p>
+    The DAS Portal brings together your dynamic art canvas, storytelling portal, smart photo frame,
+    mood setter, and Google TV   all in one magical experience. It combines generative AI,
+    deep personalization, immersive creative tools, and soulful design.
+    All powered by Vizzy   your emotionally intelligent AI companion,
+    creative partner, personal painter, and curator.
+  </p>
 
-              <p>
-                From Van Gogh to Ghibli, from personal memories to dreamlike stories, Deckoviz reimagines your walls
-                like never before.
-              </p>
+  <p>
+    From timeless masterpieces to your personal memories, from cinematic dreamscapes to original creations
+    painted in iconic art styles, Deckoviz turns your walls into an ever-evolving gallery of art,
+    stories, and living posters.
+  </p>
 
-              <p className="font-semibold text-gray-800">Make your spaces come alive</p>
+  <p className="font-semibold text-gray-800">
+    Walls reimagined. Every single day.
+  </p>
 
-              <p className="text-purple-600 font-medium">Refreshed. Inspired. Blissed. Tranquil. Content. Excited.</p>
-            </div>
+  <p className="text-purple-600 font-medium">
+    Inspired. Serene. Energized. Grounded. Joyous. Curious. Playful. Nostalgic. Uplifted. Centered. Alive.
+  </p>
+</div>
 
-            {/* Feature Points */}
-            <div className="space-y-3 md:space-y-4">
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-purple-500 mt-2 md:mt-3 flex-shrink-0"></div>
-                <p className="text-gray-700 text-sm md:text-base">
-                  <span className="font-semibold"> Controlled entirely through a mobile app.</span>
-                </p>
-              </div>
+{/* Feature Points */}
+<div className="space-y-3 md:space-y-4">
+  <div className="flex items-start gap-3">
+    <div className="w-2 h-2 rounded-full bg-purple-500 mt-2 md:mt-3 flex-shrink-0"></div>
+    <p className="text-gray-700 text-sm md:text-base">
+      <span className="font-semibold">
+        Effortlessly controlled through your Deckoviz mobile companion  
+        create, curate, schedule, and shape every experience.
+      </span>
+    </p>
+  </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 md:mt-3 flex-shrink-0"></div>
-                <p className="text-gray-700 text-sm md:text-base">
-                  <span className="font-semibold"> Built on top of Android TV, fully smart and versatile.</span>
-                </p>
-              </div>
+  <div className="flex items-start gap-3">
+    <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 md:mt-3 flex-shrink-0"></div>
+    <p className="text-gray-700 text-sm md:text-base">
+      <span className="font-semibold">
+        Built on the Google TV platform for fluid performance,
+        streaming versatility, and seamless smart integration.
+      </span>
+    </p>
+  </div>
 
-              <div className="flex items-start gap-3">
-                <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2 md:mt-3 flex-shrink-0"></div>
-                <p className="text-gray-700 text-sm md:text-base">
-                  <span className="font-semibold"> Powered by AI, styled by you.</span>
-                </p>
-              </div>
-            </div>
-
+  <div className="flex items-start gap-3">
+    <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2 md:mt-3 flex-shrink-0"></div>
+    <p className="text-gray-700 text-sm md:text-base">
+      <span className="font-semibold">
+        Emotionally intelligent at its core. Designed for your inner world.
+      </span>
+    </p>
+  </div>
+</div>
             {/* CTA Button */}
             {/* CTA Buttons */}
           <div className="pt-4 flex flex-wrap gap-4 items-center">

@@ -78,11 +78,10 @@ const CountUp = ({
 
 const Hero: React.FC = () => {
   const rotatingTexts = [
-  "personal art frame",
-  "dynamic storyteller",
+  "art canvas",
   "smart photo frame",
-  "mood-and-ambiance-setter",
-  "creative home companion",
+  "storytelling portal",
+  "mood setter",
   "Google TV",
 ];
 
@@ -99,14 +98,35 @@ useEffect(() => {
   const [leftImageIndex, setLeftImageIndex] = useState(0)
   const [rightImageIndex, setRightImageIndex] = useState(0)
 
-  const frameImages = [
-  "/images/imgleft1.png",
-  "/images/imgleft3.png",
-  "/images/imgleft5.png",
-  "/images/imgleft6.png",
-  "/images/imgleft7.png",
-  "/images/imgleft8.png",
-  "/images/imgleft9.png",
+ const frameImages = [
+  "/images/frame_l (1).png",
+  "/images/frame_l (2).png",
+  "/images/frame_l (3).png",
+  "/images/frame_l (4).png",
+  "/images/frame_l (5).png",
+  "/images/frame_l (6).png",
+  "/images/frame_l (7).png",
+  "/images/frame_l (8).png",
+  "/images/frame_l (9).png",
+  "/images/frame_l (10).png",
+  "/images/frame_l (11).png",
+  "/images/frame_l (12).png",
+  "/images/frame_l (13).png",
+  "/images/frame_l (14).png",
+  "/images/frame_l (15).png",
+  "/images/frame_l (16).png",
+  "/images/frame_l (17).png",
+  "/images/frame_l (18).png",
+  "/images/frame_l (19).png",
+  "/images/frame_l (20).png",
+  "/images/frame_l (21).png",
+  "/images/frame_l (22).png",
+  "/images/frame_l (23).png",
+  "/images/frame_l (24).png",
+  "/images/frame_l (25).png",
+  "/images/frame_l (26).png",
+  "/images/frame_l (27).png",
+  "/images/frame_l (28).png",
 ]
 
 
@@ -174,34 +194,38 @@ useEffect(() => {
       <div className="absolute inset-0 w-full h-full">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-70"></div>
       </div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-8xl mx-auto pl-0 pr-4 sm:pl-0 sm:pr-6 lg:pl-0 lg:pr-8 relative z-10">
         <div className="flex flex-col items-center">
           {/* Heading */}
-          <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16">
-            <span className="text-gray-900">Transform Your Space with </span>
-            <span className="bg-gradient-to-r from-[#9a5ffff9] to-indigo-500 bg-clip-text text-transparent">
-              AI-Powered Dynamic Art Frames
-            </span>
-          </h1>
+          <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16 leading-tight">
+  <span className="text-gray-900">
+    Make Your Space Come Alive,
+  </span>
+  <br />
+  <span className="bg-gradient-to-r from-[#9a5ffff9] to-indigo-500 bg-clip-text text-transparent">
+    With Your Personal Art Frame
+  </span>
+</h1>
           {/* Subheading */}
-        <p className="text-center text-gray-600 text-xl mb-3 max-w-2xl mx-auto leading-relaxed">
-Deckoviz brings your <span className="text-purple-600 font-semibold">walls to life</span> with a <span className="text-indigo-600 font-semibold">smart art frame</span> that <span className="text-fuchsia-500 font-semibold">learns your style</span> and <span className="text-purple-600 font-semibold">evolves with you</span> over time.
+   {/* Subheading */}
+<p className="text-center text-gray-600 text-xl mb-3 max-w-3xl mx-auto leading-relaxed">
+  Deckoviz DAS Portal is an{" "}
+  <span className="text-purple-600 font-semibold">
+    AI-powered art frame
+  </span>{" "}
+  that learns your taste and evolves with you, to paint your{" "}
+  <span className="text-indigo-600 font-semibold">
+    inner world, memories, and imagination
+  </span>{" "}
+  on your walls, as your evolving{" "}
+  <span className="inline-block font-semibold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent transition-all duration-300 whitespace-nowrap">
+    {rotatingTexts[rotatingIndex]}
+  </span>.
 </p>
-<p className="text-center text-gray-600 text-lg mt-2 max-w-2xl mx-auto leading-relaxed">
-
-With Deckoviz DAS Portal, your{" "}
-<span className="inline-block font-semibold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent transition-all duration-500 whitespace-nowrap">
-  {rotatingTexts[rotatingIndex]}
-</span>
-, all in one package—the one frame to infuse magic and wonder into your space.
-
-
-</p>
-
           {/* Main content with images and stats */}
           <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-6 mb-10 ml-4">
             {/* Left Image - Fixed container with smooth transitions */}
-            <div className="relative flex-1 flex justify-center">
+            <div className="relative flex-1 flex justify-start">
               {/* Gradient glow behind left image */}
               <div
                 className="absolute inset-0 transform"
@@ -212,55 +236,49 @@ With Deckoviz DAS Portal, your{" "}
 }}
               />
               {/* Fixed size container to prevent layout shifts */}
-              <div className="relative w-[520px] h-[520px]">
+              <div className="relative w-[660px] h-[560px]">
 
   {/* 1️⃣ Furniture / room (STATIC) */}
+  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-300/40 via-pink-200/30 to-yellow-200/40 blur-3xl opacity-70 -z-10" />
 <img
   src="/images/furniture-left.png"
   alt="Living room"
-  className="absolute top-[90px] left-1/2 -translate-x-1/2 w-[120%] h-auto object-contain z-0"
- />
-
-
-  {/* 2️⃣ Artwork inside frame (CHANGES) */}
-<div className="absolute top-[121px] left-1/2 translate-x-[-45%] w-[48%] h-[33%] z-10 overflow-hidden rounded-sm">
-
-
-
-    {frameImages.map((img, index) => (
-      <img
-        key={index}
-        src={img}
-        alt={`Frame artwork ${index + 1}`}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-in-out ${
-          index === leftImageIndex ? "opacity-100" : "opacity-0"
-        }`}
-      />
-    ))}
-  </div>
-
-  {/* 3️⃣ Frame border overlay (STATIC) */}
-<img
-  src="/images/frame-static.png"
-  alt="Frame"
-  className="absolute top-[95px] left-1/2 translate-x-[-45%] w-[70%] h-auto object-contain z-20 pointer-events-none"
+  className="absolute top-[90px] left-1/2 -translate-x-1/2 w-[122%] h-auto object-contain z-0"
 />
+
+{/* 2️⃣ Artwork inside frame (CHANGES) */}
+<div className="absolute top-[155px] left-1/2 -translate-x-1/2 w-[59%] h-[67%] z-10 overflow-hidden rounded-sm">
+
+  {frameImages.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt={`Frame artwork ${index + 1}`}
+      className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ease-in-out ${
+        index === leftImageIndex ? "opacity-100" : "opacity-0"
+      }`}
+    />
+  ))}
+
+
+</div>
+ 
 
 </div>
 
               </div>
 
             {/* Center content - Buttons and Stats */}
-            <div className="flex flex-col items-center gap-8 max-w-md">
+            <div className="flex flex-col items-center gap-9 max-w-md ml-11 mt-11">
 
               {/* Buttons */}
-<div className="flex gap-5 justify-center">
+<div className="flex gap-5 justify-start ">
   <button 
     onClick={() => window.location.href = '/place-order'}
-    className="group relative five-color-gradient border-2 ml-10 border-gray-500 ring-1 ring-inset ring-blue-300 shadow-lg hover:shadow-xl shadow-purple-200/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 overflow-hidden text-base min-w-[140px] shop-now-glow"
+    className="group relative five-color-gradient border-2  border-gray-500 ring-1 ring-inset ring-blue-300 shadow-lg hover:shadow-xl shadow-purple-200/30 text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 overflow-hidden text-base min-w-[140px] shop-now-glow"
   >
     {/* Shimmer effect overlay */}
-    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+    <div className="absolute inset-0 right-[10%] bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
     
     <span className="relative z-10 flex items-center justify-center gap-2">
       Shop Now
@@ -275,13 +293,13 @@ With Deckoviz DAS Portal, your{" "}
     Learn More 
     <ArrowRight 
       size={18} 
-      className="ml-2 transition-transform duration-300 group-hover:translate-x-1" 
+      className="ml-2 transition-transform duration-300 group-hover:translate-x-2" 
     />
   </Button>
 </div>
 
             {/* Enhanced Stats Card */}
-<div className="relative group ml-8 max-w-md w-full">
+<div className="relative group max-w-md w-full right-[10%]">
   {/* Subtle glow effect */}
   <div className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-purple-600/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500"></div>
   
@@ -344,9 +362,9 @@ With Deckoviz DAS Portal, your{" "}
                 }}
               />
               {/* Fixed size container to prevent layout shifts */}
-              <div className="relative w-96 h-96 flex items-center justify-center">
+<div className="relative w-[420px] h-[420px] flex items-center justify-center -ml-9 mt-9">
                 {rightImages.map((image, index) => (
-                  <img
+                  <img  
                     key={index}
                     src={image}
                     alt={`Right artwork ${index + 1}`}

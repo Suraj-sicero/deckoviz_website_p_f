@@ -116,16 +116,6 @@ const AllBenefits = () => {
           })}
         </div>
 
-        {/* ================= CLOSING STATEMENT ================= */}
-        <div className="max-w-4xl mx-auto text-center text-lg font-medium text-gray-800 leading-relaxed">
-          Your space starts reflecting your inner life.
-          <br />
-          Not perfectly. Not constantly.
-          <br />
-          But enough to feel seen.
-          <br /><br />
-          And that changes how you live in it.
-        </div>
       </div>
     </section>
   );

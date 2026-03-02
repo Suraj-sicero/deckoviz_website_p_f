@@ -1,7 +1,7 @@
 ---
 id: 104
 title: "100 Most Beautiful Structures"
-description: "A global journey through the most beautiful structures ever built — monuments of imagination, engineering, culture, and human ambition."
+description: "A global journey through the most beautiful structures ever built   monuments of imagination, engineering, culture, and human ambition."
 tag: "Guides"
 tagColor: "bg-emerald-100 text-emerald-700"
 date: "March 25, 2025"
@@ -15,7 +15,7 @@ size: "large"
 
 Suggestion: Visualize your favourite structures.
 
-Human beings have always shaped stone, steel, glass, and earth into meaning. Structures are frozen dreams — reflections of belief, power, faith, beauty, and curiosity. This collection spans continents and centuries, celebrating architecture not just as shelter, but as art.
+Human beings have always shaped stone, steel, glass, and earth into meaning. Structures are frozen dreams   reflections of belief, power, faith, beauty, and curiosity. This collection spans continents and centuries, celebrating architecture not just as shelter, but as art.
 
 <br>
 
@@ -90,7 +90,7 @@ Frank Lloyd Wright’s iconic house that dissolves boundaries between architectu
 <br>
 
 15. Hagia Sophia, Turkey<br>
-A structure that has shifted identities — church, mosque, museum — while remaining architecturally sublime.
+A structure that has shifted identities   church, mosque, museum   while remaining architecturally sublime.
 
 <br>
 

@@ -115,7 +115,7 @@ const MinimalistScreen: React.FC = () => {
           relative z-10
           max-w-4xl
           rounded-3xl
-          px-8 py-12 md:px-14 md:py-16
+          px-25 py-35 md:px-14 md:py-16
           backdrop-blur-xl
           bg-[#e6f7ec]/70
           border border-[#86efac]/60

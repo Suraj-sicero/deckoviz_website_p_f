@@ -5,21 +5,59 @@ const ToggleGallerySection: React.FC = () => {
   const [imageToggle, setImageToggle] = useState<boolean>(false);
 
   const imagesSet1: string[] = [
-    "/toggleimg/img1.png",
-    "/toggleimg/img2.png",
-    "/toggleimg/img3.png",
-    "/toggleimg/img4.png",
+    "/toggleimg/img (1).jpeg",
+    "/toggleimg/img (2).jpeg",
+    "/toggleimg/img (3).jpeg",
+    "/toggleimg/img (4).jpeg",
   ];
 
   const imagesSet2: string[] = [
-    "/toggleimg/img5.png",
-    "/toggleimg/img6.png",
-    "/toggleimg/img7.png",
-    "/toggleimg/img8.png",
+    "/toggleimg/img (5).jpeg",
+    "/toggleimg/img (6).jpeg",
+    "/toggleimg/img (7).jpeg",
+    "/toggleimg/img (8).jpeg",
   ];
 
   const images = imageToggle ? imagesSet2 : imagesSet1;
+const contentSet1 = [
+  {
+    title: "Morning Calm",
+    desc: "Soft daylight scenes that awaken your space gently."
+  },
+  {
+    title: "Creative Flow",
+    desc: "Visuals that spark imagination and artistic energy."
+  },
+  {
+    title: "Nature Escape",
+    desc: "Bring forests, skies, and serenity into your walls."
+  },
+  {
+    title: "Modern Minimal",
+    desc: "Clean aesthetics for focused and peaceful living."
+  }
+];
 
+const contentSet2 = [
+  {
+    title: "Night Glow",
+    desc: "Ambient tones designed for evenings and relaxation."
+  },
+  {
+    title: "Cosmic Dream",
+    desc: "Celestial visuals that expand your imagination."
+  },
+  {
+    title: "Moody Atmosphere",
+    desc: "Deep colors that transform your room’s emotion."
+  },
+  {
+    title: "Digital Art Pulse",
+    desc: "AI-generated worlds that evolve in the dark."
+  }
+];
+
+const content = imageToggle ? contentSet2 : contentSet1;
   return (
     <section
       className={`relative w-full py-49 px-6 transition-all duration-500 ${
@@ -87,14 +125,12 @@ const ToggleGallerySection: React.FC = () => {
                 className="w-full h-[380px] object-cover"
               />
 
-              <div className="p-6">
-                <h3 className="text-lg font-semibold mb-2">
-                  Scenary {index + 1}
-                </h3>
-                <p className="text-sm opacity-70">
-                  A Frame for every need.
-                </p>
-              </div>
+              <h3 className="text-lg font-semibold mb-2">
+  {content[index].title}
+</h3>
+<p className="text-sm opacity-70">
+  {content[index].desc}
+</p>
             </div>
           ))}
         </div>

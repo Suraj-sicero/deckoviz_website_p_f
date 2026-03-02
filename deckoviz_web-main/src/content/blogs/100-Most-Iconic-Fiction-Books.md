@@ -1,7 +1,7 @@
 ---
 id: 106
 title: "A List Of The 100 Most Iconic Fiction Books"
-description: "A curated journey through the most iconic works of fiction ever written — stories that shaped cultures, challenged power, explored love, memory, identity, and the human condition."
+description: "A curated journey through the most iconic works of fiction ever written   stories that shaped cultures, challenged power, explored love, memory, identity, and the human condition."
 tag: "Guides"
 tagColor: "bg-indigo-100 text-indigo-700"
 date: "March 26, 2025"
@@ -15,7 +15,7 @@ size: "large"
 
 Suggestion: Visualize your favourite fiction.
 
-Fiction has always been more than storytelling. These novels endure because they reveal something essential about human nature — our longing, cruelty, hope, fear, love, and imagination. Across centuries and cultures, these works continue to shape how we understand the world and ourselves.
+Fiction has always been more than storytelling. These novels endure because they reveal something essential about human nature   our longing, cruelty, hope, fear, love, and imagination. Across centuries and cultures, these works continue to shape how we understand the world and ourselves.
 
 <br>
 

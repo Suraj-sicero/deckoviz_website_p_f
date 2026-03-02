@@ -134,7 +134,7 @@ It grows with you.`,
     },
     {
       title: "Personalized Quotes & Posters",
-      description: "Design daily affirmations or custom quotes in aesthetic, artful frames — tailored to your energy."
+      description: "Design daily affirmations or custom quotes in aesthetic, artful frames   tailored to your energy."
     },
     {
       title: "Visual Storytelling for Kids and Families",
@@ -146,7 +146,7 @@ It grows with you.`,
     },
     {
       title: "Multi-Space Adaptation",
-      description: "Deckoviz adapts to you — however you want it to, wherever you are. Make your spaces come alive, be it homes, offices, cafés, clinics, studios."
+      description: "Deckoviz adapts to you   however you want it to, wherever you are. Make your spaces come alive, be it homes, offices, cafés, clinics, studios."
     },
     {
       title: "Personalized Curator",
@@ -304,7 +304,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
 
                 <p className="text-lg text-gray-700 leading-relaxed">
                   A whole lot. We set out to build the ultimate art and
-                  storytelling platform for living spaces — one that naturally
+                  storytelling platform for living spaces   one that naturally
                   creates abundance of features and experiences. If a feature
                   can deepen emotion, spark imagination, personalize a moment,
                   or turn a wall into a living experience, it belongs here.
@@ -316,7 +316,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
                     hundreds of individual features
                   </span>
                   , spanning art, creation, storytelling, music, learning,
-                  rituals, family moments, play, and ambient intelligence —
+                  rituals, family moments, play, and ambient intelligence  
                   organized into{" "}
                   <span className="font-semibold text-pink-500">
                     12 core themes
@@ -332,7 +332,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
 
                 <div className="pt-6 border-t border-gray-100">
                   <p className="text-gray-700 italic">
-                    Deckoviz is becoming a living platform — emotionally
+                    Deckoviz is becoming a living platform   emotionally
                     intelligent, deeply personalized, and evolving every single
                     week.
                   </p>
