@@ -177,6 +177,34 @@ export const benefitsData = [
   }
 ];
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: (index: number) => ({
+    opacity: 0,
+    y: 60,
+    x: index % 2 === 0 ? -50 : 50,
+    scale: 0.95,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
+
 /* ================= COMPONENT ================= */
 
 const Benefits = () => {
@@ -232,12 +260,20 @@ const Benefits = () => {
         </p>
 
         {/* MAIN BENEFIT CARDS ONLY */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<motion.div
+  variants={containerVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+>
           {benefitsData
             .filter((benefit) => benefit.showOnHome)
             .map((benefit, index) => (
               <motion.div
                 key={index}
+                  custom={index}
+  variants={cardVariants}
                 whileHover={{ rotateX: 6, rotateY: -6, scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 180, damping: 18 }}
                 className="
@@ -272,7 +308,7 @@ const Benefits = () => {
                 </p>
               </motion.div>
             ))}
-        </div>
+        </motion.div>
 
         {/* Explore More */}
         <div className="flex justify-center mt-12">

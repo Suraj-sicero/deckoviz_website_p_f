@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+
 /* ================= FLOATING NERVOUS SYSTEM BUTTON (LEFT near gallery) ================= */
 
 const FloatingNervousSystemButton: React.FC = () => {
@@ -164,6 +166,33 @@ const ScrollingImageGallery: React.FC = () => {
   );
 };
 
+const sideContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+    },
+  },
+};
+
+const sideCard = {
+  hidden: (index: number) => ({
+    opacity: 0,
+    x: index % 2 === 0 ? -120 : 120,
+    y: 40,
+    scale: 0.95,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
+};
 const DesignedFor: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
 
@@ -314,8 +343,10 @@ const DesignedFor: React.FC = () => {
     gradient: string;
     image: string;
     index: number;
-  }> = ({ title, caption, image }) => (
-    <div
+  }> = ({ title, caption, image, index }) => (
+    <motion.div
+  custom={index}
+  variants={sideCard}
       className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer border border-gray-100`}
       style={{ height: "430px" }}
     >
@@ -340,7 +371,7 @@ const DesignedFor: React.FC = () => {
       </div>
 
       <div className="absolute inset-0 rounded-2xl border-2 border-purple-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-    </div>
+    </motion.div>
   );
 
   return (
@@ -374,7 +405,13 @@ const DesignedFor: React.FC = () => {
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <motion.div
+  variants={sideContainer}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
+>
           {mainDesignedFor.map((item, index) => (
             <DesignedCard
               key={index}
@@ -385,7 +422,7 @@ const DesignedFor: React.FC = () => {
               index={index}
             />
           ))}
-        </div>
+        </motion.div>
 
         {/* See More Button - only show when not expanded */}
         {!showMore && (
@@ -404,7 +441,12 @@ const DesignedFor: React.FC = () => {
 
         {/* Additional Cards (Expandable) */}
         {showMore && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in slide-in-from-top-4 duration-500 mb-12">
+          <motion.div
+  variants={sideContainer}
+  initial="hidden"
+  animate="visible"
+  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"
+>
             {additionalDesignedFor.map((item, index) => (
               <DesignedCard
                 key={`additional-${index}`}
@@ -415,7 +457,7 @@ const DesignedFor: React.FC = () => {
                 index={index + 6}
               />
             ))}
-          </div>
+          </motion.div>
         )}
 
         {/* See Less Button - only show when expanded */}

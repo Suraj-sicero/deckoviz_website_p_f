@@ -1,43 +1,45 @@
-"use client"
+"use client";
 
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react";
 
 export default function DASPGuide() {
-    
-  const sparkLayer = useRef<HTMLDivElement>(null)
+  const sparkLayer = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+  useEffect(() => {
     const handleMove = (e: MouseEvent) => {
-      if (!sparkLayer.current) return
-      if (Math.random() > 0.75) return
+      if (!sparkLayer.current) return;
+      if (Math.random() > 0.75) return;
 
-      const dot = document.createElement("span")
-      dot.className = "theme-spark"
-      dot.style.left = `${e.clientX}px`
-      dot.style.top = `${e.clientY}px`
+      const dot = document.createElement("span");
+      dot.className = "theme-spark";
+      dot.style.left = `${e.clientX}px`;
+      dot.style.top = `${e.clientY}px`;
 
-      const colors = ["#ec4899", "#d946ef", "#a855f7"]
-      const picked = colors[Math.floor(Math.random() * colors.length)]
-      dot.style.background = picked
-      dot.style.boxShadow = `0 0 18px ${picked}`
+      const colors = ["#ec4899", "#d946ef", "#a855f7"];
+      const picked = colors[Math.floor(Math.random() * colors.length)];
+      dot.style.background = picked;
+      dot.style.boxShadow = `0 0 18px ${picked}`;
 
-      sparkLayer.current.appendChild(dot)
-      setTimeout(() => dot.remove(), 1100)
-    }
+      sparkLayer.current.appendChild(dot);
+      setTimeout(() => dot.remove(), 1100);
+    };
 
-    window.addEventListener("mousemove", handleMove)
-    return () => window.removeEventListener("mousemove", handleMove)
-  }, [])
+    window.addEventListener("mousemove", handleMove);
+    return () => window.removeEventListener("mousemove", handleMove);
+  }, []);
 
   return (
-      <section
+    <section
       className="
         relative min-h-screen px-6 py-20 overflow-hidden
         bg-gradient-to-br from-[#fbcfe8] via-[#e9d5ff] to-[#f5d0fe]
       "
     >
       {/* Mouse sparks */}
-      <div ref={sparkLayer} className="absolute inset-0 pointer-events-none z-20" />
+      <div
+        ref={sparkLayer}
+        className="absolute inset-0 pointer-events-none z-20"
+      />
 
       {/* Background fog */}
       <div className="absolute inset-0 -z-10">
@@ -56,7 +58,7 @@ export default function DASPGuide() {
         <div className="absolute right-20 top-[38%] h-[130px] w-[130px] rounded-full bg-white/18" />
         <div className="absolute right-24 top-44 h-[55px] w-[55px] rounded-full bg-fuchsia-300/50" />
       </div>
-        {/* Glass container */}
+      {/* Glass container */}
       <div
         className="
           relative z-10
@@ -79,718 +81,408 @@ export default function DASPGuide() {
           <span className="h-2.5 w-2.5 rounded-full bg-white/50" />
         </div>
 
-      <div className="max-w-5xl mx-auto space-y-16">
+        <div className="max-w-4xl mx-auto space-y-20">
+          <div className="max-w-4xl mx-auto space-y-20">
 
-        {/* Title */}
-        <div className="space-y-6">
-          <h1 className="text-4xl md:text-5xl font-bold">
-            Deckoviz for Homes: A Living Canvas for Life, Meaning, and Expression
-          </h1>
+  <div className="space-y-6">
+    <h1 className="text-4xl md:text-5xl font-bold text-center">
+      The Deckoviz Thesis
+    </h1>
 
-          <p className="italic text-gray-600">
-            A comprehensive guide to the Deckoviz Dynamic Art & Storytelling Portal (DASP)
-          </p>
+    <p className="text-gray-700 font-medium">
+      On Living Spaces, Emotional Design, and the Future of the Wall
+    </p>
 
-          <p className="text-gray-700 leading-relaxed">
-            Most screens in our lives are extractive.<br />
-            They ask for attention, fragment it, and give very little back.
-          </p>
-        </div>
+     <div className="h-12" />
+  </div>
 
-        {/* Intro */}
-        <div className="space-y-4 text-gray-700 leading-relaxed">
-          <p>Deckoviz was born from a radically different lens altogether:</p>
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold">Cultural Thesis</h2>
+    <h3 className="text-xl font-semibold">On Living Spaces</h3>
 
-          <p>
-            What if the largest visual surface in your home didn’t demand attention, but returned meaning?
-          </p>
+    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+      <p>For centuries, walls have held static art.<br/>Frames preserved moments.<br/>Screens delivered content.</p>
 
-          <p>
-            What if your walls could help you reflect, feel, learn, create, remember, and grow?
-          </p>
+      <p>Paintings were fixed.<br/>Photographs froze time.<br/>Televisions broadcast what others created.</p>
 
-          <p>
-            Deckoviz is not just a digital frame. It is not just generative art. It is not just a smart display.
-          </p>
+      <p>The wall has always been a surface of display.</p>
 
-          <p>
-            It is a living visual system for your home, designed to evolve with you, adapt to your rhythms,
-            and quietly elevate everyday life.
-          </p>
+      <p>But human life is no longer static, no longer beholden to the limitations of yesterday.</p>
 
-          <p>
-            At its core, Deckoviz Dynamic Art & Story Portal, combines generative AI, storytelling, music,
-            rituals, curation, and adaptive intelligence into a single, beautifully integrated home experience.
-          </p>
+      <p>Our moods shift.<br/>Our tastes evolve.<br/>Our identities expand.<br/>Our memories accumulate.<br/>Our imagination moves constantly between past, present, and possible futures.</p>
 
-          <p>
-            Below is a deep dive into the <strong>12 core pillars of Deckoviz for homes</strong>,
-            each representing an entire universe of features, use cases, and everyday magic.
-          </p>
-        </div>
+      <p>We curate playlists that change by the hour.<br/>We refresh feeds that update by the minute.<br/>We capture thousands of moments that never make it to print.</p>
 
-        {/* 1 */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold">1. The Core Generative Engine</h2>
+      <p>Yet the largest surfaces in our homes remain silent and still.</p>
 
-          <p className="italic text-gray-600">
-            Your personal painter, dream visualizer, and creative collaborator
-          </p>
+      <p>We believed this cultural mismatch would not last.</p>
 
-          <p className="text-gray-700 leading-relaxed">
-            At the heart of Deckoviz lives an extraordinarily powerful generative engine.
-            This is the system that turns your home into a living personal art studio,
-            one that never runs out of ideas and always speaks your language.
-          </p>
+      <p>As life becomes more dynamic, the spaces that surround us must become dynamic too. The wall is not just architecture. It is atmosphere. It shapes how we feel without announcing itself. It influences energy, focus, calm, creativity, nostalgia, ambition.</p>
 
-          <h3 className="font-semibold">What it does</h3>
+      <p>We built Deckoviz because walls should no longer be passive backdrops. They should move with us and they should move us.</p>
 
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
-            <li>Abstract, symbolic, emotional, and conceptual artworks</li>
-            <li>Dreamlike inner landscapes that reflect moods, memories, or states of mind</li>
-            <li>AI style transfer to transform your photos into your favorite artistic styles</li>
-            <li>Sketch-to-art and sketch-to-video transformations</li>
-            <li>Physics-based and generative artworks that evolve continuously over time</li>
-            <li>Iterative artworks that change subtly day by day rather than looping</li>
-            <li>Dynamic photo animations and image-to-video experiences</li>
-            <li>Music-responsive visuals that move and breathe with sound</li>
-            <li>Art generated from text, journal entries, poems, books, or even emotions</li>
-            <li>Access iconic art or niche art from our ever-expanding library</li>
-          </ul>
+      <p>That is what Deckoviz is an emotionally intelligent canvas that learns, adapts, and evolves. Turning space into something alive.</p>
 
-          <p>You can turn:</p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
-            <li>A memory into a painting</li>
-            <li>A feeling into a visual language</li>
-            <li>A song into a living artwork</li>
-            <li>A chapter of a book into a cinematic visual sequence</li>
-          </ul>
-
-          <p className="font-semibold">Some uses in the home</p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
-            <li>A calming abstract painting in the morning that slowly evolves throughout the day</li>
-            <li>A symbolic artwork reflecting gratitude, intention, or focus</li>
-            <li>A child’s sketch transformed into a gallery-worthy artwork</li>
-            <li>A photo from a special moment reimagined into a timeless piece of art</li>
-            <li>A continuously evolving artwork that never repeats</li>
-          </ul>
-
-          <p className="font-semibold">Why it matters</p>
-          <p className="text-gray-700 leading-relaxed">
-            Art has always been a mirror of the inner world.
-            Deckoviz makes that mirror personal, alive, and accessible every day.
-            Instead of static decor, your home becomes a space that reflects who you are becoming.
-          </p>
-        </div>
-
-        {/* 2 */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold">2. Visual Storytelling & Story Immersion</h2>
-
-          <p className="italic text-gray-600">
-            Stories you don’t just read or watch, but stories live with and live in
-          </p>
-
-          <p className="text-gray-700 leading-relaxed">
-            Deckoviz brings stories out of books and into space.
-          </p>
-
-          <p className="font-semibold">What it does</p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
-            <li>Real-time story visualization as you read</li>
-            <li>Storyboards that unfold scene by scene</li>
-            <li>Narrated visual art with voice, music, and imagery</li>
-            <li>Visual audiobooks in your preferred voice</li>
-            <li>Book-to-Frames mode, turning books into art collections</li>
-            <li>Story Sequence Generator for dynamic visual narratives</li>
-            <li>Comic-book and art-book creation tools</li>
-            <li>Storyboard-to-short-film creation experiences</li>
-            <li>Visual chat with books and stories</li>
-            <li>Bedtime and learning stories, designed for kids</li>
-          </ul>
-
-          <p className="font-semibold">Uses</p>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
-            <li>Children watching a bedtime story gently come alive on the wall</li>
-            <li>A novel visualized chapter by chapter as ambient art</li>
-            <li>Learning history, mythology, or science through visual narratives</li>
-            <li>Families co-creating story worlds together</li>
-            <li>Turning personal life stories into visual memory books</li>
-          </ul>
-
-          <p className="font-semibold">Why it matters</p>
-          <p className="text-gray-700 leading-relaxed">
-            Stories shape identity, values, and imagination.
-            Deckoviz restores storytelling to its ritualistic, shared,
-            and immersive role in the home, beyond scrolling and passive consumption.
-          </p>
-        </div>
-
-        {/* Pillars 3–9 continue exactly the same pattern */}
-      </div>
-
-      <div className="max-w-5xl mx-auto space-y-14">
-
-        {/* Pillar 3 */}
-        <div>
-          <h2 className="text-3xl font-bold mb-4">3. Poster Creation & Visual Intention Tools</h2>
-
-          <p className="italic text-gray-600 mb-6">
-            Your walls as reminders of your world, of who you want to be, of your dreams
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Deckoviz includes a powerful poster creation suite designed to turn ideas, goals, and inspiration into living visual anchors.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-3">What it does</h3>
-
-          <p className="text-gray-700 mb-4 leading-relaxed">
-            You can create virtually any type of poster:
-          </p>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Quote posters and text-driven designs</li>
-            <li>Affirmation posters that evolve over time</li>
-            <li>Vision boards and dynamic moodboards</li>
-            <li>Yearly goals, bucket lists, and personal rules</li>
-            <li>Educational posters for kids</li>
-            <li>Poem posters and literature-inspired designs</li>
-            <li>Movie-style posters for personal moments or inspiration</li>
-            <li>Smart quote posters that change based on mood or time</li>
-          </ul>
-
-          <p className="text-gray-700 mt-6 mb-4 leading-relaxed">
-            Posters can be:
-          </p>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Static or dynamic</li>
-            <li>Minimalist or cinematic</li>
-            <li>Time-based or context-aware</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Use cases in the home</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>A vision board that subtly shifts through the year</li>
-            <li>A quote that appears only in the mornings</li>
-            <li>Learning posters that adapt as a child grows</li>
-            <li>Moodboards for creative workspaces</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Why it matters</h3>
-
-          <p className="text-gray-700 leading-relaxed">
-            Your environment shapes behavior. Deckoviz helps turn walls into gentle nudges toward intention, rather than noise or decoration without meaning.
-          </p>
-        </div>
-
-        {/* Pillar 4 */}
-        <div>
-          <h2 className="text-3xl font-bold mb-4">4. Moodscapes & Music-Driven Experiences</h2>
-
-          <p className="italic text-gray-600 mb-6">
-            Enter your desired state and immerse yourself in multisensory experiences
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Deckoviz understands that visuals alone are only half the experience.
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            This pillar combines visuals, music, lights, and soon even scents, to create deeply immersive moodscapes.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-3">What it does</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Sync visuals perfectly with your chosen music</li>
-            <li>
-              Generate original AI music tailored to your mood, dreams and life, and sync it to just the perfect artworks for those songs
-            </li>
-            <li>Create multisensory collections combining art and sound</li>
-            <li>MoodSwings that help you enter states like calm, gratitude, focus, romance, or energy</li>
-            <li>Music-responsive generative art that reacts in real time</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Use cases in the home</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>A calming evening wind-down mode</li>
-            <li>Energizing visuals synced with music in the morning</li>
-            <li>Romantic ambiance for special nights</li>
-            <li>Focus-enhancing visuals for work or study</li>
-            <li>Gratitude or reflection moments at the end of the day</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Why it matters</h3>
-
-          <p className="text-gray-700 leading-relaxed">
-            Mood is not accidental. Deckoviz gives you agency over emotional states, turning your home into an active participant in wellbeing.
-          </p>
-        </div>
-
-        {/* Pillar 5 */}
-        <div>
-          <h2 className="text-3xl font-bold mb-4">5. Smart Art Photo Frame & Memory Surfaces</h2>
-
-          <p className="italic text-gray-600 mb-6">
-            From your phone to your walls, intelligently, for your memories deserve the centrepiece
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Photos are among our most valuable artifacts, yet most remain buried in camera rolls.
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Deckoviz elevates them into living memory surfaces.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-3">What it does</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Displays photos as-is or transformed into your favourite art styles</li>
-            <li>Creates intelligent AI montages from your photo library</li>
-            <li>Surfaces memories automatically on birthdays, anniversaries, or meaningful dates</li>
-            <li>Occasionally surprises you with moments “just because”</li>
-            <li>Animates photos gently for dynamic displays</li>
-            <li>Access photos from our ever-expanding library</li>
-            <li>
-              Enjoy photos of space, architecture, urbanscapes, nature, landscapes, history, portraits, and lots more
-            </li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Use cases in the home</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>A rotating family memory wall</li>
-            <li>Artistic reinterpretations of personal photos</li>
-            <li>Anniversary montages that appear automatically</li>
-            <li>Daily moments of nostalgia and warmth</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Why it matters</h3>
-
-          <p className="text-gray-700 leading-relaxed">
-            Memories shape belonging. Deckoviz makes remembering effortless, emotional, and beautiful, without needing you to curate constantly.
-          </p>
-        </div>
-
-        {/* Pillar 6 */}
-        <div>
-          <h2 className="text-3xl font-bold mb-4">6. Narration-Based & Voice-Driven Experiences</h2>
-
-          <p className="italic text-gray-600 mb-6">
-            Art that speaks, stories that listen
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Deckoviz integrates voice deeply into the visual experience.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-3">What it does</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Narrated art experiences</li>
-            <li>Poem and book narration in preferred voices</li>
-            <li>Visual audiobooks paired with book-themed art</li>
-            <li>Guided visualizations, meditation, and voice-based journeys</li>
-            <li>Interactive storytelling with preferred voice</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Use cases in the home</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Spoken poetry with evolving visuals</li>
-            <li>Calm narrated experiences before sleep</li>
-            <li>Learning through narrated visual content</li>
-            <li>Interactive storytelling sessions with kids</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Why it matters</h3>
-
-          <p className="text-gray-700 leading-relaxed">
-            Voice adds intimacy. Combined with visuals, it creates experiences that feel human, warm, and present, rather than digital.
-          </p>
-        </div>
-
-        {/* Pillar 7 */}
-        <div>
-          <h2 className="text-3xl font-bold mb-4">7. Rituals, Modes & Intelligent Scheduling</h2>
-
-          <p className="italic text-gray-600 mb-6">
-            Turning time into meaning, adding anchors to your days
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Most home vibes and state changes happen accidentally. Deckoviz lets them change intentionally.
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            This pillar is about designing rhythm into life. Daily, weekly, monthly. Quietly powerful, never intrusive.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-3">What it does</h3>
-
-          <p className="text-gray-700 mb-4 leading-relaxed">
-            Deckoviz lets you create and automate rituals and modes, including:
-          </p>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Daily, weekly, monthly and yearly rituals</li>
-            <li>Time-based modes that shift automatically or at your direction</li>
-            <li>Lifestyle-aware scheduling that adapts over time</li>
-            <li>Manual or proactive activation by Vizzy</li>
-          </ul>
-
-          <p className="text-gray-700 mt-6 mb-4 leading-relaxed">
-            Built-in modes include:
-          </p>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Creativity mode</li>
-            <li>Study mode</li>
-            <li>Celebration mode</li>
-            <li>Romantic mode</li>
-            <li>Energy mode</li>
-            <li>Reflection mode</li>
-            <li>Gratitude mode</li>
-            <li>Calm / wind-down mode</li>
-            <li>Focus mode</li>
-            <li>Kids mode</li>
-            <li>And 20+ evolving modes</li>
-          </ul>
-
-          <p className="text-gray-700 mt-6 mb-4 leading-relaxed">
-            Each mode can control:
-          </p>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Visual style</li>
-            <li>Art type</li>
-            <li>Music and narration</li>
-            <li>Mood and pacing</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Use cases in the home</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Morning intention visuals without reminders or alarms</li>
-            <li>Evening wind-down rituals that feel sacred, not mechanical</li>
-            <li>Automatic celebration modes for birthdays or anniversaries</li>
-            <li>Creative modes that activate during your usual creative hours</li>
-            <li>Study or focus modes for children at predictable times</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Why it matters</h3>
-
-          <p className="text-gray-700 leading-relaxed">
-            Ritual is how humans turn time into meaning. Deckoviz helps restore structure without rigidity, rhythm without pressure.
-          </p>
-        </div>
-
-        {/* Pillar 8 */}
-        <div>
-          <h2 className="text-3xl font-bold mb-4">8. Social & Shared Creative Experiences</h2>
-
-          <p className="italic text-gray-600 mb-6">
-            Art is better when it’s shared
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Deckoviz is not a solitary object. It is a shared creative surface. Designed to help you connect more meaningfully with your family and friends with art and stories.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-3">What it does</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Share art and collections with friends and family</li>
-            <li>Send art as gifts directly to other Deckoviz frames</li>
-            <li>Co-create artworks together in real time</li>
-            <li>Family creative spaces</li>
-            <li>A private social feed for Deckoviz users</li>
-            <li>Shared generative experiences</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Use cases in the home</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Grandparents sending art to their grandchildren’s homes, and vice versa</li>
-            <li>Friends gifting personalized artworks instead of objects</li>
-            <li>Families creating shared visual memory collections</li>
-            <li>Collaborative art creation across cities or countries</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Why it matters</h3>
-
-          <p className="text-gray-700 leading-relaxed">
-            Connection deepens when it’s creative. Deckoviz turns social interaction into shared meaning and a tapestry. Art can thus become a part of a family’s traditions.
-          </p>
-        </div>
-
-        {/* Pillar 9 */}
-        <div>
-          <h2 className="text-3xl font-bold mb-4">9. Vizzy, Your Home Companion & Vibe Creator-Curator</h2>
-
-          <p className="italic text-gray-600 mb-6">
-            A quiet, friendly intelligence that learns your taste, your preferences, your hopes
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Vizzy is the soul of Deckoviz. It is a background intelligence that learns, curates, adapts, and gently guides.
-          </p>
-
-          <p className="text-gray-700 mb-6 leading-relaxed">
-            Vizzy understands the emotional state and needs of you and the members of your household, to create, curate and display ever more meaningful experiences for you.
-          </p>
-
-          <h3 className="text-xl font-semibold mb-3">What Vizzy does</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Learns your taste, preferences, lifestyle, hopes, dreams</li>
-            <li>Understands family members individually</li>
-            <li>Curates art, photos, and experiences intelligently</li>
-            <li>Adapts visuals based on time of day, mood, and context</li>
-            <li>Surfaces meaningful moments and creations proactively</li>
-          </ul>
-
-          <p className="text-gray-700 mt-6 mb-4 leading-relaxed">
-            Signature features include:
-          </p>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Art for the Day</li>
-            <li>Quote for the Day</li>
-            <li>Memory of the Day</li>
-            <li>Knowledge for the Day</li>
-            <li>Dynamic mood-aware curation</li>
-            <li>Occasion-aware displays</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Use cases in the home</h3>
-
-          <ul className="list-disc pl-6 text-gray-700 space-y-2">
-            <li>Calm visuals in the morning, richer ones at night</li>
-            <li>Special memories resurfacing on meaningful dates</li>
-            <li>Art that subtly matches your emotional rhythm</li>
-            <li>A display that feels alive without being distracting</li>
-          </ul>
-
-          <h3 className="text-xl font-semibold mt-8 mb-3">Why it matters</h3>
-
-          <p className="text-gray-700 leading-relaxed">
-            Curation is an art. Vizzy makes your home feel considered, alive, and deeply personal, without effort. Over time, as its capabilities and attunement grows, so does its presence in your home in being your perfect home curator.
-          </p>
-        </div>
-{/* ===================== 10. Learning, Kids, and Growth Experiences ===================== */}
-<div className="space-y-6 mt-16">
-
-  <h2 className="text-3xl font-bold">
-    10. Learning, Kids, and Growth Experiences
-  </h2>
-
-  <p className="italic text-gray-600">
-    Education without friction, with fun, and with frolic and creative flourish
-  </p>
-
-  <p className="text-gray-700 leading-relaxed">
-    Deckoviz doubles as a powerful visual, story-based and personalized learning companion,
-    especially for children, though adults are always welcome in using its suite of learning
-    focused features, as follows.
-  </p>
-
-  <h3 className="text-xl font-semibold">What it does</h3>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>Learning visualizers for concepts and subjects</li>
-    <li>Story-driven education</li>
-    <li>Dynamic educational posters</li>
-    <li>Visual explanations for complex topics</li>
-    <li>Creative learning games</li>
-    <li>Safe, curiosity-driven exploration</li>
-    <li>Create short films and videos to learn topics in an immersive way</li>
-    <li>
-      Visual chat with books - make the reading process more engaging, more immersive,
-      more alive
-    </li>
-    <li>
-      Vizzy as your tutor - Vizzy can take on your favourite avatar and engage in fun lessons
-    </li>
-    <li>
-      Learn concepts by converting them into personalized songs
-    </li>
-    <li>
-      Increase your focus by activating study mode, for visuals and soundscapes that
-      inspire the deepest focus
-    </li>
-  </ul>
-
-  <h3 className="text-xl font-semibold mt-6">Use cases in the home</h3>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>Kids learning through visual storytelling</li>
-    <li>Educational posters that evolve with age</li>
-    <li>Visual explanations for science, history, or art</li>
-    <li>Creative games that encourage imagination, not addiction</li>
-  </ul>
-
-  <h3 className="text-xl font-semibold mt-6">Why it matters</h3>
-
-  <p className="text-gray-700 leading-relaxed">
-    Learning sticks when it’s beautiful, personalized, and vivid. Deckoviz makes
-    education ambient, playful, and curiosity-led. It makes learning life-sized,
-    by moving it from the small screen to the large portal to curiosity and wonder.
-    Make learning more immersive and engaging, make it more fun and more creative.
-    For yourself, and for the kids.
-  </p>
-</div>
-
-{/* ===================== 11. Games & Interactive Generative Experiences ===================== */}
-<div className="space-y-6 mt-20">
-
-  <h2 className="text-3xl font-bold">
-    11. Games & Interactive Generative Experiences
-  </h2>
-
-  <p className="italic text-gray-600">
-    Play as connection, not consumption, for depth, not distraction
-  </p>
-
-  <p className="text-gray-700 leading-relaxed">
-    Deckoviz includes a growing suite of 50+ interactive generative games,
-    with more added regularly, designed to infuse more fun, more creativity,
-    more merriment, and more connection into your home.
-  </p>
-
-  <h3 className="text-xl font-semibold">What it does</h3>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>Social generative games</li>
-    <li>Creativity-based games</li>
-    <li>Story-driven experiences</li>
-    <li>Collaborative play modes</li>
-    <li>Family-friendly/family-focused interactive modes</li>
-  </ul>
-
-  <p className="text-gray-700 mt-4">
-    These games are designed around:
-  </p>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>Expression</li>
-    <li>Connection</li>
-    <li>Curiosity</li>
-    <li>Creativity</li>
-  </ul>
-
-  <p className="text-gray-700">
-    Not dopamine loops or competitive grind.
-  </p>
-
-  <h3 className="text-xl font-semibold mt-6">Use cases in the home</h3>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>Family game nights with creative twists</li>
-    <li>Social play with friends remotely</li>
-    <li>Games that spark conversation, not silence</li>
-  </ul>
-
-  <h3 className="text-xl font-semibold mt-6">Why it matters</h3>
-
-  <p className="text-gray-700 leading-relaxed">
-    Play is fundamental to human flourishing. Deckoviz reclaims play as meaningful,
-    shared, and imaginative. Reframing play as life-affirming, not mind-numbing.
-  </p>
-</div>
-
-{/* ===================== 12. Marketplace, Personalization & Everything Else ===================== */}
-<div className="space-y-6 mt-20">
-
-  <h2 className="text-3xl font-bold">
-    12. Marketplace, Personalization & Everything Else
-  </h2>
-
-  <p className="italic text-gray-600">
-    The long tail of Deckoviz magic
-  </p>
-
-  <p className="text-gray-700 leading-relaxed">
-    The final pillar captures the ecosystem around Deckoviz. This is all the parts
-    that didn’t fit in the first 11, the parts that we are adding to expand our
-    vision of the ultimate art and storytelling platform, the ultimate home companion.
-  </p>
-
-  <h3 className="text-xl font-semibold">What it includes</h3>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>Deckoviz marketplace to buy and sell art</li>
-    <li>Discover artists and inspirations</li>
-    <li>Personalized generative clock faces</li>
-    <li>Use Deckoviz as a living clock or timepiece</li>
-    <li>Individual profiles for each household member</li>
-    <li>Deep personalization per person</li>
-    <li>Continuous feature expansion</li>
-  </ul>
-
-  <h3 className="text-xl font-semibold mt-6">Use cases in the home</h3>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>A constantly evolving art marketplace on your wall</li>
-    <li>A clock that feels like art, not utility</li>
-    <li>Personalized experiences for every family member</li>
-  </ul>
-
-  <h3 className="text-xl font-semibold mt-6">Why it matters</h3>
-
-  <p className="text-gray-700 leading-relaxed">
-    Deckoviz is not static. It is a platform that grows with you,
-    expanding over years, not months.
-  </p>
-</div>
-
-{/* ===================== Closing Section ===================== */}
-<div className="space-y-6 mt-20">
-
-  <p className="text-gray-800 font-medium">
-    Deckoviz is not about screens.
-  </p>
-
-  <p className="text-gray-800">
-    It is about spaces, it is about souls, and it is about the soul of your space.
-  </p>
-
-  <p className="text-gray-700">
-    Spaces that help you:
-  </p>
-
-  <ul className="list-disc pl-6 space-y-2 text-gray-700">
-    <li>Feel more</li>
-    <li>Remember more</li>
-    <li>Create more</li>
-    <li>Learn more</li>
-    <li>Love more</li>
-  </ul>
-
-  <p className="text-gray-700 leading-relaxed">
-    Your home is the most important interface you have, it’s your sacred space.
-    Deckoviz exists to make that interface alive, intentional, and beautiful.
-  </p>
-
-  <p className="text-gray-700 leading-relaxed">
-    Beyond merely decorating walls, Deckoviz is about designing the emotional
-    and experiential fabric of daily life.
-  </p>
-
-  <p className="text-gray-900 font-semibold">
-    And this is only the beginning.
-  </p>
+      <p>This is a portal, and the beginning of a new relationship between you and your space.</p>
     </div>
+
+     <div className="h-12" />
+  </div>
+
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold">Mind Design & World Design Thesis</h2>
+    <h3 className="text-xl font-semibold">Why We Built Deckoviz</h3>
+
+    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+      <p>Homes shape consciousness and experience more than we realize.</p>
+
+      <p>Light affects mood.<br/>Color alters perception.<br/>Texture changes warmth.<br/>Imagery influences memory and emotion.</p>
+
+      <p>Design is psychology embedded in space.</p>
+
+      <p>And yet most homes rely on static visual anchors. A painting hung once. A photograph framed and forgotten. A television screen used only for consumption.</p>
+
+      <p>We believe art should be dynamic, evolving, attuned to you.<br/>That personalization should be deep.<br/>And intelligence should be ambient, not intrusive.</p>
+
+      <p>Intelligence in the home should not shout. It should not demand attention. It should quietly adapt with subtle shifts, gradual evolution, and emotional attunement.</p>
+
+      <p>Deckoviz was created to merge art, storytelling, memories, an AI home companion, and design into a single living surface. As a canvas that learns your taste. A system that understands your patterns, your beliefs, and your aspirations. A frame that evolves with your life.</p>
+
+      <p>Not as decoration, or as a display, or for content consumption, but as a living, growing, evolving canvas, becoming the emotional operating system of your home.</p>
+
+      <p>As a surface that reflects your inner world back to you.<br/>As a space that breathes with your memories, moods, and imagination.</p>
+
+      <p>We did not want to add another device to the home or merely upgrade the wall.<br/>We wanted to elevate the space itself.</p>
+    </div>
+
+     <div className="h-12" />
+  </div>
+
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold">Foundational Technology Thesis</h2>
+    <h3 className="text-xl font-semibold">A New Category for the Wall</h3>
+
+    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+      <p>Technology has reshaped nearly every major object in modern life.</p>
+
+      <p>Phones became smart.<br/>Cars became intelligent.<br/>Workspaces became connected.</p>
+
+      <p>But the wall, the most expansive surface in the home, remained unchanged, unyielding, unmoving.</p>
+
+      <p>It holds art. It holds screens. But it does not understand.</p>
+
+      <p>We approached this from first principles.</p>
+
+      <p>What if your walls could recognize your patterns, reflect your beliefs, and your moods?<br/>What if art could evolve with your emotional state?<br/>What if memory, storytelling, generative creativity, and ambient intelligence could coexist in one seamless form?</p>
+
+      <p>From that inquiry emerged a new category the emotionally intelligent dynamic art frame.</p>
+
+      <p>Deckoviz is the world's first emotionally intelligent dynamic art frame moving beyond the content display paradigm, into something that is an adaptive, evolving visual experience that responds to you.</p>
+
+      <p>It integrates generative AI, deep personalization, storytelling systems, and refined design into one continuous living interface. It is ambient intelligence embedded into architecture.</p>
+
+      <p>It is a shift from static surfaces to responsive environments.<br/>From passive walls to adaptive presence.</p>
+
+      <p>This is the beginning of a broader transformation. Homes will not simply contain technology.<br/>They will sense, adapt, and co-create with us.</p>
+
+      <p>Deckoviz is the first expression of that future of home living.</p>
+
+       <div className="h-12" />
+
+      <p>Innovation is easy to dismiss as novelty.</p>
+      <p>But inevitability feels different.</p>
+
+      <p>As life becomes more fluid, identity more layered, and creativity more accessible, the static wall will become an artifact of a slower era.</p>
+
+      <p>Emotionally intelligent environments are not an indulgence. They are the natural next step in human-centered design.</p>
+
+      <p>Deckoviz exists because the static wall and home were overdue for reinvention.</p>
+
+      <p>And this is only the beginning the beginning of a world where our AIs, our space companions, reflect our hopes and dreams, our values and our concerns, and help us shape spaces, both internal and external, that lead to flourishing at our deepest core.</p>
+    </div>
+  </div>
+
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold">About Us</h2>
+    <h3 className="text-xl font-semibold">We Are Building Living Environments</h3>
+
+    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+      <p>Most spaces are silent, static, indifferent.</p>
+
+      <p>Walls do not evolve.<br/>Art does not adapt.<br/>Homes do not understand who you are becoming.</p>
+
+      <p>We are changing that.</p>
+
+      <p>Deckoviz exists to transform physical space into something alive.<br/>Responsive.<br/>Emotionally intelligent.<br/>Deeply personal.</p>
+
+      <p>We believe the environments we inhabit shape our energy, our thinking, our relationships, and ultimately our lives.</p>
+
+      <p>So we are building technology that does not just sit in your space.<br/>It collaborates with it.</p>
+    </div>
+
+     <div className="h-12" />
+  </div>
+
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold">A New Category</h2>
+
+    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+      <p>Deckoviz is pioneering a new category AI-powered spatial intelligence.</p>
+
+      <p>We are not building a screen.<br/>We are not building décor.<br/>We are building a living canvas that evolves with you.</p>
+
+      <p>At the intersection of art, artificial intelligence, design, and emotional insight, our flagship product brings:</p>
+
+      <ul className="list-disc pl-6 space-y-2 text-justify">
+        <li>dynamic visual expression</li>
+        <li>personalized generative art</li>
+        <li>adaptive curation</li>
+        <li>multisensory ambiance</li>
+        <li>deep contextual intelligence</li>
+      </ul>
+
+      <p>into homes, offices, restaurants, hotels, wellness spaces, and beyond.</p>
+
+      <p>Spaces should not just look beautiful.<br/>They should feel aligned.</p>
+    </div>
+
+     <div className="h-12" />
+  </div>
+
+  <div className="space-y-6">
+    <h2 className="text-2xl font-bold">Our Philosophy</h2>
+
+    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+      <p>Technology should elevate human experience.</p>
+
+      <p>It should be beautiful.<br/>It should feel magical.<br/>It should enrich emotion.<br/>It should deepen intentional living.</p>
+
+      <p>We believe that as AI becomes more powerful, taste matters more.<br/>As automation increases, meaning becomes more valuable.<br/>As the world accelerates, stillness and inspiration become strategic assets.</p>
+
+      <p>We are building tools that help people live more expressively, more consciously, more joyfully.</p>
+    </div>
+  </div>
+{/* ===================== What We Build ===================== */}
+<div className="space-y-6 mt-20">
+
+  <h2 className="text-3xl font-bold">What We Build</h2>
+
+   <div className="h-12" />
+
+  <h3 className="text-2xl font-semibold">Deckoviz</h3>
+
+  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <p>
+      Deckoviz is a personalized AI art frame that curates, creates, and evolves visual experiences based on your tastes, moods, goals, and inner world.
+    </p>
+
+    <p>
+      It does not rotate static images.<br/>
+      It evolves.
+    </p>
+
+    <p>
+      It adapts hourly, daily, seasonally, or whenever you choose.
+    </p>
+
+    <p>
+      It generates original artwork tuned to your aesthetic fingerprint.<br/>
+      It curates collections that feel uncannily aligned.<br/>
+      It transforms your walls into narrative, not decoration.
+    </p>
+
+    <p>Think of Deckoviz as:</p>
+
+    <ul className="list-disc pl-6 space-y-2 text-justify">
+      <li>art that grows with you</li>
+      <li>ambiance that responds to you</li>
+      <li>space that reflects your becoming</li>
+    </ul>
+
+    <p>
+      Not static.<br/>
+      Not generic.<br/>
+      Not decorative for decoration’s sake.
+    </p>
+
+    <p>Alive.</p>
+  </div>
 </div>
 
-      </div>
-      
- {/* Spark styles */}
+{/* ===================== Our Technology ===================== */}
+<div className="space-y-6 mt-20">
+
+  <h2 className="text-3xl font-bold">Our Technology</h2>
+
+  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <p>
+      At the heart of Deckoviz lies a proprietary personalization architecture built to understand people, not just preferences.
+    </p>
+
+    <p>We model:</p>
+
+    <ul className="list-disc pl-6 space-y-2 text-justify">
+      <li>taste and aesthetic inclination</li>
+      <li>emotional rhythms and moods</li>
+      <li>intentions and goals</li>
+      <li>creative impulses</li>
+      <li>evolving identity</li>
+    </ul>
+
+    <p>
+      Our AI does not just recommend.<br/>
+      It learns.
+    </p>
+
+     <div className="h-12" />
+
+    <p>
+      It refines.<br/>
+      It evolves alongside you.
+    </p>
+
+    <p>
+      Through layered generative systems and adaptive curation engines, we:
+    </p>
+
+    <ul className="list-disc pl-6 space-y-2 text-justify">
+      <li>generate original visuals</li>
+      <li>create symbolic and abstract art</li>
+      <li>adapt displays based on context</li>
+      <li>pair visuals with atmosphere</li>
+      <li>continuously refine personalization</li>
+    </ul>
+
+    <p>
+      This is spatial intelligence designed for human depth.
+    </p>
+  </div>
+</div>
+
+{/* ===================== Beyond Deckoviz ===================== */}
+<div className="space-y-6 mt-20">
+
+  <h2 className="text-3xl font-bold">Beyond Deckoviz</h2>
+
+  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <p>Deckoviz is the beginning.</p>
+
+    <p>We are building an ecosystem.</p>
+
+    <p>An ecosystem where:</p>
+
+    <p>
+      Homes become dynamic expressions of identity.<br/>
+      Offices become environments of alignment and creativity.<br/>
+      Restaurants and hotels become immersive emotional experiences.<br/>
+      Public spaces become living storytelling mediums.
+    </p>
+
+    <p>
+      We are expanding into modular visual walls, expressive robotic companions, dynamic sculptural forms, and next-generation ambient systems.
+    </p>
+
+    <p>Our ambition is generational.</p>
+
+    <p>
+      We are building a 100-year company focused on space, emotion, and human actualization.
+    </p>
+  </div>
+
+   <div className="h-12" />
+</div>
+
+{/* ===================== Why This Matters ===================== */}
+<div className="space-y-6 mt-20">
+
+  <h2 className="text-3xl font-bold">Why This Matters</h2>
+
+  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <p>
+      In a world saturated with screens, we are designing meaning.
+    </p>
+
+    <p>
+      In a world driven by productivity, we are elevating presence.
+    </p>
+
+     <div className="h-12" />
+
+    <p>
+      In a world where AI automates tasks, we are using AI to deepen humanity.
+    </p>
+
+    <p>
+      We believe the future of technology is not colder.<br/>
+      It is more expressive.<br/>
+      More intentional.<br/>
+      More alive.
+    </p>
+  </div>
+</div>
+
+{/* ===================== Who We Are ===================== */}
+<div className="space-y-6 mt-20">
+
+  <h2 className="text-3xl font-bold">Who We Are</h2>
+
+  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <p>
+      We are builders, designers, technologists, artists, and system thinkers.
+    </p>
+
+    <p>We care deeply about:</p>
+
+    <ul className="list-disc pl-6 space-y-2 text-justify">
+      <li>taste</li>
+      <li>emotional intelligence</li>
+      <li>long-term thinking</li>
+      <li>product excellence</li>
+      <li>human flourishing</li>
+    </ul>
+
+    <p>
+      We are not optimizing for noise.<br/>
+      We are building for depth.
+    </p>
+  </div>
+
+   <div className="h-12" />
+</div>
+
+{/* ===================== The Future We See ===================== */}
+<div className="space-y-6 mt-20">
+
+  <h2 className="text-3xl font-bold">The Future We See</h2>
+
+  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <p>We envision a world where:</p>
+
+    <p>
+      Your environment evolves with your growth.<br/>
+      Your walls reflect your ambitions.<br/>
+      Your space supports your relationships.<br/>
+      Your home feels like a living extension of your inner world.
+    </p>
+
+    <p>
+      Where technology and art are not separate.<br/>
+      Where intelligence and beauty coexist.<br/>
+      Where your surroundings participate in your story.
+    </p>
+
+    <p>
+      We are building that world.
+    </p>
+  </div>
+
+</div>
+</div>
+        </div>
+
+              </div>
+
+      {/* Spark styles */}
       <style>
         {`
           .theme-spark {
@@ -809,5 +501,5 @@ export default function DASPGuide() {
         `}
       </style>
     </section>
-  )
+  );
 }

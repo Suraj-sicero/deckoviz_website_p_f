@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 interface FeatureCardProps {
   title: string;
@@ -210,10 +211,34 @@ const getIconForFeature = (title: string) => {
   return map[title] || "3dicons-brush-dynamic-color.png";
 };
 
+const cardVariants = {
+  hidden: (direction: "left" | "right") => ({
+    opacity: 0,
+    x: direction === "left" ? -120 : 120,
+    scale: 0.95,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      duration: 0.9,
+      ease: [0.16, 1, 0.3, 1], // smooth luxury easing
+    },
+  },
+};
+
 const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescription, index }) => (
-<div className="group relative rounded-2xl p-10 pt-20 shadow-lg border border-white/40
-bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50
-hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 backdrop-blur-md">
+<motion.div
+  custom={index % 2 === 0 ? "left" : "right"}
+  variants={cardVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="group relative rounded-2xl p-10 pt-20 shadow-lg border border-white/40
+  bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50
+  hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 backdrop-blur-md"
+>
 
 
 {/* Gradient hover */}
@@ -244,7 +269,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
 </p>
 
 </div>
-</div>
+</motion.div>
 );
   return (
     <div

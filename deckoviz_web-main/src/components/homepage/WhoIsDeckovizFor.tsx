@@ -2,6 +2,35 @@
 import { useNavigate } from "react-router-dom";
 import type React from "react"
 import { GraduationCap, Hotel, Building2, Sofa, Coffee, ShoppingBag, Briefcase, Heart, Sparkles } from "lucide-react"
+import { motion } from "framer-motion";
+
+const trainContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12, // wagon timing
+    },
+  },
+};
+
+const trainCard = {
+  hidden: {
+    opacity: 0,
+    x: 300,       // off-screen right
+    rotate: 2,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    rotate: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1], // smooth cinematic easing
+    },
+  },
+};
 
 const WhoIsDeckovizFor: React.FC = () => {
   const navigate = useNavigate();
@@ -128,10 +157,17 @@ const WhoIsDeckovizFor: React.FC = () => {
   </h2>
 </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<motion.div
+  variants={trainContainer}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+>
           {segments.map((segment, index) => (
-            <div
-              key={index}
+            <motion.div
+  key={index}
+  variants={trainCard}
               className="relative group rounded-2xl p-8 py-12 transition-all duration-300 shadow-lg overflow-hidden flex flex-col h-full static-halo-card"
               style={{
                 background: getComplexGradient(index),
@@ -178,9 +214,9 @@ const WhoIsDeckovizFor: React.FC = () => {
                 </div>
               </div>
               
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="text-center mt-16 space-y-4">
           <p className="text-xl text-gray-600 font-semibold">

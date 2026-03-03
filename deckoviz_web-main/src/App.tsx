@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+import GeneralInfo from "./components/homepage/generalinfo";
 import AboutUs from "./components/AboutUs";
 import PlaceOrder from "./components/payment/PlaceOrder";
 import ScrollToTop from "./components/ScrollToTop";
@@ -37,7 +38,7 @@ import DeckovizForEnterprise from "./components/deckovizForBusinesses/DeckovizFo
 import FAQ from "./components/homepage/FAQ";
 import WallOfLove from "./components/WallOfLove";
 import HowItWorks from "./components/homepage/HowItWorks";
-import MoreInfo from "./components/homepage/MoreInfo"
+
 import AboutDeckoviz from "./components/homepage/AboutDeckoviz";
 import AllFeatures from "./components/homepage/AllFeatures";
 import Leaderboard from "./components/Leaderboard";
@@ -111,6 +112,7 @@ const App: React.FC = () => {
               <DesignedFor />
               <HowItWorks />
               <GuestReactionsTestimonials />
+
               <ToggleGallerySection />
               <Youtube />
               <Referral />
@@ -132,6 +134,7 @@ const App: React.FC = () => {
           element={<ForHomesThatMeanSomething />}
         />
         <Route path="/more-info" element={<MoreInfo />} />
+        <Route path="/generalinfo" element={<GeneralInfo />} />
 
         <Route path="/nervous-system" element={<NervousSystem />} />
 
