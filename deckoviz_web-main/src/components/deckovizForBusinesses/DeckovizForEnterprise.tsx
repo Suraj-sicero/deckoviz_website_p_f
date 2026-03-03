@@ -577,12 +577,6 @@ const renderPost = (post: MarkdownBlog) => (
           ✦ Deckoviz For All
         </span>
       </div>
-<<<<<<< HEAD
-      {/* ================= FULL ENTERPRISE OVERVIEW   GLASS CARD ================= */}
-      <section className="py-24 bg-white relative overflow-hidden">
-        {/* Ambient Glow */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 blur-[160px]" />
-=======
             <div className="
       absolute inset-0 rounded-[40px] 
       bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
@@ -590,7 +584,6 @@ const renderPost = (post: MarkdownBlog) => (
       group-hover:opacity-70 
       transition duration-500
       "></div>
->>>>>>> 4904d6b (updated for enterprise page)
 
       {/* Heading */}
       <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight mb-6">
@@ -714,7 +707,7 @@ const renderPost = (post: MarkdownBlog) => (
               <div className="space-y-6 text-white/80 leading-relaxed text-[16px]">
                 <p>
                   Attention is fragmented. Expectations are higher.
-                  Differentiation is harder. Screens are everywhere   yet most
+                  Differentiation is harder. Screens are everywhere — yet most
                   spaces still feel forgettable.
                 </p>
 
@@ -737,7 +730,7 @@ const renderPost = (post: MarkdownBlog) => (
 
                 <p>
                   For businesses, Deckoviz becomes the missing layer between
-                  brand strategy and real-world experience   the layer customers
+                  brand strategy and real-world experience — the layer customers
                   actually feel.
                 </p>
               </div>
@@ -1266,58 +1259,6 @@ const renderPost = (post: MarkdownBlog) => (
 </div>
       </motion.div>
 
-<<<<<<< HEAD
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
-          {/* Heading */}
-          <div className="text-center mb-14">
-            <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4">
-              Other Enterprise Benefits
-            </h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Beyond the core features, Deckoviz delivers enterprise-grade
-              advantages that matter at scale   operationally, strategically,
-              and experientially.
-            </p>
-          </div>
-
-          {/* Benefits Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {[
-              {
-                title: "Multi-location orchestration",
-                desc: "Manage one screen or one thousand from a single intuitive dashboard. Orchestrate content, experiences, and ambience centrally while still enabling local nuance across locations.",
-              },
-              {
-                title: "Brand consistency at scale",
-                desc: "Preserve your visual identity everywhere your brand exists   visuals, color systems, tone, narrative style, and experience design remain aligned without sacrificing flexibility.",
-              },
-              {
-                title: "Clean enterprise integrations",
-                desc: "Integrate into existing enterprise systems through APIs and structured controls. Automate updates, enable inventory-aware visuals, and coordinate campaigns without operational overhead.",
-              },
-              {
-                title: "Analytics & measurable impact",
-                desc: "Move beyond guesswork using analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals   enabling teams to optimize for real-world outcomes.",
-              },
-              {
-                title: "Enterprise security & reliability",
-                desc: "Deckoviz is built with enterprise-grade security, reliability, and support. From onboarding to expansion, it remains dependable, low-maintenance, and future-proof.",
-              },
-              {
-                title: "A living body for your brand",
-                desc: "Deckoviz does not replace your brand strategy   it gives it a living, intelligent body inside your space, continuously evolving with your business.",
-              },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className="bg-white/55 backdrop-blur-xl border border-white/40 rounded-3xl p-8 shadow-[0_20px_70px_rgba(236,72,153,0.10)] hover:shadow-[0_30px_90px_rgba(168,85,247,0.16)] transition-all duration-500 hover:-translate-y-1"
-              >
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {item.title}
-                </h3>
-                <p className="text-[15px] text-gray-700 leading-relaxed text-justify">
-                  {item.desc}
-=======
     </section>
 
       <AnimatePresence>
@@ -1356,7 +1297,6 @@ const renderPost = (post: MarkdownBlog) => (
 
                 <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
                   Enterprise-grade advantages designed for scale, consistency, and measurable impact.
->>>>>>> 4904d6b (updated for enterprise page)
                 </p>
               </div>
 
@@ -1508,33 +1448,7 @@ const renderPost = (post: MarkdownBlog) => (
   <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-purple-400/20 blur-[120px] rounded-full" />
   <div className="absolute bottom-[-120px] right-[-120px] w-[400px] h-[400px] bg-indigo-400/20 blur-[120px] rounded-full" />
 
-<<<<<<< HEAD
-{/* 📘 Business DASP Guide Button   ONLY for Explore Further */}
-<button
-  onClick={() => navigate("/dasp-business-guide")}
-  className="
-    hidden lg:flex
-    absolute
-    right-10
-    top-16
-    z-20
-    max-w-[560px]
-    px-10 py-2
-    rounded-[999px]
-    text-left
-    bg-gradient-to-br from-violet-300 via-fuchsia-400 to-pink-400
-    shadow-[0_16px_40px_rgba(168,85,247,0.35)]
-    hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
-    transition-all duration-500
-  "
->
-  <div className="flex flex-col gap-0.5">
-    <span className="text-xs uppercase tracking-widest text-purple-900">
-      Business Guide
-    </span>
-=======
   <div className="max-w-7xl mx-auto px-6 relative z-10">
->>>>>>> 4904d6b (updated for enterprise page)
 
     {/* ===== Header ===== */}
     <div className="text-center mb-20">
