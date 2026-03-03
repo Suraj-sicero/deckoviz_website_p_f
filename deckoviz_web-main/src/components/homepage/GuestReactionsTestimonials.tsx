@@ -17,37 +17,37 @@ const testimonialsData: Testimonial[] = [
   {
     quote:
       "Deckoviz is the best thing since sliced bread… jokes aside, this really has been a magical addition to my home. My living room went from ‘nice’ to ‘wait, what is that?!’ in one evening.",
-    author: "— A friend of the founding team",
+    author: "  A friend of the founding team",
     tagline: "Early Human 🧠"
   },
   {
     quote:
       "I bought it for the art. I kept it for the vibes. Didn’t expect my walls to become my mood therapist, storyteller, and late-night calm machine. Yet here we are.",
-    author: "— Early customer, London",
+    author: "  Early customer, London",
     tagline: "Real Living Room Energy ✨"
   },
   {
     quote:
       "My kid thinks it’s alive. I kind of agree. Her drawings turning into real art on the wall blew her mind. And honestly, mine too.",
-    author: "— Parent tester",
+    author: "  Parent tester",
     tagline: "Family Magic 🧡"
   },
   {
     quote:
       "It’s like having a personal artist who never sleeps and never asks for coffee. Every day there’s something new. Sometimes I just stand there staring at it. Worth every second.",
-    author: "— Design nerd & beta user",
+    author: "  Design nerd & beta user",
     tagline: "Design Obsessed 🎨"
   },
   {
     quote:
       "We started using it for date nights. Now it’s part of our relationship. From romantic modes to shared creations, Deckoviz made our evenings feel more intentional.",
-    author: "— Couple from Manchester",
+    author: "  Couple from Manchester",
     tagline: "Shared Rituals 💕"
   },
   {
     quote:
       "I thought this was a fancy digital frame. Turns out it’s a whole personality. Art, music, rituals, stories, Netflix, all in one. My wall is doing more than any gadget I own.",
-    author: "— Tech early adopter",
+    author: "  Tech early adopter",
     tagline: "More Than a Gadget 🚀"
   }
 ];

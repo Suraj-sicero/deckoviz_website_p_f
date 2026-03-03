@@ -106,7 +106,7 @@ const DeckovizTherapistsLanding = () => {
             <p className="text-base md:text-lg">
               Whether you're guiding clients through therapy, holding space for nervous system regulation,
               <br />
-              or leading people into stillness, your physical environment does more than decorate — it
+              or leading people into stillness, your physical environment does more than decorate   it
               <br />
               participates.
             </p>
@@ -397,7 +397,7 @@ const DeckovizTherapistsLanding = () => {
           {/* Bottom Description */}
           <div className="text-center max-w-6xl mx-auto">
             <p className="text-lg text-gray-900 font-medium leading-relaxed">
-              It becomes a visual support system — alive, responsive, and deeply aligned with your healing space.
+              It becomes a visual support system   alive, responsive, and deeply aligned with your healing space.
             </p>
           </div>
         </div>
@@ -601,7 +601,7 @@ const DeckovizTherapistsLanding = () => {
 
         <div className="flex-1 space-y-4">
           <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-3">
-            Deckoviz becomes your <strong>atmospheric co-facilitator</strong> — elevating sessions from experiential to unforgettable:
+            Deckoviz becomes your <strong>atmospheric co-facilitator</strong>   elevating sessions from experiential to unforgettable:
           </p>
           
           <div className="flex items-start group/bullet">
@@ -990,7 +990,7 @@ const DeckovizTherapistsLanding = () => {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Clients remember how they felt. A beautiful, supportive, emotionally intelligent space becomes part of the reason they return — and refer others.
+                Clients remember how they felt. A beautiful, supportive, emotionally intelligent space becomes part of the reason they return   and refer others.
               </p>
             </div>
           </div>
@@ -1014,7 +1014,7 @@ const DeckovizTherapistsLanding = () => {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Deckoviz visually communicates your intention, care, and attention to healing design — elevating your brand identity and perceived quality.
+                Deckoviz visually communicates your intention, care, and attention to healing design   elevating your brand identity and perceived quality.
               </p>
             </div>
           </div>
@@ -1035,7 +1035,7 @@ const DeckovizTherapistsLanding = () => {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Your studio becomes instantly more shareable, photogenic, and story-worthy — without any permanent changes to your physical space.
+                Your studio becomes instantly more shareable, photogenic, and story-worthy   without any permanent changes to your physical space.
               </p>
             </div>
           </div>
@@ -1238,13 +1238,13 @@ const DeckovizTherapistsLanding = () => {
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
           <div className="mb-6">
             <p className="text-gray-800 leading-relaxed text-lg">
-              "Clients enter the room and instantly exhale. Deckoviz is like visual sage — it clears and softens the energy for the work to come."
+              "Clients enter the room and instantly exhale. Deckoviz is like visual sage   it clears and softens the energy for the work to come."
             </p>
           </div>
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Somatic Therapist, California
+                Somatic Therapist, California
             </p>
           </div>
           
@@ -1266,7 +1266,7 @@ const DeckovizTherapistsLanding = () => {
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Yin Yoga Instructor, London
+                Yin Yoga Instructor, London
             </p>
           </div>
           
@@ -1282,13 +1282,13 @@ const DeckovizTherapistsLanding = () => {
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
           <div className="mb-6">
             <p className="text-gray-800 leading-relaxed text-lg">
-              "It's not just a screen. It's a visual prayer, a reminder, a ritual. My clients often stop and just stare — breathing, reflecting, arriving."
+              "It's not just a screen. It's a visual prayer, a reminder, a ritual. My clients often stop and just stare   breathing, reflecting, arriving."
             </p>
           </div>
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Breathwork Guide, Bali
+                Breathwork Guide, Bali
             </p>
           </div>
           

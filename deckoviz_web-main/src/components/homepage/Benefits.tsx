@@ -48,7 +48,7 @@ export const benefitsData = [
     icon: "🌍",
     title: "A Window to Wonder",
     description:
-      "Explore art, cultures, dreams, stories, and worlds far beyond your walls—keeping curiosity alive and your home feeling expansive.",
+      "Explore art, cultures, dreams, stories, and worlds far beyond your walls keeping curiosity alive and your home feeling expansive.",
     showOnHome: true
   },
   {
@@ -72,56 +72,56 @@ export const benefitsData = [
 
   {
     icon: "🧠",
-    title: "Your Space Works With You",
+    title: "Your space starts working with you, not against you",
     description:
-      "Instead of static walls and idle screens, your home begins to respond—to your mood, your time, your rituals, and your energy. The environment supports how you want to feel and who you want to become.",
+      "Instead of static walls and idle screens, your home begins to respond to your mood, your time, your rituals, and your energy. The environment supports how you want to feel and who you want to become.",
     showOnHome: false
   },
   {
-    icon: "🛠️",
-    title: "Beauty and Utility, Together",
+    icon: "🎭",
+    title: "You stop choosing between beauty and utility",
     description:
       "Deckoviz replaces art, photo frames, posters, mood lighting, music systems, and inspiration boards with a single evolving canvas. Fewer objects. Far richer experiences.",
     showOnHome: false
   },
   {
-    icon: "🖼️",
-    title: "Memories That Don’t Fade",
+    icon: "📸",
+    title: "Your memories stop fading into folders",
     description:
       "Photos, moments, and stories refuse to stay archived. They evolve into art and become part of your daily life instead of something you scroll through once a year.",
     showOnHome: false
   },
   {
     icon: "🎈",
-    title: "Creativity Becomes Playful",
+    title: "Creativity becomes lighter, faster, and more playfu",
     description:
-      "You create more without friction—paintings, posters, music, stories, rituals—not because you schedule time, but because your space invites it.",
+      "You create more without friction paintings, posters, music, stories, rituals not because you schedule time, but because your space invites it.",
     showOnHome: false
   },
   {
     icon: "🧘",
-    title: "Emotionally Intelligent Spaces",
+    title: "Your home gains emotional intelligence",
     description:
       "Morning calm feels different from evening warmth. Celebrations feel distinct from reflection. The space adapts quietly, without you managing it.",
     showOnHome: false
   },
   {
     icon: "🕯️",
-    title: "Rituals Without Effort",
+    title: "You build rituals without effort",
     description:
-      "Daily grounding. Weekly reflection. Monthly celebrations. Deckoviz remembers, prepares, and sets the tone—making reflection feel natural.",
+      "Daily grounding. Weekly reflection. Monthly celebrations. Deckoviz remembers, prepares, and sets the tone making reflection feel natural.",
     showOnHome: false
   },
   {
     icon: "📵",
-    title: "A Healthier Relationship With Technology",
+    title: "Your relationship with technology becomes healthier",
     description:
       "Less scrolling. Less noise. More ambience. More presence. Technology shifts from demanding attention to shaping atmosphere.",
     showOnHome: false
   },
   {
     icon: "🌱",
-    title: "Personal Growth Stays Visible",
+    title: " Your Personal Growth Stays Visible",
     description:
       "Goals, affirmations, visions, and intentions remain present. Not buried in apps. Not forgotten. Gently seen, every day.",
     showOnHome: false
@@ -158,7 +158,7 @@ export const benefitsData = [
     icon: "⚙️",
     title: "Personalization Without Complexity",
     description:
-      "Deckoviz learns you over time—without constant inputs or micromanagement.",
+      "Deckoviz learns you over time without constant inputs or micromanagement.",
     showOnHome: false
   },
   {
@@ -167,8 +167,43 @@ export const benefitsData = [
     description:
       "Weekly software evolution. Expanding features. A platform that grows with you, not something you outgrow.",
     showOnHome: false
+  },
+    {
+    icon: "🧘🏼‍♀️",
+    title: "Your space starts reflecting your inner life",
+    description:
+      " Not perfectly. Not constantly. But enough to feel seen. And that changes how you live in it.",
+    showOnHome: false
   }
 ];
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const cardVariants = {
+  hidden: (index: number) => ({
+    opacity: 0,
+    y: 60,
+    x: index % 2 === 0 ? -50 : 50,
+    scale: 0.95,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
 
 /* ================= COMPONENT ================= */
 
@@ -219,17 +254,26 @@ const Benefits = () => {
         </h2>
 
         <p className="text-gray-600 text-center max-w-3xl mx-auto mb-12">
+
           A living canvas, a creative companion, and a quiet presence that makes
           your space feel more like you.
         </p>
 
         {/* MAIN BENEFIT CARDS ONLY */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+<motion.div
+  variants={containerVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+>
           {benefitsData
             .filter((benefit) => benefit.showOnHome)
             .map((benefit, index) => (
               <motion.div
                 key={index}
+                  custom={index}
+  variants={cardVariants}
                 whileHover={{ rotateX: 6, rotateY: -6, scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 180, damping: 18 }}
                 className="
@@ -264,7 +308,7 @@ const Benefits = () => {
                 </p>
               </motion.div>
             ))}
-        </div>
+        </motion.div>
 
         {/* Explore More */}
         <div className="flex justify-center mt-12">

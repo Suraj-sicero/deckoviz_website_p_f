@@ -1,102 +1,101 @@
-"use client"
-import React from "react"
-import { useState } from "react"
-import { useRef, useEffect } from "react"
-import { ChevronDown, ArrowRight, Clock, Search } from "lucide-react"
-import { Link } from "react-router-dom"
-import { loadBlogs, MarkdownBlog } from "../lib/blogLoader"
+"use client";
+import React from "react";
+import { useState } from "react";
+import { useRef, useEffect } from "react";
+import { ChevronDown, ArrowRight, Clock, Search } from "lucide-react";
+import { Link } from "react-router-dom";
+import { loadBlogs, MarkdownBlog } from "../lib/blogLoader";
 
-
-
-const tags = ["View all", "Announcements", "Guides", "Use Cases", "Case Studies","Innovations"]
+import { useParams } from "react-router-dom";
+const tags = [
+  "View all",
+  "Announcements",
+  "Guides",
+  "Use Cases",
+  "Case Studies",
+  "Innovations",
+];
 
 const Blog: React.FC = () => {
-  const [blogs, setBlogs] = useState<MarkdownBlog[]>([])
-  const [email, setEmail] = useState("")
-  const [activeTag, setActiveTag] = useState("View all")
-  const [showAllHero, setShowAllHero] = useState(false)
+  const { slug } = useParams();
+  const [blogs, setBlogs] = useState<MarkdownBlog[]>([]);
+  const [email, setEmail] = useState("");
+  const [activeTag, setActiveTag] = useState("View all");
+  const [showAllHero, setShowAllHero] = useState(false);
 
   const pinnedBlogs = blogs
-  .filter(post => post.pinned)
-  .sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
-  .slice(0, 10)
+    .filter((post) => post.pinned)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 10);
 
-const infinitePinnedBlogs = [...pinnedBlogs, ...pinnedBlogs]
+  const infinitePinnedBlogs = [...pinnedBlogs, ...pinnedBlogs];
 
-const unpinnedBlogs = blogs.filter(post => !post.pinned)
+  const unpinnedBlogs = blogs.filter((post) => !post.pinned);
 
-  const pinnedTrackRef = useRef<HTMLDivElement | null>(null)
-const conveyorX = useRef(0)
-const isPaused = useRef(false)
+  const pinnedTrackRef = useRef<HTMLDivElement | null>(null);
+  const conveyorX = useRef(0);
+  const isPaused = useRef(false);
 
+  useEffect(() => {
+    loadBlogs().then(setBlogs);
+  }, []);
 
+  useEffect(() => {
+    const track = pinnedTrackRef.current;
+    if (!track || pinnedBlogs.length === 0) return;
 
-useEffect(() => {
-  loadBlogs().then(setBlogs)
-}, [])
+    const SPEED = 0.25;
+    conveyorX.current = 0;
+    let rafId: number | null = null;
 
-useEffect(() => {
-  const track = pinnedTrackRef.current
-  if (!track || pinnedBlogs.length === 0) return
+    const animate = () => {
+      if (!isPaused.current) {
+        conveyorX.current -= SPEED;
+      }
 
-  const SPEED = 0.25
-  conveyorX.current = 0
-  let rafId: number | null = null
+      if (Math.abs(conveyorX.current) >= track.scrollWidth / 2) {
+        conveyorX.current = 0;
+      }
 
-  const animate = () => {
-    if (!isPaused.current) {
-      conveyorX.current -= SPEED
-    }
+      track.style.transform = `translateX(${conveyorX.current}px)`;
+      rafId = requestAnimationFrame(animate);
+    };
+
+    rafId = requestAnimationFrame(animate);
+
+    return () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+      track.style.transform = "translateX(0px)";
+    };
+  }, [pinnedBlogs.length]);
+
+  const moveConveyor = (dir: "next" | "prev") => {
+    if (isPaused.current) return;
+
+    const track = pinnedTrackRef.current;
+    if (!track) return;
+
+    const cardWidth = 320 + 32;
+    conveyorX.current += dir === "next" ? -cardWidth : cardWidth;
 
     if (Math.abs(conveyorX.current) >= track.scrollWidth / 2) {
-      conveyorX.current = 0
+      conveyorX.current = 0;
     }
-
-    track.style.transform = `translateX(${conveyorX.current}px)`
-    rafId = requestAnimationFrame(animate)
-  }
-
-  rafId = requestAnimationFrame(animate)
-
-  return () => {
-    if (rafId !== null) {
-      cancelAnimationFrame(rafId)
-    }
-    track.style.transform = "translateX(0px)"
-  }
-}, [pinnedBlogs.length])
-
-const moveConveyor = (dir: "next" | "prev") => {
- if (isPaused.current) return  
-
-  const track = pinnedTrackRef.current
-  if (!track) return
-
-  const cardWidth = 320 + 32
-  conveyorX.current += dir === "next" ? -cardWidth : cardWidth
-
-  if (Math.abs(conveyorX.current) >= track.scrollWidth / 2) {
-    conveyorX.current = 0
-  }
-}
-
+  };
 
   // Fixed filter logic
- const filteredPosts =
-  activeTag === "View all"
-    ? blogs
-    : blogs.filter((post) => post.tag === activeTag)
+  const filteredPosts =
+    activeTag === "View all"
+      ? blogs
+      : blogs.filter((post) => post.tag === activeTag);
 
+  const heroPostsToShow = showAllHero ? blogs.slice(0, 8) : blogs.slice(0, 5);
 
-const heroPostsToShow =
-  showAllHero ? blogs.slice(0, 8) : blogs.slice(0, 5)
-
-const BlogCard = ({ post }: { post: MarkdownBlog }) => {
-
-    const isLarge = post.size === "large"
-    const isMedium = post.size === "medium"
+  const BlogCard = ({ post }: { post: MarkdownBlog }) => {
+    const isLarge = post.size === "large";
+    const isMedium = post.size === "medium";
 
     return (
       <div
@@ -146,7 +145,8 @@ const BlogCard = ({ post }: { post: MarkdownBlog }) => {
           <h3
             className="text-xl md:text-2xl font-bold text-white mb-4 transition-all duration-500 group-hover:transform group-hover:translate-y-[-4px]"
             style={{
-              textShadow: "0 4px 8px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.2)",
+              textShadow:
+                "0 4px 8px rgba(0,0,0,0.4), 0 8px 16px rgba(0,0,0,0.2)",
             }}
           >
             {post.title}
@@ -185,17 +185,13 @@ const BlogCard = ({ post }: { post: MarkdownBlog }) => {
           }}
         ></div>
       </div>
-    )
-  }
+    );
+  };
 
   // Reorder posts for better layout balance
- 
-
-
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-
       {/* Light Background with Subtle Gradients */}
       <div className="absolute inset-0">
         {/* Pure white base */}
@@ -211,81 +207,77 @@ const BlogCard = ({ post }: { post: MarkdownBlog }) => {
         <div
           className="absolute inset-0 opacity-[0.02]"
           style={{
-            backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
+            backgroundImage:
+              "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
             backgroundSize: "40px 40px",
           }}
         />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-20">
-
-
         {/* Enhanced Header */}
         <div className="flex flex-col items-center mb-16">
-  
-    {/* Badge */}
-    <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
-      <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
-        Blog Sections
-      </div>
-    </div>
+          {/* Badge */}
+          <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
+            <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
+              Blog Sections
+            </div>
+          </div>
 
-    <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black leading-tight">
-      Blog And Articles
-    </h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black leading-tight">
+            Blog And Articles
+          </h1>
 
-    <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
-      Discover <span className="text-purple-600 font-semibold">insights</span>,{" "}
-      <span className="text-pink-600 font-semibold">guides</span>, and{" "}
-      <span className="text-orange-600 font-semibold">stories</span> that inspire{" "}
-      <span className="text-blue-600 font-semibold">creativity</span> and{" "}
-      <span className="text-purple-600 font-semibold">innovation</span> in art and{" "}
-      <span className="text-indigo-600 font-semibold">technology</span>.
-    </p>
+          <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
+            Discover{" "}
+            <span className="text-purple-600 font-semibold">insights</span>,{" "}
+            <span className="text-pink-600 font-semibold">guides</span>, and{" "}
+            <span className="text-orange-600 font-semibold">stories</span> that
+            inspire{" "}
+            <span className="text-blue-600 font-semibold">creativity</span> and{" "}
+            <span className="text-purple-600 font-semibold">innovation</span> in
+            art and{" "}
+            <span className="text-indigo-600 font-semibold">technology</span>.
+          </p>
+        </div>
 
+        {pinnedBlogs.length > 0 && (
+          <div className="mt-16 mb-24 w-full">
+            {/* Section Header */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+                📍Pinned Blogs
+              </h2>
+              <span className="text-sm text-gray-500">
+                Featured & highlighted posts
+              </span>
+            </div>
 
-</div>
-
-
-{pinnedBlogs.length > 0 && (
-  <div className="mt-16 mb-24 w-full">
-    {/* Section Header */}
-    <div className="flex items-center justify-between mb-6">
-      <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
-              📍Pinned Blogs
-      </h2>
-      <span className="text-sm text-gray-500">
-        Featured & highlighted posts
-      </span>
-    </div>
-    
-
-    {/* Horizontal Scroll Container */}
-    <div className="relative">
-  {/* PREVIOUS BUTTON */}
-  <button
-  onClick={() => moveConveyor("prev")}
-    className="absolute left-0 top-1/2 -translate-y-1/2 z-20
+            {/* Horizontal Scroll Container */}
+            <div className="relative">
+              {/* PREVIOUS BUTTON */}
+              <button
+                onClick={() => moveConveyor("prev")}
+                className="absolute left-0 top-1/2 -translate-y-1/2 z-20
                w-12 h-12 rounded-full bg-white shadow-lg
                flex items-center justify-center
                hover:scale-110 transition-all duration-300"
-  >
-    <ChevronDown className="rotate-90 w-5 h-5 text-gray-700" />
-  </button>
+              >
+                <ChevronDown className="rotate-90 w-5 h-5 text-gray-700" />
+              </button>
 
-  {/* SCROLL CONTAINER */}
-  <div className="overflow-hidden px-14">
-  <div
-    ref={pinnedTrackRef}
-    className="flex gap-8 whitespace-nowrap will-change-transform"
-  >
-
-    {infinitePinnedBlogs.map((post) => (
-      <Link
-  to={`/blog/${post.slug}`}
-  onMouseEnter={() => (isPaused.current = true)}
-  onMouseLeave={() => (isPaused.current = false)}
-  className="min-w-[320px] max-w-[320px]
+              {/* SCROLL CONTAINER */}
+              <div className="overflow-hidden px-14">
+                <div
+                  ref={pinnedTrackRef}
+                  className="flex gap-8 whitespace-nowrap will-change-transform"
+                >
+                  {infinitePinnedBlogs.map((post) => (
+                    <Link
+                      to={`/blog/${post.slug}`}
+                      onMouseEnter={() => (isPaused.current = true)}
+                      onMouseLeave={() => (isPaused.current = false)}
+                      className="min-w-[320px] max-w-[320px]
              group rounded-2xl
              transition-all duration-700
              bg-white
@@ -295,136 +287,70 @@ const BlogCard = ({ post }: { post: MarkdownBlog }) => {
              hover:to-white
              hover:shadow-[0_20px_60px_-15px_rgba(236,72,153,0.45)]
              hover:-translate-y-2"
->
-
-        {/* Image */}
-        <div className="relative h-48 overflow-hidden rounded-t-2xl">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="w-full h-full object-cover
+                    >
+                      {/* Image */}
+                      <div className="relative h-48 overflow-hidden rounded-t-2xl">
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover
                        transition-transform duration-700
                        group-hover:scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
-          <span
-            className={`absolute top-4 left-4 px-3 py-1 rounded-full
+                        <span
+                          className={`absolute top-4 left-4 px-3 py-1 rounded-full
                         text-xs font-semibold backdrop-blur-md ${post.tagColor}`}
-          >
-            {post.tag}
-          </span>
+                        >
+                          {post.tag}
+                        </span>
 
-          <span className="absolute top-4 right-4 bg-white/90
+                        <span
+                          className="absolute top-4 right-4 bg-white/90
                            text-purple-600 text-xs font-bold
-                           px-3 py-1 rounded-full shadow">
-            PINNED
-          </span>
-        </div>
+                           px-3 py-1 rounded-full shadow"
+                        >
+                          PINNED
+                        </span>
+                      </div>
 
-        {/* Content */}
-        <div className="p-5">
-          <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
-            {post.title}
-          </h3>
-          <p className="text-sm text-gray-600 line-clamp-2 mb-4">
-            {post.description}
-          </p>
-          <div className="flex items-center justify-between text-sm text-gray-500">
-            <span>{post.readTime}</span>
-            <span className="flex items-center gap-1 text-purple-600 font-medium">
-              Read
-              <ArrowRight className="w-4 h-4" />
-            </span>
-          </div>
-        </div>
-      </Link>
+                      {/* Content */}
+                      <div className="p-5">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                          {post.title}
+                        </h3>
+                        <p className="text-sm text-gray-600 line-clamp-2 mb-4">
+                          {post.description}
+                        </p>
+                        <div className="flex items-center justify-between text-sm text-gray-500">
+                          <span>{post.readTime}</span>
+                          <span className="flex items-center gap-1 text-purple-600 font-medium">
+                            Read
+                            <ArrowRight className="w-4 h-4" />
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
 
-    ))}
-  </div>
-
-  {/* NEXT BUTTON */}
-  <button
-onClick={() => moveConveyor("next")}
-
-    className="absolute right-0 top-1/2 -translate-y-1/2 z-20
+                {/* NEXT BUTTON */}
+                <button
+                  onClick={() => moveConveyor("next")}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 z-20
                w-12 h-12 rounded-full bg-white shadow-lg
                flex items-center justify-center
                hover:scale-110 transition-all duration-300"
-  >
-    <ChevronDown className="-rotate-90 w-5 h-5 text-gray-700" />
-  </button>
-</div>
-
-  </div>
-
-
-        </div>
-)}      
-
-{/* Unpinned Blogs Section */}
-<div className="mt-20">
-  {/* Section Header */}
-  <div className="flex items-center justify-between mb-10">
-    <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
-      📝 All Articles
-    </h2>
-    <span className="text-sm text-gray-500">
-      Explore all blog posts
-    </span>
-  </div>
-
-  {/* Grid Layout – SAME design */}
-  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-    {unpinnedBlogs.map((post) => (
-  <Link
-    key={post.slug}
-    to={`/blog/${post.slug}`}
-    className="group relative overflow-hidden rounded-3xl bg-white shadow-xl
-               transition-all duration-500 hover:scale-[1.03] hover:-rotate-1
-               h-[460px] flex flex-col"
-  >
-    {/* Image */}
-    <div className="h-56 overflow-hidden relative">
-      <img
-        src={post.image || "/placeholder.svg"}
-        alt={post.title}
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-
-      <span
-        className={`absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold ${post.tagColor}`}
-      >
-        {post.tag}
-      </span>
-    </div>
-
-    {/* Content */}
-    <div className="p-6 flex flex-col flex-1">
-      <h4 className="font-bold text-gray-900 mb-3 text-xl line-clamp-2">
-        {post.title}
-      </h4>
-
-      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-        {post.description}
-      </p>
-
-      <div className="flex items-center justify-between mt-auto text-sm text-gray-500">
-        <span>{post.readTime}</span>
-        <span className="flex items-center gap-1 text-purple-600 font-medium">
-          Read more <ArrowRight className="w-4 h-4" />
-        </span>
-      </div>
-    </div>
-  </Link>
-))}
-
-  </div>
-</div>
-
-
-        {/* Enhanced Hero Section - 2x3 Grid Layout */}
+                >
+                  <ChevronDown className="-rotate-90 w-5 h-5 text-gray-700" />
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+{/* hi 
+        {/* Enhanced Hero Section - 2x3 Grid Layout **
         <div className="mb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {heroPostsToShow.map((post) => (
@@ -432,7 +358,7 @@ onClick={() => moveConveyor("next")}
             ))}
           </div>
 
-          {/* Enhanced Show More Button */}
+          {/* Enhanced Show More Button **
           {!showAllHero && blogs.length > 5 && (
             <div className="flex justify-center mt-12">
               <div className="relative group">
@@ -450,23 +376,22 @@ onClick={() => moveConveyor("next")}
             </div>
           )}
         </div>
-  
-{/* Hide Articles Button - Moved above category filter */}
-{showAllHero && (
-  <>
-    {/* Hide Articles Button - Moved above category filter */}
-    <div className="flex justify-center mb-8">
-      <button
-        onClick={() => setShowAllHero(false)}
-        className="flex items-center px-8 py-3 bg-white text-gray-700 rounded-full transition-all duration-300 hover:scale-105 group border border-gray-200 shadow-md hover:shadow-lg"
-      >
-        <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180" />
-        <span className="font-medium">Hide articles</span>
-      </button>
-    </div>
-  </>
-)}
-
+*/}
+        {/* Hide Articles Button - Moved above category filter */}
+        {showAllHero && (
+          <>
+            {/* Hide Articles Button - Moved above category filter */}
+            <div className="flex justify-center mb-8">
+              <button
+                onClick={() => setShowAllHero(false)}
+                className="flex items-center px-8 py-3 bg-white text-gray-700 rounded-full transition-all duration-300 hover:scale-105 group border border-gray-200 shadow-md hover:shadow-lg"
+              >
+                <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180" />
+                <span className="font-medium">Hide articles</span>
+              </button>
+            </div>
+          </>
+        )}
 
         {/* Revolutionary Card-Based Category Filter System */}
         <div className="mb-16">
@@ -479,19 +404,21 @@ onClick={() => moveConveyor("next")}
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {tags.map((tag) => {
                 const categoryPosts =
-  tag === "View all"
-    ? blogs
-    : blogs.filter((post) => post.tag === tag)
+                  tag === "View all"
+                    ? blogs
+                    : blogs.filter((post) => post.tag === tag);
 
-                const previewPost = categoryPosts[0]
-                const isActive = activeTag === tag
+                const previewPost = categoryPosts[0];
+                const isActive = activeTag === tag;
 
                 return (
                   <div
                     key={tag}
                     onClick={() => setActiveTag(tag)}
                     className={`group relative cursor-pointer transition-all duration-500 ${
-                      isActive ? "md:col-span-2 lg:col-span-2 scale-105 z-10" : "hover:scale-105 hover:z-20"
+                      isActive
+                        ? "md:col-span-2 lg:col-span-2 scale-105 z-10"
+                        : "hover:scale-105 hover:z-20"
                     }`}
                   >
                     {/* Main Card */}
@@ -503,7 +430,9 @@ onClick={() => moveConveyor("next")}
                       }`}
                     >
                       {/* Inner Content */}
-                      <div className={`relative overflow-hidden rounded-xl ${isActive ? "bg-white" : ""}`}>
+                      <div
+                        className={`relative overflow-hidden rounded-xl ${isActive ? "bg-white" : ""}`}
+                      >
                         {/* Background Image */}
                         {previewPost && (
                           <div
@@ -527,12 +456,16 @@ onClick={() => moveConveyor("next")}
                         )}
 
                         {/* Content Overlay */}
-                        <div className={`absolute inset-0 flex flex-col justify-end p-4 transition-all duration-500`}>
+                        <div
+                          className={`absolute inset-0 flex flex-col justify-end p-4 transition-all duration-500`}
+                        >
                           {/* Category Title */}
                           <div className="mb-2">
                             <h3
                               className={`font-bold transition-all duration-300 ${
-                                isActive ? "text-white text-lg" : "text-white text-sm group-hover:text-base"
+                                isActive
+                                  ? "text-white text-lg"
+                                  : "text-white text-sm group-hover:text-base"
                               }`}
                             >
                               {tag}
@@ -546,14 +479,17 @@ onClick={() => moveConveyor("next")}
                                   : "bg-white/30 text-white/90 backdrop-blur-sm"
                               }`}
                             >
-                              {categoryPosts.length} {categoryPosts.length === 1 ? "post" : "posts"}
+                              {categoryPosts.length}{" "}
+                              {categoryPosts.length === 1 ? "post" : "posts"}
                             </div>
                           </div>
 
                           {/* Active State: Show Preview Info */}
                           {isActive && previewPost && (
                             <div className="mt-2 opacity-0 animate-fadeIn">
-                              <p className="text-white/90 text-xs line-clamp-2 mb-2">{previewPost.title}</p>
+                              <p className="text-white/90 text-xs line-clamp-2 mb-2">
+                                {previewPost.title}
+                              </p>
                               <div className="flex items-center text-white/80 text-xs">
                                 <Clock className="w-3 h-3 mr-1" />
                                 <span>{previewPost.readTime}</span>
@@ -580,13 +516,16 @@ onClick={() => moveConveyor("next")}
                     {isActive && categoryPosts.length > 1 && (
                       <div className="absolute -bottom-2 left-2 right-2 bg-white rounded-lg shadow-lg p-3 opacity-0 animate-slideUp">
                         <div className="flex items-center justify-between text-xs text-gray-600">
-                          <span>Latest: {categoryPosts[1]?.title.substring(0, 30)}...</span>
+                          <span>
+                            Latest: {categoryPosts[1]?.title.substring(0, 30)}
+                            ...
+                          </span>
                           <ArrowRight className="w-3 h-3" />
                         </div>
                       </div>
                     )}
                   </div>
-                )
+                );
               })}
             </div>
 
@@ -595,8 +534,12 @@ onClick={() => moveConveyor("next")}
               <div className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-bold text-gray-800 mb-1">Viewing: {activeTag}</h3>
-                    <p className="text-gray-600 text-sm">{filteredPosts.length} articles in this category</p>
+                    <h3 className="text-lg font-bold text-gray-800 mb-1">
+                      Viewing: {activeTag}
+                    </h3>
+                    <p className="text-gray-600 text-sm">
+                      {filteredPosts.length} articles in this category
+                    </p>
                   </div>
                   <button
                     onClick={() => setActiveTag("View all")}
@@ -611,59 +554,66 @@ onClick={() => moveConveyor("next")}
           </div>
         </div>
 
-        {/* Filtered Content with improved layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {(activeTag === "View all" ? blogs : filteredPosts).map((post) => (
-  <Link
-    key={post.slug}
-    to={`/blog/${post.slug}`}
-    className="group relative overflow-hidden rounded-3xl bg-white shadow-xl
-               transition-all duration-500 hover:scale-[1.03] hover:-rotate-1
-               h-[460px] flex flex-col"
-  >
-    {/* Image */}
-    <div className="h-56 overflow-hidden relative">
-      <img
-        src={post.image || "/placeholder.svg"}
-        alt={post.title}
-        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+       
+<div className="mt-16">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
 
-      <span
-        className={`absolute top-4 left-4 px-3 py-1 rounded-full
-                    text-xs font-semibold ${post.tagColor}`}
+    {filteredPosts.map((post) => (
+      <Link
+        key={post.slug}
+        to={`/blog/${post.slug}`}
+        className="group bg-white rounded-3xl overflow-hidden shadow-md 
+                   hover:shadow-2xl transition-all duration-500 
+                   hover:-translate-y-2 flex flex-col"
       >
-        {post.tag}
-      </span>
-    </div>
+        {/* IMAGE - Square */}
+        <div className="aspect-square overflow-hidden relative">
+          <img
+            src={post.image || "/placeholder.svg"}
+            alt={post.title}
+            className="w-full h-full object-cover 
+                       transition-transform duration-700 
+                       group-hover:scale-110"
+          />
 
-    {/* Content */}
-    <div className="p-6 flex flex-col flex-1">
-      <h4 className="font-bold text-gray-900 mb-3 text-xl line-clamp-2">
-        {post.title}
-      </h4>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
 
-      <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-        {post.description || "Read this article to explore insights and ideas."}
-      </p>
-
-      <div className="flex items-center justify-between mt-auto text-sm text-gray-500">
-        <div className="flex items-center gap-2">
-          <Clock className="w-4 h-4" />
-          <span>{post.readTime}</span>
+          <span
+            className={`absolute top-4 left-4 px-3 py-1 rounded-full 
+                        text-xs font-semibold ${post.tagColor}`}
+          >
+            {post.tag}
+          </span>
         </div>
 
-        <span className="flex items-center gap-1 text-purple-600 font-medium">
-          Read more <ArrowRight className="w-4 h-4" />
-        </span>
-      </div>
-    </div>
-  </Link>
-))}
+        {/* CONTENT */}
+        <div className="p-6 flex flex-col flex-1">
+          <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 
+                         group-hover:text-purple-600 transition-colors duration-300">
+            {post.title}
+          </h3>
 
+          <p className="text-gray-600 text-sm mb-6 line-clamp-3 leading-relaxed">
+            {post.description}
+          </p>
+
+          <div className="flex items-center justify-between mt-auto text-sm text-gray-500">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4" />
+              <span>{post.readTime}</span>
+            </div>
+
+            <span className="flex items-center gap-2 text-purple-600 font-semibold group-hover:gap-3 transition-all">
+              Read <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
         </div>
+      </Link>
+    ))}
 
+  </div>
+</div>
+       
         {/* Enhanced Newsletter Section */}
         <div className="mt-24 relative overflow-hidden rounded-3xl">
           {/* Subtle background */}
@@ -678,10 +628,13 @@ onClick={() => moveConveyor("next")}
           </div>
 
           <div className="relative z-10 p-12 md:p-16 text-center">
-            <h3 className="text-4xl font-bold mb-6 text-gray-900">Stay Updated with the Future</h3>
+            <h3 className="text-4xl font-bold mb-6 text-gray-900">
+              Stay Updated with the Future
+            </h3>
             <p className="text-gray-700 mb-12 max-w-2xl mx-auto text-lg leading-relaxed">
-              Get the latest insights on art, technology, and digital preservation delivered to your inbox with
-              exclusive content and early access to new features.
+              Get the latest insights on art, technology, and digital
+              preservation delivered to your inbox with exclusive content and
+              early access to new features.
             </p>
 
             <div className="flex flex-col md:flex-row gap-6 max-w-lg mx-auto">
@@ -708,7 +661,11 @@ onClick={() => moveConveyor("next")}
             <div className="flex items-center justify-center space-x-8 mt-8 text-gray-600">
               <div className="flex items-center space-x-2">
                 <div className="w-5 h-5 bg-green-400 rounded-full flex items-center justify-center">
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="w-3 h-3 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path
                       fillRule="evenodd"
                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -720,7 +677,11 @@ onClick={() => moveConveyor("next")}
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-5 h-5 bg-blue-400 rounded-full flex items-center justify-center">
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="w-3 h-3 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path
                       fillRule="evenodd"
                       d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
@@ -732,7 +693,11 @@ onClick={() => moveConveyor("next")}
               </div>
               <div className="flex items-center space-x-2">
                 <div className="w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center">
-                  <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <svg
+                    className="w-3 h-3 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                 </div>
@@ -743,7 +708,7 @@ onClick={() => moveConveyor("next")}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Blog
+export default Blog;

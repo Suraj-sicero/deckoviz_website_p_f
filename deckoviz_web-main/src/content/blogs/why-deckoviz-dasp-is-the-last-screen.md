@@ -1,7 +1,7 @@
 ---
 id: 25
 title: "Why Deckoviz DASP Might Be the Last Screen You’ll Ever Need"
-description: "Rethinking smart TVs and displays — and why Deckoviz offers a more meaningful alternative."
+description: "Rethinking smart TVs and displays   and why Deckoviz offers a more meaningful alternative."
 tag: "Guides"
 tagColor: "bg-indigo-100 text-indigo-700"
 date: "March 14, 2025"
@@ -26,4 +26,4 @@ And in the end, you pick the best screen you can afford.
 
 But what if the question was wrong?
 
-What if your wall didn’t need another screen — but a presence?
+What if your wall didn’t need another screen   but a presence?

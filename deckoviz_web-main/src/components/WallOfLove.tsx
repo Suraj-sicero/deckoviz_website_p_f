@@ -112,7 +112,7 @@ export default function WallOfLove() {
         {/* Description section positioned over the gradient */}
         <div className="relative z-30 max-w-3xl mx-auto px-4 text-center">
           <p className="text-base sm:text-lg text-gray-900 leading-relaxed font-normal mb-12">
-            We love hearing from you — whether it's feedback, ideas, creative sparks, bugs 
+            We love hearing from you   whether it's feedback, ideas, creative sparks, bugs 
             you've noticed, feature suggestions, or simply your experience with Deckoviz. 
             Every message helps us grow, improve, and create more beautiful, 
             <br />meaningful 
@@ -125,8 +125,8 @@ export default function WallOfLove() {
           </h2>
 
           <p className="text-base sm:text-lg text-gray-800 leading-relaxed font-medium mb-12">
-            — from design lovers to digital creators, therapists to restaurateurs, 
-            <br />families to founders — all using Deckoviz to infuse their lives with:
+              from design lovers to digital creators, therapists to restaurateurs, 
+            <br />families to founders   all using Deckoviz to infuse their lives with:
           </p>
 
           {/* CTA Button */}
@@ -173,7 +173,7 @@ export default function WallOfLove() {
                  zIndex: 10
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3">—Simon Lee</h4>
+               <h4 className="font-bold text-[#6670d8] mb-3"> Simon Lee</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  Used it for a post about AI and it's got people having conversations already, more engagement than any of my previous value posts. This is exciting!
                </p>
@@ -190,9 +190,9 @@ export default function WallOfLove() {
                  zIndex: 12
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3">—Amara, Toronto</h4>
+               <h4 className="font-bold text-[#6670d8] mb-3"> Amara, Toronto</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
-                 "Deckoviz has changed the way my home feels. It's not just decor — it's dynamic, alive, and responsive to me. Every morning it greets me with something that feels right."
+                 "Deckoviz has changed the way my home feels. It's not just decor   it's dynamic, alive, and responsive to me. Every morning it greets me with something that feels right."
                </p>
              </div>
 
@@ -207,7 +207,7 @@ export default function WallOfLove() {
                  zIndex: 8
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3">—Jules, Berlin</h4>
+               <h4 className="font-bold text-[#6670d8] mb-3"> Jules, Berlin</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  Just tested it and it is looking great. I actually published something, and actually learned something new. The writing is pretty good, and with a personal touch, it was fantastic.
                </p>
@@ -224,9 +224,9 @@ export default function WallOfLove() {
                  zIndex: 15
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3">—Maya, Bangalore</h4>
+               <h4 className="font-bold text-[#6670d8] mb-3"> Maya, Bangalore</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
-                 "My favorite memory? Uploading a childhood photo, transforming it into a surreal dreamscape, and watching my daughter gasp in wonder." — Maya, Bangalore
+                 "My favorite memory? Uploading a childhood photo, transforming it into a surreal dreamscape, and watching my daughter gasp in wonder."   Maya, Bangalore
                </p>
              </div>
 
@@ -241,9 +241,9 @@ export default function WallOfLove() {
                  zIndex: 11
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3">—Marco, Florence</h4>
+               <h4 className="font-bold text-[#6670d8] mb-3"> Marco, Florence</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
-                 "Guests always ask where I got the 'wall that dances' in my wine bar. Deckoviz has become a centerpiece of experience, not just decor." — Marco, Florence
+                 "Guests always ask where I got the 'wall that dances' in my wine bar. Deckoviz has become a centerpiece of experience, not just decor."   Marco, Florence
                </p>
              </div>
 
@@ -258,9 +258,9 @@ export default function WallOfLove() {
                  zIndex: 13
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3">—Tashi, LA</h4>
+               <h4 className="font-bold text-[#6670d8] mb-3"> Tashi, LA</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
-                 "We use Deckoviz in our yoga studio. The ambient meditation visuals are unbelievable. It sets the tone for every class — calm, beauty, presence." — Tashi, LA
+                 "We use Deckoviz in our yoga studio. The ambient meditation visuals are unbelievable. It sets the tone for every class   calm, beauty, presence."   Tashi, LA
                </p>
              </div>
            </div>
@@ -332,7 +332,7 @@ export default function WallOfLove() {
          </button>
 
          <p className="text-white/80 text-base leading-relaxed max-w-2xl">
-           Every photo, message, and moment you share becomes part of our shared canvas — a global collage of wonder, connection, and creativity.
+           Every photo, message, and moment you share becomes part of our shared canvas   a global collage of wonder, connection, and creativity.
          </p>
        </div>
 

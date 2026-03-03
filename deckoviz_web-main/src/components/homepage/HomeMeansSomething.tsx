@@ -14,7 +14,7 @@ const manifesto = [
 
   "Homes where memories are cherished, and self-expression is nurtured.",
   "Where photos are not buried in clouds, but live on the walls.",
-  "Where stories are replayed gently — as art, as montages, as moments that matter.",
+  "Where stories are replayed gently   as art, as montages, as moments that matter.",
 
   "Homes where art, wonder, beauty, and depth are prioritized.",
   "Not as décor.",

@@ -31,7 +31,7 @@ const Sitemap: React.FC = () => {
                 <span className="font-semibold text-gray-900">
                   Deckoviz Sitemap
                 </span>{" "}
-                — your treasure map to all the good stuff. Think of this as your
+                  your treasure map to all the good stuff. Think of this as your
                 behind-the-scenes guide, minus the dusty corridors. Whether
                 you’re hunting for product deep dives, enterprise insights,
                 creative tools, or that one page you swear you saw last week,
@@ -40,7 +40,7 @@ const Sitemap: React.FC = () => {
                 <br />
                 It’s the calm, organized friend who always knows where
                 everything is, so you can skip the wandering and get straight to
-                what inspires you. Dive in — every click here leads somewhere
+                what inspires you. Dive in   every click here leads somewhere
                 worth exploring.
               </p>
             </div>

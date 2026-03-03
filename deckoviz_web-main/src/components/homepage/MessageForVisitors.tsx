@@ -122,7 +122,7 @@ export default function MessageForVisitors() {
 
           <p>
             At Deckoviz, we believe that space is sacred.
-            That what surrounds you shapes you — your moods, your dreams,
+            That what surrounds you shapes you   your moods, your dreams,
             your creativity, your peace.
           </p>
 
@@ -170,7 +170,7 @@ export default function MessageForVisitors() {
           </h2>
 
           <p className="text-indigo-100 leading-relaxed">
-            To revolutionize how people experience their spaces —
+            To revolutionize how people experience their spaces  
             infusing homes, workplaces, and public environments with
             living, breathing art that reflects, inspires, and evolves
             with the human spirit.
@@ -196,7 +196,7 @@ export default function MessageForVisitors() {
 
           <p className="text-indigo-100 leading-relaxed">
             To create a world where every space is a sanctuary of beauty,
-            wonder, self-expression, and emotional resonance —
+            wonder, self-expression, and emotional resonance  
             powered by intelligent, evolving, personalized art.
           </p>
 

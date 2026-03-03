@@ -64,7 +64,7 @@ const DeckovizSetup: React.FC = () => {
       number: "01",
       title: "Unbox & Power Up",
       description:
-        "Take your Deckoviz out of the box, plug it in, and connect to Wi-Fi — just like setting up a smart TV. Instantly comes to life with a calming welcome screen.",
+        "Take your Deckoviz out of the box, plug it in, and connect to Wi-Fi   just like setting up a smart TV. Instantly comes to life with a calming welcome screen.",
       icon: <CustomIcons.Package />,
       features: ["Simple plug-and-play setup", "Wi-Fi connection in seconds", "Calming welcome experience"],
       color: "from-orange-400 via-pink-400 to-purple-500",
@@ -100,7 +100,7 @@ const DeckovizSetup: React.FC = () => {
       number: "05",
       title: "Curate & Save What You Love",
       description:
-        "Like, save, and build collections of your favorite scenes. Deckoviz gets smarter with every interaction — learning your style and preferences.",
+        "Like, save, and build collections of your favorite scenes. Deckoviz gets smarter with every interaction   learning your style and preferences.",
       icon: <CustomIcons.Star />,
       features: ["Build personal collections", "AI learns your preferences", "Evolving personalized gallery"],
       color: "from-yellow-400 via-orange-400 to-red-500",

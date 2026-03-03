@@ -90,7 +90,7 @@ const Support: React.FC = () => {
             </ul>
 
             <p className="text-gray-600 mt-4">
-              If something feels unclear, unexpected, or simply not right — reach out.
+              If something feels unclear, unexpected, or simply not right   reach out.
               <br />
               <strong className="text-purple-600">No question is too small.</strong>
             </p>

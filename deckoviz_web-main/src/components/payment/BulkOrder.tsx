@@ -118,7 +118,7 @@ const BulkOrder = () => {
             </div>
             
             <h1 className="text-4xl font-bold mb-6 text-gray-900">
-              Thank You — Your Bulk Order Request Has Been Received!
+              Thank You   Your Bulk Order Request Has Been Received!
             </h1>
            
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 mb-8">
@@ -127,7 +127,7 @@ const BulkOrder = () => {
               </p>
               
               <p className="text-lg text-gray-600 leading-relaxed">
-                We're thrilled that you've chosen to bring the magic of <span className="text-purple-600 font-semibold">Deckoviz</span> to your space — and we're excited to help you craft a powerful visual experience across your environments.
+                We're thrilled that you've chosen to bring the magic of <span className="text-purple-600 font-semibold">Deckoviz</span> to your space   and we're excited to help you craft a powerful visual experience across your environments.
               </p>
             </div>
 
@@ -224,7 +224,7 @@ const BulkOrder = () => {
           
           <div className="max-w-4xl mx-auto mb-12">
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              <span className="text-purple-600 font-semibold">Deckoviz</span> is the world's first <span className="text-indigo-600 font-semibold">AI-powered dynamic art frame</span> — a powerful, beautiful blend of <span className="text-fuchsia-500 font-semibold">technology</span>, <span className="text-rose-500 font-semibold">creativity</span>, and <span className="text-purple-600 font-semibold">personalization</span>. Whether you're designing for homes, hotels, offices, or commercial spaces, Deckoviz helps you transform walls into <span className="text-indigo-600 font-semibold">living, evolving experiences</span>.
+              <span className="text-purple-600 font-semibold">Deckoviz</span> is the world's first <span className="text-indigo-600 font-semibold">AI-powered dynamic art frame</span>   a powerful, beautiful blend of <span className="text-fuchsia-500 font-semibold">technology</span>, <span className="text-rose-500 font-semibold">creativity</span>, and <span className="text-purple-600 font-semibold">personalization</span>. Whether you're designing for homes, hotels, offices, or commercial spaces, Deckoviz helps you transform walls into <span className="text-indigo-600 font-semibold">living, evolving experiences</span>.
             </p>
             <p className="text-lg text-gray-800 font-medium">
               Order in bulk and enjoy <span className="text-pink-600 font-bold">exclusive pricing</span>, <span className="text-blue-600 font-bold">dedicated support</span>, and <span className="text-purple-600 font-bold">seamless customization</span>.

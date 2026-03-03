@@ -160,16 +160,16 @@ export default function AboutUs() {
                 <br />
                 the frontier.
               </h2>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl  font-bold text-gray-900">Our flagship product —</h3>
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl  font-bold text-gray-900">Our flagship product  </h3>
             </div>
             <div className="text-left space-y-6">
               <p className="text-gray-500 leading-relaxed text-base sm:text-lg">
                 where AI personalization, art, home and office décor, and smart technology converge. Our mission is
                 simple yet profound: to infuse everyday environments with more beauty, meaning, emotion, vitality, and
-                wonder — powered by the most human-centric technologies ever created.
+                wonder   powered by the most human-centric technologies ever created.
               </p>
               <p className="text-gray-500 leading-relaxed text-base sm:text-lg">
-                Deckoviz creates deeply personalized, multisensory visual experiences — designed to inspire, soothe,
+                Deckoviz creates deeply personalized, multisensory visual experiences   designed to inspire, soothe,
                 energize, or uplift, depending on your intentions and needs. Every piece of art it displays, every
                 visual it curates, is attuned to your unique life, spirit, and essence
               </p>
@@ -209,7 +209,7 @@ export default function AboutUs() {
           <div className="text-left mb-20">
             <p className="text-lg sm:text-xl text-gray-900 leading-relaxed font-medium max-w-5xl mx-auto">
               Through the power of proprietary AI personalization engines, generative creativity, and intelligent
-              curation, Deckoviz creates deeply personalized, multisensory visual experiences — designed to inspire,
+              curation, Deckoviz creates deeply personalized, multisensory visual experiences   designed to inspire,
               soothe, energize, or uplift, depending on your intentions and needs. Every piece of art it displays, every
               visual it curates, is attuned to your unique life, spirit, and essence.
             </p>
@@ -230,13 +230,13 @@ export default function AboutUs() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
               <div className="text-left">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                  Because we believe technology should not just be functional —
+                  Because we believe technology should not just be functional  
                 </h2>
               </div>
               <div className="text-left flex items-center">
                 <p className="text-lg text-gray-500 leading-relaxed">
-                  At Deckoviz, we are pioneering a new category —<br />
-                  AI-powered spatial enhancement — bringing
+                  At Deckoviz, we are pioneering a new category  <br />
+                  AI-powered spatial enhancement   bringing
                   <br />
                   future-ready beauty, personalization, and emotion
                   <br />
@@ -359,7 +359,7 @@ export default function AboutUs() {
                 <br />
                 technologically beautiful products that continue to blur the lines between
                 <br />
-                technology, art, and life — breathing curiosity, wonder, joy, and inspiration into
+                technology, art, and life   breathing curiosity, wonder, joy, and inspiration into
                 <br />
                 every corner of your world.
               </p>
@@ -383,7 +383,7 @@ export default function AboutUs() {
                   <p className="text-gray-500 leading-relaxed">
                     Where your home and work environments are
                     <br />
-                    extensions of your innermost self — vibrant,
+                    extensions of your innermost self   vibrant,
                     <br />
                     dynamic, deeply personal.
                   </p>
@@ -490,7 +490,7 @@ export default function AboutUs() {
                     <br />
                     creates, and displays a continually evolving collection of
                     <br />
-                    artworks, paintings, photography, and visuals — all tailored
+                    artworks, paintings, photography, and visuals   all tailored
                     <br />
                     precisely to your tastes, moods, goals, intentions, and inner
                     <br />
@@ -515,7 +515,7 @@ export default function AboutUs() {
                       <p className="text-gray-700">
                         It curates art that feels like it was made
                         <br />
-                        for you — because, in a sense, it was.
+                        for you   because, in a sense, it was.
                       </p>
                     </div>
                   </div>
@@ -664,7 +664,7 @@ export default function AboutUs() {
                     <br />
                     expression, Deckoviz ensures that your space never feels
                     <br />
-                    stale — only ever more you.
+                    stale   only ever more you.
                   </p>
 
                   <button className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
@@ -859,7 +859,7 @@ export default function AboutUs() {
 
             {/* Subheading */}
             <p className="text-lg text-gray-700 leading-relaxed mb-16 max-w-3xl mx-auto">
-              It evolves with you — helping you craft a living environment that
+              It evolves with you   helping you craft a living environment that
               <br />
               feels more alive, more inspiring, more aligned with your true self.
             </p>
@@ -1091,7 +1091,7 @@ export default function AboutUs() {
               <p className="mb-2">
                 We are committed to creating a future where personalization, beauty, technology, and
                 <br />
-                human emotion are not separate realms — but one seamless experience.
+                human emotion are not separate realms   but one seamless experience.
                 <br />
                 We are building an ecosystem of products that reimagine:
               </p>
@@ -1224,16 +1224,16 @@ export default function AboutUs() {
                 {/* Description */}
                 <div className="text-gray-700 leading-relaxed mb-12 max-w-3xl mx-auto space-y-4">
                   <p>
-                    If you believe that the spaces where we live and work should inspire us —
+                    If you believe that the spaces where we live and work should inspire us  
                     <br />
                     If you dream of living in environments that feel, grow, respond, and reflect
                     <br />
-                    who you are —
+                    who you are  
                   </p>
                   <p>
                     If you believe that beauty, art, and technology can and should work together
                     <br />
-                    to make life more vivid, joyful, and meaningful —
+                    to make life more vivid, joyful, and meaningful  
                   </p>
                 </div>
 

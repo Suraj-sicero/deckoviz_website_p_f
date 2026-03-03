@@ -105,15 +105,15 @@ const DeckovizRestaurantLanding = () => {
           {/* Description Paragraphs */}
           <div className="max-w-4xl space-y-6 text-gray-900 font-medium leading-relaxed">
             <p className="text-base md:text-lg">
-              In a world where people don't just eat out — they seek atmosphere, ritual, beauty, and
+              In a world where people don't just eat out   they seek atmosphere, ritual, beauty, and
               <br />
-              memory — the visual identity of your restaurant is as important as your menu.
+              memory   the visual identity of your restaurant is as important as your menu.
             </p>
             
             <p className="text-base md:text-lg">
               Deckoviz is the world's first AI-powered Smart Art Frame built for dynamic, emotion-driven,
               <br />
-              ambient storytelling — helping you shape how your guests feel, the moment they step into
+              ambient storytelling   helping you shape how your guests feel, the moment they step into
               <br />
               your space.
             </p>
@@ -402,7 +402,7 @@ const DeckovizRestaurantLanding = () => {
     {/* Bottom Description */}
     <div className="text-center max-w-6xl mx-auto">
       <p className="text-lg text-gray-900 font-medium leading-relaxed">
-        It's a new kind of visual design — one that emotionally enhances your space, tells your brand story, and gives guests a reason to
+        It's a new kind of visual design   one that emotionally enhances your space, tells your brand story, and gives guests a reason to
         <br />
         pause, feel, and remember.
       </p>
@@ -746,7 +746,7 @@ const DeckovizRestaurantLanding = () => {
                 <div className="flex items-start">
                   <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                   <p className="text-indigo-600 font-medium">
-                    Visualize the culinary ritual — from raw ingredients to plated art
+                    Visualize the culinary ritual   from raw ingredients to plated art
                   </p>
                 </div>
               </div>
@@ -919,7 +919,7 @@ const DeckovizRestaurantLanding = () => {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-              Android TV Integration — optional smart TV use
+              Android TV Integration   optional smart TV use
             </h3>
           </div>
         </div>
@@ -1068,7 +1068,7 @@ const DeckovizRestaurantLanding = () => {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Deckoviz makes your restaurant more "Instagrammable." Guests are more likely to share their meal with stunning, evolving visuals behind them — boosting organic visibility.
+                Deckoviz makes your restaurant more "Instagrammable." Guests are more likely to share their meal with stunning, evolving visuals behind them   boosting organic visibility.
               </p>
             </div>
           </div>
@@ -1092,7 +1092,7 @@ const DeckovizRestaurantLanding = () => {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Rotate your look and feel by season, event, or menu — without redecorating or investing in expensive interior changes.
+                Rotate your look and feel by season, event, or menu   without redecorating or investing in expensive interior changes.
               </p>
             </div>
           </div>
@@ -1113,7 +1113,7 @@ const DeckovizRestaurantLanding = () => {
                 </div>
               </div>
               <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                Let guests feel who you are. Deckoviz becomes a visual extension of your brand — subtle, poetic, sophisticated.
+                Let guests feel who you are. Deckoviz becomes a visual extension of your brand   subtle, poetic, sophisticated.
               </p>
             </div>
           </div>
@@ -1194,13 +1194,13 @@ const DeckovizRestaurantLanding = () => {
             </p>
             <br />
             <p className="text-gray-800 leading-relaxed text-lg font-medium">
-              — with rotating fjord visuals, soft typography quotes, and pine forest"
+                with rotating fjord visuals, soft typography quotes, and pine forest"
             </p>
           </div>
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Events manager at luxury resort
+                Events manager at luxury resort
             </p>
           </div>
           
@@ -1222,7 +1222,7 @@ const DeckovizRestaurantLanding = () => {
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Events manager at luxury resort
+                Events manager at luxury resort
             </p>
           </div>
           
@@ -1244,7 +1244,7 @@ const DeckovizRestaurantLanding = () => {
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Owner, Nord Coffee House (Beta Pilot)
+                Owner, Nord Coffee House (Beta Pilot)
             </p>
           </div>
           

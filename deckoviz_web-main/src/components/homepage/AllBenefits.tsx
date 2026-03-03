@@ -1,6 +1,31 @@
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { benefitsData } from "./Benefits";
-
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+const cardVariants = {
+  hidden: (index: number) => ({
+    opacity: 0,
+    y: 60,
+    x: index % 2 === 0 ? -60 : 60,
+    scale: 0.92,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.9,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+};
 const AllBenefits = () => {
   /* ================= GLOBAL CURSOR GLITTER ================= */
   const mouseX = useMotionValue(0);
@@ -19,6 +44,7 @@ const AllBenefits = () => {
     >
       {/* 🌟 Cursor Glitter */}
       <motion.div
+  variants={cardVariants}
         style={{ x: smoothX, y: smoothY }}
         className="
           pointer-events-none fixed top-0 left-0
@@ -40,7 +66,13 @@ const AllBenefits = () => {
         </p>
 
         {/* ================= BENEFIT CARDS (ALL) ================= */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-28">
+        <motion.div
+  variants={cardVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mb-28"
+>
           {benefitsData.map((benefit, index) => {
             /* Per-card mouse trail */
             const x = useMotionValue(0);
@@ -51,6 +83,7 @@ const AllBenefits = () => {
 
             return (
               <motion.div
+  variants={cardVariants}
                 key={index}
                 onMouseMove={(e) => {
                   const rect = e.currentTarget.getBoundingClientRect();
@@ -72,6 +105,7 @@ const AllBenefits = () => {
               >
                 {/* 🌈 Jelly / Ribbon Trail */}
                 <motion.div
+  variants={cardVariants}
                   style={{ x: trailX, y: trailY }}
                   className="
                     pointer-events-none absolute
@@ -83,11 +117,13 @@ const AllBenefits = () => {
 
                 {/* ✨ Soft sparkles */}
                 <motion.div
+  variants={cardVariants}
                   animate={{ opacity: [0.2, 0.6, 0.2] }}
                   transition={{ repeat: Infinity, duration: 2 }}
                   className="absolute top-5 right-6 w-2 h-2 rounded-full bg-pink-400"
                 />
                 <motion.div
+  variants={cardVariants}
                   animate={{ opacity: [0.1, 0.5, 0.1] }}
                   transition={{ repeat: Infinity, duration: 3 }}
                   className="absolute bottom-6 left-6 w-2 h-2 rounded-full bg-purple-400"
@@ -95,6 +131,7 @@ const AllBenefits = () => {
 
                 {/* Emoji */}
                 <motion.div
+  variants={cardVariants}
                   whileHover={{ scale: 1.4, rotate: 6 }}
                   transition={{ type: "spring", stiffness: 260, damping: 12 }}
                   className="text-4xl mb-4 relative z-10"
@@ -114,18 +151,8 @@ const AllBenefits = () => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        {/* ================= CLOSING STATEMENT ================= */}
-        <div className="max-w-4xl mx-auto text-center text-lg font-medium text-gray-800 leading-relaxed">
-          Your space starts reflecting your inner life.
-          <br />
-          Not perfectly. Not constantly.
-          <br />
-          But enough to feel seen.
-          <br /><br />
-          And that changes how you live in it.
-        </div>
       </div>
     </section>
   );

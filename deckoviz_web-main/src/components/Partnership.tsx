@@ -51,7 +51,7 @@ const Partnership: React.FC = () => {
                     Deckoviz is the world’s first AI-powered dynamic art frame. A portal
                     of expression. A window into soul and space. We’re partnering with
                     creators, tastemakers, retailers, sales professionals to bring this
-                    magic to the world — together.
+                    magic to the world   together.
                   </p>
                   <p>
                     Whether you’re a designer, content creator, retailer, or sales
@@ -137,7 +137,7 @@ const Partnership: React.FC = () => {
                 </p>
 
                 <ul className="list-disc pl-6 text-[16px] sm:text-[18px] text-gray-800 space-y-3 leading-8 text-justify bg-white/10 border border-white/20 rounded-2xl px-6 py-5">
-                  <li>Up to $15k+ in commissions/month or more — no caps</li>
+                  <li>Up to $15k+ in commissions/month or more   no caps</li>
                   <li>$15-40K base salary for full-time roles, or uncapped earnings as a contractor</li>
                   <li>
                     Full support with product demos, sales decks, onboarding and leads (where applicable)

@@ -12,7 +12,7 @@ size: "large"
 
 
     ## How we think about AI art and AI as a creative companion at Deckoviz
-    In recent years, AI-generated art has sparked intense debate. Some hail it as a revolutionary democratization of creativity, while others decry it as soulless imitation that threatens to devalue human artistry. At Deckoviz, we believe the truth lies somewhere in between. AI is neither a replacement for human creativity nor a mere tool for replication. Instead, it represents a new frontier for human expression—one that amplifies our innate desire to create, connect, and tell stories.
+    In recent years, AI-generated art has sparked intense debate. Some hail it as a revolutionary democratization of creativity, while others decry it as soulless imitation that threatens to devalue human artistry. At Deckoviz, we believe the truth lies somewhere in between. AI is neither a replacement for human creativity nor a mere tool for replication. Instead, it represents a new frontier for human expression one that amplifies our innate desire to create, connect, and tell stories.
     We've had a lot of discussions on this topic, and so we are documenting our thinking about on AI and creation, art and the role of AI as an artist and storytelling platform at Deckoviz Space Labs. So here is how we square the circle.
 
     <br/><br/><br/>

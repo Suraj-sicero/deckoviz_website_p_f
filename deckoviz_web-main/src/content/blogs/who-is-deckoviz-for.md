@@ -8,7 +8,7 @@ readTime: "8 min read"
 pinned: False
 image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80"
 size: "large"
-description: "A deep, gentle breakdown of the kinds of people Deckoviz is designed for — and how it becomes part of real lives."
+description: "A deep, gentle breakdown of the kinds of people Deckoviz is designed for   and how it becomes part of real lives."
 ---
 
 # Who Is Deckoviz For?

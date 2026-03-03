@@ -49,7 +49,7 @@ export default function Contact() {
         {/* Description */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            We love hearing from you — whether it's feedback, ideas, creative sparks, bugs
+            We love hearing from you   whether it's feedback, ideas, creative sparks, bugs
             <br />
             you've noticed, feature suggestions, or simply your experience with Deckoviz.
           </p>

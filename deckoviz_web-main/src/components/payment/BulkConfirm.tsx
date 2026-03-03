@@ -51,7 +51,7 @@ const BulkConfirm = () => {
                     
                     <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
                       We're thrilled that you've chosen to bring the magic of 
-                      <span className="font-semibold text-purple-600"> Deckoviz</span> to your space — and we're excited to help you craft a powerful visual experience across your environments.
+                      <span className="font-semibold text-purple-600"> Deckoviz</span> to your space   and we're excited to help you craft a powerful visual experience across your environments.
                     </p>
                   </div>
                   

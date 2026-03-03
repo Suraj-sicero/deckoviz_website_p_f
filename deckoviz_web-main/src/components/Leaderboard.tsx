@@ -317,7 +317,7 @@ export default function Leaderboard() {
           <br />
           showcasing the top 250 Deckoviz contributors, collectors, sharers, and art
           <br />
-          lovers — the ones who make this whole ecosystem come alive.
+          lovers   the ones who make this whole ecosystem come alive.
         </p>
       </div>
 
@@ -558,7 +558,7 @@ export default function Leaderboard() {
        Referral Champions
      </h1>
      <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
-       These are the beautiful souls spreading the Deckoviz love far and wide. Every referral helps grow our global creative family — and we're rewarding you in magical ways.
+       These are the beautiful souls spreading the Deckoviz love far and wide. Every referral helps grow our global creative family   and we're rewarding you in magical ways.
      </p>
    </div>
 
@@ -880,7 +880,7 @@ export default function Leaderboard() {
          Engagement Legends
        </h2>
        <p className="text-lg text-gray-700 max-w-3xl">
-         These are the most engaged Deckoviz users — exploring, curating, creating, sharing, and loving their Deckoviz every day.
+         These are the most engaged Deckoviz users   exploring, curating, creating, sharing, and loving their Deckoviz every day.
        </p>
      </div>
 
@@ -1041,7 +1041,7 @@ export default function Leaderboard() {
        For students, artists, and curators shaping the future:
      </p>
      <p className="text-lg text-gray-600 max-w-4xl mx-auto">
-       Each university will have its own referral and engagement leaderboard — and the winning<br />
+       Each university will have its own referral and engagement leaderboard   and the winning<br />
        campus will receive a Deckoviz Experience Day + Installation Showcase.
      </p>
    </div>
@@ -1169,7 +1169,7 @@ export default function Leaderboard() {
    {/* Bottom Text */}
    <div className="text-left">
      <p className="text-lg text-gray-900 font-medium">
-       Check your personal stats in the app — and see how you stack up<br />
+       Check your personal stats in the app   and see how you stack up<br />
        against the world's most vivid souls.
      </p>
    </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { ChevronDown, ChevronUp } from "lucide-react";
 interface FeatureCardProps {
   title: string;
@@ -134,7 +135,7 @@ It grows with you.`,
     },
     {
       title: "Personalized Quotes & Posters",
-      description: "Design daily affirmations or custom quotes in aesthetic, artful frames — tailored to your energy."
+      description: "Design daily affirmations or custom quotes in aesthetic, artful frames   tailored to your energy."
     },
     {
       title: "Visual Storytelling for Kids and Families",
@@ -146,7 +147,7 @@ It grows with you.`,
     },
     {
       title: "Multi-Space Adaptation",
-      description: "Deckoviz adapts to you — however you want it to, wherever you are. Make your spaces come alive, be it homes, offices, cafés, clinics, studios."
+      description: "Deckoviz adapts to you   however you want it to, wherever you are. Make your spaces come alive, be it homes, offices, cafés, clinics, studios."
     },
     {
       title: "Personalized Curator",
@@ -210,10 +211,34 @@ const getIconForFeature = (title: string) => {
   return map[title] || "3dicons-brush-dynamic-color.png";
 };
 
+const cardVariants = {
+  hidden: (direction: "left" | "right") => ({
+    opacity: 0,
+    x: direction === "left" ? -120 : 120,
+    scale: 0.95,
+  }),
+  visible: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: {
+      duration: 0.9,
+      ease: [0.16, 1, 0.3, 1], // smooth luxury easing
+    },
+  },
+};
+
 const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescription, index }) => (
-<div className="group relative rounded-2xl p-10 pt-20 shadow-lg border border-white/40
-bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50
-hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 backdrop-blur-md">
+<motion.div
+  custom={index % 2 === 0 ? "left" : "right"}
+  variants={cardVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="group relative rounded-2xl p-10 pt-20 shadow-lg border border-white/40
+  bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50
+  hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 backdrop-blur-md"
+>
 
 
 {/* Gradient hover */}
@@ -244,7 +269,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
 </p>
 
 </div>
-</div>
+</motion.div>
 );
   return (
     <div
@@ -304,7 +329,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
 
                 <p className="text-lg text-gray-700 leading-relaxed">
                   A whole lot. We set out to build the ultimate art and
-                  storytelling platform for living spaces — one that naturally
+                  storytelling platform for living spaces   one that naturally
                   creates abundance of features and experiences. If a feature
                   can deepen emotion, spark imagination, personalize a moment,
                   or turn a wall into a living experience, it belongs here.
@@ -316,7 +341,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
                     hundreds of individual features
                   </span>
                   , spanning art, creation, storytelling, music, learning,
-                  rituals, family moments, play, and ambient intelligence —
+                  rituals, family moments, play, and ambient intelligence  
                   organized into{" "}
                   <span className="font-semibold text-pink-500">
                     12 core themes
@@ -332,7 +357,7 @@ hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 bac
 
                 <div className="pt-6 border-t border-gray-100">
                   <p className="text-gray-700 italic">
-                    Deckoviz is becoming a living platform — emotionally
+                    Deckoviz is becoming a living platform   emotionally
                     intelligent, deeply personalized, and evolving every single
                     week.
                   </p>

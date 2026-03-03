@@ -125,26 +125,34 @@ const BlogDetail = () => {
           "
         >
           <div
-            className="
-              max-w-none
-              prose prose-lg
-              prose-p:leading-[1.85]
-              prose-p:text-[17px]
-              prose-p:text-gray-800
-              prose-p:text-justify
-              prose-strong:text-gray-900
-              prose-strong:font-semibold
+  className="
+    max-w-none
+    prose prose-lg
 
-              prose-h2:text-3xl prose-h2:font-bold
-              prose-h2:mt-16 prose-h2:mb-6
-              prose-h2:scroll-mt-28
-              prose-h3:text-2xl prose-h3:font-bold
-              prose-h3:mt-14 prose-h3:mb-5
+    prose-p:text-[17px]
+    prose-p:leading-[1.9]
+    prose-p:text-gray-800
+    prose-p:text-justify
 
-              prose-ul:my-6 prose-li:my-2
-              prose-hr:my-14 prose-hr:border-gray-300/80
-            "
-          >
+    prose-li:text-justify
+
+    hyphens-auto
+    break-words
+
+    prose-strong:text-gray-900
+    prose-strong:font-semibold
+
+    prose-h2:text-3xl prose-h2:font-bold
+    prose-h2:mt-16 prose-h2:mb-6
+    prose-h2:scroll-mt-28
+
+    prose-h3:text-2xl prose-h3:font-bold
+    prose-h3:mt-14 prose-h3:mb-5
+
+    prose-ul:my-6 prose-li:my-2
+    prose-hr:my-14 prose-hr:border-gray-300/80
+  "
+>
             <ReactMarkdown
               rehypePlugins={[rehypeRaw]}
               components={{

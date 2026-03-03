@@ -106,7 +106,7 @@ const DeckovizSchoolsLanding = () => {
             <p className="text-base md:text-lg">
               In a world of distraction and overstimulation, children and learners need more than just
               <br />
-              information — they need spaces that invite curiosity, calm, focus, and wonder. They need
+              information   they need spaces that invite curiosity, calm, focus, and wonder. They need
               <br />
               environments that nurture imagination and help them feel safe, seen, and engaged.
             </p>
@@ -121,7 +121,7 @@ const DeckovizSchoolsLanding = () => {
             
             <div className="pt-4 pb-20">
               <p className="text-base md:text-lg font-semibold text-gray-800">
-                Deckoviz supports whole-child development — through visuals that teach,
+                Deckoviz supports whole-child development   through visuals that teach,
                 <br />
                 regulate, inspire, and support learning goals.
               </p>
@@ -256,7 +256,7 @@ const DeckovizSchoolsLanding = () => {
           <p className="text-lg text-gray-800 leading-relaxed mt-14">
             Deckoviz is a smart visual display frame that curates and
             <br />
-            displays ambient, educational, and emotion-aware visuals —
+            displays ambient, educational, and emotion-aware visuals  
             <br />
             from animated storyscapes to nature scenes, breathing guides
             <br />
@@ -543,7 +543,7 @@ const DeckovizSchoolsLanding = () => {
 
         <div className="flex-1 space-y-3">
           <p className="text-indigo-700 font-medium text-sm leading-relaxed">
-            From nebulae to rainforest canopies, poetry loops to historical scenes — Deckoviz makes <strong>learning feel magical</strong>. It brings visual life to concepts across every subject, sparking wonder and engagement in students.
+            From nebulae to rainforest canopies, poetry loops to historical scenes   Deckoviz makes <strong>learning feel magical</strong>. It brings visual life to concepts across every subject, sparking wonder and engagement in students.
           </p>
         </div>
 
@@ -1252,13 +1252,13 @@ const DeckovizSchoolsLanding = () => {
         <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
           <div className="mb-6">
             <p className="text-gray-800 leading-relaxed text-lg">
-              "My students are instantly calmer when the nature scenes start playing. It's like visual magic — they settle into learning mode without me having to ask."
+              "My students are instantly calmer when the nature scenes start playing. It's like visual magic   they settle into learning mode without me having to ask."
             </p>
           </div>
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — 2nd Grade Teacher, Portland
+                2nd Grade Teacher, Portland
             </p>
           </div>
           
@@ -1280,7 +1280,7 @@ const DeckovizSchoolsLanding = () => {
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Elementary Principal, Austin
+                Elementary Principal, Austin
             </p>
           </div>
           
@@ -1302,7 +1302,7 @@ const DeckovizSchoolsLanding = () => {
           
           <div className="mb-6">
             <p className="text-gray-900 font-semibold">
-              — Special Education Coordinator, Denver
+                Special Education Coordinator, Denver
             </p>
           </div>
           

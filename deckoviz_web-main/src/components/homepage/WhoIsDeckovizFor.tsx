@@ -2,6 +2,35 @@
 import { useNavigate } from "react-router-dom";
 import type React from "react"
 import { GraduationCap, Hotel, Building2, Sofa, Coffee, ShoppingBag, Briefcase, Heart, Sparkles } from "lucide-react"
+import { motion } from "framer-motion";
+
+const trainContainer = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12, // wagon timing
+    },
+  },
+};
+
+const trainCard = {
+  hidden: {
+    opacity: 0,
+    x: 300,       // off-screen right
+    rotate: 2,
+    scale: 0.95,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+    rotate: 0,
+    scale: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1], // smooth cinematic easing
+    },
+  },
+};
 
 const WhoIsDeckovizFor: React.FC = () => {
   const navigate = useNavigate();
@@ -11,7 +40,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <GraduationCap size={24} />,
       title: "Learning Centres & Schools",
       description:
-        "Transform educational spaces with inspiring, dynamic visuals that enhance learning environments. Create focused study atmospheres, spark creativity, and support different learning modes—from calm concentration to energetic collaboration.",
+        "Transform educational spaces with inspiring, dynamic visuals that enhance learning environments. Create focused study atmospheres, spark creativity, and support different learning modes from calm concentration to energetic collaboration.",
       haloColorRgb: "96, 165, 250", // Blue glow
       route: "/deckoviz-for-schools"
     },
@@ -35,7 +64,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <Sofa size={24} />,
       title: "Electronics & Home Decor Stores",
       description:
-        "Add an irresistible edge to your showroom. Demo how tech and decor beautifully blend—and sell more by showing what's possible.",
+        "Add an irresistible edge to your showroom. Demo how tech and decor beautifully blend and sell more by showing what's possible.",
       haloColorRgb: "251, 146, 60", // Orange glow
       route: "/deckoviz-for-retailstores"
     },
@@ -43,7 +72,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <Coffee size={24} />,
       title: "Restaurants & Cafes",
       description:
-        "Create an unforgettable vibe. Use AI-powered visual storytelling to enhance ambiance, reinforce brand identity, and shape customer moods—from cozy to high-energy.",
+        "Create an unforgettable vibe. Use AI-powered visual storytelling to enhance ambiance, reinforce brand identity, and shape customer moods from cozy to high-energy.",
       haloColorRgb: "216, 180, 254", // Lavender glow
       route: "/deckoviz-for-restaurants"
     },
@@ -51,7 +80,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <ShoppingBag size={24} />,
       title: "Shops and Boutiques",
       description:
-        "Design your atmosphere like a pro—whether it's minimalist chic or artsy and vibrant. Enhance customer experience and stay memorable with every glance.",
+        "Design your atmosphere like a pro whether it's minimalist chic or artsy and vibrant. Enhance customer experience and stay memorable with every glance.",
       haloColorRgb: "249, 115, 22", // Amber glow
       route: "/deckoviz-for-retailstores"
     },
@@ -67,7 +96,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       icon: <Heart size={24} />,
       title: "Therapists & Wellness Centers",
       description:
-        "Whether you're running a therapy office, wellness center, or healing space—Deckoviz helps set the right tone. Calm, uplift, or energize your space, naturally and beautifully.",
+        "Whether you're running a therapy office, wellness center, or healing space Deckoviz helps set the right tone. Calm, uplift, or energize your space, naturally and beautifully.",
       haloColorRgb: "52, 211, 153", // Emerald glow
       route: "/deckoviz-for-therapists"
     },
@@ -128,10 +157,17 @@ const WhoIsDeckovizFor: React.FC = () => {
   </h2>
 </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<motion.div
+  variants={trainContainer}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.2 }}
+  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+>
           {segments.map((segment, index) => (
-            <div
-              key={index}
+            <motion.div
+  key={index}
+  variants={trainCard}
               className="relative group rounded-2xl p-8 py-12 transition-all duration-300 shadow-lg overflow-hidden flex flex-col h-full static-halo-card"
               style={{
                 background: getComplexGradient(index),
@@ -178,9 +214,9 @@ const WhoIsDeckovizFor: React.FC = () => {
                 </div>
               </div>
               
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         <div className="text-center mt-16 space-y-4">
           <p className="text-xl text-gray-600 font-semibold">

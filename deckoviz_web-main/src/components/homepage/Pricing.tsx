@@ -138,7 +138,7 @@ const pricingTiers: PricingPlan[] = [
     originalPrice: 1199,
     gbpPrice: 699,
         image: "/images/55-inch-dasp.png",
-    description: "The ultimate Deckoviz experience — breathtaking, personal, extraordinary.",
+    description: "The ultimate Deckoviz experience   breathtaking, personal, extraordinary.",
     features: [
       "55-inch 4K UHD Premium Display",
       "Superior visual quality with advanced color calibration",
@@ -205,7 +205,7 @@ const largeFormatTiers: PricingPlan[] = [
     originalPrice: 1899,
     gbpPrice: 1299,
         image: "/images/85-inch-dasp.png",
-    description: "For those who want art to truly dominate their space — bold, beautiful, and unforgettable.",
+    description: "For those who want art to truly dominate their space   bold, beautiful, and unforgettable.",
     features: [
       "85-inch 4K UHD Premium Display",
       "Immense wall presence with gallery-grade visuals",
@@ -227,7 +227,7 @@ const largeFormatTiers: PricingPlan[] = [
     originalPrice: 2349,
     gbpPrice: 1649,
         image: "/images/95-inch-dasp.png",
-    description: "The ultimate Deckoviz — a full-wall digital canvas that redefines how spaces feel, live, and breathe.",
+    description: "The ultimate Deckoviz   a full-wall digital canvas that redefines how spaces feel, live, and breathe.",
     features: [
       "95-inch 4K UHD Premium Display",
       "Largest and most immersive Deckoviz available",
@@ -331,13 +331,11 @@ export default function Pricing() {
   "
 >
   <div className="flex flex-col gap-0.5">
-    <span className="text-xs uppercase tracking-widest text-purple-900">
-      Ultimate Guide
-    </span>
+    
 
     <span className="text-sm font-medium text-purple-950 leading-snug flex items-center gap-2">
       <Sparkles className="w-4 h-4" />
-      Your Ultimate Deckoviz DASP Guide
+      Our Founding Thesis
     </span>
 
     <span className="text-xs text-purple-900 opacity-80">

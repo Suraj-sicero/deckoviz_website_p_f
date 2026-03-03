@@ -111,13 +111,13 @@ const DeckovizLanding: React.FC = () => {
             <p className="text-base md:text-lg">
               In today's hyper-competitive hospitality landscape, experience is everything. Guests no
               <br />
-              longer just look for comfort and service — they want story, beauty, meaning, and memory.
+              longer just look for comfort and service   they want story, beauty, meaning, and memory.
               <br />
               They want to feel something.
             </p>
             
             <p className="text-base md:text-lg">
-              Deckoviz helps you give them all of that — through a breathtaking, emotion-rich, AI-powered
+              Deckoviz helps you give them all of that   through a breathtaking, emotion-rich, AI-powered
               <br />
               visual frame that transforms your hotel's interiors into living, evolving expressions of luxury,
               <br />
@@ -129,7 +129,7 @@ const DeckovizLanding: React.FC = () => {
                 This isn't just décor.
               </p>
               <p className="text-base md:text-lg font-semibold text-gray-800">
-                This is emotional ambiance as a service — smart, responsive, curated, and always beautiful.
+                This is emotional ambiance as a service   smart, responsive, curated, and always beautiful.
               </p>
             </div>
           </div>
@@ -397,7 +397,7 @@ const DeckovizLanding: React.FC = () => {
             <p className="text-lg text-gray-900 font-medium leading-relaxed">
               It runs on Android TV, connects with an intuitive mobile app, and gives you the ability to curate, control, and personalize the
               <br />
-              entire visual atmosphere of your property — across rooms, lobbies, lounges, spas, restaurants, and suites.
+              entire visual atmosphere of your property   across rooms, lobbies, lounges, spas, restaurants, and suites.
             </p>
           </div>
         </div>
@@ -697,7 +697,7 @@ const DeckovizLanding: React.FC = () => {
                     <div className="flex items-start group/bullet">
                       <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
                       <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Offer guests access to your own curated content collections — art, poetry, culture
+                        Offer guests access to your own curated content collections   art, poetry, culture
                       </p>
                     </div>
                   </div>
@@ -742,7 +742,7 @@ const DeckovizLanding: React.FC = () => {
                     <div className="flex items-start group/bullet">
                       <div className="w-2 h-2 bg-gradient-to-r from-rose-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
                       <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Change the mood of a room instantly — no paint, no wallpaper, no redesign
+                        Change the mood of a room instantly   no paint, no wallpaper, no redesign
                       </p>
                     </div>
                     <div className="flex items-start group/bullet">
@@ -925,7 +925,7 @@ const DeckovizLanding: React.FC = () => {
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Visualize healing — flowing water, slow-moving clouds, fractal breath animations
+                          Visualize healing   flowing water, slow-moving clouds, fractal breath animations
                         </p>
                       </div>
                       <div className="flex items-start">
@@ -1042,7 +1042,7 @@ const DeckovizLanding: React.FC = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Android TV Integration — optional smart TV use
+                    Android TV Integration   optional smart TV use
                   </h3>
                 </div>
               </div>
@@ -1190,7 +1190,7 @@ const DeckovizLanding: React.FC = () => {
                       </div>
                     </div>
                     <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      People love beautiful things. Deckoviz becomes the most Instagrammable spot in the room — generating organic reach and impressions every day.
+                      People love beautiful things. Deckoviz becomes the most Instagrammable spot in the room   generating organic reach and impressions every day.
                     </p>
                   </div>
                 </div>
@@ -1235,7 +1235,7 @@ const DeckovizLanding: React.FC = () => {
                       </div>
                     </div>
                     <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      People love beautiful things. Deckoviz becomes the most Instagrammable spot in the room — generating organic reach and impressions every day.
+                      People love beautiful things. Deckoviz becomes the most Instagrammable spot in the room   generating organic reach and impressions every day.
                     </p>
                   </div>
                 </div>
@@ -1318,7 +1318,7 @@ const DeckovizLanding: React.FC = () => {
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — Guest at boutique hotel pilot
+                      Guest at boutique hotel pilot
                   </p>
                 </div>
                 
@@ -1340,7 +1340,7 @@ const DeckovizLanding: React.FC = () => {
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — Events manager at luxury resort
+                      Events manager at luxury resort
                   </p>
                 </div>
                 
@@ -1362,7 +1362,7 @@ const DeckovizLanding: React.FC = () => {
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — General Manager, design-forward city hotel
+                      General Manager, design-forward city hotel
                   </p>
                 </div>
                 

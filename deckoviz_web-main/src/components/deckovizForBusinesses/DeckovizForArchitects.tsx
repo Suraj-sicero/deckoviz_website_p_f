@@ -108,9 +108,9 @@ const DeckovizArchitectsLanding = () => {
             </p>
             
             <p className="text-base md:text-lg">
-              With Deckoviz, you now have a new design dimension — a living, breathing visual frame that
+              With Deckoviz, you now have a new design dimension   a living, breathing visual frame that
               <br />
-              adapts to mood, moment, and meaning. It's the evolution of wall design — emotional,
+              adapts to mood, moment, and meaning. It's the evolution of wall design   emotional,
               <br />
               dynamic, intelligent, and beautiful.
             </p>
@@ -460,7 +460,7 @@ const DeckovizArchitectsLanding = () => {
 
               <div className="flex-1">
                 <p className="text-indigo-700 font-medium text-sm leading-relaxed">
-                  Minimalism. Neutral tones. Clean lines. But where's the <strong>emotion</strong>? Deckoviz gives you a way to inject feeling, seasonality, story, and change — without clutter, over-design, or compromise.
+                  Minimalism. Neutral tones. Clean lines. But where's the <strong>emotion</strong>? Deckoviz gives you a way to inject feeling, seasonality, story, and change   without clutter, over-design, or compromise.
                 </p>
               </div>
 
@@ -547,7 +547,7 @@ const DeckovizArchitectsLanding = () => {
 
               <div className="flex-1">
                 <p className="text-indigo-700 font-medium text-sm leading-relaxed">
-                  Whether you're designing a single luxury residence or a commercial tower, Deckoviz allows you to offer <strong>bespoke visual identity</strong> to each room, zone, or user — powered by AI.
+                  Whether you're designing a single luxury residence or a commercial tower, Deckoviz allows you to offer <strong>bespoke visual identity</strong> to each room, zone, or user   powered by AI.
                 </p>
               </div>
 
@@ -663,7 +663,7 @@ const DeckovizArchitectsLanding = () => {
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Offer clients an evolving personal gallery — powered by their mood, story, and memories.
+                          Offer clients an evolving personal gallery   powered by their mood, story, and memories.
                         </p>
                       </div>
                       <div className="flex items-start">
@@ -709,7 +709,7 @@ const DeckovizArchitectsLanding = () => {
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Use Deckoviz to reflect transitions — sunrise light, sunset warmth, rainy introspection
+                          Use Deckoviz to reflect transitions   sunrise light, sunset warmth, rainy introspection
                         </p>
                       </div>
                     </div>
@@ -816,7 +816,7 @@ const DeckovizArchitectsLanding = () => {
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Offer clients an evolving personal gallery — powered by their mood, story, and memories.
+                          Offer clients an evolving personal gallery   powered by their mood, story, and memories.
                         </p>
                       </div>
                       <div className="flex items-start">
@@ -862,7 +862,7 @@ const DeckovizArchitectsLanding = () => {
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Use Deckoviz to reflect transitions — sunrise light, sunset warmth, rainy introspection
+                          Use Deckoviz to reflect transitions   sunrise light, sunset warmth, rainy introspection
                         </p>
                       </div>
                     </div>
@@ -927,7 +927,7 @@ const DeckovizArchitectsLanding = () => {
                       <div className="flex items-start">
                         <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                         <p className="text-indigo-600 font-medium">
-                          Design team-specific mood zones — creative inspiration rooms, calm break zones, client welcome lobbies
+                          Design team-specific mood zones   creative inspiration rooms, calm break zones, client welcome lobbies
                         </p>
                       </div>
                       <div className="flex items-start">
@@ -1003,7 +1003,7 @@ const DeckovizArchitectsLanding = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Built on Google TV — doubles as a smart TV if needed
+                    Built on Google TV   doubles as a smart TV if needed
                   </h3>
                 </div>
               </div>
@@ -1145,7 +1145,7 @@ const DeckovizArchitectsLanding = () => {
                       </div>
                     </div>
                     <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      Deckoviz is a statement piece — without dominating the design. It subtly transforms a space while letting your interior vision remain in focus.
+                      Deckoviz is a statement piece   without dominating the design. It subtly transforms a space while letting your interior vision remain in focus.
                     </p>
                   </div>
                 </div>
@@ -1211,7 +1211,7 @@ const DeckovizArchitectsLanding = () => {
                       </div>
                     </div>
                     <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      Let guests feel who you are. Deckoviz becomes a visual extension of your brand — subtle, poetic, sophisticated.
+                      Let guests feel who you are. Deckoviz becomes a visual extension of your brand   subtle, poetic, sophisticated.
                     </p>
                   </div>
                 </div>
@@ -1242,7 +1242,7 @@ const DeckovizArchitectsLanding = () => {
                   Stylists, and Curators
                 </h2>
                 <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                  If you create curated atmospheres for a living — you'll love
+                  If you create curated atmospheres for a living   you'll love
                   <br />
                   how Deckoviz helps you:
                 </p>
@@ -1429,7 +1429,7 @@ const DeckovizArchitectsLanding = () => {
                   Architects & Designer
                 </h2>
                 <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                  If you create curated atmospheres for a living — you'll
+                  If you create curated atmospheres for a living   you'll
                   <br />
                   love how Deckoviz helps you:
                 </p>
@@ -1549,13 +1549,13 @@ const DeckovizArchitectsLanding = () => {
               <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
                 <div className="mb-6">
                   <p className="text-gray-800 leading-relaxed text-lg">
-                    "It's like giving a room a consciousness. Deckoviz makes static walls feel sentient — it brings emotional storytelling into spatial design."
+                    "It's like giving a room a consciousness. Deckoviz makes static walls feel sentient   it brings emotional storytelling into spatial design."
                   </p>
                 </div>
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — Principal Architect, boutique studio
+                      Principal Architect, boutique studio
                   </p>
                 </div>
                 
@@ -1577,7 +1577,7 @@ const DeckovizArchitectsLanding = () => {
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — High-end residential interior designer
+                      High-end residential interior designer
                   </p>
                 </div>
                 
@@ -1593,13 +1593,13 @@ const DeckovizArchitectsLanding = () => {
               <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
                 <div className="mb-6">
                   <p className="text-gray-800 leading-relaxed text-lg">
-                    "Deckoviz lets me design for seasonality, emotion, and identity — all in one frame."
+                    "Deckoviz lets me design for seasonality, emotion, and identity   all in one frame."
                   </p>
                 </div>
                 
                 <div className="mb-6">
                   <p className="text-gray-900 font-semibold">
-                    — Design consultant, hotel chain
+                      Design consultant, hotel chain
                   </p>
                 </div>
                 

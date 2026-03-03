@@ -550,7 +550,7 @@ const renderPost = (post: MarkdownBlog) => (
           {/* Description Paragraphs */}
         </div>
       </div>
-      {/* ================= FULL ENTERPRISE OVERVIEW — GLASS CARD ================= */}
+      {/* ================= FULL ENTERPRISE OVERVIEW   GLASS CARD ================= */}
       <section className="py-24 bg-white relative overflow-hidden">
         {/* Ambient Glow */}
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 blur-[160px]" />
@@ -595,7 +595,7 @@ const renderPost = (post: MarkdownBlog) => (
               <div className="space-y-6 text-white/80 leading-relaxed text-[16px]">
                 <p>
                   Attention is fragmented. Expectations are higher.
-                  Differentiation is harder. Screens are everywhere — yet most
+                  Differentiation is harder. Screens are everywhere   yet most
                   spaces still feel forgettable.
                 </p>
 
@@ -618,7 +618,7 @@ const renderPost = (post: MarkdownBlog) => (
 
                 <p>
                   For businesses, Deckoviz becomes the missing layer between
-                  brand strategy and real-world experience — the layer customers
+                  brand strategy and real-world experience   the layer customers
                   actually feel.
                 </p>
               </div>
@@ -1093,7 +1093,7 @@ const renderPost = (post: MarkdownBlog) => (
             </h2>
             <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
               Beyond the core features, Deckoviz delivers enterprise-grade
-              advantages that matter at scale — operationally, strategically,
+              advantages that matter at scale   operationally, strategically,
               and experientially.
             </p>
           </div>
@@ -1107,7 +1107,7 @@ const renderPost = (post: MarkdownBlog) => (
               },
               {
                 title: "Brand consistency at scale",
-                desc: "Preserve your visual identity everywhere your brand exists — visuals, color systems, tone, narrative style, and experience design remain aligned without sacrificing flexibility.",
+                desc: "Preserve your visual identity everywhere your brand exists   visuals, color systems, tone, narrative style, and experience design remain aligned without sacrificing flexibility.",
               },
               {
                 title: "Clean enterprise integrations",
@@ -1115,7 +1115,7 @@ const renderPost = (post: MarkdownBlog) => (
               },
               {
                 title: "Analytics & measurable impact",
-                desc: "Move beyond guesswork using analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals — enabling teams to optimize for real-world outcomes.",
+                desc: "Move beyond guesswork using analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals   enabling teams to optimize for real-world outcomes.",
               },
               {
                 title: "Enterprise security & reliability",
@@ -1123,7 +1123,7 @@ const renderPost = (post: MarkdownBlog) => (
               },
               {
                 title: "A living body for your brand",
-                desc: "Deckoviz does not replace your brand strategy — it gives it a living, intelligent body inside your space, continuously evolving with your business.",
+                desc: "Deckoviz does not replace your brand strategy   it gives it a living, intelligent body inside your space, continuously evolving with your business.",
               },
             ].map((item, i) => (
               <div
@@ -1175,7 +1175,7 @@ const renderPost = (post: MarkdownBlog) => (
 <section className="relative py-28 bg-white border-t border-gray-100">
 
 
-{/* 📘 Business DASP Guide Button — ONLY for Explore Further */}
+{/* 📘 Business DASP Guide Button   ONLY for Explore Further */}
 <button
   onClick={() => navigate("/dasp-business-guide")}
   className="

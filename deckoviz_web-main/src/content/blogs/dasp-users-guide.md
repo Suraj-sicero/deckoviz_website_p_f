@@ -38,7 +38,7 @@ Some people use this feature as self reflection. Others as storytelling. Others 
 
 There is no wrong reason.
 
-The wall becomes a mirror — not of how you look, but of who you are becoming.
+The wall becomes a mirror   not of how you look, but of who you are becoming.
 
 ---
 
