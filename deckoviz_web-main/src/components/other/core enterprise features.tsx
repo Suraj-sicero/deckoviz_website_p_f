@@ -36,7 +36,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
     <section
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative py-20 md:py-32 overflow-hidden bg-slate-50"
+      className="relative pt-0 pb-10 md:pb-32 overflow-hidden bg-slate-25"
     >
       <div className="relative max-w-7xl mx-auto px-6">
         
@@ -53,7 +53,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
             Built for scale, security, and seamless integration.
           </p>
         </div>
-<br></br>
+<div className="pt-11"></div>
         {/* Carousel Container */}
         <div className="relative flex items-center justify-center h-[400px] md:h-[500px] perspective-[1500px]">
           <LayoutGroup>
@@ -105,7 +105,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
                     {feature.title}
                   </h3>
                   
-                  <p className="text-slate-600 leading-relaxed text-sm md:text-base text-center md:text-left">
+                  <p className="text-slate-600 leading-relaxed text-sm md:text-base text-center md:text-left whitespace-pre-line">
                     {feature.description}
                   </p>
                 </motion.div>

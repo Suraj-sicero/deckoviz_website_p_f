@@ -3,6 +3,8 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import ProgressBar from "../progressbar.tsx";
+import { supabase } from "../../lib/supabase";
+import { Calendar } from "lucide-react";
 import {
   Building,
   Layers,
@@ -18,107 +20,78 @@ import { useNavigate } from "react-router-dom";
 import { loadBlogs, MarkdownBlog } from "../../lib/blogLoader";
 import ShopCarousel from "../other/ShopCarousel.tsx";
 import EnterpriseFeatures from "../other/core enterprise features.tsx";
-
 import { Link } from "react-router-dom"
+import { image } from "framer-motion/client";
 
-const ENTERPRISE_ARTICLES = {
-  core: [
-    "deckoviz-for-restaurants",
-    "deckoviz-for-retail",
-    "deckoviz-for-real-estate",
-    "deckoviz-for-hotels",
-    "deckoviz-for-wellness",
-  ],
+  const ENTERPRISE_ARTICLES = {
+    core: [
+      "deckoviz-for-restaurants",
+      "deckoviz-for-retail",
+      "deckoviz-for-real-estate",
+      "deckoviz-for-hotels",
+      "deckoviz-for-wellness",
+    ],
 
-  platform: [
-    "dasp-users-guide",
-    "the-vizzy-magic-for-homes-and-businesses",
-    "from-screens-to-spaces",
-    "enterprise-control-layer",
-  ],
+    platform: [
+      "dasp-users-guide",
+      "the-vizzy-magic-for-homes-and-businesses",
+      "from-screens-to-spaces",
+      "enterprise-control-layer",
+    ],
 
-  thought: [
-    "why-deckoviz-is-a-must-have-for-modern-enterprises",
-    "the-power-of-visual-storytelling-and-custom-art-for-enterprises-with-deckoviz-e-dasp",
-    "custom-art-as-a-brand-asset",
-    "designing-for-dwell-time-not-distraction",
-  ],
+    thought: [
+      "why-deckoviz-is-a-must-have-for-modern-enterprises",
+      "the-power-of-visual-storytelling-and-custom-art-for-enterprises-with-deckoviz-e-dasp",
+      "custom-art-as-a-brand-asset",
+      "designing-for-dwell-time-not-distraction",
+    ],
 
-  practical: [
-    "measuring-experience-without-killing-it",
-    "the-future-of-intelligent-physical-spaces",
-  ],
-}
+    practical: [
+      "measuring-experience-without-killing-it",
+      "the-future-of-intelligent-physical-spaces",
+    ],
+  }
 
 
 
 
 
 // --- REUSABLE COMPONENTS (Updated with new styling) ---
-type Spark = {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  color: string;
-  dx: number;
-  dy: number;
-};
+  type Spark = {
+    id: number;
+    x: number;
+    y: number;
+    size: number;
+    color: string;
+    dx: number;
+    dy: number;
+  };
 
 const Button = ({
   children,
   variant = "primary",
   onClick,
+  className = "",
 }: {
   children: React.ReactNode;
   variant?: "primary" | "secondary";
   onClick?: () => void;
+  className?: string;
 }) => {
-  // Style matched with the buttons in the first component
   const baseClasses =
     "px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5";
+
   const variants = {
     primary: "bg-[#6670d8] text-white hover:bg-indigo-700",
     secondary:
       "bg-white/80 backdrop-blur-sm text-gray-900 border border-gray-300/50 hover:bg-gray-100",
   };
-  const renderPost = (post: MarkdownBlog) => (
-  <Link
-    key={post.slug}
-    to={`/blog/${post.slug}`}
-    className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-purple-400 transition"
-  >
-    <div className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition pointer-events-none
-      bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
-
-    <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
-      <img
-        src={post.image || "/placeholder.svg"}
-        alt={post.title}
-        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-      />
-    </div>
-
-    <div className="relative flex-grow">
-      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition">
-        {post.title}
-      </h3>
-
-      {post.description && (
-        <p className="text-sm text-gray-600 mt-1 leading-relaxed line-clamp-2">
-          {post.description}
-        </p>
-      )}
-
-      <div className="mt-2 text-sm text-purple-600 opacity-0 group-hover:opacity-100 transition">
-        Read →
-      </div>
-    </div>
-  </Link>
-)
 
   return (
-    <button onClick={onClick} className={`${baseClasses} ${variants[variant]}`}>
+    <button
+      onClick={onClick}
+      className={`${baseClasses} ${variants[variant]} ${className}`}
+    >
       {children}
     </button>
   );
@@ -219,162 +192,232 @@ const EnterpriseFeatureCard = ({
   );
 };
 
+interface DemoRequestModalProps {
+  onClose: () => void;
+}
 
+const DemoRequestModal = ({ onClose }: DemoRequestModalProps) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    email: "",
+    message: "",
+  });
 
-const DemoRequestModal = ({ onClose }: { onClose: () => void }) => {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert("Thank you! Your demo request has been submitted.");
-    onClose();
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+const { data, error } = await supabase
+  .from("demo_requests")
+  .insert([formData]);
+
+console.log("DATA:", data);
+console.log("ERROR:", error);
+
+if (error) {
+  setError(error.message);   // show real message
+  return;
+}
+
+      setSuccess(true);
+
+      // auto close after 2s
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+
+    } catch (err: any) {
+      console.error(err);
+      setError("Failed to submit request. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out">
-<div className="relative w-full max-w-lg">
+    <div className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
 
-  {/* gradient glow border */}
-  <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-30"></div>
+      <div className="relative w-full max-w-lg">
 
-  <div className="relative bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl w-full transition-all duration-300 ease-in-out transform scale-95 opacity-0 animate-fade-in-scale border border-white/40">
-    
-    <div className="flex items-center justify-between p-6 border-b border-gray-200/60">
-      <h3 className="text-xl font-semibold text-gray-900 tracking-wide">
-        Request an Enterprise Demo
-      </h3>
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-30"></div>
 
-      <button
-        onClick={onClose}
-        className="p-2 rounded-full bg-gray-100/60 hover:bg-gray-200 transition-all duration-300 hover:rotate-90"
-        aria-label="Close modal"
-      >
-        <X className="w-5 h-5 text-gray-600" />
-      </button>
-    </div>
+        <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full border border-white/40">
 
-    <form onSubmit={handleSubmit} className="p-6 space-y-5">
-      
-      <div>
-        <label htmlFor="name" className="block text-sm font-semibold text-gray-700">
-          Full Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          required
-          className="mt-2 block w-full px-4 py-3 bg-white/70 backdrop-blur-md border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6670d8] focus:border-[#6670d8] transition-all duration-300 hover:border-[#6670d8]"
-          placeholder="Enter your full name"
-        />
+          <div className="flex items-center justify-between p-6 border-b border-gray-200/60">
+            <h3 className="text-xl font-semibold text-gray-900">
+              Request an Enterprise Demo
+            </h3>
+
+            <button
+              onClick={onClose}
+              className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition"
+            >
+              <X className="w-5 h-5 text-gray-600" />
+            </button>
+          </div>
+
+          {success ? (
+            <div className="p-8 text-center">
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                ✅ Request Submitted
+              </h4>
+              <p className="text-gray-600">
+                Our team will contact you shortly.
+              </p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="p-6 space-y-5">
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700">
+                  Full Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
+                  placeholder="Enter your full name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  required
+                  value={formData.company}
+                  onChange={handleChange}
+                  className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
+                  placeholder="Enter company name"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
+                  placeholder="Enter your email"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700">
+                  Message (Optional)
+                </label>
+                <textarea
+                  id="message"
+                  rows={3}
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="mt-2 w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none"
+                  placeholder="Write your message..."
+                />
+              </div>
+
+              {error && (
+                <p className="text-sm text-red-600">{error}</p>
+              )}
+
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition disabled:opacity-50"
+                >
+                  {loading ? "Submitting..." : "Submit Request"}
+                </button>
+              </div>
+
+            </form>
+          )}
+
+        </div>
       </div>
-
-      <div>
-        <label htmlFor="company" className="block text-sm font-semibold text-gray-700">
-          Company Name
-        </label>
-        <input
-          type="text"
-          id="company"
-          required
-          className="mt-2 block w-full px-4 py-3 bg-white/70 backdrop-blur-md border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6670d8] focus:border-[#6670d8] transition-all duration-300 hover:border-[#6670d8]"
-          placeholder="Enter company name"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="email" className="block text-sm font-semibold text-gray-700">
-          Email Address
-        </label>
-        <input
-          type="email"
-          id="email"
-          required
-          className="mt-2 block w-full px-4 py-3 bg-white/70 backdrop-blur-md border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6670d8] focus:border-[#6670d8] transition-all duration-300 hover:border-[#6670d8]"
-          placeholder="Enter your email"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="message" className="block text-sm font-semibold text-gray-700">
-          Message (Optional)
-        </label>
-        <textarea
-          id="message"
-          rows={3}
-          className="mt-2 block w-full px-4 py-3 bg-white/70 backdrop-blur-md border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#6670d8] focus:border-[#6670d8] transition-all duration-300 hover:border-[#6670d8]"
-          placeholder="Write your message..."
-        ></textarea>
-      </div>
-
-      <div className="pt-6">
-        <button
-          type="submit"
-          className="w-full relative overflow-hidden bg-gradient-to-r from-[#6670d8] via-indigo-600 to-purple-600 text-white px-6 py-3.5 rounded-xl font-semibold tracking-wide shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300 group"
-        >
-          <span className="relative z-10">Submit Request</span>
-
-          {/* shine effect */}
-          <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-transparent via-white/30 to-transparent blur-xl"></span>
-        </button>
-      </div>
-
-    </form>
-  </div>
-</div>
     </div>
   );
 };
 
-const enterpriseImages = [
-  { src: "/images/DIGE6.png" },
-  { src: "/images/DIGE2.png" },
-  { src: "/images/DIGE3.png" },
-  { src: "/images/DIGE4.png" },
-  { src: "/images/DIGE5.png" },
-  { src: "/images/DIGE7.png" },
-  { src: "/images/DIGE8.png" },
-  { src: "/images/DIGE9.png" },
-];
 
-export default function DeckovizForEnterprise() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [sparks, setSparks] = useState<Spark[]>([]);
+  const enterpriseImages = [
+    // { src: "/images/DIGE6.png" },
+    { src: "/images/DIGE2.png" },
+    { src: "/images/DIGE3.png" },
+    { src: "/images/DIGE4.png" },
+    // { src: "/images/DIGE5.png" },
+    { src: "/images/DIGE7.png" },
+    // { src: "/images/DIGE8.png" },
+    { src: "/images/DIGE9.png" },
+  ];
 
-  const [blogs, setBlogs] = useState<MarkdownBlog[]>([])
-  const categorizedEnterpriseBlogs = {
-  core: blogs.filter(b => ENTERPRISE_ARTICLES.core.includes(b.slug)),
-  platform: blogs.filter(b => ENTERPRISE_ARTICLES.platform.includes(b.slug)),
-  thought: blogs.filter(b => ENTERPRISE_ARTICLES.thought.includes(b.slug)),
-  practical: blogs.filter(b => ENTERPRISE_ARTICLES.practical.includes(b.slug)),
-}
+  export default function DeckovizForEnterprise() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [sparks, setSparks] = useState<Spark[]>([]);
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.2,
+    const [blogs, setBlogs] = useState<MarkdownBlog[]>([])
+    const categorizedEnterpriseBlogs = {
+    core: blogs.filter(b => ENTERPRISE_ARTICLES.core.includes(b.slug)),
+    platform: blogs.filter(b => ENTERPRISE_ARTICLES.platform.includes(b.slug)),
+    thought: blogs.filter(b => ENTERPRISE_ARTICLES.thought.includes(b.slug)),
+    practical: blogs.filter(b => ENTERPRISE_ARTICLES.practical.includes(b.slug)),
+  }
+
+  const containerVariants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.2,
+      },
     },
-  },
-};
+  };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: "easeOut" },
-  },
-};
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
 
-const [activeCategory, setActiveCategory] = useState("All")
+  const [activeCategory, setActiveCategory] = useState("All")
 
-useEffect(() => {
-  loadBlogs().then(setBlogs)
-}, [])
-const enterpriseCategories = [
-  "All",
-  "Core Industry Pages",
-  "Platform & Intelligence",
-  "Thought Leadership & Strategy",
-  "Practical & Forward-Looking",
-]
+  useEffect(() => {
+    loadBlogs().then(setBlogs)
+  }, [])
+
+  const enterpriseCategories = [
+    "All",
+    "Core Industry Pages",
+    "Platform & Intelligence",
+    "Thought Leadership & Strategy",
+    "Practical & Forward-Looking",
+  ]
 
   const [pos, setPos] = useState("0% 0%");
   const [isHover, setIsHover] = useState(false);
@@ -395,266 +438,387 @@ const enterpriseCategories = [
     return () => clearInterval(interval);
   }, [isHover]);
 
-const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(false);
 
-const [showBenefits, setShowBenefits] = useState(false);
+  const [showBenefits, setShowBenefits] = useState(false);
 
 const mainFeatures = [
-  ["Dynamic Product Display Enhancer", "Turn static product images into animated visuals, artistic loops, or short videos. Showcase products in motion, in use, or reimagined through high-production generative visuals."],
-  ["AI Brand-Themed Artwork Engine", "Generate living artworks inspired by your brand identity, location, history, and values. Every space gains a unique visual language that evolves with time and context."],
-  ["Generative Marketing & Signage Suite", "Instantly create menus, posters, signage, promotions, and announcements in your brand style. Update content dynamically without design bottlenecks."],
-  ["Customer Visual Keepsakes", "Create personalized visuals for guests or customers during special moments and let them take it home digitally. Experiences turn into shareable memories."],
-  ["Vizzy for Business (AI Brand Companion)", "Vizzy acts as a brand ambassador, storyteller, and guide. It answers questions, introduces offerings, and shapes experiences with personality and restraint."],
-  ["AI Montage & Memory Creator", "Instantly generate artistic montages from photos or events. Ideal for hospitality, celebrations, retail milestones, or real estate walkthroughs."],
+  {
+    title: "Dynamic Product Display Enhancer",
+    description: "Turn static product images into animated visuals, artistic loops, or short videos. Showcase products in motion, in use, or reimagined through high-production generative visuals.",
+    icon: "🎥"
+  },
+  {
+    title: "AI Brand-Themed Artwork Engine",
+    description: "Generate living artworks inspired by your brand identity, location, history, and values. Every space gains a unique visual language that evolves with time and context.",
+    icon: "🎨"
+  },
+  {
+    title: "Generative Marketing & Signage Suite",
+    description: "Instantly create menus, posters, signage, promotions, and announcements in your brand style. Update content dynamically without design bottlenecks.",
+    icon: "📢"
+  },
+  {
+    title: "Customer Visual Keepsakes",
+    description: "Create personalized visuals for guests or customers during special moments and let them take it home digitally. experiences turn into shareable memories.",
+    icon: "📸"
+  },
+  {
+    title: "Vizzy for Business (AI Brand Companion)",
+    description: "Vizzy acts as a brand ambassador, storyteller, and guide. It answers questions, introduces offerings, and shapes experiences with personality and restraint.",
+    icon: "🤖"
+  },
+  {
+    title: "AI Montage & Memory Creator",
+    description: "Instantly generate artistic montages from photos or events. ideal for hospitality, celebrations, retail milestones, or real estate walkthroughs.",
+    icon: "🖼️"
+  }
 ];
 
 const extraFeatures = [
-  ["Guest & Visitor Personalization", "Remember frequent guests, customer personas, or visitor types. Adapt visuals and ambience subtly to make people feel recognized, not tracked."],
-  ["Collections with AI Narration", "Turn products, menus, stories, or spaces into narrated visual collections. Voice adds trust, warmth, and clarity without feeling salesy."],
-  ["AI Music & Sound Generator", "Create brand-themed music, product-specific soundscapes, or ambient audio that aligns with time of day, energy, and context."],
-  ["Smart Display Scheduling", "Automate displays by time, season, event, audience type, or business rhythm. Morning, evening, weekday, festive, or campaign-specific modes run automatically."],
-  ["Adaptive Intelligence Engine","Over time, Deckoviz learns what works in each space. Displays, moods, and stories improve continuously based on real-world interaction patterns."],
-  ["Enterprise Control & Admin Suite","Centralized dashboard for multi-location control, scheduling, approvals, branding consistency, and future CRM or POS integrations."],
-  ["Marketplace & Commerce Layer","Use Deckoviz as a visual commerce surface. Showcase products, experiences, or digital items directly within the environment."],
-  ["Multisensory Moodscapes Engine","Sync visuals with music, adaptive backlighting, and future scent modules to create deeply immersive, emotionally resonant environments."],
-  ["Social Proof & Testimonial Displays","Curate reviews, testimonials, and customer moments into ambient, trust-building visual loops without turning the space into a feed."],
-  ["Dynamic Visual Menus & Catalogs","Replace static menus or catalogs with living visual systems that rotate items, highlight specials, and tell stories visually."],
+  {
+    title: "Guest & Visitor Personalization",
+    description: "Remember frequent guests, customer personas, or visitor types. Adapt visuals and ambience subtly to make people feel recognized, not tracked.",
+    icon: "👥"
+  },
+  {
+    title: "Collections with AI Narration",
+    description: "Turn products, menus, stories, or spaces into narrated visual collections. Voice adds trust, warmth, and clarity without feeling salesy.",
+    icon: "🎙️"
+  },
+  {
+    title: "AI Music & Sound Generator",
+    description: "Create brand-themed music, product-specific soundscapes, or ambient audio that aligns with time of day, energy, and context.",
+    icon: "🎵"
+  },
+  {
+    title: "Smart Display Scheduling",
+    description: "Automate displays by time, season, event, audience type, or business rhythm. Morning, evening, weekday, festive, or campaign-specific modes run automatically.",
+    icon: "⏰"
+  },
+  {
+    title: "Adaptive Intelligence Engine",
+    description: "Over time, Deckoviz learns what works in each space. Displays, moods, and stories improve continuously based on real-world interaction patterns.",
+    icon: "🧠"
+  },
+  {
+    title: "Enterprise Control & Admin Suite",
+    description: "Centralized dashboard for multi-location control, scheduling, approvals, branding consistency, and future CRM or POS integrations.",
+    icon: "🏢"
+  },
+  {
+    title: "Marketplace & Commerce Layer",
+    description: "Use Deckoviz as a visual commerce surface. Showcase products, experiences, or digital items directly within the environment.",
+    icon: "🛍️"
+  },
+  {
+    title: "Multisensory Moodscapes Engine",
+    description: "Sync visuals with music, adaptive backlighting, and future scent modules to create deeply immersive, emotionally resonant environments.",
+    icon: "✨"
+  },
+  {
+    title: "Social Proof & Testimonial Displays",
+    description: "Curate reviews, testimonials, and customer moments into ambient, trust-building visual loops without turning the space into a feed.",
+    icon: "⭐"
+  },
+  {
+    title: "Dynamic Visual Menus & Catalogs",
+    description: "Replace static menus or catalogs with living visual systems that rotate items, highlight specials, and tell stories visually.",
+    icon: "📋"
+  }
 ];
-useEffect(() => {
-  const handleMouseMove = (e: MouseEvent) => {
 
-    if (Math.random() > 0.5) return;
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
 
-    setSparks(prev => [
-      ...prev,
-      ...Array.from({ length: 6 }).map(() => ({
-        id: Math.random(),
-        x: e.clientX,
-        y: e.clientY,
-        size: Math.random() * 8 + 6,
-        color: ["#ffffff","#facc15","#a855f7","#ec4899","#38bdf8"]
-          [Math.floor(Math.random() * 5)],
-        dx: (Math.random() - 0.5) * 10,
-        dy: (Math.random() - 0.5) * 10,
-      }))
-    ]);
+      if (Math.random() > 0.5) return;
 
-    setTimeout(() => {
-      setSparks(prev => prev.slice(6));
-    }, 600);
+      setSparks(prev => [
+        ...prev,
+        ...Array.from({ length: 6 }).map(() => ({
+          id: Math.random(),
+          x: e.clientX,
+          y: e.clientY,
+          size: Math.random() * 8 + 6,
+          color: ["#ffffff","#facc15","#a855f7","#ec4899","#38bdf8"]
+            [Math.floor(Math.random() * 5)],
+          dx: (Math.random() - 0.5) * 10,
+          dy: (Math.random() - 0.5) * 10,
+        }))
+      ]);
 
+      setTimeout(() => {
+        setSparks(prev => prev.slice(6));
+      }, 600);
   };
 
   window.addEventListener("mousemove", handleMouseMove);
-  return () => window.removeEventListener("mousemove", handleMouseMove);
-}, []);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   const words = ["Deckoviz for Enterprise"]; // words to type
-const [text, setText] = useState("");
-const [wordIndex, setWordIndex] = useState(0);
-const [charIndex, setCharIndex] = useState(0);
-const [deleting, setDeleting] = useState(false);
+  const [text, setText] = useState("");
+  const [wordIndex, setWordIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [deleting, setDeleting] = useState(false);
 
-useEffect(() => {
-  const currentWord = words[wordIndex];
-  let speed = deleting ? 40 : 80;
+  useEffect(() => {
+    const currentWord = words[wordIndex];
+    let speed = deleting ? 40 : 80;
 
-  const timeout = setTimeout(() => {
-    if (!deleting) {
-      setText(currentWord.slice(0, charIndex + 1));
-      setCharIndex(charIndex + 1);
+    const timeout = setTimeout(() => {
+      if (!deleting) {
+        setText(currentWord.slice(0, charIndex + 1));
+        setCharIndex(charIndex + 1);
 
-      if (charIndex + 1 === currentWord.length) {
+        if (charIndex + 1 === currentWord.length) {
+        }
+      } else {
+        setText(currentWord.slice(0, charIndex - 1));
+        setCharIndex(charIndex - 1);
+
+        if (charIndex === 0) {
+          setDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }
       }
-    } else {
-      setText(currentWord.slice(0, charIndex - 1));
-      setCharIndex(charIndex - 1);
+    }, speed);
 
-      if (charIndex === 0) {
-        setDeleting(false);
-        setWordIndex((prev) => (prev + 1) % words.length);
-      }
-    }
-  }, speed);
+    return () => clearTimeout(timeout);
+  }, [charIndex, deleting, wordIndex]);
 
-  return () => clearTimeout(timeout);
-}, [charIndex, deleting, wordIndex]);
+    const navigate = useNavigate();
 
-  const navigate = useNavigate();
+    const enterpriseFeatures = [
+      {
+        icon: <Layers size={28} className="text-white" />,
+        title: "Adaptive Environments",
+        image:"/images/officenavbar.png",
+        description:
+            `Deckoviz creates environments that evolve in real time. Art, visuals, music, lighting, and ambience adapt to the time of day, season, event, and guest context. Morning feels different from evening. Weekdays feel different from weekends. \n \n A quiet afternoon does not feel like a celebration night. Your space stops being static and starts feeling alive, intentional, and tuned.`,
+      },
+      {
+        icon: <Building size={28} className="text-white" />,
+        title: "Products That Come Alive",
+        image:"/images/dish.png",
+        description:
+          "Deckoviz turns products, dishes, collections, and offerings into living visuals. Static images become dynamic animations, subtle videos, and narrative-driven displays. \n \n Dishes float, textures breathe, products are shown in use, in context, in mood. This increases perceived value, curiosity, and conversion without feeling promotional. Your walls start doing the storytelling your staff cannot repeat endlessly.",
+      },
+      {
+        icon: <Code size={28} className="text-white" />,
+        title: "Deep Guest Personalization",
+        image:"/images/officenavbar.png",
+        description:
+          "Deckoviz allows you to recognize guests without making it awkward. Frequent visitors can be welcomed with subtle visual cues, personalized menus, memento artworks, or contextual experiences. \n \n New guests can be served through persona-based experiences that feel thoughtful, not generic. Personalization becomes atmospheric rather than transactional.",
+      },
+      {
+        icon: <Headset size={28} className="text-white" />,
+        title: "Built-in Generative Engine",
+        image:"/images/officenavbar.png",
+        description:
+          "Deckoviz removes the friction between creation and display. Custom art, branded visuals, posters, menus, announcements, and campaign material can be generated directly on the platform and instantly deployed across screens. \n \n No external tools. No printing. No long design loops. Creation, iteration, and deployment happen in one continuous flow.",
+      },
+      {
+        icon: <BarChart2 size={28} className="text-white" />,
+        title: "Memorable Guest Experiences",
+        image:"/images/officenavbar.png",
+        description:
+          "Deckoviz turns visits into experiences worth remembering and sharing. Immersive visuals, narrative moments, personalized elements, and multisensory scenes create emotional anchors. Guests remember how the space made them feel.  \n \nThey talk about it. They photograph it. They return. Memorability compounds into loyalty, word of mouth, and organic reach.",
+      },
+      {
+        icon: <Shield size={28} className="text-white" />,
+        title: "Vizzy, Your AI Brand Companion",
+        image:"/images/officenavbar.png",
+        description:
+          "Vizzy is the intelligence layer behind Deckoviz. For enterprises, Vizzy acts as a brand storyteller, visual curator, experience designer, customer entertainer, campaign assistant, ambience orchestrator, and custom art generator.  \n \n Vizzy understands your brand, your offerings, your audience, and your goals. And it improves continuously, learning from real-world usage rather than assumptions.",
+      },
+    ];
 
-  const enterpriseFeatures = [
-    {
-      icon: <Layers size={28} className="text-white" />,
-      title: "Adaptive Environments",
-      description:
-        "Deckoviz creates environments that evolve in real time. Art, visuals, music, lighting, and ambience adapt to the time of day, season, event, and guest context. Morning feels different from evening. Weekdays feel different from weekends. A quiet afternoon does not feel like a celebration night. Your space stops being static and starts feeling alive, intentional, and tuned.",
-    },
-    {
-      icon: <Building size={28} className="text-white" />,
-      title: "Products That Come Alive",
-      description:
-        "Deckoviz turns products, dishes, collections, and offerings into living visuals. Static images become dynamic animations, subtle videos, and narrative-driven displays. Dishes float, textures breathe, products are shown in use, in context, in mood. This increases perceived value, curiosity, and conversion without feeling promotional. Your walls start doing the storytelling your staff cannot repeat endlessly.",
-    },
-    {
-      icon: <Code size={28} className="text-white" />,
-      title: "Deep Guest Personalization",
-      description:
-        "Deckoviz allows you to recognize guests without making it awkward. Frequent visitors can be welcomed with subtle visual cues, personalized menus, memento artworks, or contextual experiences. New guests can be served through persona-based experiences that feel thoughtful, not generic. Personalization becomes atmospheric rather than transactional.",
-    },
-    {
-      icon: <Headset size={28} className="text-white" />,
-      title: "Built-in Generative Engine",
-      description:
-        "Deckoviz removes the friction between creation and display. Custom art, branded visuals, posters, menus, announcements, and campaign material can be generated directly on the platform and instantly deployed across screens. No external tools. No printing. No long design loops. Creation, iteration, and deployment happen in one continuous flow.",
-    },
-    {
-      icon: <BarChart2 size={28} className="text-white" />,
-      title: "Memorable Guest Experiences",
-      description:
-        "Deckoviz turns visits into experiences worth remembering and sharing. Immersive visuals, narrative moments, personalized elements, and multisensory scenes create emotional anchors. Guests remember how the space made them feel. They talk about it. They photograph it. They return. Memorability compounds into loyalty, word of mouth, and organic reach.",
-    },
-    {
-      icon: <Shield size={28} className="text-white" />,
-      title: "Vizzy, Your AI Brand Companion",
-      description:
-        "Vizzy is the intelligence layer behind Deckoviz. For enterprises, Vizzy acts as a brand storyteller, visual curator, experience designer, customer entertainer, campaign assistant, ambience orchestrator, and custom art generator. Vizzy understands your brand, your offerings, your audience, and your goals. And it improves continuously, learning from real-world usage rather than assumptions.",
-    },
-  ];
 
-const brandGradient = "from-purple-600 via-pink-500 to-indigo-600";
-  
-const renderPost = (post: MarkdownBlog) => (
-  <Link
-    key={post.slug}
-    to={`/blog/${post.slug}`}
-    className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-purple-400 transition"
-  >
-    <div className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition pointer-events-none
-      bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
+        const enterprisebenefits = [
+      {
+        icon: <Layers size={28} className="text-white" />,
+        title: "Multi-location orchestration",
+        image:"/images/multi.png",
+        description:
+            `Manage one screen or one thousand from a single intuitive dashboard. Orchestrate content, experiences, and ambience centrally while still enabling local nuance across locations.`,
+      },
+      {
+        icon: <Building size={28} className="text-white" />,
+        title: "Brand consistency at scale",
+        image:"/images/brand.png",
+        description:
+          "Preserve your visual identity everywhere your brand exists - visuals, color systems, tone, narrative style, and experience design remain aligned without sacrificing flexibility.",
+      },
+      {
+        icon: <Code size={28} className="text-white" />,
+        title: "Clean enterprise integrations",
+        image:"/images/api.png",
+        description:
+          "Integrate into existing enterprise systems through APIs and structured controls. Automate updates, enable inventory-aware visuals, and coordinate campaigns without operational overhead.",
+      },
+      {
+        icon: <BarChart2 size={28} className="text-white" />,
+        title: "Analytics & measurable impact",
+        image:"/images/analystix.png",
+        description:
+          "Move beyond guesswork using analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals - enabling teams to optimize for real-world outcomes.",
+      },
+      {
+        icon: <Shield size={28} className="text-white" />,
+        title: "Enterprise security & reliability",
+        image:"/images/sec.png",
+        description:
+          "Deckoviz is built with enterprise-grade security, reliability, and support. From onboarding to expansion, it remains dependable, low-maintenance, and future-proof.",
+      },
+      {
+        icon: <Headset size={28} className="text-white" />,
+        title: "A living body for your brand",
+        image:"/images/5c874e33-e35b-4777-a210-349524e8805f.png",
+        description:
+          "Deckoviz does not replace your brand strategy - it gives it a living, intelligent body inside your space, continuously evolving with your business.",
+      },
+    ];
 
-    <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
-      <img
-        src={post.image || "/placeholder.svg"}
-        alt={post.title}
-        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-      />
-    </div>
+  const renderPost = (post: MarkdownBlog) => (
+    <Link
+      key={post.slug}
+      to={`/blog/${post.slug}`}
+      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-purple-400 transition"
+    >
+      <div className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition pointer-events-none
+        bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
 
-    <div className="relative flex-grow">
-      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition">
-        {post.title}
-      </h3>
-
-      {post.description && (
-        <p className="text-sm text-gray-600 mt-1 leading-relaxed line-clamp-2">
-          {post.description}
-        </p>
-      )}
-
-      <div className="mt-2 text-sm text-purple-600 opacity-0 group-hover:opacity-100 transition">
-        Read →
+      <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
+        <img
+          src={post.image || "/placeholder.svg"}
+          alt={post.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
       </div>
-    </div>
-  </Link>
-)
+
+      <div className="relative flex-grow">
+        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition">
+          {post.title}
+        </h3>
+
+        {post.description && (
+          <p className="text-sm text-gray-600 mt-1 leading-relaxed line-clamp-2">
+            {post.description}
+          </p>
+        )}
+
+        <div className="mt-2 text-sm text-purple-600 opacity-0 group-hover:opacity-100 transition">
+          Read →
+        </div>
+      </div>
+    </Link>
+  )
 
   return (
     <div className="bg-white">
       
-{/* ================= PREMIUM SPLIT HERO ================= */}
-<div className="relative z-10 min-h-screen flex items-center px-6 pt-24">
+      {/* ================= PREMIUM SPLIT HERO ================= */}
+      <div className="relative z-10 min-h-screen flex items-center px-6 pt-24">
 
-  <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
 
-    {/* ===== LEFT CONTENT ===== */}
-    <div className="text-center md:text-left">
+          {/* ===== LEFT CONTENT ===== */}
+          <div className="text-center md:text-left">
 
-      {/* Badge */}
-      <div className="mb-6">
-        <span className="inline-flex items-center px-4 py-1.5 
-        bg-gradient-to-r from-indigo-600 to-purple-600 
-        text-white text-xs font-semibold rounded-full shadow-lg">
-          ✦ Deckoviz For All
-        </span>
-      </div>
+            {/* Badge */}
+            <div className="mb-6">
+              <span className="inline-flex items-center px-4 py-1.5 
+              bg-gradient-to-r from-indigo-600 to-purple-600 
+              text-white text-xs font-semibold rounded-full shadow-lg">
+                ✦ Deckoviz For Business
+              </span>
+            </div>
+                  <div className="
+            absolute inset-0 rounded-[40px] 
+            bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
+            blur-3xl opacity-40 
+            group-hover:opacity-70 
+            transition duration-500
+            "></div>
+
+            {/* Heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight mb-6">
+              <span
+                className="bg-clip-text text-transparent animate-gradient"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(90deg,#6366f1,#a855f7,#ec4899,#f59e0b,#6366f1)",
+                  backgroundSize: "300% auto"
+                }}
+              >
+                {text}
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 max-w-xl mx-auto md:mx-0">
+              The AI-powered ambience, storytelling, and personalization layer
+              for modern enterprise spaces.
+            </p>
+
+            {/* Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <Button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-gradient-to-r from-red-600 via-purple-600 to-violet-600 text-white px-8 py-3 rounded-full flex items-center gap-2"
+              >
+                <Calendar size={18} />
+                <span>Schedule Your Enterprise Demo</span>
+              </Button>
+              <a href="/Flyer Deckoviz DASP.pdf" target="_blank" rel="noopener noreferrer">
+                <Button variant="secondary"
+                
+                className="bg-gradient-to-r from-violet-600 via-purple-600 to-red-600 text-white px-8 py-3 rounded-full flex items-center gap-2">Download Brochure</Button>
+              </a>
+            </div>
+          </div>
+
+          {/* ===== RIGHT IMAGE / CAROUSEL ===== */}
+          <div 
+          className="relative flex justify-center transition-all duration-500 ease-out group">
+
+            {/* glow on hover */}
             <div className="
-      absolute inset-0 rounded-[40px] 
-      bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
-      blur-3xl opacity-40 
-      group-hover:opacity-70 
-      transition duration-500
-      "></div>
+            absolute inset-0 rounded-[40px] 
+            bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
+            blur-3xl opacity-40 
+            group-hover:opacity-70 
+            transition duration-500
+            "></div>
 
-      {/* Heading */}
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight mb-6">
-        <span
-          className="bg-clip-text text-transparent animate-gradient"
-          style={{
-            backgroundImage:
-              "linear-gradient(90deg,#6366f1,#a855f7,#ec4899,#f59e0b,#6366f1)",
-            backgroundSize: "300% auto"
-          }}
-        >
-          {text}
-        </span>
-      </h1>
+            {/* glass card */}
 
-      {/* Subtitle */}
-      <p className="text-lg md:text-xl text-gray-700 leading-relaxed mb-10 max-w-xl mx-auto md:mx-0">
-        The AI-powered ambience, storytelling, and personalization layer
-        for modern enterprise spaces.
-      </p>
+            <ShopCarousel
+              className="
+                bg-white/40 backdrop-blur-2xl 
+                rounded-[32px] p-6 border border-white/40 
+                shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+                transition-all duration-500
+                hover:-translate-y-2
+                hover:scale-[1.02]
+                hover:shadow-[0_35px_100px_rgba(80,0,200,0.25)]
+              "
+              images={[
+                "/images/shop.png",
+                "/images/wall.png",
+                "/images/rest.png",
+                "/images/office.png",
+                "/images/heniterprise.png",
+                "/images/heniterprise1.png",
+              ]}
+              interval={3000}
+            />
+          </div>
 
-      {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-        <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-          Request an Enterprise Demo
-        </Button>
-
-        <a href="/d(1).pdf" target="_blank" rel="noopener noreferrer">
-          <Button variant="secondary">Download Brochure</Button>
-        </a>
+        </div>
       </div>
-    </div>
-
-    {/* ===== RIGHT IMAGE / CAROUSEL ===== */}
-    <div 
-    className="relative flex justify-center transition-all duration-500 ease-out group">
-
-      {/* glow on hover */}
-      <div className="
-      absolute inset-0 rounded-[40px] 
-      bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
-      blur-3xl opacity-40 
-      group-hover:opacity-70 
-      transition duration-500
-      "></div>
-
-      {/* glass card */}
-
-<ShopCarousel
-  className="
-    bg-white/40 backdrop-blur-2xl 
-    rounded-[32px] p-6 border border-white/40 
-    shadow-[0_20px_60px_rgba(0,0,0,0.12)]
-    transition-all duration-500
-    hover:-translate-y-2
-    hover:scale-[1.02]
-    hover:shadow-[0_35px_100px_rgba(80,0,200,0.25)]
-  "
-  images={[
-    "/images/shop.png",
-    "/images/wall.png",
-    "/images/rest.png",
-    "/images/office.png",
-  ]}
-  interval={3000}
-/>
-    </div>
-
-  </div>
-</div>
-      {/* ================= FULL ENTERPRISE OVERVIEW — GLASS CARD ================= */}
+      {/* ================= FULL ENTERPRISE OVERVIEW - GLASS CARD ================= */}
       <section className="py-24 bg-white relative overflow-hidden"
       >
         {/* Ambient Glow */}
@@ -690,15 +854,17 @@ const renderPost = (post: MarkdownBlog) => (
                 </h2>
 
                 <div className="px-4 py-1 rounded-full text-sm bg-white/10 border border-white/20">
-                  Full Overview
+                  Quick Overview
                 </div>
               </div>
 
               {/* Progress */}
               <div className="mb-10">
                 <div className="flex justify-between text-sm text-white/70 mb-3">
-                  <span>Experience Progress</span>
-                  <span>∞</span>
+                  <p style={{
+                    color : "white"
+                  }}
+                  >Experience A Radically New Way To Enhance Your Customer Journeys</p>
                 </div>
                 <ProgressBar value={85} />
               </div>
@@ -707,7 +873,7 @@ const renderPost = (post: MarkdownBlog) => (
               <div className="space-y-6 text-white/80 leading-relaxed text-[16px]">
                 <p>
                   Attention is fragmented. Expectations are higher.
-                  Differentiation is harder. Screens are everywhere — yet most
+                  Differentiation is harder. Screens are everywhere - yet most
                   spaces still feel forgettable.
                 </p>
 
@@ -730,7 +896,7 @@ const renderPost = (post: MarkdownBlog) => (
 
                 <p>
                   For businesses, Deckoviz becomes the missing layer between
-                  brand strategy and real-world experience — the layer customers
+                  brand strategy and real-world experience - the layer customers
                   actually feel.
                 </p>
               </div>
@@ -742,11 +908,17 @@ const renderPost = (post: MarkdownBlog) => (
                 </div>
 
                 <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
-                  Storytelling
+                  Brand Storyteller
                 </div>
 
                 <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
+                  Ambiance Creator
+                </div>
+                <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
                   Spatial Intelligence
+                </div>
+                <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
+                  Space Enhancer
                 </div>
               </div>
             </div>
@@ -773,77 +945,171 @@ const renderPost = (post: MarkdownBlog) => (
             `}
           </style>
         </>
-
       {/* ================= SECTION 2: WHAT DECKOVIZ IS AT ITS CORE ================= */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-6xl mx-auto px-6">
-        <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: false, amount:0.3 }}
-            style={{
-                border: "1px solid black",
-                borderRadius: "24px",
-                padding: "40px",
-                background: "linear-gradient(135deg, #9fccfa, transparent, #f093fb)",
-                backgroundSize: "300% 300%",
-                animation: "moveGradient 5s ease infinite",
-                boxShadow: "10px 10px 20px rgba(128,0,128,0.5)"
-              }}>
-          <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 leading-tight mb-8">
-            What Deckoviz is, at its Core
-          </h2>
+     <section className="bg-gray-50 py-20">
+  <div className="max-w-6xl mx-auto px-6">
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: false, amount: 0.3 }}
+      style={{
+        borderRadius: "24px",
+        padding: "40px",
+        background: "linear-gradient(135deg, #9fccfa, transparent, #f093fb)",
+        backgroundSize: "300% 300%",
+        animation: "moveGradient 5s ease infinite",
+        boxShadow: "10px 10px 20px rgba(128,0,128,0.5)"
+      }}
+    >
+      <h2
+        style={{
+          fontSize: "2rem",
+          fontWeight: "600",
+          color: "#111",
+          marginBottom: "32px"
+        }}
+      >
+        What Deckoviz is, at its Core
+      </h2>
 
-          <p className="text-[17px] text-gray-700 leading-relaxed text-justify mb-10">
-            Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal,
-            paired with a premium Smart Display system. It functions
-            simultaneously as:
-          </p>
+      <p
+        style={{
+          fontSize: "17px",
+          color: "#444",
+          lineHeight: "1.8",
+          marginBottom: "40px"
+        }}
+      >
+        Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal,
+        paired with a premium Smart Display system. It functions
+        simultaneously as:
+      </p>
 
-          <motion.div
-          className="mt-10 space-y-6">
-            {[
+      {/* ticker container */}
+      <div
+        style={{
+          overflow: "hidden",
+          width: "100%",
+          position: "relative"
+        }}
+      >
+        <div
+          className="tickerTrack"
+          style={{
+            display: "inline-flex",
+            gap: "80px",
+            whiteSpace: "nowrap",
+            animation: "tickerMove 20s linear infinite"
+          }}
+        >
+          {[
+            "A generative visual engine",
+            "A brand storytelling system",
+            "A dynamic signage and merchandising platform",
+            "A multisensory ambience controller",
+            "An adaptive, learning companion for physical spaces"
+          ]
+            .concat([
               "A generative visual engine",
               "A brand storytelling system",
               "A dynamic signage and merchandising platform",
               "A multisensory ambience controller",
-              "An adaptive, learning companion for physical spaces",
-            ].map((item, i) => (
-              <motion.div
-                initial={{ opacity: 0, x: 60 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: false, amount:0.3 }}
+              "An adaptive, learning companion for physical spaces"
+            ])
+            .map((item, i) => (
+              <div
                 key={i}
-                className="group flex items-center gap-6 py-5 border-b border-gray-200 hover:border-purple-400 transition"
+                className="tickerItem"
                 style={{
-                  cursor:'pointer'
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  fontSize: "18px",
+                  color: "#333",
+                  cursor: "pointer",
+                  position: "relative",
+                  transition: "all 0.7s ease"
                 }}
               >
-                {/* Number */}
-                <div className="text-xl font-semibold text-purple-500 w-10">
-                  0{i + 1}
-                </div>
+<span
+  style={{
+    color: "#9333ea",
+    fontWeight: "600"
+  }}
+>
+  {["🎨","📖","🏬","🎧","🧠"][i % 5]}
+</span>
 
-                {/* Text */}
-                <p className="text-gray-800 text-lg group-hover:text-purple-600 transition">
-                  {item}
-                </p>
+                <span>{item}</span>
 
-                {/* Line grow */}
-                <div className="flex-grow h-[1px] bg-gradient-to-r from-transparent via-purple-300 to-transparent opacity-0 group-hover:opacity-100 transition" />
-              </motion.div>
+                {/* animated underline */}
+                <div
+                  className="underline"
+                  style={{
+                    position: "absolute",
+                    bottom: "-6px",
+                    left: 0,
+                    height: "2px",
+                    width: "0%",
+                    background:
+                      "linear-gradient(90deg,#9333ea, #c084fc, #9333ea)",
+                    transition: "width 0.9s ease"
+                  }}
+                />
+              </div>
             ))}
-          </motion.div>
-
-          <p className="mt-10 text-[17px] text-gray-700 leading-relaxed text-justify">
-            This is not a device you “install and forget”. It is a platform that
-            learns your business and grows with it.
-          </p>
-        </motion.div>
         </div>
-      </section>
+      </div>
+
+      <p
+        style={{
+          marginTop: "40px",
+          fontSize: "17px",
+          color: "#444",
+          lineHeight: "1.8"
+        }}
+      >
+        This is not a device you “install and forget”. It is a platform that
+        learns your business and grows with it.
+      </p>
+
+      <style>
+        {`
+        
+        @keyframes tickerMove{
+          0%{ transform:translateX(0); }
+          100%{ transform:translateX(-50%); }
+        }
+
+        @keyframes moveGradient{
+          0%{ background-position:0% 50% }
+          50%{ background-position:100% 50% }
+          100%{ background-position:0% 50% }
+        }
+
+        /* hover slows ticker */
+        .tickerTrack:hover{
+          animation-duration:40s;
+        }
+
+        /* premium hover effect */
+        .tickerItem:hover{
+          color:#7c3aed;
+          transform:scale(1.06);
+          text-shadow:0 0 10px rgba(147,51,234,0.3);
+        }
+
+        /* underline animation */
+        .tickerItem:hover .underline{
+          width:100%;
+        }
+
+        `}
+      </style>
+    </motion.div>
+  </div>
+</section>
 
 
 
@@ -878,7 +1144,7 @@ const renderPost = (post: MarkdownBlog) => (
         {/* Heading */}
         <motion.h1
           variants={fadeUp}
-          className="text-4xl md:text-6xl font-bold leading-tight text-gray-900"
+          className="text-4xl md:text-4xl font-bold leading-tight text-gray-900"
         >
           The Intelligent Ambience & Storytelling Layer
           <span className="block bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-rose-500 bg-clip-text text-transparent">
@@ -944,7 +1210,7 @@ const renderPost = (post: MarkdownBlog) => (
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-            {mainFeatures.map(([feature, desc], i) => (
+            {mainFeatures.map((feature, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 40 }}
@@ -953,20 +1219,22 @@ const renderPost = (post: MarkdownBlog) => (
                 viewport={{ once: true }}
                 className="group rounded-3xl p-7 bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)] transition-all duration-500"
               >
+                <div className="text-3xl mb-3">{feature.icon}</div>
+
                 <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-600 transition">
-                  {feature}
+                  {feature.title}
                 </h3>
+
                 <p className="text-gray-600 leading-relaxed">
-                  {desc}
+                  {feature.description}
                 </p>
-                
-        <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
+
+                <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
               </motion.div>
             ))}
-
             <AnimatePresence>
               {showMore &&
-                extraFeatures.map(([feature, desc], i) => (
+                extraFeatures.map((feature, i) => (
                   <motion.div
                     key={`extra-${i}`}
                     initial={{ opacity: 0, y: 40 }}
@@ -975,14 +1243,17 @@ const renderPost = (post: MarkdownBlog) => (
                     transition={{ duration: 0.4, delay: i * 0.05 }}
                     className="group rounded-3xl p-7 bg-white/60 backdrop-blur-xl border border-white/40 shadow-[0_20px_60px_rgba(0,0,0,0.08)] hover:-translate-y-2 hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)] transition-all duration-500"
                   >
+                    <div className="text-3xl mb-3">{feature.icon}</div>
+
                     <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-600 transition">
-                      {feature}
+                      {feature.title}
                     </h3>
+
                     <p className="text-gray-600 leading-relaxed">
-                      {desc}
+                      {feature.description}
                     </p>
-                    
-        <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" /> 
+
+                    <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
                   </motion.div>
                 ))}
             </AnimatePresence>
@@ -1126,7 +1397,7 @@ const renderPost = (post: MarkdownBlog) => (
       />
 
       {/* Features Section */}
-    <section className="relative py-24 md:py-32 px-5 md:px-[110px] bg-white overflow-hidden">
+    <section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-white overflow-hidden">
       {/* Brand Background Glows */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div 
@@ -1158,7 +1429,7 @@ const renderPost = (post: MarkdownBlog) => (
             className="p-8 rounded-3xl border border-purple-100/50 shadow-sm bg-white/40 backdrop-blur-md"
           >
             <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
-                Benefits that compound over time Not features you install once,
+                Not features you install once,
                 but advantages that grow with every guest, every day Deckoviz is
                 designed to quietly solve the hardest problems in physical spaces.
                 Problems of attention, emotion, memory, differentiation, and
@@ -1180,7 +1451,7 @@ const renderPost = (post: MarkdownBlog) => (
           />
 
           <div className="space-y-16 md:space-y-0">
-            {enterpriseFeatures.map((feature, index) => {
+            {enterprisebenefits.map((feature, index) => {
               const isEven = index % 2 === 0;
               return (
                 <div 
@@ -1191,7 +1462,6 @@ const renderPost = (post: MarkdownBlog) => (
                   <motion.div 
                     initial={{ opacity: 0, x: isEven ? -120 : 120 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    // 'once: false' ensures it animates every time it enters the viewport
                     viewport={{ once: false, amount: 0.3 }}
                     transition={{ 
                       duration: 0.7, 
@@ -1231,7 +1501,21 @@ const renderPost = (post: MarkdownBlog) => (
                     />
                   </div>
 
-                  <div className="hidden md:block md:w-[46%]" />
+                  <div
+  className={`hidden md:flex md:w-[56%] items-center 
+  ${isEven ? "justify-start pl-40" : "justify-end pr-40"}`}
+>
+                    <motion.img
+                      src={feature.image}
+                      alt={feature.title}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: false, amount: 0.3 }}
+                      transition={{ duration: 0.7 }}
+                      className="max-w-[420px] rounded-3xl shadow-xl"
+                    />
+                  </div>
+                  <div className="pt-6"></div>
                 </div>
               );
             })}
@@ -1248,126 +1532,9 @@ const renderPost = (post: MarkdownBlog) => (
           Deckoviz solves problems of attention, emotion, memory, differentiation, and scale for modern environments.
         </motion.div>
       </div>
-      <motion.div>
-        <div className="flex justify-center my-20">
-  <button
-    onClick={() => setShowBenefits(!showBenefits)}
-    className="px-10 py-4 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white font-medium shadow-xl hover:scale-105 transition-all duration-300"
-  >
-    {showBenefits ? "Hide Enterprise Benefits" : "Explore Some Enterprise Benefits"}
-  </button>
-</div>
-      </motion.div>
-
     </section>
-
-      <AnimatePresence>
-        {showBenefits && (
-          <motion.section
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 40 }}
-            transition={{ duration: 0.6 }}
-            className="relative py-28 overflow-hidden mx-5 md:mx-[110px] rounded-[32px]"
-            style={{
-              border: "1px solid rgba(255,255,255,0.5)",
-              background:
-                "linear-gradient(135deg, rgba(255,255,255,0.65), rgba(240,147,251,0.12))",
-              backdropFilter: "blur(24px)",
-              boxShadow: "0 40px 120px rgba(168,85,247,0.15)",
-            }}
-          >
-
-            {/* Ambient Glow */}
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute -top-32 left-20 w-[500px] h-[500px] rounded-full bg-pink-300/30 blur-[140px]" />
-              <div className="absolute bottom-0 right-10 w-[450px] h-[450px] rounded-full bg-purple-300/30 blur-[140px]" />
-            </div>
-
-            <div className="relative z-10 max-w-6xl mx-auto px-6">
-
-              <div className="text-center mb-20">
-                <h2 className="text-4xl md:text-5xl font-semibold leading-tight mb-6 text-gray-900">
-                  Other{" "}
-                  <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    Enterprise
-                  </span>{" "}
-                  Benefits
-                </h2>
-
-                <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                  Enterprise-grade advantages designed for scale, consistency, and measurable impact.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                {[
-                  {
-                    title: "Multi-location orchestration",
-                    desc: "Manage one screen or one thousand from a single intuitive dashboard. Orchestrate content, experiences, and ambience centrally while still enabling local nuance across locations.",
-                  },
-                  {
-                    title: "A living body for your brand",
-                    desc: "Deckoviz does not replace your brand strategy — it gives it a living, intelligent body inside your space, continuously evolving with your business.",
-                  },
-                  {
-                    title: "Brand consistency at scale",
-                    desc: "Preserve your visual identity everywhere your brand exists — visuals, color systems, tone, narrative style, and experience design remain aligned without sacrificing flexibility.",
-                  },
-                  {
-                    title: "Clean enterprise integrations",
-                    desc: "Integrate into existing enterprise systems through APIs and structured controls. Automate updates, enable inventory-aware visuals, and coordinate campaigns without operational overhead.",
-                  },
-                  {
-                    title: "Analytics & measurable impact",
-                    desc: "Move beyond guesswork using analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals — enabling teams to optimize for real-world outcomes.",
-                  },
-                  
-                  {
-                    title: "Enterprise security & reliability",
-                    desc: "Deckoviz is built with enterprise-grade security, reliability, and support. From onboarding to expansion, it remains dependable, low-maintenance, and future-proof.",
-                  },
-                ].map((item, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 40 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: i * 0.08 }}
-                    viewport={{ once: true }}
-                    className="group relative p-[1px] rounded-3xl bg-gradient-to-br from-purple-400/40 via-pink-400/30 to-indigo-400/40"
-                  >
-                    <div
-                      className="
-                        relative
-                        rounded-3xl
-                        bg-white/70
-                        backdrop-blur-2xl
-                        p-6 sm:p-8
-                        transition-all duration-500
-                        group-hover:-translate-y-2
-                        group-hover:shadow-[0_30px_100px_rgba(168,85,247,0.2)]
-                        min-h-[220px] sm:min-h-[240px] md:min-h-[260px]
-                      "
-                    >
-                      <h3 className="text-xl font-semibold text-gray-900 mb-4 group-hover:text-purple-600 transition">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-600 leading-relaxed">
-                        {item.desc}
-                      </p>
-                      
-              <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-
-            </div>
-          </motion.section>
-        )}
-      </AnimatePresence>
       {/* Bottom CTA Section */}
-      <section className="py-20 md:py-28 bg-white">
+      <section className="py-8 md:py-8 bg-white">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4">
             Ready to Redefine Your Space?
@@ -1377,19 +1544,36 @@ const renderPost = (post: MarkdownBlog) => (
             Let's discuss how Deckoviz can create a unique, immersive experience
             for your brand.
           </p>
-
-          <Button variant="primary" onClick={() => setIsModalOpen(true)}>
-            Schedule Your Enterprise Demo
-          </Button>
         </div>
       </section>
+
+
+    <section className="flex justify-center items-center">
+      <Button
+        onClick={() => setIsModalOpen(true)}
+        className="
+          px-10 py-4 rounded-full text-lg
+          bg-gradient-to-r from-red-600 via-purple-600 to-violet-600
+          text-white
+          shadow-[0_10px_30px_rgba(124,58,237,0.35)]
+          hover:shadow-[0_20px_50px_rgba(124,58,237,0.55)]
+          hover:scale-[1.05]
+          transition-all duration-300
+        "
+      >
+        <Calendar size={20} style={{
+          display:'inline-block'
+        }}/> Schedule Your Enterprise Demo
+      </Button>
+    </section>
+<div className="pt-16"></div>
 
       {isModalOpen && (
         <DemoRequestModal onClose={() => setIsModalOpen(false)} />
       )}
 
       {/* ================= EXPLORE FURTHER ================= */}  
-      <section className="bg-white py-20 border-t border-gray-100"
+      <section className="bg-white py-0 border-t border-gray-100"
         style={{
           paddingLeft:'20px',
           paddingRight:'20px'

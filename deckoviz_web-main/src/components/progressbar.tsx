@@ -10,7 +10,7 @@ const ProgressBar = ({ value = 95, delay = 600 }) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             setStart(true);
-          }, delay); // ⏱ delay here
+          }, delay); 
 
           observer.disconnect();
         }
