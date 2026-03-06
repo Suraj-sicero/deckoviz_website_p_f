@@ -2,84 +2,88 @@
 
 import React, { useEffect, useRef } from "react";
 
-const manifesto = [
-  "Not just homes that look good in photos.",
-  "Homes that feel good when you live in them.",
+const manifesto = ["",
 
-  "Homes that hold laughter in the walls.",
-  "And quiet in the corners.",
-  "Homes that remember who you are, and make space for who you’re becoming.",
+"If This Is the Only Screen You Keep - For the Minimalists",
 
-  "Deckoviz is designed for…",
+"Some people want more screens.",
+"Some want fewer things.",
+"Better things.",
 
-  "Homes where memories are cherished, and self-expression is nurtured.",
-  "Where photos are not buried in clouds, but live on the walls.",
-  "Where stories are replayed gently   as art, as montages, as moments that matter.",
+"Deckoviz is for the second kind.",
 
-  "Homes where art, wonder, beauty, and depth are prioritized.",
-  "Not as décor.",
-  "As daily nourishment.",
-  "Where walls surprise you, move you, slow you down.",
+"It is the one screen that earns its place.",
 
-  "Homes where conversations matter.",
-  "Where dinners turn into stories.",
-  "Where visuals spark questions, laughter, reflection.",
-  "Where the room itself invites people to connect.",
+"Not because it does more.",
+"Because it replaces more.",
 
-  "Homes where kids create.",
-  "Where drawings become paintings.",
-  "Stories become worlds.",
-  "And imagination is taken seriously.",
+"One frame, where many used to be.",
+"The prints you kept changing.",
+"The photos you never framed.",
+"The mood board on your wall.",
+"The TV that dominated the room.",
+"The posters, clocks, reminders, notes.",
 
-  "Homes where silence is respected.",
-  "Where nothing blinks for attention.",
-  "Where beauty can simply be there.",
-  "Where calm is not empty, but full.",
+"Deckoviz gathers them into one quiet presence.",
 
-  "Homes where growth is intentional.",
-  "Where visions live on the wall.",
-  "Where rituals shape mornings and evenings.",
-  "Where becoming is part of the design.",
+"A single surface.",
+"A thousand possibilities.",
 
-  "Homes that feel lived in, not staged.",
-  "Not perfect.",
-  "Not frozen.",
-  "Warm, human, evolving.",
-  "With traces of real life everywhere.",
+"Art when you want beauty.",
+"Photos when you want memory.",
+"A vision board when you want direction.",
+"A story when you want warmth.",
+"A calm canvas when you want nothing at all.",
+"And yes, your Smart TV, when you want to watch.",
 
-  "Homes where depth, alignment, conversation, and beauty are cherished.",
-  "Where what you care about shows up in the space you live in.",
-  "Every day.",
+"No clutter.",
+"No visual noise.",
+"No stack of frames competing for attention.",
 
-  "Homes that feel alive.",
-  "Dynamic, changing with moods, seasons, light, and life.",
-  "Not static.",
-  "Not passive.",
-  "Never dull.",
+"Just one object.",
+"Always right.",
 
-  "This is what Deckoviz is for.",
+"For minimalists, space is not empty.",
+"It is intentional.",
+"Every object has to justify itself.",
+"Every line has to matter.",
 
-  "Because Deckoviz is not just a frame on your wall.",
-  "It becomes a signature of your taste.",
-  "A reflection of your values.",
-  "A quiet declaration of what matters to you.",
+"",
 
-  "It says:",
-  "Beauty matters here.",
-  "Meaning matters here.",
-  "People matter here.",
+"Deckoviz does.",
 
-  "Your home already tells a story.",
-  "Deckoviz helps it tell your story.",
+"With its thin, handcrafted wooden frame.",
+"With synced halo backlights that glow only when they should.",
+"With visuals that change instead of piling up.",
+"With intelligence that adapts instead of demanding.",
 
-  "A home that feels alive.",
-  "A home that grows with you.",
-  "A home that means something.",
+"It lets you own less.",
+"But live with more.",
+
+"More beauty.",
+"More meaning.",
+"More variety.",
+"More life.",
+
+"You do not decorate around Deckoviz.",
+"You let it become the calm center of the room.",
+
+"One frame.",
+"One screen.",
+"One quiet companion.",
+
+"If you were to keep just one screen in your home,",
+"make it the one that replaces all the others.",
+
+"The one that evolves.",
+"The one that disappears when it should.",
+"The one that earns its place, every single day.",
 ];
 
 const HomeMeansSomething: React.FC = () => {
   const sparkLayer = useRef<HTMLDivElement>(null);
-
+const [visibleLines, setVisibleLines] = React.useState(0);
+const [typedText, setTypedText] = React.useState("");
   /* Mouse particles (theme match: cyan + purple + pink) */
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
@@ -103,6 +107,29 @@ const HomeMeansSomething: React.FC = () => {
     window.addEventListener("mousemove", handleMove);
     return () => window.removeEventListener("mousemove", handleMove);
   }, []);
+  useEffect(() => {
+  if (visibleLines >= manifesto.length) return;
+
+  let charIndex = 0;
+  const currentLine = manifesto[visibleLines];
+
+  const typing = setInterval(() => {
+    charIndex++;
+    setTypedText(currentLine.slice(0, charIndex));
+
+    if (charIndex >= currentLine.length) {
+      clearInterval(typing);
+
+      setTimeout(() => {
+        setTypedText("");
+        setVisibleLines((prev) => prev + 1);
+      }, 700);
+    }
+  }, 20);
+
+  return () => clearInterval(typing);
+}, [visibleLines]);
+
 
   return (
     <section
@@ -165,21 +192,34 @@ const HomeMeansSomething: React.FC = () => {
           "
           style={{ fontFamily: "Bricolage Grotesque, sans-serif" }}
         >
-          For Homes That Mean Something
+          If This Is the Only Screen You Keep - For the Minimalists
         </h1>
 
         {/* Manifesto */}
         <div className="space-y-4 text-center">
-          {manifesto.map((line, index) => (
-            <p
-              key={index}
-              className={`text-slate-800/90 ${
-                line.length < 30 ? "text-lg font-semibold" : "text-base opacity-90"
-              }`}
-            >
-              {line}
-            </p>
-          ))}
+          {manifesto.slice(0, visibleLines).map((line, index) => (
+  <p
+    key={index}
+    className={`text-slate-800/90 ${
+      line.length < 30 ? "text-lg font-semibold" : "text-base opacity-90"
+    }`}
+  >
+    {line}
+  </p>
+))}
+
+{visibleLines < manifesto.length && (
+  <p
+    className={`text-slate-800/90 ${
+      manifesto[visibleLines].length < 30
+        ? "text-lg font-semibold"
+        : "text-base opacity-90"
+    }`}
+  >
+    {typedText}
+    <span className="animate-pulse">|</span>
+  </p>
+)}
         </div>
       </div>
 

@@ -148,6 +148,7 @@ useEffect(() => {
             </button>
 
             {/* Learn More */}
+            {/* Button Text 
             <button
   onClick={() => window.location.href = "/about-deckoviz"}
   className="group relative bg-gradient-to-r from-blue-500 via-sky-500 to-cyan-400 
@@ -156,19 +157,22 @@ useEffect(() => {
              transition-all duration-300 hover:scale-105 shadow-2xl 
              hover:shadow-blue-500/30 text-sm border border-white/20"
 >
-  {/* Shimmer */}
+  {/* Shimmer *
   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
                   -skew-x-12 -translate-x-full group-hover:translate-x-full 
                   transition-transform duration-1000 rounded-full"></div>
 
-  {/* Inner glow */}
+  {/* Inner glow *
   <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-sky-400/20 to-cyan-400/20 
                   rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
 
   <span className="relative z-10 flex items-center gap-2">
     Learn More about Deckoviz
   </span>
+  
 </button>
+*/}
 
 {/* Conversation Cloud Button */}
 <div className="absolute top-16 right-8 lg:right-14 z-30 hidden lg:block">

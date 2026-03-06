@@ -163,7 +163,7 @@ const Footer: React.FC = () => {
   onClick={() => handleNavigation("generalinfo", "/generalinfo")}
   className="text-gray-600 hover:text-purple-700 transition-colors text-sm text-left block"
 >
-  More Info
+  Subscriptions & More Info 
 </button>
               </li>
             </ul>
