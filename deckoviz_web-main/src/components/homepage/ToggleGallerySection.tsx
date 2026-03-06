@@ -19,45 +19,45 @@ const ToggleGallerySection: React.FC = () => {
   ];
 
   const images = imageToggle ? imagesSet2 : imagesSet1;
-const contentSet1 = [
-  {
-    title: "Morning Calm",
-    desc: "Soft daylight scenes that awaken your space gently."
-  },
-  {
-    title: "Creative Flow",
-    desc: "Visuals that spark imagination and artistic energy."
-  },
-  {
-    title: "Nature Escape",
-    desc: "Bring forests, skies, and serenity into your walls."
-  },
-  {
-    title: "Modern Minimal",
-    desc: "Clean aesthetics for focused and peaceful living."
-  }
-];
+  const contentSet1 = [
+    {
+      title: "Morning Calm",
+      desc: "Soft daylight scenes that awaken your space gently.",
+    },
+    {
+      title: "Creative Flow",
+      desc: "Visuals that spark imagination and artistic energy.",
+    },
+    {
+      title: "Nature Escape",
+      desc: "Bring forests, skies, and serenity into your walls.",
+    },
+    {
+      title: "Modern Minimal",
+      desc: "Clean aesthetics for focused and peaceful living.",
+    },
+  ];
 
-const contentSet2 = [
-  {
-    title: "Night Glow",
-    desc: "Ambient tones designed for evenings and relaxation."
-  },
-  {
-    title: "Cosmic Dream",
-    desc: "Celestial visuals that expand your imagination."
-  },
-  {
-    title: "Moody Atmosphere",
-    desc: "Deep colors that transform your room’s emotion."
-  },
-  {
-    title: "Digital Art Pulse",
-    desc: "AI-generated worlds that evolve in the dark."
-  }
-];
+  const contentSet2 = [
+    {
+      title: "Night Glow",
+      desc: "Ambient tones designed for evenings and relaxation.",
+    },
+    {
+      title: "Cosmic Dream",
+      desc: "Celestial visuals that expand your imagination.",
+    },
+    {
+      title: "Moody Atmosphere",
+      desc: "Deep colors that transform your room’s emotion.",
+    },
+    {
+      title: "Digital Art Pulse",
+      desc: "AI-generated worlds that evolve in the dark.",
+    },
+  ];
 
-const content = imageToggle ? contentSet2 : contentSet1;
+  const content = imageToggle ? contentSet2 : contentSet1;
   return (
     <section
       className={`relative w-full py-49 px-6 transition-all duration-500 ${
@@ -125,12 +125,12 @@ const content = imageToggle ? contentSet2 : contentSet1;
                 className="w-full h-[380px] object-cover"
               />
 
-              <h3 className="text-lg font-semibold mb-2">
-  {content[index].title}
-</h3>
-<p className="text-sm opacity-70">
-  {content[index].desc}
-</p>
+              <div className="p-5">
+                <h3 className="text-lg font-semibold mb-2">
+                  {content[index].title}
+                </h3>
+                <p className="text-sm opacity-70">{content[index].desc}</p>
+              </div>
             </div>
           ))}
         </div>
