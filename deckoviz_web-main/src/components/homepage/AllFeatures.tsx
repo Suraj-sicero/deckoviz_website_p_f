@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface FeatureCardProps {
   title: string;
@@ -355,48 +356,66 @@ const ADDITIONAL_FEATURES : Feature[] = [
 const FeatureCard: React.FC<FeatureCardProps> = ({
   title,
   description,
-  index, // ✅ REQUIRED
+  index,
 }) => (
+  <motion.div
+    initial={{
+      opacity: 0,
+      y: -200,
+      rotate: Math.random() * 10 - 5,
+      scale: 0.8,
+    }}
+    animate={{
+      opacity: 1,
+      y: 0,
+      rotate: 0,
+      scale: 1,
+    }}
+    transition={{
+      delay: index * 0.04,
+      type: "spring",
+      stiffness: 120,
+      damping: 14,
+    }}
+    className="group relative rounded-2xl p-8 pt-16
+    bg-white/60 backdrop-blur-xl
+    border border-white/30
+    shadow-[0_20px_40px_rgba(168,85,247,0.15)]
+    hover:shadow-[0_30px_60px_rgba(168,85,247,0.25)]
+    hover:scale-105 hover:-rotate-1
+    transition-all duration-500 cursor-pointer"
+  >
+      {/* Gradient overlay on hover */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-blue-50/20
+                      opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
 
- <div className="group relative rounded-2xl p-8 pt-16
-  bg-white/60 backdrop-blur-xl
-  border border-white/30
-  shadow-[0_20px_40px_rgba(168,85,247,0.15)]
-  hover:shadow-[0_30px_60px_rgba(168,85,247,0.25)]
-  hover:scale-105 hover:-rotate-1
-  transition-all duration-500 cursor-pointer">
+      {/* Icon */}
+      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 z-20">
+          <img src={`/images/${getIconForFeature(title)}`} 
 
-    {/* Gradient overlay on hover */}
-    <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-blue-50/20
-                    opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
+          alt="Feature Icon"
+          className="w-16 h-16 object-contain transform -rotate-12
+    group-hover:rotate-6 group-hover:scale-125 group-hover:-translate-y-1
+    transition-all duration-500
+    drop-shadow-[0_10px_25px_rgba(168,85,247,0.6)]"
 
-    {/* Icon */}
-    <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 z-20">
-        <img src={`/images/${getIconForFeature(title)}`} 
+        />
+      </div>
 
-        alt="Feature Icon"
-        className="w-16 h-16 object-contain transform -rotate-12
-  group-hover:rotate-6 group-hover:scale-125 group-hover:-translate-y-1
-  transition-all duration-500
-  drop-shadow-[0_10px_25px_rgba(168,85,247,0.6)]"
+      <div className="flex flex-col items-center text-center relative z-10">
+        <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight
+                      group-hover:bg-gradient-to-r group-hover:from-purple-600
+                      group-hover:to-pink-500 group-hover:bg-clip-text
+                      group-hover:text-transparent transition-all duration-500">
+          {title}
+        </h3>
 
-      />
-    </div>
-
-    <div className="flex flex-col items-center text-center relative z-10">
-      <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight
-                     group-hover:bg-gradient-to-r group-hover:from-purple-600
-                     group-hover:to-pink-500 group-hover:bg-clip-text
-                     group-hover:text-transparent transition-all duration-500">
-        {title}
-      </h3>
-
-      <p className="text-gray-700 leading-relaxed">
-        {description}
-      </p>
-    </div>
-  </div>
-);
+        <p className="text-gray-700 leading-relaxed">
+          {description}
+        </p>
+      </div>
+    </motion.div>
+  );
 
 type Spark = {
   id: number;

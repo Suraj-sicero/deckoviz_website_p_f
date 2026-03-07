@@ -11,7 +11,23 @@ interface Testimonial {
   author: string;
   tagline: string;
 }
-
+const cardVariants = {
+  hidden: {
+    opacity: 0,
+    y: 60,
+    scale: 0.9,
+  },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: {
+      delay: i * 0.15,
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  }),
+};
 // --- Testimonial Data ---
 const testimonialsData: Testimonial[] = [
   {
@@ -148,6 +164,7 @@ const GuestReactionsTestimonials: React.FC = () => {
           Real words from the curious souls who let Deckoviz into their homes before it was cool.
         </p>
       </div>
+      
 
 
 {/* LEFT ARROW */}
@@ -180,14 +197,19 @@ const GuestReactionsTestimonials: React.FC = () => {
         <div className="flex -ml-4">
           {testimonialsData.map((t, index) => (
             <motion.div
-              key={index}
-              className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 pl-4"
-              animate={{
-                scale: getScale(index),
-                opacity: getScale(index) < 0.9 ? 0.7 : 1,
-              }}
-              transition={{ type: "spring", stiffness: 200, damping: 30 }}
-            >
+  key={index}
+  className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 pl-4"
+  custom={index}
+  variants={cardVariants}
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, amount: 0.3 }}
+  animate={{
+    scale: getScale(index),
+    opacity: getScale(index) < 0.9 ? 0.7 : 1,
+  }}
+  transition={{ type: "spring", stiffness: 200, damping: 30 }}
+>
               <div
   className={`h-full rounded-2xl p-[1px] ${
     index % 3 === 0

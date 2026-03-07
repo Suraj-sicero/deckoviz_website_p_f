@@ -233,7 +233,7 @@ const Navbar: React.FC = () => {
       description: "Elevate guest experiences",
       image: "/images/hotelnavbar.png",
       gradient: "from-blue-500 to-cyan-500",
-      route: "/deckoviz-for-hotels",
+      route: "/deckoviz-for-enterprises",/*deckoviz-for-hotels*/
       fallbackColor: "bg-gradient-to-br from-blue-100 to-cyan-100",
     },
     {
@@ -241,7 +241,7 @@ const Navbar: React.FC = () => {
       description: "Create dining ambiance",
       image: "/images/restaurantnavbar.png",
       gradient: "from-orange-500 to-red-500",
-      route: "/deckoviz-for-restaurants",
+      route: "/deckoviz-for-enterprises",/*deckoviz-for-restaurants*/
       fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100",
     },
 
@@ -250,7 +250,7 @@ const Navbar: React.FC = () => {
       description: "Design living spaces",
       image: "/images/architectnavbar.png",
       gradient: "from-purple-500 to-pink-500",
-      route: "/deckoviz-for-architects",
+      route: "/deckoviz-for-enterprises",/*deckoviz-for-architects*/
       fallbackColor: "bg-gradient-to-br from-purple-100 to-pink-100",
     },
     {
@@ -258,7 +258,7 @@ const Navbar: React.FC = () => {
       description: "Inspire productivity",
       image: "/images/officenavbar.png",
       gradient: "from-green-500 to-emerald-500",
-      route: "/deckoviz-for-offices",
+      route: "/deckoviz-for-enterprises",/*deckoviz-for-offices*/
       fallbackColor: "bg-gradient-to-br from-green-100 to-emerald-100",
     },
     {
@@ -266,7 +266,7 @@ const Navbar: React.FC = () => {
       description: "Showcase properties",
       image: "/images/realestatenavbar.png",
       gradient: "from-indigo-500 to-blue-500",
-      route: "/deckoviz-for-realestate",
+      route: "/deckoviz-for-enterprises",/*deckoviz-for-realestate*/
       fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
     },
     {
@@ -274,7 +274,7 @@ const Navbar: React.FC = () => {
       description: "Healing environments",
       image: "/images/therapistnavbar.png",
       gradient: "from-teal-500 to-cyan-500",
-      route: "/deckoviz-for-therapists",
+      route: "/deckoviz-for-enterprises",/*deckoviz-for-therapists*/
       fallbackColor: "bg-gradient-to-br from-teal-100 to-cyan-100",
     },
     {
@@ -282,7 +282,7 @@ const Navbar: React.FC = () => {
       description: "Educational spaces",
       image: "/images/schoolnavbar.png",
       gradient: "from-yellow-500 to-orange-500",
-      route: "/deckoviz-for-schools",
+      route: "/deckoviz-for-enterprises",/*deckoviz-for-schools*/
       fallbackColor: "bg-gradient-to-br from-yellow-100 to-orange-100",
     },
     {
@@ -290,7 +290,7 @@ const Navbar: React.FC = () => {
       description: "Shopping experiences",
       image: "/images/retailnavbar.png",
       gradient: "from-pink-500 to-rose-500",
-      route: "/deckoviz-for-retailstores",
+      route: "/deckoviz-for-enterprises", /*deckoviz-for-retailstores*/
       fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100",
     },
     {

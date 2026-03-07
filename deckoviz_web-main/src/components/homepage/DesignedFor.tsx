@@ -531,6 +531,8 @@ const frameImages = [
 
     {/* glow */}
      <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-purple-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
+     
+     
     {/* FULL furniture image */}
     <img
       src="/images/furniture-left.png"
