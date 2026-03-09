@@ -438,6 +438,35 @@ if (error) {
     return () => clearInterval(interval);
   }, [isHover]);
 
+  const retailImages = Array.from(
+  { length: 20 },
+  (_, i) => `/images/shoppic (${i + 1}).png`
+);
+
+const hotelImages = Array.from(
+  { length: 43 },
+  (_, i) => `/images/hootelpic (${i + 1}).png`
+);
+
+
+const [retailIndex, setRetailIndex] = useState(0);
+const [hotelIndex, setHotelIndex] = useState(0);
+useEffect(() => {
+  const retailInterval = setInterval(() => {
+    setRetailIndex((prev) => (prev + 1) % retailImages.length);
+  }, 2000);
+
+  const hotelInterval = setInterval(() => {
+    setHotelIndex((prev) => (prev + 1) % hotelImages.length);
+  }, 2000);
+
+  return () => {
+    clearInterval(retailInterval);
+    clearInterval(hotelInterval);
+  };
+}, []);
+
+
   const [showMore, setShowMore] = useState(false);
 
   const [showBenefits, setShowBenefits] = useState(false);
@@ -1390,11 +1419,84 @@ const extraFeatures = [
 {/* 📘 Floating Business DASP Guide Button */}
 
 
-      <DynamicImageGrid
-        imageSources={enterpriseImages}
-        sectionTitle="A Canvas for Every Environment, Every Moment"
-        sectionDescription="From lobbies to luxury suites, from restaurants to wellness spaces, see how Deckoviz adapts to any enterprise space."
+{/* 📘 Floating Business DASP Guide Button */}
+
+
+      <section className="py-24 bg-white">
+
+  <div className="max-w-7xl mx-auto px-6">
+
+    {/* Title */}
+    <div className="text-center mb-14">
+
+      <h2 className="text-4xl font-semibold text-gray-900 mb-4">
+        A Canvas for Every Environment, Every Moment
+      </h2>
+
+      <p className="text-gray-600 max-w-2xl mx-auto">
+        From lobbies to luxury suites, from restaurants to wellness spaces, see how Deckoviz adapts to any enterprise space.
+      </p>
+
+    </div>
+
+
+      {/* Images */}
+    <div className="grid md:grid-cols-2 gap-16">
+
+      {/* RETAIL */}
+      <div className="relative flex justify-center">
+
+      <img
+      src="/images/retail_bgpic.png"
+      className="w-full rounded-[40px] shadow-xl"
       />
+
+      <div className="absolute top-[116px] left-1/2 -translate-x-1/2 w-[70%] h-[188px] overflow-hidden">
+
+        {retailImages.map((img, index) => (
+        <img
+        key={index}
+        src={img}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+        index === retailIndex ? "opacity-100" : "opacity-0"
+        }`}
+        />
+        ))}
+
+      </div>
+
+      </div>
+
+
+      {/* RESTAURANT */}
+      <div className="relative flex justify-center">
+
+      <img
+      src="/images/Restuarant_bg pic.png"
+      className="w-full rounded-[40px] shadow-xl"
+      />
+
+      <div className="absolute top-[102px] left-1/2 -translate-x-1/2 w-[60%] h-[152px] overflow-hidden z-10">
+
+      {hotelImages.map((img, index) => (
+      <img
+      key={index}
+      src={img}
+      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+      index === hotelIndex ? "opacity-100" : "opacity-0"
+      }`}
+      />
+      ))}
+
+      </div>
+
+      </div>
+
+      </div>
+
+    </div>
+
+</section>
 
       {/* Features Section */}
     <section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-white overflow-hidden">
@@ -1454,10 +1556,12 @@ const extraFeatures = [
             {enterprisebenefits.map((feature, index) => {
               const isEven = index % 2 === 0;
               return (
-                <div 
-                  key={feature.title} 
-                  className={`flex flex-col md:flex-row items-center w-full md:mb-20 ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'}`}
-                >
+                <div
+  key={feature.title}
+  className={`flex flex-col md:flex-row items-center w-full py-24 relative ${
+    isEven ? "md:flex-row" : "md:flex-row-reverse"
+  }`}
+>
                   {/* Content Card with Every-Scroll Animation */}
                   <motion.div 
                     initial={{ opacity: 0, x: isEven ? -120 : 120 }}
@@ -1502,9 +1606,9 @@ const extraFeatures = [
                   </div>
 
                   <div
-  className={`hidden md:flex md:w-[56%] items-center 
-  ${isEven ? "justify-start pl-40" : "justify-end pr-40"}`}
->
+                    className={`hidden md:flex md:w-[56%] items-center 
+                    ${isEven ? "justify-start pl-40" : "justify-end pr-40"}`}
+                  >
                     <motion.img
                       src={feature.image}
                       alt={feature.title}
@@ -1515,7 +1619,7 @@ const extraFeatures = [
                       className="max-w-[420px] rounded-3xl shadow-xl"
                     />
                   </div>
-                  <div className="pt-6"></div>
+                  {/* <div className="pt-6"></div> */}
                 </div>
               );
             })}

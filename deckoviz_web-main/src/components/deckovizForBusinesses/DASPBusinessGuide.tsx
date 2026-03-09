@@ -65,7 +65,7 @@ export default function DASPBusinessGuide() {
           <p className="text-xl font-medium">
             Designing Intelligent, Experiential, Brand-Infused Physical Spaces
           </p>
- <h1 className="text-4xl font-bold">Deckoviz DASP Enterprise Guide</h1>
+          <h1 className="text-4xl font-bold">Deckoviz DASP Enterprise Guide</h1>
 
         <p className="text-xl font-medium">
           Designing Intelligent, Experiential, Brand-Infused Physical Spaces
