@@ -18,7 +18,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
     if (isHovered) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % enterpriseFeatures.length);
-    }, 4000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [index, isHovered]);
 

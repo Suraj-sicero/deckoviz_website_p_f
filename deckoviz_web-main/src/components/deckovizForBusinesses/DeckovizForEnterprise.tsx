@@ -1081,7 +1081,7 @@ index === retailIndex ? "opacity-100" : "opacity-0"
 <div className="relative flex justify-center">
 
 <img
-src="/images/Restuarant_bg pic.png"
+src="/images/restobg.png"
 className="w-full rounded-[40px] shadow-xl"
 />
 
