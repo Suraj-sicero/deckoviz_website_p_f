@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.98.0",
+    "button": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^11.18.2",
     "front-matter": "^4.0.2",
