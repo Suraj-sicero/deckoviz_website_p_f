@@ -98,37 +98,30 @@ useEffect(() => {
   const [leftImageIndex, setLeftImageIndex] = useState(0)
   const [rightImageIndex, setRightImageIndex] = useState(0)
 
- const frameImages = [
-  "/images/frame_l (1).png",
-  "/images/frame_l (2).png",
-  "/images/frame_l (3).png",
-  "/images/frame_l (4).png",
-  "/images/frame_l (5).png",
-  "/images/frame_l (6).png",
-  "/images/frame_l (7).png",
-  "/images/frame_l (8).png",
-  "/images/frame_l (9).png",
-  "/images/frame_l (10).png",
-  "/images/frame_l (11).png",
-  "/images/frame_l (12).png",
-  "/images/frame_l (13).png",
-  "/images/frame_l (14).png",
-  "/images/frame_l (15).png",
-  "/images/frame_l (16).png",
-  "/images/frame_l (17).png",
-  "/images/frame_l (18).png",
-  "/images/frame_l (19).png",
-  "/images/frame_l (20).png",
-  "/images/frame_l (21).png",
-  "/images/frame_l (22).png",
-  "/images/frame_l (23).png",
-  "/images/frame_l (24).png",
-  "/images/frame_l (25).png",
-  "/images/frame_l (26).png",
-  "/images/frame_l (27).png",
-  "/images/frame_l (28).png",
-]
-
+const frameImages = [
+  "/images/herol (1).png",
+  "/images/herol (2).png",
+  "/images/herol (3).png",
+  "/images/herol (4).png",
+  "/images/herol (5).png",
+  "/images/herol (6).png",
+  "/images/herol (7).png",
+  "/images/herol (8).png",
+  "/images/herol (9).png",
+  "/images/herol (10).png",
+  "/images/herol (11).png",
+  "/images/herol (12).png",
+  "/images/herol (13).png",
+  "/images/herol (14).png",
+  "/images/herol (15).png",
+  "/images/herol (16).png",
+  "/images/herol (17).png",
+  "/images/herol (18).png",
+  "/images/herol (19).png",
+  "/images/herol (20).png",
+  "/images/herol (21).png",
+  "/images/herol (22).png"
+];
 
   const rightImages = [
     "/images/righthero1.png",
@@ -241,20 +234,19 @@ useEffect(() => {
   {/* 1️⃣ Furniture / room (STATIC) */}
   <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-300/40 via-pink-200/30 to-yellow-200/40 blur-3xl opacity-70 -z-10" />
 <img
-  src="/images/furniture-left.png"
+  src="/images/hero_left.png"
   alt="Living room"
-  className="absolute top-[90px] left-1/2 -translate-x-1/2 w-[122%] h-auto object-contain z-0"
+  className="absolute top-[10px] left-1/2 -translate-x-1/2 w-[82%] h-auto object-contain z-0 rounded-[80px]"
 />
-
 {/* 2️⃣ Artwork inside frame (CHANGES) */}
-<div className="absolute top-[155px] left-1/2 -translate-x-1/2 w-[59%] h-[67%] z-10 overflow-hidden rounded-sm">
+<div className="absolute top-[109px] left-1/2 -translate-x-1/2 w-[49%] h-[30%] z-10 overflow-hidden rounded-sm">
 
   {frameImages.map((img, index) => (
     <img
       key={index}
       src={img}
       alt={`Frame artwork ${index + 1}`}
-      className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ease-in-out ${
+      className={`absolute inset-0 w-full h-full object-fill transition-opacity duration-1000 ease-in-out ${
         index === leftImageIndex ? "opacity-100" : "opacity-0"
       }`}
     />

@@ -1,28 +1,64 @@
-import { useParams, useNavigate } from "react-router-dom"
-import { ArrowLeft, Clock } from "lucide-react"
+import { useParams, Link, useNavigate } from "react-router-dom"
 import { useEffect, useState } from "react"
 import { loadBlogs, MarkdownBlog } from "../lib/blogLoader"
 import ReactMarkdown from "react-markdown"
 import rehypeRaw from "rehype-raw"
 import GithubSlugger from "github-slugger"
 
+import { ChevronLeft } from "lucide-react"
+
+const TypingMarkdown = ({ content }: { content: string }) => {
+  const [displayed, setDisplayed] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+
+    const interval = setInterval(() => {
+      setDisplayed(content.slice(0, i));
+      i += 2; // typing speed
+
+      if (i >= content.length) {
+        clearInterval(interval);
+        setDisplayed(content);
+      }
+    }, 8);
+
+    return () => clearInterval(interval);
+  }, [content]);
+
+  return (
+    <div className="typing-markdown">
+      <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+        {displayed}
+      </ReactMarkdown>
+      <span className="typing-cursor">|</span>
+    </div>
+  );
+};
+
+
 const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
 
   const [post, setPost] = useState<MarkdownBlog | null>(null)
+  const [allBlogs, setAllBlogs] = useState<MarkdownBlog[]>([])
 
-  /* ---------- LOAD BLOG FROM MARKDOWN FILES ---------- */
   useEffect(() => {
     loadBlogs().then((blogs) => {
+      setAllBlogs(blogs)
       const found = blogs.find((b) => b.slug === slug)
       setPost(found ?? null)
     })
   }, [slug])
 
   if (!post) {
-    return <div className="p-10 text-center">Article not found</div>
+    return <div className="text-gray-800 p-10 text-center">Blog not found.</div>
   }
+
+  const relatedArticles = allBlogs
+    .filter((b) => b.slug !== post.slug)
+    .slice(0, 3)
 
   /* ---------- CLEAN MARKDOWN ---------- */
   const cleanContent = post.content
@@ -47,157 +83,160 @@ const BlogDetail = () => {
     })
 
   return (
-  <div className="relative min-h-screen overflow-hidden">
-    {/* Soft Background */}
-    <div className="absolute inset-0">
-      <div className="absolute inset-0 bg-white" />
-      <div className="absolute -top-20 left-0 w-[40%] h-[60%] bg-gradient-to-br from-purple-100/60 via-pink-50/40 to-transparent blur-3xl" />
-      <div className="absolute top-1/3 right-0 w-[45%] h-[50%] bg-gradient-to-bl from-pink-100/50 via-orange-50/40 to-transparent blur-3xl" />
-      <div className="absolute bottom-0 left-1/4 w-[50%] h-[40%] bg-gradient-to-tr from-indigo-100/50 via-purple-50/40 to-transparent blur-3xl" />
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 text-gray-900">
 
-      <div
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, rgba(125,57,236,0.9) 1px, transparent 1px)",
-          backgroundSize: "40px 40px",
-        }}
-      />
-    </div>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16 flex flex-col lg:flex-row gap-8">
 
-    {/* Layout */}
-    <div className="relative z-10 max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
+        {/* Sidebar */}
+        <aside className="lg:w-16 flex lg:flex-col items-center justify-between lg:justify-start gap-4 lg:pt-20">
 
-              {/* MAIN CONTENT */}
-      <div>
-        <button
-          onClick={() => navigate(-1)}
-          className="flex items-center gap-2 text-purple-600 mb-6 font-medium"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back
-        </button>
+          <Link
+            to="/blog"
+            className="flex items-center gap-2 bg-white border border-purple-200 text-purple-700 px-4 py-2 rounded-full text-xs font-medium hover:bg-purple-50 transition"
+            style={{ width: "140px" }}
+          >
+            <ChevronLeft size={24} />
+            <span className="hidden sm:inline">Back</span>
+          </Link>
 
-        {/* Glass Hero Image */}
-        <div className="relative rounded-[34px] overflow-hidden mb-10">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-300/50 via-pink-300/40 to-orange-200/40 blur-md opacity-70" />
-          <div className="relative bg-white/75 backdrop-blur-xl border border-white/60 shadow-[0_20px_80px_-30px_rgba(236,72,153,0.35)] rounded-[34px] overflow-hidden">
-            <div className="w-full h-[420px] overflow-hidden bg-gray-200">
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
-            </div>
+        </aside>
 
-            {/* Meta info */}
-            <div className="p-6 md:p-8">
-              <div className="flex flex-wrap gap-3 text-sm text-gray-600 mb-6">
-                <span className={`px-3 py-1 rounded-full ${post.tagColor}`}>
-                  {post.tag}
-                </span>
+        {/* Main Content */}
+        <div className="flex-1 min-w-0">
 
-                <span className="flex items-center gap-2 bg-white/70 border border-white/60 px-3 py-1 rounded-full">
-                  <Clock className="w-4 h-4 text-purple-600" />
-                  {post.readTime}
-                </span>
+          {/* Title */}
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 bg-clip-text text-transparent">
+            {post.title}
+          </h1>
 
-                <span className="bg-white/70 border border-white/60 px-3 py-1 rounded-full">
-                  {post.date}
-                </span>
-              </div>
-
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
-                {post.title}
-              </h1>
-            </div>
+          {/* Meta */}
+          <div className="flex items-center gap-3 mb-8 text-sm text-purple-500">
+            <span>{post.date}</span>
+            <span>•</span>
+            <span>{post.readTime}</span>
           </div>
-        </div>
 
-        {/* Article */}
-        <div
-          className="
-            bg-white/70 backdrop-blur-xl
-            border border-white/60
-            shadow-[0_18px_70px_-40px_rgba(125,57,236,0.35)]
-            rounded-[32px]
-            px-6 py-10 md:px-10
-          "
-        >
+          {/* Hero Image */}
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-auto object-cover rounded-2xl shadow-xl mb-10"
+          />
+
+          {/* Article */}
           <div
   className="
-    max-w-none
-    prose prose-lg
-
-    prose-p:text-[17px]
-    prose-p:leading-[1.9]
-    prose-p:text-gray-800
-    prose-p:text-justify
-
-    prose-li:text-justify
-
-    hyphens-auto
-    break-words
-
-    prose-strong:text-gray-900
-    prose-strong:font-semibold
-
-    prose-h2:text-3xl prose-h2:font-bold
-    prose-h2:mt-16 prose-h2:mb-6
-    prose-h2:scroll-mt-28
-
-    prose-h3:text-2xl prose-h3:font-bold
-    prose-h3:mt-14 prose-h3:mb-5
-
-    prose-ul:my-6 prose-li:my-2
-    prose-hr:my-14 prose-hr:border-gray-300/80
-  "
+  mb-16
+  rounded-[32px]
+  backdrop-blur-xl
+  bg-white/60
+  border border-purple-200/60
+  shadow-[0_20px_60px_rgba(168,85,247,0.25)]
+  px-8 py-10 md:px-12
+"
 >
-            <ReactMarkdown
-              rehypePlugins={[rehypeRaw]}
-              components={{
-                h2: ({ children }) => {
-                  const text = String(children)
-                  const id = headingMap.get(text)
-                  return <h2 id={id}>{children}</h2>
-                },
-              }}
-            >
-              {cleanContent}
-            </ReactMarkdown>
+  <article
+    className="
+    prose
+    max-w-none
+    prose-lg
+    prose-headings:font-bold
+    prose-h2:text-3xl
+    prose-h3:text-2xl
+    prose-p:text-gray-700
+    prose-li:text-gray-700
+    prose-strong:text-gray-900
+    prose-a:text-purple-500
+    prose-a:no-underline
+    prose-a:font-medium
+    prose-a:hover:text-pink-500
+  "
+  >
+<TypingMarkdown content={cleanContent} />
+
+          </article>
           </div>
+
+          {/* Related Articles */}
+          <h2 className="text-xl sm:text-2xl font-bold mb-6">
+            Related Articles
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {relatedArticles.map((article) => (
+              <Link
+                to={`/blog/${article.slug}`}
+                key={article.slug}
+                className="bg-white rounded-2xl overflow-hidden border border-purple-200 p-4 hover:border-pink-300 hover:shadow-lg transition"
+              >
+                <span className="text-sm font-bold block mb-2">
+                  {article.title}
+                </span>
+
+                <span className="text-[10px] text-purple-400">
+                  {article.date}
+                </span>
+              </Link>
+            ))}
+          </div>
+
         </div>
-      </div>
 
-      {/* TABLE OF CONTENTS */}
-      {headings.length > 0 && (
-        <aside className="hidden lg:block sticky top-28 self-start">
-          <div className="bg-white/70 backdrop-blur-xl border border-white/60 shadow-lg rounded-3xl p-6">
-            <p className="text-sm font-semibold text-gray-800 mb-4">
-              Table of contents
-            </p>
+        {/* Table of Contents */}
+        {headings.length > 0 && (
+          <aside className="hidden xl:block w-[260px] sticky top-24 self-start">
 
-            <ul className="space-y-3 text-sm text-gray-600">
-              {headings.map((h) => (
-                <li
-                  key={h.id}
-                  className="cursor-pointer hover:text-purple-600"
-                  onClick={() =>
-                    document
-                      .getElementById(h.id)
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                >
-                  {h.text}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </aside>
-      )}
-    </div>
-  </div>
-  )
+            <div className="bg-white border border-purple-200 rounded-2xl p-6 shadow-sm">
+
+              <p className="text-sm font-semibold text-purple-700 mb-4">
+                Table of Contents
+              </p>
+
+              <ul className="space-y-3 text-sm text-purple-500">
+
+                {headings.map((h) => (
+                  <li
+                    key={h.id}
+                    className="cursor-pointer hover:text-pink-500 transition"
+                    onClick={() =>
+                      document
+                        .getElementById(h.id)
+                        ?.scrollIntoView({ behavior: "smooth" })
+                    }
+                  >
+                    {h.text}
+                  </li>
+                ))}
+
+              </ul>
+
+            </div>
+<style>
+{`
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease forwards;
+}
+`}
+</style>
+          </aside>
+        )}
+
+      </main>
+    </div>
+    
+    
+  )
+  
+}
 export default BlogDetail

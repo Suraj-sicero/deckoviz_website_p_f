@@ -31,10 +31,41 @@ const AutoScrollCarousel = () => {
     };
   }, []);
 
+  const scrollLeft = () => {
+  const container = scrollRef.current;
+  if (!container) return;
+
+  isPausedRef.current = true;
+
+  container.scrollBy({
+    left: -400,
+    behavior: "smooth",
+  });
+
+  setTimeout(() => {
+    isPausedRef.current = false;
+  }, 600);
+};
+
+const scrollRight = () => {
+  const container = scrollRef.current;
+  if (!container) return;
+
+  isPausedRef.current = true;
+
+  container.scrollBy({
+    left: 400,
+    behavior: "smooth",
+  });
+
+  setTimeout(() => {
+    isPausedRef.current = false;
+  }, 600);
+};
   const frames = [
     {
-      file: "frame style - Floating Frame Inner recessed mount for 'floating' art effect.png",
-      name: "Floating Frame",
+      file: "Simple Handcarving Symmetrical, minimal motifs (waves, leaves, flowers, geometric patterns).png",
+      name: "Handcarving Frames",
     },
     {
       file: "default frame with theme Floral motif (delicate botanicals wrapping around the frame).png",
@@ -57,10 +88,25 @@ const AutoScrollCarousel = () => {
   ];
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden py-10">
+  
+  {/* LEFT ARROW */}
+  <button
+  onClick={scrollLeft}
+  className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-white/80 backdrop-blur-lg shadow-xl rounded-full p-3 hover:scale-110 transition"
+>
+  ←
+</button>
+
+<button
+  onClick={scrollRight}
+  className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-white/80 backdrop-blur-lg shadow-xl rounded-full p-3 hover:scale-110 transition"
+>
+  →
+</button>
       <div
         ref={scrollRef}
-        className="flex gap-10 overflow-x-scroll no-scrollbar"
+        className="flex gap-14 overflow-x-scroll scroll-smooth no-scrollbar py-4"
       >
         {[...frames, ...frames].map((frame, index) => (
           <div
@@ -94,23 +140,36 @@ const AutoScrollCarousel = () => {
 
 const ShippingCard = ({ title, items }: any) => {
   return (
-    <div className="backdrop-blur-xl bg-white/50 border border-white/40 shadow-2xl rounded-3xl p-10 mb-16">
-      <h3 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent">
+    <div className="backdrop-blur-xl bg-white/60 border border-white/40 shadow-xl rounded-3xl p-10 mb-16">
+
+      {/* Section Title */}
+      <h3 className="text-2xl font-semibold mb-8 text-center 
+      bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 
+      bg-clip-text text-transparent">
         {title}
       </h3>
 
-      <div className="space-y-6">
+      {/* Card Rows */}
+      <div className="grid gap-5">
         {items.map((item: any, index: number) => (
           <div
             key={index}
-            className="flex justify-between items-start border-b border-purple-200 pb-4"
+            className="flex justify-between items-start p-5 rounded-2xl
+            bg-white/70 backdrop-blur-lg border border-purple-100
+            shadow-md hover:shadow-lg hover:scale-[1.02]
+            transition-all duration-300"
           >
             <div>
-              <h4 className="font-semibold text-gray-800">{item.name}</h4>
-              <p className="text-gray-600 text-sm mt-1 max-w-xl">{item.desc}</p>
+              <h4 className="font-semibold text-gray-800 text-lg">
+                {item.name}
+              </h4>
+
+              <p className="text-gray-600 text-sm mt-1 max-w-xl">
+                {item.desc}
+              </p>
             </div>
 
-            <div className="font-semibold text-purple-700 whitespace-nowrap">
+            <div className="font-semibold text-purple-700 text-lg whitespace-nowrap">
               {item.price}
             </div>
           </div>
@@ -158,9 +217,21 @@ const GeneralInfo = () => {
 
       <div className="relative max-w-6xl mx-auto">
         {/* SHINY GRADIENT MAIN HEADING */}
-        <h1 className="text-6xl font-extrabold text-center mb-16 bg-gradient-to-r from-primary-900 via-violet-700 to-blue-500 bg-clip-text text-transparent drop-shadow-lg">
-          Subscription
-        </h1>
+        <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-16 tracking-wide 
+bg-gradient-to-r from-purple-700 via-pink-500 to-blue-500 
+bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.25)]">
+
+  Subscriptions, Custom Options <br className="hidden md:block"/>
+  <span className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text text-transparent">
+    & Other Info
+  </span>
+
+</h1>
+
+{/* Decorative divider */}
+<div className="flex justify-center mb-16">
+  <div className="w-32 h-[3px] rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"></div>
+</div>
 
         {/* SINGLE GLASS CARD */}
         <ScrollReveal direction="left">
@@ -208,84 +279,65 @@ const GeneralInfo = () => {
             </div>
 
             {/* TABLE SECTION */}
-            <div className="overflow-x-auto">
-              <h3 className="text-2xl font-semibold text-center text-purple-700 mb-8">
-                Side-by-Side Feature Comparison
-              </h3>
+            <div className="overflow-x-auto mt-6">
+  <table className="min-w-full text-sm rounded-2xl overflow-hidden shadow-xl backdrop-blur-lg bg-white/60 border border-white/40">
 
-              <table className="min-w-full text-sm text-gray-800">
-                <thead>
-                  <tr className="text-purple-800 text-left border-b border-purple-200">
-                    <th className="py-3 px-4">Feature</th>
-                    <th className="py-3 px-4">Silver</th>
-                    <th className="py-3 px-4">Gold</th>
-                    <th className="py-3 px-4">Diamond</th>
-                  </tr>
-                </thead>
+    <thead className="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 text-white text-sm uppercase tracking-wider">
+      <tr>
+        <th className="py-4 px-6 text-left">Feature</th>
+        <th className="py-4 px-6 text-left">Silver</th>
+        <th className="py-4 px-6 text-left">Gold</th>
+        <th className="py-4 px-6 text-left">Diamond</th>
+      </tr>
+    </thead>
 
-                <tbody className="divide-y divide-purple-100">
-                  <tr>
-                    <td className="py-3 px-4 font-medium">Pricing</td>
-                    <td className="py-3 px-4">
-                      $8/mo
-                      <br />
-                      $45 / 6-mo
-                      <br />
-                      $80 / yr
-                    </td>
-                    <td className="py-3 px-4">
-                      $16/mo
-                      <br />
-                      $90 / 6-mo
-                      <br />
-                      $160 / yr
-                    </td>
-                    <td className="py-3 px-4">
-                      $24/mo
-                      <br />
-                      $135 / 6-mo
-                      <br />
-                      $240 / yr
-                    </td>
-                  </tr>
+    <tbody className="divide-y divide-purple-100">
 
-                  <tr>
-                    <td className="py-3 px-4 font-medium">Image Credits</td>
-                    <td className="py-3 px-4">100/month</td>
-                    <td className="py-3 px-4">200/month</td>
-                    <td className="py-3 px-4">20/month</td>
-                  </tr>
+      <tr className="hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Pricing</td>
+        <td className="py-4 px-6">$8/mo<br/>$45 / 6-mo<br/>$80 / yr</td>
+        <td className="py-4 px-6">$16/mo<br/>$90 / 6-mo<br/>$160 / yr</td>
+        <td className="py-4 px-6">$24/mo<br/>$135 / 6-mo<br/>$240 / yr</td>
+      </tr>
 
-                  <tr>
-                    <td className="py-3 px-4 font-medium">Video Credits</td>
-                    <td className="py-3 px-4">–</td>
-                    <td className="py-3 px-4">3 min/month</td>
-                    <td className="py-3 px-4">10 min/month</td>
-                  </tr>
+      <tr className="bg-white/50 hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Image Credits</td>
+        <td className="py-4 px-6">100/month</td>
+        <td className="py-4 px-6">200/month</td>
+        <td className="py-4 px-6">20/month</td>
+      </tr>
 
-                  <tr>
-                    <td className="py-3 px-4 font-medium">Text Tokens</td>
-                    <td className="py-3 px-4">500k/month</td>
-                    <td className="py-3 px-4">1m/month</td>
-                    <td className="py-3 px-4">2m/month</td>
-                  </tr>
+      <tr className="hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Video Credits</td>
+        <td className="py-4 px-6">–</td>
+        <td className="py-4 px-6">3 min/month</td>
+        <td className="py-4 px-6">10 min/month</td>
+      </tr>
 
-                  <tr>
-                    <td className="py-3 px-4 font-medium">Storage</td>
-                    <td className="py-3 px-4">100 GB</td>
-                    <td className="py-3 px-4">200 GB</td>
-                    <td className="py-3 px-4">400 GB</td>
-                  </tr>
+      <tr className="bg-white/50 hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Text Tokens</td>
+        <td className="py-4 px-6">500k/month</td>
+        <td className="py-4 px-6">1m/month</td>
+        <td className="py-4 px-6">2m/month</td>
+      </tr>
 
-                  <tr>
-                    <td className="py-3 px-4 font-medium">Customer Care</td>
-                    <td className="py-3 px-4">Standard email</td>
-                    <td className="py-3 px-4">Priority support</td>
-                    <td className="py-3 px-4">Instant voice support</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+      <tr className="hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Storage</td>
+        <td className="py-4 px-6">100 GB</td>
+        <td className="py-4 px-6">200 GB</td>
+        <td className="py-4 px-6">400 GB</td>
+      </tr>
+
+      <tr className="bg-white/50 hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Customer Care</td>
+        <td className="py-4 px-6">Standard email</td>
+        <td className="py-4 px-6">Priority support</td>
+        <td className="py-4 px-6">Instant voice support</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
           </div>
         </ScrollReveal>
 
@@ -729,105 +781,148 @@ const GeneralInfo = () => {
               Carving Options
             </h3>
 
-            <table className="min-w-full text-sm text-gray-800">
-              <thead>
-                <tr className="border-b border-purple-300 text-left">
-                  <th className="py-3 px-4">Carving Type</th>
-                  <th className="py-3 px-4">Description</th>
-                  <th className="py-3 px-4">Extra Cost</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-purple-200">
-                <tr>
-                  <td className="py-3 px-4">Simple Carvings</td>
-                  <td className="py-3 px-4">
-                    Symmetrical motifs like waves, flowers, geometric patterns
-                  </td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $80
-                  </td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">Ornate Carvings</td>
-                  <td className="py-3 px-4">
-                    Detailed themes, cursive words, intricate designs
-                  </td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $150
-                  </td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">Branded Carvings</td>
-                  <td className="py-3 px-4">
-                    Logos or themes for hotels, restaurants & businesses
-                  </td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $200
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+            <div className="overflow-x-auto mt-6">
+  <table className="min-w-full rounded-2xl overflow-hidden shadow-xl bg-white/70 backdrop-blur-lg border border-purple-200">
 
-          {/* COLOUR & FINISH OPTIONS */}
-          <div className="mb-14 overflow-x-auto">
-            <h3 className="text-xl font-semibold text-purple-700 mb-6">
-              Colour & Finish Options
-            </h3>
+    <thead className="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 text-white">
+      <tr>
+        <th className="py-4 px-6 text-left">Carving Type</th>
+        <th className="py-4 px-6 text-left">Description</th>
+        <th className="py-4 px-6 text-left">Extra Cost</th>
+      </tr>
+    </thead>
 
-            <table className="min-w-full text-sm text-gray-800">
-              <thead>
-                <tr className="border-b border-purple-300 text-left">
-                  <th className="py-3 px-4">Finish Type</th>
-                  <th className="py-3 px-4">Extra Cost</th>
-                  <th className="py-3 px-4">Notes</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-purple-200">
-                <tr>
-                  <td className="py-3 px-4">Natural Wood Clear Coat</td>
-                  <td className="py-3 px-4">Included</td>
-                  <td className="py-3 px-4">Elegant & protective finish</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">Matte Black / White / Charcoal</td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $35
-                  </td>
-                  <td className="py-3 px-4">Timeless modern finishes</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">Custom Pantone Colour</td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $65
-                  </td>
-                  <td className="py-3 px-4">Choose any Pantone shade</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">Dual-Tone (Two Colours)</td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $85
-                  </td>
-                  <td className="py-3 px-4">Outer frame + inner edge</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">Hand-Painted Artwork</td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $120
-                  </td>
-                  <td className="py-3 px-4">Premium acrylic & enamel paints</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">Colour + Carving Combo</td>
-                  <td className="py-3 px-4 font-semibold text-purple-700">
-                    + $160 (Simple) / + $230 (Ornate)
-                  </td>
-                  <td className="py-3 px-4">
-                    Painted carvings in chosen colour(s)
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+    <tbody className="divide-y divide-purple-100">
+
+      <tr className="hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold">Simple Carvings</td>
+        <td className="py-4 px-6">
+          Waves, flowers, geometric patterns
+        </td>
+        <td className="py-4 px-6 font-semibold text-purple-700">
+          + $80
+        </td>
+      </tr>
+
+      <tr className="bg-white/50 hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold">Ornate Carvings</td>
+        <td className="py-4 px-6">
+          Detailed themes and cursive designs
+        </td>
+        <td className="py-4 px-6 font-semibold text-purple-700">
+          + $150
+        </td>
+      </tr>
+
+      <tr className="hover:bg-purple-50 transition">
+        <td className="py-4 px-6 font-semibold">Branded Carvings</td>
+        <td className="py-4 px-6">
+          Logos and brand-themed designs
+        </td>
+        <td className="py-4 px-6 font-semibold text-purple-700">
+          + $200
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>          </div>
+{/* COLOUR & FINISH OPTIONS */}
+<div className="mb-14">
+  <h3 className="text-xl font-semibold text-purple-700 mb-6">
+    Colour & Finish Options
+  </h3>
+
+  <div className="overflow-x-auto rounded-2xl shadow-xl">
+    <table className="min-w-full text-sm text-gray-800 bg-white/70 backdrop-blur-lg border border-purple-200 rounded-2xl overflow-hidden">
+
+      {/* HEADER */}
+      <thead className="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 text-white">
+        <tr>
+          <th className="py-4 px-6 text-left font-semibold">Finish Type</th>
+          <th className="py-4 px-6 text-left font-semibold">Extra Cost</th>
+          <th className="py-4 px-6 text-left font-semibold">Notes</th>
+        </tr>
+      </thead>
+
+      {/* BODY */}
+      <tbody className="divide-y divide-purple-100">
+
+        <tr className="hover:bg-purple-50 transition">
+          <td className="py-4 px-6 font-medium">
+            Natural Wood Clear Coat
+          </td>
+          <td className="py-4 px-6 font-semibold text-green-600">
+            Included
+          </td>
+          <td className="py-4 px-6">
+            Preserves wood grain with protective finish
+          </td>
+        </tr>
+
+        <tr className="bg-white/50 hover:bg-purple-50 transition">
+          <td className="py-4 px-6 font-medium">
+            Matte Black / White / Charcoal
+          </td>
+          <td className="py-4 px-6 font-semibold text-purple-700">
+            + $35
+          </td>
+          <td className="py-4 px-6">
+            Timeless modern finishes
+          </td>
+        </tr>
+
+        <tr className="hover:bg-purple-50 transition">
+          <td className="py-4 px-6 font-medium">
+            Custom Pantone Colour
+          </td>
+          <td className="py-4 px-6 font-semibold text-purple-700">
+            + $65
+          </td>
+          <td className="py-4 px-6">
+            Choose any Pantone shade
+          </td>
+        </tr>
+
+        <tr className="bg-white/50 hover:bg-purple-50 transition">
+          <td className="py-4 px-6 font-medium">
+            Dual-Tone (Two Colours)
+          </td>
+          <td className="py-4 px-6 font-semibold text-purple-700">
+            + $85
+          </td>
+          <td className="py-4 px-6">
+            Outer frame + inner edge combination
+          </td>
+        </tr>
+
+        <tr className="hover:bg-purple-50 transition">
+          <td className="py-4 px-6 font-medium">
+            Hand-Painted Artwork
+          </td>
+          <td className="py-4 px-6 font-semibold text-purple-700">
+            + $120
+          </td>
+          <td className="py-4 px-6">
+            Premium acrylic & enamel paints
+          </td>
+        </tr>
+
+        <tr className="bg-white/50 hover:bg-purple-50 transition">
+          <td className="py-4 px-6 font-medium">
+            Colour + Carving Combo
+          </td>
+          <td className="py-4 px-6 font-semibold text-purple-700">
+            + $160 / + $230
+          </td>
+          <td className="py-4 px-6">
+            Painted carvings in selected colour
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
           </div>
 
           {/* PREMIUM COMBINATIONS */}

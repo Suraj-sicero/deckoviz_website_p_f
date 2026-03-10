@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -93,7 +93,7 @@ const FloatingMinimalistButton: React.FC = () => {
             {" "}
             <p className="text-xs opacity-90">
               {" "}
-              the Only Screen You Keep{" "}
+              If This Is the Only Screen You Keep{" "}
             </p>{" "}
             <p className="text-[11px] font-light opacity-80">
               {" "}
@@ -195,6 +195,31 @@ const sideCard = {
 };
 const DesignedFor: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
+  const [leftImageIndex, setLeftImageIndex] = useState(0);
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setLeftImageIndex((prev) => {
+      let next;
+      do {
+        next = Math.floor(Math.random() * frameImages.length);
+      } while (next === prev);
+      return next;
+    });
+  }, 4000);
+
+  return () => clearInterval(interval);
+}, []);
+
+const frameImages = [
+  "/images/frame_l (1).png",
+  "/images/frame_l (2).png",
+  "/images/frame_l (3).png",
+  "/images/frame_l (4).png",
+  "/images/frame_l (5).png",
+  "/images/frame_l (6).png",
+  "/images/frame_l (7).png",
+  "/images/frame_l (8).png",
+];
 
   const mainDesignedFor = [
     {
@@ -496,11 +521,42 @@ const DesignedFor: React.FC = () => {
             </div>
           </div>
         </div>
+<div className="relative mt-10">
+  <FloatingNervousSystemButton />
+  <ScrollingImageGallery />
 
-        <div className="relative mt-10">
-          <FloatingNervousSystemButton />
-          <ScrollingImageGallery />
-        </div>
+{/* Dynamic Frame Showcase */}
+<div className="flex justify-center mt-20">
+  <div className="relative w-[520px] rounded-2xl overflow-hidden">
+
+    {/* glow */}
+     <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-purple-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
+     
+     
+    {/* FULL furniture image */}
+    <img
+      src="/images/furniture-left.png"
+      alt="Living room"
+      className="w-full h-auto object-contain rounded-2xl"
+    />
+
+    {/* Artwork inside frame */}
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[57%] h-[57%] overflow-hidden">
+      {frameImages.map((img, index) => (
+        <img
+          key={index}
+          src={img}
+          alt={`Frame artwork ${index + 1}`}
+          className={`absolute inset-0 w-full h-full object-contain rounded-lg transition-opacity duration-1000 ${
+            index === leftImageIndex ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </div>
+
+  </div>
+</div>
+</div>
       </div>
     </section>
   );
