@@ -1049,19 +1049,18 @@ From lobbies to luxury suites, from restaurants to wellness spaces, see how Deck
 
 </div>
 
-
 {/* Images */}
-<div className="grid md:grid-cols-2 gap-16">
+<div className="grid md:grid-cols-2 gap-12 md:gap-16">
 
 {/* RETAIL */}
 <div className="relative flex justify-center">
 
 <img
-src="/images/retail_bgpic.png"
+src="/images/retail_bgpic.jpeg"
 className="w-full rounded-[40px] shadow-xl"
 />
 
-<div className="absolute top-[116px] left-1/2 -translate-x-1/2 w-[70%] h-[188px] overflow-hidden">
+<div className="absolute top-[20.5%] left-1/2 -translate-x-1/2 w-[70%] h-[41%] aspect-video overflow-hidden">
 
 {retailImages.map((img, index) => (
 <img
@@ -1086,13 +1085,13 @@ src="/images/Restuarant_bg pic.png"
 className="w-full rounded-[40px] shadow-xl"
 />
 
-<div className="absolute top-[102px] left-1/2 -translate-x-1/2 w-[60%] h-[152px] overflow-hidden z-10">
+<div className="absolute top-[14.5%] left-1/2 -translate-x-1/2 w-[60%] aspect-video overflow-hidden z-10">
 
 {hotelImages.map((img, index) => (
 <img
 key={index}
 src={img}
-className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
 index === hotelIndex ? "opacity-100" : "opacity-0"
 }`}
  />
@@ -1101,7 +1100,6 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
 </div>
 
 </div>
-
 </div>
 
 </div>
