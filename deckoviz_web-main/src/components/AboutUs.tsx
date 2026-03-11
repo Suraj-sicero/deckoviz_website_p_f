@@ -158,20 +158,15 @@ export default function AboutUs() {
                 <br />
                 company innovating at
                 <br />
-                the frontier.
+                the frontier of emotional-amplifying tech.
               </h2>
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl  font-bold text-gray-900">Our flagship product  </h3>
             </div>
             <div className="text-left space-y-6">
               <p className="text-gray-500 leading-relaxed text-base sm:text-lg">
-                where AI personalization, art, home and office décor, and smart technology converge. Our mission is
-                simple yet profound: to infuse everyday environments with more beauty, meaning, emotion, vitality, and
-                wonder   powered by the most human-centric technologies ever created.
-              </p>
-              <p className="text-gray-500 leading-relaxed text-base sm:text-lg">
-                Deckoviz creates deeply personalized, multisensory visual experiences   designed to inspire, soothe,
-                energize, or uplift, depending on your intentions and needs. Every piece of art it displays, every
-                visual it curates, is attuned to your unique life, spirit, and essence
+                where deep personalization, generative AI, new modalities of art and storytelling, new modalities of 
+                mood and state setting, and emotionally intelligent technology converge. Our mission is 
+                simple yet profound: to infuse  environments with more beauty, meaning, emotion, vitality, and 
+                wonder - powered by the most human-centric, expression-amplifying technologies ever created.
               </p>
             </div>
           </div>
@@ -191,15 +186,15 @@ export default function AboutUs() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
                 <div className="text-center lg:text-left lg:pr-6">
                   <div className="text-xs font-semibold text-gray-800 tracking-wider uppercase mb-3 bg-gray-100 inline-block px-3 py-1 rounded-lg">
-                    FLAGSHIP PRODUCT
+                    OUR FLAGSHIP PRODUCT
                   </div>
-                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Deckoviz AI Smart Art</h4>
+                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Deckoviz DASP 1</h4>
                 </div>
                 <div className="text-center lg:text-left lg:pl-6">
                   <div className="text-xs font-semibold text-gray-800 tracking-wider uppercase mb-3 bg-gray-100 inline-block px-3 py-1 rounded-lg">
-                    FLAGSHIP PRODUCT
+                    Coming Soon
                   </div>
-                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Space Enhancement Frame</h4>
+                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Spatial Enhancement System</h4>
                 </div>
               </div>
             </div>
@@ -208,10 +203,10 @@ export default function AboutUs() {
           {/* Final Description */}
           <div className="text-left mb-20">
             <p className="text-lg sm:text-xl text-gray-900 leading-relaxed font-medium max-w-5xl mx-auto">
-              Through the power of proprietary AI personalization engines, generative creativity, and intelligent
-              curation, Deckoviz creates deeply personalized, multisensory visual experiences   designed to inspire,
-              soothe, energize, or uplift, depending on your intentions and needs. Every piece of art it displays, every
-              visual it curates, is attuned to your unique life, spirit, and essence.
+              Through the power of proprietary modelling and personalization engines, generative creativity, intelligent 
+              curation, and a suite of story-affirming features, Deckoviz creates deeply emotionally attuned, multisensory 
+              visual and multisensory experiences - designed to inspire, soothe, energize, or uplift, depending on your 
+              intentions and needs. Every piece of art it displays, every visual it curates, is attuned to your unique life, spirit, and essence.
             </p>
           </div>
         </div>
