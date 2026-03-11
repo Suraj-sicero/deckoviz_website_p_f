@@ -833,14 +833,28 @@ const extraFeatures = [
                 hover:scale-[1.02]
                 hover:shadow-[0_35px_100px_rgba(80,0,200,0.25)]
               "
-              images={[
-                "/images/shop.png",
-                "/images/wall.png",
-                "/images/rest.png",
-                "/images/office.png",
-                "/images/heniterprise.png",
-                "/images/heniterprise1.png",
-              ]}
+            images={[
+              "/images/h1.png",
+              "/images/h2.png",
+              "/images/h3.png",
+              "/images/h4.png",
+              "/images/h5.png",
+              "/images/h6.png",
+              "/images/h7.png",
+              "/images/h8.png",
+              "/images/h9.png",
+              "/images/h10.png",
+              "/images/h11.png",
+              "/images/h12.png",
+              "/images/h13.png",
+              "/images/h14.png",
+              "/images/h15.png",
+              "/images/h16.png",
+              "/images/h17.png",
+              "/images/h18.png",
+              "/images/h19.png",
+              "/images/h20.png"
+            ]}
               interval={3000}
             />
           </div>
@@ -1348,13 +1362,13 @@ const extraFeatures = [
                     </div>
 
                     <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
-                      <iframe
-                        src="https://www.youtube.com/embed/Rxms0gWUmMs"
-                        title="Deckoviz Demo"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="w-full h-full"
-                      ></iframe>
+                      <iframe width="560" height="315"
+                      src="https://www.youtube.com/embed/zCLi3OTFRFU?si=Yq7cTENdhvaHuMkF" 
+                      title="YouTube video player" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                      referrerpolicy="strict-origin-when-cross-origin" 
+                      allowfullscreen></iframe>
                     </div>
 
                     <p className="text-center text-gray-600 mt-4">
@@ -1387,14 +1401,14 @@ const extraFeatures = [
                 className="relative bg-white/95 backdrop-blur-sm w-full max-w-md mx-auto rounded-3xl p-3 shadow-2xl border border-white/60 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
                   {/* Responsive Instagram Embed */}
                   <div className="w-full aspect-[4/5] overflow-hidden rounded-2xl">
-                    <iframe
-                      src="https://www.instagram.com/p/DLM9TrnSibN/embed"
-                      className="w-full h-full"
-                      frameBorder="0"
-                      allowTransparency={true}
-                      allow="encrypted-media"
-                      title="Instagram Post"
-                    ></iframe>
+                  <iframe 
+                      src="https://www.instagram.com/p/DT5DTtdjPmh/embed"
+                      width="400"
+                      height="480"
+                      frameborder="0"
+                      scrolling="no"
+                      allowtransparency="true">
+                  </iframe>
                   </div>
 
                   {/* Caption */}
