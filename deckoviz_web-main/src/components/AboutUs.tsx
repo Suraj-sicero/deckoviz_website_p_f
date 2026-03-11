@@ -225,17 +225,17 @@ export default function AboutUs() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
               <div className="text-left">
                 <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                  Because we believe technology should not just be functional  
+                  We believe technology should not just be functional  
                 </h2>
               </div>
               <div className="text-left flex items-center">
                 <p className="text-lg text-gray-500 leading-relaxed">
-                  At Deckoviz, we are pioneering a new category  <br />
-                  AI-powered spatial enhancement   bringing
+                  At Deckoviz, we are pioneering a new category of <br />
+                  AI-powered spatial enhancement and state-setting - bringing
                   <br />
-                  future-ready beauty, personalization, and emotion
+                  future-ready tech, personalization, and emotion
                   <br />
-                  into homes, offices, cafés, hotels, wellness spaces, and
+                  into homes, offices, restaurants, hotels, wellness spaces, and
                   <br />
                   beyond.
                 </p>
@@ -340,23 +340,23 @@ export default function AboutUs() {
             {/* Top Badge */}
             <div className="flex justify-center mb-8">
               <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                Our Vision
+                Our Mission and Vision 
               </div>
             </div>
 
             {/* Main Heading */}
             <div className="text-center mb-12">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-8">
-                Our Vision
+                Our Mission
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
                 Our mission is to develop an ecosystem of cutting-edge, artistically rich,
                 <br />
                 technologically beautiful products that continue to blur the lines between
                 <br />
-                technology, art, and life   breathing curiosity, wonder, joy, and inspiration into
+                technology, art, and life design, breathing curiosity, wonder, joy, and inspiration into
                 <br />
-                every corner of your world.
+                every corner of your world, both inner and outer. 
               </p>
             </div>
 
@@ -373,14 +373,14 @@ export default function AboutUs() {
                     <br />
                     are not static, but alive with your story.
                     <br />
-                    Where art evolves with you.
+                    Where art evolves with you, your moods, your states.
                   </h3>
                   <p className="text-gray-500 leading-relaxed">
                     Where your home and work environments are
                     <br />
-                    extensions of your innermost self   vibrant,
+                    extensions of your innermost self - vibrant,
                     <br />
-                    dynamic, deeply personal.
+                    dynamic, evolving, richly expressed.
                   </p>
                 </div>
 
@@ -391,16 +391,16 @@ export default function AboutUs() {
                   >
                     We are building the next generation of
                     <br />
-                    products at the crossroads of art, AI,
+                    ecosystem at the crossroads of evolving art, gen AI,
                     <br />
-                    smart technology, and design
+                    emotional modelling, and soulful design
                   </h3>
                   <p className="text-gray-500 leading-relaxed">
                     creating living environments that resonate
                     <br />
                     emotionally, artistically, and intelligently with
                     <br />
-                    the people who inhabit them
+                    the people who inhabit them.
                   </p>
                 </div>
               </div>
@@ -450,7 +450,7 @@ export default function AboutUs() {
                       </div>
                       <div>
                         <div className="text-sm font-semibold">AI-Powered</div>
-                        <div className="text-xs opacity-70">Vision That Inspires You.</div>
+                        <div className="text-xs opacity-70">Vision That Inspires You</div>
                       </div>
                     </div>
                   </div>
@@ -466,7 +466,7 @@ export default function AboutUs() {
             {/* Top Badge - White bg with gray border */}
             <div className="flex justify-start mb-8">
               <div className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 shadow-md">
-                Our Product Deckoviz
+                The Deckoviz DASP
               </div>
             </div>
 
@@ -478,14 +478,14 @@ export default function AboutUs() {
                   <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
                     Our Product :
                     <br />
-                    <span className="text-[#6670d8]">Deckoviz</span>
+                    <span className="text-[#6670d8]">Deckoviz DASP</span>
                   </h2>
                   <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                    Deckoviz is a personalized AI art frame that curates,
+                    Deckoviz DASP is a personalized Dynamic Art and Storytelling Portal art frame, 
                     <br />
-                    creates, and displays a continually evolving collection of
+                    that curates, creates, and displays a continually evolving collection of
                     <br />
-                    artworks, paintings, photography, and visuals   all tailored
+                    artworks, paintings, photography, and visuals all tailored
                     <br />
                     precisely to your tastes, moods, goals, intentions, and inner
                     <br />
@@ -508,9 +508,9 @@ export default function AboutUs() {
                         <span className="text-white text-xs">✓</span>
                       </div>
                       <p className="text-gray-700">
-                        It curates art that feels like it was made
+                        It creates and curates art that feels like it was made
                         <br />
-                        for you   because, in a sense, it was.
+                        for you - because, it was.
                       </p>
                     </div>
                   </div>
@@ -582,7 +582,7 @@ export default function AboutUs() {
             {/* Top Badge - White bg with gray border */}
             <div className="flex justify-center mb-8 ml-60">
               <div className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 shadow-md">
-                Product Features
+                Some Product Highlights
               </div>
             </div>
 
@@ -650,16 +650,16 @@ export default function AboutUs() {
                   <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
                     Think of Deckoviz as a
                     <br />
-                    new kind of art:
+                    new kind of art experience:
                   </h2>
                   <p className="text-gray-700 leading-relaxed text-lg mb-8">
-                    With stunning frame options, customizable collections,
+                    With stunning personal art and posters, customizable frame options,
                     <br />
-                    evolving AI art styles, and endless possibilities for
+                    collections, evolving AI art styles, and endless possibilities for
                     <br />
                     expression, Deckoviz ensures that your space never feels
                     <br />
-                    stale   only ever more you.
+                    stale - only ever more you.
                   </p>
 
                   <button className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
@@ -671,22 +671,22 @@ export default function AboutUs() {
                       <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
-                      <p className="text-gray-700">Not static, but alive.</p>
+                      <p className="text-gray-700">From static to alive.</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
-                      <p className="text-gray-700">Not generic, but deeply personal.</p>
+                      <p className="text-gray-700">From generic to deeply personal.</p>
                     </div>
                     <div className="flex items-start space-x-3">
                       <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
                       <p className="text-gray-700">
-                        Not merely decorative, but emotionally
+                        From merely decorative to emotionally
                         <br />
-                        intelligent.
+                        moving.
                       </p>
                     </div>
                   </div>
@@ -720,12 +720,14 @@ export default function AboutUs() {
             {/* Main Heading */}
             <div className="text-center mb-16">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-                Our Technology
+                The Magic Behind The DASP Technology
               </h2>
               <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
                 At the heart of Deckoviz lies our proprietary AI personalization architecture,
                 <br />
-                built from the ground up to understand you intimately
+                built from the ground up to understand you intimately, and learns more about you over time,
+                <br />
+                tuning its creations, personality, towards yours, adapting to your rhythms, taste, inner world. 
               </p>
             </div>
 
@@ -847,14 +849,14 @@ export default function AboutUs() {
 
             {/* Main Heading */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-              Our AI doesn't just recommend. It
+              Vizzy, your AI learns, grows, evolves, curates, creates, 
               <br />
-              learns. It grows.
+              with you.
             </h2>
 
             {/* Subheading */}
             <p className="text-lg text-gray-700 leading-relaxed mb-16 max-w-3xl mx-auto">
-              It evolves with you   helping you craft a living environment that
+              It evolves with you helping you craft a living environment that
               <br />
               feels more alive, more inspiring, more aligned with your true self.
             </p>
@@ -942,9 +944,9 @@ export default function AboutUs() {
                       className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-blue-700 transition-colors duration-300"
                       style={{ fontFamily: "Bricolage Grotesque, sans-serif" }}
                     >
-                      Curate dynamically
+                      Create and curate 
                       <br />
-                      evolving, personalized
+                      dynamically evolving, 
                       <br />
                       multisensory art
                       <br />
@@ -989,9 +991,9 @@ export default function AboutUs() {
                     >
                       Generate original
                       <br />
-                      visuals tuned to your
+                      and personal visuals tuned  
                       <br />
-                      unique aesthetic
+                      to your unique aesthetic
                       <br />
                       fingerprint.
                     </h4>
@@ -1073,12 +1075,12 @@ export default function AboutUs() {
 
             {/* Main Heading */}
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold text-gray-900 leading-tight mb-6">
-              Our Future
+              Where Are We Going
             </h2>
 
             {/* Subheading */}
             <p className="text-lg text-gray-800 leading-relaxed mb-4 max-w-2xl mx-auto">
-              Deckoviz is just the beginning.
+              Deckoviz DASP is just the beginning.
             </p>
 
             {/* Description */}
@@ -1086,7 +1088,7 @@ export default function AboutUs() {
               <p className="mb-2">
                 We are committed to creating a future where personalization, beauty, technology, and
                 <br />
-                human emotion are not separate realms   but one seamless experience.
+                human emotions are not separate realms but one seamless experience.
                 <br />
                 We are building an ecosystem of products that reimagine:
               </p>
