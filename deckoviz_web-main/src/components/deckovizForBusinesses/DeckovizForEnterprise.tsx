@@ -1424,77 +1424,75 @@ const extraFeatures = [
 
       <section className="py-24 bg-white">
 
-  <div className="max-w-7xl mx-auto px-6">
+<div className="max-w-7xl mx-auto px-6">
 
-    {/* Title */}
-    <div className="text-center mb-14">
+{/* Title */}
+<div className="text-center mb-14">
 
-      <h2 className="text-4xl font-semibold text-gray-900 mb-4">
-        A Canvas for Every Environment, Every Moment
-      </h2>
+<h2 className="text-4xl font-semibold text-gray-900 mb-4">
+A Canvas for Every Environment, Every Moment
+</h2>
 
-      <p className="text-gray-600 max-w-2xl mx-auto">
-        From lobbies to luxury suites, from restaurants to wellness spaces, see how Deckoviz adapts to any enterprise space.
-      </p>
+<p className="text-gray-600 max-w-2xl mx-auto">
+From lobbies to luxury suites, from restaurants to wellness spaces, see how Deckoviz adapts to any enterprise space.
+</p>
 
-    </div>
+</div>
+
+{/* Images */}
+<div className="grid md:grid-cols-2 gap-12 md:gap-16">
+
+{/* RETAIL */}
+<div className="relative flex justify-center">
+
+<img
+src="/images/retail_bgpic.jpeg"
+className="w-full rounded-[40px] shadow-xl"
+/>
+
+<div className="absolute top-[20.5%] left-1/2 -translate-x-1/2 w-[70%] h-[41%] aspect-video overflow-hidden">
+
+{retailImages.map((img, index) => (
+<img
+key={index}
+src={img}
+className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+index === retailIndex ? "opacity-100" : "opacity-0"
+}`}
+ />
+))}
+
+</div>
+
+</div>
 
 
-      {/* Images */}
-    <div className="grid md:grid-cols-2 gap-16">
+{/* RESTAURANT */}
+<div className="relative flex justify-center">
 
-      {/* RETAIL */}
-      <div className="relative flex justify-center">
+<img
+src="/images/restobg.png"
+className="w-full rounded-[40px] shadow-xl"
+/>
 
-      <img
-      src="/images/retail_bgpic.png"
-      className="w-full rounded-[40px] shadow-xl"
-      />
+<div className="absolute top-[14.5%] left-1/2 -translate-x-1/2 w-[60%] aspect-video overflow-hidden z-10">
 
-      <div className="absolute top-[116px] left-1/2 -translate-x-1/2 w-[70%] h-[188px] overflow-hidden">
+{hotelImages.map((img, index) => (
+<img
+key={index}
+src={img}
+className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
+index === hotelIndex ? "opacity-100" : "opacity-0"
+}`}
+ />
+))}
 
-        {retailImages.map((img, index) => (
-        <img
-        key={index}
-        src={img}
-        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-        index === retailIndex ? "opacity-100" : "opacity-0"
-        }`}
-        />
-        ))}
+</div>
 
-      </div>
+</div>
+</div>
 
-      </div>
-
-
-      {/* RESTAURANT */}
-      <div className="relative flex justify-center">
-
-      <img
-      src="/images/Restuarant_bg pic.png"
-      className="w-full rounded-[40px] shadow-xl"
-      />
-
-      <div className="absolute top-[102px] left-1/2 -translate-x-1/2 w-[60%] h-[152px] overflow-hidden z-10">
-
-      {hotelImages.map((img, index) => (
-      <img
-      key={index}
-      src={img}
-      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-      index === hotelIndex ? "opacity-100" : "opacity-0"
-      }`}
-      />
-      ))}
-
-      </div>
-
-      </div>
-
-      </div>
-
-    </div>
+</div>
 
 </section>
 
