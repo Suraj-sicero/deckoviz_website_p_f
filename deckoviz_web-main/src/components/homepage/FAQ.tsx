@@ -571,37 +571,38 @@ boxShadow: `
     </div>
 
     {/* Form */}
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+<form onSubmit={handleSubmit} className="max-w-md mx-auto w-full">
 
-      <div className="flex items-center rounded-full border bg-white px-4 py-2 transition-all duration-300 focus-within:border-purple-400 focus-within:shadow-[0_0_12px_rgba(168,85,247,0.5)]">
+  <div className="flex items-center gap-2 rounded-full border bg-white px-3 py-2 w-full
+  focus-within:border-purple-400 focus-within:shadow-[0_0_12px_rgba(168,85,247,0.5)]">
 
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
-          className="flex-1 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none py-2"
-        />
+    <input
+      type="email"
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
+      placeholder="Enter your email"
+      className="flex-1 min-w-0 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
+    />
 
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="flex items-center justify-center w-9 h-9 rounded-full 
-          bg-gradient-to-r from-purple-600 via-purple-500 to-violet-600 
-          text-white shadow-[0_4px_14px_rgba(124,58,237,0.45)]
-          transition-all duration-300 hover:scale-110 hover:shadow-[0_6px_22px_rgba(124,58,237,0.65)]
-          disabled:opacity-50"
-        >
-          {isSubmitting ? (
-            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-          ) : (
-            <Send size={16} />
-          )}
-        </button>
+    <button
+      type="submit"
+      disabled={isSubmitting}
+      className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full 
+      bg-gradient-to-r from-purple-600 via-purple-500 to-violet-600 
+      text-white shadow-[0_4px_14px_rgba(124,58,237,0.45)]
+      transition-all duration-300 md:hover:scale-110 md:hover:shadow-[0_6px_22px_rgba(124,58,237,0.65)]
+      disabled:opacity-50"
+    >
+      {isSubmitting ? (
+        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+      ) : (
+        <Send size={16} />
+      )}
+    </button>
 
-      </div>
+  </div>
 
-    </form>
+</form>
 
     {/* Message */}
     {subscribeMessage && (
