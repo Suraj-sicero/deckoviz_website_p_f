@@ -88,14 +88,8 @@ const Youtube: React.FC = () => {
             hover:scale-[1.01] transition-all duration-500"
             style={{ paddingBottom: "56.25%" }}
           >
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/ge6KgCR2C4M?autoplay=0&controls=1&modestbranding=1&rel=0"
-              title="Deckoviz Product Showcase"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+              {/* className="absolute top-0 left-0 w-full h-full" */}
+            <iframe className="absolute top-0 left-0 w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/1mPhddoCgwI?si=oXcDQCmFPIvS0_NP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
         </div>
       </div>

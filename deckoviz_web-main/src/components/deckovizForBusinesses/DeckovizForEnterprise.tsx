@@ -873,111 +873,111 @@ const extraFeatures = [
         </div>
       </div>
       {/* ================= FULL ENTERPRISE OVERVIEW - GLASS CARD ================= */}
-<section className="py-16 md:py-24 bg-white relative overflow-hidden">
-  
-  {/* Ambient Glow */}
-  <div className="absolute -top-40 left-1/2 -translate-x-1/2 
-  w-[400px] h-[400px] md:w-[700px] md:h-[700px] 
-  bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 
-  blur-[120px] md:blur-[160px]" />
+      <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+        
+        {/* Ambient Glow */}
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 
+        w-[400px] h-[400px] md:w-[700px] md:h-[700px] 
+        bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 
+        blur-[120px] md:blur-[160px]" />
 
-  <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
-    
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: false, amount: 0.3 }}
-      className="relative rounded-[28px] md:rounded-[40px] overflow-hidden shadow-[0_40px_120px_rgba(168,85,247,0.35)]"
-    >
+        <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
+          
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: false, amount: 0.3 }}
+            className="relative rounded-[28px] md:rounded-[40px] overflow-hidden shadow-[0_40px_120px_rgba(168,85,247,0.35)]"
+          >
 
-      <div
-        className="text-white backdrop-blur-xl p-6 md:p-10"
-        onMouseEnter={() => setIsHover(true)}
-        onMouseLeave={() => setIsHover(false)}
-        style={{
-          background:
-            "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 45%, #f5576c 55%, #4facfe 100%)",
-          backgroundSize: "250% 250%",
-          backgroundPosition: pos,
-        }}
-      >
-
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 md:mb-8">
-          <h2 className="text-xl md:text-2xl font-semibold tracking-wide">
-            Deckoviz for Enterprises
-          </h2>
-
-          <div className="px-4 py-1 rounded-full text-xs md:text-sm bg-white/10 border border-white/20 w-fit">
-            Quick Overview
-          </div>
-        </div>
-
-        {/* Progress */}
-        <div className="mb-8 md:mb-10">
-          <div className="flex justify-between text-sm text-white/70 mb-3">
-            <p className="text-white text-sm md:text-base">
-              Experience A Radically New Way To Enhance Your Customer Journeys
-            </p>
-          </div>
-          <ProgressBar value={85} />
-        </div>
-
-        {/* Content */}
-        <div className="space-y-5 text-white/80 leading-relaxed text-sm md:text-[16px]">
-          <p>
-            Attention is fragmented. Expectations are higher.
-            Differentiation is harder. Screens are everywhere — yet most
-            spaces still feel forgettable.
-          </p>
-
-          <p>
-            Deckoviz was built for this exact problem. It is an AI-powered
-            Dynamic Art, Storytelling, and Spatial Experience Platform
-            designed for enterprises that understand one thing clearly:
-            <span className="text-white font-semibold">
-              {" "}
-              the future of business is experiential, emotional, and adaptive.
-            </span>
-          </p>
-
-          <p>
-            Not static signage. Not passive screens. Deckoviz turns walls
-            into living, intelligent canvases that respond to context,
-            brand, time, audience, and intent.
-          </p>
-
-          <p>
-            For businesses, Deckoviz becomes the missing layer between
-            brand strategy and real-world experience — the layer customers
-            actually feel.
-          </p>
-        </div>
-
-        {/* Footer Pills */}
-        <div className="mt-8 md:mt-10 flex gap-3 flex-wrap">
-          {[
-            "Dynamic Art",
-            "Brand Storyteller",
-            "Ambiance Creator",
-            "Spatial Intelligence",
-            "Space Enhancer",
-          ].map((item) => (
             <div
-              key={item}
-              className="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/10 text-xs md:text-sm border border-white/20"
+              className="text-white backdrop-blur-xl p-6 md:p-10"
+              onMouseEnter={() => setIsHover(true)}
+              onMouseLeave={() => setIsHover(false)}
+              style={{
+                background:
+                  "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 45%, #f5576c 55%, #4facfe 100%)",
+                backgroundSize: "250% 250%",
+                backgroundPosition: pos,
+              }}
             >
-              {item}
+
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 md:mb-8">
+                <h2 className="text-xl md:text-2xl font-semibold tracking-wide">
+                  Deckoviz for Enterprises
+                </h2>
+
+                <div className="px-4 py-1 rounded-full text-xs md:text-sm bg-white/10 border border-white/20 w-fit">
+                  Quick Overview
+                </div>
+              </div>
+
+              {/* Progress */}
+              <div className="mb-8 md:mb-10">
+                <div className="flex justify-between text-sm text-white/70 mb-3">
+                  <p className="text-white text-sm md:text-base">
+                    Experience A Radically New Way To Enhance Your Customer Journeys
+                  </p>
+                </div>
+                <ProgressBar value={85} />
+              </div>
+
+              {/* Content */}
+              <div className="space-y-5 text-white/80 leading-relaxed text-sm md:text-[16px]">
+                <p>
+                  Attention is fragmented. Expectations are higher.
+                  Differentiation is harder. Screens are everywhere — yet most
+                  spaces still feel forgettable.
+                </p>
+
+                <p>
+                  Deckoviz was built for this exact problem. It is an AI-powered
+                  Dynamic Art, Storytelling, and Spatial Experience Platform
+                  designed for enterprises that understand one thing clearly:
+                  <span className="text-white font-semibold">
+                    {" "}
+                    the future of business is experiential, emotional, and adaptive.
+                  </span>
+                </p>
+
+                <p>
+                  Not static signage. Not passive screens. Deckoviz turns walls
+                  into living, intelligent canvases that respond to context,
+                  brand, time, audience, and intent.
+                </p>
+
+                <p>
+                  For businesses, Deckoviz becomes the missing layer between
+                  brand strategy and real-world experience — the layer customers
+                  actually feel.
+                </p>
+              </div>
+
+              {/* Footer Pills */}
+              <div className="mt-8 md:mt-10 flex gap-3 flex-wrap">
+                {[
+                  "Dynamic Art",
+                  "Brand Storyteller",
+                  "Ambiance Creator",
+                  "Spatial Intelligence",
+                  "Space Enhancer",
+                ].map((item) => (
+                  <div
+                    key={item}
+                    className="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/10 text-xs md:text-sm border border-white/20"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+
             </div>
-          ))}
+          </motion.div>
+
         </div>
-
-      </div>
-    </motion.div>
-
-  </div>
-</section>
+      </section>
         <>
           <style>
             {`

@@ -113,7 +113,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
             })}
           </LayoutGroup>
         </div>
-
+<br></br>
         {/* Pagination Dots */}
         <div className="flex justify-center mt-12 md:mt-16 gap-3">
           {enterpriseFeatures.map((_, i) => (
