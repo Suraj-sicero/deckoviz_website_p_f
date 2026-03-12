@@ -792,19 +792,30 @@ const extraFeatures = [
             </p>
 
             {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start w-full">
+              
               <Button
                 onClick={() => setIsModalOpen(true)}
-                className="bg-gradient-to-r from-red-600 via-purple-600 to-violet-600 text-white px-8 py-3 rounded-full flex items-center gap-2"
+                className="w-full sm:w-auto bg-gradient-to-r from-red-600 via-purple-600 to-violet-600 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
               >
                 <Calendar size={18} />
-                <span>Schedule Your Enterprise Demo</span>
+                <span className="text-center">Schedule Your Enterprise Demo</span>
               </Button>
-              <a href="/Flyer Deckoviz DASP.pdf" target="_blank" rel="noopener noreferrer">
-                <Button variant="secondary"
-                
-                className="bg-gradient-to-r from-violet-600 via-purple-600 to-red-600 text-white px-8 py-3 rounded-full flex items-center gap-2">Download Brochure</Button>
+
+              <a
+                href="/Flyer Deckoviz DASP.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto"
+              >
+                <Button
+                  variant="secondary"
+                  className="w-full sm:w-auto bg-gradient-to-r from-violet-600 via-purple-600 to-red-600 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
+                >
+                  Download Brochure
+                </Button>
               </a>
+
             </div>
           </div>
 
@@ -862,113 +873,111 @@ const extraFeatures = [
         </div>
       </div>
       {/* ================= FULL ENTERPRISE OVERVIEW - GLASS CARD ================= */}
-      <section className="py-24 bg-white relative overflow-hidden"
+<section className="py-16 md:py-24 bg-white relative overflow-hidden">
+  
+  {/* Ambient Glow */}
+  <div className="absolute -top-40 left-1/2 -translate-x-1/2 
+  w-[400px] h-[400px] md:w-[700px] md:h-[700px] 
+  bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 
+  blur-[120px] md:blur-[160px]" />
+
+  <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
+    
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: false, amount: 0.3 }}
+      className="relative rounded-[28px] md:rounded-[40px] overflow-hidden shadow-[0_40px_120px_rgba(168,85,247,0.35)]"
+    >
+
+      <div
+        className="text-white backdrop-blur-xl p-6 md:p-10"
+        onMouseEnter={() => setIsHover(true)}
+        onMouseLeave={() => setIsHover(false)}
+        style={{
+          background:
+            "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 45%, #f5576c 55%, #4facfe 100%)",
+          backgroundSize: "250% 250%",
+          backgroundPosition: pos,
+        }}
       >
-        {/* Ambient Glow */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 blur-[160px]"
-         />
 
-        <div className="max-w-5xl mx-auto px-6 relative z-10"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: false, amount:0.3 }}
-            className="relative rounded-[40px] overflow-hidden shadow-[0_60px_160px_rgba(168,85,247,0.35)]"
-            
-          >
-            {/* Glass Card */}
-          <div
-            className="bg-gradient-to-br from-[#0c0c6d] via-[#a73dc4] to-purple-600 text-white backdrop-blur-xl p-10"
-            onMouseEnter={() => setIsHover(true)}
-            onMouseLeave={() => setIsHover(false)}
-            style={{
-              background:
-                "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 45%, #f5576c 55%, #4facfe 100%)",
-              backgroundSize: "250% 250%",
-              backgroundPosition: pos,
-            }}
-          >
-              {/* Header */}
-              <div className="flex justify-between items-center mb-8">
-                <h2 className="text-2xl font-semibold tracking-wide">
-                  Deckoviz for Enterprises
-                </h2>
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 md:mb-8">
+          <h2 className="text-xl md:text-2xl font-semibold tracking-wide">
+            Deckoviz for Enterprises
+          </h2>
 
-                <div className="px-4 py-1 rounded-full text-sm bg-white/10 border border-white/20">
-                  Quick Overview
-                </div>
-              </div>
-
-              {/* Progress */}
-              <div className="mb-10">
-                <div className="flex justify-between text-sm text-white/70 mb-3">
-                  <p style={{
-                    color : "white"
-                  }}
-                  >Experience A Radically New Way To Enhance Your Customer Journeys</p>
-                </div>
-                <ProgressBar value={85} />
-              </div>
-
-              {/* Content */}
-              <div className="space-y-6 text-white/80 leading-relaxed text-[16px]">
-                <p>
-                  Attention is fragmented. Expectations are higher.
-                  Differentiation is harder. Screens are everywhere - yet most
-                  spaces still feel forgettable.
-                </p>
-
-                <p>
-                  Deckoviz was built for this exact problem. It is an AI-powered
-                  Dynamic Art, Storytelling, and Spatial Experience Platform
-                  designed for enterprises that understand one thing clearly:
-                  <span className="text-white font-semibold">
-                    {" "}
-                    the future of business is experiential, emotional, and
-                    adaptive.
-                  </span>
-                </p>
-
-                <p>
-                  Not static signage. Not passive screens. Deckoviz turns walls
-                  into living, intelligent canvases that respond to context,
-                  brand, time, audience, and intent.
-                </p>
-
-                <p>
-                  For businesses, Deckoviz becomes the missing layer between
-                  brand strategy and real-world experience - the layer customers
-                  actually feel.
-                </p>
-              </div>
-
-              {/* Footer Pills */}
-              <div className="mt-10 flex gap-4 flex-wrap">
-                <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
-                  Dynamic Art
-                </div>
-
-                <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
-                  Brand Storyteller
-                </div>
-
-                <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
-                  Ambiance Creator
-                </div>
-                <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
-                  Spatial Intelligence
-                </div>
-                <div className="px-4 py-2 rounded-full bg-white/10 text-sm border border-white/20">
-                  Space Enhancer
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <div className="px-4 py-1 rounded-full text-xs md:text-sm bg-white/10 border border-white/20 w-fit">
+            Quick Overview
+          </div>
         </div>
-      </section>
 
+        {/* Progress */}
+        <div className="mb-8 md:mb-10">
+          <div className="flex justify-between text-sm text-white/70 mb-3">
+            <p className="text-white text-sm md:text-base">
+              Experience A Radically New Way To Enhance Your Customer Journeys
+            </p>
+          </div>
+          <ProgressBar value={85} />
+        </div>
+
+        {/* Content */}
+        <div className="space-y-5 text-white/80 leading-relaxed text-sm md:text-[16px]">
+          <p>
+            Attention is fragmented. Expectations are higher.
+            Differentiation is harder. Screens are everywhere — yet most
+            spaces still feel forgettable.
+          </p>
+
+          <p>
+            Deckoviz was built for this exact problem. It is an AI-powered
+            Dynamic Art, Storytelling, and Spatial Experience Platform
+            designed for enterprises that understand one thing clearly:
+            <span className="text-white font-semibold">
+              {" "}
+              the future of business is experiential, emotional, and adaptive.
+            </span>
+          </p>
+
+          <p>
+            Not static signage. Not passive screens. Deckoviz turns walls
+            into living, intelligent canvases that respond to context,
+            brand, time, audience, and intent.
+          </p>
+
+          <p>
+            For businesses, Deckoviz becomes the missing layer between
+            brand strategy and real-world experience — the layer customers
+            actually feel.
+          </p>
+        </div>
+
+        {/* Footer Pills */}
+        <div className="mt-8 md:mt-10 flex gap-3 flex-wrap">
+          {[
+            "Dynamic Art",
+            "Brand Storyteller",
+            "Ambiance Creator",
+            "Spatial Intelligence",
+            "Space Enhancer",
+          ].map((item) => (
+            <div
+              key={item}
+              className="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/10 text-xs md:text-sm border border-white/20"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </motion.div>
+
+  </div>
+</section>
         <>
           <style>
             {`
@@ -1361,15 +1370,17 @@ const extraFeatures = [
                       </h3>
                     </div>
 
-                    <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
-                      <iframe width="560" height="315"
-                      src="https://www.youtube.com/embed/zCLi3OTFRFU?si=Yq7cTENdhvaHuMkF" 
-                      title="YouTube video player" 
-                      frameborder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                      referrerpolicy="strict-origin-when-cross-origin" 
-                      allowfullscreen></iframe>
-                    </div>
+<div className="aspect-video w-full rounded-2xl overflow-hidden shadow-lg">
+  <iframe
+    className="w-full h-full"
+    src="https://www.youtube.com/embed/zCLi3OTFRFU?si=Yq7cTENdhvaHuMkF"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerPolicy="strict-origin-when-cross-origin"
+    allowFullScreen
+  ></iframe>
+</div>
 
                     <p className="text-center text-gray-600 mt-4">
                       Experience the magic of Deckoviz and see how it can transform your space.
@@ -1400,17 +1411,15 @@ const extraFeatures = [
                   viewport={{ once: false, amount: 0.3 }} // animate every scroll
                 className="relative bg-white/95 backdrop-blur-sm w-full max-w-md mx-auto rounded-3xl p-3 shadow-2xl border border-white/60 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
                   {/* Responsive Instagram Embed */}
-                  <div className="w-full aspect-[4/5] overflow-hidden rounded-2xl">
-                  <iframe 
+                  <div className="w-full max-w-md mx-auto aspect-[4/5] overflow-hidden rounded-2xl">
+                    <iframe
+                      className="w-full h-full"
                       src="https://www.instagram.com/p/DT5DTtdjPmh/embed"
-                      width="400"
-                      height="480"
-                      frameborder="0"
+                      frameBorder="0"
                       scrolling="no"
-                      allowtransparency="true">
-                  </iframe>
+                      allowTransparency="true"
+                    ></iframe>
                   </div>
-
                   {/* Caption */}
                   <div className="mt-4 text-center">
                     <h3 className="text-lg font-semibold text-gray-800 mb-1">
