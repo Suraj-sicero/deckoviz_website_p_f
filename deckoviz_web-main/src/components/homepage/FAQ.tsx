@@ -4,7 +4,8 @@ import type React from "react"
 import { useState } from "react"
 import { ChevronDown, Home, Package, Rocket, Sparkles } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-
+import {  Send } from "lucide-react"
+import { useMediaQuery } from 'react-responsive';
 
 interface FAQItem {
   question: string
@@ -16,6 +17,47 @@ const FAQ: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null)
   const [activeCategory, setActiveCategory] = useState<string>("General")
   const navigate = useNavigate()
+
+    const [email, setEmail] = useState("")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [subscribeMessage, setSubscribeMessage] = useState("")
+  const isMobile: boolean = useMediaQuery({ query: '(max-width: 767px)' });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+
+    if (!email) {
+      setSubscribeMessage("Please enter your email")
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubscribeMessage("")
+
+    try {
+      const response = await fetch("https://auth.deckoviz.com/auth/newsletter/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      })
+
+      if (response.status == 201) {
+        setEmail("")
+        setSubscribeMessage("Successfully subscribed!")
+      } else {
+        setSubscribeMessage("Subscription failed. Please try again.")
+      }
+    } catch (error) {
+      setSubscribeMessage("Network error. Please try again.")
+      console.error("Newsletter subscription error:", error)
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
 
   const faqItems: FAQItem[] = [
@@ -399,7 +441,8 @@ const FAQ: React.FC = () => {
         {/* Join Our Community Section */}
         <div className="relative mt-32 mb-32">
           {/* Main content container - made wider */}
-          <div className="relative max-w-6xl mx-auto px-4">
+          <div className="relative max-w-6xl mx-auto px-4"
+          >
             {/* Large Mail Icon - positioned to overlap */}
             <div className="flex justify-center relative z-20 mb-16">
               <img src="/images/mailnoti.png" alt="Mail Notification" className="w-32 h-32 object-contain" />
@@ -409,9 +452,22 @@ const FAQ: React.FC = () => {
             <div
               className="relative -mt-32 pt-20 pb-16 px-12 rounded-3xl"
               style={{
-                background: "#faf9ff",
+                          background: `radial-gradient(circle at 50% 60%, 
+        rgba(168, 85, 247, 0.4) 0%, /* purple-500 */
+        rgba(180, 83, 220, 0.3) 10%, /* purple-pink blend */
+        rgba(195, 80, 190, 0.2) 18%, /* purple-pink blend */
+        rgba(215, 75, 165, 0.15) 27%, /* purple-pink blend */
+        rgba(226, 73, 155, 0.08) 39%, /* purple-pink blend */
+        rgba(236, 72, 153, 0.03) 45%, /* pink-500 */
+        transparent 50%)`,
                 backgroundImage: "radial-gradient(circle, rgba(147,51,234,0.06) 1px, transparent 1px)",
                 backgroundSize: "20px 20px",
+                border: '1px solid transparent',
+boxShadow: `
+  0 0 10px rgba(168,85,247,0.4),
+  0 0 20px rgba(236,72,153,0.3),
+  0 0 30px rgba(99,102,241,0.2)
+`
               }}
             >
               {/* Content positioned below the icon */}
@@ -495,7 +551,73 @@ const FAQ: React.FC = () => {
                       </div>
                     </div>
                   </div>
+{/* Stay Connected */}
+<div className="mt-16 md:mt-20 max-w-2xl mx-auto">
 
+  <div className="relative rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm p-6 sm:p-8 shadow-lg">
+
+    {/* Glow */}
+    <div className="absolute -inset-10 bg-purple-500/5 blur-[80px] pointer-events-none"></div>
+
+    {/* Header */}
+    <div className="text-center mb-6">
+      <h3 className="text-xs font-bold tracking-[0.25em] uppercase text-gray-900 mb-2">
+        Stay Connected
+      </h3>
+
+      <p className="text-sm text-gray-600">
+        Experience the future of home decor. Subscribe for exclusive updates and product drops.
+      </p>
+    </div>
+
+    {/* Form */}
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto">
+
+      <div className="flex items-center rounded-full border bg-white px-4 py-2 transition-all duration-300 focus-within:border-purple-400 focus-within:shadow-[0_0_12px_rgba(168,85,247,0.5)]">
+
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email"
+          className="flex-1 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none py-2"
+        />
+
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="flex items-center justify-center w-9 h-9 rounded-full 
+          bg-gradient-to-r from-purple-600 via-purple-500 to-violet-600 
+          text-white shadow-[0_4px_14px_rgba(124,58,237,0.45)]
+          transition-all duration-300 hover:scale-110 hover:shadow-[0_6px_22px_rgba(124,58,237,0.65)]
+          disabled:opacity-50"
+        >
+          {isSubmitting ? (
+            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+          ) : (
+            <Send size={16} />
+          )}
+        </button>
+
+      </div>
+
+    </form>
+
+    {/* Message */}
+    {subscribeMessage && (
+      <p
+        className={`text-xs text-center mt-4 ${
+          subscribeMessage.includes("Successfully")
+            ? "text-green-500"
+            : "text-red-500"
+        }`}
+      >
+        {subscribeMessage}
+      </p>
+    )}
+
+  </div>
+</div>
                   {/* Trust indicators */}
                   <div className="flex items-center justify-center space-x-4 mt-4 text-sm text-gray-500">
                     <div className="flex items-center space-x-1">

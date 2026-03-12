@@ -176,7 +176,7 @@ const sideContainer = {
 };
 
 const sideCard = {
-  hidden: (index: number) => ({
+  hidden: (index: number = 0) => ({
     opacity: 0,
     x: index % 2 === 0 ? -120 : 120,
     y: 40,
@@ -369,9 +369,11 @@ const frameImages = [
     image: string;
     index: number;
   }> = ({ title, caption, image, index }) => (
-    <motion.div
+<motion.div
   custom={index}
   variants={sideCard}
+  initial="hidden"
+  animate="visible"
       className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer border border-gray-100`}
       style={{ height: "430px" }}
     >
