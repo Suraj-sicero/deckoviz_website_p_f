@@ -467,6 +467,8 @@ useEffect(() => {
 }, []);
 
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+
   const [showMore, setShowMore] = useState(false);
 
   const [showBenefits, setShowBenefits] = useState(false);
@@ -1519,145 +1521,196 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
 
 </section>
 
-      {/* Features Section */}
-    <section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-white overflow-hidden">
-      {/* Brand Background Glows */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className="absolute top-[-5%] left-[-5%] w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
-          style={{ background: 'radial-gradient(circle, #9333ea, #db2777)' }}
-        />
-        <div 
-          className="absolute bottom-[-5%] right-[-5%] w-[600px] h-[600px] rounded-full opacity-15 blur-[100px]"
-          style={{ background: 'radial-gradient(circle, #3b82f6, #9333ea)' }}
-        />
-      </div>
+{/* Features Section */}
+<section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-white overflow-hidden">
 
-      <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center mb-24 max-w-4xl mx-auto">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false }}
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight"
-          >
-            Benefits that <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">compound</span>, with enterprise-grade solutions
-          </motion.h2>
-          
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: false }}
-            className="p-8 rounded-3xl border border-purple-100/50 shadow-sm bg-white/40 backdrop-blur-md"
-          >
-            <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
-                Not features you install once,
-                but advantages that grow with every guest, every day Deckoviz is
-                designed to quietly solve the hardest problems in physical spaces.
-                Problems of attention, emotion, memory, differentiation, and
-                scale. These are a few core benefits enterprises experience when
-                Deckoviz becomes part of their environment.
-            </p>
-          </motion.div>
-        </div>
+  {/* Brand Background Glows */}
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
 
-        {/* The Timeline Layout */}
-        <div className="relative">
-          {/* Central Vertical Line (Desktop) */}
-          <motion.div 
-            initial={{ height: 0 }}
-            whileInView={{ height: '100%' }}
-            viewport={{ once: false }}
-            transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="hidden md:block absolute left-1/2 top-0 w-[2px] bg-gradient-to-b from-purple-400 via-pink-400 to-transparent -translate-x-1/2 origin-top" 
-          />
+    <div
+      className="absolute top-[-5%] left-[-5%] w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
+      style={{ background: "radial-gradient(circle, #9333ea, #db2777)" }}
+    />
 
-          <div className="space-y-16 md:space-y-0">
-            {enterprisebenefits.map((feature, index) => {
-              const isEven = index % 2 === 0;
-              return (
-                <div
-  key={feature.title}
-  className={`flex flex-col md:flex-row items-center w-full py-24 relative ${
-    isEven ? "md:flex-row" : "md:flex-row-reverse"
-  }`}
->
-                  {/* Content Card with Every-Scroll Animation */}
-                  <motion.div 
-                    initial={{ opacity: 0, x: isEven ? -120 : 120 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: false, amount: 0.3 }}
-                    transition={{ 
-                      duration: 0.7, 
-                      type: "spring", 
-                      bounce: 0.25,
-                      delay: 0.1
-                    }}
-                    className="w-full md:w-[46%]"
-                  >
-                    <div className="p-8 rounded-[2.5rem] border border-purple-100 shadow-lg hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 bg-white group relative overflow-hidden">
-                      <div className="flex items-center gap-5 mb-6">
-                        <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center text-white shadow-lg shrink-0 transform group-hover:scale-110 group-hover:rotate-3 transition-transform">
-                          {feature.icon}
-                        </div>
-                        <h3 className="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
-                          {feature.title}
-                        </h3>
-                      </div>
+    <div
+      className="absolute bottom-[-5%] right-[-5%] w-[600px] h-[600px] rounded-full opacity-15 blur-[100px]"
+      style={{ background: "radial-gradient(circle, #3b82f6, #9333ea)" }}
+    />
 
-                      <p className="text-gray-600 text-base md:text-lg leading-relaxed">
-                        {feature.description}
-                      </p>
+  </div>
 
-                      {/* Bottom Visual Glow */}
-                      <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+  <div className="relative z-10 max-w-7xl mx-auto">
+
+    {/* Header Section */}
+    <div className="text-center mb-24 max-w-4xl mx-auto">
+
+      <motion.h2
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: false }}
+        className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight"
+      >
+        Benefits that{" "}
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+          compound
+        </span>
+        , with enterprise-grade solutions
+      </motion.h2>
+
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: false }}
+        className="p-8 rounded-3xl border border-purple-100/50 shadow-sm bg-white/40 backdrop-blur-md"
+      >
+
+        <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
+          Not features you install once, but advantages that grow with every
+          guest, every day Deckoviz is designed to quietly solve the hardest
+          problems in physical spaces. Problems of attention, emotion, memory,
+          differentiation, and scale. These are a few core benefits enterprises
+          experience when Deckoviz becomes part of their environment.
+        </p>
+
+      </motion.div>
+
+    </div>
+
+    {/* Timeline Layout */}
+    <div className="relative">
+
+      {/* Timeline Line (Mobile + Desktop) */}
+      <motion.div
+        initial={{ height: 0 }}
+        whileInView={{ height: "100%" }}
+        viewport={{ once: false }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+        className="
+        absolute left-5 md:left-1/2 top-0
+        w-[2px]
+        bg-gradient-to-b from-purple-400 via-pink-400 to-transparent
+        md:-translate-x-1/2
+        origin-top
+        "
+      />
+
+      <div className="space-y-16 md:space-y-0">
+
+        {enterprisebenefits.map((feature, index) => {
+
+          const isEven = index % 2 === 0;
+
+          return (
+
+            <div
+              key={feature.title}
+              className={`flex flex-col md:flex-row items-center w-full py-10 md:py-24 relative ${
+                isEven ? "md:flex-row" : "md:flex-row-reverse"
+              }`}
+            >
+
+              {/* Content Card */}
+              <motion.div
+                initial={{
+                  opacity: 0,
+                  x: isMobile ? 120 : isEven ? -120 : 120
+                }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: false, amount: 0.3 }}
+                transition={{
+                  duration: 0.7,
+                  type: "spring",
+                  bounce: 0.25,
+                  delay: 0.1,
+                }}
+                className="w-full md:w-[46%] pl-12 md:pl-0"
+              >
+
+                <div className="p-6 md:p-8 rounded-[2.5rem] border border-purple-100 shadow-lg hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 bg-white group relative overflow-hidden">
+
+                  <div className="flex items-center gap-5 mb-6">
+
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 
+                                    flex items-center justify-center text-white shadow-lg shrink-0 
+                                    transform group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                      {feature.icon}
                     </div>
-                  </motion.div>
 
-                  {/* Center Node Dot */}
-                  <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center justify-center z-20">
-                    <motion.div 
-                      initial={{ scale: 0, opacity: 0 }}
-                      whileInView={{ scale: 1, opacity: 1 }}
-                      viewport={{ once: false }}
-                      transition={{ delay: 0.3 }}
-                      className="w-6 h-6 rounded-full bg-white border-[5px] border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.6)]"
-                    />
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                      {feature.title}
+                    </h3>
+
                   </div>
 
-                  <div
-                    className={`hidden md:flex md:w-[56%] items-center 
-                    ${isEven ? "justify-start pl-40" : "justify-end pr-40"}`}
-                  >
-                    <motion.img
-                      src={feature.image}
-                      alt={feature.title}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: false, amount: 0.3 }}
-                      transition={{ duration: 0.7 }}
-                      className="max-w-[420px] rounded-3xl shadow-xl"
-                    />
-                  </div>
-                  {/* <div className="pt-6"></div> */}
+                  <p className="text-gray-600 text-base md:text-lg leading-relaxed">
+                    {feature.description}
+                  </p>
+
+                  {/* Glow */}
+                  <div className="absolute bottom-0 left-0 h-1 w-full 
+                                  bg-gradient-to-r from-transparent via-purple-500 to-transparent 
+                                  opacity-0 group-hover:opacity-100 transition-opacity" />
+
                 </div>
-              );
-            })}
-          </div>
-        </div>
 
-        {/* Closing Context */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: false }}
-          className="mt-24 text-center text-gray-600 font-medium max-w-3xl mx-auto border-t border-gray-100 pt-10"
-        >
-          Deckoviz solves problems of attention, emotion, memory, differentiation, and scale for modern environments.
-        </motion.div>
+              </motion.div>
+
+              {/* Timeline Dot */}
+              <div className="absolute left-5 md:left-1/2 -translate-x-1/2 flex items-center justify-center z-20">
+
+                <motion.div
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileInView={{ scale: 1, opacity: 1 }}
+                  viewport={{ once: false }}
+                  transition={{ delay: 0.3 }}
+                  className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-[4px] md:border-[5px] border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.6)]"
+                />
+
+              </div>
+
+              {/* Image (Desktop Only) */}
+              <div
+                className={`hidden md:flex md:w-[56%] items-center ${
+                  isEven ? "justify-start pl-40" : "justify-end pr-40"
+                }`}
+              >
+
+                <motion.img
+                  src={feature.image}
+                  alt={feature.title}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: false, amount: 0.3 }}
+                  transition={{ duration: 0.7 }}
+                  className="max-w-[420px] rounded-3xl shadow-xl"
+                />
+
+              </div>
+
+            </div>
+
+          );
+
+        })}
+
       </div>
-    </section>
+
+    </div>
+
+    {/* Closing Context */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: false }}
+      className="mt-4 text-center text-gray-600 font-medium max-w-3xl mx-auto border-t border-gray-100 pt-10"
+    >
+      Deckoviz solves problems of attention, emotion, memory,
+      differentiation, and scale for modern environments.
+    </motion.div>
+
+  </div>
+
+</section>    
       {/* Bottom CTA Section */}
       <section className="py-8 md:py-8 bg-white">
         <div className="container mx-auto px-6 text-center">
@@ -1673,24 +1726,28 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
       </section>
 
 
-    <section className="flex justify-center items-center">
-      <Button
-        onClick={() => setIsModalOpen(true)}
-        className="
-          px-10 py-4 rounded-full text-lg
-          bg-gradient-to-r from-red-600 via-purple-600 to-violet-600
-          text-white
-          shadow-[0_10px_30px_rgba(124,58,237,0.35)]
-          hover:shadow-[0_20px_50px_rgba(124,58,237,0.55)]
-          hover:scale-[1.05]
-          transition-all duration-300
-        "
-      >
-        <Calendar size={20} style={{
-          display:'inline-block'
-        }}/> Schedule Your Enterprise Demo
-      </Button>
-    </section>
+<section className="flex justify-center items-center px-4">
+  <Button
+    onClick={() => setIsModalOpen(true)}
+    className="
+      w-full sm:w-auto
+      flex items-center justify-center gap-2
+      px-6 py-3 sm:px-10 sm:py-4
+      rounded-full
+      text-sm sm:text-lg
+      bg-gradient-to-r from-red-600 via-purple-600 to-violet-600
+      text-white
+      shadow-[0_10px_30px_rgba(124,58,237,0.35)]
+      hover:shadow-[0_20px_50px_rgba(124,58,237,0.55)]
+      hover:scale-[1.05]
+      transition-all duration-300
+      whitespace-nowrap
+    "
+  >
+    <Calendar size={18} className="sm:w-5 sm:h-5" />
+    Schedule Your Enterprise Demo
+  </Button>
+</section>
 <div className="pt-16"></div>
 
       {isModalOpen && (
