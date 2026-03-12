@@ -6,7 +6,7 @@ const ReturnPolicy: React.FC = () => {
     <section className="section-padding bg-white">
       <div className="container-custom">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 text-center">
+          <h1 className="text-4xl font-bold mb-8 mt-4 text-center">
             Return <span className="text-primary-600">Policy</span>
           </h1>
           
