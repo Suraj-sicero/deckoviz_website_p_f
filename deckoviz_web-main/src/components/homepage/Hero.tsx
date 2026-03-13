@@ -211,24 +211,25 @@ const Hero: React.FC = () => {
     />
 
     {/* Frame artwork */}
-    <div className="absolute 
-      top-[45px] sm:top-[58px] md:top-[68px] lg:top-[80px]
-      left-1/2 -translate-x-1/2
-      w-[calc(49%+2px)] h-[30%]
-      overflow-hidden rounded-sm">
+<div className="absolute 
+  top-[19%] 
+  left-[50.5%] -translate-x-1/2
+  w-[49%] 
+  h-[30%]
+  overflow-hidden rounded-sm">
 
-      {frameImages.map((img, index) => (
-        <img
-          key={index}
-          src={img}
-          alt={`Frame artwork ${index}`}
-          className={`absolute inset-0 w-full h-full object-fill transition-opacity duration-1000 ease-in-out will-change-opacity ${
-  index === leftImageIndex ? "opacity-100" : "opacity-0"
-}`}
-        />
-      ))}
+  {frameImages.map((img, index) => (
+    <img
+      key={index}
+      src={img}
+      alt={`Frame artwork ${index}`}
+      className={`absolute inset-0 w-full h-full object-fill transition-opacity duration-1000 ease-in-out will-change-opacity ${
+        index === leftImageIndex ? "opacity-100" : "opacity-0"
+      }`}
+    />
+  ))}
 
-    </div>
+</div>
 
   </div>
 </div>
