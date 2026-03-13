@@ -239,12 +239,12 @@ const Hero: React.FC = () => {
 
             <div className="flex gap-5">
 
-              <button
-                onClick={() => (window.location.href = "/place-order")}
-                className="group relative border border-gray-500 text-white px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow"
-              >
-                Shop Now
-              </button>
+<button
+  onClick={() => (window.location.href = "/place-order")}
+  className="group relative border border-gray-500 text-black hover:text-white px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:bg-blue-600 hover:border-blue-600"
+>
+  Shop Now
+</button>
 
               <Button
                 variant="outline"

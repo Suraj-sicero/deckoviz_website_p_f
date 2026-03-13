@@ -200,12 +200,13 @@ const ScrollReveal = ({ children, direction = "left" }: any) => {
       variants={variants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
+      viewport={{ once: true, margin: "-80px" }}
     >
       {children}
     </motion.div>
   );
 };
+
 
 const GeneralInfo = () => {
   return (
@@ -217,15 +218,13 @@ const GeneralInfo = () => {
 
       <div className="relative max-w-6xl mx-auto">
         {/* SHINY GRADIENT MAIN HEADING */}
-        <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-16 tracking-wide 
-bg-gradient-to-r from-purple-700 via-pink-500 to-blue-500 
-bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.25)]">
-
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-center mb-16 tracking-wide 
+                bg-gradient-to-r from-purple-700 via-pink-500 to-blue-500 
+                bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.25)]">
   Subscriptions, Custom Options <br className="hidden md:block"/>
-  <span className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text text-transparent">
+  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text text-transparent">
     & Other Info
   </span>
-
 </h1>
 
 {/* Decorative divider */}
@@ -1027,5 +1026,6 @@ bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.25)]">
     </div>
   );
 };
+
 
 export default GeneralInfo;

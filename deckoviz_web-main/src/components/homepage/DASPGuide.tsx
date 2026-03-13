@@ -64,7 +64,7 @@ export default function DASPGuide() {
           relative z-10
           max-w-5xl mx-auto
           rounded-[28px]
-          px-8 sm:px-12 md:px-16 py-16
+          px-6 sm:px-10 md:px-16 py-10 sm:py-14 md:py-16
           bg-white/22 backdrop-blur-[24px]
           border border-white/35
           shadow-[0_60px_160px_rgba(88,28,135,0.18)]
@@ -81,8 +81,7 @@ export default function DASPGuide() {
           <span className="h-2.5 w-2.5 rounded-full bg-white/50" />
         </div>
 
-        <div className="max-w-4xl mx-auto space-y-20">
-          <div className="max-w-4xl mx-auto space-y-20">
+        <div className="max-w-4xl mx-auto space-y-12 md:space-y-20">
 
   <div className="space-y-6">
     <h1 className="text-4xl md:text-5xl font-bold text-center">
@@ -93,14 +92,14 @@ export default function DASPGuide() {
       On Living Spaces, Emotional Design, and the Future of the Wall
     </p>
 
-     <div className="h-12" />
+     <div className="h-8 md:h-12" />
   </div>
 
   <div className="space-y-6">
     <h2 className="text-2xl font-bold">Cultural Thesis</h2>
     <h3 className="text-xl font-semibold">On Living Spaces</h3>
 
-    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
       <p>For centuries, walls have held static art.<br/>Frames preserved moments.<br/>Screens delivered content.</p>
 
       <p>Paintings were fixed.<br/>Photographs froze time.<br/>Televisions broadcast what others created.</p>
@@ -126,14 +125,14 @@ export default function DASPGuide() {
       <p>This is a portal, and the beginning of a new relationship between you and your space.</p>
     </div>
 
-     <div className="h-12" />
+     <div className="h-8 md:h-12" />
   </div>
 
   <div className="space-y-6">
     <h2 className="text-2xl font-bold">Mind Design & World Design Thesis</h2>
     <h3 className="text-xl font-semibold">Why We Built Deckoviz</h3>
 
-    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
       <p>Homes shape consciousness and experience more than we realize.</p>
 
       <p>Light affects mood.<br/>Color alters perception.<br/>Texture changes warmth.<br/>Imagery influences memory and emotion.</p>
@@ -155,14 +154,14 @@ export default function DASPGuide() {
       <p>We did not want to add another device to the home or merely upgrade the wall.<br/>We wanted to elevate the space itself.</p>
     </div>
 
-     <div className="h-12" />
+     <div className="h-8 md:h-12" />
   </div>
 
   <div className="space-y-6">
     <h2 className="text-2xl font-bold">Foundational Technology Thesis</h2>
     <h3 className="text-xl font-semibold">A New Category for the Wall</h3>
 
-    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
       <p>Technology has reshaped nearly every major object in modern life.</p>
 
       <p>Phones became smart.<br/>Cars became intelligent.<br/>Workspaces became connected.</p>
@@ -187,7 +186,7 @@ export default function DASPGuide() {
 
       <p>Deckoviz is the first expression of that future of home living.</p>
 
-       <div className="h-12" />
+       <div className="h-8 md:h-12" />
 
       <p>Innovation is easy to dismiss as novelty.</p>
       <p>But inevitability feels different.</p>
@@ -206,7 +205,7 @@ export default function DASPGuide() {
     <h2 className="text-2xl font-bold">About Us</h2>
     <h3 className="text-xl font-semibold">We Are Building Living Environments</h3>
 
-    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
       <p>Most spaces are silent, static, indifferent.</p>
 
       <p>Walls do not evolve.<br/>Art does not adapt.<br/>Homes do not understand who you are becoming.</p>
@@ -220,13 +219,13 @@ export default function DASPGuide() {
       <p>So we are building technology that does not just sit in your space.<br/>It collaborates with it.</p>
     </div>
 
-     <div className="h-12" />
+     <div className="h-8 md:h-12" />
   </div>
 
   <div className="space-y-6">
     <h2 className="text-2xl font-bold">A New Category</h2>
 
-    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
       <p>Deckoviz is pioneering a new category AI-powered spatial intelligence.</p>
 
       <p>We are not building a screen.<br/>We are not building décor.<br/>We are building a living canvas that evolves with you.</p>
@@ -246,13 +245,13 @@ export default function DASPGuide() {
       <p>Spaces should not just look beautiful.<br/>They should feel aligned.</p>
     </div>
 
-     <div className="h-12" />
+     <div className="h-8 md:h-12" />
   </div>
 
   <div className="space-y-6">
     <h2 className="text-2xl font-bold">Our Philosophy</h2>
 
-    <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+    <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
       <p>Technology should elevate human experience.</p>
 
       <p>It should be beautiful.<br/>It should feel magical.<br/>It should enrich emotion.<br/>It should deepen intentional living.</p>
@@ -267,11 +266,11 @@ export default function DASPGuide() {
 
   <h2 className="text-3xl font-bold">What We Build</h2>
 
-   <div className="h-12" />
+   <div className="h-8 md:h-12" />
 
   <h3 className="text-2xl font-semibold">Deckoviz</h3>
 
-  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+  <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
     <p>
       Deckoviz is a personalized AI art frame that curates, creates, and evolves visual experiences based on your tastes, moods, goals, and inner world.
     </p>
@@ -314,7 +313,7 @@ export default function DASPGuide() {
 
   <h2 className="text-3xl font-bold">Our Technology</h2>
 
-  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+  <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
     <p>
       At the heart of Deckoviz lies a proprietary personalization architecture built to understand people, not just preferences.
     </p>
@@ -334,7 +333,7 @@ export default function DASPGuide() {
       It learns.
     </p>
 
-     <div className="h-12" />
+     <div className="h-8 md:h-12" />
 
     <p>
       It refines.<br/>
@@ -364,7 +363,7 @@ export default function DASPGuide() {
 
   <h2 className="text-3xl font-bold">Beyond Deckoviz</h2>
 
-  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+  <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
     <p>Deckoviz is the beginning.</p>
 
     <p>We are building an ecosystem.</p>
@@ -389,7 +388,7 @@ export default function DASPGuide() {
     </p>
   </div>
 
-   <div className="h-12" />
+   <div className="h-8 md:h-12" />
 </div>
 
 {/* ===================== Why This Matters ===================== */}
@@ -397,7 +396,7 @@ export default function DASPGuide() {
 
   <h2 className="text-3xl font-bold">Why This Matters</h2>
 
-  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+  <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
     <p>
       In a world saturated with screens, we are designing meaning.
     </p>
@@ -406,7 +405,7 @@ export default function DASPGuide() {
       In a world driven by productivity, we are elevating presence.
     </p>
 
-     <div className="h-12" />
+     <div className="h-8 md:h-12" />
 
     <p>
       In a world where AI automates tasks, we are using AI to deepen humanity.
@@ -426,7 +425,7 @@ export default function DASPGuide() {
 
   <h2 className="text-3xl font-bold">Who We Are</h2>
 
-  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+  <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
     <p>
       We are builders, designers, technologists, artists, and system thinkers.
     </p>
@@ -447,7 +446,7 @@ export default function DASPGuide() {
     </p>
   </div>
 
-   <div className="h-12" />
+   <div className="h-8 md:h-12" />
 </div>
 
 {/* ===================== The Future We See ===================== */}
@@ -455,7 +454,7 @@ export default function DASPGuide() {
 
   <h2 className="text-3xl font-bold">The Future We See</h2>
 
-  <div className="space-y-4 text-gray-700 leading-relaxed text-justify">
+  <div className="space-y-4 text-gray-700 leading-relaxed text-left md:text-justify">
     <p>We envision a world where:</p>
 
     <p>
@@ -478,7 +477,6 @@ export default function DASPGuide() {
 
 </div>
 </div>
-        </div>
 
               </div>
 
