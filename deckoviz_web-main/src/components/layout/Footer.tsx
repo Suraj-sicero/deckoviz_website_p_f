@@ -3,6 +3,7 @@
 import type React from "react"
 // import { useState } from "react"
 import { Instagram, Linkedin, Facebook } from "lucide-react"
+import { path } from "framer-motion/client"
 // import { useMediaQuery } from 'react-responsive';
 
 const Footer: React.FC = () => {
@@ -84,63 +85,64 @@ const Footer: React.FC = () => {
       </div>
     </div>
 
-    {/* Links */}
-    <div className="grid grid-cols-2 gap-12">
+<div className="grid grid-cols-2 gap-8 md:gap-20">
 
-      {/* Product */}
-      <div>
-        <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900 mb-5">
-          Product
-        </h3>
+  {/* Product */}
+  <div>
+    <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900 mb-5">
+      Product
+    </h3>
 
-        <ul className="space-y-3 text-sm">
-          {[
-            { name: "Features", path: "/features" },
-            { name: "How It Works", path: "/how-it-works" },
-            { name: "Pricing", path: "/pricing" },
-            { name: "FAQ", path: "/faq" },
-            { name: "Subscriptions and more info", path: "/generalinfo" },
-          ].map((item) => (
-            <li key={item.name}>
-              <button
-                onClick={() => (window.location.href = item.path)}
-                className="text-gray-600 hover:text-gray-900 transition"
-              >
-                {item.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <ul className="space-y-3 text-sm">
+      {[
+        { name: "Features", path: "/features" },
+        { name: "How It Works", path: "/how-it-works" },
+        { name: "Pricing", path: "/pricing" },
+        { name: "FAQ", path: "/faq" },
+        { name: "Subscriptions & Info", path: "/generalinfo" },
+        { name: "Stories in sound", path: "/audiobook" }
+      ].map((item) => (
+        <li key={item.name}>
+          <button
+            onClick={() => (window.location.href = item.path)}
+            className="text-gray-600 hover:text-gray-900 transition whitespace-nowrap"
+          >
+            {item.name}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
 
-      {/* Company */}
-      <div>
-        <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900 mb-5">
-          Company
-        </h3>
+  {/* Company */}
+  <div>
+    <h3 className="text-xs font-bold tracking-[0.2em] uppercase text-gray-900 mb-5">
+      Company
+    </h3>
 
-        <ul className="space-y-3 text-sm">
-          {[
-            { name: "About Us", path: "/about" },
-            { name: "Careers", path: "https://www.linkedin.com/company/deckoviz-space/jobs/" },
-            { name: "Blog", path: "/blog" },
-            { name: "Contact Us", path: "/contact" },
-            { name: "Support", path: "/support" },
-          ].map((item) => (
-            <li key={item.name}>
-              <button
-                onClick={() => (window.location.href = item.path)}
-                className="text-gray-600 hover:text-gray-900 transition"
-              >
-                {item.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <ul className="space-y-3 text-sm">
+      {[
+        { name: "About Us", path: "/about" },
+        { name: "Careers", path: "https://www.linkedin.com/company/deckoviz-space/jobs/" },
+        { name: "Blog", path: "/blog" },
+        { name: "Contact Us", path: "/contact" },
+        { name: "Support", path: "/support" },
+      ].map((item) => (
+        <li key={item.name}>
+          <button
+            onClick={() => (window.location.href = item.path)}
+            className="text-gray-600 hover:text-gray-900 transition"
+          >
+            {item.name}
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
 
-    </div>
+</div>
 
+ 
   </div>
 
   {/* RIGHT CTA */}

@@ -117,13 +117,12 @@ const Hero: React.FC = () => {
 
   const rightImages = [
     "/images/righthero1.png",
-    "/images/righthero7.png",
-    "/images/righthero8.png",
+    "/images/righthero2.png",
     "/images/righthero4.png",
     "/images/righthero5.png",
     "/images/righthero6.png",
-    "/images/righthero2.png",
-    "/images/righthero3.png",
+    "/images/righthero7.png",
+    "/images/righthero8.png",
   ]
 
   useEffect(() => {
@@ -241,7 +240,7 @@ const Hero: React.FC = () => {
 
 <button
   onClick={() => (window.location.href = "/place-order")}
-  className="group relative border border-gray-500 text-black hover:text-white px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:bg-blue-600 hover:border-blue-600"
+  className="group relative border border-gray-500 text-black hover:text-white px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:text-indigo-600 hover:border-blue-600"
 >
   Shop Now
 </button>

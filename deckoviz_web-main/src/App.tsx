@@ -73,6 +73,8 @@ import StartHere from "./components/homepage/StartHere";
 import DASPBusinessGuide from "./components/deckovizForBusinesses/DASPBusinessGuide";
 import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 
+import Audiobook from "./components/Audiobook";
+
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -213,6 +215,7 @@ const App: React.FC = () => {
         <Route path="/order-confirmed" element={<OrderConfirmed />} />
         <Route path="bulk-orders" element={<BulkOrder />} />
         <Route path="/bulk-confirm" element={<BulkConfirm />} />
+        <Route path="/audiobook" element={< Audiobook />} />
       </Routes>
       <Footer />
     </Router>
