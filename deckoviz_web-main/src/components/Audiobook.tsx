@@ -5,11 +5,99 @@ import { useState } from "react";
 
 const Audiobook: React.FC = () => {
 
-    const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [style, setStyle] = useState("Calm and warm");
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
+  const [frames, setFrames] = useState(5);
+  
+  const generateAudiobook = async () => {
 
-  const generateAudiobook = () => {
-    // Example: replace this with your backend API call
-    setAudioUrl("/sample-audiobook.mp3");
+    if (!file) {
+      alert("Please upload a PDF");
+      return;
+    }
+
+    setLoading(true);
+    setStatus("Uploading PDF...");
+
+    const formData = new FormData();
+    formData.append("pdf", file);
+    formData.append("frames", frames.toString());
+    formData.append("style", style);
+
+    try {
+
+      const res = await fetch("https://sudharsan051006-visual-audiobook-api.hf.space/generate", {
+        method: "POST",
+        body: formData
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to start job");
+      }
+
+      const data = await res.json();
+      const jobId = data.job_id;
+
+      setStatus("Generating audiobook...");
+
+      const interval = setInterval(async () => {
+
+        try {
+
+          const result = await fetch(`https://sudharsan051006-visual-audiobook-api.hf.space/result/${jobId}`);
+
+          if (!result.ok) return;
+
+          const json = await result.json();
+
+          if (json.status === "processing") return;
+
+          clearInterval(interval);
+
+          setStatus("Preparing download...");
+
+          await downloadZip(jobId);
+
+          setStatus("Download started");
+          setLoading(false);
+
+        } catch (err) {
+          console.error("Polling error:", err);
+        }
+
+      }, 5000);
+
+    } catch (error) {
+
+      console.error("Generate error:", error);
+      setStatus("Error generating audiobook");
+      setLoading(false);
+
+    }
+  };
+
+
+  const downloadZip = async (jobId: string) => {
+
+    const response = await fetch(`https://sudharsan051006-visual-audiobook-api.hf.space/download/${jobId}`);
+
+    const blob = await response.blob();
+
+    const url = window.URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "visual_audiobook.zip";
+
+    document.body.appendChild(a);
+    a.click();
+
+    document.body.removeChild(a);
+
+    window.URL.revokeObjectURL(url);
   };
   return (
     <section className="relative min-h-screen px-6 py-24 bg-gradient-to-br from-[#fbcfe8] via-[#e9d5ff] to-[#f5d0fe] overflow-hidden">
@@ -46,13 +134,18 @@ const Audiobook: React.FC = () => {
               Upload your PDF
             </label>
 
-            <input
-              type="file"
-              accept="application/pdf"
-              className="w-full rounded-xl p-3 sm:p-3.5 text-sm
-              bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 
-              border border-purple-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
-            />
+<input
+  type="file"
+  accept="application/pdf"
+  onChange={(e) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  }}
+  className="w-full rounded-xl p-3 sm:p-3.5 text-sm
+  bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 
+  border border-purple-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+/>
 
             <p className="text-xs sm:text-sm text-gray-600">
               Supports most PDFs including books, papers, and essays.
@@ -66,36 +159,25 @@ const Audiobook: React.FC = () => {
             </label>
 
         <div style={{ position: "relative", width: "100%" }}>
-          <select
-            style={{
-              width: "100%",
-              padding: "12px 40px 12px 12px",
-              borderRadius: "10px",
-              border: "1px solid #c084fc",
-              outline: "none",
-              appearance: "none",
-              WebkitAppearance: "none",
-              MozAppearance: "none",
-              backgroundColor: "#ffffff",
-              fontSize: "14px"
-            }}
-          >
-            <option style={{ backgroundColor: "#f3e8ff", color: "#333" }}>
-              Calm and warm
-            </option>
-
-            <option style={{ backgroundColor: "#fce7f3", color: "#333" }}>
-              Clear and professional
-            </option>
-
-            <option style={{ backgroundColor: "#dbeafe", color: "#333" }}>
-              Expressive and narrative
-            </option>
-
-            <option style={{ backgroundColor: "#f3e8ff", color: "#333" }}>
-              Neutral and academic
-            </option>
-          </select>
+<select
+  value={style}
+  onChange={(e) => setStyle(e.target.value)}
+  style={{
+    width: "100%",
+    padding: "12px 40px 12px 12px",
+    borderRadius: "10px",
+    border: "1px solid #c084fc",
+    outline: "none",
+    appearance: "none",
+    backgroundColor: "#ffffff",
+    fontSize: "14px"
+  }}
+>
+  <option>Calm and warm</option>
+  <option>Clear and professional</option>
+  <option>Expressive and narrative</option>
+  <option>Neutral and academic</option>
+</select>
 
           {/* Custom Arrow */}
           <span
@@ -114,17 +196,46 @@ const Audiobook: React.FC = () => {
         </div>
           </div>
 
-          {/* Generate Button */}
-          <button
-            className="w-full py-3 rounded-xl font-semibold text-white text-sm sm:text-base
-            bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
-            active:scale-[0.98] sm:hover:scale-105
-            hover:shadow-[0_10px_30px_rgba(168,85,247,0.35)]
-            transition"
-          >
-            Generate Audiobook
-          </button>
+          {/* Frames selector */}
+<div className="space-y-2">
+  <label className="block font-semibold text-gray-800 text-sm sm:text-base">
+    Number of visuals (frames)
+  </label>
 
+  <input
+    type="number"
+    min={1}
+    value={frames}
+    onChange={(e) => setFrames(Number(e.target.value))}
+    className="w-full rounded-xl p-3 text-sm
+    bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100
+    border border-purple-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+  />
+
+  <p className="text-xs text-gray-600">
+    Example: If your PDF has 20 pages and you choose 5 frames,
+    each visual will represent ~4 pages.
+  </p>
+</div>
+
+          {/* Generate Button */}
+<button
+  onClick={generateAudiobook}
+  disabled={loading}
+  className="w-full py-3 rounded-xl font-semibold text-white text-sm sm:text-base
+  bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
+  active:scale-[0.98] sm:hover:scale-105
+  hover:shadow-[0_10px_30px_rgba(168,85,247,0.35)]
+  transition"
+>
+  {loading ? "Generating..." : "Generate Audiobook"}
+</button>
+
+          {status && (
+            <p className="text-sm text-gray-700 mt-2">
+              {status}
+            </p>
+          )}
           {/* Closing text */}
           <p className="text-sm sm:text-base">
             Deckoviz lets you turn short stories, novels, essays, research papers,
@@ -251,7 +362,7 @@ const Audiobook: React.FC = () => {
             </p>
 
             {/* Generate button */}
-            <button
+            {/* <button
               onClick={generateAudiobook}
               className="px-6 py-3 rounded-xl text-white font-semibold
               bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
@@ -259,7 +370,7 @@ const Audiobook: React.FC = () => {
               disabled
             >
               Generate Sample Output
-            </button>
+            </button> */}
 
             {/* Output Player */}
             {audioUrl && (
