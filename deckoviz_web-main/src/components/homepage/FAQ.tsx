@@ -188,6 +188,7 @@ const FAQ: React.FC = () => {
     px-6 py-3
     rounded-[999px]
     text-left
+    mt-14
     bg-gradient-to-br from-yellow-200 via-amber-200 to-yellow-300
     shadow-[0_16px_40px_rgba(251,191,36,0.35)]
     hover:shadow-[0_24px_60px_rgba(251,191,36,0.55)]
