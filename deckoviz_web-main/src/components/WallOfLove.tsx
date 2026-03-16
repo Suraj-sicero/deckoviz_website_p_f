@@ -1,4 +1,21 @@
+import { useEffect, useState } from "react";
+
+
 export default function WallOfLove() {
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    setIsMobile(media.matches);
+
+    const listener = () => setIsMobile(media.matches);
+    media.addEventListener("change", listener);
+
+    return () => media.removeEventListener("change", listener);
+  }, []);
+
+
   // Sample profile data for the CTA section
   const featuredProfiles = [
     {
@@ -150,13 +167,71 @@ export default function WallOfLove() {
            </h2>
          </div>
 
+         
+         {/* Mobile Layout */}
+<div 
+  className="md:hidden rounded-3xl p-6 relative overflow-hidden"
+  style={{ 
+    background: "linear-gradient(135deg, rgba(147,51,234,0.08) 0%, rgba(236,72,153,0.12) 25%, rgba(255,182,193,0.15) 50%, rgba(230,230,250,0.10) 75%, rgba(255,255,255,0.95) 100%)"
+  }}
+>
+
+  <div className="flex flex-col gap-6">
+
+    {/* Card */}
+    <div className="bg-white rounded-2xl p-5 shadow-lg">
+      <h4 className="font-bold text-[#6670d8] mb-2">Simon Lee</h4>
+      <p className="text-gray-700 text-sm leading-relaxed">
+        Used it for a post about AI and it's got people having conversations already, more engagement than any of my previous value posts. This is exciting!
+      </p>
+    </div>
+
+    <div className="bg-white rounded-2xl p-5 shadow-lg">
+      <h4 className="font-bold text-[#6670d8] mb-2">Amara, Toronto</h4>
+      <p className="text-gray-700 text-sm leading-relaxed">
+        "Deckoviz has changed the way my home feels. It's not just decor it's dynamic, alive, and responsive to me. Every morning it greets me with something that feels right."
+      </p>
+    </div>
+
+    <div className="bg-white rounded-2xl p-5 shadow-lg">
+      <h4 className="font-bold text-[#6670d8] mb-2">Jules, Berlin</h4>
+      <p className="text-gray-700 text-sm leading-relaxed">
+        Just tested it and it is looking great. I actually published something, and actually learned something new. The writing is pretty good, and with a personal touch, it was fantastic.
+      </p>
+    </div>
+
+    <div className="bg-white rounded-2xl p-5 shadow-lg">
+      <h4 className="font-bold text-[#6670d8] mb-2">Maya, Bangalore</h4>
+      <p className="text-gray-700 text-sm leading-relaxed">
+        "My favorite memory? Uploading a childhood photo, transforming it into a surreal dreamscape, and watching my daughter gasp in wonder."
+      </p>
+    </div>
+
+    <div className="bg-white rounded-2xl p-5 shadow-lg">
+      <h4 className="font-bold text-[#6670d8] mb-2">Marco, Florence</h4>
+      <p className="text-gray-700 text-sm leading-relaxed">
+        "Guests always ask where I got the 'wall that dances' in my wine bar. Deckoviz has become a centerpiece of experience, not just decor."
+      </p>
+    </div>
+
+    <div className="bg-white rounded-2xl p-5 shadow-lg">
+      <h4 className="font-bold text-[#6670d8] mb-2">Tashi, LA</h4>
+      <p className="text-gray-700 text-sm leading-relaxed">
+        "We use Deckoviz in our yoga studio. The ambient meditation visuals are unbelievable. It sets the tone for every class calm, beauty, presence."
+      </p>
+    </div>
+
+  </div>
+</div>
          {/* Testimonials Container with Gradient Background */}
+         
          <div 
            className="rounded-3xl p-12 relative overflow-hidden mx-auto"
            style={{ 
              minHeight: "80vh",
              width: "calc(100vw - 6rem)",
-             background: "linear-gradient(135deg, rgba(147,51,234,0.08) 0%, rgba(236,72,153,0.12) 25%, rgba(255,182,193,0.15) 50%, rgba(230,230,250,0.10) 75%, rgba(255,255,255,0.95) 100%)"
+             background: "linear-gradient(135deg, rgba(147,51,234,0.08) 0%, rgba(236,72,153,0.12) 25%, rgba(255,182,193,0.15) 50%, rgba(230,230,250,0.10) 75%, rgba(255,255,255,0.95) 100%)",
+             display:isMobile ? 'none' :'block'
            }}
          >
            {/* Floating Testimonial Cards */}
