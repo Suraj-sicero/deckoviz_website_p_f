@@ -225,7 +225,7 @@ export default function WallOfLove() {
 </div>
          {/* Testimonials Container with Gradient Background */}
          
-         <div 
+         <div  
            className="rounded-3xl p-12 relative overflow-hidden mx-auto"
            style={{ 
              minHeight: "80vh",
