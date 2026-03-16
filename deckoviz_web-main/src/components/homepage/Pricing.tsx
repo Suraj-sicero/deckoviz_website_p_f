@@ -290,6 +290,7 @@ export default function Pricing() {
     px-10 py-1
     rounded-[999px]
     text-left
+    mt-4
   bg-gradient-to-br from-[#b7f3f0] via-[#6fd6d4] to-[#1fa9b1]
     shadow-[0_16px_40px_rgba(31,169,177,0.35)]
     hover:shadow-[0_24px_60px_rgba(31,169,177,0.55)]
@@ -323,6 +324,7 @@ export default function Pricing() {
     px-10 py-1
     rounded-[999px]
     text-left
+    mt-4
     bg-gradient-to-br from-violet-300 via-fuchsia-400 to-pink-400
     shadow-[0_16px_40px_rgba(168,85,247,0.35)]
     hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
@@ -330,7 +332,7 @@ export default function Pricing() {
     animate-[float_6s_ease-in-out_infinite]
   "
 >
-  <div className="flex flex-col gap-0.5">
+  <div className="flex flex-col gap-0.5 ">
     
 
     <span className="text-sm font-medium text-purple-950 leading-snug flex items-center gap-2">
@@ -362,10 +364,10 @@ export default function Pricing() {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-indigo-100/25 via-fuchsia-100/15 to-orange-100/25 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 ">
           {/* Header */}
           <div className="text-center mb-12 sm:mb-16 relative">
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-to-r from-violet-400 to-fuchsia-400 rounded-full opacity-20 blur-2xl"></div>
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-to-r from-violet-400 to-fuchsia-400 rounded-full opacity-20 blur-2xl "></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-12 mb-4 sm:mb-6 relative">
               Simple <span className="bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">Pricing</span>
             </h2>
