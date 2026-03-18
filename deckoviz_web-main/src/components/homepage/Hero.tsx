@@ -123,6 +123,8 @@ const Hero: React.FC = () => {
     "/images/righthero6.png",
     "/images/righthero7.png",
     "/images/righthero8.png",
+    "/images/righthero9.png",
+    "/images/righthero10.png",
   ]
 
   useEffect(() => {
