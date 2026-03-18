@@ -242,7 +242,7 @@ const Hero: React.FC = () => {
 
 <button
   onClick={() => (window.location.href = "/place-order")}
-  className="group relative border border-gray-500 text-black hover:text-white px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:text-indigo-600 hover:border-blue-600"
+  className="group relative border border-gray-500 text-black hover:text-white px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:text-blue-600 hover:border-blue-600"
 >
   Shop Now
 </button>
@@ -289,8 +289,8 @@ const Hero: React.FC = () => {
 
           {/* RIGHT IMAGE */}
           <div className="relative flex-1 flex justify-center lg:justify-end">
-            <div className="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[420px]">
-
+            {/* Added overflow-hidden and moved border/radius here */}
+            <div className="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[280px] overflow-hidden rounded-[12px] border border-transparent bg-gray-50">
               {rightImages.map((image, index) => (
                 <img
                   key={index}
@@ -301,10 +301,8 @@ const Hero: React.FC = () => {
                   }`}
                 />
               ))}
-
             </div>
           </div>
-
         </div>
       </div>
     </section>
