@@ -198,55 +198,52 @@ const Hero: React.FC = () => {
         </p>
 
         {/* Layout */}
-        <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-10">
+  <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-10">
 
           {/* LEFT IMAGE */}
-          <div className="relative flex-1 flex justify-center lg:justify-start">
-  <div className="relative w-[300px] h-[260px] sm:w-[380px] sm:h-[320px] md:w-[460px] md:h-[380px] lg:w-[520px] lg:h-[440px]">
+    <div className="relative flex-1 flex justify-center lg:justify-start">
+      <div className="relative w-[300px] h-[260px] sm:w-[380px] sm:h-[320px] md:w-[460px] md:h-[380px] lg:w-[520px] lg:h-[440px]">
 
-    {/* Room image */}
-    <img
-      src="/images/hero_left.png"
-      alt="Living room"
-      className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[82%] h-auto object-contain rounded-[40px] sm:rounded-[50px] lg:rounded-[60px]"
-    />
+        {/* Room image */}
+        <img
+          src="/images/hero_left.png"
+          alt="Living room"
+          className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[82%] h-auto object-contain rounded-[40px] sm:rounded-[50px] lg:rounded-[60px]"
+        />
 
-    {/* Frame artwork */}
-<div className="absolute 
-  top-[19%] 
-  left-[50.5%] -translate-x-1/2
-  w-[49%] 
-  h-[30%]
-  overflow-hidden rounded-sm">
+        {/* Frame artwork */}
+        <div className="absolute 
+          top-[19%] 
+          left-[50.5%] -translate-x-1/2
+          w-[49%] 
+          h-[30%]
+          overflow-hidden rounded-sm">
 
-  {frameImages.map((img, index) => (
-    <img
-      key={index}
-      src={img}
-      alt={`Frame artwork ${index}`}
-      className={`absolute inset-0 w-full h-full object-fill transition-opacity duration-1000 ease-in-out will-change-opacity ${
-        index === leftImageIndex ? "opacity-100" : "opacity-0"
-      }`}
-    />
-  ))}
+          {frameImages.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              alt={`Frame artwork ${index}`}
+              className={`absolute inset-0 w-full h-full object-fill transition-opacity duration-1000 ease-in-out will-change-opacity ${
+                index === leftImageIndex ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
 
-</div>
+        </div>
 
-  </div>
-</div>
+          </div>
+        </div>
 
           {/* CENTER */}
           <div className="flex flex-col items-center gap-9 max-w-md">
-
             <div className="flex gap-5">
-
-<button
-  onClick={() => (window.location.href = "/place-order")}
-  className="group relative border border-gray-500 text-black hover:text-white px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:text-blue-600 hover:border-blue-600"
->
-  Shop Now
-</button>
-
+            <button
+              onClick={() => (window.location.href = "/place-order")}
+              className="group relative border border-gray-500 text-black hover:text-blue px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:text-blue-600 hover:border-blue-600"
+            >
+              Shop Now
+            </button>
               <Button
                 variant="outline"
                 onClick={() => (window.location.href = "/about")}

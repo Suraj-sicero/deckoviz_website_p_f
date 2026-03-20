@@ -2,117 +2,151 @@ import React, { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const AutoScrollCarousel = () => {
-  const scrollRef = React.useRef<HTMLDivElement>(null);
-  const animationRef = React.useRef<number>();
-  const isPausedRef = React.useRef(false);
+const trackRef = useRef<HTMLDivElement | null>(null);
+const conveyorX = useRef(0);
+const isPaused = useRef(false); 
+  
+useEffect(() => {
+  const track = trackRef.current;
+  if (!track) return;
 
-  React.useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
+  const SPEED = 1.2;
 
-    const scroll = () => {
-      if (!isPausedRef.current) {
-        container.scrollLeft += 0.5; // slow speed
+  let raf: number;
 
-        if (container.scrollLeft >= container.scrollWidth / 2) {
-          container.scrollLeft = 0;
-        }
+  const startAnimation = () => {
+    const totalWidth = track.scrollWidth / 2;
+
+    const animate = () => {
+      if (!isPaused.current) {
+        conveyorX.current -= SPEED;
       }
 
-      animationRef.current = requestAnimationFrame(scroll);
-    };
-
-    animationRef.current = requestAnimationFrame(scroll);
-
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      if (Math.abs(conveyorX.current) >= totalWidth) {
+        conveyorX.current = 0;
       }
+
+      track.style.transform = `translateX(${conveyorX.current}px)`;
+
+      raf = requestAnimationFrame(animate);
     };
-  }, []);
 
-  const scrollLeft = () => {
-  const container = scrollRef.current;
-  if (!container) return;
+    animate();
+  };
 
-  isPausedRef.current = true;
+  // ✅ WAIT until images load
+  const images = track.querySelectorAll("img");
+  let loaded = 0;
 
-  container.scrollBy({
-    left: -400,
-    behavior: "smooth",
-  });
+  if (images.length === 0) {
+    startAnimation();
+  } else {
+    images.forEach((img) => {
+      if (img.complete) {
+        loaded++;
+      } else {
+        img.onload = () => {
+          loaded++;
+          if (loaded === images.length) {
+            startAnimation();
+          }
+        };
+      }
+    });
 
-  setTimeout(() => {
-    isPausedRef.current = false;
-  }, 600);
+    if (loaded === images.length) {
+      startAnimation();
+    }
+  }
+
+  return () => cancelAnimationFrame(raf);
+}, []);
+
+const moveCarousel = (dir: "next" | "prev") => {
+  const track = trackRef.current;
+  if (!track) return;
+
+  const cardWidth = 320 + 56; // width + gap
+
+  conveyorX.current += dir === "next" ? -cardWidth : cardWidth;
+
+  if (Math.abs(conveyorX.current) >= track.scrollWidth / 2) {
+    conveyorX.current = 0;
+  }
 };
+const frames = [
+  {
+    file: "Simple Handcarving Symmetrical, minimal motifs (waves, leaves, flowers, geometric patterns).png",
+    name: "Handcarving Frames",
+  },
+  {
+    file: "default frame with theme Floral motif (delicate botanicals wrapping around the frame).png",
+    name: "Floral Wrap",
+  },
+  {
+    file: "default frame with theme cosmic motif (milky way, galaxies, black hole kind of visuals on the frame).png",
+    name: "Cosmic Frame",
+  },
+  {
+    file: "default frame with Pantone Colour dual tone gradient - teal and coral hues intermixed.png",
+    name: "Teal Coral",
+  },
+  {
+    file: "default frame with Custom Pantone Colour - striking dual tone - eg gold and black.png",
+    name: "Gold & Black",
+  },
+  { file: "75 inch frame.png", name: "75 Inch" },
+  { file: "85 inch frame.png", name: "85 Inch" },
 
-const scrollRight = () => {
-  const container = scrollRef.current;
-  if (!container) return;
-
-  isPausedRef.current = true;
-
-  container.scrollBy({
-    left: 400,
-    behavior: "smooth",
-  });
-
-  setTimeout(() => {
-    isPausedRef.current = false;
-  }, 600);
-};
-  const frames = [
-    {
-      file: "Simple Handcarving Symmetrical, minimal motifs (waves, leaves, flowers, geometric patterns).png",
-      name: "Handcarving Frames",
-    },
-    {
-      file: "default frame with theme Floral motif (delicate botanicals wrapping around the frame).png",
-      name: "Floral Wrap",
-    },
-    {
-      file: "default frame with theme cosmic motif (milky way, galaxies, black hole kind of visuals on the frame).png",
-      name: "Cosmic Frame",
-    },
-    {
-      file: "default frame with Pantone Colour dual tone gradient - teal and coral hues intermixed.png",
-      name: "Teal Coral",
-    },
-    {
-      file: "default frame with Custom Pantone Colour - striking dual tone - eg gold and black.png",
-      name: "Gold & Black",
-    },
-    { file: "75 inch frame.png", name: "75 Inch" },
-    { file: "85 inch frame.png", name: "85 Inch" },
-  ];
+  { file: "boucle.png", name: "Boucle Frame" },
+  { file: "wool.png", name: "Wool Frame" },
+  { file: "denim.png", name: "Denim Frame" },
+  { file: "velvet.png", name: "Velvet Frame" },
+  { file: "velvet (2).png", name: "Velvet Dark" },
+  { file: "silk.png", name: "Silk Frame" },
+  { file: "cashmere.png", name: "Cashmere Frame" },
+  { file: "corduroy.png", name: "Corduroy Frame" },
+  { file: "fur.png", name: "Fur Frame" },
+  { file: "fur (2).png", name: "Soft Fur Frame" },
+  { file: "furr.png", name: "Light Fur Frame" },
+  { file: "boucle (2).png", name: "Boucle Soft Frame" },
+  { file: "cartoon carving.png", name: "Cartoon Carving Frame" },
+  { file: "wood crave.png", name: "Wood Carving Frame" }
+];
 
   return (
     <div className="relative overflow-hidden py-10">
   
   {/* LEFT ARROW */}
   <button
-  onClick={scrollLeft}
+onClick={() => moveCarousel("prev")}
   className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-white/80 backdrop-blur-lg shadow-xl rounded-full p-3 hover:scale-110 transition"
 >
   ←
 </button>
 
 <button
-  onClick={scrollRight}
+onClick={() => moveCarousel("next")}
   className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-white/80 backdrop-blur-lg shadow-xl rounded-full p-3 hover:scale-110 transition"
 >
   →
 </button>
-      <div
-        ref={scrollRef}
-        className="flex gap-14 overflow-x-scroll scroll-smooth no-scrollbar py-4"
-      >
+      <div className="overflow-hidden px-10">
+  <div
+    ref={trackRef}
+    className="flex gap-14 will-change-transform py-4"
+    style={{
+  transform: "translateX(0px)",
+  transition: "transform 0.05s linear"
+}}
+    onMouseEnter={() => (isPaused.current = true)}
+    onMouseLeave={() => (isPaused.current = false)}
+  >
         {[...frames, ...frames].map((frame, index) => (
           <div
             key={index}
-            onMouseEnter={() => (isPausedRef.current = true)}
-            onMouseLeave={() => (isPausedRef.current = false)}
+onMouseEnter={() => (isPaused.current = true)}
+onMouseLeave={() => (isPaused.current = false)}
             className="relative min-w-[320px] flex-shrink-0 p-[2px] rounded-3xl bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 transition-all duration-500 hover:scale-105"
           >
             {/* Glow Effect */}
@@ -134,6 +168,7 @@ const scrollRight = () => {
           </div>
         ))}
       </div>
+    </div>
     </div>
   );
 };
@@ -200,13 +235,12 @@ const ScrollReveal = ({ children, direction = "left" }: any) => {
       variants={variants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, amount: 0.2 }}
     >
       {children}
     </motion.div>
   );
 };
-
 
 const GeneralInfo = () => {
   return (
@@ -218,13 +252,15 @@ const GeneralInfo = () => {
 
       <div className="relative max-w-6xl mx-auto">
         {/* SHINY GRADIENT MAIN HEADING */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-center mb-16 tracking-wide 
-                bg-gradient-to-r from-purple-700 via-pink-500 to-blue-500 
-                bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.25)]">
+        <h1 className="text-5xl md:text-6xl font-extrabold text-center mb-16 tracking-wide 
+bg-gradient-to-r from-purple-700 via-pink-500 to-blue-500 
+bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.25)]">
+
   Subscriptions, Custom Options <br className="hidden md:block"/>
-  <span className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text text-transparent">
+  <span className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-violet-600 to-pink-500 bg-clip-text text-transparent">
     & Other Info
   </span>
+
 </h1>
 
 {/* Decorative divider */}
@@ -983,6 +1019,7 @@ const GeneralInfo = () => {
               </tbody>
             </table>
           </div>
+
         </div>
         </ScrollReveal>
 
@@ -1026,6 +1063,5 @@ const GeneralInfo = () => {
     </div>
   );
 };
-
 
 export default GeneralInfo;
