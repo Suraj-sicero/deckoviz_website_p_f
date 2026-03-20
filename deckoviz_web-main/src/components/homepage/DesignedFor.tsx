@@ -165,34 +165,27 @@ const ScrollingImageGallery: React.FC = () => {
     </div>
   );
 };
-
 const sideContainer = {
-  hidden: {},
+  hidden: { opacity: 0 },
   visible: {
+    opacity: 1,
     transition: {
       staggerChildren: 0.12,
     },
   },
 };
-
 const sideCard = {
-  hidden: (index: number = 0) => ({
-    opacity: 0,
-    x: index % 2 === 0 ? -120 : 120,
-    y: 40,
-    scale: 0.95,
-  }),
   visible: {
     opacity: 1,
-    x: 0,
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.8,
-      ease: [0.22, 1, 0.36, 1],
+      duration: 0.6,
+      ease: "easeOut",
     },
   },
 };
+
 const DesignedFor: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
   const [leftImageIndex, setLeftImageIndex] = useState(0);
@@ -369,11 +362,10 @@ const frameImages = [
     image: string;
     index: number;
   }> = ({ title, caption, image, index }) => (
-<motion.div
-  custom={index}
-  variants={sideCard}
-  initial="hidden"
-  animate="visible"
+    <motion.div
+  initial={{ opacity: 0, y: 40 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, delay: index * 0.08 }}
       className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer border border-gray-100`}
       style={{ height: "430px" }}
     >
@@ -433,10 +425,8 @@ const frameImages = [
 
         {/* Main Grid */}
         <motion.div
-  variants={sideContainer}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.2 }}
+  initial="visible"
+  animate="visible"
   className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8"
 >
           {mainDesignedFor.map((item, index) => (

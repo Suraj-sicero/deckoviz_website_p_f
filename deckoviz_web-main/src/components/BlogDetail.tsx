@@ -7,7 +7,13 @@ import GithubSlugger from "github-slugger"
 
 import { ChevronLeft } from "lucide-react"
 
-const TypingMarkdown = ({ content }: { content: string }) => {
+const TypingMarkdown = ({
+  content,
+  headingMap,
+}: {
+  content: string
+  headingMap: Map<string, string>
+}) => {
   const [displayed, setDisplayed] = useState("");
 
   useEffect(() => {
@@ -28,7 +34,21 @@ const TypingMarkdown = ({ content }: { content: string }) => {
 
   return (
     <div className="typing-markdown">
-      <ReactMarkdown rehypePlugins={[rehypeRaw]}>
+<ReactMarkdown
+  rehypePlugins={[rehypeRaw]}
+  components={{
+    h2: ({ children }) => {
+      const text = String(children)
+      const id = headingMap.get(text)
+
+      return (
+        <h2 id={id} className="scroll-mt-28">
+          {children}
+        </h2>
+      )
+    },
+  }}
+>
         {displayed}
       </ReactMarkdown>
       <span className="typing-cursor">|</span>
@@ -152,7 +172,7 @@ const BlogDetail = () => {
     prose-a:hover:text-pink-500
   "
   >
-<TypingMarkdown content={cleanContent} />
+<TypingMarkdown content={cleanContent} headingMap={headingMap} />
 
           </article>
           </div>
@@ -201,7 +221,7 @@ const BlogDetail = () => {
                     onClick={() =>
                       document
                         .getElementById(h.id)
-                        ?.scrollIntoView({ behavior: "smooth" })
+                        ?.scrollIntoView({ behavior: "smooth", block: "start" })
                     }
                   >
                     {h.text}

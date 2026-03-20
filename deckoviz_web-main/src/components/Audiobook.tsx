@@ -100,7 +100,7 @@ const Audiobook: React.FC = () => {
     window.URL.revokeObjectURL(url);
   };
   return (
-    <section className="relative min-h-screen px-6 py-24 bg-gradient-to-br from-[#fbcfe8] via-[#e9d5ff] to-[#f5d0fe] overflow-hidden">
+    <section className="relative min-h-screen px-6 py-24 bg-gradient-to-br from-[#fbcfe8] via-white to-gray overflow-hidden">
 
       {/* Main container */}
       <div className="max-w-5xl mx-auto bg-white/30 backdrop-blur-xl border border-white/40 rounded-3xl shadow-[0_60px_140px_rgba(0,0,0,0.15)] p-8 sm:p-12 md:p-16 space-y-20">
