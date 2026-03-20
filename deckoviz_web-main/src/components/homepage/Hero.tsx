@@ -208,6 +208,7 @@ const Hero: React.FC = () => {
         <img
           src="/images/hero_left.png"
           alt="Living room"
+          loading="lazy"
           className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[82%] h-auto object-contain rounded-[40px] sm:rounded-[50px] lg:rounded-[60px]"
         />
 
@@ -223,6 +224,7 @@ const Hero: React.FC = () => {
             <img
               key={index}
               src={img}
+              loading="lazy"
               alt={`Frame artwork ${index}`}
               className={`absolute inset-0 w-full h-full object-fill transition-opacity duration-1000 ease-in-out will-change-opacity ${
                 index === leftImageIndex ? "opacity-100" : "opacity-0"
@@ -293,6 +295,7 @@ const Hero: React.FC = () => {
                   key={index}
                   src={image}
                   alt=""
+                  loading="lazy"
                   className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
                     index === rightImageIndex ? "opacity-100" : "opacity-0"
                   }`}
