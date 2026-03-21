@@ -214,10 +214,10 @@ const Hero: React.FC = () => {
 
         {/* Frame artwork */}
         <div className="absolute 
-          top-[19%] 
+          top-[18.5%] 
           left-[50.5%] -translate-x-1/2
-          w-[49%] 
-          h-[30%]
+          w-[50%] 
+          h-[30.5%]
           overflow-hidden rounded-sm">
 
           {frameImages.map((img, index) => (
@@ -289,19 +289,30 @@ const Hero: React.FC = () => {
           {/* RIGHT IMAGE */}
           <div className="relative flex-1 flex justify-center lg:justify-end">
             {/* Added overflow-hidden and moved border/radius here */}
-            <div className="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[280px] overflow-hidden rounded-[12px] border border-transparent bg-gray-50">
-              {rightImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt=""
-                  loading="lazy"
-                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
-                    index === rightImageIndex ? "opacity-100" : "opacity-0"
-                  }`}
-                />
-              ))}
-            </div>
+<div 
+  className="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[280px] overflow-hidden bg-gray-50"
+  style={{
+    // Using mask-image with an SVG path allows for rounded "steps"
+    WebkitMaskImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 280'%3E%3Cpath d='M40 8C40 3.58 43.58 0 48 0H412C416.42 0 420 3.58 420 8V232C420 236.42 416.42 240 412 240H380C375.58 240 372 243.58 372 248V272C372 276.42 368.42 280 364 280H8C3.58 280 0 276.42 0 272V48C0 43.58 3.58 40 8 40H32C36.42 40 40 36.42 40 32V8Z' fill='black'/%3E%3C/svg%3E")`,
+    maskImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 280'%3E%3Cpath d='M40 8C40 3.58 43.58 0 48 0H412C416.42 0 420 3.58 420 8V232C420 236.42 416.42 240 412 240H380C375.58 240 372 243.58 372 248V272C372 276.42 368.42 280 364 280H8C3.58 280 0 276.42 0 272V48C0 43.58 3.58 40 8 40H32C36.42 40 40 36.42 40 32V8Z' fill='black'/%3E%3C/svg%3E")`,
+    maskSize: '100% 100%',
+    WebkitMaskSize: '100% 100%',
+    maskRepeat: 'no-repeat',
+    WebkitMaskRepeat: 'no-repeat'
+  }}
+>
+  {rightImages.map((image, index) => (
+    <img
+      key={index}
+      src={image}
+      alt=""
+      loading="lazy"
+      className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
+        index === rightImageIndex ? "opacity-100" : "opacity-0"
+      }`}
+    />
+  ))}
+</div>
           </div>
         </div>
       </div>
