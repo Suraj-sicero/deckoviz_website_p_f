@@ -149,9 +149,9 @@ const Hero: React.FC = () => {
     return () => clearInterval(interval)
   }, [])
 
-    const normalMask = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 280'%3E%3Cpath d='M40 8C40 3.58 43.58 0 48 0H412C416.42 0 420 3.58 420 8V232C420 236.42 416.42 240 412 240H380C375.58 240 372 243.58 372 248V272C372 276.42 368.42 280 364 280H8C3.58 280 0 276.42 0 272V48C0 43.58 3.58 40 8 40H32C36.42 40 40 36.42 40 32V8Z' fill='black'/%3E%3C/svg%3E")`
+  const normalMask = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 840 560'%3E%3Cpath d='M80 16C80 7.16 87.16 0 96 0H824C832.84 0 840 7.16 840 16V464C840 472.84 832.84 480 824 480H780C751.16 480 744 487.16 744 496V544C744 552.84 736.84 560 728 560H16C7.16 560 0 552.84 0 544V96C0 87.16 7.16 80 16 80H64C72.84 80 80 72.84 80 64V16Z' fill='black'/%3E%3C/svg%3E")`
 
-  const reversedMask = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 280'%3E%3Cpath d='M380 8C380 3.58 376.42 0 372 0H8C3.58 0 0 3.58 0 8V232C0 236.42 3.58 240 8 240H40C44.42 240 48 243.58 48 248V272C48 276.42 51.58 280 56 280H412C416.42 280 420 276.42 420 272V48C420 43.58 416.42 40 412 40H388C383.58 40 380 36.42 380 32V8Z' fill='black'/%3E%3C/svg%3E")`
+  const reversedMask = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 840 560'%3E%3Cpath d='M760 16C760 7.16 752.84 0 744 0H16C7.16 0 0 7.16 0 16V464C0 472.84 7.16 480 16 480H80C88.84 480 96 487.16 96 496V544C96 552.84 103.16 560 112 560H824C832.84 560 840 552.84 840 544V96C840 87.16 832.84 80 824 80H776C767.16 80 760 72.84 760 64V16Z' fill='black'/%3E%3C/svg%3E")`
 
   const currentMask =
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
@@ -313,6 +313,9 @@ const Hero: React.FC = () => {
                 src={image}
                 alt=""
                 loading="lazy"
+                style={{
+                  // borderRadius:'30px'
+                }}
                 className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
                   index === rightImageIndex ? "opacity-100" : "opacity-0"
                 }`}
