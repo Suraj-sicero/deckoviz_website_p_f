@@ -53,7 +53,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
             Built for scale, security, and seamless integration.
           </p>
         </div>
-<div className="pt-11"></div>
+<div className="pt-6"></div>
         {/* Carousel Container */}
         <div className="relative flex items-center justify-center h-[400px] md:h-[500px] perspective-[1500px]">
           <LayoutGroup>
@@ -119,7 +119,7 @@ ${!isCenter && isMobile ? "pointer-events-none" : "pointer-events-auto"}`}
             })}
           </LayoutGroup>
         </div>
-      <div className="pt-10"></div>
+      <div className="pt-12"></div>
         {/* Pagination Dots */}
         <div className="flex justify-center mt-12 md:mt-16 gap-3">
           {enterpriseFeatures.map((_, i) => (
