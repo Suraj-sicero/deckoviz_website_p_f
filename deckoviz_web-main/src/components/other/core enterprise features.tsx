@@ -119,7 +119,7 @@ ${!isCenter && isMobile ? "pointer-events-none" : "pointer-events-auto"}`}
             })}
           </LayoutGroup>
         </div>
-      <div className="pt-12"></div>
+      <div className="pt-16"></div>
         {/* Pagination Dots */}
         <div className="flex justify-center mt-12 md:mt-16 gap-3">
           {enterpriseFeatures.map((_, i) => (
