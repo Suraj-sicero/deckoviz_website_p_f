@@ -73,6 +73,11 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
                     if (info.offset.x > 50) setIndex((prev) => (prev - 1 + enterpriseFeatures.length) % enterpriseFeatures.length);
                     if (info.offset.x < -50) setIndex((prev) => (prev + 1) % enterpriseFeatures.length);
                   }}
+                  onClick={() => {
+  if (isCenter) {
+    setIndex((prev) => (prev + 1) % enterpriseFeatures.length);
+  }
+}}
                   animate={{
                     // Logic: On mobile, side cards have 0 x-offset and 0 opacity
                     x: isCenter 
@@ -90,9 +95,10 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
                     filter: isCenter ? "blur(0px)" : "blur(2px)",
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className={`absolute w-[90%] max-w-[350px] md:max-w-[460px] p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] 
-                             bg-white border border-slate-100 shadow-xl
-                             ${!isCenter && isMobile ? "pointer-events-none" : "pointer-events-auto"}`}
+className={`absolute w-[90%] max-w-[350px] md:max-w-[460px] p-8 md:p-12 rounded-[2rem] md:rounded-[2.5rem] 
+bg-white border border-slate-100 shadow-xl
+${isCenter ? "cursor-pointer" : "cursor-default"}
+${!isCenter && isMobile ? "pointer-events-none" : "pointer-events-auto"}`}
                 >
                   {/* Icon */}
                   <div className={`w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br ${brandGradient} 
@@ -113,7 +119,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
             })}
           </LayoutGroup>
         </div>
-<br></br>
+      <div className="pt-10"></div>
         {/* Pagination Dots */}
         <div className="flex justify-center mt-12 md:mt-16 gap-3">
           {enterpriseFeatures.map((_, i) => (

@@ -989,181 +989,181 @@ const extraFeatures = [
                 100% { background-position: 0% 50%; }
               }
                 /* Hide scrollbar */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+              .no-scrollbar::-webkit-scrollbar {
+                display: none;
+              }
+              .no-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+              }
             `}
           </style>
         </>
       {/* ================= SECTION 2: WHAT DECKOVIZ IS AT ITS CORE ================= */}
      <section className="bg-gray-50 py-20">
-  <div className="max-w-6xl mx-auto px-6">
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-      viewport={{ once: false, amount: 0.3 }}
-      style={{
-        borderRadius: "24px",
-        padding: "40px",
-        background: "linear-gradient(135deg, #9fccfa, transparent, #f093fb)",
-        backgroundSize: "300% 300%",
-        animation: "moveGradient 5s ease infinite",
-        boxShadow: "10px 10px 20px rgba(128,0,128,0.5)"
-      }}
-    >
-      <h2
-        style={{
-          fontSize: "2rem",
-          fontWeight: "600",
-          color: "#111",
-          marginBottom: "32px"
-        }}
-      >
-        What Deckoviz is, at its Core
-      </h2>
-
-      <p
-        style={{
-          fontSize: "17px",
-          color: "#444",
-          lineHeight: "1.8",
-          marginBottom: "40px"
-        }}
-      >
-        Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal,
-        paired with a premium Smart Display system. It functions
-        simultaneously as:
-      </p>
-
-      {/* ticker container */}
-      <div
-        style={{
-          overflow: "hidden",
-          width: "100%",
-          position: "relative"
-        }}
-      >
-        <div
-          className="tickerTrack"
+      <div className="max-w-6xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: false }}
           style={{
-            display: "inline-flex",
-            gap: "80px",
-            whiteSpace: "nowrap",
-            animation: "tickerMove 20s linear infinite"
+            borderRadius: "24px",
+            padding: "40px",
+            background: "linear-gradient(135deg, #9fccfa, transparent, #f093fb)",
+            backgroundSize: "300% 300%",
+            animation: "moveGradient 5s ease infinite",
+            boxShadow: "10px 10px 20px rgba(128,0,128,0.5)"
           }}
         >
-          {[
-            "A generative visual engine",
-            "A brand storytelling system",
-            "A dynamic signage and merchandising platform",
-            "A multisensory ambience controller",
-            "An adaptive, learning companion for physical spaces"
-          ]
-            .concat([
-              "A generative visual engine",
-              "A brand storytelling system",
-              "A dynamic signage and merchandising platform",
-              "A multisensory ambience controller",
-              "An adaptive, learning companion for physical spaces"
-            ])
-            .map((item, i) => (
-              <div
-                key={i}
-                className="tickerItem"
+          <h2
+            style={{
+              fontSize: "2rem",
+              fontWeight: "600",
+              color: "#111",
+              marginBottom: "32px"
+            }}
+          >
+            What Deckoviz is, at its Core
+          </h2>
+
+          <p
+            style={{
+              fontSize: "17px",
+              color: "#444",
+              lineHeight: "1.8",
+              marginBottom: "40px"
+            }}
+          >
+            Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal,
+            paired with a premium Smart Display system. It functions
+            simultaneously as:
+          </p>
+
+          {/* ticker container */}
+          <div
+            style={{
+              overflow: "hidden",
+              width: "100%",
+              position: "relative"
+            }}
+          >
+            <div
+              className="tickerTrack"
+              style={{
+                display: "inline-flex",
+                gap: "80px",
+                whiteSpace: "nowrap",
+                animation: "tickerMove 20s linear infinite"
+              }}
+            >
+              {[
+                "A generative visual engine",
+                "A brand storytelling system",
+                "A dynamic signage and merchandising platform",
+                "A multisensory ambience controller",
+                "An adaptive, learning companion for physical spaces"
+              ]
+                .concat([
+                  "A generative visual engine",
+                  "A brand storytelling system",
+                  "A dynamic signage and merchandising platform",
+                  "A multisensory ambience controller",
+                  "An adaptive, learning companion for physical spaces"
+                ])
+                .map((item, i) => (
+                  <div
+                    key={i}
+                    className="tickerItem"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      fontSize: "18px",
+                      color: "#333",
+                      cursor: "pointer",
+                      position: "relative",
+                      transition: "all 0.7s ease"
+                    }}
+                  >
+              <span
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  fontSize: "18px",
-                  color: "#333",
-                  cursor: "pointer",
-                  position: "relative",
-                  transition: "all 0.7s ease"
+                  color: "#9333ea",
+                  fontWeight: "600"
                 }}
               >
-<span
-  style={{
-    color: "#9333ea",
-    fontWeight: "600"
-  }}
->
-  {["🎨","📖","🏬","🎧","🧠"][i % 5]}
-</span>
+                {["🎨","📖","🏬","🎧","🧠"][i % 5]}
+              </span>
 
-                <span>{item}</span>
+                    <span>{item}</span>
 
-                {/* animated underline */}
-                <div
-                  className="underline"
-                  style={{
-                    position: "absolute",
-                    bottom: "-6px",
-                    left: 0,
-                    height: "2px",
-                    width: "0%",
-                    background:
-                      "linear-gradient(90deg,#9333ea, #c084fc, #9333ea)",
-                    transition: "width 0.9s ease"
-                  }}
-                />
-              </div>
-            ))}
+                    {/* animated underline */}
+                    <div
+                      className="underline"
+                      style={{
+                        position: "absolute",
+                        bottom: "-6px",
+                        left: 0,
+                        height: "2px",
+                        width: "0%",
+                        background:
+                          "linear-gradient(90deg,#9333ea, #c084fc, #9333ea)",
+                        transition: "width 0.9s ease"
+                      }}
+                    />
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          <p
+            style={{
+              marginTop: "40px",
+              fontSize: "17px",
+              color: "#444",
+              lineHeight: "1.8"
+            }}
+          >
+            This is not a device you “install and forget”. It is a platform that
+            learns your business and grows with it.
+          </p>
+
+            <style>
+              {`
+              
+              @keyframes tickerMove{
+                0%{ transform:translateX(0); }
+                100%{ transform:translateX(-50%); }
+              }
+
+              @keyframes moveGradient{
+                0%{ background-position:0% 50% }
+                50%{ background-position:100% 50% }
+                100%{ background-position:0% 50% }
+              }
+
+              /* hover slows ticker */
+              .tickerTrack:hover{
+                animation-duration:40s;
+              }
+
+              /* premium hover effect */
+              .tickerItem:hover{
+                color:#7c3aed;
+                transform:scale(1.06);
+                text-shadow:0 0 10px rgba(147,51,234,0.3);
+              }
+
+              /* underline animation */
+              .tickerItem:hover .underline{
+                width:100%;
+              }
+
+              `}
+            </style>
+          </motion.div>
         </div>
-      </div>
-
-      <p
-        style={{
-          marginTop: "40px",
-          fontSize: "17px",
-          color: "#444",
-          lineHeight: "1.8"
-        }}
-      >
-        This is not a device you “install and forget”. It is a platform that
-        learns your business and grows with it.
-      </p>
-
-      <style>
-        {`
-        
-        @keyframes tickerMove{
-          0%{ transform:translateX(0); }
-          100%{ transform:translateX(-50%); }
-        }
-
-        @keyframes moveGradient{
-          0%{ background-position:0% 50% }
-          50%{ background-position:100% 50% }
-          100%{ background-position:0% 50% }
-        }
-
-        /* hover slows ticker */
-        .tickerTrack:hover{
-          animation-duration:40s;
-        }
-
-        /* premium hover effect */
-        .tickerItem:hover{
-          color:#7c3aed;
-          transform:scale(1.06);
-          text-shadow:0 0 10px rgba(147,51,234,0.3);
-        }
-
-        /* underline animation */
-        .tickerItem:hover .underline{
-          width:100%;
-        }
-
-        `}
-      </style>
-    </motion.div>
-  </div>
-</section>
+      </section>
 
 
 
