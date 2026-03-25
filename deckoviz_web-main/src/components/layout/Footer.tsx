@@ -9,6 +9,7 @@ import {
   ArrowUpRight
 } from "lucide-react"
 import { motion } from "framer-motion"
+import { path } from "framer-motion/client"
 
 // ───────────────── DATA ─────────────────
 
@@ -35,6 +36,7 @@ const legalLinks = [
   { name: "Privacy Policy", path: "/privacy-policy" },
   { name: "Terms & Conditions", path: "/terms-conditions" },
   { name: "Shipping Policy  ", path: "/shipping-policy" },
+  { name: "Return Policy", path:"/return-policy" }
 ]
 
 const socialLinks = [
