@@ -272,7 +272,7 @@ if (error) {
           {success ? (
             <div className="p-8 text-center">
               <h4 className="text-lg font-semibold text-gray-900 mb-2">
-                ✅ Request Submitted
+                Request Submitted
               </h4>
               <p className="text-gray-600">
                 Our team will contact you shortly.
