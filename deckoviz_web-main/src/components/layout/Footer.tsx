@@ -1,15 +1,12 @@
 "use client"
 
-import React from "react"
 import {
   Instagram,
   Linkedin,
   Facebook,
-  Twitter,
-  ArrowUpRight
+  Twitter
 } from "lucide-react"
 import { motion } from "framer-motion"
-import { path } from "framer-motion/client"
 
 // ───────────────── DATA ─────────────────
 
@@ -35,7 +32,7 @@ const companyLinks = [
 const legalLinks = [
   { name: "Privacy Policy", path: "/privacy-policy" },
   { name: "Terms & Conditions", path: "/terms-conditions" },
-  { name: "Shipping Policy  ", path: "/shipping-policy" },
+  { name: "Shipping Policy", path: "/shipping-policy" },
   { name: "Return Policy", path:"/return-policy" }
 ]
 
@@ -46,131 +43,220 @@ const socialLinks = [
   { name: "LinkedIn", href: "https://www.linkedin.com/company/deckoviz/", icon: Linkedin },
 ]
 
-// ───────────────── COMPONENTS ─────────────────
-
-const NavLink = ({ item }: any) => (
-  <a
-    href={item.path}
-    className="group flex justify-between items-center py-2 px-2 rounded-md hover:bg-white/40 transition"
-  >
-    <span className="text-sm text-slate-600 group-hover:text-purple-600 transition">
-      {item.name}
-    </span>
-    <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition text-purple-500" size={14} />
-  </a>
-)
-
-const SocialButton = ({ item }: any) => (
-  <a
-    href={item.href}
-    className="w-10 h-10 flex items-center justify-center rounded-full bg-white/60 hover:bg-gradient-to-r from-purple-500 to-pink-500 hover:text-white transition shadow"
-  >
-    <item.icon size={16} />
-  </a>
-)
-
 // ───────────────── FOOTER ─────────────────
 
 const Footer = () => {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative bg-[#FFFBF5] pt-24 pb-12 overflow-hidden">
+    <>
+      {/* ───── FOOTER ───── */}
+      <footer className="relative overflow-hidden">
 
-      {/* ✨ BACKGROUND GLOW */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-pink-300 opacity-30 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-300 opacity-30 blur-[120px]" />
-      </div>
+        {/* Main Footer Content with Floating Particles */}
+        <div 
+          className="relative py-6 overflow-hidden"
+          style={{
+            backgroundImage: 'url(/images/wallhaven-962wqx.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        >
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-[#0a1628]/50"></div>
+          
+          {/* Animated floating particles */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-white rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0.2, 0.5, 0.2],
+                  scale: [1, 1.5, 1],
+                }}
+                transition={{
+                  duration: 3 + Math.random() * 4,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              />
+            ))}
+          </div>
 
-      <div className="relative max-w-7xl mx-auto px-6">
+          {/* Glowing orbs in background */}
+          <div className="absolute inset-0 pointer-events-none">
+            <motion.div
+              className="absolute top-20 left-10 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="absolute bottom-20 right-10 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+            />
+          </div>
 
-        {/* ───── CTA ───── */}
-        <div className="relative mb-20 rounded-3xl p-10 overflow-hidden">
-
-          {/* Glow behind CTA */}
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-100 via-pink-100 to-purple-100 opacity-80" />
-          <div className="absolute inset-0 blur-3xl opacity-40 bg-gradient-to-r from-purple-400 to-pink-400" />
-
-          <div className="relative flex flex-col md:flex-row justify-between items-center gap-6">
-
-            <div className="max-w-lg text-center md:text-left">
-              <h2 className="text-3xl md:text-4xl font-lucida font-bold ">
-                Ready to transform your{" "}
-                <span className="bg-gradient-to-r from-purple-600 to-pink-500 text-transparent bg-clip-text">
-                  space
-                </span>
-                ?
-              </h2>
-
-              <p className="text-slate-600 mt-3 text-sm">
-                Join thousands of happy customers who’ve brought their walls to life with Deckoviz.
-
-
-              </p>
-            </div>
-
-            <button
-              onClick={() => (window.location.href = "/place-order")}
-              className="relative px-8 py-4 bg-gradient-to-r from-pink-600 to-transparent-600 text-white rounded-full flex items-center gap-2 hover:bg-gradient-to-r from-purple-600 to-pink-600 transition"
+          <div className="relative max-w-7xl mx-auto px-6">
+            
+            {/* Top Section: Logo + Description + Social Links in one compact row */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="flex flex-col md:flex-row items-center justify-between gap-4 mb-5 pb-3 border-b border-white/10"
             >
-              Shop Deckoviz Frames
-              <ArrowUpRight size={16} />
-            </button>
+              <motion.div
+                className="flex items-center gap-4"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
+              >
+                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-3 shadow-2xl border border-white/30">
+                  <img src="/images/deckoviz background removed.png" className="h-14 drop-shadow-2xl" alt="Deckoviz" />
+                </div>
+                <p className="text-white text-sm leading-tight max-w-xs hidden md:block">
+                  Transform your space with AI-powered art
+                </p>
+              </motion.div>
+              
+              {/* Social Links inline */}
+              <div className="flex items-center gap-3">
+                <span className="text-white/70 text-xs font-medium hidden sm:block">Follow Us:</span>
+                <div className="flex gap-2">
+                  {socialLinks.map((social) => (
+                    <motion.a
+                      key={social.name}
+                      href={social.href}
+                      whileHover={{ scale: 1.15, rotate: 5 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white/80 hover:text-white transition-all duration-300 backdrop-blur-sm"
+                      aria-label={social.name}
+                    >
+                      <social.icon size={16} />
+                    </motion.a>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Links Grid - Ultra compact 4 columns on desktop */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={{
+                hidden: {},
+                visible: {
+                  transition: {
+                    staggerChildren: 0.05,
+                  },
+                },
+              }}
+              className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 mb-3"
+            >
+              
+              {/* Product */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <h3 className="text-white font-semibold text-xs mb-1.5">Product</h3>
+                <ul className="space-y-0.5">
+                  {productLinks.map((link) => (
+                    <motion.li key={link.name} whileHover={{ x: 3 }}>
+                      <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
+                        {link.name}
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Company */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <h3 className="text-white font-semibold text-xs mb-1.5">Company</h3>
+                <ul className="space-y-0.5">
+                  {companyLinks.map((link) => (
+                    <motion.li key={link.name} whileHover={{ x: 3 }}>
+                      <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
+                        {link.name}
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Legal */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <h3 className="text-white font-semibold text-xs mb-1.5">Legal</h3>
+                <ul className="space-y-0.5">
+                  {legalLinks.map((link) => (
+                    <motion.li key={link.name} whileHover={{ x: 3 }}>
+                      <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
+                        {link.name}
+                      </a>
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Copyright - moved to 4th column */}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                className="flex flex-col justify-center"
+              >
+                <p className="text-[11px] text-white/60 leading-relaxed">
+                  © {year} Deckoviz.<br/>
+                  All rights reserved.<br/>
+                  Made with <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Infinity }} className="inline-block text-pink-400">♥</motion.span> by Deckoviz Team
+                </p>
+              </motion.div>
+            </motion.div>
 
           </div>
         </div>
-
-        {/* ───── GRID ───── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-16">
-
-          {/* BRAND */}
-          <div className="lg:col-span-4">
-            <img src="/images/deckospacelabs.png" className="h-10 mb-6" />
-
-            <p className="text-sm text-slate-600 leading-7 mb-6 max-w-sm">
-              Transform your space with AI-powered art that evolves with your style. Create personalized artwork that reflects your taste and brings your walls to life.
-            </p>
-
-            <p className="text-purple-600 mb-3 font-medium">Follow Us</p>
-
-            <div className="flex gap-3">
-              {socialLinks.map((s) => (
-                <SocialButton key={s.name} item={s} />
-              ))}
-            </div>
-          </div>
-
-          {/* LINKS */}
-          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-8">
-
-            <div>
-              <h3 className="font-serif font-bold mb-4">Product</h3>
-              {productLinks.map((l) => <NavLink key={l.name} item={l} />)}
-            </div>
-
-            <div>
-              <h3 className="font-serif font-bold mb-4">Company</h3>
-              {companyLinks.map((l) => <NavLink key={l.name} item={l} />)}
-            </div>
-
-            <div>
-              <h3 className="font-serif font-bold mb-4">Legal</h3>
-              {legalLinks.map((l) => <NavLink key={l.name} item={l} />)}
-            </div>
-
-          </div>
-        </div>
-
-        {/* ───── BOTTOM ───── */}
-        <div className="border-t pt-6 text-sm text-slate-500 flex justify-between">
-          <p>© {year} Deckoviz. All rights reserved.</p>
-        </div>
-
-      </div>
-    </footer>
+        
+      </footer>
+    </>
   )
 }
 
-export default Footer	
-
+export default Footer

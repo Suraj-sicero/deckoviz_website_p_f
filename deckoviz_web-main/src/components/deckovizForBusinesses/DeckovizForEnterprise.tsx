@@ -20,10 +20,11 @@ import { useNavigate } from "react-router-dom";
 import { loadBlogs, MarkdownBlog } from "../../lib/blogLoader";
 import ShopCarousel from "../other/ShopCarousel.tsx";
 import EnterpriseFeatures from "../other/core enterprise features.tsx";
-import { Link } from "react-router-dom"
+import { Link } from "react-router-dom";
 import { image } from "framer-motion/client";
+import DeckovizSectors from "./DeckovizSectors";
 
-  const ENTERPRISE_ARTICLES = {
+const ENTERPRISE_ARTICLES = {
     core: [
       "deckoviz-for-restaurants",
       "deckoviz-for-retail",
@@ -1696,21 +1697,15 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
       </div>
 
     </div>
-
-    {/* Closing Context */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: false }}
-      className="mt-4 text-center text-gray-600 font-medium max-w-3xl mx-auto border-t border-gray-100 pt-10"
-    >
-      Deckoviz solves problems of attention, emotion, memory,
-      differentiation, and scale for modern environments.
-    </motion.div>
+    
 
   </div>
 
-</section>    
+</section>
+
+{/* DeckovizSectors Component */}
+<DeckovizSectors />
+    
       {/* Bottom CTA Section */}
       <section className="py-8 md:py-8 bg-white">
         <div className="container mx-auto px-6 text-center">

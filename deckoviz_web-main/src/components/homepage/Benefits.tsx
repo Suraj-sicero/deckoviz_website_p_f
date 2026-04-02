@@ -249,8 +249,15 @@ const Benefits = () => {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Heading */}
-        <h2 className="text-3xl md:text-4xl font-semibold text-center mb-4">
-          How Deckoviz Brings Your Space to Life
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <span className="text-gray-900">How</span>{" "}
+          <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            Deckoviz
+          </span>{" "}
+          <span className="text-gray-900">Brings Your Space to</span>{" "}
+          <span className="italic bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
+            Life
+          </span>
         </h2>
 
         <p className="text-gray-600 text-center max-w-3xl mx-auto mb-12">

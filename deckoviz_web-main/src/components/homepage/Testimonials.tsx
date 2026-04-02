@@ -104,8 +104,8 @@ const Testimonials: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-            What Our <span className="text-[#7441dd]">Customers Say</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+            What Our <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">Customers</span> Say
           </h2>
           <p className="text-gray-600 text-base sm:text-lg max-w-2xl mx-auto px-4">
  Don't just take our word for it. Here's what people <span className="text-red-600 font-semibold">love</span> about Deckoviz.

@@ -133,9 +133,9 @@ const DeckovizSetup: React.FC = () => {
         <div className="text-center mb-20">
          
 
-          <h1 className="text-4xl md:text-5xl lg:text-4xl font-bold mb-6 text-slate-900 leading-tight">
-            How to Set Up{" "}
-            <span className="bg-gradient-to-r from-indigo-500 via-fuchsia-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-slate-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <span className="text-gray-900">How to Set Up</span>{" "}
+            <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               Deckoviz?
             </span>
           </h1>
