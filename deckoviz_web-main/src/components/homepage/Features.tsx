@@ -302,9 +302,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
               <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40"></div>
  {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Features &{" "}
-            <span className="bg-gradient-to-r from-[#793ae7] to-[#be37b1] bg-clip-text text-transparent">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <span className="text-gray-900">Features &</span>{" "}
+            <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               Highlights
             </span>
           </h1>
@@ -312,12 +312,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
               <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
                 {/* Gradient Heading */}
                 <h2
-                  className="text-4xl font-extrabold mb-4
-                 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
-                 bg-clip-text text-transparent
-                 drop-shadow-sm"
+                  className="text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+                  style={{ fontFamily: "'Playfair Display', serif" }}
                 >
-                  What Can Deckoviz Do
+                  What Can{" "}
+                  <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+                    Deckoviz
+                  </span>{" "}
+                  Do
                 </h2>
 
                 {/* Soft underline glow */}
