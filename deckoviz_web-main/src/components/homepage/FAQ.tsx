@@ -228,9 +228,9 @@ const FAQ: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6 relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-4xl font-bold mb-6 mt-6 text-gray-900 leading-tight">
-            Questions?{" "}
-            <span className="bg-gradient-to-r from-[#7d39ec] via-[#6366f1] to-[#ec4899] bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-6 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <span className="text-gray-900">Questions?</span>{" "}
+            <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               We've got answers.
             </span>
           </h2>

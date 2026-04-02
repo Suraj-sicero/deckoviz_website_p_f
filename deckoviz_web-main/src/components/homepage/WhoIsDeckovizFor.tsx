@@ -148,9 +148,9 @@ const WhoIsDeckovizFor: React.FC = () => {
   </button>
 
   {/* Title */}
-  <h2 className="text-4xl font-bold text-gray-900">
+  <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
     Who is{" "}
-    <span className="bg-[#7634e0] bg-clip-text text-transparent">
+    <span className="italic bg-gradient-to-r from-purple-600 via-blue-600 to-pink-600 bg-clip-text text-transparent">
       Deckoviz
     </span>{" "}
     For?
