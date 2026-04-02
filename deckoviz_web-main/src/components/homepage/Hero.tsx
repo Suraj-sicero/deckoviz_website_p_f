@@ -3,7 +3,6 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { ArrowRight } from "lucide-react"
-import { useMediaQuery } from 'react-responsive';
 
 /* ---------------- Button Component ---------------- */
 
@@ -156,7 +155,7 @@ const Hero: React.FC = () => {
   const currentMask =
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
   return (
-    <section className="py-14 md:py-12 lg:py-10 overflow-hidden relative bg-white">
+    <section className="py-14 md:py-12 lg:py-10 overflow-x-hidden relative bg-white">
 
       {/* Glow animation */}
       <style
@@ -178,15 +177,24 @@ const Hero: React.FC = () => {
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-70"></div>
       </div>
 
-      <div className="max-w-[1400px] mx-auto px-6 relative z-10 flex flex-col items-center">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center overflow-x-hidden">
 
         {/* Heading */}
-        <h1 className="text-center font-bold text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16 leading-tight">
-          <span className="text-gray-900">Make Your Space Come Alive,</span>
+        <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16 leading-tight">
+          <div className="inline">
+            <span className="text-black">Make Your Space Come </span>
+            <span className="italic bg-gradient-to-r from-[#8B5CF6] to-[#A78BFA] bg-clip-text text-transparent">
+              Alive
+            </span>
+            <span className="text-black">,</span>
+          </div>
           <br />
-          <span className="bg-gradient-to-r from-[#9a5ffff9] to-indigo-500 bg-clip-text text-transparent">
-            With Your Personal Art Frame
-          </span>
+          <div className="inline">
+            <span className="text-black">With Your Personal </span>
+            <span className="italic bg-gradient-to-r from-[#06B6D4] to-[#14B8A6] bg-clip-text text-transparent">
+              Art Frame
+            </span>
+          </div>
         </h1>
 
         {/* Subheading */}
@@ -204,11 +212,11 @@ const Hero: React.FC = () => {
         </p>
 
         {/* Layout */}
-  <div className="w-full flex flex-col lg:flex-row items-center justify-between gap-10">
+  <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10 px-2">
 
           {/* LEFT IMAGE */}
-        <div className="relative flex-1 flex justify-center lg:justify-start">
-          <div className="relative w-[300px] h-[260px] sm:w-[380px] sm:h-[320px] md:w-[460px] md:h-[380px] lg:w-[520px] lg:h-[440px]">
+        <div className="relative flex justify-center lg:justify-start w-full lg:w-auto lg:flex-1 max-w-[520px]">
+          <div className="relative w-[300px] h-[260px] sm:w-[380px] sm:h-[320px] md:w-[460px] md:h-[380px] lg:w-[480px] lg:h-[420px]">
 
           {/* Room image */}
           <img
@@ -244,59 +252,229 @@ const Hero: React.FC = () => {
         </div>
 
           {/* CENTER */}
-          <div className="flex flex-col items-center gap-9 max-w-md">
-            <div className="flex gap-5">
-            <button
-              onClick={() => (window.location.href = "/place-order")}
-              className="group relative border border-gray-500 text-black hover:text-blue px-6 py-3 rounded-xl font-medium hover:scale-105 transition-all shop-now-glow hover:text-blue-600 hover:border-blue-600"
-            >
-              Shop Now
-            </button>
-              <Button
-                variant="outline"
-                onClick={() => (window.location.href = "/about")}
+          <div className="flex flex-col items-center gap-9 w-full lg:w-auto max-w-md flex-shrink-0">
+            <div className="flex gap-5 flex-wrap justify-center">
+              <button
+                onClick={() => (window.location.href = "/place-order")}
+                className="group relative px-8 py-4 rounded-3xl font-semibold text-lg overflow-hidden transition-all duration-500 hover:scale-105"
               >
-                Learn More
-                <ArrowRight
-                  size={18}
-                  className="ml-2 transition-transform group-hover:translate-x-2"
-                />
-              </Button>
+                {/* Animated gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 bg-[length:200%_100%]" style={{ animation: 'gradient-flow 3s ease infinite' }} />
+                
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                </div>
+                
+                {/* Glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
+                
+                {/* Floating particles */}
+                <div className="absolute inset-0 overflow-hidden rounded-3xl">
+                  <div className="absolute w-2 h-2 bg-white/40 rounded-full top-1/4 left-1/4" style={{ animation: 'float-particle 3s ease-in-out infinite' }} />
+                  <div className="absolute w-1.5 h-1.5 bg-white/30 rounded-full top-3/4 left-2/3" style={{ animation: 'float-particle-delayed 4s ease-in-out infinite 1s' }} />
+                  <div className="absolute w-2 h-2 bg-white/40 rounded-full top-1/2 right-1/4" style={{ animation: 'float-particle-slow 5s ease-in-out infinite 0.5s' }} />
+                </div>
+                
+                {/* Button text */}
+                <span className="relative z-10 text-white drop-shadow-lg">Shop Now</span>
+              </button>
+
+              <button
+                onClick={() => (window.location.href = "/about")}
+                className="group relative px-8 py-4 rounded-3xl font-semibold text-lg overflow-hidden transition-all duration-500 hover:scale-105"
+              >
+                {/* Glassmorphism background */}
+                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border-2 border-purple-200 rounded-3xl transition-all duration-300 group-hover:border-purple-400 group-hover:bg-white/90" />
+                
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-50 via-violet-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                
+                {/* Ripple effect */}
+                <div className="absolute inset-0 rounded-3xl overflow-hidden">
+                  <div className="absolute w-0 h-0 rounded-full bg-purple-400/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:w-full group-hover:h-full group-hover:scale-150 transition-all duration-700" />
+                </div>
+                
+                {/* Glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-3xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+                
+                {/* Button text with arrow */}
+                <span className="relative z-10 flex items-center gap-2 text-gray-800 group-hover:text-purple-700 transition-colors duration-300">
+                  Learn More
+                  <ArrowRight
+                    size={20}
+                    className="transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110"
+                  />
+                </span>
+              </button>
             </div>
+            
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                @keyframes gradient-flow {
+                  0% { background-position: 0% 50%; }
+                  50% { background-position: 100% 50%; }
+                  100% { background-position: 0% 50%; }
+                }
+                
+                @keyframes float-particle {
+                  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
+                  50% { transform: translateY(-20px) translateX(10px); opacity: 0.8; }
+                }
+                
+                @keyframes float-particle-delayed {
+                  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
+                  50% { transform: translateY(-15px) translateX(-10px); opacity: 0.7; }
+                }
+                
+                @keyframes float-particle-slow {
+                  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
+                  50% { transform: translateY(-25px) translateX(5px); opacity: 0.9; }
+                }
+              `
+            }} />
 
-            {/* Stats */}
-            <div className="bg-white rounded-2xl shadow-xl px-6 py-6 border w-full">
-
-              <div className="grid grid-cols-2 gap-6 text-center">
-
-                <div>
-                  <div className="text-4xl font-bold text-indigo-600">
-                    <CountUp from={0} to={2.5} duration={2} suffix="M+" />
+            {/* Stats Card - Enhanced with animations */}
+            <div className="relative group w-full max-w-2xl">
+              {/* Floating decorative elements */}
+              <div className="absolute -left-8 top-1/4 w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-60 blur-sm animate-float-slow" />
+              <div className="absolute -right-6 bottom-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-purple-500 opacity-50 blur-sm animate-float-slower" />
+              <div className="absolute -bottom-4 left-1/3 w-10 h-10 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 opacity-60 blur-sm animate-float-medium" />
+              
+              {/* Glow effect */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-purple-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+              
+              {/* Main card */}
+              <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl px-12 py-10 border border-white/50 w-full overflow-hidden">
+                
+                {/* Shimmer effect */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500" />
+                </div>
+                
+                {/* Top stats - Horizontal layout */}
+                <div className="flex items-start justify-center gap-6 mb-10">
+                  
+                  {/* Items stat */}
+                  <div className="relative flex flex-col items-center">
+                    <div className="absolute -inset-2 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-2xl blur-lg" />
+                    <div className="relative flex flex-col items-center">
+                      <div className="text-6xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-3 animate-pulse-slow leading-none">
+                        <CountUp from={0} to={3} duration={2} suffix="M+" />
+                      </div>
+                      <div className="text-gray-600 font-medium text-sm whitespace-nowrap">Items in Library</div>
+                    </div>
                   </div>
-                  <div className="text-gray-600">Items in Library</div>
+
+                  {/* Plus sign */}
+                  <div className="text-4xl font-bold text-blue-600 mt-1">+</div>
+
+                  {/* Rating stat */}
+                  <div className="relative flex flex-col items-center">
+                    <div className="absolute -inset-2 bg-gradient-to-br from-orange-400/20 to-pink-500/20 rounded-2xl blur-lg" />
+                    <div className="relative flex flex-col items-center">
+                      <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent mb-3 flex items-center gap-2 animate-pulse-slow leading-none">
+                        <CountUp from={0} to={4.9} duration={2} decimals={1} />
+                        <span className="text-4xl">✨</span>
+                      </div>
+                      <div className="text-gray-600 font-medium text-sm whitespace-nowrap">Star Rating</div>
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <div className="text-4xl font-bold text-indigo-600">
-                    <CountUp from={0} to={4.9} duration={2} decimals={1} />
+                {/* Divider with gradient */}
+                <div className="relative h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent mb-10" />
+
+                {/* Infinity stat */}
+                <div className="text-center relative">
+                  <div className="absolute -inset-4 bg-gradient-to-br from-purple-400/20 to-indigo-500/20 rounded-2xl blur-xl" />
+                  <div className="relative flex flex-col items-center">
+                    {/* Animated infinity symbol */}
+                    <div className="inline-block relative mb-4">
+                      <div className="text-7xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
+                        ∞
+                      </div>
+                      {/* Orbiting dots */}
+                      <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-purple-500 rounded-full animate-orbit" />
+                      <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-indigo-500 rounded-full animate-orbit-reverse" />
+                    </div>
+                    <div className="text-gray-600 font-medium text-base">Ways of Exploring</div>
                   </div>
-                  <div className="text-gray-600">Star Rating</div>
+                </div>
+
+                {/* Decorative dots */}
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                  <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                  <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
                 </div>
               </div>
-
-              <div className="text-center mt-6">
-                <div className="text-6xl font-bold text-indigo-600">∞</div>
-                <div className="text-gray-600">Ways of Exploring</div>
-              </div>
-
             </div>
+            
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                @keyframes float-slow {
+                  0%, 100% { transform: translateY(0px) translateX(0px); }
+                  50% { transform: translateY(-20px) translateX(10px); }
+                }
+                
+                @keyframes float-slower {
+                  0%, 100% { transform: translateY(0px) translateX(0px); }
+                  50% { transform: translateY(-25px) translateX(-15px); }
+                }
+                
+                @keyframes float-medium {
+                  0%, 100% { transform: translateY(0px) translateX(0px); }
+                  50% { transform: translateY(-15px) translateX(8px); }
+                }
+                
+                @keyframes pulse-slow {
+                  0%, 100% { opacity: 1; transform: scale(1); }
+                  50% { opacity: 0.9; transform: scale(1.02); }
+                }
+                
+                @keyframes orbit {
+                  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(40px) rotate(0deg); }
+                  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(40px) rotate(-360deg); }
+                }
+                
+                @keyframes orbit-reverse {
+                  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(40px) rotate(0deg); }
+                  100% { transform: translate(-50%, -50%) rotate(-360deg) translateX(40px) rotate(360deg); }
+                }
+                
+                .animate-float-slow {
+                  animation: float-slow 6s ease-in-out infinite;
+                }
+                
+                .animate-float-slower {
+                  animation: float-slower 8s ease-in-out infinite;
+                }
+                
+                .animate-float-medium {
+                  animation: float-medium 7s ease-in-out infinite;
+                }
+                
+                .animate-pulse-slow {
+                  animation: pulse-slow 3s ease-in-out infinite;
+                }
+                
+                .animate-orbit {
+                  animation: orbit 8s linear infinite;
+                }
+                
+                .animate-orbit-reverse {
+                  animation: orbit-reverse 8s linear infinite;
+                }
+              `
+            }} />
           </div>
 
           {/* RIGHT IMAGE */}
-<div className="relative flex-1 flex justify-end">
+<div className="relative flex justify-center lg:justify-end w-full lg:w-auto lg:flex-1 max-w-[420px]">
 
           <div
-            className="relative w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[280px] overflow-hidden bg-gray-50"
+            className="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[380px] md:h-[260px] overflow-hidden bg-gray-50"
             style={{
               WebkitMaskImage: currentMask,
               maskImage: currentMask,

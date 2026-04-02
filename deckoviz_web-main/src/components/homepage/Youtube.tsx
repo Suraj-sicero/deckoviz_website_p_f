@@ -64,10 +64,15 @@ const Youtube: React.FC = () => {
       <div className="max-w-4xl mx-auto px-6 relative z-10">
 
         {/* Heading */}
-        <h2 className="text-4xl md:text-5xl font-bold mb-4
-          bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-500
-          bg-clip-text text-transparent animate-fadeIn">
-          See Deckoviz in Action
+        <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <span className="text-gray-900">See</span>{" "}
+          <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            Deckoviz
+          </span>{" "}
+          <span className="text-gray-900">in</span>{" "}
+          <span className="italic bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
+            Action
+          </span>
         </h2>
 
         <p className="text-lg text-gray-600 mb-12 animate-fadeIn delay-150">
