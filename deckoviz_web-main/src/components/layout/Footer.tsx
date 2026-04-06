@@ -49,9 +49,7 @@ const Footer = () => {
   const year = new Date().getFullYear()
 
   return (
-    <>
-      {/* ───── FOOTER ───── */}
-      <footer className="relative overflow-hidden">
+    <footer className="relative bg-[#FFFBF5] pt-24 pb-12 overflow-hidden print:hidden">
 
         {/* Main Footer Content with Floating Particles */}
         <div 
@@ -255,7 +253,6 @@ const Footer = () => {
         </div>
         
       </footer>
-    </>
   )
 }
 
