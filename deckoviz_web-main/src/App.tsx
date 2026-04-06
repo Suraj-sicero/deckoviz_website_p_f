@@ -81,6 +81,7 @@ import AudiobookTool from "./components/tools/AudiobookTool";
 import StorybookTool from "./components/tools/StorybookTool";
 import MusicTool from "./components/tools/MusicTool";
 import VisualJournalTool from "./components/tools/VisualJournalTool";
+import WizzyPage from "./components/wizzy/WizzyPage";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -259,6 +260,7 @@ const App: React.FC = () => {
         <Route path="/tools/storybook" element={<StorybookTool />} />
         <Route path="/tools/music" element={<MusicTool />} />
         <Route path="/tools/visual-journal" element={<VisualJournalTool />} />
+        <Route path="/wizzy" element={<WizzyPage />} />
       </Routes>
       <Footer />
     </Router>

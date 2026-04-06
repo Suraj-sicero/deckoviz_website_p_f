@@ -1,43 +1,55 @@
 // ===== server.js =====
 
 // ===== Core Imports =====
+import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import methodOverride from "method-override";
 import expressLayouts from "express-ejs-layouts";
-import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+
+dotenv.config();
 import { sequelize } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
 import blogRoutes from "./routes/blogRoutes.js";
 import creativeToolsRoutes from "./routes/creativeTools.js";
+import wizzyRoutes from "./routes/wizzyRoutes.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
 
 
 
-await client.set("hello", "Dekoviz");
-console.log(await client.get("hello"));
+// ===== Startup Logic (Background) =====
+(async () => {
+  try {
+    await client.set("hello", "Dekoviz");
+    console.log(await client.get("hello"));
+  } catch (redisErr) {
+    console.warn("⚠️ Redis not available, skipping initial test.");
+  }
 
-dotenv.config();
+  try {
+    await sequelize.authenticate();
+    console.log("✅ PostgreSQL connected via Sequelize.");
+    await sequelize.sync();
+  } catch (error) {
+    console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
+  }
+})();
+
+// DB logic moved to background IIFE above
 const app = express();
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () =>
+  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
+);
 
 // ===== Resolve __dirname (for ES modules) =====
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ===== Connect to PostgreSQL (Sequelize) =====
-try {
-  await sequelize.authenticate();
-  console.log("✅ PostgreSQL connected via Sequelize.");
-  await sequelize.sync(); // Optional: { alter: true } during dev
-} catch (error) {
-  console.warn("⚠️  Database connection failed — server will start without DB.");
-  console.warn("   Fix PG_PASSWORD in .env to restore DB features.");
-  console.warn("   Error:", error.message);
-  // NOTE: process.exit removed so Creative Tools (no DB needed) still work
-}
+// DB logic moved to background IIFE above
 
 // ===== Stripe Configuration =====
 const stripe = new Stripe(
@@ -69,6 +81,7 @@ app.set("layout", "layout");
 // ✅ API routes (for frontend JSON calls)
 app.use("/api", blogRoutes); // Example: http://localhost:5000/api/blog
 app.use("/api", creativeToolsRoutes); // Creative Tools Hub
+app.use("/api/wizzy", wizzyRoutes);
 
 // ✅ EJS routes (for admin panel / UI)
 app.use("/", blogRoutes); // Example: http://localhost:5000/blogs or /add
@@ -161,7 +174,4 @@ app.get("/order-details", async (req, res) => {
 // ======================================================================
 // ========================== SERVER START ==============================
 // ======================================================================
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
-);
+// Server already started above
