@@ -33,7 +33,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
         <div className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-orange-300/15 blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
         
         <div className="absolute top-20 left-10 text-4xl opacity-15 animate-float-slow">🛍️</div>
-        <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">👗</div>
+        <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">�-</div>
         <div className="absolute top-60 left-1/4 text-3xl opacity-15 animate-float-medium">👔</div>
         <div className="absolute top-1/3 right-1/3 text-4xl opacity-10 animate-float-slow delay-1000">👠</div>
         <div className="absolute bottom-1/3 right-10 text-4xl opacity-10 animate-float-medium delay-1500">💼</div>
@@ -125,7 +125,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm rounded-3xl p-8 border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-3xl mb-6">
-                  👗
+                  �-
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Living Lookbooks</h3>
                 <p className="text-gray-300 leading-relaxed">
