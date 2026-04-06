@@ -155,7 +155,7 @@ const Hero: React.FC = () => {
   const currentMask =
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
   return (
-    <section className="py-14 md:py-12 lg:py-10 overflow-x-hidden relative bg-white">
+    <section className="py-14 md:py-12 lg:py-10 relative bg-white overflow-hidden">
 
       {/* Glow animation */}
       <style
@@ -173,11 +173,11 @@ const Hero: React.FC = () => {
       />
 
       {/* Background Glow */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-70"></div>
       </div>
 
-      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center overflow-x-hidden">
+      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
 
         {/* Heading */}
         <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16 leading-tight">

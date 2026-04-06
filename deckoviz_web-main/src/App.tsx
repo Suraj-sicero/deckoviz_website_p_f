@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 
 import {
@@ -7,6 +7,8 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
+import LoadingAnimation from "./components/LoadingAnimation";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import GeneralInfo from "./components/homepage/generalinfo";
@@ -94,8 +96,37 @@ const ScrollToSectionOnHome: React.FC = () => {
 };
 
 const App: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time - adjust as needed
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // 3 seconds minimum loading time
+
+    // Also check if page is actually loaded
+    const handleLoad = () => {
+      setTimeout(() => setIsLoading(false), 1500);
+    };
+
+    if (document.readyState === "complete") {
+      handleLoad();
+    } else {
+      window.addEventListener("load", handleLoad);
+    }
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("load", handleLoad);
+    };
+  }, []);
+
   return (
     <Router>
+      <AnimatePresence mode="wait">
+        {isLoading && <LoadingAnimation key="loading" />}
+      </AnimatePresence>
+
       <ScrollToTop />
       <ScrollToSectionOnHome />
       <MouseSparkles />

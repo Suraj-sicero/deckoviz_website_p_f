@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, Plus, Minus } from "lucide-react";
 interface FeatureCardProps {
   title: string;
   description: string;
@@ -228,49 +228,199 @@ const cardVariants = {
   },
 };
 
-const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescription, index }) => (
-<motion.div
-  custom={index % 2 === 0 ? "left" : "right"}
-  variants={cardVariants}
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.2 }}
-  className="group relative rounded-2xl p-10 pt-20 shadow-lg border border-white/40
-  bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50
-  hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 backdrop-blur-md"
->
+const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescription, index }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
+  const shouldShowContent = isExpanded || isHovered;
 
-{/* Gradient hover */}
-<div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-blue-50/20 opacity-0 group-hover:opacity-100 transition rounded-2xl" />
+  // Unique gradient combinations for each card
+  const gradients = [
+    "from-violet-100 via-purple-100 to-fuchsia-100",
+    "from-rose-100 via-pink-100 to-red-100",
+    "from-cyan-100 via-sky-100 to-blue-100",
+    "from-amber-100 via-orange-100 to-yellow-100",
+    "from-emerald-100 via-teal-100 to-green-100",
+    "from-indigo-100 via-blue-100 to-purple-100",
+    "from-pink-100 via-rose-100 to-purple-100",
+    "from-lime-100 via-green-100 to-emerald-100",
+    "from-fuchsia-100 via-pink-100 to-rose-100",
+    "from-sky-100 via-cyan-100 to-teal-100",
+    "from-orange-100 via-amber-100 to-yellow-100",
+    "from-purple-100 via-violet-100 to-indigo-100",
+  ];
 
-{/* Icon */}
-<div className="absolute -top-10 left-1/2 -translate-x-1/2 z-50">
-  <img
-    src={`/images/${getIconForFeature(title)}`}
-    className="w-20 h-20 object-contain drop-shadow-xl group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-500"
-  />
-</div>
+  const borderColors = [
+    "border-violet-200/60",
+    "border-rose-200/60",
+    "border-cyan-200/60",
+    "border-amber-200/60",
+    "border-emerald-200/60",
+    "border-indigo-200/60",
+    "border-pink-200/60",
+    "border-lime-200/60",
+    "border-fuchsia-200/60",
+    "border-sky-200/60",
+    "border-orange-200/60",
+    "border-purple-200/60",
+  ];
 
-<div className="relative z-10 text-center space-y-4">
+  const titleGradients = [
+    "from-violet-600 via-purple-600 to-fuchsia-600",
+    "from-rose-600 via-pink-600 to-red-600",
+    "from-cyan-600 via-sky-600 to-blue-600",
+    "from-amber-600 via-orange-600 to-yellow-600",
+    "from-emerald-600 via-teal-600 to-green-600",
+    "from-indigo-600 via-blue-600 to-purple-600",
+    "from-pink-600 via-rose-600 to-purple-600",
+    "from-lime-600 via-green-600 to-emerald-600",
+    "from-fuchsia-600 via-pink-600 to-rose-600",
+    "from-sky-600 via-cyan-600 to-teal-600",
+    "from-orange-600 via-amber-600 to-yellow-600",
+    "from-purple-600 via-violet-600 to-indigo-600",
+  ];
 
-<h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">
-{title}
-</h3>
+  const buttonGradients = [
+    "from-violet-500 to-fuchsia-500 hover:from-violet-600 hover:to-fuchsia-600",
+    "from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600",
+    "from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600",
+    "from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",
+    "from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600",
+    "from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600",
+    "from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600",
+    "from-lime-500 to-green-500 hover:from-lime-600 hover:to-green-600",
+    "from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600",
+    "from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600",
+    "from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600",
+    "from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600",
+  ];
 
-<p className="text-gray-700 font-medium">
-{description}
-</p>
+  const dividerGradients = [
+    "from-transparent via-violet-300 to-transparent",
+    "from-transparent via-rose-300 to-transparent",
+    "from-transparent via-cyan-300 to-transparent",
+    "from-transparent via-amber-300 to-transparent",
+    "from-transparent via-emerald-300 to-transparent",
+    "from-transparent via-indigo-300 to-transparent",
+    "from-transparent via-pink-300 to-transparent",
+    "from-transparent via-lime-300 to-transparent",
+    "from-transparent via-fuchsia-300 to-transparent",
+    "from-transparent via-sky-300 to-transparent",
+    "from-transparent via-orange-300 to-transparent",
+    "from-transparent via-purple-300 to-transparent",
+  ];
 
-<div className="h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent my-4" />
+  return (
+    <motion.div
+      custom={index % 2 === 0 ? "left" : "right"}
+      variants={cardVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`group relative rounded-3xl p-10 pt-20 shadow-xl border-2 ${borderColors[index]}
+      bg-gradient-to-br ${gradients[index]}
+      hover:shadow-2xl hover:scale-[1.03] transition-all duration-500 backdrop-blur-md
+      ${shouldShowContent ? 'ring-4 ring-purple-300/30' : ''}`}
+    >
+      {/* Animated gradient overlay on hover */}
+      <motion.div 
+        className={`absolute inset-0 bg-gradient-to-br ${gradients[index]} opacity-0 rounded-3xl`}
+        animate={{ opacity: isHovered ? 0.6 : 0 }}
+        transition={{ duration: 0.3 }}
+      />
 
-<p className="whitespace-pre-line text-gray-600 leading-relaxed">
-{longDescription}
-</p>
+      {/* Floating glow effect */}
+      <div className={`absolute -inset-1 bg-gradient-to-r ${buttonGradients[index].split(' ')[0]} ${buttonGradients[index].split(' ')[1]} rounded-3xl blur-xl opacity-0 group-hover:opacity-30 transition-opacity duration-500`} />
 
-</div>
-</motion.div>
-);
+      {/* Icon with enhanced animation */}
+      <motion.div 
+        className="absolute -top-12 left-1/2 -translate-x-1/2 z-50"
+        whileHover={{ scale: 1.2, rotate: 5, y: -8 }}
+        transition={{ type: "spring", stiffness: 300 }}
+      >
+        <div className="relative">
+          {/* Icon glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity" />
+          <img
+            src={`/images/${getIconForFeature(title)}`}
+            className="relative w-24 h-24 object-contain drop-shadow-2xl transition-all duration-500"
+          />
+        </div>
+      </motion.div>
+
+      {/* Plus/Minus Button with enhanced styling */}
+      <motion.button
+        onClick={() => setIsExpanded(!isExpanded)}
+        whileHover={{ scale: 1.15, rotate: 90 }}
+        whileTap={{ scale: 0.95 }}
+        className={`absolute top-5 right-5 z-20 p-3 rounded-full 
+        bg-gradient-to-r ${buttonGradients[index]}
+        text-white shadow-lg hover:shadow-2xl
+        transition-all duration-300`}
+        aria-label={isExpanded ? "Collapse" : "Expand"}
+      >
+        <motion.div
+          animate={{ rotate: isExpanded ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          {isExpanded ? <Minus size={20} strokeWidth={3} /> : <Plus size={20} strokeWidth={3} />}
+        </motion.div>
+      </motion.button>
+
+      <div className="relative z-10 text-center space-y-4">
+        <motion.h3 
+          className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${titleGradients[index]} bg-clip-text text-transparent`}
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 400 }}
+        >
+          {title}
+        </motion.h3>
+
+        <motion.p 
+          className="text-gray-700 font-semibold text-lg"
+          whileHover={{ scale: 1.02 }}
+        >
+          {description}
+        </motion.p>
+
+        <AnimatePresence>
+          {shouldShowContent && (
+            <motion.div
+              initial={{ height: 0, opacity: 0, y: -10 }}
+              animate={{ height: "auto", opacity: 1, y: 0 }}
+              exit={{ height: 0, opacity: 0, y: -10 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden"
+            >
+              <motion.div 
+                className={`h-1 bg-gradient-to-r ${dividerGradients[index]} my-6 rounded-full`}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              />
+              
+              <motion.p 
+                className="whitespace-pre-line text-gray-700 leading-relaxed text-base"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+              >
+                {longDescription}
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Corner decoration */}
+      <div className="absolute top-0 right-0 w-20 h-20 opacity-20">
+        <div className={`absolute top-4 right-4 w-12 h-12 bg-gradient-to-br ${buttonGradients[index].split(' ')[0]} ${buttonGradients[index].split(' ')[1]} rounded-full blur-xl`} />
+      </div>
+    </motion.div>
+  );
+};
   return (
     <div
       id="features"
@@ -309,7 +459,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
             </span>
           </h1>
         </div>
-              <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+              <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
                 {/* Gradient Heading */}
                 <h2
                   className="text-4xl md:text-5xl font-bold mb-4 text-gray-900"
@@ -329,41 +479,95 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                   opacity-60 mb-6"
                 ></div>
 
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  A whole lot. We set out to build the ultimate art and
-                  storytelling platform for living spaces   one that naturally
-                  creates abundance of features and experiences. If a feature
-                  can deepen emotion, spark imagination, personalize a moment,
-                  or turn a wall into a living experience, it belongs here.
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  Today, Deckoviz includes{" "}
-                  <span className="font-semibold text-purple-600">
-                    hundreds of individual features
-                  </span>
-                  , spanning art, creation, storytelling, music, learning,
-                  rituals, family moments, play, and ambient intelligence  
-                  organized into{" "}
-                  <span className="font-semibold text-pink-500">
-                    12 core themes
-                  </span>
-                  .
-                </p>
-
-                <p className="text-gray-600 leading-relaxed">
-                  Each theme represents a feature suite, bringing together
-                  related capabilities and experiences so you can quickly
-                  understand how Deckoviz fits into your life.
-                </p>
-
-                <div className="pt-6 border-t border-gray-100">
-                  <p className="text-gray-700 italic">
-                    Deckoviz is becoming a living platform   emotionally
-                    intelligent, deeply personalized, and evolving every single
-                    week.
+                {/* Main intro paragraph with colorful background */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, type: "spring", bounce: 0.3 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-2xl p-6 border-2 border-orange-200 shadow-sm hover:shadow-lg transition-shadow cursor-default"
+                >
+                  <p className="text-lg md:text-xl text-gray-800 leading-relaxed font-medium">
+                    A whole lot. We set out to build the ultimate art and
+                    storytelling platform for living spaces   one that naturally
+                    creates abundance of features and experiences. If a feature
+                    can deepen emotion, spark imagination, personalize a moment,
+                    or turn a wall into a living experience, it belongs here.
                   </p>
-                </div>
+                </motion.div>
+
+                {/* Stats paragraph with colorful highlights */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.1, type: "spring", bounce: 0.3 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 rounded-2xl p-6 border-2 border-purple-200 shadow-sm hover:shadow-lg transition-shadow cursor-default"
+                >
+                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                    Today, Deckoviz includes{" "}
+                    <motion.span 
+                      whileHover={{ scale: 1.1 }}
+                      className="inline-block font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+                    >
+                      hundreds of individual features
+                    </motion.span>
+                    , spanning{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-orange-600">art</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-pink-600">creation</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-indigo-600">storytelling</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-violet-600">music</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-blue-600">learning</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-rose-600">rituals</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-amber-600">family moments</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-cyan-600">play</motion.span>, and{" "}
+                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-emerald-600">ambient intelligence</motion.span>  
+                    organized into{" "}
+                    <motion.span 
+                      whileHover={{ scale: 1.1 }}
+                      className="inline-block font-bold text-xl bg-gradient-to-r from-pink-600 to-indigo-600 bg-clip-text text-transparent"
+                    >
+                      12 core themes
+                    </motion.span>
+                    .
+                  </p>
+                </motion.div>
+
+                {/* Feature suite explanation with colorful background */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.2, type: "spring", bounce: 0.3 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="bg-gradient-to-br from-cyan-50 via-blue-50 to-indigo-50 rounded-2xl p-6 border-2 border-cyan-200 shadow-sm hover:shadow-lg transition-shadow cursor-default"
+                >
+                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
+                    Each theme represents a feature suite, bringing together
+                    related capabilities and experiences so you can quickly
+                    understand how Deckoviz fits into your life.
+                  </p>
+                </motion.div>
+
+                {/* Bottom quote with special styling */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: 0.3, type: "spring", bounce: 0.3 }}
+                  whileHover={{ scale: 1.02, y: -4 }}
+                  className="pt-6"
+                >
+                  <div className="bg-gradient-to-br from-emerald-50 via-teal-50 to-green-50 rounded-2xl p-6 border-2 border-emerald-200 shadow-sm hover:shadow-lg transition-shadow cursor-default">
+                    <p className="text-base md:text-lg text-gray-800 italic font-medium leading-relaxed">
+                      Deckoviz is becoming a living platform   emotionally
+                      intelligent, deeply personalized, and evolving every single
+                      week.
+                    </p>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
