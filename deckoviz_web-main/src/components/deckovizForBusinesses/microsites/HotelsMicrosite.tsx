@@ -41,7 +41,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
         <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">✨</div>
         <div className="absolute top-60 left-1/4 text-3xl opacity-15 animate-float-medium">🛎️</div>
         <div className="absolute top-1/3 right-1/3 text-4xl opacity-10 animate-float-slow delay-1000">🌟</div>
-        <div className="absolute top-1/2 left-10 text-3xl opacity-15 animate-float-slower delay-2000">🗝️</div>
+        <div className="absolute top-1/2 left-10 text-3xl opacity-15 animate-float-slower delay-2000">�-�️</div>
         <div className="absolute bottom-1/3 right-10 text-4xl opacity-10 animate-float-medium delay-1500">💎</div>
         <div className="absolute bottom-40 left-1/4 text-3xl opacity-15 animate-float-slow delay-500">🏛️</div>
       </div>
