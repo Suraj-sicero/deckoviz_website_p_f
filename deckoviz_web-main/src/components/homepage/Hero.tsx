@@ -225,11 +225,11 @@ const Hero: React.FC = () => {
         </p>
 
         {/* Layout */}
-  <div className="w-full max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-10 px-2">
+  <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6 xl:gap-8 px-4">
 
           {/* LEFT IMAGE */}
-        <div className="relative flex justify-center lg:justify-start w-full lg:w-auto lg:flex-1 max-w-[520px]">
-          <div className="relative w-[300px] h-[260px] sm:w-[380px] sm:h-[320px] md:w-[460px] md:h-[380px] lg:w-[480px] lg:h-[420px]">
+        <div className="relative flex justify-center lg:justify-end w-full lg:w-auto flex-shrink-0 max-w-[400px] lg:max-w-[450px]">
+          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[380px] md:h-[330px] lg:w-[400px] lg:h-[350px]">
 
           {/* Room image */}
           <img
@@ -266,7 +266,7 @@ const Hero: React.FC = () => {
         </div>
 
           {/* CENTER */}
-          <div className="flex flex-col items-center gap-9 w-full lg:w-auto max-w-md flex-shrink-0">
+          <div className="flex flex-col items-center gap-9 w-full lg:w-auto lg:max-w-sm xl:max-w-md flex-shrink-0">
             <div className="flex gap-5 flex-wrap justify-center">
               <button
                 onClick={() => (window.location.href = "/place-order")}
@@ -485,10 +485,10 @@ const Hero: React.FC = () => {
           </div>
 
           {/* RIGHT IMAGE */}
-<div className="relative flex justify-center lg:justify-end w-full lg:w-auto lg:flex-1 max-w-[420px]">
+<div className="relative flex justify-center lg:justify-start w-full lg:w-auto flex-shrink-0 max-w-[350px] lg:max-w-[380px]">
 
           <div
-            className="relative w-[280px] h-[280px] sm:w-[340px] sm:h-[340px] md:w-[380px] md:h-[260px] overflow-hidden bg-gray-50"
+            className="relative w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[340px] md:h-[240px] lg:w-[360px] lg:h-[250px] overflow-hidden bg-gray-50"
             style={{
               WebkitMaskImage: currentMask,
               maskImage: currentMask,
