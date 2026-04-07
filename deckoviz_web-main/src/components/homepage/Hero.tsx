@@ -156,12 +156,12 @@ const Hero: React.FC = () => {
   const currentMask =
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
   return (
-<<<<<<< HEAD
-    <section className="py-14 md:py-12 lg:py-10 relative bg-white overflow-hidden">
+{/* <<<<<<< HEAD */}
+    // <section className="py-14 md:py-12 lg:py-10 relative bg-white overflow-hidden">
 
-=======
+{/* ======= */}
 <section className="relative w-full min-h-screen bg-white overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center">
->>>>>>> 07727efc75e9f99ef0fe34abae08e3d65c4293f4
+{/* >>>>>>> 07727efc75e9f99ef0fe34abae08e3d65c4293f4 */}
       {/* Glow animation */}
       <style
   dangerouslySetInnerHTML={{
