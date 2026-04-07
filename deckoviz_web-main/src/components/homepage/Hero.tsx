@@ -244,7 +244,7 @@ const Hero: React.FC = () => {
             top-[28%] 
             left-[50.25%] -translate-x-1/2
             w-[50%] 
-            h-[30.2%]
+            h-[45%]
             overflow-hidden rounded-sm">
 
             {frameImages.map((img, index) => (
