@@ -144,8 +144,8 @@ const DeckovizSectors: React.FC = () => {
           </h2>
 
           {/* Subtitle */}
-          <p className="text-center text-gray-600 text-lg md:text-xl max-w-3xl mx-auto mb-16 leading-relaxed">
-            A dynamic visual engine powered by generative AI — turning any wall into a living surface that evolves with your environment, audience, and purpose.
+          <p className="text-center text-gray-600 text-lg md:text-xl max-w-4xl mx-auto mb-16 leading-relaxed">
+            Deckoviz is a dynamic visual engine designed to bring many kinds of spaces to life. Powered by generative AI, deep customization, and intelligent content orchestration, it allows businesses to create, adapt, and display visual experiences that evolve with their environment, audience, and purpose. From ambient art to marketing visuals, from storytelling to product showcases, Deckoviz turns any wall into a living surface, adapting to enterprises from restaurants to hotels.
           </p>
 
           {/* Subheading */}
@@ -179,7 +179,7 @@ const DeckovizSectors: React.FC = () => {
           <div className="mt-20">
             <div className="text-center mb-12">
               <p className="text-gray-400 text-sm font-medium tracking-wider uppercase">
-                SECTORS WE TRANSFORM
+                Below are some of the sectors where Deckoviz can transform the customer experience, brand presence, and atmosphere of a space.
               </p>
             </div>
 
@@ -410,7 +410,7 @@ const RestaurantMicrosite: React.FC<{ onClose: () => void }> = ({ onClose }) => 
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mb-12 relative z-10">
-            Art that shifts from bright brunch vibes to intimate dinner moods —
+            Art that shifts from bright brunch vibes to intimate dinner moods 
             automatically, beautifully. Create unforgettable dining atmospheres that evolve
             throughout the day.
           </p>
