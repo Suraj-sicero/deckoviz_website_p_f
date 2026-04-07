@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState, useEffect } from "react"
 import { ArrowRight } from "lucide-react"
+import { style } from "framer-motion/m"
 
 /* ---------------- Button Component ---------------- */
 
@@ -155,22 +156,33 @@ const Hero: React.FC = () => {
   const currentMask =
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
   return (
-    <section className="py-14 md:py-12 lg:py-10 overflow-x-hidden relative bg-white">
-
+<section className="relative w-full min-h-screen bg-white overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center">
       {/* Glow animation */}
       <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes pulse-glow {
-          0% { box-shadow: 0 0 5px rgba(138,43,226,.2); }
-          50% { box-shadow: 0 0 25px rgba(138,43,226,.6); }
-          100% { box-shadow: 0 0 5px rgba(138,43,226,.2); }
-        }
-        .shop-now-glow{
-          animation:pulse-glow 3s infinite ease-in-out;
-        }`,
-        }}
-      />
+  dangerouslySetInnerHTML={{
+    __html: `
+      @keyframes pulse-glow {
+        0% { box-shadow: 0 0 5px rgba(138,43,226,.2); }
+        50% { box-shadow: 0 0 25px rgba(138,43,226,.6); }
+        100% { box-shadow: 0 0 5px rgba(138,43,226,.2); }
+      }
+
+      .shop-now-glow {
+        animation: pulse-glow 3s infinite ease-in-out;
+      }
+
+      /* Hide scrollbar but allow scroll */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    `,
+  }}
+/>
 
       {/* Background Glow */}
       <div className="absolute inset-0">
@@ -180,7 +192,7 @@ const Hero: React.FC = () => {
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center overflow-x-hidden">
 
         {/* Heading */}
-        <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-16 leading-tight">
+        <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
           <div className="inline">
             <span className="text-black">Make Your Space Come </span>
             <span className="italic bg-gradient-to-r from-[#8B5CF6] to-[#A78BFA] bg-clip-text text-transparent">
@@ -227,9 +239,10 @@ const Hero: React.FC = () => {
           />
 
         {/* Frame artwork */}
+        <div className="relative w-full max-w-[900px] aspect-[16/9] mx-auto">
           <div className="absolute 
-            top-[19%] 
-            left-[50.5%] -translate-x-1/2
+            top-[28%] 
+            left-[50.25%] -translate-x-1/2
             w-[50%] 
             h-[30.2%]
             overflow-hidden rounded-sm">
@@ -245,7 +258,7 @@ const Hero: React.FC = () => {
                 }`}
               />
             ))}
-
+          </div>
           </div>
 
           </div>
