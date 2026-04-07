@@ -156,7 +156,8 @@ const Hero: React.FC = () => {
   const currentMask =
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
   return (
-    <section className="relative w-full min-h-screen bg-white overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center">
+    
+<section className="relative w-full min-h-screen bg-white overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center">
       {/* Glow animation */}
       <style
   dangerouslySetInnerHTML={{
