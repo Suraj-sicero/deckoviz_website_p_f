@@ -11,6 +11,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { sequelize } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
 import blogRoutes from "./routes/blogRoutes.js";
+import creativeToolsRoutes from "./routes/creativeTools.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
 
@@ -32,8 +33,10 @@ try {
   console.log("✅ PostgreSQL connected via Sequelize.");
   await sequelize.sync(); // Optional: { alter: true } during dev
 } catch (error) {
-  console.error("❌ Database connection failed:", error);
-  process.exit(1);
+  console.warn("⚠️  Database connection failed — server will start without DB.");
+  console.warn("   Fix PG_PASSWORD in .env to restore DB features.");
+  console.warn("   Error:", error.message);
+  // NOTE: process.exit removed so Creative Tools (no DB needed) still work
 }
 
 // ===== Stripe Configuration =====
@@ -65,6 +68,7 @@ app.set("layout", "layout");
 // ===== ROUTES =====
 // ✅ API routes (for frontend JSON calls)
 app.use("/api", blogRoutes); // Example: http://localhost:5000/api/blog
+app.use("/api", creativeToolsRoutes); // Creative Tools Hub
 
 // ✅ EJS routes (for admin panel / UI)
 app.use("/", blogRoutes); // Example: http://localhost:5000/blogs or /add

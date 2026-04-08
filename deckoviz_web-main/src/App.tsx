@@ -76,6 +76,11 @@ import DASPBusinessGuide from "./components/deckovizForBusinesses/DASPBusinessGu
 import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 
 import Audiobook from "./components/Audiobook";
+import CreativeStudio from "./components/tools/CreativeStudio";
+import AudiobookTool from "./components/tools/AudiobookTool";
+import StorybookTool from "./components/tools/StorybookTool";
+import MusicTool from "./components/tools/MusicTool";
+import VisualJournalTool from "./components/tools/VisualJournalTool";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -246,7 +251,14 @@ const App: React.FC = () => {
         <Route path="/order-confirmed" element={<OrderConfirmed />} />
         <Route path="bulk-orders" element={<BulkOrder />} />
         <Route path="/bulk-confirm" element={<BulkConfirm />} />
-        <Route path="/audiobook" element={< Audiobook />} />
+        <Route path="/audiobook" element={<Audiobook />} />
+
+        {/* ── Creative Studio Hub ── */}
+        <Route path="/creative-studio" element={<CreativeStudio />} />
+        <Route path="/tools/audiobook" element={<AudiobookTool />} />
+        <Route path="/tools/storybook" element={<StorybookTool />} />
+        <Route path="/tools/music" element={<MusicTool />} />
+        <Route path="/tools/visual-journal" element={<VisualJournalTool />} />
       </Routes>
       <Footer />
     </Router>
