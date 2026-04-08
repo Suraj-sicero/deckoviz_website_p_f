@@ -242,10 +242,10 @@ const Hero: React.FC = () => {
         {/* Frame artwork */}
         <div className="relative w-full max-w-[900px] aspect-[16/9] mx-auto">
           <div className="absolute 
-            top-[28%] 
+            top-[28.5%] 
             left-[50.25%] -translate-x-1/2
             w-[50%] 
-            h-[45%]
+            h-[46%]
             overflow-hidden rounded-sm">
 
             {frameImages.map((img, index) => (
