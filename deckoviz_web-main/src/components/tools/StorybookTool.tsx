@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com//";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
 
 type Status = "idle" | "loading" | "done" | "error";
 
