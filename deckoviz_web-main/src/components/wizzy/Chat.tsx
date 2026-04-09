@@ -33,7 +33,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/wizzy/chat", {
+      const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, userMessage] }),
@@ -53,7 +53,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
   const generateStructure = async () => {
     setIsGeneratingStructure(true);
     try {
-      const response = await fetch("http://localhost:5000/api/wizzy/generate-structure", {
+      const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/generate-structure", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ history: messages }),
