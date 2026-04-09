@@ -5,6 +5,8 @@ import ImageViewer from "./ImageViewer";
 import { StoryStructure } from "../../types/wizzy";
 import { Sparkles, Bot, ArrowRight } from "lucide-react";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+
 const WizzyPage: React.FC = () => {
   const [step, setStep] = useState<"ideation" | "builder" | "viewer">("ideation");
   const [structure, setStructure] = useState<StoryStructure | null>(null);
@@ -29,7 +31,7 @@ const WizzyPage: React.FC = () => {
       const charDesc = structure.characters.map(c => `${c.name}: ${c.description}`).join(". ");
       
       for (let i = 0; i < updatedPages.length; i++) {
-        const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/generate-image", {
+        const response = await fetch(`${BACKEND_URL}/api/wizzy/generate-image`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -63,7 +65,7 @@ const WizzyPage: React.FC = () => {
 
     try {
       const charDesc = structure.characters.map(c => `${c.name}: ${c.description}`).join(". ");
-      const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/generate-image", {
+      const response = await fetch(`${BACKEND_URL}/api/wizzy/generate-image`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

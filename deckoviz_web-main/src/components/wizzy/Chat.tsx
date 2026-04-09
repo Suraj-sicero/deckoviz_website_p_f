@@ -6,11 +6,13 @@ interface ChatProps {
   onStoryGenerated: (structure: any) => void;
 }
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+
 const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: "assistant",
-      content: "Hi! I'm Wizzy. I'm here to help you create an amazing comic or storybook. What kind of story do you have in mind today? Tell me about your characters or the world you want to build!",
+      content: "Hi! I'm Wizzy. I'll help you create your comic or storybook. What kind of story do you have in mind?",
     },
   ]);
   const [input, setInput] = useState("");
@@ -33,7 +35,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/chat", {
+      const response = await fetch(`${BACKEND_URL}/api/wizzy/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: [...messages, userMessage] }),
@@ -53,7 +55,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
   const generateStructure = async () => {
     setIsGeneratingStructure(true);
     try {
-      const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/generate-structure", {
+      const response = await fetch(`${BACKEND_URL}/api/wizzy/generate-structure`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ history: messages }),
