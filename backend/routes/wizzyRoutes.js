@@ -8,32 +8,88 @@ dotenv.config();
 
 const router = express.Router();
 
-// Initialize Gemini (Free Tier)
+// Initialize Gemini
 const genAI = process.env.GOOGLE_API_KEY ? new GoogleGenerativeAI(process.env.GOOGLE_API_KEY) : null;
+const GROQ_KEY = process.env.GROQ_API_KEY;
+
+/**
+ * Generic LLM call for Wizzy Chat (supports Gemini & Groq fallback)
+ */
+async function callWizzyLLM(messages, isJson = false) {
+  // 1. Try Gemini
+  if (genAI) {
+    try {
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-1.5-flash",
+        generationConfig: isJson ? { responseMimeType: "application/json" } : undefined
+      });
+
+      // Filter and map for Gemini format
+      const contents = messages.filter(m => m.role !== "system").map(m => ({
+        role: m.role === "assistant" ? "model" : "user",
+        parts: [{ text: m.content }],
+      }));
+
+      const systemInstruction = messages.find(m => m.role === "system")?.content || "";
+
+      const result = await model.generateContent({
+        contents,
+        systemInstruction: systemInstruction || "You are Wizzy, a creative storytelling assistant.",
+      });
+
+      return result.response.text();
+    } catch (err) {
+      console.warn("⚠️ Gemini failed, trying Groq fallback...", err.message);
+    }
+  }
+
+  // 2. Try Groq Fallback
+  if (GROQ_KEY) {
+    try {
+      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${GROQ_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "llama-3.3-70b-versatile",
+          messages: messages, // Groq uses standard OpenAI format (role: user/assistant/system)
+          temperature: 0.7,
+          response_format: isJson ? { type: "json_object" } : undefined,
+        }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        return data.choices[0].message.content;
+      }
+      const errText = await res.text();
+      console.warn("⚠️ Groq failing...", errText);
+    } catch (err) {
+      console.error("Groq Error:", err.message);
+    }
+  }
+
+  throw new Error("All LLM providers failed. Check Gemini/Groq keys and quota.");
+}
+
 
 // Chat Ideation Route (using Gemini)
 router.post("/chat", async (req, res) => {
   console.log("✅ Chat endpoint hit! Messages received:", req.body.messages?.length);
   try {
     const { messages } = req.body;
-    if (!genAI) throw new Error("Google API Key / Gemini not configured");
-
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+    const systemInstruction = "You are Wizzy, a creative storytelling assistant helping users create comic books and visual storybooks. Guide the user to define characters, world, theme, and story flow.";
     
-    // Filter and map only user/model messages
-    const contents = messages.filter(m => m.role !== "system").map(m => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }],
-    }));
+    // Prepare full message list including system instruction
+    const fullMessages = [
+      { role: "system", content: systemInstruction },
+      ...messages
+    ];
 
-    console.log("Calling model.generateContent...");
-    const result = await model.generateContent({
-      contents,
-      systemInstruction: "You are Wizzy, a creative storytelling assistant helping users create comic books and visual storybooks. Guide the user to define characters, world, theme, and story flow.",
-    });
-    console.log("generateContent finished!", result.response.text());
-
-    const payload = JSON.stringify({ message: { role: "assistant", content: result.response.text() } });
+    const responseText = await callWizzyLLM(fullMessages);
+    const payload = JSON.stringify({ message: { role: "assistant", content: responseText } });
     res.setHeader('Content-Type', 'application/json');
     res.status(200).send(payload);
   } catch (error) {
@@ -46,13 +102,6 @@ router.post("/chat", async (req, res) => {
 router.post("/generate-structure", async (req, res) => {
   try {
     const { history } = req.body;
-    if (!genAI) throw new Error("Google API Key / Gemini not configured");
-
-    const model = genAI.getGenerativeModel({ 
-      model: "gemini-2.5-flash",
-      generationConfig: { responseMimeType: "application/json" }
-    });
-
     const prompt = `Based on the following conversation, generate a structured story JSON with title, character descriptions, style, and 5-8 pages with scene descriptions. 
 
 STRICT JSON format:
@@ -68,10 +117,13 @@ NOT TEXT, ONLY JSON.
 History:
 ${JSON.stringify(history)}`;
 
-    const result = await model.generateContent(prompt);
-    const content = result.response.text();
+    const responseText = await callWizzyLLM([
+      { role: "system", content: "You are a JSON generator. Return ONLY valid JSON." },
+      { role: "user", content: prompt }
+    ], true);
+
     res.setHeader('Content-Type', 'application/json');
-    res.status(200).send(content);
+    res.status(200).send(responseText);
   } catch (error) {
     console.error("Structure Error:", error);
     res.setHeader('Content-Type', 'application/json');
