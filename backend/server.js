@@ -79,12 +79,12 @@ app.set("layout", "layout");
 
 // ===== ROUTES =====
 // ✅ API routes (for frontend JSON calls)
-app.use("/api", blogRoutes); // Example: http://localhost:5000/api/blog
+app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/blog
 app.use("/api", creativeToolsRoutes); // Creative Tools Hub
 app.use("/api/wizzy", wizzyRoutes);
 
 // ✅ EJS routes (for admin panel / UI)
-app.use("/", blogRoutes); // Example: http://localhost:5000/blogs or /add
+app.use("/", blogRoutes); // Example: https://deckoviz-demo.onrender.com/blogs or /add
 
 // ===== Root Message =====
 app.get("/", (req, res) => {

@@ -29,7 +29,7 @@ const WizzyPage: React.FC = () => {
       const charDesc = structure.characters.map(c => `${c.name}: ${c.description}`).join(". ");
       
       for (let i = 0; i < updatedPages.length; i++) {
-        const response = await fetch("http://localhost:5000/api/wizzy/generate-image", {
+        const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/generate-image", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -63,7 +63,7 @@ const WizzyPage: React.FC = () => {
 
     try {
       const charDesc = structure.characters.map(c => `${c.name}: ${c.description}`).join(". ");
-      const response = await fetch("http://localhost:5000/api/wizzy/generate-image", {
+      const response = await fetch("https://deckoviz-demo.onrender.com/api/wizzy/generate-image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
