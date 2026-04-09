@@ -65,10 +65,28 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
 
 // ===== Enable CORS for Frontend =====
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://deploy-preview-5--tubular-scone-336b8c.netlify.app",
+  "https://deckoviz.netlify.app" // Add your main production domain here too
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // ✅ your frontend origin
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      // Check if the origin is in our allowed list or is a netlify preview
+      if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".netlify.app")) {
+        callback(null, true);
+      } else {
+        // Fallback: in development/preview, we can be more permissive
+        callback(null, true); 
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true
   })
 );
 
@@ -129,9 +147,8 @@ app.post("/create-checkout-session", async (req, res) => {
       ],
       metadata: metadata || {},
       mode: "payment",
-      success_url:
-        "http://localhost:5173/order-confirmed?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:5173/",
+      success_url: `${req.headers.origin || "http://localhost:5173"}/order-confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin || "http://localhost:5173"}/`,
     });
 
     res.json({ url: session.url });
