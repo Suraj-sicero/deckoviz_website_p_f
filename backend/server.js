@@ -14,6 +14,7 @@ dotenv.config();
 import { sequelize } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
 import blogRoutes from "./routes/blogRoutes.js";
 import creativeToolsRoutes from "./routes/creativeTools.js";
+import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
 import wizzyRoutes from "./routes/wizzyRoutes.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
@@ -98,7 +99,8 @@ app.set("layout", "layout");
 // ===== ROUTES =====
 // ✅ API routes (for frontend JSON calls)
 app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/blog
-app.use("/api", creativeToolsRoutes); // Creative Tools Hub
+app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
+app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
 
 // ✅ EJS routes (for admin panel / UI)
