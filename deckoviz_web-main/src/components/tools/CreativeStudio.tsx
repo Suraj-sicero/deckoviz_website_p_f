@@ -22,6 +22,15 @@ const toolCategories = [
         accent: "violet",
       },
       {
+        id: "visual-audiobook",
+        title: "Visual Audiobook",
+        description: "PDF to scene-by-scene visual audiobook with AI narration and synchronized illustrations.",
+        icon: "🎬",
+        route: "/tools/visual-audiobook",
+        badge: "New",
+        accent: "violet",
+      },
+      {
         id: "storybook",
         title: "Storybook Creator",
         description: "Type your story idea and watch Gemini craft illustrated pages with vivid AI-generated artwork.",
@@ -30,11 +39,38 @@ const toolCategories = [
         badge: "Beta",
         accent: "purple",
       },
+      {
+        id: "short-story",
+        title: "Short Story Generator",
+        description: "Describe an idea — Gemini writes a complete, engaging short story in your chosen genre.",
+        icon: "✍️",
+        route: "/tools/short-story",
+        badge: "New",
+        accent: "purple",
+      },
+      {
+        id: "comic",
+        title: "Comic Book Creator",
+        description: "Turn your story idea into a panel-by-panel comic with scene descriptions and AI illustrations.",
+        icon: "💥",
+        route: "/tools/comic",
+        badge: "New",
+        accent: "purple",
+      },
+      {
+        id: "storybook-studio",
+        title: "Storybook Studio",
+        description: "Create a storybook then edit any page text and regenerate individual illustrations.",
+        icon: "🎨",
+        route: "/tools/storybook-studio",
+        badge: "New",
+        accent: "violet",
+      },
     ],
   },
   {
     id: "personal-expression",
-    label: "Personal Expression",
+    label: "Personal Expression & Memory",
     emoji: "🖼️",
     color: "from-pink-500 to-rose-600",
     bg: "from-pink-50 to-rose-50",
@@ -46,6 +82,33 @@ const toolCategories = [
         description: "Write your thoughts, feelings and mood — Vizzy converts them into personalized AI visual art cards.",
         icon: "🌸",
         route: "/tools/visual-journal",
+        badge: "Live",
+        accent: "pink",
+      },
+      {
+        id: "greeting-card",
+        title: "Greeting Card Creator",
+        description: "Create personalized, heartfelt greeting cards with AI-written messages and matching visuals.",
+        icon: "💌",
+        route: "/tools/greeting-card",
+        badge: "New",
+        accent: "pink",
+      },
+      {
+        id: "life-book",
+        title: "Life Book",
+        description: "Transform your memories into beautifully organised chapters of your life story.",
+        icon: "📔",
+        route: "/tools/life-book",
+        badge: "New",
+        accent: "pink",
+      },
+      {
+        id: "visual-book",
+        title: "Visual Book Creator",
+        description: "Upload your photos — Gemini creates captions and weaves them into a visual narrative story.",
+        icon: "📸",
+        route: "/tools/visual-book",
         badge: "New",
         accent: "pink",
       },
@@ -67,6 +130,62 @@ const toolCategories = [
         route: "/tools/music",
         badge: "Beta",
         accent: "cyan",
+      },
+      {
+        id: "song",
+        title: "Personalized Song Creator",
+        description: "Generate custom lyrics and an original song dedicated to someone special.",
+        icon: "🎤",
+        route: "/tools/song",
+        badge: "New",
+        accent: "cyan",
+      },
+    ],
+  },
+  {
+    id: "learning",
+    label: "Learning & Education",
+    emoji: "📘",
+    color: "from-blue-500 to-indigo-600",
+    bg: "from-blue-50 to-indigo-50",
+    border: "border-blue-200",
+    tools: [
+      {
+        id: "learning-book",
+        title: "Visual Learning Book",
+        description: "Convert any topic into a structured, illustrated learning guide with chapters and key points.",
+        icon: "📘",
+        route: "/tools/learning-book",
+        badge: "New",
+        accent: "blue",
+      },
+      {
+        id: "learning-portal",
+        title: "Learning Portal",
+        description: "Chat with Vizzy AI tutor — get explanations, interactive quizzes, and a learning roadmap.",
+        icon: "🎓",
+        route: "/tools/learning-portal",
+        badge: "New",
+        accent: "blue",
+      },
+    ],
+  },
+  {
+    id: "daily",
+    label: "Daily Inspiration",
+    emoji: "🌅",
+    color: "from-amber-500 to-orange-600",
+    bg: "from-amber-50 to-orange-50",
+    border: "border-amber-200",
+    tools: [
+      {
+        id: "daily",
+        title: "Daily Inspiration Engine",
+        description: "Get your daily dose — quote, poem, book recommendation, and movie pick — all themed and visual.",
+        icon: "🌅",
+        route: "/tools/daily",
+        badge: "New",
+        accent: "amber",
       },
     ],
   },
@@ -93,6 +212,16 @@ const accentMap: Record<string, { btn: string; ring: string; glow: string }> = {
     btn: "bg-gradient-to-r from-cyan-500 to-teal-600 hover:from-cyan-400 hover:to-teal-500",
     ring: "ring-cyan-400",
     glow: "shadow-cyan-200",
+  },
+  blue: {
+    btn: "bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500",
+    ring: "ring-blue-400",
+    glow: "shadow-blue-200",
+  },
+  amber: {
+    btn: "bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500",
+    ring: "ring-amber-400",
+    glow: "shadow-amber-200",
   },
 };
 
@@ -142,6 +271,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
             ? "from-purple-50/60 to-indigo-50/60"
             : accent === "pink"
             ? "from-pink-50/60 to-rose-50/60"
+            : accent === "blue"
+            ? "from-blue-50/60 to-indigo-50/60"
+            : accent === "amber"
+            ? "from-amber-50/60 to-orange-50/60"
             : "from-cyan-50/60 to-teal-50/60"
         } opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`}
       />
@@ -170,6 +303,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
             ? "from-purple-100 to-indigo-100"
             : accent === "pink"
             ? "from-pink-100 to-rose-100"
+            : accent === "blue"
+            ? "from-blue-100 to-indigo-100"
+            : accent === "amber"
+            ? "from-amber-100 to-orange-100"
             : "from-cyan-100 to-teal-100"
         } transition-transform duration-300 group-hover:scale-110`}
       >
@@ -280,7 +417,7 @@ const CreativeStudio: React.FC = () => {
           {/* Pill badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-purple-100 shadow-md mb-8">
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-purple-700">Powered by Vizzy AI · 4 Creative Tools</span>
+            <span className="text-sm font-semibold text-purple-700">Powered by Vizzy AI · 15 Creative Tools</span>
           </div>
 
           {/* Title */}

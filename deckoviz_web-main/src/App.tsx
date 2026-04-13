@@ -81,6 +81,18 @@ import AudiobookTool from "./components/tools/AudiobookTool";
 import StorybookTool from "./components/tools/StorybookTool";
 import MusicTool from "./components/tools/MusicTool";
 import VisualJournalTool from "./components/tools/VisualJournalTool";
+import ShortStoryTool from "./components/tools/ShortStoryTool";
+import GreetingCardTool from "./components/tools/GreetingCardTool";
+import ComicTool from "./components/tools/ComicTool";
+import LifeBookTool from "./components/tools/LifeBookTool";
+import SongTool from "./components/tools/SongTool";
+import LearningBookTool from "./components/tools/LearningBookTool";
+import LearningPortalTool from "./components/tools/LearningPortalTool";
+import VisualBookTool from "./components/tools/VisualBookTool";
+import StorybookStudioTool from "./components/tools/StorybookStudioTool";
+import DailyInspirationTool from "./components/tools/DailyInspirationTool";
+import VisualAudiobookTool from "./components/tools/VisualAudiobookTool";
+import WizzyPage from "./components/wizzy/WizzyPage";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -256,9 +268,21 @@ const App: React.FC = () => {
         {/* ── Creative Studio Hub ── */}
         <Route path="/creative-studio" element={<CreativeStudio />} />
         <Route path="/tools/audiobook" element={<AudiobookTool />} />
+        <Route path="/tools/visual-audiobook" element={<VisualAudiobookTool />} />
         <Route path="/tools/storybook" element={<StorybookTool />} />
-        <Route path="/tools/music" element={<MusicTool />} />
+        <Route path="/tools/short-story" element={<ShortStoryTool />} />
+        <Route path="/tools/comic" element={<ComicTool />} />
+        <Route path="/tools/life-book" element={<LifeBookTool />} />
         <Route path="/tools/visual-journal" element={<VisualJournalTool />} />
+        <Route path="/tools/greeting-card" element={<GreetingCardTool />} />
+        <Route path="/tools/song" element={<SongTool />} />
+        <Route path="/tools/learning-book" element={<LearningBookTool />} />
+        <Route path="/tools/learning-portal" element={<LearningPortalTool />} />
+        <Route path="/tools/visual-book" element={<VisualBookTool />} />
+        <Route path="/tools/storybook-studio" element={<StorybookStudioTool />} />
+        <Route path="/tools/daily" element={<DailyInspirationTool />} />
+        <Route path="/tools/music" element={<MusicTool />} />
+        <Route path="/wizzy" element={<WizzyPage />} />
       </Routes>
       <Footer />
     </Router>

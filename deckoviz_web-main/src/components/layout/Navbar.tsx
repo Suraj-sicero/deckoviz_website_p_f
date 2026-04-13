@@ -317,7 +317,7 @@ const Navbar: React.FC = () => {
       <ImagePreloader />
 
       <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"}`}
+        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"} print:hidden`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Desktop Left Corner - Wall/Leader Hamburger Menu - Extreme Left */}

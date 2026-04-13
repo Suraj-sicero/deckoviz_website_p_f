@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react";
 import ToolLayout from "./ToolLayout";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
 
-const AudiobookTool: React.FC = () => {
+const VisualAudiobookTool: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [voice, setVoice] = useState("calm-warm");
-  const [frames, setFrames] = useState(5);
+  const [frames, setFrames] = useState(8);
   const [status, setStatus] = useState<Status>("idle");
   const [statusMsg, setStatusMsg] = useState("");
   const [downloadId, setDownloadId] = useState<string | null>(null);
@@ -24,7 +24,7 @@ const AudiobookTool: React.FC = () => {
 
   const generate = async () => {
     if (!file) { setError("Please upload a PDF first."); return; }
-    setError(""); setStatus("uploading"); setStatusMsg("Uploading PDF...");
+    setError(""); setStatus("uploading"); setStatusMsg("Uploading PDF…");
 
     const formData = new FormData();
     formData.append("pdf", file);
@@ -37,16 +37,13 @@ const AudiobookTool: React.FC = () => {
         body: formData,
       });
 
-      if (!res.ok) {
-        const msg = await res.text();
-        throw new Error(msg || "Upload failed");
-      }
+      if (!res.ok) throw new Error(await res.text() || "Upload failed");
 
       const data = await res.json();
       const jobId = data.job_id as string;
 
       setStatus("processing");
-      setStatusMsg("Generating your audiobook… this may take a minute.");
+      setStatusMsg("Generating visual audiobook… this may take a few minutes.");
 
       intervalRef.current = setInterval(async () => {
         try {
@@ -59,7 +56,7 @@ const AudiobookTool: React.FC = () => {
           if (json.status === "done") {
             setDownloadId(jobId);
             setStatus("done");
-            setStatusMsg("Your audiobook is ready!");
+            setStatusMsg("Your visual audiobook is ready!");
           } else {
             throw new Error(json.message || "Generation failed");
           }
@@ -85,7 +82,7 @@ const AudiobookTool: React.FC = () => {
 
   const reset = () => {
     setFile(null); setStatus("idle"); setStatusMsg("");
-    setDownloadId(null); setError(""); setFrames(5); setVoice("calm-warm");
+    setDownloadId(null); setError(""); setFrames(8); setVoice("calm-warm");
     if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
@@ -93,47 +90,43 @@ const AudiobookTool: React.FC = () => {
 
   return (
     <ToolLayout
-      icon="🎧"
-      title="Audiobook Creator"
-      subtitle="Turn any PDF into a beautifully narrated audiobook with AI voice"
-      gradient="from-violet-600 via-purple-700 to-indigo-800"
+      icon="🎬"
+      title="Visual Audiobook"
+      subtitle="Transform PDFs into scene-by-scene visual audiobooks with narration and AI art"
+      gradient="from-fuchsia-600 via-purple-700 to-violet-800"
     >
       <div className="space-y-8">
 
-        {/* ── Input Card ─────────────────────────────────────────────── */}
+        {/* Input Card */}
         <div className="bg-white/80 backdrop-blur-sm border border-white/60 rounded-3xl p-8 shadow-xl">
-          <h2 className="text-xl font-bold text-gray-900 mb-6">1. Configure Your Audiobook</h2>
+          <h2 className="text-xl font-bold text-gray-900 mb-6">1. Configure Your Visual Audiobook</h2>
 
           {/* File upload */}
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Upload PDF *
-            </label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Upload PDF *</label>
             <label
-              htmlFor="pdf-upload"
+              htmlFor="visual-pdf-upload"
               className={`flex flex-col items-center justify-center w-full h-40 rounded-2xl border-2 border-dashed cursor-pointer transition-all duration-300 ${
                 file
-                  ? "border-violet-400 bg-violet-50"
-                  : "border-gray-200 bg-gray-50 hover:border-violet-300 hover:bg-violet-50/50"
+                  ? "border-fuchsia-400 bg-fuchsia-50"
+                  : "border-gray-200 bg-gray-50 hover:border-fuchsia-300 hover:bg-fuchsia-50/50"
               }`}
             >
               {file ? (
                 <div className="text-center">
                   <div className="text-4xl mb-2">📄</div>
-                  <p className="font-semibold text-violet-700">{file.name}</p>
-                  <p className="text-xs text-violet-500 mt-1">
-                    {(file.size / 1024 / 1024).toFixed(2)} MB
-                  </p>
+                  <p className="font-semibold text-fuchsia-700">{file.name}</p>
+                  <p className="text-xs text-fuchsia-500 mt-1">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                 </div>
               ) : (
                 <div className="text-center">
                   <div className="text-4xl mb-2">📁</div>
                   <p className="font-semibold text-gray-600">Drop your PDF here</p>
-                  <p className="text-xs text-gray-400 mt-1">or click to browse</p>
+                  <p className="text-xs text-gray-400 mt-1">or click to browse (max 20MB)</p>
                 </div>
               )}
               <input
-                id="pdf-upload"
+                id="visual-pdf-upload"
                 type="file"
                 accept="application/pdf"
                 className="hidden"
@@ -144,7 +137,7 @@ const AudiobookTool: React.FC = () => {
 
           {/* Voice picker */}
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-gray-700 mb-3">Choose a Voice Style</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-3">Narration Voice Style</label>
             <div className="grid grid-cols-2 gap-3">
               {voiceOptions.map((v) => (
                 <button
@@ -152,51 +145,42 @@ const AudiobookTool: React.FC = () => {
                   onClick={() => setVoice(v.value)}
                   className={`flex items-center gap-3 p-4 rounded-2xl border-2 text-left transition-all duration-200 ${
                     voice === v.value
-                      ? "border-violet-500 bg-violet-50 shadow-md"
-                      : "border-gray-100 bg-white hover:border-violet-200 hover:bg-violet-50/30"
+                      ? "border-fuchsia-500 bg-fuchsia-50 shadow-md"
+                      : "border-gray-100 bg-white hover:border-fuchsia-200 hover:bg-fuchsia-50/30"
                   }`}
                 >
                   <span className="text-2xl">{v.emoji}</span>
-                  <span className={`font-medium text-sm ${voice === v.value ? "text-violet-700" : "text-gray-600"}`}>
-                    {v.label}
-                  </span>
+                  <span className={`font-medium text-sm ${voice === v.value ? "text-fuchsia-700" : "text-gray-600"}`}>{v.label}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Frames slider */}
+          {/* Visual frames slider */}
           <div className="mb-8">
             <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Number of Visual Frames: <span className="text-violet-600">{frames}</span>
+              Visual Scenes: <span className="text-fuchsia-600">{frames}</span>
             </label>
             <input
-              type="range"
-              min={1} max={20} step={1}
+              type="range" min={3} max={20} step={1}
               value={frames}
               onChange={(e) => setFrames(Number(e.target.value))}
-              className="w-full accent-violet-600"
+              className="w-full accent-fuchsia-600"
             />
-            <p className="text-xs text-gray-400 mt-1">
-              Higher = more visual snapshots through your PDF (slower processing)
-            </p>
+            <p className="text-xs text-gray-400 mt-1">Each scene gets an AI-generated illustration synchronized with narration</p>
           </div>
 
-          {/* Error */}
           {error && (
-            <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
-              ⚠️ {error}
-            </div>
+            <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">⚠️ {error}</div>
           )}
 
-          {/* Generate Button */}
           <button
             onClick={generate}
             disabled={isRunning}
             className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 ${
               isRunning
                 ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+                : "bg-gradient-to-r from-fuchsia-600 via-purple-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 hover:shadow-xl hover:scale-[1.02] shadow-lg"
             }`}
           >
             {isRunning ? (
@@ -207,47 +191,46 @@ const AudiobookTool: React.FC = () => {
                 </svg>
                 {statusMsg}
               </span>
-            ) : "🎙️ Generate Audiobook"}
+            ) : "🎬 Generate Visual Audiobook"}
           </button>
         </div>
 
-        {/* ── Processing State ────────────────────────────────────────── */}
+        {/* Processing */}
         {status === "processing" && (
-          <div className="bg-violet-50 border border-violet-200 rounded-3xl p-8 text-center">
+          <div className="bg-fuchsia-50 border border-fuchsia-200 rounded-3xl p-8 text-center">
             <div className="flex justify-center mb-4">
               <div className="relative w-16 h-16">
                 {[0, 1, 2].map((i) => (
                   <div
                     key={i}
-                    className="absolute inset-0 rounded-full border-2 border-violet-400 opacity-40 animate-ping"
+                    className="absolute inset-0 rounded-full border-2 border-fuchsia-400 opacity-40 animate-ping"
                     style={{ animationDelay: `${i * 300}ms` }}
                   />
                 ))}
-                <div className="absolute inset-4 bg-violet-500 rounded-full" />
+                <div className="absolute inset-4 bg-fuchsia-500 rounded-full" />
               </div>
             </div>
-            <h3 className="text-lg font-bold text-violet-800 mb-1">Vizzy is creating your audiobook…</h3>
-            <p className="text-sm text-violet-600">This usually takes 1–3 minutes depending on PDF length.</p>
+            <h3 className="text-lg font-bold text-fuchsia-800 mb-1">Creating your visual audiobook…</h3>
+            <p className="text-sm text-fuchsia-600">Splitting into scenes, narrating with AI voice, and generating illustrations. Takes 2–5 minutes.</p>
           </div>
         )}
 
-        {/* ── Output ─────────────────────────────────────────────────── */}
+        {/* Done */}
         {status === "done" && (
           <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-3xl p-8 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center text-xl">✅</div>
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Your Audiobook is Ready!</h2>
-                <p className="text-sm text-gray-500">Download the ZIP to get your audio + visuals</p>
+                <h2 className="text-xl font-bold text-gray-900">Your Visual Audiobook is Ready!</h2>
+                <p className="text-sm text-gray-500">ZIP contains: narrated audio + scene illustrations + HTML slideshow</p>
               </div>
             </div>
-
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={handleDownload}
                 className="flex-1 py-3.5 rounded-2xl font-bold text-white text-sm bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 transition-all duration-300 hover:scale-[1.02] shadow-lg"
               >
-                📥 Download Audiobook ZIP
+                📥 Download Visual Audiobook ZIP
               </button>
               <button
                 onClick={reset}
@@ -259,19 +242,19 @@ const AudiobookTool: React.FC = () => {
           </div>
         )}
 
-        {/* ── How it works (always visible) ──────────────────────────── */}
-        <div className="grid md:grid-cols-3 gap-6">
+        {/* How it works */}
+        <div className="grid md:grid-cols-4 gap-4">
           {[
-            { step: "1", icon: "📄", title: "Upload PDF", desc: "Books, essays, papers, or any text-heavy document" },
-            { step: "2", icon: "🤖", title: "AI Narrates", desc: "Our AI engine reads and narrates with chosen voice style" },
-            { step: "3", icon: "📥", title: "Download", desc: "Get your audiobook + visual slides as a ZIP" },
-          ].map((step) => (
-            <div key={step.step} className="bg-white/60 backdrop-blur-sm border border-gray-100 rounded-2xl p-6 text-center">
-              <div className="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center text-xl mx-auto mb-3">
-                {step.icon}
-              </div>
-              <h4 className="font-bold text-gray-900 mb-1">Step {step.step}: {step.title}</h4>
-              <p className="text-sm text-gray-500">{step.desc}</p>
+            { step: "1", icon: "📄", title: "Upload PDF", desc: "Any text-heavy document" },
+            { step: "2", icon: "🧠", title: "Scene Split", desc: "Gemini breaks into scenes" },
+            { step: "3", icon: "🎨", title: "AI Visuals", desc: "Illustration per scene" },
+            { step: "4", icon: "🎙️", title: "Narration", desc: "ElevenLabs voice audio" },
+          ].map((s) => (
+            <div key={s.step} className="bg-white/60 border border-gray-100 rounded-2xl p-5 text-center">
+              <div className="w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center text-fuchsia-700 font-black text-sm mx-auto mb-2">{s.step}</div>
+              <div className="text-2xl mb-2">{s.icon}</div>
+              <h4 className="font-bold text-gray-900 text-sm mb-1">{s.title}</h4>
+              <p className="text-xs text-gray-500">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -280,4 +263,4 @@ const AudiobookTool: React.FC = () => {
   );
 };
 
-export default AudiobookTool;
+export default VisualAudiobookTool;
