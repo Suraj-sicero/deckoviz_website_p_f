@@ -29,24 +29,23 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 
 // HELPERS
 // ──────────────────────────────────────────────────────────────────────────────
 
-const GEMINI_KEY      = process.env.GEMINI_API_KEY;
+const GEMINI_KEY      = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
 const ELEVENLABS_KEY  = process.env.ELEVENLABS_API_KEY;
 const HF_AUDIOBOOK_URL = "https://sudharsan051006-visual-audiobook-api.hf.space";
 
-/**
- * Generic LLM call that supports Gemini, Groq, or Hugging Face.
- * Defaults to Gemini, falls back to Groq or HF if keys are provided.
- */
-async function callLLM(prompt) {
-  const GEMINI_KEY = process.env.GEMINI_API_KEY;
+async function callLLM(prompt, isJson = false) {
+  const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
   const GROQ_KEY = process.env.GROQ_API_KEY;
-  const HF_TOKEN = process.env.HF_TOKEN;
 
-  // 1. Try Gemini (default)
-  if (GEMINI_KEY && !process.env.USE_FALLBACK_LLM) {
+  // 1. Try Gemini (Primary now that paid key is available)
+  if (GEMINI_KEY) {
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
-      const body = { contents: [{ parts: [{ text: prompt }] }] };
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+      const body = { 
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: isJson ? { responseMimeType: "application/json" } : undefined
+      };
+      
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -57,13 +56,13 @@ async function callLLM(prompt) {
         const data = await res.json();
         return data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
       }
-      console.warn("Gemini failing, checking for fallbacks...");
+      console.warn("Gemini failing, checking for fallbacks...", await res.text());
     } catch (err) {
       console.error("Gemini Error:", err.message);
     }
   }
 
-  // 2. Try Groq (Recommended for Testing - Fast & Free)
+  // 2. Try Groq (Fallback)
   if (GROQ_KEY) {
     try {
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -76,6 +75,7 @@ async function callLLM(prompt) {
           model: "llama-3.3-70b-versatile",
           messages: [{ role: "user", content: prompt }],
           temperature: 0.7,
+          response_format: isJson ? { type: "json_object" } : undefined,
         }),
       });
 
@@ -89,32 +89,46 @@ async function callLLM(prompt) {
     }
   }
 
-  // 3. Try Hugging Face Inference API (Free)
-  if (HF_TOKEN) {
-    try {
-      const model = "mistralai/Mistral-7B-Instruct-v0.3";
-      const res = await fetch(`https://api-inference.huggingface.co/models/${model}`, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${HF_TOKEN}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ inputs: prompt, parameters: { max_new_tokens: 1000 } }),
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        // HF returns arrays or objects depending on the model
-        return Array.isArray(data) ? data[0].generated_text : (data.generated_text || JSON.stringify(data));
-      }
-      console.warn("HF Inference failing...");
-    } catch (err) {
-      console.error("HF Error:", err.message);
-    }
-  }
-
-  throw new Error("No LLM provider available or and all fallbacks failed. Check API keys.");
+  throw new Error("No LLM provider available or all fallbacks failed. Check API keys.");
 }
+
+async function generateSingleImage(prompt) {
+  const REPLICATE_TOKEN = process.env.REPLICATE_API_TOKEN;
+  if (!REPLICATE_TOKEN) return null;
+
+  try {
+    const res = await fetch("https://api.replicate.com/v1/predictions", {
+      method: "POST",
+      headers: {
+        Authorization: `Token ${REPLICATE_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        version: "5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637", // SDXL Lightning
+        input: { prompt, negative_prompt: "blurry, low quality, deformed" },
+      }),
+    });
+
+    if (res.ok) {
+      let pred = await res.json();
+      // Poll for result (Lightning is usually fast enough that we might need 1-2 polls)
+      const pollUrl = pred.urls.get;
+      for (let i = 0; i < 10; i++) {
+        await new Promise(r => setTimeout(r, 1500));
+        const pollRes = await fetch(pollUrl, {
+          headers: { Authorization: `Token ${REPLICATE_TOKEN}` },
+        });
+        pred = await pollRes.json();
+        if (pred.status === "succeeded") return pred.output?.[0];
+        if (pred.status === "failed") break;
+      }
+    }
+  } catch (err) {
+    console.error("Image Generation Error:", err.message);
+  }
+  return null;
+}
+
 
 // ──────────────────────────────────────────────────────────────────────────────
 // AUDIOBOOK ROUTES  (proxies to Hugging Face Space)
@@ -233,13 +247,24 @@ JSON FORMAT:
 }
 `.trim();
 
-    const raw = await callLLM(prompt);
+    const raw = await callLLM(prompt, true);
 
     // Extract JSON from Gemini response (Gemini sometimes wraps in markdown)
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error("Gemini returned invalid format");
 
     const parsed = JSON.parse(jsonMatch[0]);
+
+    // Generate images for each page (background)
+    // We only generate for the first 3 pages to avoid extreme timeouts
+    // For a production app, this should be a background job
+    for (let i = 0; i < Math.min(parsed.pages.length, 3); i++) {
+        const page = parsed.pages[i];
+        if (page.imagePrompt) {
+            page.imageUrl = await generateSingleImage(`${page.imagePrompt}, ${genre} style, high quality children book illustration`);
+        }
+    }
+
     return res.json(parsed);
   } catch (err) {
     console.error("[storybook/generate]", err);
@@ -280,7 +305,7 @@ Return ONLY a JSON object:
 }
 `.trim();
 
-    const raw = await callLLM(enhancePrompt);
+    const raw = await callLLM(enhancePrompt, true);
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     const meta = jsonMatch ? JSON.parse(jsonMatch[0]) : { enhancedPrompt: description, title: "Your Track", bpm: 90 };
 
@@ -288,7 +313,7 @@ Return ONLY a JSON object:
     // Currently returns a demo response structure
     // TODO: Replace with Suno / Stable Audio / MusicGen API call
 
-    const musicApiKey = process.env.MUSIC_API_KEY;
+    const musicApiKey = process.env.MUSIC_API_KEY || process.env.REPLICATE_API_TOKEN;
 
     let audioUrl = null;
 
@@ -358,7 +383,7 @@ Return ONLY valid JSON:
 }
 `.trim();
 
-    const raw = await callLLM(analysisPrompt);
+    const raw = await callLLM(analysisPrompt, true);
     const jsonMatch = raw.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error("Invalid Gemini response");
 
@@ -366,50 +391,8 @@ Return ONLY valid JSON:
 
     // Optional: Call image generation API (Stable Diffusion / DALL·E / Runware)
     let imageUrl = null;
-    const imageApiKey = process.env.IMAGE_API_KEY;
-    const imageProvider = process.env.IMAGE_PROVIDER || "runware"; // or "openai", "stability"
-
-    if (imageApiKey && analysed.imagePrompt) {
-      try {
-        if (imageProvider === "runware") {
-          const rwRes = await fetch("https://api.runware.ai/v1", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${imageApiKey}` },
-            body: JSON.stringify([{
-              taskType: "imageInference",
-              taskUUID: `journal-${Date.now()}`,
-              positivePrompt: analysed.imagePrompt,
-              width: 768,
-              height: 512,
-              model: "runware:100@1",
-              numberResults: 1,
-            }]),
-          });
-          if (rwRes.ok) {
-            const rwData = await rwRes.json();
-            imageUrl = rwData.data?.[0]?.imageURL ?? null;
-          }
-        } else if (imageProvider === "openai") {
-          const oaiRes = await fetch("https://api.openai.com/v1/images/generations", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${imageApiKey}` },
-            body: JSON.stringify({
-              model: "dall-e-3",
-              prompt: analysed.imagePrompt,
-              size: "1792x1024",
-              quality: "standard",
-              n: 1,
-            }),
-          });
-          if (oaiRes.ok) {
-            const oaiData = await oaiRes.json();
-            imageUrl = oaiData.data?.[0]?.url ?? null;
-          }
-        }
-      } catch (imgErr) {
-        console.error("[visual-journal] Image generation error:", imgErr);
-        // Non-fatal — proceed without image
-      }
+    if (analysed.imagePrompt) {
+      imageUrl = await generateSingleImage(analysed.imagePrompt);
     }
 
     return res.json({ ...analysed, imageUrl });
