@@ -51,6 +51,7 @@ import BulkOrder from "./components/payment/BulkOrder";
 import BulkConfirm from "./components/payment/BulkConfirm";
 import GuestReactionsTestimonials from "./components/homepage/GuestReactionsTestimonials";
 import Referral from "./components/Referral";
+import GoogleTVSection from "./components/homepage/GoogleTVSection";
 import DesignedForHumans from "./components/homepage/DesignedForHumans";
 import Sitemap from "./components/Sitemap";
 import YourLifePlayedBackGently from "./components/homepage/YourLifePlayedBackGently";
@@ -148,6 +149,7 @@ const App: React.FC = () => {
 
               <ToggleGallerySection />
               <Youtube />
+              <GoogleTVSection />
               <Referral />
               <StartHere />
               <Pricing />
