@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Plus, Minus } from "lucide-react";
+import HorizontalScrollingFeatures from "./HorizontalScrollingFeatures";
 interface FeatureCardProps {
   title: string;
   description: string;
@@ -424,7 +425,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
   return (
     <div
       id="features"
-      className="min-h-screen bg-white relative overflow-hidden"
+      className="min-h-screen bg-white relative overflow-visible"
     >
       {/* Purple to pink spiral gradient background */}
       <div
@@ -443,6 +444,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
        
+        {/* Horizontal Scrolling Features Section */}
+        <HorizontalScrollingFeatures />
+
         {/* Intro Card */}
         <div className="mb-20">
           <div className="relative overflow-hidden rounded-[32px] p-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 shadow-2xl">
