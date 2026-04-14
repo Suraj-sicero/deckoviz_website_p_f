@@ -211,12 +211,50 @@ const Benefits = () => {
   const navigate = useNavigate();
 
   return (
-<section className="relative py-20 bg-white overflow-visible">
+<section className="relative py-24 bg-gradient-to-b from-slate-50 via-purple-50/20 to-pink-50/20 overflow-visible">
 
-      {/* 🌸 Infinite Portal Button */}
-{/* 🌸 Infinite Portal Button */}
-<button
+      {/* Enhanced floating decorative elements with softer colors */}
+      <motion.div
+        animate={{ 
+          y: [0, -30, 0],
+          x: [0, 20, 0],
+          scale: [1, 1.1, 1]
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-32 left-20 w-40 h-40 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, 30, 0],
+          x: [0, -20, 0],
+          scale: [1, 1.2, 1]
+        }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-32 right-20 w-56 h-56 bg-gradient-to-br from-cyan-200/30 to-teal-200/30 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{ 
+          scale: [1, 1.3, 1],
+          opacity: [0.2, 0.4, 0.2],
+          rotate: [0, 180, 360]
+        }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 rounded-full blur-3xl"
+      />
+      <motion.div
+        animate={{ 
+          y: [0, -20, 0],
+          scale: [1, 1.15, 1]
+        }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-1/4 left-1/3 w-48 h-48 bg-gradient-to-br from-rose-200/25 to-orange-200/25 rounded-full blur-3xl"
+      />
+
+      {/* 🌸 Infinite Portal Button with enhanced styling */}
+<motion.button
   onClick={() => navigate("/infinite-portal")}
+  whileHover={{ scale: 1.08, y: -2 }}
+  whileTap={{ scale: 0.98 }}
   className="
     hidden lg:flex
     absolute right-8 top-6
@@ -226,7 +264,6 @@ const Benefits = () => {
     rounded-full
     text-left
 
-    /* 🍊 Dark Peach / Soft Orange */
     bg-gradient-to-r 
     from-[#ffb088] 
     via-[#ff9966] 
@@ -245,98 +282,250 @@ const Benefits = () => {
     A Portal of Infinite Goodness, Endless Memories,  
     and a Frame That Will Never Be Finished 
   </span>
-</button>
+</motion.button>
 
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-center mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-          <span className="text-gray-900">How</span>{" "}
-          <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
-            Deckoviz
-          </span>{" "}
-          <span className="text-gray-900">Brings Your Space to</span>{" "}
-          <span className="italic bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
-            Life
-          </span>
-        </h2>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Enhanced heading with better spacing and animations */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="mb-16"
+        >
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <motion.span 
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-gray-800"
+            >
+              How
+            </motion.span>{" "}
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.7, rotate: -5 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.35, duration: 0.7, type: "spring", bounce: 0.4 }}
+              className="italic bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent inline-block"
+            >
+              Deckoviz
+            </motion.span>{" "}
+            <motion.span 
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="text-gray-800"
+            >
+              Brings Your Space to
+            </motion.span>{" "}
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.7, rotate: 5 }}
+              whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.65, duration: 0.7, type: "spring", bounce: 0.4 }}
+              className="italic bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 bg-clip-text text-transparent inline-block"
+            >
+              Life
+            </motion.span>
+          </h2>
 
-        <p className="text-gray-600 text-center max-w-3xl mx-auto mb-12">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.8, duration: 0.7 }}
+            className="text-gray-600 text-center text-lg max-w-3xl mx-auto leading-relaxed"
+          >
+            A living canvas, a creative companion, and a quiet presence that makes
+            your space feel more like you.
+          </motion.p>
+        </motion.div>
 
-          A living canvas, a creative companion, and a quiet presence that makes
-          your space feel more like you.
-        </p>
-
-        {/* MAIN BENEFIT CARDS ONLY */}
+        {/* Enhanced benefit cards with refined aesthetics */}
 <motion.div
   variants={containerVariants}
   initial="hidden"
   whileInView="visible"
-  viewport={{ once: true, amount: 0.2 }}
-  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+  viewport={{ once: true, amount: 0.15 }}
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
 >
           {benefitsData
             .filter((benefit) => benefit.showOnHome)
             .map((benefit, index) => (
               <motion.div
                 key={index}
-                  custom={index}
-  variants={cardVariants}
-                whileHover={{ rotateX: 6, rotateY: -6, scale: 1.03 }}
-                transition={{ type: "spring", stiffness: 180, damping: 18 }}
+                custom={index}
+                variants={cardVariants}
+                whileHover={{ 
+                  y: -16,
+                  scale: 1.03,
+                  transition: { duration: 0.4, type: "spring", stiffness: 300, damping: 20 }
+                }}
                 className="
-                  p-6 rounded-2xl
-                  bg-gradient-to-br from-indigo-50 via-pink-50 to-purple-50
-                  hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500
-                  text-gray-800 hover:text-white
-                  shadow-sm hover:shadow-xl
-                  transition-colors
+                  relative
+                  p-8 rounded-[2rem]
+                  bg-white/80 backdrop-blur-sm
+                  border border-gray-100
+                  shadow-[0_8px_30px_rgba(0,0,0,0.04)]
+                  hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+                  transition-all duration-500
                   transform-gpu
                   text-center
+                  group
+                  overflow-hidden
                 "
-                style={{ transformStyle: "preserve-3d" }}
               >
-                {/* Emoji */}
+                {/* Subtle gradient overlay on hover */}
                 <motion.div
-                  whileHover={{ scale: 1.4 }}
-                  transition={{ type: "spring", stiffness: 260, damping: 12 }}
-                  className="text-4xl mb-4 inline-block"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileHover={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute inset-0 bg-gradient-to-br from-purple-50/80 via-pink-50/60 to-indigo-50/80 rounded-[2rem] -z-10"
+                />
+                
+                {/* Soft glow effect */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute -inset-1 bg-gradient-to-br from-purple-200/20 via-pink-200/20 to-indigo-200/20 rounded-[2rem] blur-xl -z-20"
+                />
+
+                {/* Floating sparkles */}
+                <motion.div
+                  animate={{ 
+                    y: [0, -10, 0],
+                    opacity: [0, 1, 0],
+                    scale: [0, 1, 0]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity,
+                    delay: index * 0.3
+                  }}
+                  className="absolute top-6 right-6 w-2 h-2 bg-gradient-to-br from-yellow-300 to-orange-300 rounded-full"
+                />
+                <motion.div
+                  animate={{ 
+                    y: [0, -15, 0],
+                    opacity: [0, 1, 0],
+                    scale: [0, 1.2, 0]
+                  }}
+                  transition={{ 
+                    duration: 3.5,
+                    repeat: Infinity,
+                    delay: index * 0.3 + 0.5
+                  }}
+                  className="absolute top-10 right-10 w-1.5 h-1.5 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full"
+                />
+
+                {/* Emoji with enhanced animation */}
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.4,
+                    rotate: [0, -12, 12, -8, 8, 0],
+                    y: -8,
+                    transition: { 
+                      scale: { type: "spring", stiffness: 400, damping: 15 },
+                      rotate: { duration: 0.6 },
+                      y: { type: "spring", stiffness: 300 }
+                    }
+                  }}
+                  className="text-6xl mb-5 inline-block filter drop-shadow-lg"
                 >
                   {benefit.icon}
                 </motion.div>
 
-                {/* Title */}
-                <h3 className="text-lg font-semibold mb-2">
+                {/* Title with refined typography */}
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 group-hover:text-purple-700 transition-colors duration-400 leading-snug">
                   {benefit.title}
                 </h3>
 
-                {/* Description */}
-                <p className="text-sm opacity-90">
+                {/* Description with better readability */}
+                <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-400">
                   {benefit.description}
                 </p>
+
+                {/* Elegant bottom accent */}
+                <motion.div
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  whileHover={{ scaleX: 1, opacity: 1 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-0.5 bg-gradient-to-r from-transparent via-purple-300 to-transparent rounded-full"
+                />
               </motion.div>
             ))}
         </motion.div>
 
-        {/* Explore More */}
-        <div className="flex justify-center mt-12">
-          <Link
-            to="/benefits"
-            className="
-              px-8 py-3 rounded-full
-              bg-gradient-to-r from-indigo-500 to-pink-500
-              text-white font-medium shadow-lg
-              hover:scale-105 transition
-            "
+        {/* Enhanced CTA button */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.9, duration: 0.7 }}
+          className="flex justify-center mt-16"
+        >
+          <motion.div
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
           >
-            See More Magic ✨
-          </Link>
-        </div>
+            <Link
+              to="/benefits"
+              className="
+                relative
+                px-10 py-4 rounded-full
+                bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+                text-white font-semibold text-base
+                shadow-[0_10px_40px_rgba(139,92,246,0.3)]
+                hover:shadow-[0_20px_60px_rgba(139,92,246,0.5)]
+                transition-all duration-500
+                overflow-hidden
+                group
+                inline-flex items-center gap-3
+              "
+            >
+              <span className="relative z-10">
+                See More Magic
+              </span>
+              <motion.span
+                animate={{ 
+                  rotate: [0, 14, -14, 0],
+                  scale: [1, 1.3, 1.3, 1]
+                }}
+                transition={{ 
+                  duration: 2.5,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+                className="relative z-10 text-xl"
+              >
+                ✨
+              </motion.span>
+              
+              {/* Shimmer effect */}
+              <motion.div
+                initial={{ x: "-100%", opacity: 0.5 }}
+                animate={{ x: "200%" }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "linear",
+                  repeatDelay: 1
+                }}
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
+              />
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
+      
       <style>{`
   @keyframes float {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
   }
 `}</style>
 

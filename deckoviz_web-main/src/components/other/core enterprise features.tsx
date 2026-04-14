@@ -46,6 +46,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className={`text-3xl md:text-6xl font-bold bg-gradient-to-r ${brandGradient} bg-clip-text text-transparent pb-2`}
+            style={{ fontFamily: "'Playfair Display', serif" }}
           >
             Core Enterprise Features
           </motion.h2>

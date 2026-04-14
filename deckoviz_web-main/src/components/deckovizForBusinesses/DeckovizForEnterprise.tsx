@@ -775,7 +775,7 @@ const extraFeatures = [
             "></div>
 
             {/* Heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold leading-tight tracking-tight mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
               <span
                 className="bg-clip-text text-transparent animate-gradient"
                 style={{
@@ -908,7 +908,7 @@ const extraFeatures = [
 
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 md:mb-8">
-                <h2 className="text-xl md:text-2xl font-semibold tracking-wide">
+                <h2 className="text-xl md:text-2xl font-semibold tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Deckoviz for Enterprises
                 </h2>
 
@@ -1022,7 +1022,8 @@ const extraFeatures = [
               fontSize: "2rem",
               fontWeight: "600",
               color: "#111",
-              marginBottom: "32px"
+              marginBottom: "32px",
+              fontFamily: "'Playfair Display', serif"
             }}
           >
             What Deckoviz is, at its Core
@@ -1168,13 +1169,7 @@ const extraFeatures = [
 
 
 
-     {/* ================= CORE ENTERPRISE FEATURES ================= */}
-
-
-<EnterpriseFeatures enterpriseFeatures={enterpriseFeatures} />
-
-
-      {/* ================= INTELLIGENT AMBIENCE CARD ================= */}
+     {/* ================= INTELLIGENT AMBIENCE CARD ================= */}
     <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-purple-50 py-28 px-6 md:px-12">
       
       {/* Animated Background Glow */}
@@ -1200,6 +1195,7 @@ const extraFeatures = [
         <motion.h1
           variants={fadeUp}
           className="text-4xl md:text-4xl font-bold leading-tight text-gray-900"
+          style={{ fontFamily: "'Playfair Display', serif" }}
         >
           The Intelligent Ambience & Storytelling Layer
           <span className="block bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-rose-500 bg-clip-text text-transparent">
@@ -1240,6 +1236,12 @@ const extraFeatures = [
       </motion.div>
     </section>
 
+     {/* ================= CORE ENTERPRISE FEATURES ================= */}
+
+
+<EnterpriseFeatures enterpriseFeatures={enterpriseFeatures} />
+
+
       {/* ================= SECTION 5: ENTERPRISE FEATURES ================= */}
 <motion.section
         initial={{ opacity: 0, y: 30 }}
@@ -1259,8 +1261,8 @@ const extraFeatures = [
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
 
-          <h2 className="text-4xl font-semibold text-center mb-14 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent">
-            Core Enterprise Features & Highlights
+          <h2 className="text-4xl font-semibold text-center mb-14 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
+            Additional Enterprise Features and Highlights
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -1332,7 +1334,7 @@ const extraFeatures = [
         <div className="max-w-7xl mx-auto px-4">
           {/* Enhanced Heading Section */}
           <div className="text-center mb-10">
-            <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight mb-7">
+            <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight mb-7" style={{ fontFamily: "'Playfair Display', serif" }}>
               Learn More About
               <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
                 {" "}
@@ -1455,7 +1457,7 @@ const extraFeatures = [
 {/* Title */}
 <div className="text-center mb-14">
 
-<h2 className="text-4xl font-semibold text-gray-900 mb-4">
+<h2 className="text-4xl font-semibold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
 A Canvas for Every Environment, Every Moment
 </h2>
 
@@ -1550,6 +1552,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: false }}
         className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight"
+        style={{ fontFamily: "'Playfair Display', serif" }}
       >
         Benefits that{" "}
         <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
@@ -1709,7 +1712,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
       {/* Bottom CTA Section */}
       <section className="py-8 md:py-8 bg-white">
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
             Ready to Redefine Your Space?
           </h2>
 
@@ -1815,7 +1818,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
     <div className="text-center mb-20">
       <h2 className="text-3xl md:text-5xl font-semibold tracking-tight mb-6 
       bg-gradient-to-r from-purple-700 via-pink-600 to-indigo-600 
-      bg-clip-text text-transparent">
+      bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
         Explore Further
       </h2>
 
