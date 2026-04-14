@@ -1,9 +1,179 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { ArrowRight } from "lucide-react"
-import { style } from "framer-motion/m"
+import * as THREE from 'three'
+
+/* ---------------- Three.js Background Component ---------------- */
+
+const ThreeBackground: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const sceneRef = useRef<THREE.Scene | null>(null)
+  const cameraRef = useRef<THREE.PerspectiveCamera | null>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+  const particlesRef = useRef<THREE.Points | null>(null)
+  const mouseRef = useRef({ x: 0, y: 0 })
+
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    // Scene setup
+    const scene = new THREE.Scene()
+    sceneRef.current = scene
+
+    // Camera setup
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    )
+    camera.position.z = 5
+    cameraRef.current = camera
+
+    // Renderer setup
+    const renderer = new THREE.WebGLRenderer({ 
+      alpha: true, 
+      antialias: true 
+    })
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    containerRef.current.appendChild(renderer.domElement)
+    rendererRef.current = renderer
+
+    // Create particles
+    const particlesGeometry = new THREE.BufferGeometry()
+    const particlesCount = 3000
+    const posArray = new Float32Array(particlesCount * 3)
+    const colorArray = new Float32Array(particlesCount * 3)
+
+    // Purple to cyan gradient colors
+    const colors = [
+      new THREE.Color(0x8B5CF6), // Purple
+      new THREE.Color(0xA78BFA), // Light purple
+      new THREE.Color(0x06B6D4), // Cyan
+      new THREE.Color(0x14B8A6), // Teal
+      new THREE.Color(0x6366F1), // Indigo
+    ]
+
+    for (let i = 0; i < particlesCount * 3; i += 3) {
+      // Position
+      posArray[i] = (Math.random() - 0.5) * 15
+      posArray[i + 1] = (Math.random() - 0.5) * 15
+      posArray[i + 2] = (Math.random() - 0.5) * 10
+
+      // Color
+      const color = colors[Math.floor(Math.random() * colors.length)]
+      colorArray[i] = color.r
+      colorArray[i + 1] = color.g
+      colorArray[i + 2] = color.b
+    }
+
+    particlesGeometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(posArray, 3)
+    )
+    particlesGeometry.setAttribute(
+      'color',
+      new THREE.BufferAttribute(colorArray, 3)
+    )
+
+    // Particle material
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.03,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending,
+      sizeAttenuation: true
+    })
+
+    // Mesh
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial)
+    scene.add(particlesMesh)
+    particlesRef.current = particlesMesh
+
+    // Mouse move handler
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1
+      mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+
+    // Animation
+    let animationId: number
+    const clock = new THREE.Clock()
+
+    const animate = () => {
+      animationId = requestAnimationFrame(animate)
+      const elapsedTime = clock.getElapsedTime()
+
+      if (particlesRef.current) {
+        // Rotate particles
+        particlesRef.current.rotation.y = elapsedTime * 0.05
+        particlesRef.current.rotation.x = elapsedTime * 0.03
+
+        // Wave effect
+        const positions = particlesRef.current.geometry.attributes.position.array as Float32Array
+        for (let i = 0; i < positions.length; i += 3) {
+          const x = positions[i]
+          const z = positions[i + 2]
+          positions[i + 1] = Math.sin(x * 0.5 + elapsedTime) * 0.5 + 
+                            Math.cos(z * 0.5 + elapsedTime) * 0.5
+        }
+        particlesRef.current.geometry.attributes.position.needsUpdate = true
+
+        // Mouse interaction
+        particlesRef.current.rotation.x += mouseRef.current.y * 0.0005
+        particlesRef.current.rotation.y += mouseRef.current.x * 0.0005
+      }
+
+      // Camera movement
+      camera.position.x = Math.sin(elapsedTime * 0.1) * 0.5
+      camera.position.y = Math.cos(elapsedTime * 0.15) * 0.3
+
+      renderer.render(scene, camera)
+    }
+
+    animate()
+
+    // Handle resize
+    const handleResize = () => {
+      if (!cameraRef.current || !rendererRef.current) return
+      
+      cameraRef.current.aspect = window.innerWidth / window.innerHeight
+      cameraRef.current.updateProjectionMatrix()
+      rendererRef.current.setSize(window.innerWidth, window.innerHeight)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('resize', handleResize)
+      cancelAnimationFrame(animationId)
+      
+      if (containerRef.current && rendererRef.current) {
+        containerRef.current.removeChild(rendererRef.current.domElement)
+      }
+      
+      particlesGeometry.dispose()
+      particlesMaterial.dispose()
+      rendererRef.current?.dispose()
+    }
+  }, [])
+
+  return (
+    <div 
+      ref={containerRef} 
+      className="absolute inset-0 pointer-events-none"
+      style={{ zIndex: 0 }}
+    />
+  )
+}
 
 /* ---------------- Button Component ---------------- */
 
@@ -158,6 +328,9 @@ const Hero: React.FC = () => {
   return (
     
 <section className="relative w-full min-h-screen bg-white overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center">
+      {/* Three.js Particle Background */}
+      <ThreeBackground />
+      
       {/* Glow animation */}
       <style
   dangerouslySetInnerHTML={{
@@ -185,9 +358,9 @@ const Hero: React.FC = () => {
   }}
 />
 
-      {/* Background Glow */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-70"></div>
+      {/* Background Glow - reduced opacity to work with Three.js */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1 }}>
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200 via-indigo-200 to-violet-200 blur-3xl opacity-30"></div>
       </div>
 
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
