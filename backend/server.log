@@ -1,0 +1,87 @@
+[2026-04-14T16:15:31.802Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:15:31.812Z] LOG: ✅ Redis Connected
+[2026-04-14T16:15:31.813Z] LOG: Dekoviz
+[2026-04-14T16:15:31.834Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:15:31.840Z] LOG: ✅ Redis Connected
+[2026-04-14T16:15:31.840Z] LOG: Dekoviz
+[2026-04-14T16:16:06.176Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:16:06.183Z] LOG: ✅ Redis Connected
+[2026-04-14T16:16:06.183Z] LOG: Dekoviz
+[2026-04-14T16:16:06.302Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:16:06.308Z] LOG: ✅ Redis Connected
+[2026-04-14T16:16:06.309Z] LOG: Dekoviz
+[2026-04-14T16:17:27.230Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:17:32.274Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.66 GiB already allocated; 26.87 GiB free; 17.00 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:17:32.275Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:17:33.730Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:17:38.149Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.66 GiB already allocated; 26.89 GiB free; 16.98 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:17:38.150Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:18:41.932Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:18:57.619Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.65 GiB already allocated; 29.59 GiB free; 14.29 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:18:57.620Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:19:05.222Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:19:11.038Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.65 GiB already allocated; 29.58 GiB free; 14.29 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:19:11.039Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:20:04.207Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:20:04.212Z] LOG: ✅ Redis Connected
+[2026-04-14T16:20:04.213Z] LOG: Dekoviz
+[2026-04-14T16:20:04.223Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:20:04.228Z] LOG: ✅ Redis Connected
+[2026-04-14T16:20:04.229Z] LOG: Dekoviz
+[2026-04-14T16:30:31.950Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:30:38.539Z] LOG: Generation output received: https://replicate.delivery/xezq/K2jG4cou9tZCGJBiac2eHojarF4JsSfPBmMHEu3fpc3atD2sA/out-0.png
+[2026-04-14T16:30:39.303Z] ERROR: [postcard/generate] Error: Input buffer has corrupt header: glib: XML parse error: Error domain 1 code 23 on line 4 column 122 of data: EntityRef: expecting ';'
+[2026-04-14T16:31:23.424Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:31:35.688Z] LOG: Generation output received: https://replicate.delivery/xezq/AeBbB6DiXnQJXq5XtVQ59lnHCrNIB7awS72d2bttjCBz7gNLA/out-0.png
+[2026-04-14T16:31:38.437Z] ERROR: [postcard/generate] Error: Input buffer has corrupt header: glib: XML parse error: Error domain 1 code 23 on line 4 column 122 of data: EntityRef: expecting ';'
+[2026-04-14T16:32:20.709Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:20.712Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:20.714Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:20.715Z] LOG: Dekoviz
+[2026-04-14T16:32:20.717Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:20.718Z] LOG: Dekoviz
+[2026-04-14T16:32:36.253Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:36.257Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:36.259Z] LOG: Dekoviz
+[2026-04-14T16:32:36.287Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:36.291Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:36.291Z] LOG: Dekoviz
+[2026-04-14T16:37:57.561Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:38:05.016Z] LOG: Generation output received: https://replicate.delivery/xezq/BYuaX6Jy4yYZFRqdXMTDcUWzrkMAPcZwIye92NAOt2z1eBbWA/out-0.png
+[2026-04-14T17:07:14.331Z] LOG: Redis Error: Error: Socket closed unexpectedly
+[2026-04-14T17:07:14.333Z] LOG: Redis Error: Error: connect ECONNREFUSED 127.0.0.1:6379
+[2026-04-15T03:55:35.883Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T03:55:35.889Z] LOG: ✅ Redis Connected
+[2026-04-15T03:55:35.889Z] LOG: Dekoviz
+[2026-04-15T03:58:26.949Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-15T03:58:36.373Z] LOG: Generation output received: https://replicate.delivery/xezq/ujLkLwc84t6xFpaaCJHedSOm55v9x7EJewBRikmDrVSp7LbWA/out-0.png
+[2026-04-15T08:29:05.409Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T08:29:05.413Z] LOG: ✅ Redis Connected
+[2026-04-15T08:29:05.413Z] LOG: Dekoviz
+[2026-04-15T08:41:58.420Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T08:41:58.426Z] LOG: ✅ Redis Connected
+[2026-04-15T08:41:58.427Z] LOG: Dekoviz
+[2026-04-15T08:43:57.426Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T08:43:57.426Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T08:43:57.426Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T08:43:57.426Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T08:43:58.273Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T08:43:58.273Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T08:43:58.273Z] LOG: [postcard] Generating context-aware artwork...
+[2026-04-15T08:44:02.477Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/ypWRuPFraHpjN1woauahfID3T84hccXanEOjzQ2BV8goDoNLA/out-0.png
+[2026-04-15T08:44:02.478Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T08:44:02.480Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T08:44:12.910Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/55ZedAuOqKVUWCc8YminhKtZpkQmwwALSxjqNsSzXIRuDoNLA/out-0.png
+[2026-04-15T08:44:12.911Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T08:44:14.456Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T08:44:14.842Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776242654842.jpg
+[2026-04-15T08:44:14.843Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T08:44:14.843Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T08:44:14.843Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T09:46:40.341Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T09:46:40.344Z] LOG: ✅ Redis Connected
+[2026-04-15T09:46:40.345Z] LOG: Dekoviz
