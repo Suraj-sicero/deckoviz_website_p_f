@@ -42,13 +42,30 @@ import client from "./redisClient.js";
 // DB logic moved to background IIFE above
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
-);
-
+import fs from "fs";
 // ===== Resolve __dirname (for ES modules) =====
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+const logStream = fs.createWriteStream(path.join(__dirname, "server.log"), { flags: "a" });
+const originalLog = console.log;
+const originalError = console.error;
+
+console.log = (...args) => {
+    const msg = `[${new Date().toISOString()}] LOG: ${args.join(" ")}\n`;
+    originalLog(...args);
+    logStream.write(msg);
+};
+
+console.error = (...args) => {
+    const msg = `[${new Date().toISOString()}] ERROR: ${args.join(" ")}\n`;
+    originalError(...args);
+    logStream.write(msg);
+};
+
+app.listen(PORT, () =>
+  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
+);
 
 // DB logic moved to background IIFE above
 
