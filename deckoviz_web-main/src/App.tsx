@@ -66,7 +66,7 @@ import Partnership from "./components/Partnership";
 import CoreReading from "./components/CoreReading";
 import MouseSparkles from "./components/MouseSparkles";
 
-import { i } from "framer-motion/client";
+
 import Benefits from "./components/homepage/Benefits";
 import AllBenefits from "./components/homepage/AllBenefits";
 import Support from "./components/Support";
@@ -93,6 +93,7 @@ import VisualBookTool from "./components/tools/VisualBookTool";
 import StorybookStudioTool from "./components/tools/StorybookStudioTool";
 import DailyInspirationTool from "./components/tools/DailyInspirationTool";
 import VisualAudiobookTool from "./components/tools/VisualAudiobookTool";
+import PostcardTool from "./components/tools/PostcardTool";
 import WizzyPage from "./components/wizzy/WizzyPage";
 
 
@@ -178,7 +179,7 @@ const App: React.FC = () => {
         <Route path="/blog" element={<Blog />} />
         {/* ## 2. ADD THE NEW DYNAMIC ROUTE FOR SINGLE POSTS ## */}
         <Route path="/blog/:slug" element={<BlogDetail />} />
-<Route path="/blog/:slug" element={<Blog />} />
+
         <Route path="/designed-for" element={<DesignedFor />} />
         <Route path="/FAQ" element={<FAQ />} />
         <Route
@@ -284,6 +285,7 @@ const App: React.FC = () => {
         <Route path="/tools/storybook-studio" element={<StorybookStudioTool />} />
         <Route path="/tools/daily" element={<DailyInspirationTool />} />
         <Route path="/tools/music" element={<MusicTool />} />
+        <Route path="/tools/postcard" element={<PostcardTool />} />
         <Route path="/wizzy" element={<WizzyPage />} />
       </Routes>
       <Footer />

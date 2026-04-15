@@ -112,6 +112,15 @@ const toolCategories = [
         badge: "New",
         accent: "pink",
       },
+      {
+        id: "postcard",
+        title: "Before & After Postcard",
+        description: "Transform your business space — create high-quality before/after postcards with Deckoviz frames.",
+        icon: "🎴",
+        route: "/tools/postcard",
+        badge: "New",
+        accent: "pink",
+      },
     ],
   },
   {
