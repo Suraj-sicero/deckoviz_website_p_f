@@ -48,7 +48,7 @@ async function callLLM(prompt, isJson = false) {
   // 1. Try Gemini
   if (GEMINI_KEY) {
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_KEY}`;
       const body = {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: isJson ? { responseMimeType: "application/json" } : undefined,
@@ -103,19 +103,62 @@ function extractJSON(raw) {
   return JSON.parse(match[0]);
 }
 
-async function generateImage(prompt) {
+async function callVisionLLM(prompt, imageBuffer, isJson = false) {
+  const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  if (!GEMINI_KEY) throw new Error("Gemini API key is required for vision tasks.");
+
+  try {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_KEY}`;
+    const body = {
+      contents: [
+        {
+          parts: [
+            { text: prompt },
+            {
+              inline_data: {
+                mime_type: "image/jpeg",
+                data: imageBuffer.toString("base64"),
+              },
+            },
+          ],
+        },
+      ],
+      generationConfig: isJson ? { responseMimeType: "application/json" } : undefined,
+    };
+
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    }
+    const errorText = await res.text();
+    console.warn("Gemini Vision failing:", errorText);
+    throw new Error(`Gemini Vision Error: ${errorText}`);
+  } catch (err) {
+    console.error("Vision Error:", err.message);
+    throw err;
+  }
+}
+
+async function generateImage(prompt, negPrompt = "") {
   const REPLICATE_TOKEN = process.env.REPLICATE_API_TOKEN;
   if (!REPLICATE_TOKEN) return null;
 
   try {
     const replicate = new Replicate({ auth: REPLICATE_TOKEN });
+    const finalNeg = negPrompt || "blurry, low quality, deformed, text, watermark";
     // Using SDXL Lightning for speed
     const output = await replicate.run(
       "bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
       {
         input: {
           prompt,
-          negative_prompt: "blurry, low quality, deformed, text, watermark",
+          negative_prompt: finalNeg,
         },
       }
     );
@@ -776,231 +819,8 @@ Choose real books and movies that exist. Make everything feel curated and person
 });
 
 // ──────────────────────────────────────────────────────────────────────────────
-// 11. BEFORE-AND-AFTER POSTCARD GENERATOR  (Premium AI Pipeline)
+// 11. BEFORE-AND-AFTER POSTCARD GENERATOR
 // ──────────────────────────────────────────────────────────────────────────────
-
-/**
- * Step 1 — Analyze the uploaded room photo with Gemini Vision.
- * Returns structured JSON about the interior style, wall, palette, lighting,
- * and business vibe so every downstream prompt is context-aware.
- */
-async function analyzeRoomWithVision(imageBuffer) {
-  const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-  if (!GEMINI_KEY) {
-    console.warn("No Gemini key — falling back to default room analysis");
-    return null;
-  }
-
-  try {
-    const base64Image = imageBuffer.toString("base64");
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`;
-
-    const body = {
-      contents: [
-        {
-          parts: [
-            {
-              inlineData: {
-                mimeType: "image/jpeg",
-                data: base64Image,
-              },
-            },
-            {
-              text: `You are a professional interior design analyst. Analyze this room photo and return ONLY valid JSON with exactly these keys (no markdown, no explanation):
-
-{
-  "interiorStyle": "one of: modern, rustic, luxury, cozy, industrial, minimalist, bohemian, scandinavian, traditional, eclectic",
-  "wallColor": "the dominant wall color as a descriptive name, e.g. warm beige, cool grey, off-white",
-  "wallTexture": "one of: smooth painted, textured plaster, brick, wood paneling, concrete, wallpaper, stone",
-  "colorPalette": ["list 4-5 dominant colors in the scene as descriptive names"],
-  "lightingType": "one of: warm natural, cool natural, warm artificial, cool artificial, mixed ambient, dramatic spotlight",
-  "lightingDirection": "one of: left, right, overhead, diffused, window-left, window-right",
-  "roomType": "e.g. living room, office, café, restaurant, bedroom, lobby, gallery",
-  "mood": "one of: sophisticated, cozy, energetic, serene, dramatic, playful, professional",
-  "bestWallForFrame": "describe the largest empty wall area suitable for hanging a frame",
-  "artworkRecommendation": "describe the ideal artwork style and colors that would complement this specific interior"
-}`,
-            },
-          ],
-        },
-      ],
-      generationConfig: { responseMimeType: "application/json" },
-    };
-
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-      const parsed = JSON.parse(raw.match(/\{[\s\S]*\}/)?.[0] || "{}");
-      console.log("[postcard] Room analysis:", JSON.stringify(parsed, null, 2));
-      return parsed;
-    }
-    console.warn("[postcard] Gemini Vision failed:", await res.text());
-  } catch (err) {
-    console.error("[postcard] Room analysis error:", err.message);
-  }
-  return null;
-}
-
-/**
- * Build the default room analysis when Gemini Vision is unavailable.
- */
-function getDefaultRoomAnalysis() {
-  return {
-    interiorStyle: "modern",
-    wallColor: "warm beige",
-    wallTexture: "smooth painted",
-    colorPalette: ["warm beige", "soft white", "charcoal", "natural wood", "sage green"],
-    lightingType: "warm natural",
-    lightingDirection: "diffused",
-    roomType: "living room",
-    mood: "sophisticated",
-    bestWallForFrame: "the main wall behind the seating area",
-    artworkRecommendation: "abstract contemporary art with warm earth tones and gold accents",
-  };
-}
-
-/**
- * Step 2 — Generate a gallery-quality artwork via text-to-image that
- * matches the analysed interior style, palette, and mood.
- */
-async function generateContextAwareArtwork(roomAnalysis) {
-  const REPLICATE_TOKEN = process.env.REPLICATE_API_TOKEN;
-  if (!REPLICATE_TOKEN) return null;
-
-  // Map interior styles to art styles
-  const artStyleMap = {
-    modern:       "contemporary abstract expressionism with bold geometric forms",
-    rustic:       "impressionist landscape painting with rich earth tones and natural textures",
-    luxury:       "large-scale abstract art with metallic gold leaf, deep jewel tones, and sweeping brushstrokes",
-    cozy:         "warm toned impressionist still life with soft edges and intimate lighting",
-    industrial:   "urban contemporary mixed media art with raw textures and metallic elements",
-    minimalist:   "zen-inspired minimal abstract with negative space and subtle ink wash",
-    bohemian:     "vibrant mixed-media collage with rich patterns and warm saturated colors",
-    scandinavian: "Nordic abstract with muted pastels, clean lines, and organic shapes",
-    traditional:  "classical oil painting style with rich depth, warm glazing and dramatic chiaroscuro",
-    eclectic:     "bold pop-art inspired contemporary piece with vivid complementary colors",
-  };
-
-  const artStyle = artStyleMap[roomAnalysis.interiorStyle] || artStyleMap.modern;
-  const paletteStr = (roomAnalysis.colorPalette || []).join(", ");
-
-  const artworkPrompt = `A stunning gallery-quality fine art painting, ${artStyle}. Color palette complements ${paletteStr}. Masterful technique, museum-worthy, richly textured with visible brushstrokes, ${roomAnalysis.mood} atmosphere. Professional art photography of the painting, perfectly lit, ultra high resolution, 8K detail. No frame, no wall, just the artwork itself on a clean background.`;
-
-  try {
-    console.log("[postcard] Generating context-aware artwork...");
-    const replicate = new Replicate({ auth: REPLICATE_TOKEN });
-    const output = await replicate.run(
-      "bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
-      {
-        input: {
-          prompt: artworkPrompt,
-          negative_prompt: "blurry, low quality, deformed, text, watermark, frame, wall, room, ugly, amateur, generic clip art",
-          width: 1024,
-          height: 768,
-        },
-      }
-    );
-    const url = Array.isArray(output) ? output[0] : output;
-    console.log("[postcard] Artwork generated:", url);
-    return url;
-  } catch (err) {
-    console.error("[postcard] Artwork generation error:", err.message);
-  }
-  return null;
-}
-
-/**
- * Step 3 — Enhanced Image-to-Image transformation with a context-aware
- * prompt built from the room analysis. Uses lower prompt_strength to
- * preserve the room while adding the frame + backlighting convincingly.
- */
-async function generatePremiumTransformation(imageBuffer, roomAnalysis, artworkDescription) {
-  const REPLICATE_TOKEN = process.env.REPLICATE_API_TOKEN;
-  if (!REPLICATE_TOKEN) return null;
-
-  try {
-    console.log("[postcard] Starting premium img2img transformation...");
-    const replicate = new Replicate({ auth: REPLICATE_TOKEN });
-
-    // Resize for SDXL
-    const resizedBuffer = await sharp(imageBuffer)
-      .resize(1024, 1024, { fit: "inside", withoutEnlargement: true })
-      .jpeg({ quality: 90 })
-      .toBuffer();
-
-    const dataUri = `data:image/jpeg;base64,${resizedBuffer.toString("base64")}`;
-
-    // Build a richly detailed, context-aware transformation prompt
-    const prompt = [
-      `A photorealistic interior photograph of the exact same ${roomAnalysis.roomType} with identical furniture and layout,`,
-      `but now featuring a premium Deckoviz DASP digital art frame mounted naturally on ${roomAnalysis.bestWallForFrame || "the main wall"}.`,
-      `The frame has sleek ${roomAnalysis.interiorStyle === "rustic" ? "natural oak" : roomAnalysis.interiorStyle === "luxury" ? "brushed gold" : "matte black"} edges with modern premium finish, realistic 3D depth, subtle cast shadows.`,
-      `Inside the frame: a breathtaking ${artworkDescription || "gallery-quality contemporary abstract artwork with sophisticated colors"}.`,
-      `Behind the frame: soft warm ambient LED backlighting creating a cinematic ${roomAnalysis.lightingType === "cool natural" ? "cool-white" : "warm golden"} glow that diffuses naturally onto the ${roomAnalysis.wallColor} ${roomAnalysis.wallTexture} wall.`,
-      `The wall has slightly richer texture, the room lighting feels warmer and more cinematic with enhanced depth and contrast.`,
-      `The overall atmosphere is ${roomAnalysis.mood}, luxurious, high-end interior design magazine quality.`,
-      `${roomAnalysis.lightingDirection} lighting with natural shadows. Photorealistic, 8K quality, architectural photography.`,
-    ].join(" ");
-
-    const output = await replicate.run(
-      "stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc",
-      {
-        input: {
-          image: dataUri,
-          prompt,
-          prompt_strength: 0.38,
-          negative_prompt: "blurry, low quality, deformed, text, watermark, distorted furniture, changed room layout, extra windows, multiple frames, cartoon, painting style, oversaturated, overexposed, different room, different furniture arrangement, people, animals",
-          num_outputs: 1,
-          guidance_scale: 8.5,
-          num_inference_steps: 40,
-        },
-      }
-    );
-
-    const url = Array.isArray(output) ? output[0] : output;
-    console.log("[postcard] Premium transformation complete:", url);
-    return url;
-  } catch (err) {
-    console.error("[postcard] Premium transformation error:", err);
-  }
-  return null;
-}
-
-/**
- * Step 4 — Post-process the "After" image with Sharp:
- *  • Slightly boost warmth and contrast for a cinematic luxury feel
- *  • Enhance saturation subtly
- *  • Apply gentle sharpening for perceived quality
- */
-async function postProcessAfterImage(afterBuffer) {
-  try {
-    return await sharp(afterBuffer)
-      // Subtle warmth boost: shift toward golden amber tones
-      .modulate({
-        brightness: 1.04,    // +4% brightness
-        saturation: 1.12,    // +12% saturation for richer colors
-      })
-      // Linear contrast bump
-      .linear(1.08, -(128 * 0.08))   // gentle S-curve equivalent
-      // Sharpen for perceived crispness
-      .sharpen({
-        sigma: 0.8,
-        m1: 0.6,   // flat areas
-        m2: 1.2,   // jagged areas (edges)
-      })
-      .jpeg({ quality: 95 })
-      .toBuffer();
-  } catch (err) {
-    console.warn("[postcard] Post-processing failed, using raw buffer:", err.message);
-    return afterBuffer;
-  }
-}
 
 router.post("/postcard/generate", upload.single("image"), async (req, res) => {
   try {
@@ -1010,156 +830,212 @@ router.post("/postcard/generate", upload.single("image"), async (req, res) => {
     if (!file) return res.status(400).json({ error: "Missing image upload" });
     if (!businessName?.trim()) return res.status(400).json({ error: "Missing business name" });
 
-    console.log(`\n[postcard] ═══════════════════════════════════════`);
-    console.log(`[postcard] Starting premium pipeline for "${businessName}"`);
-    console.log(`[postcard] ═══════════════════════════════════════\n`);
+    console.log("Postcard generation started for:", businessName);
 
-    // ── Step 1: Analyze the room with Gemini Vision ────────────────────────
-    console.log("[postcard] Step 1/5 — Analyzing room with AI Vision...");
-    let roomAnalysis = await analyzeRoomWithVision(file.buffer);
-    if (!roomAnalysis || !roomAnalysis.interiorStyle) {
-      console.log("[postcard] Vision unavailable, using intelligent defaults");
-      roomAnalysis = getDefaultRoomAnalysis();
-    }
+    // Step 1: Analyze room with Gemini Vision for optimal frame placement
+    const visionPrompt = `
+      Analyze this room image for optimal placement of a Deckoviz premium 16:9 digital art frame.
+      
+      CRITICAL PLACEMENT RULES:
+      1. ART REPLACEMENT: If there is existing artwork or a painting on the wall, prioritize replacing it exactly in the same position.
+      2. SCALING: The frame must be realistically scaled. It should occupy 30-50% of the visible wall section's width (unless replacing existing art, then match its width).
+      3. ELEVATION: The frame must be positioned at natural EYE LEVEL (slightly above tables/couches), matching the original painting's perspective if applicable.
+      4. CENTERING: Center HORIZONTALLY on the specific wall section.
+      5. PERSPECTIVE: Ensure perfect alignment with the wall plane to avoid any "floating" effect.
+      
+      Return ONLY valid JSON (normalized 0-1000):
+      {
+        "center_x": [0-1000], 
+        "center_y": [0-1000],
+        "width": [200-500],
+        "backlight_color": "hex_color_curated_for_room",
+        "reasoning": "Explain if you are replacing existing art and how you determined centering/eye-level."
+      }
+    `.trim();
 
-    // ── Step 2: Generate context-aware artwork ─────────────────────────────
-    console.log("[postcard] Step 2/5 — Generating gallery-quality artwork...");
-    const artworkUrl = await generateContextAwareArtwork(roomAnalysis);
-    const artworkDescription = roomAnalysis.artworkRecommendation ||
-      `${roomAnalysis.interiorStyle} abstract art with sophisticated textures`;
+    const visionRaw = await callVisionLLM(visionPrompt, file.buffer, true);
+    const placement = extractJSON(visionRaw);
+    console.log("Placement detected:", placement);
 
-    // ── Step 3: Premium img2img transformation ─────────────────────────────
-    console.log("[postcard] Step 3/5 — Applying premium AI transformation...");
-    const afterImageUrl = await generatePremiumTransformation(
-      file.buffer,
-      roomAnalysis,
-      artworkDescription
-    );
-    if (!afterImageUrl) throw new Error("Failed to generate 'After' image transformation.");
+    // Step 2: Generate stunning FLAT 2D artwork for the frame
+    const artThemes = ["luxury minimalist abstract", "geometric vector landscape", "flat oil wash texture", "modern graphic glass art"];
+    const chosenTheme = artThemes[Math.floor(Math.random() * artThemes.length)];
+    
+    // Strict rules for 2D content - removing any mention of "landscape" if it causes 3D rooms
+    const artPrompt = `A high-end FLAT 2D VECTOR ${chosenTheme} digital art, museum quality, professional graphic design, flat colors, NO perspective, NO depth, NO rooms, NO furniture, NO windows, 16:9 aspect ratio, 8k resolution, flat 2D style.`;
+    const artNegativePrompt = "room, interior, furniture, window, portal, 3D, depth, perspective, realistic scene, person, lamp, couch, bed, wall, floor, ceiling, architecture, blurry, distorted";
+    
+    const artworkUrl = await generateImage(artPrompt, artNegativePrompt);
+    if (!artworkUrl) throw new Error("Failed to generate frame artwork.");
+    
+    const artRes = await fetch(artworkUrl);
+    const artBuffer = Buffer.from(await artRes.arrayBuffer());
 
-    // ── Step 4: Post-process for cinematic warmth ──────────────────────────
-    console.log("[postcard] Step 4/5 — Post-processing for cinematic quality...");
-    const rawAfterRes = await fetch(afterImageUrl);
-    const rawAfterBuffer = Buffer.from(await rawAfterRes.arrayBuffer());
-    const enhancedAfterBuffer = await postProcessAfterImage(rawAfterBuffer);
+    // Step 3: Prepare Dimensions
+    const metadata = await sharp(file.buffer).metadata();
+    const roomWidth = metadata.width;
+    const roomHeight = metadata.height;
 
-    // ── Step 5: Compose the final postcard ─────────────────────────────────
-    console.log("[postcard] Step 5/5 — Composing final premium postcard...");
-    const width = 1920;
-    const height = 1080;
-    const halfWidth = width / 2;
+    // Calculate frame dimensions in pixels
+    const frameWidthPx = (placement.width / 1000) * roomWidth;
+    const frameHeightPx = (frameWidthPx * 9) / 16;
+    const centerX = (placement.center_x / 1000) * roomWidth;
+    const centerY = (placement.center_y / 1000) * roomHeight;
+    const left = centerX - frameWidthPx / 2;
+    const top = centerY - frameHeightPx / 2;
 
-    // Resize original and enhanced-after to fit halves
-    const beforePart = await sharp(file.buffer)
-      .resize(halfWidth, height, { fit: "cover" })
-      .toBuffer();
+    // Step 4: Create the Premium Frame, Shadows & LED Backlight
+    const borderRadius = frameWidthPx * 0.04; 
+    const borderSize = frameWidthPx * 0.03;  
+    const glowBlur = frameWidthPx * 0.08;
+    const contactShadowBlur = frameWidthPx * 0.01; // Tight shadow for "sticking" to wall
+    const backlightColor = placement.backlight_color || "#ffaa44";
 
-    const afterPart = await sharp(enhancedAfterBuffer)
-      .resize(halfWidth, height, { fit: "cover" })
-      .toBuffer();
-
-    // Escape business name for SVG
-    const escapedBusinessName = businessName
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&apos;");
-
-    // Premium SVG overlay with elegant design
-    const labelsSvg = `
-      <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="topGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="rgba(0,0,0,0.6)" />
-            <stop offset="100%" stop-color="rgba(0,0,0,0)" />
-          </linearGradient>
-          <linearGradient id="bottomGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="rgba(0,0,0,0)" />
-            <stop offset="100%" stop-color="rgba(0,0,0,0.5)" />
-          </linearGradient>
-          <linearGradient id="dividerGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="rgba(255,255,255,0)" />
-            <stop offset="30%" stop-color="rgba(255,255,255,0.7)" />
-            <stop offset="70%" stop-color="rgba(255,255,255,0.7)" />
-            <stop offset="100%" stop-color="rgba(255,255,255,0)" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-        </defs>
+    // Combined Shadows SVG (Contact Shadow + Ambient Occlusion + LED Glow)
+    const shadowSvg = `
+      <svg width="${roomWidth}" height="${roomHeight}">
+        <filter id="ledGlow">
+          <feGaussianBlur stdDeviation="${glowBlur}" />
+        </filter>
+        <filter id="contactShadow">
+          <feGaussianBlur stdDeviation="${contactShadowBlur}" />
+        </filter>
         
-        <!-- Top gradient overlay for text readability -->
-        <rect x="0" y="0" width="${width}" height="180" fill="url(#topGrad)" />
-        
-        <!-- Bottom gradient overlay for labels -->
-        <rect x="0" y="${height - 120}" width="${width}" height="120" fill="url(#bottomGrad)" />
+        <!-- 1. Ambient LED Glow -->
+        <rect 
+          x="${left - glowBlur}" 
+          y="${top - glowBlur}" 
+          width="${frameWidthPx + glowBlur * 2}" 
+          height="${frameHeightPx + glowBlur * 2}" 
+          fill="${backlightColor}" 
+          filter="url(#ledGlow)" 
+          opacity="0.5"
+        />
 
-        <!-- Center divider line -->
-        <rect x="${halfWidth - 1}" y="0" width="2" height="${height}" fill="url(#dividerGrad)" />
-
-        <!-- Branding Top Center -->
-        <text x="${width / 2}" y="55" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="bold" text-anchor="middle" filter="url(#glow)" letter-spacing="6">DECKOVIZ</text>
-        <text x="${width / 2}" y="90" fill="rgba(255,255,255,0.85)" font-family="Georgia, serif" font-size="20" font-style="italic" text-anchor="middle">${escapedBusinessName} — Reimagined with Deckoviz DASP</text>
-
-        <!-- Before Label -->
-        <rect x="30" y="${height - 75}" width="130" height="44" rx="22" fill="rgba(0,0,0,0.5)" />
-        <text x="95" y="${height - 46}" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="3">BEFORE</text>
-
-        <!-- After Label -->
-        <rect x="${width - 160}" y="${height - 75}" width="130" height="44" rx="22" fill="rgba(212,175,55,0.7)" />
-        <text x="${width - 95}" y="${height - 46}" fill="white" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="3">AFTER</text>
-
-        <!-- Subtle inner border with rounded corners -->
-        <rect x="8" y="8" width="${width - 16}" height="${height - 16}" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" rx="8" />
+        <!-- 2. Dark Contact Shadow (To prevent floating) -->
+        <rect 
+          x="${left}" 
+          y="${top}" 
+          width="${frameWidthPx}" 
+          height="${frameHeightPx}" 
+          fill="rgba(0,0,0,0.8)" 
+          filter="url(#contactShadow)"
+          rx="${borderRadius}"
+        />
       </svg>
     `;
 
-    // Final composition
-    const finalBuffer = await sharp({
-      create: {
-        width: width,
-        height: height,
-        channels: 4,
-        background: { r: 0, g: 0, b: 0, alpha: 1 },
-      },
-    })
+    // Wooden Frame SVG with more detail
+    const frameBezelSvg = `
+      <svg width="${frameWidthPx}" height="${frameHeightPx}">
+        <defs>
+          <linearGradient id="woodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3d2b1f;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#1e140d;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#3d2b1f;stop-opacity:1" />
+          </linearGradient>
+          <filter id="innerDepth">
+            <feOffset dx="0" dy="5" />
+            <feGaussianBlur stdDeviation="10" result="offset-blur" />
+            <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
+            <feFlood flood-color="black" flood-opacity="0.8" result="color" />
+            <feComposite operator="in" in="color" in2="inverse" result="shadow" />
+            <feComposite operator="over" in="shadow" in2="SourceGraphic" />
+          </filter>
+        </defs>
+        <!-- Outer Frame -->
+        <rect x="0" y="0" width="${frameWidthPx}" height="${frameHeightPx}" rx="${borderRadius}" fill="url(#woodGrad)" stroke="#5c4033" stroke-width="2" />
+        <!-- Inner Bezel Depth -->
+        <rect x="${borderSize}" y="${borderSize}" width="${frameWidthPx - borderSize * 2}" height="${frameHeightPx - borderSize * 2}" rx="${borderRadius * 0.7}" fill="black" filter="url(#innerDepth)" />
+      </svg>
+    `;
+
+    // Step 5: Composite the "After" image
+    const resizedArt = await sharp(artBuffer)
+      .resize(Math.round(frameWidthPx - borderSize * 2), Math.round(frameHeightPx - borderSize * 2), { fit: "cover" })
+      .toBuffer();
+
+    const afterImageBuffer = await sharp(file.buffer)
       .composite([
-        { input: beforePart, top: 0, left: 0 },
-        { input: afterPart, top: 0, left: halfWidth },
-        { input: Buffer.from(labelsSvg), top: 0, left: 0 },
+        { input: Buffer.from(shadowSvg), top: 0, left: 0 },
+        { input: Buffer.from(frameBezelSvg), top: Math.round(top), left: Math.round(left) },
+        { input: resizedArt, top: Math.round(top + borderSize), left: Math.round(left + borderSize) }
       ])
       .jpeg({ quality: 95 })
       .toBuffer();
 
-    // Save to local public folder
+    // Step 6: Create the Final Postcard (Side-by-Side)
+    const canvasWidth = 1920;
+    const canvasHeight = 1080;
+    const halfWidth = canvasWidth / 2;
+
+    const beforePart = await sharp(file.buffer)
+      .resize(halfWidth, canvasHeight, { fit: "cover" })
+      .toBuffer();
+    
+    const afterPart = await sharp(afterImageBuffer)
+      .resize(halfWidth, canvasHeight, { fit: "cover" })
+      .toBuffer();
+
+    const escapedName = businessName.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[m]));
+
+    const labelsSvg = `
+      <svg width="${canvasWidth}" height="${canvasHeight}">
+        <style>
+          @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&amp;family=Dancing+Script:wght@700&amp;display=swap');
+          .title { fill: white; font-family: 'Comfortaa', sans-serif; font-size: 64px; font-weight: 700; text-anchor: middle; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); }
+          .tagline { fill: white; font-family: 'Dancing Script', cursive; font-size: 32px; text-anchor: middle; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); }
+          .label { fill: white; font-family: sans-serif; font-size: 24px; font-weight: bold; text-anchor: middle; }
+          .label-bg { fill: rgba(0,0,0,0.6); rx: 12; }
+          .brand-bg { fill: rgba(0,0,0,0.3); filter: blur(15px); }
+        </style>
+        
+        <rect x="${canvasWidth/2 - 450}" y="15" width="900" height="150" class="brand-bg" rx="20" />
+        <text x="${canvasWidth/2}" y="85" class="title">Deckoviz</text>
+        <text x="${canvasWidth/2}" y="130" class="tagline">${escapedName}, experience your space transformed with Deckoviz DASP</text>
+
+        <rect x="40" y="${canvasHeight - 80}" width="140" height="50" class="label-bg" />
+        <text x="110" y="${canvasHeight - 45}" class="label">BEFORE</text>
+
+        <rect x="${canvasWidth - 180}" y="${canvasHeight - 80}" width="140" height="50" class="label-bg" />
+        <text x="${canvasWidth - 110}" y="${canvasHeight - 45}" class="label">AFTER</text>
+
+        <rect x="0" y="0" width="${canvasWidth}" height="${canvasHeight}" fill="none" stroke="white" stroke-width="15" opacity="0.2" />
+      </svg>
+    `;
+
+    const finalBuffer = await sharp({
+      create: { width: canvasWidth, height: canvasHeight, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 1 } }
+    })
+    .composite([
+      { input: beforePart, top: 0, left: 0 },
+      { input: afterPart, top: 0, left: halfWidth },
+      { input: Buffer.from(labelsSvg), top: 0, left: 0 }
+    ])
+    .jpeg({ quality: 95 })
+    .toBuffer();
+
     const publicDir = path.join(__dirname, "../public/generated");
     if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
 
-    const fileName = `postcard_${Date.now()}.jpg`;
-    const filePath = path.join(publicDir, fileName);
-    fs.writeFileSync(filePath, finalBuffer);
+    const timestamp = Date.now();
+    const fileName = `postcard_premium_${timestamp}.jpg`;
+    const afterFileName = `after_${timestamp}.jpg`;
+    const beforeFileName = `before_${timestamp}.jpg`;
+
+    fs.writeFileSync(path.join(publicDir, fileName), finalBuffer);
+    fs.writeFileSync(path.join(publicDir, afterFileName), afterImageBuffer);
+    // Resize before buffer for consistency in slider
+    const beforeBuffer = await sharp(file.buffer).jpeg({ quality: 95 }).toBuffer();
+    fs.writeFileSync(path.join(publicDir, beforeFileName), beforeBuffer);
 
     const baseUrl = process.env.BACKEND_URL || "http://localhost:5000";
-
-    console.log(`\n[postcard] ✅ Premium postcard ready: ${fileName}`);
-    console.log(`[postcard] Room style detected: ${roomAnalysis.interiorStyle}`);
-    console.log(`[postcard] Mood: ${roomAnalysis.mood}`);
-    console.log(`[postcard] ═══════════════════════════════════════\n`);
-
     return res.json({
       success: true,
       imageUrl: `${baseUrl}/generated/${fileName}`,
-      afterImageUrl: afterImageUrl,
-      artworkUrl: artworkUrl || null,
-      roomAnalysis: {
-        style: roomAnalysis.interiorStyle,
-        mood: roomAnalysis.mood,
-        wallColor: roomAnalysis.wallColor,
-        roomType: roomAnalysis.roomType,
-        palette: roomAnalysis.colorPalette,
-      },
+      afterUrl: `${baseUrl}/generated/${afterFileName}`,
+      beforeUrl: `${baseUrl}/generated/${beforeFileName}`,
+      reasoning: placement.reasoning
     });
   } catch (err) {
     console.error("[postcard/generate]", err);
@@ -1168,3 +1044,4 @@ router.post("/postcard/generate", upload.single("image"), async (req, res) => {
 });
 
 export default router;
+

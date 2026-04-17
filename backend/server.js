@@ -79,7 +79,6 @@ const stripe = new Stripe(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
 
 // ===== Enable CORS for Frontend =====
@@ -107,6 +106,25 @@ app.use(
     credentials: true
   })
 );
+
+// Static files AFTER CORS so generated images get proper headers
+app.use(express.static(path.join(__dirname, "public")));
+
+// Dedicated download endpoint — forces Content-Disposition: attachment
+app.get("/download/:filename", (req, res) => {
+  const filename = req.params.filename;
+  // Sanitize: only allow alphanumeric, underscores, dots, hyphens
+  if (!/^[a-zA-Z0-9_.\-]+$/.test(filename)) {
+    return res.status(400).json({ error: "Invalid filename" });
+  }
+  const filePath = path.join(__dirname, "public/generated", filename);
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: "File not found" });
+  }
+  res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+  res.setHeader("Content-Type", "image/jpeg");
+  res.sendFile(filePath);
+});
 
 // ===== View Engine (EJS) =====
 app.set("view engine", "ejs");
