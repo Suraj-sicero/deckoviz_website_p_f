@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight } from "lucide-react";
 import { Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
 import { useAudio } from "../AudioProvider";
 
@@ -198,8 +198,10 @@ const Navbar: React.FC = () => {
   const [currentPath, setCurrentPath] = useState("");
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] =
     useState<boolean>(false);
+
   const [isWallLeaderDropdownOpen, setIsWallLeaderDropdownOpen] =
     useState<boolean>(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
   const { isPlaying, toggle, next, prev } = useAudio();
 
   useEffect(() => {
@@ -214,6 +216,37 @@ const Navbar: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // NEW: Auto-hide Navbar logic for Developer Specs
+  useEffect(() => {
+    if (!currentPath.startsWith("/developer-specs/")) {
+      setIsNavbarVisible(true);
+      return;
+    }
+
+    let hideTimeout: NodeJS.Timeout;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      // Show navbar if mouse is in the top 100px or moving
+      if (e.clientY < 100) {
+        setIsNavbarVisible(true);
+        clearTimeout(hideTimeout);
+      } else {
+        // If mouse is in the "space" (below 100px), set a timer to hide it
+        setIsNavbarVisible(true); // Keep visible while moving
+        clearTimeout(hideTimeout);
+        hideTimeout = setTimeout(() => {
+          setIsNavbarVisible(false);
+        }, 2000); // Hide after 2 seconds of inactivity in the "space"
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(hideTimeout);
+    };
+  }, [currentPath]);
 
   const handleBuyNow = (): void => {
     window.location.href = "/place-order";
@@ -311,13 +344,15 @@ const Navbar: React.FC = () => {
     (cat) => cat.title !== "Enterprises",
   );
 
+
+
   return (
     <>
       {/* OPTIMIZATION 1: Add Image Preloader */}
       <ImagePreloader />
 
       <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"} print:hidden`}
+        className={`fixed w-full z-50 transition-all duration-700 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"} ${!isNavbarVisible ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Desktop Left Corner - Wall/Leader Hamburger Menu - Extreme Left */}
@@ -713,6 +748,8 @@ const Navbar: React.FC = () => {
                 <span style={{ fontSize: "14px" }}>✨</span>
                 Creative Studio
               </a>
+
+
             </div>
 
             {/* Center Logo with Comfortaa font */}
@@ -862,6 +899,8 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
             </div>
+
+
 
             {/* Other Navigation Items */}
             <div className="border-t border-gray-200 pt-4 space-y-0">

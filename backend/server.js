@@ -16,6 +16,8 @@ import blogRoutes from "./routes/blogRoutes.js";
 import creativeToolsRoutes from "./routes/creativeTools.js";
 import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
 import wizzyRoutes from "./routes/wizzyRoutes.js";
+import dreamRoutes from "./routes/dreamRoutes.js";
+import memoryRoutes from "./routes/memoryRoutes.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
 
@@ -137,6 +139,8 @@ app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/
 app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
 app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
+app.use("/api", dreamRoutes);
+app.use("/api/memory", memoryRoutes);
 
 // ✅ EJS routes (for admin panel / UI)
 app.use("/", blogRoutes); // Example: https://deckoviz-demo.onrender.com/blogs or /add
