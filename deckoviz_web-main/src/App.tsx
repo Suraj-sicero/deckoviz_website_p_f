@@ -95,6 +95,28 @@ import DailyInspirationTool from "./components/tools/DailyInspirationTool";
 import VisualAudiobookTool from "./components/tools/VisualAudiobookTool";
 import PostcardTool from "./components/tools/PostcardTool";
 import WizzyPage from "./components/wizzy/WizzyPage";
+import ToolGenerator from "./components/developerSpecs/ToolGenerator";
+import FluidDreams from "./components/developerSpecs/FluidDreams";
+import ParticleGalaxy from "./components/developerSpecs/ParticleGalaxy";
+import AudioWaves from "./components/developerSpecs/AudioWaves";
+import LivingPaintings from "./components/developerSpecs/LivingPaintings";
+import FractalWorlds from "./components/developerSpecs/FractalWorlds";
+import PhysicsSandbox from "./components/developerSpecs/PhysicsSandbox";
+import NatureSystems from "./components/developerSpecs/NatureSystems";
+import AIDreamWorlds from "./components/developerSpecs/AIDreamWorlds";
+import TypographyArt from "./components/developerSpecs/TypographyArt";
+import WeatherSimulations from "./components/developerSpecs/WeatherSimulations";
+import ZenGarden from "./components/developerSpecs/ZenGarden";
+import MotionArt from "./components/developerSpecs/MotionArt";
+import DataAsArt from "./components/DataAsArt";
+import MemoryLandscapes from "./components/MemoryLandscapes";
+import CelestialCosmos from "./components/CelestialCosmos";
+import MaterialSimulations from "./components/MaterialSimulations";
+import DreamArchitecture from "./components/DreamArchitecture";
+import OrganismSim from "./components/OrganismSim";
+import AmbientRitual from "./components/AmbientRitual";
+import SymmetryMachine from "./components/SymmetryMachine";
+import ExperimentalArtModes from "./components/developerSpecs/ExperimentalArtModes";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -142,15 +164,27 @@ const App: React.FC = () => {
 
   return (
     <Router>
+      <AppContent isLoading={isLoading} />
+    </Router>
+  );
+};
+
+const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
+  const location = useLocation();
+  const isDeveloperTool = location.pathname.startsWith("/developer-specs");
+
+  return (
+    <>
       <AnimatePresence mode="wait">
         {isLoading && <LoadingAnimation key="loading" />}
       </AnimatePresence>
 
       <ScrollToTop />
       <ScrollToSectionOnHome />
-      <MouseSparkles />
+      {!isDeveloperTool && <MouseSparkles />}
 
       <Navbar />
+      <main className={isDeveloperTool ? "relative z-10 h-screen pt-20 bg-black overflow-hidden" : ""}>
       <Routes>
         <Route
           path="/"
@@ -287,9 +321,33 @@ const App: React.FC = () => {
         <Route path="/tools/music" element={<MusicTool />} />
         <Route path="/tools/postcard" element={<PostcardTool />} />
         <Route path="/wizzy" element={<WizzyPage />} />
+        <Route path="/experimental-art-modes" element={<ExperimentalArtModes />} />
+        
+        {/* ── Developer Specs ── */}
+        <Route path="/developer-specs/fluid-dreams" element={<FluidDreams />} />
+        <Route path="/developer-specs/particle-galaxy" element={<ParticleGalaxy />} />
+        <Route path="/developer-specs/audio-waves" element={<AudioWaves />} />
+        <Route path="/developer-specs/living-paintings" element={<LivingPaintings />} />
+        <Route path="/developer-specs/fractal-worlds" element={<FractalWorlds />} />
+        <Route path="/developer-specs/physics-sandbox" element={<PhysicsSandbox />} />
+        <Route path="/developer-specs/nature-systems" element={<NatureSystems />} />
+        <Route path="/developer-specs/ai-dream-worlds" element={<AIDreamWorlds />} />
+        <Route path="/developer-specs/typography-art" element={<TypographyArt />} />
+        <Route path="/developer-specs/weather-simulations" element={<WeatherSimulations />} />
+        <Route path="/developer-specs/zen-garden" element={<ZenGarden />} />
+        <Route path="/developer-specs/motion-art" element={<MotionArt />} />
+        <Route path="/developer-specs/data-as-art" element={<DataAsArt />} />
+        <Route path="/developer-specs/memory-landscapes" element={<MemoryLandscapes />} />
+        <Route path="/developer-specs/celestial-cosmos" element={<CelestialCosmos />} />
+        <Route path="/developer-specs/material-simulations" element={<MaterialSimulations />} />
+        <Route path="/developer-specs/dream-architecture" element={<DreamArchitecture />} />
+        <Route path="/developer-specs/organism-sim" element={<OrganismSim />} />
+        <Route path="/developer-specs/ambient-ritual" element={<AmbientRitual />} />
+        <Route path="/developer-specs/symmetry-machine" element={<SymmetryMachine />} />
       </Routes>
+      </main>
       <Footer />
-    </Router>
+    </>
   );
 };
 
