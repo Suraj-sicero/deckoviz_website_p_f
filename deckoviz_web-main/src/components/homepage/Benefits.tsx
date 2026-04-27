@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import HomesMicrosite from "./HomesMicrosite";
 
 /* ================= BENEFITS DATA ================= */
 
@@ -209,8 +211,10 @@ const cardVariants = {
 
 const Benefits = () => {
   const navigate = useNavigate();
+  const [showHomesMicrosite, setShowHomesMicrosite] = useState(false);
 
   return (
+    <>
 <section className="relative py-24 bg-gradient-to-b from-slate-50 via-purple-50/20 to-pink-50/20 overflow-visible">
 
       {/* Enhanced floating decorative elements with softer colors */}
@@ -250,41 +254,85 @@ const Benefits = () => {
         className="absolute bottom-1/4 left-1/3 w-48 h-48 bg-gradient-to-br from-rose-200/25 to-orange-200/25 rounded-full blur-3xl"
       />
 
-      {/* 🌸 Infinite Portal Button with enhanced styling */}
-<motion.button
-  onClick={() => navigate("/infinite-portal")}
-  whileHover={{ scale: 1.08, y: -2 }}
-  whileTap={{ scale: 0.98 }}
-  className="
-    hidden lg:flex
-    absolute right-8 top-6
-    z-30
-    max-w-[460px]
-    px-6 py-3
-    rounded-full
-    text-left
+      <div className="max-w-7xl mx-auto px-6 relative z-10 pt-6">
+        
+        {/* Top Floating Buttons Container */}
+        <div className="flex items-center justify-between mb-16 relative z-30">
+          
+          {/* Homes Microsite Trigger Button - Premium Aesthetic */}
+          <div className="relative group">
+            {/* Outer Glow Aura */}
+            <div className="absolute -inset-1.5 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 rounded-full blur-md opacity-40 group-hover:opacity-75 group-hover:blur-lg transition-all duration-500" />
+            
+            <button
+              onClick={() => setShowHomesMicrosite(true)}
+              className="relative flex items-center gap-4 p-2 pr-6 bg-gray-900 border border-white/10 rounded-full shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(168,85,247,0.4)]"
+            >
+              {/* Subtle gradient background inside button */}
+              <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-900/40 via-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              {/* Shimmer sweep */}
+              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-in-out" />
+              
+              {/* Icon Container */}
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-fuchsia-500 to-indigo-500 flex items-center justify-center text-2xl shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] relative z-10 group-hover:scale-110 transition-transform duration-500 ease-out">
+                ✨
+              </div>
 
-    bg-gradient-to-r 
-    from-[#ffb088] 
-    via-[#ff9966] 
-    to-[#ff874d]
+              <div className="text-left relative z-10 py-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="w-2 h-2 rounded-full bg-fuchsia-400 animate-pulse" />
+                  <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-300">
+                    Deckoviz For Homes
+                  </p>
+                </div>
+                <p className="text-white font-medium text-sm md:text-base leading-tight tracking-wide group-hover:text-fuchsia-100 transition-colors">
+                  Why Deckoviz, & the problem it solves
+                </p>
+              </div>
+              
+              <div className="ml-4 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 group-hover:bg-white group-hover:text-gray-900 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110 relative z-10">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </div>
+            </button>
+          </div>
 
-    text-[#6b2f16]
+          {/* 🌸 Infinite Portal Button with enhanced styling */}
+          <motion.button
+            onClick={() => navigate("/infinite-portal")}
+            whileHover={{ scale: 1.08, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="
+              hidden lg:flex
+              max-w-[460px]
+              px-6 py-3
+              rounded-full
+              text-left
 
-    shadow-[0_18px_45px_rgba(255,135,77,0.45)]
-    hover:shadow-[0_28px_70px_rgba(255,135,77,0.65)]
+              bg-gradient-to-r 
+              from-[#ffb088] 
+              via-[#ff9966] 
+              to-[#ff874d]
 
-    transition-all duration-500
-    animate-[float_7s_ease-in-out_infinite]
-  "
->
-  <span className="text-sm font-medium leading-snug">
-    A Portal of Infinite Goodness, Endless Memories,  
-    and a Frame That Will Never Be Finished 
-  </span>
-</motion.button>
+              text-[#6b2f16]
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+              shadow-[0_18px_45px_rgba(255,135,77,0.45)]
+              hover:shadow-[0_28px_70px_rgba(255,135,77,0.65)]
+
+              transition-all duration-500
+              animate-[float_7s_ease-in-out_infinite]
+            "
+          >
+            <span className="text-sm font-medium leading-snug">
+              A Portal of Infinite Goodness, Endless Memories,  
+              and a Frame That Will Never Be Finished 
+            </span>
+          </motion.button>
+        </div>
+
         {/* Enhanced heading with better spacing and animations */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -530,6 +578,10 @@ const Benefits = () => {
 `}</style>
 
     </section>
+    {showHomesMicrosite && (
+      <HomesMicrosite onClose={() => setShowHomesMicrosite(false)} />
+    )}
+    </>
   );
 };
 
