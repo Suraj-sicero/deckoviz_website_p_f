@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight } from "lucide-react";
 import { Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
 import { useAudio } from "../AudioProvider";
 
@@ -167,9 +167,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
       <img
         src={src}
         alt={alt}
-        className={`w-full h-full object-cover rounded-lg transition-opacity duration-200 ${
-          imageLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={`w-full h-full object-cover rounded-lg transition-opacity duration-200 ${imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageError(true)}
         loading="eager" // Load immediately, don't wait for viewport
@@ -185,8 +184,10 @@ const Navbar: React.FC = () => {
   const [currentPath, setCurrentPath] = useState("");
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] =
     useState<boolean>(false);
+
   const [isWallLeaderDropdownOpen, setIsWallLeaderDropdownOpen] =
     useState<boolean>(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
   const { isPlaying, toggle, next, prev } = useAudio();
 
   useEffect(() => {
@@ -201,6 +202,37 @@ const Navbar: React.FC = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // NEW: Auto-hide Navbar logic for Developer Specs
+  useEffect(() => {
+    if (!currentPath.startsWith("/developer-specs/")) {
+      setIsNavbarVisible(true);
+      return;
+    }
+
+    let hideTimeout: NodeJS.Timeout;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      // Show navbar if mouse is in the top 100px or moving
+      if (e.clientY < 100) {
+        setIsNavbarVisible(true);
+        clearTimeout(hideTimeout);
+      } else {
+        // If mouse is in the "space" (below 100px), set a timer to hide it
+        setIsNavbarVisible(true); // Keep visible while moving
+        clearTimeout(hideTimeout);
+        hideTimeout = setTimeout(() => {
+          setIsNavbarVisible(false);
+        }, 2000); // Hide after 2 seconds of inactivity in the "space"
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      clearTimeout(hideTimeout);
+    };
+  }, [currentPath]);
 
   const handleBuyNow = (): void => {
     window.location.href = "/place-order";
@@ -298,13 +330,15 @@ const Navbar: React.FC = () => {
     (cat) => cat.title !== "Enterprises",
   );
 
+
+
   return (
     <>
       {/* OPTIMIZATION 1: Add Image Preloader */}
       <ImagePreloader />
 
       <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"} print:hidden`}
+        className={`fixed w-full z-50 transition-all duration-700 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"} ${!isNavbarVisible ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Desktop Left Corner - Wall/Leader Hamburger Menu - Extreme Left */}
@@ -319,11 +353,10 @@ const Navbar: React.FC = () => {
 
             {/* Wall Of Love & Leaderboard Dropdown - Enhanced Design */}
             <div
-              className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
-                isWallLeaderDropdownOpen
-                  ? "opacity-100 visible translate-y-0"
-                  : "opacity-0 invisible -translate-y-4"
-              }`}
+              className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${isWallLeaderDropdownOpen
+                ? "opacity-100 visible translate-y-0"
+                : "opacity-0 invisible -translate-y-4"
+                }`}
               onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
             >
@@ -525,11 +558,10 @@ const Navbar: React.FC = () => {
 
                 {/* Beautiful Dropdown with Optimized Images */}
                 <div
-                  className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
-                    isBusinessDropdownOpen
-                      ? "opacity-100 visible translate-y-0"
-                      : "opacity-0 invisible -translate-y-4"
-                  }`}
+                  className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${isBusinessDropdownOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-4"
+                    }`}
                 >
                   <div className="w-[640px] bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden flex flex-col">
                     {/* Header */}
@@ -688,6 +720,20 @@ const Navbar: React.FC = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
 
+              <a
+                href="/creative-studio"
+                className="relative inline-flex items-center gap-1.5 text-sm font-semibold px-3.5 py-1.5 rounded-full transition-all duration-300 hover:scale-105"
+                style={{
+                  background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%)",
+                  color: "white",
+                  boxShadow: "0 2px 12px rgba(124,58,237,0.35)",
+                }}
+              >
+                <span style={{ fontSize: "14px" }}>✨</span>
+                Creative Studio
+              </a>
+
+
 
             </div>
 
@@ -772,9 +818,8 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Navigation with Optimized Images */}
         <div
-          className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${
-            isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
-          }`}
+          className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
+            }`}
           style={{
             maxHeight: isOpen ? "calc(100vh - 4rem)" : "0",
             overflowY: "auto",
@@ -829,6 +874,8 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
             </div>
+
+
 
             {/* Other Navigation Items */}
             <div className="border-t border-gray-200 pt-4 space-y-0">
