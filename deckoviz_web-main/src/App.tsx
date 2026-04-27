@@ -29,6 +29,7 @@ import Contact from "./components/Contact";
 import Pricing from "./components/homepage/Pricing";
 import Youtube from "./components/homepage/Youtube";
 import DeckovizLanding from "./components/deckovizForBusinesses/DeckovizForHotels";
+import HotelExperienceJourney from "./components/deckovizForBusinesses/HotelExperienceJourney";
 import DeckovizRestaurantLanding from "./components/deckovizForBusinesses/DeckovizForRestaurantsAndCafes";
 import DeckovizArchitectsLanding from "./components/deckovizForBusinesses/DeckovizForArchitects";
 import DeckovizOfficesLanding from "./components/deckovizForBusinesses/DeckovizForOffices";
@@ -261,7 +262,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/minimalist" element={<MinimalistScreen />} />
 
         <Route path="/all-features" element={<AllFeatures />} />
-        <Route path="/deckoviz-for-hotels" element={<DeckovizLanding />} />
+        <Route path="/deckoviz-for-hotels" element={<HotelExperienceJourney />} />
         <Route
           path="/deckoviz-for-restaurants"
           element={<DeckovizRestaurantLanding />}

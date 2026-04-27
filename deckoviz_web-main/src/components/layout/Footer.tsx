@@ -50,7 +50,7 @@ const Footer = () => {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="relative bg-[#FFFBF5] pt-24 pb-12 overflow-hidden print:hidden">
+    <footer className="relative bg-transparent overflow-hidden print:hidden">
 
         {/* Main Footer Content with Floating Particles */}
         <div 
@@ -134,11 +134,26 @@ const Footer = () => {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="bg-white/20 backdrop-blur-md rounded-2xl p-3 shadow-2xl border border-white/30">
-                  <img src="/images/deckoviz background removed.png" className="h-14 drop-shadow-2xl" alt="Deckoviz" />
+                  <img src="/images/new_logo.png" className="h-14 drop-shadow-2xl object-contain" alt="Deckoviz" />
                 </div>
-                <p className="text-white text-sm leading-tight max-w-xs hidden md:block">
-                  Transform your space with AI-powered art
-                </p>
+                <div className="hidden md:flex flex-col gap-3">
+                  <p className="text-white text-sm leading-tight max-w-xs">
+                    Bring your space to life with AI-powered ambiance, dynamic art and visually stunning stories
+                  </p>
+                  <a
+                    href="/creative-studio"
+                    className="relative inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 w-max"
+                    style={{
+                      background: "linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #2563EB 100%)",
+                      color: "white",
+                      boxShadow: "0 2px 12px rgba(59,130,246,0.4)",
+                      border: "1px solid rgba(96,165,250,0.3)"
+                    }}
+                  >
+                    <span style={{ fontSize: "14px" }}>✨</span>
+                    Creative Studio
+                  </a>
+                </div>
               </motion.div>
               
               {/* Social Links inline */}
