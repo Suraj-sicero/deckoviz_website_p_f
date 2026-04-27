@@ -341,6 +341,35 @@ const Hero: React.FC = () => {
         100% { box-shadow: 0 0 5px rgba(138,43,226,.2); }
       }
 
+      @keyframes liquid-flow-waves {
+        0% { background-position: 0px 0px, 0px 0px; }
+        100% { background-position: 300px 0px, -300px 0px; }
+      }
+
+      .liquid-gradient-purple {
+        background: 
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%238B5CF6' d='M0,140 Q100,80 200,140 T400,140 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%23C084FC' opacity='0.6' d='M0,100 Q100,40 200,100 T400,100 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
+          #F3E8FF;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 1px rgba(139, 92, 246, 0.3);
+        animation: liquid-flow-waves 3s linear infinite;
+        display: inline-block;
+      }
+      
+      .liquid-gradient-cyan {
+        background: 
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%2306B6D4' d='M0,140 Q100,80 200,140 T400,140 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%2367E8F9' opacity='0.6' d='M0,100 Q100,40 200,100 T400,100 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
+          #CFFAFE;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 1px rgba(6, 182, 212, 0.3);
+        animation: liquid-flow-waves 3s linear infinite;
+        display: inline-block;
+      }
+
       .shop-now-glow {
         animation: pulse-glow 3s infinite ease-in-out;
       }
@@ -369,7 +398,7 @@ const Hero: React.FC = () => {
         <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
           <div className="inline">
             <span className="text-black">Make Your Space Come </span>
-            <span className="italic bg-gradient-to-r from-[#8B5CF6] to-[#A78BFA] bg-clip-text text-transparent">
+            <span className="italic liquid-gradient-purple">
               Alive
             </span>
             <span className="text-black">,</span>
@@ -377,7 +406,7 @@ const Hero: React.FC = () => {
           <br />
           <div className="inline">
             <span className="text-black">With Your Personal </span>
-            <span className="italic bg-gradient-to-r from-[#06B6D4] to-[#14B8A6] bg-clip-text text-transparent">
+            <span className="italic liquid-gradient-cyan">
               Art Frame
             </span>
           </div>
@@ -401,8 +430,8 @@ const Hero: React.FC = () => {
   <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6 xl:gap-8 px-4">
 
           {/* LEFT IMAGE */}
-        <div className="relative flex justify-center lg:justify-end w-full lg:w-auto flex-shrink-0 max-w-[400px] lg:max-w-[450px]">
-          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[380px] md:h-[330px] lg:w-[400px] lg:h-[350px]">
+        <div className="relative flex justify-center lg:justify-end w-full lg:w-auto flex-shrink-0 max-w-[400px] lg:max-w-[480px] xl:max-w-[520px]">
+          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[400px] md:h-[340px] lg:w-[440px] lg:h-[380px] xl:w-[480px] xl:h-[420px]">
 
           {/* Room image */}
           <img
@@ -439,11 +468,11 @@ const Hero: React.FC = () => {
         </div>
 
           {/* CENTER */}
-          <div className="flex flex-col items-center gap-9 w-full lg:w-auto lg:max-w-sm xl:max-w-md flex-shrink-0">
+          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0">
             <div className="flex gap-5 flex-wrap justify-center">
               <button
                 onClick={() => (window.location.href = "/place-order")}
-                className="group relative px-8 py-4 rounded-3xl font-semibold text-lg overflow-hidden transition-all duration-500 hover:scale-105"
+                className="group relative px-5 py-2.5 rounded-3xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105"
               >
                 {/* Animated gradient background */}
                 <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 bg-[length:200%_100%]" style={{ animation: 'gradient-flow 3s ease infinite' }} />
@@ -469,7 +498,7 @@ const Hero: React.FC = () => {
 
               <button
                 onClick={() => (window.location.href = "/about")}
-                className="group relative px-8 py-4 rounded-3xl font-semibold text-lg overflow-hidden transition-all duration-500 hover:scale-105"
+                className="group relative px-5 py-2.5 rounded-3xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105"
               >
                 {/* Glassmorphism background */}
                 <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border-2 border-purple-200 rounded-3xl transition-all duration-300 group-hover:border-purple-400 group-hover:bg-white/90" />
@@ -532,7 +561,7 @@ const Hero: React.FC = () => {
               <div className="absolute -inset-4 bg-gradient-to-r from-purple-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
               
               {/* Main card */}
-              <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl px-12 py-10 border border-white/50 w-full overflow-hidden">
+              <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl px-6 py-6 border border-white/50 w-full overflow-hidden">
                 
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
@@ -540,16 +569,16 @@ const Hero: React.FC = () => {
                 </div>
                 
                 {/* Top stats - Horizontal layout */}
-                <div className="flex items-start justify-center gap-6 mb-10">
+                <div className="flex items-start justify-center gap-4 mb-6">
                   
                   {/* Items stat */}
                   <div className="relative flex flex-col items-center">
                     <div className="absolute -inset-2 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-2xl blur-lg" />
                     <div className="relative flex flex-col items-center">
-                      <div className="text-6xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-3 animate-pulse-slow leading-none">
+                      <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1 animate-pulse-slow leading-none">
                         <CountUp from={0} to={3} duration={2} suffix="M+" />
                       </div>
-                      <div className="text-gray-600 font-medium text-sm whitespace-nowrap">Items in Library</div>
+                      <div className="text-gray-600 font-medium text-xs whitespace-nowrap">Items in Library</div>
                     </div>
                   </div>
 
@@ -560,32 +589,32 @@ const Hero: React.FC = () => {
                   <div className="relative flex flex-col items-center">
                     <div className="absolute -inset-2 bg-gradient-to-br from-orange-400/20 to-pink-500/20 rounded-2xl blur-lg" />
                     <div className="relative flex flex-col items-center">
-                      <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent mb-3 flex items-center gap-2 animate-pulse-slow leading-none">
+                      <div className="text-4xl font-bold bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent mb-1 flex items-center gap-1 animate-pulse-slow leading-none">
                         <CountUp from={0} to={4.9} duration={2} decimals={1} />
-                        <span className="text-4xl">✨</span>
+                        <span className="text-2xl">✨</span>
                       </div>
-                      <div className="text-gray-600 font-medium text-sm whitespace-nowrap">Star Rating</div>
+                      <div className="text-gray-600 font-medium text-xs whitespace-nowrap">Star Rating</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Divider with gradient */}
-                <div className="relative h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent mb-10" />
+                <div className="relative h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent mb-6" />
 
                 {/* Infinity stat */}
                 <div className="text-center relative">
                   <div className="absolute -inset-4 bg-gradient-to-br from-purple-400/20 to-indigo-500/20 rounded-2xl blur-xl" />
                   <div className="relative flex flex-col items-center">
                     {/* Animated infinity symbol */}
-                    <div className="inline-block relative mb-4">
-                      <div className="text-7xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
+                    <div className="inline-block relative mb-2">
+                      <div className="text-5xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
                         ∞
                       </div>
                       {/* Orbiting dots */}
-                      <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-purple-500 rounded-full animate-orbit" />
-                      <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-indigo-500 rounded-full animate-orbit-reverse" />
+                      <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-purple-500 rounded-full animate-orbit" />
+                      <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-indigo-500 rounded-full animate-orbit-reverse" />
                     </div>
-                    <div className="text-gray-600 font-medium text-base">Ways of Exploring</div>
+                    <div className="text-gray-600 font-medium text-sm">Ways of Exploring</div>
                   </div>
                 </div>
 
@@ -658,10 +687,10 @@ const Hero: React.FC = () => {
           </div>
 
           {/* RIGHT IMAGE */}
-<div className="relative flex justify-center lg:justify-start w-full lg:w-auto flex-shrink-0 max-w-[350px] lg:max-w-[380px]">
+<div className="relative flex justify-center lg:justify-start w-full lg:w-auto flex-shrink-0 max-w-[350px] lg:max-w-[420px] xl:max-w-[460px]">
 
           <div
-            className="relative w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[340px] md:h-[240px] lg:w-[360px] lg:h-[250px] overflow-hidden bg-gray-50"
+            className="relative w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[360px] md:h-[260px] lg:w-[380px] lg:h-[280px] xl:w-[420px] xl:h-[300px] overflow-hidden bg-gray-50"
             style={{
               WebkitMaskImage: currentMask,
               maskImage: currentMask,

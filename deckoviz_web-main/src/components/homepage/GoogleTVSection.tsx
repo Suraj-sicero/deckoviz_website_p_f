@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const backgroundImages = [
+  '/images/google-tv-images/everything-in-one-place-2x.webp=n-w2400-h1372-fcrop64=1,00000000ffffffff-rw',
+  '/images/google-tv-images/maulik-2x.webp=n-w599-h337-fcrop64=1,0000001cffffffe4-rw',
+  '/images/google-tv-images/Screenshot_from_2025_07_16_09_48_36_8691156ccf.webp',
+  '/images/google-tv-images/original-b3de00a6da1404bafdb541fc9dbe6659.webp'
+];
+
 const GoogleTVSection: React.FC = () => {
-  // Array of beautiful background images
-  const backgroundImages = [
-    '/images/framebg (1).png',
-    '/images/framebg (5).png',
-    '/images/framebg (10).png',
-    '/images/framebg (15).png',
-    '/images/framebg (20).png',
-    '/images/herol (5).png',
-    '/images/herol (10).png',
-    '/images/herol (15).png',
-  ];
 
   const [currentLeftIndex, setCurrentLeftIndex] = useState(0);
-  const [currentRightIndex, setCurrentRightIndex] = useState(4);
+  const [currentRightIndex, setCurrentRightIndex] = useState(1);
 
-  // Change background images every 4 seconds
+  // Change background images every 2.5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentLeftIndex((prevIndex) => 
@@ -26,7 +22,7 @@ const GoogleTVSection: React.FC = () => {
       setCurrentRightIndex((prevIndex) => 
         (prevIndex + 1) % backgroundImages.length
       );
-    }, 4000);
+    }, 2500);
 
     return () => clearInterval(interval);
   }, []);
@@ -75,7 +71,7 @@ const GoogleTVSection: React.FC = () => {
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 1.5 }}
+                    transition={{ duration: 0.5 }}
                     className="w-full h-auto object-contain aspect-[16/9]"
                   />
                 </AnimatePresence>
@@ -102,7 +98,7 @@ const GoogleTVSection: React.FC = () => {
                     initial={{ opacity: 0, scale: 1.1 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 1.5 }}
+                    transition={{ duration: 0.5 }}
                     className="w-full h-auto object-contain aspect-[16/9]"
                   />
                 </AnimatePresence>
