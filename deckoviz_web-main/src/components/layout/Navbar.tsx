@@ -2,8 +2,7 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight } from "lucide-react";
-import { Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
+import { Menu, X, ChevronDown, Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
 import { useAudio } from "../AudioProvider";
 
 // Button component with proper types
@@ -720,21 +719,6 @@ const Navbar: React.FC = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
 
-              <a
-                href="/creative-studio"
-                className="relative inline-flex items-center gap-1.5 text-sm font-semibold px-3.5 py-1.5 rounded-full transition-all duration-300 hover:scale-105"
-                style={{
-                  background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%)",
-                  color: "white",
-                  boxShadow: "0 2px 12px rgba(124,58,237,0.35)",
-                }}
-              >
-                <span style={{ fontSize: "14px" }}>✨</span>
-                Creative Studio
-              </a>
-
-
-
             </div>
 
             {/* Center Logo */}
@@ -909,20 +893,6 @@ const Navbar: React.FC = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Pricing
-              </a>
-
-              <a
-                href="/creative-studio"
-                className="flex items-center gap-2 font-semibold py-3 px-3 rounded-lg transition-all duration-200"
-                style={{
-                  background: "linear-gradient(135deg, rgba(124,58,237,0.1) 0%, rgba(168,85,247,0.1) 100%)",
-                  color: "#7c3aed",
-                  border: "1px solid rgba(124,58,237,0.2)",
-                }}
-                onClick={() => setIsOpen(false)}
-              >
-                <span>✨</span>
-                Creative Studio
               </a>
 
               <a
