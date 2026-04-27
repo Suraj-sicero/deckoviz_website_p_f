@@ -1,40 +1,73 @@
 // ===== server.js =====
 
 // ===== Core Imports =====
+import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
 import methodOverride from "method-override";
 import expressLayouts from "express-ejs-layouts";
-import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+
+dotenv.config();
 import { sequelize } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
 import blogRoutes from "./routes/blogRoutes.js";
+import creativeToolsRoutes from "./routes/creativeTools.js";
+import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
+import wizzyRoutes from "./routes/wizzyRoutes.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
 
 
 
-await client.set("hello", "Dekoviz");
-console.log(await client.get("hello"));
+// ===== Startup Logic (Background) =====
+(async () => {
+  try {
+    await client.set("hello", "Dekoviz");
+    console.log(await client.get("hello"));
+  } catch (redisErr) {
+    console.warn("⚠️ Redis not available, skipping initial test.");
+  }
 
-dotenv.config();
+  try {
+    await sequelize.authenticate();
+    console.log("✅ PostgreSQL connected via Sequelize.");
+    await sequelize.sync();
+  } catch (error) {
+    console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
+  }
+})();
+
+// DB logic moved to background IIFE above
 const app = express();
-
+const PORT = process.env.PORT || 5000;
+import fs from "fs";
 // ===== Resolve __dirname (for ES modules) =====
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// ===== Connect to PostgreSQL (Sequelize) =====
-try {
-  await sequelize.authenticate();
-  console.log("✅ PostgreSQL connected via Sequelize.");
-  await sequelize.sync(); // Optional: { alter: true } during dev
-} catch (error) {
-  console.error("❌ Database connection failed:", error);
-  process.exit(1);
-}
+const logStream = fs.createWriteStream(path.join(__dirname, "server.log"), { flags: "a" });
+const originalLog = console.log;
+const originalError = console.error;
+
+console.log = (...args) => {
+    const msg = `[${new Date().toISOString()}] LOG: ${args.join(" ")}\n`;
+    originalLog(...args);
+    logStream.write(msg);
+};
+
+console.error = (...args) => {
+    const msg = `[${new Date().toISOString()}] ERROR: ${args.join(" ")}\n`;
+    originalError(...args);
+    logStream.write(msg);
+};
+
+app.listen(PORT, () =>
+  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
+);
+
+// DB logic moved to background IIFE above
 
 // ===== Stripe Configuration =====
 const stripe = new Stripe(
@@ -46,16 +79,52 @@ const stripe = new Stripe(
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "public")));
 app.use(expressLayouts);
 
 // ===== Enable CORS for Frontend =====
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://deploy-preview-5--tubular-scone-336b8c.netlify.app",
+  "https://deckoviz.netlify.app" // Add your main production domain here too
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // ✅ your frontend origin
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      
+      // Check if the origin is in our allowed list or is a netlify preview
+      if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".netlify.app")) {
+        callback(null, true);
+      } else {
+        // Fallback: in development/preview, we can be more permissive
+        callback(null, true); 
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true
   })
 );
+
+// Static files AFTER CORS so generated images get proper headers
+app.use(express.static(path.join(__dirname, "public")));
+
+// Dedicated download endpoint — forces Content-Disposition: attachment
+app.get("/download/:filename", (req, res) => {
+  const filename = req.params.filename;
+  // Sanitize: only allow alphanumeric, underscores, dots, hyphens
+  if (!/^[a-zA-Z0-9_.\-]+$/.test(filename)) {
+    return res.status(400).json({ error: "Invalid filename" });
+  }
+  const filePath = path.join(__dirname, "public/generated", filename);
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).json({ error: "File not found" });
+  }
+  res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+  res.setHeader("Content-Type", "image/jpeg");
+  res.sendFile(filePath);
+});
 
 // ===== View Engine (EJS) =====
 app.set("view engine", "ejs");
@@ -64,10 +133,13 @@ app.set("layout", "layout");
 
 // ===== ROUTES =====
 // ✅ API routes (for frontend JSON calls)
-app.use("/api", blogRoutes); // Example: http://localhost:5000/api/blog
+app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/blog
+app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
+app.use("/api", newCreativeToolsRoutes); // New Creative Tools
+app.use("/api/wizzy", wizzyRoutes);
 
 // ✅ EJS routes (for admin panel / UI)
-app.use("/", blogRoutes); // Example: http://localhost:5000/blogs or /add
+app.use("/", blogRoutes); // Example: https://deckoviz-demo.onrender.com/blogs or /add
 
 // ===== Root Message =====
 app.get("/", (req, res) => {
@@ -112,9 +184,8 @@ app.post("/create-checkout-session", async (req, res) => {
       ],
       metadata: metadata || {},
       mode: "payment",
-      success_url:
-        "http://localhost:5173/order-confirmed?session_id={CHECKOUT_SESSION_ID}",
-      cancel_url: "http://localhost:5173/",
+      success_url: `${req.headers.origin || "http://localhost:5173"}/order-confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin || "http://localhost:5173"}/`,
     });
 
     res.json({ url: session.url });
@@ -157,7 +228,4 @@ app.get("/order-details", async (req, res) => {
 // ======================================================================
 // ========================== SERVER START ==============================
 // ======================================================================
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
-);
+// Server already started above

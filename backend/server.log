@@ -1,0 +1,743 @@
+[2026-04-14T16:15:31.802Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:15:31.812Z] LOG: ✅ Redis Connected
+[2026-04-14T16:15:31.813Z] LOG: Dekoviz
+[2026-04-14T16:15:31.834Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:15:31.840Z] LOG: ✅ Redis Connected
+[2026-04-14T16:15:31.840Z] LOG: Dekoviz
+[2026-04-14T16:16:06.176Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:16:06.183Z] LOG: ✅ Redis Connected
+[2026-04-14T16:16:06.183Z] LOG: Dekoviz
+[2026-04-14T16:16:06.302Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:16:06.308Z] LOG: ✅ Redis Connected
+[2026-04-14T16:16:06.309Z] LOG: Dekoviz
+[2026-04-14T16:17:27.230Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:17:32.274Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.66 GiB already allocated; 26.87 GiB free; 17.00 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:17:32.275Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:17:33.730Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:17:38.149Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.66 GiB already allocated; 26.89 GiB free; 16.98 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:17:38.150Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:18:41.932Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:18:57.619Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.65 GiB already allocated; 29.59 GiB free; 14.29 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:18:57.620Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:19:05.222Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:19:11.038Z] ERROR: Image-to-Image Error: Error: Prediction failed: CUDA out of memory. Tried to allocate 63.34 GiB (GPU 0; 44.40 GiB total capacity; 13.65 GiB already allocated; 29.58 GiB free; 14.29 GiB reserved in total by PyTorch) If reserved memory is >> allocated memory try setting max_split_size_mb to avoid fragmentation.  See documentation for Memory Management and PYTORCH_CUDA_ALLOC_CONF
+[2026-04-14T16:19:11.039Z] ERROR: [postcard/generate] Error: Failed to generate 'After' image transformation.
+[2026-04-14T16:20:04.207Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:20:04.212Z] LOG: ✅ Redis Connected
+[2026-04-14T16:20:04.213Z] LOG: Dekoviz
+[2026-04-14T16:20:04.223Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:20:04.228Z] LOG: ✅ Redis Connected
+[2026-04-14T16:20:04.229Z] LOG: Dekoviz
+[2026-04-14T16:30:31.950Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:30:38.539Z] LOG: Generation output received: https://replicate.delivery/xezq/K2jG4cou9tZCGJBiac2eHojarF4JsSfPBmMHEu3fpc3atD2sA/out-0.png
+[2026-04-14T16:30:39.303Z] ERROR: [postcard/generate] Error: Input buffer has corrupt header: glib: XML parse error: Error domain 1 code 23 on line 4 column 122 of data: EntityRef: expecting ';'
+[2026-04-14T16:31:23.424Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:31:35.688Z] LOG: Generation output received: https://replicate.delivery/xezq/AeBbB6DiXnQJXq5XtVQ59lnHCrNIB7awS72d2bttjCBz7gNLA/out-0.png
+[2026-04-14T16:31:38.437Z] ERROR: [postcard/generate] Error: Input buffer has corrupt header: glib: XML parse error: Error domain 1 code 23 on line 4 column 122 of data: EntityRef: expecting ';'
+[2026-04-14T16:32:20.709Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:20.712Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:20.714Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:20.715Z] LOG: Dekoviz
+[2026-04-14T16:32:20.717Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:20.718Z] LOG: Dekoviz
+[2026-04-14T16:32:36.253Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:36.257Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:36.259Z] LOG: Dekoviz
+[2026-04-14T16:32:36.287Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-14T16:32:36.291Z] LOG: ✅ Redis Connected
+[2026-04-14T16:32:36.291Z] LOG: Dekoviz
+[2026-04-14T16:37:57.561Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-14T16:38:05.016Z] LOG: Generation output received: https://replicate.delivery/xezq/BYuaX6Jy4yYZFRqdXMTDcUWzrkMAPcZwIye92NAOt2z1eBbWA/out-0.png
+[2026-04-14T17:07:14.331Z] LOG: Redis Error: Error: Socket closed unexpectedly
+[2026-04-14T17:07:14.333Z] LOG: Redis Error: Error: connect ECONNREFUSED 127.0.0.1:6379
+[2026-04-15T03:55:35.883Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T03:55:35.889Z] LOG: ✅ Redis Connected
+[2026-04-15T03:55:35.889Z] LOG: Dekoviz
+[2026-04-15T03:58:26.949Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-15T03:58:36.373Z] LOG: Generation output received: https://replicate.delivery/xezq/ujLkLwc84t6xFpaaCJHedSOm55v9x7EJewBRikmDrVSp7LbWA/out-0.png
+[2026-04-15T08:29:05.409Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T08:29:05.413Z] LOG: ✅ Redis Connected
+[2026-04-15T08:29:05.413Z] LOG: Dekoviz
+[2026-04-15T08:41:58.420Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T08:41:58.426Z] LOG: ✅ Redis Connected
+[2026-04-15T08:41:58.427Z] LOG: Dekoviz
+[2026-04-15T08:43:57.426Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T08:43:57.426Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T08:43:57.426Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T08:43:57.426Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T08:43:58.273Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T08:43:58.273Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T08:43:58.273Z] LOG: [postcard] Generating context-aware artwork...
+[2026-04-15T08:44:02.477Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/ypWRuPFraHpjN1woauahfID3T84hccXanEOjzQ2BV8goDoNLA/out-0.png
+[2026-04-15T08:44:02.478Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T08:44:02.480Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T08:44:12.910Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/55ZedAuOqKVUWCc8YminhKtZpkQmwwALSxjqNsSzXIRuDoNLA/out-0.png
+[2026-04-15T08:44:12.911Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T08:44:14.456Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T08:44:14.842Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776242654842.jpg
+[2026-04-15T08:44:14.843Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T08:44:14.843Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T08:44:14.843Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T09:46:40.341Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T09:46:40.344Z] LOG: ✅ Redis Connected
+[2026-04-15T09:46:40.345Z] LOG: Dekoviz
+[2026-04-15T10:22:26.399Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T10:22:26.402Z] LOG: ✅ Redis Connected
+[2026-04-15T10:22:26.402Z] LOG: Dekoviz
+[2026-04-15T10:22:51.588Z] LOG: Redis Error: Error: Socket closed unexpectedly
+[2026-04-15T10:22:51.591Z] LOG: Redis Error: Error: connect ECONNREFUSED 127.0.0.1:6379
+[2026-04-15T16:28:04.282Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T16:28:04.289Z] LOG: ✅ Redis Connected
+[2026-04-15T16:28:04.290Z] LOG: Dekoviz
+[2026-04-15T16:30:19.256Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T16:30:19.256Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T16:30:19.257Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T16:30:19.257Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T16:30:20.013Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T16:30:20.013Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T16:30:20.013Z] LOG: [postcard] Generating context-aware artwork (16:9 for digital display)...
+[2026-04-15T16:30:23.390Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/yndGwYZaSnrnOhuiPOmgsTCZfcPvgNvRQQMe4fvNWU884t2sA/out-0.png
+[2026-04-15T16:30:23.391Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T16:30:23.392Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T16:30:28.200Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/74x5Rmo7bGZTI59nwxMfVdqfw0Hfth7OdnODhfV4d9sPybtZB/out-0.png
+[2026-04-15T16:30:28.201Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T16:30:29.764Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T16:30:30.196Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776270630196.jpg
+[2026-04-15T16:30:30.197Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T16:30:30.197Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T16:30:30.197Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T16:33:42.054Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T16:33:42.059Z] LOG: ✅ Redis Connected
+[2026-04-15T16:33:42.060Z] LOG: Dekoviz
+[2026-04-15T16:34:08.297Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T16:34:08.302Z] LOG: ✅ Redis Connected
+[2026-04-15T16:34:08.303Z] LOG: Dekoviz
+[2026-04-15T16:41:28.842Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T16:41:28.842Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T16:41:28.842Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T16:41:28.842Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T16:41:29.621Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T16:41:29.621Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T16:41:29.621Z] LOG: [postcard] Generating context-aware artwork (16:9 for digital display)...
+[2026-04-15T16:41:39.234Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/ZQhe3j5cY12LSqjMssYrU9nrKzxumZjPi4OepIqfqXnEOu2sA/out-0.png
+[2026-04-15T16:41:39.235Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T16:41:39.236Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T16:41:49.880Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/UgjxSL3KXMK9MtVKJyjbo1mpvdI5wbko2nH29tsPzs4xx1mF/out-0.png
+[2026-04-15T16:41:49.881Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T16:41:51.981Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T16:41:53.781Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776271312467.jpg
+[2026-04-15T16:41:53.781Z] LOG: [postcard] ✅ After image saved: postcard_after_1776271312467.jpg
+[2026-04-15T16:41:53.781Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T16:41:53.781Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T16:41:53.781Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T17:47:29.028Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T17:47:29.032Z] LOG: ✅ Redis Connected
+[2026-04-15T17:47:29.033Z] LOG: Dekoviz
+[2026-04-15T17:47:48.926Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T17:47:48.930Z] LOG: ✅ Redis Connected
+[2026-04-15T17:47:48.931Z] LOG: Dekoviz
+[2026-04-15T18:00:33.257Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:00:33.257Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:00:33.257Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:00:33.257Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:00:35.311Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:00:35.311Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:00:35.312Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:00:38.793Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/DPmWxAEhfUXtN6yA2pnNkeMQMFMR5TyQxs36InEGsCNGRYbWA/out-0.png
+[2026-04-15T18:00:38.794Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:00:38.795Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:01:01.558Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/rpo5tS5zGapIO5TuFtsucHmmu5tgF9Dn2qAR0Sl3APNXE2mF/out-0.png
+[2026-04-15T18:01:01.559Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:01:02.443Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:01:02.975Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776276062763.jpg
+[2026-04-15T18:01:02.975Z] LOG: [postcard] ✅ After image saved: postcard_after_1776276062763.jpg
+[2026-04-15T18:01:02.975Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:01:02.975Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:01:02.975Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:05:23.140Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:05:23.144Z] LOG: ✅ Redis Connected
+[2026-04-15T18:05:23.145Z] LOG: Dekoviz
+[2026-04-15T18:05:52.893Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:05:52.897Z] LOG: ✅ Redis Connected
+[2026-04-15T18:05:52.898Z] LOG: Dekoviz
+[2026-04-15T18:06:03.415Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:06:03.419Z] LOG: ✅ Redis Connected
+[2026-04-15T18:06:03.420Z] LOG: Dekoviz
+[2026-04-15T18:07:15.845Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:07:15.845Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:07:15.845Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:07:15.845Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:07:17.720Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:07:17.720Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:07:17.720Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:07:20.153Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/xWKcyoF2Me34NCCEQIepNh4gIMAP0WgcdKituP1QLwFXXYbWA/out-0.png
+[2026-04-15T18:07:20.154Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:07:20.155Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:07:24.759Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/YcUbk1Q2PnaGC9JhaHnMOzGqybGhuT5XdG0LxCjVhestLsNLA/out-0.png
+[2026-04-15T18:07:24.760Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:07:26.582Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:07:27.027Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776276446793.jpg
+[2026-04-15T18:07:27.027Z] LOG: [postcard] ✅ After image saved: postcard_after_1776276446793.jpg
+[2026-04-15T18:07:27.027Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:07:27.027Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:07:27.027Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:11:04.672Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:11:04.676Z] LOG: ✅ Redis Connected
+[2026-04-15T18:11:04.676Z] LOG: Dekoviz
+[2026-04-15T18:11:23.974Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:11:23.980Z] LOG: ✅ Redis Connected
+[2026-04-15T18:11:23.981Z] LOG: Dekoviz
+[2026-04-15T18:14:59.812Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:14:59.812Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:14:59.812Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:14:59.812Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:15:02.032Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:15:02.032Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:15:02.033Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:15:04.300Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/A1sBDF6z30IxFFlbo00qq43VgKanqhiM6dfeIi0de2HO9w2sA/out-0.png
+[2026-04-15T18:15:04.301Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:15:04.301Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:15:08.575Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/w0lEeLIrhx2vZypaf3JJhfLh9BgPpcDrDjhSZ71EgKxX9w2sA/out-0.png
+[2026-04-15T18:15:08.576Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:15:09.875Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:15:11.328Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776276910124.jpg
+[2026-04-15T18:15:11.328Z] LOG: [postcard] ✅ After image saved: postcard_after_1776276910124.jpg
+[2026-04-15T18:15:11.328Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:15:11.328Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:15:11.328Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:18:22.692Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:18:22.697Z] LOG: ✅ Redis Connected
+[2026-04-15T18:18:22.697Z] LOG: Dekoviz
+[2026-04-15T18:19:37.045Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:19:37.049Z] LOG: ✅ Redis Connected
+[2026-04-15T18:19:37.049Z] LOG: Dekoviz
+[2026-04-15T18:19:49.565Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:19:49.569Z] LOG: ✅ Redis Connected
+[2026-04-15T18:19:49.570Z] LOG: Dekoviz
+[2026-04-15T18:25:25.106Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:25:25.106Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:25:25.106Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:25:25.106Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:25:25.730Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:25:25.730Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:25:25.730Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:25:28.432Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/mmqLwQBQemTJYKg0jK0bVabzw0UCxZlZVha86kObyezXoYbWA/out-0.png
+[2026-04-15T18:25:28.433Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:25:28.434Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:25:36.878Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/VRGlyfeDYsiRXkpVbSQABRgnC9oaqEg7e4bs145fyKhCiitZB/out-0.png
+[2026-04-15T18:25:36.879Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:25:38.864Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:25:39.345Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776277539137.jpg
+[2026-04-15T18:25:39.345Z] LOG: [postcard] ✅ After image saved: postcard_after_1776277539137.jpg
+[2026-04-15T18:25:39.345Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:25:39.345Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:25:39.345Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:26:04.401Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:26:04.401Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:26:04.401Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:26:04.401Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:26:05.180Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:26:05.181Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:26:05.181Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:26:07.992Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/jcXwO7DyxGaaP9ydMixbdBMU9kmJDrXH0OOgcqJ53U4PK2mF/out-0.png
+[2026-04-15T18:26:07.993Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:26:07.993Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:26:18.870Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/5KRGIms3z1oSC5kyGKU7BfcgvsCgoZFUjxaEXIhyBDeIpYbWA/out-0.png
+[2026-04-15T18:26:18.870Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:26:21.440Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:26:21.860Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776277581644.jpg
+[2026-04-15T18:26:21.860Z] LOG: [postcard] ✅ After image saved: postcard_after_1776277581644.jpg
+[2026-04-15T18:26:21.860Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:26:21.860Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:26:21.860Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:27:16.903Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:27:16.903Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:27:16.903Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:27:16.903Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:27:17.241Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:27:17.241Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:27:17.241Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:27:19.450Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/g6cJPgeBYF0AS693pj1mW73ew1K7w3DITWdZxm3ZvuhGqYbWA/out-0.png
+[2026-04-15T18:27:19.450Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:27:19.450Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:27:27.192Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/l599FJkETcrnBFBrVJpc42e6f6PLqd1ywc4T67N5R63OqYbWA/out-0.png
+[2026-04-15T18:27:27.193Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:27:29.745Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:27:31.211Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776277649941.jpg
+[2026-04-15T18:27:31.211Z] LOG: [postcard] ✅ After image saved: postcard_after_1776277649941.jpg
+[2026-04-15T18:27:31.211Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:27:31.211Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:27:31.211Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:28:07.485Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:28:07.485Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:28:07.485Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:28:07.485Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:28:07.971Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:28:07.971Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:28:07.971Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:28:16.386Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/aHke2XKxmNw4NiVO3qRWwXgf5rzekeKPMri3wh5KHbm9ritZB/out-0.png
+[2026-04-15T18:28:16.387Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:28:16.387Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:28:22.841Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/e3ASciBCePmfroK6KLPFwbKlhQuijv0lPpXf0Ue88UX0YFbzC/out-0.png
+[2026-04-15T18:28:22.841Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:28:23.752Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:28:24.359Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776277704043.jpg
+[2026-04-15T18:28:24.359Z] LOG: [postcard] ✅ After image saved: postcard_after_1776277704043.jpg
+[2026-04-15T18:28:24.359Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:28:24.359Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:28:24.359Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:29:10.120Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:29:10.120Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:29:10.120Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:29:10.120Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:29:12.285Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:29:12.285Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:29:12.285Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:29:14.257Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/HDfM3OI3Liw0NKF22cQm7IESjDmYB3CMpXgETC0e5QY5rYbWA/out-0.png
+[2026-04-15T18:29:14.257Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:29:14.257Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:29:18.575Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/QJmzTCHEmcqKE5gRfBnNsYnf98OPOQ4O6P5ouqJaPCC9rYbWA/out-0.png
+[2026-04-15T18:29:18.575Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:29:21.475Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:29:21.914Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776277761680.jpg
+[2026-04-15T18:29:21.914Z] LOG: [postcard] ✅ After image saved: postcard_after_1776277761680.jpg
+[2026-04-15T18:29:21.914Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:29:21.914Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:29:21.914Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:32:14.189Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:32:14.194Z] LOG: ✅ Redis Connected
+[2026-04-15T18:32:14.195Z] LOG: Dekoviz
+[2026-04-15T18:32:24.631Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:32:24.635Z] LOG: ✅ Redis Connected
+[2026-04-15T18:32:24.636Z] LOG: Dekoviz
+[2026-04-15T18:36:30.816Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:36:30.816Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:36:30.816Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:36:30.816Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:36:31.698Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:36:31.699Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:36:31.699Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:36:37.338Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/Xe8R4NhopF0DD6oHwEWYY7X2AYGfAG6LwPVcmqGdV2l0yYbWA/out-0.png
+[2026-04-15T18:36:37.338Z] LOG: [postcard] Step 3/5 — Applying premium AI transformation...
+[2026-04-15T18:36:37.339Z] LOG: [postcard] Starting premium img2img transformation...
+[2026-04-15T18:36:37.372Z] LOG: [postcard] Attempt 1/2 — prompt_strength: 0.65
+[2026-04-15T18:36:42.089Z] LOG: [postcard] Attempt 1 result: https://replicate.delivery/xezq/Rg1CjomKsM5zBtDHdaMt8vMHqBQRcD9rYE8OtHv8cxcuM2mF/out-0.png
+[2026-04-15T18:36:45.156Z] LOG: [postcard] ✅ Frame detected — using this result.
+[2026-04-15T18:36:45.156Z] LOG: [postcard] Premium transformation complete: https://replicate.delivery/xezq/Rg1CjomKsM5zBtDHdaMt8vMHqBQRcD9rYE8OtHv8cxcuM2mF/out-0.png
+[2026-04-15T18:36:45.157Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:36:45.490Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:36:45.967Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776278205713.jpg
+[2026-04-15T18:36:45.967Z] LOG: [postcard] ✅ After image saved: postcard_after_1776278205713.jpg
+[2026-04-15T18:36:45.967Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:36:45.967Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:36:45.967Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:52:31.455Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:52:31.459Z] LOG: ✅ Redis Connected
+[2026-04-15T18:52:31.459Z] LOG: Dekoviz
+[2026-04-15T18:53:07.791Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:53:07.794Z] LOG: ✅ Redis Connected
+[2026-04-15T18:53:07.795Z] LOG: Dekoviz
+[2026-04-15T18:53:17.014Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T18:53:17.017Z] LOG: ✅ Redis Connected
+[2026-04-15T18:53:17.018Z] LOG: Dekoviz
+[2026-04-15T18:54:06.522Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T18:54:06.522Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T18:54:06.522Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T18:54:06.522Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T18:54:08.503Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T18:54:08.503Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T18:54:08.503Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T18:54:11.326Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/7ZYxgVB8hVJOC9DziZHfg4bNlYJPKkA0cpU8diw0WBDphsNLA/out-0.png
+[2026-04-15T18:54:11.327Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-15T18:54:11.331Z] LOG: [postcard] Original image: 3543x2362
+[2026-04-15T18:54:11.923Z] LOG: [postcard] Frame: 1240x698 at (1152,690), bezel=31px, radius=56px
+[2026-04-15T18:54:11.923Z] LOG: [postcard] Downloading artwork for frame...
+[2026-04-15T18:54:13.478Z] LOG: [postcard] Compositing frame layers onto original image...
+[2026-04-15T18:54:13.626Z] LOG: [postcard] ✅ Frame composited successfully — background 100% preserved
+[2026-04-15T18:54:13.626Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T18:54:14.615Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T18:54:15.077Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776279254857.jpg
+[2026-04-15T18:54:15.077Z] LOG: [postcard] ✅ After image saved: postcard_after_1776279254857.jpg
+[2026-04-15T18:54:15.077Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T18:54:15.077Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T18:54:15.077Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T19:01:19.082Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T19:01:19.086Z] LOG: ✅ Redis Connected
+[2026-04-15T19:01:19.086Z] LOG: Dekoviz
+[2026-04-15T19:12:45.375Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T19:12:45.375Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T19:12:45.375Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T19:12:45.375Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T19:12:47.520Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T19:12:47.520Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T19:12:47.520Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T19:12:53.984Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/JUS2DyW4rz5WI5T6lAOR23rJylnHLvtpDMDYf2yJYoqaqsNLA/out-0.png
+[2026-04-15T19:12:53.984Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-15T19:12:53.985Z] LOG: [postcard] Original image: 3543x2362
+[2026-04-15T19:12:54.640Z] LOG: [postcard] Frame: 1240x698 at (1152,690), bezel=31px, radius=56px
+[2026-04-15T19:12:54.640Z] LOG: [postcard] Downloading artwork for frame...
+[2026-04-15T19:12:56.396Z] LOG: [postcard] Compositing frame layers onto original image...
+[2026-04-15T19:12:56.540Z] LOG: [postcard] ✅ Frame composited successfully — background 100% preserved
+[2026-04-15T19:12:56.541Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T19:12:57.502Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T19:12:57.919Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776280377705.jpg
+[2026-04-15T19:12:57.919Z] LOG: [postcard] ✅ After image saved: postcard_after_1776280377705.jpg
+[2026-04-15T19:12:57.919Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T19:12:57.919Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T19:12:57.919Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T19:22:28.201Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T19:22:28.206Z] LOG: ✅ Redis Connected
+[2026-04-15T19:22:28.207Z] LOG: Dekoviz
+[2026-04-15T19:30:08.633Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T19:30:08.633Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T19:30:08.633Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T19:30:08.633Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T19:30:10.506Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T19:30:10.506Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T19:30:10.506Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T19:30:13.006Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/VsU75tKOBoJtJ1VzbAnt4KNmNaIfUHgXKvrC38EPE1FiysNLA/out-0.png
+[2026-04-15T19:30:13.007Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-15T19:30:13.009Z] LOG: [postcard] Original image: 3543x2362
+[2026-04-15T19:30:13.597Z] LOG: [postcard] Frame: 1240x698 at (1152,690), bezel=31px, radius=56px
+[2026-04-15T19:30:13.598Z] LOG: [postcard] Downloading artwork for frame...
+[2026-04-15T19:30:15.138Z] LOG: [postcard] Compositing frame layers onto original image...
+[2026-04-15T19:30:15.291Z] LOG: [postcard] ✅ Frame composited successfully — background 100% preserved
+[2026-04-15T19:30:15.291Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T19:30:16.236Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T19:30:16.639Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776281416436.jpg
+[2026-04-15T19:30:16.639Z] LOG: [postcard] ✅ After image saved: postcard_after_1776281416436.jpg
+[2026-04-15T19:30:16.639Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T19:30:16.639Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T19:30:16.639Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T19:42:20.737Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T19:42:20.741Z] LOG: ✅ Redis Connected
+[2026-04-15T19:42:20.742Z] LOG: Dekoviz
+[2026-04-15T19:53:10.006Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-15T19:53:10.011Z] LOG: ✅ Redis Connected
+[2026-04-15T19:53:10.012Z] LOG: Dekoviz
+[2026-04-15T19:54:05.353Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-15T19:54:05.353Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-15T19:54:05.353Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T19:54:05.353Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-15T19:54:07.758Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-15T19:54:07.758Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-15T19:54:07.758Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-15T19:54:10.406Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/yIHyqrzkXNakBpytLxB7mUYfoR5d9M5YWQCaA50P8Rpw9sNLA/out-0.png
+[2026-04-15T19:54:10.407Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-15T19:54:10.408Z] LOG: [postcard] Original image: 3543x2362
+[2026-04-15T19:54:11.001Z] LOG: [postcard] Frame: 1240x698 at (1152,690), bezel=31px, radius=56px
+[2026-04-15T19:54:11.001Z] LOG: [postcard] Downloading artwork for frame...
+[2026-04-15T19:54:12.523Z] LOG: [postcard] Compositing frame layers onto original image...
+[2026-04-15T19:54:12.670Z] LOG: [postcard] ✅ Frame composited successfully — background 100% preserved
+[2026-04-15T19:54:12.670Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-15T19:54:13.613Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-15T19:54:13.990Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776282853805.jpg
+[2026-04-15T19:54:13.990Z] LOG: [postcard] ✅ After image saved: postcard_after_1776282853805.jpg
+[2026-04-15T19:54:13.990Z] LOG: [postcard] Room style detected: modern
+[2026-04-15T19:54:13.990Z] LOG: [postcard] Mood: sophisticated
+[2026-04-15T19:54:13.990Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-15T19:54:57.782Z] LOG: Redis Error: Error: Socket closed unexpectedly
+[2026-04-15T19:54:57.786Z] LOG: Redis Error: Error: connect ECONNREFUSED 127.0.0.1:6379
+[2026-04-16T04:56:49.241Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T04:56:49.245Z] LOG: ✅ Redis Connected
+[2026-04-16T04:56:49.246Z] LOG: Dekoviz
+[2026-04-16T05:01:29.755Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-16T05:01:29.755Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-16T05:01:29.755Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:01:29.755Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-16T05:01:30.526Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-16T05:01:30.527Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-16T05:01:30.527Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-16T05:01:34.648Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/353el2fw87nhZkFxofaaQoeDVafsjcojehkBPXnPWy7hLfwNLA/out-0.png
+[2026-04-16T05:01:34.649Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-16T05:01:39.971Z] LOG: [postcard] ✅ Wall-embedded composite complete (with occlusion and perspective logic)
+[2026-04-16T05:01:39.971Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-16T05:01:41.245Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-16T05:01:43.042Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776315701611.jpg
+[2026-04-16T05:01:43.042Z] LOG: [postcard] ✅ After image saved: postcard_after_1776315701611.jpg
+[2026-04-16T05:01:43.042Z] LOG: [postcard] Room style detected: modern
+[2026-04-16T05:01:43.042Z] LOG: [postcard] Mood: sophisticated
+[2026-04-16T05:01:43.042Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:13:04.464Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T05:13:04.469Z] LOG: ✅ Redis Connected
+[2026-04-16T05:13:04.470Z] LOG: Dekoviz
+[2026-04-16T05:13:34.994Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T05:13:34.998Z] LOG: ✅ Redis Connected
+[2026-04-16T05:13:34.998Z] LOG: Dekoviz
+[2026-04-16T05:19:58.841Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-16T05:19:58.841Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-16T05:19:58.841Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:19:58.841Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-16T05:20:00.785Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-16T05:20:00.785Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-16T05:20:00.786Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-16T05:20:03.431Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/7oKtfL00ZN0VUaOmE9Y8YVW3WDNBPlKN92CcJ3opXXZBHxNLA/out-0.png
+[2026-04-16T05:20:03.432Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-16T05:20:16.270Z] LOG: [postcard] ✅ Wall-embedded composite complete (with occlusion and perspective logic)
+[2026-04-16T05:20:16.270Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-16T05:20:17.219Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-16T05:20:17.788Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776316817459.jpg
+[2026-04-16T05:20:17.788Z] LOG: [postcard] ✅ After image saved: postcard_after_1776316817459.jpg
+[2026-04-16T05:20:17.788Z] LOG: [postcard] Room style detected: modern
+[2026-04-16T05:20:17.788Z] LOG: [postcard] Mood: sophisticated
+[2026-04-16T05:20:17.788Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:30:01.964Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T05:30:01.967Z] LOG: ✅ Redis Connected
+[2026-04-16T05:30:01.968Z] LOG: Dekoviz
+[2026-04-16T05:30:25.930Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T05:30:25.936Z] LOG: ✅ Redis Connected
+[2026-04-16T05:30:25.937Z] LOG: Dekoviz
+[2026-04-16T05:46:30.681Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-16T05:46:30.681Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-16T05:46:30.681Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:46:30.681Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-16T05:46:31.383Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-16T05:46:31.383Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-16T05:46:31.384Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-16T05:46:34.035Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/T0Pw2K4me2w1QilIr7qPei3JQpSZUfC24BrQQ5SbUG2zNF3sA/out-0.png
+[2026-04-16T05:46:34.036Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-16T05:46:42.067Z] LOG: [postcard] ✅ Wall-embedded composite complete (with occlusion and perspective logic)
+[2026-04-16T05:46:42.067Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-16T05:46:42.496Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-16T05:46:43.893Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776318402689.jpg
+[2026-04-16T05:46:43.893Z] LOG: [postcard] ✅ After image saved: postcard_after_1776318402689.jpg
+[2026-04-16T05:46:43.893Z] LOG: [postcard] Room style detected: modern
+[2026-04-16T05:46:43.893Z] LOG: [postcard] Mood: sophisticated
+[2026-04-16T05:46:43.893Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:48:18.695Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T05:48:18.698Z] LOG: ✅ Redis Connected
+[2026-04-16T05:48:18.699Z] LOG: Dekoviz
+[2026-04-16T05:48:26.276Z] LOG: 
+[postcard] ═══════════════════════════════════════
+[2026-04-16T05:48:26.277Z] LOG: [postcard] Starting premium pipeline for "test"
+[2026-04-16T05:48:26.277Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:48:26.277Z] LOG: [postcard] Step 1/5 — Analyzing room with AI Vision...
+[2026-04-16T05:48:27.000Z] LOG: [postcard] Vision unavailable, using intelligent defaults
+[2026-04-16T05:48:27.000Z] LOG: [postcard] Step 2/5 — Generating gallery-quality artwork...
+[2026-04-16T05:48:27.000Z] LOG: [postcard] Generating context-aware artwork (16:9, space-matched)...
+[2026-04-16T05:48:29.349Z] LOG: [postcard] Artwork generated: https://replicate.delivery/yhqm/TXr3XM6aJZKUHdHMPnQpT1aFn0vjgs0piLAw2l8MoYDLq4mF/out-0.png
+[2026-04-16T05:48:29.350Z] LOG: [postcard] Step 3/5 — Compositing Deckoviz frame onto scene...
+[2026-04-16T05:48:37.371Z] LOG: [postcard] ✅ Wall-embedded composite complete (with occlusion and perspective logic)
+[2026-04-16T05:48:37.371Z] LOG: [postcard] Step 4/5 — Post-processing for cinematic quality...
+[2026-04-16T05:48:37.840Z] LOG: [postcard] Step 5/5 — Composing final premium postcard...
+[2026-04-16T05:48:38.370Z] LOG: 
+[postcard] ✅ Premium postcard ready: postcard_1776318518055.jpg
+[2026-04-16T05:48:38.370Z] LOG: [postcard] ✅ After image saved: postcard_after_1776318518055.jpg
+[2026-04-16T05:48:38.370Z] LOG: [postcard] Room style detected: modern
+[2026-04-16T05:48:38.370Z] LOG: [postcard] Mood: sophisticated
+[2026-04-16T05:48:38.370Z] LOG: [postcard] ═══════════════════════════════════════
+
+[2026-04-16T05:50:36.777Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T05:50:36.780Z] LOG: ✅ Redis Connected
+[2026-04-16T05:50:36.781Z] LOG: Dekoviz
+[2026-04-16T05:51:01.469Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-16T05:51:07.319Z] LOG: Generation output received: https://replicate.delivery/xezq/5LrCpUN3vUaNE9aQfK8j3hEEifD6HaERWBWi2MwFQMHKribWA/out-0.png
+[2026-04-16T06:28:48.988Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-16T06:28:57.131Z] LOG: Generation output received: https://replicate.delivery/xezq/yRk5eeLu3hhP50dvhAGImJQeWbpjdrqIctMrhHssI40RdG3sA/out-0.png
+[2026-04-16T06:41:53.091Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-16T06:41:58.635Z] LOG: Generation output received: https://replicate.delivery/xezq/CRbXj5BL607UDdFjPnCf1eOBQbfVkUoJEQc0CNUklLPq1G3sA/out-0.png
+[2026-04-16T06:42:39.862Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-16T06:42:45.406Z] LOG: Generation output received: https://replicate.delivery/xezq/iQHmArPmCfUHKaKf1LuvsPC1XInrLsU3IyZifnuzEAGI3G3sA/out-0.png
+[2026-04-16T06:46:37.528Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T06:46:37.533Z] LOG: ✅ Redis Connected
+[2026-04-16T06:46:37.533Z] LOG: Dekoviz
+[2026-04-16T06:47:00.674Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T06:47:00.678Z] LOG: ✅ Redis Connected
+[2026-04-16T06:47:00.679Z] LOG: Dekoviz
+[2026-04-16T06:52:16.512Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T06:52:16.516Z] LOG: ✅ Redis Connected
+[2026-04-16T06:52:16.516Z] LOG: Dekoviz
+[2026-04-16T07:10:52.982Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:10:52.986Z] LOG: ✅ Redis Connected
+[2026-04-16T07:10:52.987Z] LOG: Dekoviz
+[2026-04-16T07:12:06.363Z] LOG: Starting Image-to-Image generation with Replicate SDK...
+[2026-04-16T07:12:11.416Z] LOG: Generation output received: https://replicate.delivery/xezq/CrHGIkHKQLYAMx46i0gKOAWbnw4q3tGrkJbviu1QeYZl7xNLA/out-0.png
+[2026-04-16T07:18:15.924Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:18:15.929Z] LOG: ✅ Redis Connected
+[2026-04-16T07:18:15.929Z] LOG: Dekoviz
+[2026-04-16T07:19:56.225Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:19:56.229Z] LOG: ✅ Redis Connected
+[2026-04-16T07:19:56.229Z] LOG: Dekoviz
+[2026-04-16T07:23:17.517Z] LOG: Postcard generation started for: test
+[2026-04-16T07:23:18.246Z] ERROR: Vision Error: Gemini Vision Error: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+[2026-04-16T07:23:18.247Z] ERROR: [postcard/generate] Error: Gemini Vision Error: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+[2026-04-16T07:24:31.891Z] LOG: Postcard generation started for: test
+[2026-04-16T07:24:32.768Z] ERROR: Vision Error: Gemini Vision Error: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+[2026-04-16T07:24:32.768Z] ERROR: [postcard/generate] Error: Gemini Vision Error: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+[2026-04-16T07:24:45.666Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:24:45.671Z] LOG: ✅ Redis Connected
+[2026-04-16T07:24:45.672Z] LOG: Dekoviz
+[2026-04-16T07:25:18.420Z] LOG: Postcard generation started for: test
+[2026-04-16T07:25:20.380Z] ERROR: Vision Error: Gemini Vision Error: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+[2026-04-16T07:25:20.380Z] ERROR: [postcard/generate] Error: Gemini Vision Error: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+[2026-04-16T07:26:04.759Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:26:04.763Z] LOG: ✅ Redis Connected
+[2026-04-16T07:26:04.764Z] LOG: Dekoviz
+[2026-04-16T07:27:02.924Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:27:02.928Z] LOG: ✅ Redis Connected
+[2026-04-16T07:27:02.929Z] LOG: Dekoviz
+[2026-04-16T07:28:11.425Z] LOG: Postcard generation started for: test
+[2026-04-16T07:28:20.529Z] LOG: Placement detected: [object Object]
+[2026-04-16T07:28:28.387Z] ERROR: [postcard/generate] Error: Input buffer has corrupt header: glib: XML parse error: Error domain 1 code 23 on line 4 column 122 of data: EntityRef: expecting ';'
+[2026-04-16T07:39:48.295Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:39:48.299Z] LOG: ✅ Redis Connected
+[2026-04-16T07:39:48.300Z] LOG: Dekoviz
+[2026-04-16T07:48:00.888Z] LOG: Postcard generation started for: test
+[2026-04-16T07:48:09.619Z] LOG: Placement detected: [object Object]
+[2026-04-16T07:50:14.763Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:50:14.769Z] LOG: ✅ Redis Connected
+[2026-04-16T07:50:14.770Z] LOG: Dekoviz
+[2026-04-16T07:52:33.522Z] LOG: Postcard generation started for: test
+[2026-04-16T07:52:44.034Z] LOG: Placement detected: [object Object]
+[2026-04-16T07:55:29.169Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:55:29.172Z] LOG: ✅ Redis Connected
+[2026-04-16T07:55:29.173Z] LOG: Dekoviz
+[2026-04-16T07:56:53.836Z] LOG: Postcard generation started for: test
+[2026-04-16T07:57:04.463Z] LOG: Placement detected: [object Object]
+[2026-04-16T07:59:04.401Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:59:04.406Z] LOG: ✅ Redis Connected
+[2026-04-16T07:59:04.407Z] LOG: Dekoviz
+[2026-04-16T07:59:25.723Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T07:59:25.727Z] LOG: ✅ Redis Connected
+[2026-04-16T07:59:25.727Z] LOG: Dekoviz
+[2026-04-16T08:00:13.473Z] LOG: Postcard generation started for: test
+[2026-04-16T08:00:30.956Z] LOG: Placement detected: [object Object]
+[2026-04-16T08:01:38.125Z] LOG: Postcard generation started for: test
+[2026-04-16T08:01:58.156Z] LOG: Placement detected: [object Object]
+[2026-04-16T08:07:19.700Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T08:07:19.705Z] LOG: ✅ Redis Connected
+[2026-04-16T08:07:19.706Z] LOG: Dekoviz
+[2026-04-16T08:23:36.011Z] LOG: Postcard generation started for: t
+[2026-04-16T08:23:48.029Z] LOG: Placement detected: [object Object]
+[2026-04-16T08:24:56.168Z] LOG: Postcard generation started for: t
+[2026-04-16T08:25:09.374Z] LOG: Placement detected: [object Object]
+[2026-04-16T08:27:50.349Z] LOG: Postcard generation started for: test
+[2026-04-16T08:28:04.939Z] LOG: Placement detected: [object Object]
+[2026-04-16T08:29:56.016Z] LOG: Postcard generation started for: t
+[2026-04-16T08:30:07.081Z] LOG: Placement detected: [object Object]
+[2026-04-16T08:39:40.242Z] LOG: Postcard generation started for: t
+[2026-04-16T08:39:51.075Z] LOG: Placement detected: [object Object]
+[2026-04-16T08:46:25.107Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-16T08:46:25.111Z] LOG: ✅ Redis Connected
+[2026-04-16T08:46:25.111Z] LOG: Dekoviz
+[2026-04-16T08:59:12.560Z] LOG: Postcard generation started for: t
+[2026-04-16T08:59:35.674Z] LOG: Placement detected: [object Object]

@@ -1,6 +1,15 @@
+// src/lib/supabase.ts
+
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = "https://ftxrfurwzpghdzajtoxr.supabase.co";
-const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0eHJmdXJ3enBnaGR6YWp0b3hyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NDc3NDMsImV4cCI6MjA4ODEyMzc0M30.susN6eXfnFozPbhOcmZHk3tQVhluPsbmprUPuoWP1O8";
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.warn("Supabase credentials missing. Some features may not work.");
+}
+
+export const supabase = createClient(
+  supabaseUrl || "https://placeholder.supabase.co",
+  supabaseAnonKey || "placeholder"
+);
