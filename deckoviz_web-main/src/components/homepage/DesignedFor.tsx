@@ -11,7 +11,7 @@ const FloatingNervousSystemButton: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute left-0 -top-[10%] z-30 animate-float">
+    <div className="z-30">
       <button
         onClick={() => navigate("/nervous-system")}
         className="
@@ -76,6 +76,123 @@ const FloatingNervousSystemButton: React.FC = () => {
   );
 };
 
+const FloatingDASPGuideButton: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    /* Outer wrapper — positions the whole assembly (pin + card) */
+    <div className="z-30 flex flex-col items-center select-none mt-5">
+      {/* ── Thumbtack pin ── */}
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Pin head: shiny gold disc */}
+        <div
+          className="w-[18px] h-[18px] rounded-full border border-white/30"
+          style={{
+            background: "radial-gradient(circle at 35% 30%, #fde68a, #f59e0b 55%, #92400e)",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.5)",
+          }}
+        />
+        {/* Pin shaft */}
+        <div
+          className="w-[2px] h-[10px] rounded-b-full"
+          style={{ background: "linear-gradient(to bottom, #d97706, #78350f)" }}
+        />
+      </div>
+
+      {/* ── Hanging card ── */}
+      <button
+        onClick={() => navigate("/dasp-homes-guide")}
+        className="group relative overflow-hidden cursor-pointer"
+        style={{
+          width: "175px",
+          borderRadius: "12px",
+          /* Card swings from top-center pin point */
+          transformOrigin: "top center",
+          animation: "cardSwing 5s ease-in-out infinite",
+          background: "linear-gradient(150deg, #6d28d9 0%, #9333ea 45%, #db2777 100%)",
+          boxShadow:
+            "0 10px 32px rgba(109,40,217,0.5), 0 2px 6px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
+          border: "1px solid rgba(255,255,255,0.22)",
+          padding: "14px 14px 15px",
+        }}
+      >
+        {/* Subtle horizontal line texture (ruled-paper feel) */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(180deg, transparent, transparent 11px, rgba(255,255,255,1) 11px, rgba(255,255,255,1) 12px)",
+            borderRadius: "12px",
+          }}
+        />
+
+        {/* Shine sweep on hover */}
+        <div
+          className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+          style={{
+            background:
+              "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)",
+            borderRadius: "12px",
+          }}
+        />
+
+        {/* Dog-ear folded corner (bottom-right) */}
+        <div
+          className="pointer-events-none absolute bottom-0 right-0"
+          style={{
+            width: 0,
+            height: 0,
+            borderStyle: "solid",
+            borderWidth: "0 0 15px 15px",
+            borderColor: "transparent transparent rgba(0,0,0,0.22) transparent",
+          }}
+        />
+
+        {/* Card content */}
+        <div className="relative flex flex-col items-center text-center gap-1.5">
+          {/* Icon badge */}
+          <div
+            className="w-9 h-9 rounded-lg flex items-center justify-center text-lg mb-0.5 group-hover:scale-110 transition-transform duration-300"
+            style={{
+              background: "rgba(255,255,255,0.18)",
+              backdropFilter: "blur(6px)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.35), 0 2px 6px rgba(0,0,0,0.12)",
+            }}
+          >
+            📘
+          </div>
+
+          <p className="text-[8.5px] font-semibold uppercase tracking-[0.17em] text-white/75 leading-none">
+            A Quick But Comprehensive
+          </p>
+          <p className="text-[12.5px] font-extrabold text-white leading-snug group-hover:text-yellow-200 transition-colors duration-300">
+            Guide To Your DAS Portal
+          </p>
+
+          {/* CTA pill */}
+          <div
+            className="mt-1.5 px-3 py-[3px] rounded-full text-[10px] font-bold text-purple-900 group-hover:scale-105 transition-transform duration-300"
+            style={{ background: "rgba(255,255,255,0.9)" }}
+          >
+            Read →
+          </div>
+        </div>
+      </button>
+
+      {/* Keyframes for the pendulum swing */}
+      <style>{`
+        @keyframes cardSwing {
+          0%   { transform: rotate(-3deg);  }
+          25%  { transform: rotate(2deg);   }
+          50%  { transform: rotate(-1.2deg);}
+          75%  { transform: rotate(2.5deg); }
+          100% { transform: rotate(-3deg);  }
+        }
+      `}</style>
+    </div>
+  );
+};
+
 const FloatingMinimalistButton: React.FC = () => {
   const navigate = useNavigate();
   return (
@@ -107,6 +224,8 @@ const FloatingMinimalistButton: React.FC = () => {
 };
 // REFINED: Component for the scrolling image gallery
 const ScrollingImageGallery: React.FC = () => {
+  const navigate = useNavigate();
+  
   const images = [
     {
       src: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80",
@@ -513,9 +632,14 @@ const frameImages = [
             </div>
           </div>
         </div>
-<div className="relative mt-10">
-  <FloatingNervousSystemButton />
-  <ScrollingImageGallery />
+<div className="relative mt-24 flex items-start">
+  <div className="absolute left-6 -top-[20px] z-30 flex flex-col items-center animate-float">
+    <FloatingNervousSystemButton />
+    <FloatingDASPGuideButton />
+  </div>
+  <div className="w-full">
+    <ScrollingImageGallery />
+  </div>
 
 {/* Dynamic Frame Showcase */}
 <div className="flex justify-center mt-20">

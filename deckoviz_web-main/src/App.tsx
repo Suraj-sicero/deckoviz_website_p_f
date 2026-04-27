@@ -29,7 +29,7 @@ import Contact from "./components/Contact";
 import Pricing from "./components/homepage/Pricing";
 import Youtube from "./components/homepage/Youtube";
 import DeckovizLanding from "./components/deckovizForBusinesses/DeckovizForHotels";
-import DeckovizRestaurantLanding from "./components/deckovizForBusinesses/DeckovizForRestaurants";
+import DeckovizRestaurantLanding from "./components/deckovizForBusinesses/DeckovizForRestaurantsAndCafes";
 import DeckovizArchitectsLanding from "./components/deckovizForBusinesses/DeckovizForArchitects";
 import DeckovizOfficesLanding from "./components/deckovizForBusinesses/DeckovizForOffices";
 import DeckovizForRealEstate from "./components/deckovizForBusinesses/DeckovizForRealestate";
@@ -72,8 +72,10 @@ import AllBenefits from "./components/homepage/AllBenefits";
 import Support from "./components/Support";
 import MoreInfo from "./components/MoreInfo";
 import DASPGuide from "./components/homepage/DASPGuide";
+import DASPHomesGuide from "./components/homepage/DASPHomesGuide";
 import StartHere from "./components/homepage/StartHere";
 import DASPBusinessGuide from "./components/deckovizForBusinesses/DASPBusinessGuide";
+import PragmaticBuyerGuide from "./components/deckovizForBusinesses/PragmaticBuyerGuide";
 import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 
 import Audiobook from "./components/Audiobook";
@@ -182,7 +184,9 @@ const App: React.FC = () => {
           element={<YourLifePlayedBackGently />}
         />
         <Route path="/dasp-guide" element={<DASPGuide />} />
+        <Route path="/dasp-homes-guide" element={<DASPHomesGuide />} />
         <Route path="/dasp-business-guide" element={<DASPBusinessGuide />} />
+        <Route path="/pragmatic-buyer-guide" element={<PragmaticBuyerGuide />} />
         <Route path="/how-it-works" element={<HowItWorks />} />
         <Route path="/about" element={<AboutUs />} />
         <Route path="/place-order" element={<PlaceOrder />} />
