@@ -274,7 +274,7 @@ const Navbar: React.FC = () => {
       description: "Create dining ambiance",
       image: "/images/restaurantnavbar.png",
       gradient: "from-orange-500 to-red-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-restaurants*/
+      route: "/deckoviz-for-restaurants",
       fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100",
     },
 
@@ -323,7 +323,7 @@ const Navbar: React.FC = () => {
       description: "Shopping experiences",
       image: "/images/retailnavbar.png",
       gradient: "from-pink-500 to-rose-500",
-      route: "/deckoviz-for-enterprises", /*deckoviz-for-retailstores*/
+      route: "/deckoviz-for-retailstores",
       fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100",
     },
     {
@@ -752,22 +752,17 @@ const Navbar: React.FC = () => {
 
             </div>
 
-            {/* Center Logo with Comfortaa font */}
-            <a href="/" className="flex items-center">
+            {/* Center Logo */}
+            <a href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center z-50">
               <img
-                src="/images/deckovizlogo.png"
-                alt="Deckoviz Logo"
-                className="h-12 w-12 rounded-full object-contain mt-1"
-              />
-              <img
-                src="/images/deckospacelabs.png"
-                alt="Space Labs Logo"
-                className="h-14 w-auto object-contain ml-1 mb-2"
+                src="/images/new_logo.png"
+                alt="Deckoviz Space Labs Logo"
+                className="h-10 md:h-14 w-auto object-contain"
               />
             </a>
 
             {/* Right Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-6">
               <a
                 href="/blog"
                 className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
@@ -786,39 +781,35 @@ const Navbar: React.FC = () => {
                 Buy Now
               </Button>
 
-              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
-           <div className="fixed right-4 top-3.5 flex items-center space-x-2 z-50">
+              <div className="flex items-center space-x-2 z-50 pl-2">
+                {/* Previous */}
+                <button
+                  onClick={prev}
+                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
+                >
+                  <SkipBack size={18} className="text-[#8345EE]" />
+                </button>
 
-  {/* Previous */}
-  <button
-    onClick={prev}
-    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
-  >
-    <SkipBack size={18} className="text-[#8345EE]" />
-  </button>
+                {/* Play / Pause */}
+                <button
+                  onClick={toggle}
+                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
+                >
+                  {isPlaying ? (
+                    <Volume2 size={20} className="text-[#8345EE]" />
+                  ) : (
+                    <VolumeX size={20} className="text-gray-400" />
+                  )}
+                </button>
 
-  {/* Play / Pause */}
-  <button
-    onClick={toggle}
-    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
-  >
-    {isPlaying ? (
-      <Volume2 size={20} className="text-[#8345EE]" />
-    ) : (
-      <VolumeX size={20} className="text-gray-400" />
-    )}
-  </button>
-
-  {/* Next */}
-  <button
-    onClick={next}
-    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
-  >
-    <SkipForward size={18} className="text-[#8345EE]" />
-  </button>
-
-</div>
-
+                {/* Next */}
+                <button
+                  onClick={next}
+                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
+                >
+                  <SkipForward size={18} className="text-[#8345EE]" />
+                </button>
+              </div>
             </div>
 
             {/* Mobile Menu Button with cool animation */}
