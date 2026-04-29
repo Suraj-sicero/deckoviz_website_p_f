@@ -182,7 +182,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: cat.accent }} />
             <span className="text-sm font-medium tracking-wider text-violet-200 uppercase">An Evolving List of Use Cases</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight">
+          <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
             Deckoviz becomes your store's{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400">
               everything layer
@@ -239,7 +239,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
             <div className="flex items-center gap-4 mb-10">
               <span className="text-4xl">{cat.icon}</span>
               <div>
-                <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] font-semibold text-white">{cat.label}</h3>
+                <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>{cat.label}</h3>
                 <p className="text-sm text-gray-500 mt-1">{cat.items.length} use cases</p>
               </div>
               <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent ml-4" />
@@ -290,7 +290,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           ))}
           <div className="h-8 w-px bg-white/10" />
           <span className="text-sm text-gray-500">
-            <span className="text-2xl font-['Playfair_Display'] text-white font-semibold">{totalUseCases}</span>
+            <span className="text-2xl font-['Playfair_Display'] text-white font-semibold" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>{totalUseCases}</span>
             {' '}total use cases & growing
           </span>
         </motion.div>
@@ -306,7 +306,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-fuchsia-500/5 to-amber-500/5 rounded-3xl pointer-events-none" />
           <div className="border border-white/8 rounded-3xl p-10 md:p-16 backdrop-blur-sm">
             <div className="text-center mb-14">
-              <h3 className="text-3xl md:text-5xl font-['Playfair_Display'] font-semibold text-white mb-4">
+              <h3 className="text-3xl md:text-5xl font-['Playfair_Display'] font-semibold text-white mb-4" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 The Full Deckoviz in Retail Experience
               </h3>
               <p className="text-gray-500 text-lg">The real magic happens when all of this works together.</p>
@@ -352,7 +352,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
               className="text-center space-y-6 max-w-3xl mx-auto"
             >
               <p className="text-2xl text-gray-300 font-light">That is no longer just shopping.</p>
-              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400">
+              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 That becomes an experience.
               </p>
               <p className="text-2xl text-gray-300 font-light">And experiences are what people come back for.</p>
