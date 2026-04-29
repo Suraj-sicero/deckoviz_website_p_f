@@ -267,9 +267,9 @@ const Navbar: React.FC = () => {
       title: "Architects & Designers",
       description: "Design living spaces",
       image: "/images/architectnavbar.png",
-      gradient: "from-purple-500 to-pink-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-architects*/
-      fallbackColor: "bg-gradient-to-br from-purple-100 to-pink-100",
+      gradient: "from-blue-500 to-indigo-500",
+      route: "/deckoviz-for-architects",
+      fallbackColor: "bg-gradient-to-br from-blue-100 to-indigo-100",
     },
     {
       title: "Offices & Workspaces",
@@ -284,7 +284,7 @@ const Navbar: React.FC = () => {
       description: "Showcase properties",
       image: "/images/realestatenavbar.png",
       gradient: "from-indigo-500 to-blue-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-realestate*/
+      route: "/deckoviz-for-realestate",
       fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
     },
     {
@@ -722,11 +722,16 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Center Logo */}
-            <a href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center z-50">
+            <a href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center space-x-1 z-50">
               <img
-                src="/images/new_logo.png"
+                src="/images/deckovizlogo.png"
+                alt="Deckoviz Symbol"
+                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
+              />
+              <img
+                src="/images/new_logoo.jpeg"
                 alt="Deckoviz Space Labs Logo"
-                className="h-10 md:h-14 w-auto object-contain"
+                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
               />
             </a>
 

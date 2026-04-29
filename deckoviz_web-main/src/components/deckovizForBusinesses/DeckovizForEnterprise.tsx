@@ -23,6 +23,8 @@ import EnterpriseFeatures from "../other/core enterprise features.tsx";
 import { Link } from "react-router-dom";
 import { image } from "framer-motion/client";
 import DeckovizSectors from "./DeckovizSectors";
+import EnterpriseHorizontalScrollingFeatures from "./EnterpriseHorizontalScrollingFeatures";
+
 
 const ENTERPRISE_ARTICLES = {
     core: [
@@ -930,31 +932,36 @@ const extraFeatures = [
               {/* Content */}
               <div className="space-y-5 text-white/80 leading-relaxed text-sm md:text-[16px]">
                 <p>
-                  Attention is fragmented. Expectations are higher.
-                  Differentiation is harder. Screens are everywhere — yet most
-                  spaces still feel forgettable.
+                  Most spaces are designed once - and then left to decay into the background.
+                  Static walls. Stale visuals. Dull posters. Generic experiences. Repetitive screens.
                 </p>
 
                 <p>
-                  Deckoviz was built for this exact problem. It is an AI-powered
-                  Dynamic Art, Storytelling, and Spatial Experience Platform
-                  designed for enterprises that understand one thing clearly:
-                  <span className="text-white font-semibold">
-                    {" "}
-                    the future of business is experiential, emotional, and adaptive.
-                  </span>
+                  Meanwhile, customer expectations are shaped by personalised, adaptive digital worlds. 
+                  That gap is where businesses lose attention, memory, and loyalty.
                 </p>
 
                 <p>
-                  Not static signage. Not passive screens. Deckoviz turns walls
-                  into living, intelligent canvases that respond to context,
-                  brand, time, audience, and intent.
+                  Deckoviz fixes that.
+                  It transforms your space into a dynamic experience system - combining storytelling, visual design, custom art, and real-time ambience into one intelligent and proactive layer.
                 </p>
 
                 <p>
-                  For businesses, Deckoviz becomes the missing layer between
-                  brand strategy and real-world experience — the layer customers
-                  actually feel.
+                  Your brand layer. Your mood layer. Your storytelling layer. Your AI layer. Your experience layer.
+                  All adaptive. All evolving.
+                </p>
+
+                <p>
+                  An AI-powered Dynamic Art, Storytelling, and Spatial Experience Platform designed for enterprises that understand one thing clearly: the future of customer experience is experiential, emotional, adaptive, personalized, multisensory and immersive.
+                </p>
+
+                <p>
+                  So your space doesn’t just look good once - Deckoviz performs, engages, and creates moments that people remember, turning your walls into living, intelligent canvases that respond to context, brand, time, audience, and intent.
+                  Because in a world of commodities, experience is the only moat.
+                </p>
+
+                <p>
+                  Turn your business into an immersive, personal experience that your guests will remember long after the meal or the sale.
                 </p>
               </div>
 
@@ -1177,6 +1184,8 @@ const extraFeatures = [
 
 {/* 📘 Floating Business DASP Guide Button */}
 
+
+      <EnterpriseHorizontalScrollingFeatures />
 
       <section className="py-24 bg-white">
 

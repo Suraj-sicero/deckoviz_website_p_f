@@ -190,7 +190,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: cat.accent }} />
             <span className="text-sm font-medium tracking-wider text-orange-200 uppercase">An Evolving List of Use Cases</span>
           </div>
-          <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight">
+          <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
             Deckoviz becomes your restaurant's{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400">
               everything layer
@@ -244,7 +244,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           <div className="flex items-center gap-4 mb-10">
             <span className="text-4xl">{cat.icon}</span>
             <div>
-              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] font-semibold text-white">{cat.label}</h3>
+              <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>{cat.label}</h3>
               <p className="text-sm text-gray-500 mt-1">{cat.items.length} use cases</p>
             </div>
             <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent ml-4" />
@@ -296,7 +296,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           ))}
           <div className="h-8 w-px bg-white/10" />
           <span className="text-sm text-gray-500">
-            <span className="text-2xl font-['Playfair_Display'] text-white font-semibold">
+            <span className="text-2xl font-['Playfair_Display'] text-white font-semibold" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               {useCaseCategories.reduce((a, c) => a + c.items.length, 0)}
             </span>
             {' '}total use cases & growing
@@ -314,7 +314,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-purple-500/5 to-rose-500/5 rounded-3xl pointer-events-none" />
           <div className="border border-white/8 rounded-3xl p-10 md:p-16 backdrop-blur-sm">
             <div className="text-center mb-14">
-              <h3 className="text-3xl md:text-5xl font-['Playfair_Display'] font-semibold text-white mb-4">
+              <h3 className="text-3xl md:text-5xl font-['Playfair_Display'] font-semibold text-white mb-4" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 The Full Deckoviz Restaurant Experience
               </h3>
               <p className="text-gray-500 text-lg">The real magic happens when all of this works together.</p>
@@ -354,7 +354,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
               className="text-center space-y-6 max-w-3xl mx-auto"
             >
               <p className="text-2xl text-gray-300 font-light">That is no longer just dinner.</p>
-              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400">
+              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 That becomes an experience.
               </p>
               <p className="text-2xl text-gray-300 font-light">And experiences are what people remember.</p>
@@ -515,6 +515,7 @@ const DeckovizForRestaurantsAndCafes = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="text-5xl md:text-7xl lg:text-8xl font-['Playfair_Display'] font-semibold mb-8 leading-tight tracking-tight"
+            style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
           >
             The New Standard in <br className="hidden md:block" />
             <motion.span 
@@ -549,6 +550,27 @@ const DeckovizForRestaurantsAndCafes = () => {
         </div>
       </section>
 
+      {/* Video Embed Section */}
+      <section className="py-16 md:py-24 px-6 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              A Glimpse Of Deckoviz For Your Restaurant
+            </h2>
+          </div>
+          <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-3xl shadow-[0_0_50px_rgba(249,115,22,0.15)] border border-white/10">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/pq6vb-AvmYc?rel=0&showinfo=0"
+              title="A Glimpse Of Deckoviz For Your Restaurant"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
       {/* Core Problems We Solve */}
       <section className="py-24 relative z-10 bg-black/40">
         <div className="max-w-7xl mx-auto px-6">
@@ -559,7 +581,7 @@ const DeckovizForRestaurantsAndCafes = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6">Core Problems We Solve</h2>
+            <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Core Problems We Solve</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-rose-500 mx-auto rounded-full" />
           </motion.div>
 
@@ -620,7 +642,7 @@ const DeckovizForRestaurantsAndCafes = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
             >
-              <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight">
+              <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 Why Deckoviz <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-400">for Restaurants?</span>
               </h2>
@@ -698,7 +720,7 @@ const DeckovizForRestaurantsAndCafes = () => {
                       <Sparkles className="w-5 h-5" />
                       <span className="text-sm font-semibold tracking-wider uppercase">Living System</span>
                     </div>
-                    <p className="text-xl text-white font-['Playfair_Display']">Transforming spaces with intelligent design</p>
+                    <p className="text-xl text-white font-['Playfair_Display']" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Transforming spaces with intelligent design</p>
                   </div>
                   {/* Dot indicators */}
                   <div className="absolute top-4 right-4 z-20 flex flex-col gap-1.5">
@@ -743,7 +765,7 @@ const DeckovizForRestaurantsAndCafes = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6">15 High-Impact Use Cases</h2>
+            <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>15 High-Impact Use Cases</h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">Discover how Deckoviz transforms every aspect of your dining experience.</p>
           </motion.div>
 
@@ -794,7 +816,7 @@ const DeckovizForRestaurantsAndCafes = () => {
             transition={{ duration: 0.8 }}
             className="text-center mb-20"
           >
-            <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6">12 Unrivaled Benefits</h2>
+            <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>12 Unrivaled Benefits</h2>
             <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-rose-500 mx-auto rounded-full" />
           </motion.div>
 
