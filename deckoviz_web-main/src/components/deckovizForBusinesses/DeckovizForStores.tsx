@@ -67,6 +67,7 @@ const DeckovizForRetail = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             className="text-5xl md:text-7xl lg:text-8xl font-['Playfair_Display'] font-semibold mb-8 leading-tight tracking-tight"
+            style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
           >
             The Retail Renaissance: <br className="hidden md:block" />
             <motion.span 
@@ -110,7 +111,7 @@ const DeckovizForRetail = () => {
           >
             <div className="flex items-center gap-4 mb-4">
               <span className="text-violet-400 font-mono text-xl">01.</span>
-              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold text-white">The AI Layer: Integrating Intelligence</h2>
+              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>The AI Layer: Integrating Intelligence</h2>
             </div>
             <p className="text-xl text-gray-400 max-w-3xl">Deckoviz is not digital signage; it is a creative intelligence engine that lives inside your architecture.</p>
           </motion.div>
@@ -144,7 +145,7 @@ const DeckovizForRetail = () => {
             <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }}>
               <div className="flex items-center gap-4 mb-4">
                 <span className="text-fuchsia-400 font-mono text-xl">02.</span>
-                <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-2 leading-tight">The Experience Layer</h2>
+                <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-2 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>The Experience Layer</h2>
               </div>
               <p className="text-xl text-gray-300 mb-12 font-light">
                 People do not return to stores because of the prices; they return because of how the space made them feel.
@@ -184,7 +185,7 @@ const DeckovizForRetail = () => {
                       <Sparkles className="w-5 h-5" />
                       <span className="text-sm font-semibold tracking-wider uppercase">Designing Human State-of-Being</span>
                     </div>
-                    <p className="text-xl text-white font-['Playfair_Display']">Transforming retail into immersive destinations</p>
+                    <p className="text-xl text-white font-['Playfair_Display']" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Transforming retail into immersive destinations</p>
                   </div>
                 </div>
               </div>
@@ -199,7 +200,7 @@ const DeckovizForRetail = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }} className="mb-16 text-center">
              <div className="inline-flex items-center justify-center gap-4 mb-4">
               <span className="text-amber-400 font-mono text-xl">03.</span>
-              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold text-white">8 Core Use Cases</h2>
+              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>8 Core Use Cases</h2>
             </div>
             <p className="text-xl text-gray-400">For the Modern Retailer</p>
           </motion.div>
@@ -233,7 +234,7 @@ const DeckovizForRetail = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.8 }} className="mb-16 text-center">
              <div className="inline-flex items-center justify-center gap-4 mb-4">
               <span className="text-rose-400 font-mono text-xl">04.</span>
-              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold text-white">12 Massive Benefits</h2>
+              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>12 Massive Benefits</h2>
             </div>
             <p className="text-xl text-gray-400">The Hard ROI of Intelligent Walls</p>
           </motion.div>
@@ -276,7 +277,7 @@ const DeckovizForRetail = () => {
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
             <div className="inline-flex items-center justify-center gap-4 mb-8">
               <span className="text-white/50 font-mono text-xl">05.</span>
-              <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold text-white">The Future of Retail is Ambiently Intelligent</h2>
+              <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>The Future of Retail is Ambiently Intelligent</h2>
             </div>
             
             <div className="space-y-6 text-xl md:text-2xl text-gray-300 font-light leading-relaxed mb-16">
@@ -285,7 +286,7 @@ const DeckovizForRetail = () => {
               <p>Most things you buy fill space; <strong className="text-white font-normal">Deckoviz shapes how your customers live and feel within it.</strong></p>
               <p>In a world of generic shopping, give your customers a space that finally speaks to them.</p>
               <p>The product is what they buy. <strong className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-amber-400 font-semibold">The atmosphere is why they come back.</strong></p>
-              <p className="text-3xl text-white font-['Playfair_Display'] italic pt-8">Stop managing a store. Start curating an experience.</p>
+              <p className="text-3xl text-white font-['Playfair_Display'] italic pt-8" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Stop managing a store. Start curating an experience.</p>
             </div>
 
             <motion.button

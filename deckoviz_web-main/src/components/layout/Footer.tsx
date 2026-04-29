@@ -133,26 +133,21 @@ const Footer = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <div className="bg-white/20 backdrop-blur-md rounded-2xl p-3 shadow-2xl border border-white/30">
-                  <img src="/images/new_logo.png" className="h-14 drop-shadow-2xl object-contain" alt="Deckoviz" />
+                <div 
+                  className="rounded-xl md:rounded-2xl p-2 md:p-2.5 shadow-[0_0_20px_rgba(167,139,250,0.3)] flex items-center space-x-1 md:space-x-2 border border-white/50"
+                  style={{
+                    background: "linear-gradient(135deg, #e0e7ff, #fbcfe8, #bfdbfe, #e0e7ff)",
+                    backgroundSize: "300% 300%",
+                    animation: "footerGradientFlow 6s ease infinite",
+                  }}
+                >
+                  <img src="/images/deckovizlogo.png" className="h-8 sm:h-10 md:h-12 object-contain" alt="Deckoviz Symbol" />
+                  <img src="/images/new_logoo.jpeg" className="h-8 sm:h-10 md:h-12 object-contain mix-blend-multiply" alt="Deckoviz" />
                 </div>
                 <div className="hidden md:flex flex-col gap-3">
                   <p className="text-white text-sm leading-tight max-w-xs">
                     Bring your space to life with AI-powered ambiance, dynamic art and visually stunning stories
                   </p>
-                  <a
-                    href="/creative-studio"
-                    className="relative inline-flex items-center gap-1.5 text-sm font-semibold px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 w-max"
-                    style={{
-                      background: "linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #2563EB 100%)",
-                      color: "white",
-                      boxShadow: "0 2px 12px rgba(59,130,246,0.4)",
-                      border: "1px solid rgba(96,165,250,0.3)"
-                    }}
-                  >
-                    <span style={{ fontSize: "14px" }}>✨</span>
-                    Creative Studio
-                  </a>
                 </div>
               </motion.div>
               
@@ -176,19 +171,43 @@ const Footer = () => {
               </div>
             </motion.div>
 
-            {/* Experimental Art Mode CTA Button */}
+            {/* Action CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="flex justify-center mb-8"
+              className="flex justify-center items-center gap-4 flex-wrap mb-8"
             >
               <a
-                href="/experimental-art-modes"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden"
+                href="/creative-studio"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
                 style={{
-                  background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%)",
+                  background: "linear-gradient(135deg, #60A5FA, #2563EB, #0ea5e9, #2563EB, #60A5FA)",
+                  backgroundSize: "300% 300%",
+                  animation: "footerGradientFlow 4s ease infinite",
+                  color: "white",
+                  boxShadow: "0 4px 20px rgba(59,130,246,0.4)",
+                }}
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <span className="relative z-10">✨ Creative Studio</span>
+              </a>
+
+              <style dangerouslySetInnerHTML={{__html: `
+                @keyframes footerGradientFlow {
+                  0% { background-position: 0% 50%; }
+                  50% { background-position: 100% 50%; }
+                  100% { background-position: 0% 50%; }
+                }
+              `}} />
+              <a
+                href="/experimental-art-modes"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                style={{
+                  background: "linear-gradient(135deg, #7c3aed, #ec4899, #3b82f6, #ec4899, #7c3aed)",
+                  backgroundSize: "300% 300%",
+                  animation: "footerGradientFlow 4s ease infinite",
                   color: "white",
                   boxShadow: "0 4px 20px rgba(124,58,237,0.4)",
                 }}

@@ -9,7 +9,7 @@ const SectionHeader = ({ number, title, subtitle }: { number: string, title: str
       </span>
       <div className="h-[1px] flex-1 bg-gradient-to-r from-indigo-500/50 to-transparent" />
     </div>
-    <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-tight">
+    <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
       {title}
     </h2>
     {subtitle && (
@@ -28,7 +28,7 @@ const FeatureBlock = ({ title, content, delay = 0 }: { title: string, content: s
     transition={{ duration: 0.7, delay }}
     className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-500"
   >
-    <h3 className="text-2xl font-semibold text-white mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+    <h3 className="text-2xl font-semibold text-white mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
       {title}
     </h3>
     <p className="text-gray-300 leading-relaxed text-lg">
@@ -46,7 +46,7 @@ const ExpandableUseCase = ({ category, items }: { category: string, items: { tit
         onClick={() => setIsOpen(!isOpen)}
         className="w-full flex items-center justify-between py-6 text-left group"
       >
-        <h3 className="text-2xl md:text-3xl font-light text-white group-hover:text-indigo-400 transition-colors duration-300">
+        <h3 className="text-2xl md:text-3xl font-light text-white group-hover:text-indigo-400 transition-colors duration-300" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
           {category}
         </h3>
         <span className={`text-3xl text-indigo-400 transition-transform duration-500 ${isOpen ? 'rotate-45' : ''}`}>
@@ -93,7 +93,7 @@ export const HotelExperienceJourney: React.FC = () => {
             transition={{ duration: 1 }}
             className="max-w-4xl"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[1.1]">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[1.1]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               The Future of Hospitality: <br />
               <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Beyond the Stay
@@ -114,6 +114,27 @@ export const HotelExperienceJourney: React.FC = () => {
               </p>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Video Embed Section */}
+      <section className="py-16 md:py-24 px-6 border-t border-white/5 relative z-10">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              A Glimpse Of Deckoviz For Your Hotel
+            </h2>
+          </div>
+          <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-3xl shadow-[0_0_50px_rgba(79,70,229,0.15)] border border-white/10">
+            <iframe
+              className="absolute top-0 left-0 w-full h-full"
+              src="https://www.youtube.com/embed/zCLi3OTFRFU?rel=0&showinfo=0"
+              title="A Glimpse Of Deckoviz For Your Hotel"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
       </section>
 
@@ -276,7 +297,7 @@ export const HotelExperienceJourney: React.FC = () => {
       <section className="py-24 md:py-32 px-6 border-t border-white/5 bg-white/5 relative">
         <div className="max-w-5xl mx-auto">
           <div className="mb-16 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Deckoviz for Hotels:<br/> An Evolving List of Use Cases</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Deckoviz for Hotels:<br/> An Evolving List of Use Cases</h2>
             <p className="text-xl text-gray-400 font-light max-w-3xl mx-auto leading-relaxed">
               Deckoviz becomes your hotel's visual layer, storytelling layer, concierge layer, ambience layer, memory layer, and guest delight system.
               Hospitality is no longer just about rooms, service, and amenities. Most hotels can offer comfort. What guests remember is how the place made them feel, how personal the experience was, and whether the stay felt memorable enough to return to or recommend.
@@ -413,7 +434,7 @@ export const HotelExperienceJourney: React.FC = () => {
           
           <div className="mt-32 pt-16 border-t border-white/10">
             <div className="text-center mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-6">
+              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 The Full Deckoviz Hospitality Experience
               </h3>
               <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
@@ -468,7 +489,7 @@ export const HotelExperienceJourney: React.FC = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 blur-[100px] rounded-full pointer-events-none" />
               <div className="relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 p-10 md:p-16 rounded-3xl max-w-4xl mx-auto shadow-2xl">
-                <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                   That is no longer just hospitality. <br className="hidden md:block" />
                   <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent inline-block mt-2">That becomes an experience.</span>
                 </h4>
@@ -490,7 +511,7 @@ export const HotelExperienceJourney: React.FC = () => {
             number="05" 
             title="Step Into the Era Of The Intelligent Hotels" 
           />
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8">Don't just host guests. Immerse them.</h3>
+          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Don't just host guests. Immerse them.</h3>
           
           <div className="space-y-6 text-xl text-gray-300 font-light mb-12">
             <p>
