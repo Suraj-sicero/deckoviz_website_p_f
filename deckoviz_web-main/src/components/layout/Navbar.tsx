@@ -2,8 +2,8 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight, User, LogOut } from "lucide-react";
-import { Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
+import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight, User, LogOut, Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
+
 import { useAudio } from "../AudioProvider";
 import { useAuth } from "../../context/AuthContext";
 
@@ -36,54 +36,41 @@ const Button: React.FC<ButtonProps> = ({
       <div className="relative inline-block">
         {/* Animated Border Glow - Colors flow around perimeter */}
         <div
-          className="absolute -inset-0.5 rounded-lg opacity-100"
+          className="absolute -inset-[1px] rounded-lg opacity-60 transition-opacity duration-300 group-hover:opacity-100"
           style={{
             background: `linear-gradient(90deg, 
-              #8A2BE2, #FF1493, #9932CC, #FF69B4, 
-              #8A2BE2, #FF1493, #9932CC, #FF69B4, 
-              #8A2BE2, #FF1493)`,
+              #3B82F6, #8B5CF6, #3B82F6, #8B5CF6)`,
             backgroundSize: "300% 100%",
-            filter: "blur(2px)",
+            filter: "blur(6px)",
             zIndex: -1,
-            animation: "flowColors 3s linear infinite",
+            animation: "flowColors 4s linear infinite",
           }}
         />
 
         <button
-          className={classes}
+          className={`${classes} group`}
           style={{
-            background: `linear-gradient(135deg, 
-              #B19CD9 0%, #DDA0DD 25%, #DA70D6 50%, #C8A2C8 75%, #B19CD9 100%)`,
+            background: `linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%)`,
             boxShadow: `
-              inset 0 0 30px rgba(138, 43, 226, 0.8),
-              inset 0 0 20px rgba(255, 20, 147, 0.6),
-              inset 0 0 40px rgba(186, 85, 211, 0.4),
-              0 0 15px rgba(138, 43, 226, 0.3),
-              0 0 25px rgba(255, 20, 147, 0.2)
+              inset 0 1px 0 rgba(255, 255, 255, 0.2),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+              0 4px 12px rgba(29, 78, 216, 0.4)
             `,
-            textShadow: `
-              0 0 15px rgba(255, 255, 255, 1),
-              0 0 25px rgba(138, 43, 226, 0.8),
-              0 0 35px rgba(255, 20, 147, 0.6)
-            `,
-            border: "1px solid rgba(186, 85, 211, 0.3)",
+            textShadow: `0 1px 2px rgba(0, 0, 0, 0.2)`,
+            border: "1px solid rgba(30, 58, 138, 0.5)",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 0 40px rgba(138, 43, 226, 1),
-              inset 0 0 30px rgba(255, 20, 147, 0.8),
-              inset 0 0 50px rgba(186, 85, 211, 0.6),
-              0 0 20px rgba(138, 43, 226, 0.5),
-              0 0 35px rgba(255, 20, 147, 0.4)
+              inset 0 1px 0 rgba(255, 255, 255, 0.3),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+              0 6px 16px rgba(37, 99, 235, 0.6)
             `;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 0 30px rgba(138, 43, 226, 0.8),
-              inset 0 0 20px rgba(255, 20, 147, 0.6),
-              inset 0 0 40px rgba(186, 85, 211, 0.4),
-              0 0 15px rgba(138, 43, 226, 0.3),
-              0 0 25px rgba(255, 20, 147, 0.2)
+              inset 0 1px 0 rgba(255, 255, 255, 0.2),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
+              0 4px 12px rgba(29, 78, 216, 0.4)
             `;
           }}
           {...props}
@@ -181,9 +168,8 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
       <img
         src={src}
         alt={alt}
-        className={`w-full h-full object-cover rounded-lg transition-opacity duration-200 ${
-          imageLoaded ? "opacity-100" : "opacity-0"
-        }`}
+        className={`w-full h-full object-cover rounded-lg transition-opacity duration-200 ${imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageError(true)}
         loading="eager" // Load immediately, don't wait for viewport
@@ -269,7 +255,7 @@ const Navbar: React.FC = () => {
       description: "Elevate guest experiences",
       image: "/images/hotelnavbar.png",
       gradient: "from-blue-500 to-cyan-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-hotels*/
+      route: "/deckoviz-for-hotels",
       fallbackColor: "bg-gradient-to-br from-blue-100 to-cyan-100",
     },
     {
@@ -277,7 +263,7 @@ const Navbar: React.FC = () => {
       description: "Create dining ambiance",
       image: "/images/restaurantnavbar.png",
       gradient: "from-orange-500 to-red-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-restaurants*/
+      route: "/deckoviz-for-restaurants",
       fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100",
     },
 
@@ -285,9 +271,9 @@ const Navbar: React.FC = () => {
       title: "Architects & Designers",
       description: "Design living spaces",
       image: "/images/architectnavbar.png",
-      gradient: "from-purple-500 to-pink-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-architects*/
-      fallbackColor: "bg-gradient-to-br from-purple-100 to-pink-100",
+      gradient: "from-blue-500 to-indigo-500",
+      route: "/deckoviz-for-architects",
+      fallbackColor: "bg-gradient-to-br from-blue-100 to-indigo-100",
     },
     {
       title: "Offices & Workspaces",
@@ -302,7 +288,7 @@ const Navbar: React.FC = () => {
       description: "Showcase properties",
       image: "/images/realestatenavbar.png",
       gradient: "from-indigo-500 to-blue-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-realestate*/
+      route: "/deckoviz-for-realestate",
       fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
     },
     {
@@ -326,7 +312,7 @@ const Navbar: React.FC = () => {
       description: "Shopping experiences",
       image: "/images/retailnavbar.png",
       gradient: "from-pink-500 to-rose-500",
-      route: "/deckoviz-for-enterprises", /*deckoviz-for-retailstores*/
+      route: "/deckoviz-for-retailstores",
       fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100",
     },
     {
@@ -370,11 +356,10 @@ const Navbar: React.FC = () => {
 
             {/* Wall Of Love & Leaderboard Dropdown - Enhanced Design */}
             <div
-              className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
-                isWallLeaderDropdownOpen
-                  ? "opacity-100 visible translate-y-0"
-                  : "opacity-0 invisible -translate-y-4"
-              }`}
+              className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${isWallLeaderDropdownOpen
+                ? "opacity-100 visible translate-y-0"
+                : "opacity-0 invisible -translate-y-4"
+                }`}
               onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
             >
@@ -576,11 +561,10 @@ const Navbar: React.FC = () => {
 
                 {/* Beautiful Dropdown with Optimized Images */}
                 <div
-                  className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${
-                    isBusinessDropdownOpen
-                      ? "opacity-100 visible translate-y-0"
-                      : "opacity-0 invisible -translate-y-4"
-                  }`}
+                  className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${isBusinessDropdownOpen
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible -translate-y-4"
+                    }`}
                 >
                   <div className="w-[640px] bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden flex flex-col">
                     {/* Header */}
@@ -739,38 +723,24 @@ const Navbar: React.FC = () => {
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
 
-              <a
-                href="/creative-studio"
-                className="relative inline-flex items-center gap-1.5 text-sm font-semibold px-3.5 py-1.5 rounded-full transition-all duration-300 hover:scale-105"
-                style={{
-                  background: "linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #ec4899 100%)",
-                  color: "white",
-                  boxShadow: "0 2px 12px rgba(124,58,237,0.35)",
-                }}
-              >
-                <span style={{ fontSize: "14px" }}>✨</span>
-                Creative Studio
-              </a>
-
-
             </div>
 
-            {/* Center Logo with Comfortaa font */}
-            <a href="/" className="flex items-center">
+            {/* Center Logo */}
+            <a href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center space-x-1 z-50">
               <img
                 src="/images/deckovizlogo.png"
-                alt="Deckoviz Logo"
-                className="h-12 w-12 rounded-full object-contain mt-1"
+                alt="Deckoviz Symbol"
+                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
               />
               <img
-                src="/images/deckospacelabs.png"
-                alt="Space Labs Logo"
-                className="h-14 w-auto object-contain ml-1 mb-2"
+                src="/images/new_logoo.jpeg"
+                alt="Deckoviz Space Labs Logo"
+                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
               />
             </a>
 
             {/* Right Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-6">
               <a
                 href="/blog"
                 className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
@@ -834,39 +804,36 @@ const Navbar: React.FC = () => {
                 )}
               </div>
 
-              &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
-           <div className="fixed right-4 top-3.5 flex items-center space-x-2 z-50">
+              <div className="flex items-center space-x-2 z-50 pl-2">
+                {/* Previous */}
+                <button
+                  onClick={prev}
+                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                >
+                  <SkipBack size={18} className="text-blue-600" />
+                </button>
 
-  {/* Previous */}
-  <button
-    onClick={prev}
-    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
-  >
-    <SkipBack size={18} className="text-[#8345EE]" />
-  </button>
 
-  {/* Play / Pause */}
-  <button
-    onClick={toggle}
-    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
-  >
-    {isPlaying ? (
-      <Volume2 size={20} className="text-[#8345EE]" />
-    ) : (
-      <VolumeX size={20} className="text-gray-400" />
-    )}
-  </button>
+                {/* Play / Pause */}
+                <button
+                  onClick={toggle}
+                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                >
+                  {isPlaying ? (
+                    <Volume2 size={20} className="text-blue-600" />
+                  ) : (
+                    <VolumeX size={20} className="text-gray-400" />
+                  )}
+                </button>
 
-  {/* Next */}
-  <button
-    onClick={next}
-    className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-purple-50 transition transform hover:scale-110"
-  >
-    <SkipForward size={18} className="text-[#8345EE]" />
-  </button>
-
-</div>
-
+                {/* Next */}
+                <button
+                  onClick={next}
+                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                >
+                  <SkipForward size={18} className="text-blue-600" />
+                </button>
+              </div>
             </div>
 
             {/* Mobile Menu Button with cool animation */}
@@ -890,9 +857,8 @@ const Navbar: React.FC = () => {
 
         {/* Mobile Navigation with Optimized Images */}
         <div
-          className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${
-            isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
-          }`}
+          className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
+            }`}
           style={{
             maxHeight: isOpen ? "calc(100vh - 4rem)" : "0",
             overflowY: "auto",
@@ -982,20 +948,6 @@ const Navbar: React.FC = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Pricing
-              </a>
-
-              <a
-                href="/creative-studio"
-                className="flex items-center gap-2 font-semibold py-3 px-3 rounded-lg transition-all duration-200"
-                style={{
-                  background: "linear-gradient(135deg, rgba(124,58,237,0.1) 0%, rgba(168,85,247,0.1) 100%)",
-                  color: "#7c3aed",
-                  border: "1px solid rgba(124,58,237,0.2)",
-                }}
-                onClick={() => setIsOpen(false)}
-              >
-                <span>✨</span>
-                Creative Studio
               </a>
 
               <a

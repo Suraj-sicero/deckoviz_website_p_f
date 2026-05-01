@@ -104,21 +104,21 @@ const DeckovizCustomizer = () => {
     <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Enhanced Creative Gradient Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -left-48 w-[110%] h-60 sm:h-80 bg-gradient-to-r from-pink-300 via-orange-100 to-transparent rounded-full blur-3xl rotate-8"></div>
-        <div className="absolute top-1/4 -right-64 w-[120%] h-48 sm:h-64 bg-gradient-to-l from-orange-100 via-pink-100 to-transparent rounded-full blur-3xl -rotate-[35deg]"></div>
-        <div className="absolute -bottom-32 -left-32 w-[125%] h-60 sm:h-72 bg-gradient-to-r from-purple-200 via-orange-100 to-purple-100 rounded-full blur-3xl rotate-[4deg]"></div>
+        <div className="absolute -top-40 -left-48 w-[110%] h-60 sm:h-80 bg-gradient-to-r from-blue-300 via-indigo-100 to-transparent rounded-full blur-3xl rotate-8"></div>
+        <div className="absolute top-1/4 -right-64 w-[120%] h-48 sm:h-64 bg-gradient-to-l from-indigo-100 via-blue-100 to-transparent rounded-full blur-3xl -rotate-[35deg]"></div>
+        <div className="absolute -bottom-32 -left-32 w-[125%] h-60 sm:h-72 bg-gradient-to-r from-purple-200 via-indigo-100 to-blue-100 rounded-full blur-3xl rotate-[4deg]"></div>
       </div>
 
       <div className="absolute inset-0">
-        <div className="absolute top-[12%] left-[18%] w-[600px] sm:w-[900px] h-32 sm:h-40 bg-gradient-to-r from-pink-100 to-transparent rounded-full blur-2xl rotate-[28deg] opacity-80"></div>
+        <div className="absolute top-[12%] left-[18%] w-[600px] sm:w-[900px] h-32 sm:h-40 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-2xl rotate-[28deg] opacity-80"></div>
         <div className="absolute bottom-[65%] right-[25%] w-[700px] sm:w-[1100px] h-36 sm:h-48 bg-gradient-to-l from-purple-200 to-transparent rounded-full blur-2xl -rotate-[42deg] opacity-70"></div>
-        <div className="absolute top-[55%] left-[45%] w-[550px] sm:w-[850px] h-28 sm:h-36 bg-gradient-to-r from-orange-100 to-transparent rounded-full blur-2xl rotate-[62deg] opacity-65"></div>
-        <div className="absolute top-[38%] right-[8%] w-[800px] sm:w-[1200px] h-40 sm:h-52 bg-gradient-to-l from-pink-200 to-transparent rounded-full blur-3xl -rotate-[18deg] opacity-60"></div>
+        <div className="absolute top-[55%] left-[45%] w-[550px] sm:w-[850px] h-28 sm:h-36 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-2xl rotate-[62deg] opacity-65"></div>
+        <div className="absolute top-[38%] right-[8%] w-[800px] sm:w-[1200px] h-40 sm:h-52 bg-gradient-to-l from-blue-200 to-transparent rounded-full blur-3xl -rotate-[18deg] opacity-60"></div>
         <div className="absolute bottom-[38%] left-[12%] w-[650px] sm:w-[1000px] h-36 sm:h-44 bg-gradient-to-r from-purple-100 to-transparent rounded-full blur-3xl rotate-[75deg] opacity-55"></div>
-        <div className="absolute top-[72%] right-[35%] w-[600px] sm:w-[950px] h-32 sm:h-40 bg-gradient-to-l from-purple-300 to-transparent rounded-full blur-2xl -rotate-[55deg] opacity-70"></div>
-        <div className="absolute top-[85%] left-[28%] w-[500px] sm:w-[800px] h-24 sm:h-32 bg-gradient-to-r from-pink-100 to-transparent rounded-full blur-xl rotate-[15deg] opacity-50"></div>
+        <div className="absolute top-[72%] right-[35%] w-[600px] sm:w-[950px] h-32 sm:h-40 bg-gradient-to-l from-indigo-300 to-transparent rounded-full blur-2xl -rotate-[55deg] opacity-70"></div>
+        <div className="absolute top-[85%] left-[28%] w-[500px] sm:w-[800px] h-24 sm:h-32 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-xl rotate-[15deg] opacity-50"></div>
         <div className="absolute top-[25%] right-[45%] w-[450px] sm:w-[750px] h-28 sm:h-36 bg-gradient-to-l from-purple-100 to-transparent rounded-full blur-xl -rotate-[68deg] opacity-45"></div>
-        <div className="absolute bottom-[18%] left-[55%] w-[400px] sm:w-[700px] h-20 sm:h-28 bg-gradient-to-r from-orange-100 to-transparent rounded-full blur-xl rotate-[38deg] opacity-60"></div>
+        <div className="absolute bottom-[18%] left-[55%] w-[400px] sm:w-[700px] h-20 sm:h-28 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-xl rotate-[38deg] opacity-60"></div>
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/20 pointer-events-none"></div>
@@ -133,7 +133,7 @@ const DeckovizCustomizer = () => {
               <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 text-center">
-                  <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl mt-6 sm:mt-4 font-medium mb-2 sm:mb-3 bg-clip-text text-transparent bg-gray-700">
+                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-6 sm:mt-4 font-semibold mb-2 sm:mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-800 font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                     Get Your Deckoviz
                   </h1>
                   <p className="text-gray-600 font-medium text-xs sm:text-sm md:text-base mt-3 sm:mt-4 md:mt-6 mb-2 px-4">
@@ -154,7 +154,7 @@ const DeckovizCustomizer = () => {
                   {/* Glow border */}
                   <div
                     className="absolute -inset-[2px] rounded-[32px]
-bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400
+bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400
 opacity-70 blur-md group-hover:opacity-100 transition"
                   />
 
@@ -164,7 +164,7 @@ opacity-70 blur-md group-hover:opacity-100 transition"
 relative rounded-[30px]
 bg-white/85 backdrop-blur-xl
 will-change-[opacity,transform,backdrop-filter] translate-z-0
-shadow-[0_30px_90px_rgba(168,85,247,0.25)]
+shadow-[0_30px_90px_rgba(79,70,229,0.25)]
 border border-white/50
 p-8 sm:p-10
 space-y-6
@@ -176,8 +176,8 @@ font-[450]
                   >
                     <h3
                       className="text-2xl font-semibold mb-2
-bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600
-bg-clip-text text-transparent"
+bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600
+bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
                     >
                       Pre-checkout notes ✨
                     </h3>
@@ -313,17 +313,75 @@ bg-clip-text text-transparent"
                   </div>
                 </div>
 
+                {/* ================= NEW CONTENT ADDED HERE ================= */}
+                <div className="group relative mt-8 mb-10 smooth-enter smooth-enter-active">
+                  <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 opacity-70 blur-md group-hover:opacity-100 transition" />
+                  <div className="relative rounded-[30px] bg-white/85 backdrop-blur-xl shadow-[0_30px_90px_rgba(79,70,229,0.25)] border border-white/50 p-8 sm:p-10 space-y-6 text-[15px] leading-relaxed text-gray-700 font-[450]">
+                    <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                      ✨ Almost There! Here’s What Happens Next
+                    </h3>
+                    <p>
+                      You’re just one step away from bringing the Deckoviz DAS Portal into your home. On the next page, you will finalize your order. To ensure your piece is exactly how you envisioned it, here is how we handle the personalization process once your order is placed.
+                    </p>
+
+                    <h4 className="text-xl font-medium text-gray-900 mt-6">🎨 Crafting Your Masterpiece: The Order Flow</h4>
+                    <p>
+                      Once you complete your purchase on the following page, we begin the tailoring process. Here is what to expect on the journey of your Deckoviz DASP:
+                    </p>
+                    <ul className="list-disc pl-5 space-y-2">
+                      <li><strong>Finalize Your Order:</strong> Secure your device on the next screen - size, etc.</li>
+                      <li><strong>The Confirmation Kick-off:</strong> You’ll receive a confirmation email immediately. This email will ask you for your preferences. This is your creative brief!</li>
+                      <li><strong>Tailor Your Details:</strong> Simply reply to that email with your specific preferences. Our default frames are premium and handcrafted, but this is your chance to go further:
+                        <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                          <li><em>Custom Carvings:</em> Make it a legacy piece. You can request to have your family name, a family motto, or specific design motifs carved directly into the frame.</li>
+                          <li><em>Material Selection:</em> Choose from our range of premium woods or explore our unique Soft Material Frames - including luxurious wool, corduroy, and silk options for a textured, "cushy" aesthetic.</li>
+                          <li><em>Engravings & Motifs:</em> Tell us about any specific patterns or text you’d like integrated into the design.</li>
+                        </ul>
+                      </li>
+                      <li><strong>The Blueprint:</strong> Our team will review your requests and send a follow-up email. This will include your personalized estimate, shipping timeline, and a secure Stripe link for any custom frame selections or add-ons.</li>
+                      <li><strong>Final Countdown:</strong> You will receive an email one day prior to delivery so you can prepare your space.</li>
+                    </ul>
+
+                    <h4 className="text-xl font-medium text-gray-900 mt-6">🔍 More Info & Custom Add-Ons</h4>
+                    <p>
+                      Want to explore the possibilities before your confirmation email arrives?<br />
+                      <strong>Explore Our Frames</strong><br />
+                      <a href="/generalinfo" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">Click Here to Explore Our Many Frame Options</a>
+                    </p>
+                    <p>
+                      <strong>How to Select:</strong> Choose based on your preferences, room's lighting and decor style. Whether it's a specific wood grain or a soft-touch fabric frame, we can likely craft it for you (subject to material availability).
+                    </p>
+
+                    <h4 className="text-xl font-medium text-gray-900 mt-6">Enhance Your Experience</h4>
+                    <p>
+                      In our follow-up email, we will also provide an updated list of our latest custom options, personalized gift features, and new add-ons we’ve recently introduced. Current options include:
+                    </p>
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li><strong>Anti-Glare & Matte Finish:</strong> Specialized screen filters to eliminate reflections.</li>
+                      <li><strong>Scent Diffusers:</strong> To pair your visual art with a curated olfactory experience.</li>
+                      <li><strong>Stands & Outlining:</strong> Custom physical stands or specialized frame outlining.</li>
+                    </ul>
+
+                    <p className="mt-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                      <strong>Note:</strong> Because our frames are bespoke - from the carved mottos to the choice of silk or wool - we finalize these specific details via email to ensure 100% accuracy before production begins.
+                    </p>
+                    <p className="font-medium text-center text-lg mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                      Ready to customize your ambiance? Proceed to the next page to place your order.
+                    </p>
+                  </div>
+                </div>
+
                 {/* Bottom Button - now scrollable */}
                 <div className="py-6 sm:py-8 flex justify-center px-4 smooth-enter smooth-enter-active">
                   <button
                     onClick={confirmOrder}
                     type="button"
-                    className="group relative overflow-hidden text-white py-3 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-medium text-sm sm:text-base md:text-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-purple-200/50 transition-[transform,box-shadow,opacity] duration-500 ease-out will-change-transform w-full sm:w-auto backdrop-blur-sm border border-white/20"
+                    className="group relative overflow-hidden text-white py-3 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-medium text-sm sm:text-base md:text-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-200/50 transition-[transform,box-shadow,opacity] duration-500 ease-out will-change-transform w-full sm:w-auto backdrop-blur-sm border border-white/20"
                     style={{
                       background:
-                        "linear-gradient(135deg, #ea580c 0%, #7c3aed 35%, #4338ca 70%, #1e1b4b 100%)",
+                        "linear-gradient(135deg, #2563eb 0%, #4f46e5 35%, #4338ca 70%, #1e1b4b 100%)",
                       boxShadow:
-                        "0 8px 32px rgba(124, 58, 237, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                        "0 8px 32px rgba(79, 70, 229, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                     }}
                   >
                     {/* Glass shimmer effect */}
@@ -369,7 +427,7 @@ bg-clip-text text-transparent"
             <div className="max-w-4xl mx-auto">
               {/* Header - now scrollable */}
               <div className="relative z-10 text-center pt-12 sm:pt-16 md:pt-20 pb-3">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl mt-6 font-medium mb-3 sm:mb-4 bg-clip-text text-transparent bg-gray-700">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl mt-6 font-semibold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-800 font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                   Get Your Deckoviz
                 </h1>
                 <p className="text-gray-800 font-medium text-xs sm:text-sm md:text-base mb-2 px-4">
@@ -388,6 +446,229 @@ bg-clip-text text-transparent"
                   showOnlyFirstTwo={true}
                 />
               </div>
+
+              {/* ================= FULL PRE-CHECKOUT NOTES ================= */}
+              <div className="group relative mt-12 mb-10 smooth-enter smooth-enter-active">
+                {/* Glow border */}
+                <div
+                  className="absolute -inset-[2px] rounded-[32px]
+bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400
+opacity-70 blur-md group-hover:opacity-100 transition"
+                />
+
+                {/* Glass card */}
+                <div
+                  className="
+relative rounded-[30px]
+bg-white/85 backdrop-blur-xl
+will-change-[opacity,transform,backdrop-filter] translate-z-0
+shadow-[0_30px_90px_rgba(79,70,229,0.25)]
+border border-white/50
+p-8 sm:p-10
+space-y-6
+text-[15px]
+leading-relaxed
+text-gray-700
+font-[450]
+"
+                >
+                  <h3
+                    className="text-2xl font-semibold mb-2
+bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600
+bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
+                  >
+                    Pre-checkout notes ✨
+                  </h3>
+
+                  <div className="space-y-4">
+                    <p>
+                      <strong>
+                        Free subscription included with every Deckoviz
+                        purchase
+                      </strong>
+                      <br />
+                      As a thank you for choosing Deckoviz, your device comes
+                      with a complimentary subscription based on screen size:
+                    </p>
+
+                    <ul className="list-disc pl-5 space-y-1">
+                      <li>43 inch Deckoviz – 2 months of Silver Sub</li>
+                      <li>55 inch Deckoviz DASP – 2 months of Gold Sub</li>
+                      <li>65 inch Deckoviz DASP – 2 months of Diamond Sub</li>
+                      <li>75 inch Deckoviz DASP – 3 months of Diamond Sub</li>
+                      <li>85 inch Deckoviz DASP – 4 months of Diamond Sub</li>
+                      <li>95 inch Deckoviz DASP – 6 months of Diamond Sub</li>
+                    </ul>
+
+                    <p>
+                      <strong>Learn more about subscriptions</strong>
+                      <br />
+                      You can explore what each subscription tier includes on
+                      our Subscriptions page.
+                    </p>
+
+                    <p>
+                      <strong>Lifetime subscriptions coming soon</strong>
+                      <br />
+                      We are actively working on lifetime subscription options
+                      and will share updates as they become available.
+                    </p>
+
+                    <p>
+                      <strong>
+                        Order confirmation and delivery timeline
+                      </strong>
+                      <br />
+                      After placing your order, you will receive an order
+                      confirmation and receipt via email. Once we finalize any
+                      custom configuration and shipping details, you will
+                      receive a follow-up email within 24 hours confirming
+                      your estimated delivery date.
+                    </p>
+
+                    <p>
+                      <strong>Bulk orders and special pricing</strong>
+                      <br />
+                      Bulk discounts are available and referenced on our
+                      landing pages. If you would like to place more than 5
+                      orders, please email vizzy@deckoviz.com to access
+                      exclusive bulk pricing and discounted shipping rates.
+                    </p>
+
+                    <p>
+                      <strong>Getting started with Deckoviz</strong>
+                      <br />
+                      After your Deckoviz DASP is delivered, you will receive
+                      a detailed onboarding email with a simple, step-by-step
+                      guide to help you get the most out of your device.
+                    </p>
+
+                    <p>
+                      <strong>We’re here to help</strong>
+                      <br />
+                      If you have any questions at any point, or need
+                      assistance before or after your purchase, feel free to
+                      reach out to us at support@deckoviz.com. We’re always
+                      happy to help.
+                    </p>
+
+                    <p>
+                      <strong>Shipping Costs</strong>
+                      <br />
+                      For now, shipping is estimated at £200–300, depending on
+                      the size of your Deckoviz unit.
+                    </p>
+
+                    <p>
+                      We’re actively working on optimizing our shipping
+                      options, and this range represents the maximum you’ll be
+                      charged. If the final shipping cost is lower, we’ll
+                      automatically refund the difference to your card. If
+                      it’s higher, we’ll cover it.
+                    </p>
+
+                    <p>
+                      We’ve set a range because we’re currently comparing
+                      multiple carriers to ensure you get the best possible
+                      rate.
+                    </p>
+
+                    <p>
+                      Thank you for your patience   and for joining the
+                      Deckoviz mission to make the world more wondrous,
+                      joyous, and beautiful.
+                    </p>
+
+                    <div className="border-t border-purple-200 pt-4 space-y-3">
+                      <p className="font-medium text-gray-900">
+                        A note for our early believers 💜
+                      </p>
+
+                      <p>
+                        If you’re excited about bringing Deckoviz into your
+                        home but feel that cost might be the only thing
+                        holding you back, we’d love to help.
+                      </p>
+
+                      <p>
+                        For our early customers, those who share our vision of
+                        what homes could be like, we’re happy to offer an
+                        additional discount when needed. Just email us at
+                        vizzy@deckoviz.com with the subject line “Discount”,
+                        and we’ll send you a personal discount code.
+                      </p>
+
+                      <p>
+                        We’re building Deckoviz for people who care about
+                        beauty, meaning, and living with intention. If that’s
+                        you, we’d hate for price alone to stand in the way of
+                        a little more magic in your space.
+                      </p>
+
+                      <p className="italic text-gray-600">  Team Deckoviz</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ================= NEW CONTENT ADDED HERE ================= */}
+              <div className="group relative mt-8 mb-10 smooth-enter smooth-enter-active">
+                <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 opacity-70 blur-md group-hover:opacity-100 transition" />
+                <div className="relative rounded-[30px] bg-white/85 backdrop-blur-xl shadow-[0_30px_90px_rgba(79,70,229,0.25)] border border-white/50 p-8 sm:p-10 space-y-6 text-[15px] leading-relaxed text-gray-700 font-[450]">
+                  <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                    ✨ Almost There! Here’s What Happens Next
+                  </h3>
+                  <p>
+                    You’re just one step away from bringing the Deckoviz DAS Portal into your home. On the next page, you will finalize your order. To ensure your piece is exactly how you envisioned it, here is how we handle the personalization process once your order is placed.
+                  </p>
+
+                  <h4 className="text-xl font-medium text-gray-900 mt-6">🎨 Crafting Your Masterpiece: The Order Flow</h4>
+                  <p>
+                    Once you complete your purchase on the following page, we begin the tailoring process. Here is what to expect on the journey of your Deckoviz DASP:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li><strong>Finalize Your Order:</strong> Secure your device on the next screen - size, etc.</li>
+                    <li><strong>The Confirmation Kick-off:</strong> You’ll receive a confirmation email immediately. This email will ask you for your preferences. This is your creative brief!</li>
+                    <li><strong>Tailor Your Details:</strong> Simply reply to that email with your specific preferences. Our default frames are premium and handcrafted, but this is your chance to go further:
+                      <ul className="list-disc pl-5 mt-2 space-y-1 text-gray-600">
+                        <li><em>Custom Carvings:</em> Make it a legacy piece. You can request to have your family name, a family motto, or specific design motifs carved directly into the frame.</li>
+                        <li><em>Material Selection:</em> Choose from our range of premium woods or explore our unique Soft Material Frames - including luxurious wool, corduroy, and silk options for a textured, "cushy" aesthetic.</li>
+                        <li><em>Engravings & Motifs:</em> Tell us about any specific patterns or text you’d like integrated into the design.</li>
+                      </ul>
+                    </li>
+                    <li><strong>The Blueprint:</strong> Our team will review your requests and send a follow-up email. This will include your personalized estimate, shipping timeline, and a secure Stripe link for any custom frame selections or add-ons.</li>
+                    <li><strong>Final Countdown:</strong> You will receive an email one day prior to delivery so you can prepare your space.</li>
+                  </ul>
+
+                  <h4 className="text-xl font-medium text-gray-900 mt-6">🔍 More Info & Custom Add-Ons</h4>
+                  <p>
+                    Want to explore the possibilities before your confirmation email arrives?<br />
+                    <strong>Explore Our Frames</strong><br />
+                    <a href="/generalinfo" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">Click Here to Explore Our Many Frame Options</a>
+                  </p>
+                  <p>
+                    <strong>How to Select:</strong> Choose based on your preferences, room's lighting and decor style. Whether it's a specific wood grain or a soft-touch fabric frame, we can likely craft it for you (subject to material availability).
+                  </p>
+
+                  <h4 className="text-xl font-medium text-gray-900 mt-6">Enhance Your Experience</h4>
+                  <p>
+                    In our follow-up email, we will also provide an updated list of our latest custom options, personalized gift features, and new add-ons we’ve recently introduced. Current options include:
+                  </p>
+                  <ul className="list-disc pl-5 space-y-1">
+                    <li><strong>Anti-Glare & Matte Finish:</strong> Specialized screen filters to eliminate reflections.</li>
+                    <li><strong>Scent Diffusers:</strong> To pair your visual art with a curated olfactory experience.</li>
+                    <li><strong>Stands & Outlining:</strong> Custom physical stands or specialized frame outlining.</li>
+                  </ul>
+
+                  <p className="mt-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
+                    <strong>Note:</strong> Because our frames are bespoke - from the carved mottos to the choice of silk or wool - we finalize these specific details via email to ensure 100% accuracy before production begins.
+                  </p>
+                  <p className="font-medium text-center text-lg mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    Ready to customize your ambiance? Proceed to the next page to place your order.
+                  </p>
+                </div>
+              </div>
+
             </div>
           </div>
         )}
