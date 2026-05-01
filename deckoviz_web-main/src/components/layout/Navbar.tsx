@@ -2,9 +2,10 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight, User, LogOut } from "lucide-react";
 import { Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
 import { useAudio } from "../AudioProvider";
+import { useAuth } from "../../context/AuthContext";
 
 // Button component with proper types
 interface ButtonProps {
@@ -203,6 +204,8 @@ const Navbar: React.FC = () => {
     useState<boolean>(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
   const { isPlaying, toggle, next, prev } = useAudio();
+  const { user, logout, openAuthModal } = useAuth();
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   useEffect(() => {
     setCurrentPath(window.location.pathname);
@@ -786,6 +789,51 @@ const Navbar: React.FC = () => {
                 Buy Now
               </Button>
 
+              {/* User Profile / Login */}
+              <div className="relative ml-2">
+                {user ? (
+                  <div 
+                    className="relative"
+                    onMouseEnter={() => setIsUserDropdownOpen(true)}
+                    onMouseLeave={() => setIsUserDropdownOpen(false)}
+                  >
+                    <button className="flex items-center gap-2 p-1.5 rounded-full bg-purple-50 border border-purple-100 hover:bg-purple-100 transition-colors">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                        <User size={16} />
+                      </div>
+                      <ChevronDown size={14} className={`text-purple-600 transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* User Dropdown */}
+                    <div className={`absolute top-full right-0 mt-2 w-48 transition-all duration-300 ${isUserDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Account</p>
+                          <p className="text-sm font-semibold text-gray-800 truncate">{user.email}</p>
+                          <p className="text-xs text-purple-600 font-bold mt-1">🪙 {user.credits} Credits</p>
+                        </div>
+                        <div className="p-2">
+                          <button 
+                            onClick={logout}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 font-semibold hover:bg-red-50 rounded-xl transition-colors"
+                          >
+                            <LogOut size={16} />
+                            Logout
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => openAuthModal()}
+                    className="px-5 py-2.5 rounded-xl border-2 border-purple-100 text-purple-600 font-bold text-sm hover:bg-purple-50 transition-all"
+                  >
+                    Login
+                  </button>
+                )}
+              </div>
+
               &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; 
            <div className="fixed right-4 top-3.5 flex items-center space-x-2 z-50">
 
@@ -966,7 +1014,35 @@ const Navbar: React.FC = () => {
                 About us
               </a>
 
-              <div className="pt-4">
+              <div className="pt-4 space-y-3">
+                {user ? (
+                  <div className="p-4 rounded-2xl bg-purple-50 border border-purple-100">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                        <User size={20} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-gray-800 truncate">{user.email}</p>
+                        <p className="text-xs text-purple-600 font-bold">🪙 {user.credits} Credits</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => { logout(); setIsOpen(false); }}
+                      className="w-full flex items-center justify-center gap-2 py-3 text-sm text-red-600 font-bold bg-white border border-red-100 rounded-xl hover:bg-red-50 transition-colors"
+                    >
+                      <LogOut size={16} />
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => { openAuthModal(); setIsOpen(false); }}
+                    className="w-full py-3 rounded-xl border-2 border-purple-100 text-purple-600 font-bold text-sm hover:bg-purple-50 transition-all"
+                  >
+                    Login / Sign Up
+                  </button>
+                )}
+                
                 <Button
                   variant="primary"
                   className="w-full"

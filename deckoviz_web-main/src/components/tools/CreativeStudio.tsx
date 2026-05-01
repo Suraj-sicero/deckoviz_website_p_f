@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { CreditSystemModal } from "./CreditSystem";
+import { useAuth } from "../../context/AuthContext";
 
 // ─── Tool Data ───────────────────────────────────────────────────────────────
 
@@ -20,6 +22,7 @@ const toolCategories = [
         route: "/tools/audiobook",
         badge: "Live",
         accent: "violet",
+        creditCost: "5 credits / hr",
       },
       {
         id: "visual-audiobook",
@@ -29,6 +32,7 @@ const toolCategories = [
         route: "/tools/visual-audiobook",
         badge: "New",
         accent: "violet",
+        creditCost: "10 credits / hr",
       },
       {
         id: "storybook",
@@ -38,6 +42,7 @@ const toolCategories = [
         route: "/tools/storybook",
         badge: "Beta",
         accent: "purple",
+        creditCost: "5 credits / 10 pages",
       },
       {
         id: "short-story",
@@ -47,6 +52,7 @@ const toolCategories = [
         route: "/tools/short-story",
         badge: "New",
         accent: "purple",
+        creditCost: "5 credits / 10 pages",
       },
       {
         id: "comic",
@@ -56,6 +62,7 @@ const toolCategories = [
         route: "/tools/comic",
         badge: "New",
         accent: "purple",
+        creditCost: "5 credits / 10 pages",
       },
       {
         id: "storybook-studio",
@@ -65,6 +72,17 @@ const toolCategories = [
         route: "/tools/storybook-studio",
         badge: "New",
         accent: "violet",
+        creditCost: "5 credits / 10 pages",
+      },
+      {
+        id: "visual-book-companion",
+        title: "Visual Book Companion",
+        description: "Convert any fiction PDF into a visual companion book with AI illustrations aligned with the narrative beats.",
+        icon: "🎨",
+        route: "/tools/visual-book-companion",
+        badge: "New",
+        accent: "violet",
+        creditCost: "15 credits / book",
       },
     ],
   },
@@ -84,6 +102,7 @@ const toolCategories = [
         route: "/tools/visual-journal",
         badge: "Live",
         accent: "pink",
+        creditCost: "2 credits / entry",
       },
       {
         id: "greeting-card",
@@ -93,6 +112,7 @@ const toolCategories = [
         route: "/tools/greeting-card",
         badge: "New",
         accent: "pink",
+        creditCost: "2 credits / card",
       },
       {
         id: "life-book",
@@ -102,6 +122,7 @@ const toolCategories = [
         route: "/tools/life-book",
         badge: "New",
         accent: "pink",
+        creditCost: "5 credits / 10 pages",
       },
       {
         id: "visual-book",
@@ -111,6 +132,7 @@ const toolCategories = [
         route: "/tools/visual-book",
         badge: "New",
         accent: "pink",
+        creditCost: "5 credits / 10 pages",
       },
       {
         id: "postcard",
@@ -120,6 +142,7 @@ const toolCategories = [
         route: "/tools/postcard",
         badge: "New",
         accent: "pink",
+        creditCost: "2 credits / card",
       },
     ],
   },
@@ -139,6 +162,7 @@ const toolCategories = [
         route: "/tools/music",
         badge: "Beta",
         accent: "cyan",
+        creditCost: "5 credits / 5 mins",
       },
       {
         id: "song",
@@ -148,6 +172,7 @@ const toolCategories = [
         route: "/tools/song",
         badge: "New",
         accent: "cyan",
+        creditCost: "5 credits / 5 mins",
       },
     ],
   },
@@ -167,6 +192,7 @@ const toolCategories = [
         route: "/tools/learning-book",
         badge: "New",
         accent: "blue",
+        creditCost: "5 credits / 10 pages",
       },
       {
         id: "learning-portal",
@@ -176,6 +202,7 @@ const toolCategories = [
         route: "/tools/learning-portal",
         badge: "New",
         accent: "blue",
+        creditCost: "10 credits / hr",
       },
     ],
   },
@@ -195,6 +222,27 @@ const toolCategories = [
         route: "/tools/daily",
         badge: "New",
         accent: "amber",
+        creditCost: "1 credit / day",
+      },
+    ],
+  },
+  {
+    id: "immersive-worlds",
+    label: "Immersive Worlds & 3D",
+    emoji: "🌍",
+    color: "from-indigo-500 to-blue-600",
+    bg: "from-indigo-50 to-blue-50",
+    border: "border-indigo-200",
+    tools: [
+      {
+        id: "create-world",
+        title: "Creative World",
+        description: "Describe a world and step inside a real 3D Gaussian Splat environment powered by Marble AI.",
+        icon: "🌍",
+        route: "/create-world",
+        badge: "New",
+        accent: "blue",
+        creditCost: "Free",
       },
     ],
   },
@@ -244,6 +292,7 @@ interface ToolCardProps {
   badge?: string;
   accent: string;
   index: number;
+  creditCost: string;
 }
 
 const ToolCard: React.FC<ToolCardProps> = ({
@@ -254,6 +303,7 @@ const ToolCard: React.FC<ToolCardProps> = ({
   badge,
   accent,
   index,
+  creditCost,
 }) => {
   const [hovered, setHovered] = useState(false);
   const colors = accentMap[accent] ?? accentMap.violet;
@@ -325,7 +375,10 @@ const ToolCard: React.FC<ToolCardProps> = ({
       {/* Content */}
       <div className="relative">
         <h3 className="text-lg font-bold text-gray-900 mb-2 leading-tight">{title}</h3>
-        <p className="text-sm text-gray-500 leading-relaxed mb-5">{description}</p>
+        <p className="text-sm text-gray-500 leading-relaxed mb-3">{description}</p>
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-100/80 backdrop-blur text-gray-600 text-xs font-bold mb-5 border border-gray-200">
+          <span>🪙</span> {creditCost}
+        </div>
 
         {/* CTA */}
         <Link
@@ -367,6 +420,9 @@ const Particle: React.FC<{ style: React.CSSProperties }> = ({ style }) => (
 const CreativeStudio: React.FC = () => {
   const [scrollY, setScrollY] = useState(0);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isCreditModalOpen, setIsCreditModalOpen] = useState(false);
+  const { user, openAuthModal } = useAuth();
+  const credits = user ? user.credits : 0;
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -426,7 +482,7 @@ const CreativeStudio: React.FC = () => {
           {/* Pill badge */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-purple-100 shadow-md mb-8">
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-purple-700">Powered by Vizzy AI · 15 Creative Tools</span>
+            <span className="text-sm font-semibold text-purple-700">Powered by Vizzy AI · 17 Creative Tools</span>
           </div>
 
           {/* Title */}
@@ -469,12 +525,12 @@ const CreativeStudio: React.FC = () => {
             >
               🚀 Start Creating
             </a>
-            <a
-              href="#tools"
-              className="px-8 py-4 rounded-2xl font-bold text-base border-2 border-purple-200 text-purple-700 bg-white/70 backdrop-blur hover:bg-purple-50 hover:border-purple-400 transition-all duration-300 hover:scale-105"
+            <button
+              onClick={() => user ? setIsCreditModalOpen(true) : openAuthModal()}
+              className="px-8 py-4 rounded-2xl font-bold text-base border-2 border-purple-200 text-purple-700 bg-white/70 backdrop-blur hover:bg-purple-50 hover:border-purple-400 transition-all duration-300 hover:scale-105 flex items-center gap-2"
             >
-              🔭 Explore Tools
-            </a>
+              <span className="text-xl">🪙</span> {credits} Credits
+            </button>
           </div>
         </div>
 
@@ -535,6 +591,7 @@ const CreativeStudio: React.FC = () => {
                     badge={tool.badge}
                     accent={tool.accent}
                     index={idx}
+                    creditCost={tool.creditCost}
                   />
                 ))}
               </div>
@@ -631,15 +688,29 @@ const CreativeStudio: React.FC = () => {
             <p className="text-white/75 text-lg mb-8">
               Pick a tool, bring your idea, and let Vizzy do the magic.
             </p>
-            <a
-              href="#tools"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-purple-700 font-bold text-base hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-xl"
-            >
-              ✨ Start Creating Now
-            </a>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a
+                href="#tools"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-purple-700 font-bold text-base hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-xl"
+              >
+                ✨ Start Creating Now
+              </a>
+              <button
+                onClick={() => user ? setIsCreditModalOpen(true) : openAuthModal()}
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-purple-800/80 text-white font-bold text-base hover:bg-purple-700 transition-all duration-300 hover:scale-105 shadow-xl"
+              >
+                🪙 Top Up Credits
+              </button>
+            </div>
           </div>
         </div>
       </section>
+      <CreditSystemModal 
+        isOpen={isCreditModalOpen} 
+        onClose={() => setIsCreditModalOpen(false)} 
+        credits={credits}
+        
+      />
     </div>
   );
 };
