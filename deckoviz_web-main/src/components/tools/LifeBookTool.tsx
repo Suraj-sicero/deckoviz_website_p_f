@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
@@ -25,6 +26,7 @@ interface LifeBookResult {
 }
 
 const LifeBookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [memories, setMemories] = useState<MemoryEntry[]>([
     { title: "", year: "", description: "" },
   ]);
@@ -49,6 +51,8 @@ const LifeBookTool: React.FC = () => {
   };
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     const validMemories = memories.filter(m => m.description.trim());
     if (validMemories.length < 2) { setError("Please add at least 2 memory descriptions."); return; }
     setError(""); setStatus("loading"); setResult(null);

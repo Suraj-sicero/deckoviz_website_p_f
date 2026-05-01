@@ -18,6 +18,9 @@ import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
 import wizzyRoutes from "./routes/wizzyRoutes.js";
 import dreamRoutes from "./routes/dreamRoutes.js";
 import memoryRoutes from "./routes/memoryRoutes.js";
+import worldRoutes from "./routes/worldRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
+import { User } from "./models/User.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
 
@@ -141,6 +144,8 @@ app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
 app.use("/api", dreamRoutes);
 app.use("/api/memory", memoryRoutes);
+app.use("/api", worldRoutes);
+app.use("/api/auth", authRoutes);
 
 // ✅ EJS routes (for admin panel / UI)
 app.use("/", blogRoutes); // Example: https://deckoviz-demo.onrender.com/blogs or /add
@@ -186,7 +191,7 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: 1,
         },
       ],
-      metadata: metadata || {},
+      metadata: { ...metadata, userId: req.body.userId || "" },
       mode: "payment",
       success_url: `${req.headers.origin || "http://localhost:5173"}/order-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.origin || "http://localhost:5173"}/`,
@@ -196,6 +201,36 @@ app.post("/create-checkout-session", async (req, res) => {
   } catch (error) {
     console.error("Stripe Error:", error);
     res.status(500).json({ error: "Failed to create payment session." });
+  }
+});
+
+
+// --- Fulfill Credits after Payment ---
+app.post("/fulfill-credits", async (req, res) => {
+  const { session_id } = req.body;
+  if (!session_id) return res.status(400).json({ error: "Missing session_id" });
+
+  try {
+    const session = await stripe.checkout.sessions.retrieve(session_id);
+    if (session.payment_status === "paid") {
+      const userId = session.metadata?.userId;
+      const creditsToAdd = parseInt(session.metadata?.credits) || 0;
+      
+      if (userId && creditsToAdd > 0) {
+        // You would typically check if this session was already fulfilled
+        // Here we assume client calls it once or we check a db flag
+        const user = await User.findByPk(userId);
+        if (user) {
+          user.credits += creditsToAdd;
+          await user.save();
+          return res.json({ success: true, credits: user.credits });
+        }
+      }
+    }
+    res.status(400).json({ error: "Payment not completed or missing metadata" });
+  } catch (error) {
+    console.error("Fulfill error:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 

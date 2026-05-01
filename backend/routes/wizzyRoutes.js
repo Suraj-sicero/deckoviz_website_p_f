@@ -167,4 +167,41 @@ router.post("/generate-image", async (req, res) => {
   }
 });
 
+// Specialized Distillation Endpoint for Visual Book Companion
+router.post("/companion/distill", async (req, res) => {
+  try {
+    const { text, style, additionalInstructions } = req.body;
+    
+    const prompt = `
+      You are an expert visual storyteller. I have a long section of a fiction book.
+      Your task is to:
+      1. Distill this section into a 1-sentence "Visual Summary" that captures the core narrative beat.
+      2. Generate a professional AI image generation prompt (SDXL style) that illustrates this beat.
+      
+      Style Preference: ${style}
+      Additional Instructions: ${additionalInstructions}
+      
+      Text Section:
+      "${text}"
+      
+      Return ONLY valid JSON:
+      {
+        "visualSummary": "The 1-sentence narrative beat",
+        "imagePrompt": "Detailed technical prompt for AI generation"
+      }
+    `;
+
+    const responseText = await callWizzyLLM([
+      { role: "system", content: "You are a visual narrative analyst. Return ONLY valid JSON." },
+      { role: "user", content: prompt }
+    ], true);
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).send(responseText);
+  } catch (error) {
+    console.error("Distillation Error:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 export default router;
