@@ -113,8 +113,9 @@ const ImagePreloader: React.FC = () => {
       "/images/therapistnavbar.png",
       "/images/schoolnavbar.png",
       "/images/retailnavbar.png",
-      "/images/newenterprisenavbar.png",
+      "/images/newenterpriselogo.png",
     ];
+
 
     // Preload all images
     imagesToPreload.forEach((src) => {
