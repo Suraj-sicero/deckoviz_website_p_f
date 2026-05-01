@@ -1,3 +1,45 @@
-backend/.env
-backend/.env
-backend/.env
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing
+coverage/
+
+# Production
+dist/
+build/
+
+# Misc
+.DS_Store
+*.pem
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Vercel
+.vercel
+
+# VS Code
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+
+# Junk files
+temp_nav.txt
+old_stores.txt
+deckoviz_web-main/diff.txt
+deckoviz_web-main/temp_nav.txt
+
+# Netlify
+.netlify

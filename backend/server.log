@@ -2013,3 +2013,308 @@
 [2026-04-24T15:56:55.395Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-04-24T15:56:55.399Z] LOG: ✅ Redis Connected
 [2026-04-24T15:56:55.399Z] LOG: Dekoviz
+[2026-04-27T06:48:12.005Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-27T06:48:12.014Z] LOG: ✅ Redis Connected
+[2026-04-27T06:48:12.015Z] LOG: Dekoviz
+[2026-04-27T06:49:05.628Z] LOG: Backend: Received prompt for world generation: A place surrounded by big walls and very less population
+[2026-04-27T06:51:14.943Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-27T06:51:14.948Z] LOG: ✅ Redis Connected
+[2026-04-27T06:51:14.949Z] LOG: Dekoviz
+[2026-04-27T06:55:10.261Z] LOG: Backend: Received prompt for world generation: A Place surrounded by big walla and the surrounded area have a very less population
+[2026-04-27T07:12:44.617Z] LOG: Backend: Received prompt for world generation: A massive alien planet control room with panoramic glass windows showing galaxies, neon interfaces, cinematic lighting, 360 view
+[2026-04-27T07:16:36.046Z] LOG: Backend: Received prompt for world generation: A massive alien planet control room with panoramic glass windows showing galaxies, neon interfaces, cinematic lighting, 360 view
+[2026-04-27T17:09:57.074Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-27T17:09:57.078Z] LOG: ✅ Redis Connected
+[2026-04-27T17:09:57.079Z] LOG: Dekoviz
+[2026-04-27T17:36:57.390Z] LOG: Backend: Received prompt for world generation: A haunted Victorian mansion hallway, dim lights, moving shadows, dust particles, eerie atmosphere, ultra realistic, 360 environment
+[2026-04-27T17:37:55.871Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-27T17:37:55.878Z] LOG: ✅ Redis Connected
+[2026-04-27T17:37:55.879Z] LOG: Dekoviz
+[2026-04-27T17:41:13.954Z] LOG: Backend: Received prompt for world generation: A haunted Victorian mansion hallway, dim lights, moving shadows, dust particles, eerie atmosphere, ultra realistic, 360 environment
+[2026-04-28T05:34:42.758Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T05:34:42.762Z] LOG: ✅ Redis Connected
+[2026-04-28T05:34:42.762Z] LOG: Dekoviz
+[2026-04-28T05:44:47.619Z] LOG: Backend: Received prompt for world generation: A place where the land is filled with lava with very pathways and in the sky dragons are flying everywhere
+[2026-04-28T08:02:45.227Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:02:45.232Z] LOG: ✅ Redis Connected
+[2026-04-28T08:02:45.232Z] LOG: Dekoviz
+[2026-04-28T08:02:53.545Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:02:53.549Z] LOG: ✅ Redis Connected
+[2026-04-28T08:02:53.551Z] LOG: Dekoviz
+[2026-04-28T08:03:22.409Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:03:22.416Z] LOG: ✅ Redis Connected
+[2026-04-28T08:03:22.417Z] LOG: Dekoviz
+[2026-04-28T08:03:39.146Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:03:39.151Z] LOG: ✅ Redis Connected
+[2026-04-28T08:03:39.151Z] LOG: Dekoviz
+[2026-04-28T08:21:49.699Z] ERROR: Signup error: SequelizeConnectionError: password authentication failed for user "shashank"
+[2026-04-28T08:21:52.858Z] ERROR: Signup error: SequelizeConnectionError: password authentication failed for user "shashank"
+[2026-04-28T08:21:53.922Z] ERROR: Signup error: SequelizeConnectionError: password authentication failed for user "shashank"
+[2026-04-28T08:22:34.082Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:22:34.089Z] LOG: ✅ Redis Connected
+[2026-04-28T08:22:34.090Z] LOG: Dekoviz
+[2026-04-28T08:50:21.085Z] ERROR: Signup error: SequelizeConnectionRefusedError: connect ECONNREFUSED 168.231.112.236:5432
+[2026-04-28T08:50:22.415Z] ERROR: Signup error: SequelizeConnectionRefusedError: connect ECONNREFUSED 168.231.112.236:5432
+[2026-04-28T08:51:24.983Z] ERROR: Signup error: SequelizeConnectionRefusedError: connect ECONNREFUSED 168.231.112.236:5432
+[2026-04-28T08:51:26.928Z] ERROR: Signup error: SequelizeConnectionRefusedError: connect ECONNREFUSED 168.231.112.236:5432
+[2026-04-28T08:51:36.555Z] ERROR: Signup error: SequelizeConnectionRefusedError: connect ECONNREFUSED 168.231.112.236:5432
+[2026-04-28T08:52:54.178Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:52:54.185Z] LOG: ✅ Redis Connected
+[2026-04-28T08:52:54.186Z] LOG: Dekoviz
+[2026-04-28T08:53:25.044Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:53:25.050Z] LOG: ✅ Redis Connected
+[2026-04-28T08:53:25.050Z] LOG: Dekoviz
+[2026-04-28T08:53:42.774Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:53:42.778Z] LOG: ✅ Redis Connected
+[2026-04-28T08:53:42.779Z] LOG: Dekoviz
+[2026-04-28T08:53:45.521Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T08:53:45.525Z] LOG: ✅ Redis Connected
+[2026-04-28T08:53:45.526Z] LOG: Dekoviz
+[2026-04-28T08:53:45.530Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-28T09:35:52.959Z] LOG: Backend: Received prompt for world generation: A world in which i am on a island surrounded by water and a few homes ona island with plants and trees
+[2026-04-28T09:53:26.662Z] LOG: Backend: Received prompt for world generation: a island surrounded by water and on the island there are only a few houses with very less population 
+[2026-04-28T10:13:58.051Z] LOG: Backend: Received prompt for world generation: i am on a island surrounded by water and a few houses on the island with very less population 
+
+[2026-04-28T10:14:27.273Z] LOG: Backend: Received prompt for world generation: i am on a island surrounded by water and a few houses on the island with very less population 
+
+[2026-04-28T10:15:26.152Z] LOG: Backend: Received prompt for world generation: i am on a island surrounded by water and a few houses on the island with very less population 
+[2026-04-28T10:25:55.981Z] LOG: Backend: Received prompt for world generation: A place where the land is lava and every apartment is burning and dragons are in the sky flying and throwing fire whiel flying and also there are some lava fountains 
+[2026-04-28T13:36:47.331Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T13:36:47.335Z] LOG: ✅ Redis Connected
+[2026-04-28T13:36:47.335Z] LOG: Dekoviz
+[2026-04-28T13:36:47.342Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-28T13:38:14.942Z] LOG: Backend: Received prompt for world generation:  i am on a island surrounded by water and a few houses on the island with very less population 
+[2026-04-28T14:49:11.168Z] LOG: Backend: Received prompt for world generation: A lava land with pathways and dragons flying in the sky
+[2026-04-28T14:49:30.570Z] LOG: Backend: Received prompt for world generation: A lava land with pathways and dragons flying in the sky
+[2026-04-28T14:55:04.415Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T14:55:04.420Z] LOG: ✅ Redis Connected
+[2026-04-28T14:55:04.420Z] LOG: Dekoviz
+[2026-04-28T14:55:04.424Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-28T14:59:20.132Z] LOG: [Marble] Starting world generation — prompt: "An island surrounded by turquoise water with a few cottages" | image: no
+[2026-04-28T14:59:27.521Z] LOG: [Marble] operation_id=dca05ef1-6bfe-4a98-927a-77fb66fb0aad
+[2026-04-28T14:59:31.808Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T14:59:36.089Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T14:59:40.376Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T14:59:44.673Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T14:59:48.953Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T14:59:53.271Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T14:59:57.552Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:01.836Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:06.119Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:10.412Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:14.713Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:19.001Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:23.290Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:27.609Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:31.890Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:36.168Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:40.450Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:44.732Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:49.021Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:53.307Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:00:57.595Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:01.880Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:06.157Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:10.445Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:14.737Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:19.020Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:23.317Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:27.606Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:31.892Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:36.175Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:40.466Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:44.748Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:49.030Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:53.311Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:01:57.594Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:01.876Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:06.159Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:10.455Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:14.741Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:19.024Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:23.314Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:27.594Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:31.878Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:36.157Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:40.444Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:44.728Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:49.009Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:53.306Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:02:57.587Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:01.870Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:06.150Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:10.443Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:14.727Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:19.010Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:23.290Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:27.569Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:31.847Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:36.123Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:40.401Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:44.680Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:48.964Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:53.256Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:03:57.538Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:01.821Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:06.101Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:10.383Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:14.670Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:18.957Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:23.243Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:27.526Z] LOG: [Marble] op=dca05ef1-6bfe-4a98-927a-77fb66fb0aad status=undefined
+[2026-04-28T15:04:27.526Z] ERROR: [Marble] Error: Marble world generation timed out after 5 minutes
+[2026-04-28T15:09:28.368Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T15:09:28.371Z] LOG: ✅ Redis Connected
+[2026-04-28T15:09:28.372Z] LOG: Dekoviz
+[2026-04-28T15:09:28.375Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-28T15:09:45.871Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T15:09:45.875Z] LOG: ✅ Redis Connected
+[2026-04-28T15:09:45.875Z] LOG: Dekoviz
+[2026-04-28T15:09:45.878Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-28T15:14:47.086Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-28T15:14:47.095Z] LOG: ✅ Redis Connected
+[2026-04-28T15:14:47.098Z] LOG: Dekoviz
+[2026-04-28T15:14:47.102Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-28T15:15:07.588Z] LOG: [Marble] Starting world generation — prompt: "A snowy arctic tundra with aurora borealis and ice crystals" | image: no
+[2026-04-28T15:15:16.818Z] LOG: [Marble] operation_id=6553428b-db0c-4c07-a69e-d15bb5ebe6ce early_world_id=null
+[2026-04-28T15:15:25.594Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:15:34.744Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:15:43.932Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:15:53.021Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:16:02.096Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:16:11.200Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:16:20.320Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:16:29.425Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:16:38.601Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:16:47.687Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:16:56.760Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:17:05.864Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:17:15.008Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:17:24.134Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:17:33.228Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:17:42.326Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:17:51.408Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:18:00.493Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:18:09.637Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:18:18.786Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:18:27.889Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:18:36.961Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:18:46.046Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:18:55.146Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:19:04.231Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:19:13.300Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:19:22.373Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:19:31.483Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:19:40.595Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:19:49.674Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:19:58.767Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:20:07.876Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:20:17.433Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:20:26.549Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-28T15:20:35.763Z] LOG: [Marble] op=6553428b-db0c-4c07-a69e-d15bb5ebe6ce done=false status=IN_PROGRESS world=5aed4cf6-bede-4250-abde-7acba8a28198
+[2026-04-29T04:19:29.834Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-29T04:19:29.840Z] LOG: ✅ Redis Connected
+[2026-04-29T04:19:29.841Z] LOG: Dekoviz
+[2026-04-29T04:19:29.849Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-29T04:21:40.171Z] LOG: [Marble] Starting world generation — prompt: "A dark cyberpunk city with neon lights and flying ships at night" | image: no
+[2026-04-29T04:21:47.737Z] LOG: [Marble] operation_id=3c2e80d9-b266-4444-8860-d2273e8dadbb early_world_id=null
+[2026-04-29T04:21:56.605Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:22:05.851Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:22:15.131Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:22:24.305Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:22:33.562Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:22:42.778Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:22:51.893Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:23:01.109Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:23:10.196Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:23:19.437Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:23:28.514Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:23:37.768Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:23:46.982Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:23:56.199Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:24:05.385Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:24:14.533Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:24:23.830Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:24:33.122Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:24:42.451Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:24:51.660Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:25:00.889Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:25:03.791Z] LOG: [Marble] Starting world generation — prompt: "A dark cyberpunk city with neon lights and flying ships at night" | image: no
+[2026-04-29T04:25:10.100Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:25:10.168Z] LOG: [Marble] operation_id=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 early_world_id=null
+[2026-04-29T04:25:19.043Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:25:19.349Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:25:28.564Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:25:28.566Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:25:37.741Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:25:37.755Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:25:46.997Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:25:46.998Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:25:56.140Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:25:56.143Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:26:05.337Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:26:05.343Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:26:14.615Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:26:14.619Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:26:23.830Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:26:23.833Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:26:33.075Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:26:33.077Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:26:42.258Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:26:42.260Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:26:51.610Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:26:51.613Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:27:00.826Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:27:00.829Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:27:10.042Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:27:10.044Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=false status=IN_PROGRESS world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:27:19.158Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:27:19.179Z] LOG: [Marble] op=3c2e80d9-b266-4444-8860-d2273e8dadbb done=true status=SUCCEEDED world=c87f00ef-30ef-47ca-9040-b18c85f0042e
+[2026-04-29T04:27:19.179Z] LOG: [Marble] Operation done via response field
+[2026-04-29T04:27:19.179Z] LOG: [Marble] Done! world_id=undefined spz_500k=✓
+[2026-04-29T04:27:28.333Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:27:37.485Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:27:46.702Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:27:55.824Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:28:04.994Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:28:14.145Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:28:23.361Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:28:32.578Z] LOG: [Marble] op=c9891d4d-6ec6-41c2-8877-a9ee3deb2440 done=false status=IN_PROGRESS world=e6051b72-1045-440a-a409-fd3c239948c8
+[2026-04-29T04:28:35.871Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-29T04:28:35.878Z] LOG: ✅ Redis Connected
+[2026-04-29T04:28:35.879Z] LOG: Dekoviz
+[2026-04-29T04:28:35.885Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-29T04:48:37.392Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-29T04:48:37.400Z] LOG: ✅ Redis Connected
+[2026-04-29T04:48:37.401Z] LOG: Dekoviz
+[2026-04-29T04:48:37.406Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-29T04:49:08.752Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-29T04:49:08.757Z] LOG: ✅ Redis Connected
+[2026-04-29T04:49:08.758Z] LOG: Dekoviz
+[2026-04-29T04:49:08.762Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-29T04:49:27.053Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-29T04:49:27.061Z] LOG: ✅ Redis Connected
+[2026-04-29T04:49:27.062Z] LOG: Dekoviz
+[2026-04-29T04:49:27.070Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-29T04:49:50.918Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-29T04:49:50.926Z] LOG: ✅ Redis Connected
+[2026-04-29T04:49:50.927Z] LOG: Dekoviz
+[2026-04-29T04:49:50.931Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-29T05:18:24.700Z] LOG: [Marble] Starting world generation — prompt: "A dark cyberpunk city with neon lights and flying ships at night" | image: no
+[2026-04-29T05:18:28.977Z] ERROR: [Marble] Error: Request failed with status code 402
+[2026-04-30T05:46:33.107Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-30T05:46:33.112Z] LOG: ✅ Redis Connected
+[2026-04-30T05:46:33.113Z] LOG: Dekoviz
+[2026-04-30T05:46:33.120Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-30T16:00:07.162Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-30T16:00:07.166Z] LOG: ✅ Redis Connected
+[2026-04-30T16:00:07.166Z] LOG: Dekoviz
+[2026-04-30T16:00:07.172Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-04-30T17:53:37.875Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-04-30T17:53:37.882Z] LOG: ✅ Redis Connected
+[2026-04-30T17:53:37.883Z] LOG: Dekoviz
+[2026-04-30T17:53:37.890Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-01T06:57:54.135Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-01T06:57:54.142Z] LOG: ✅ Redis Connected
+[2026-05-01T06:57:54.143Z] LOG: Dekoviz
+[2026-05-01T06:57:54.151Z] LOG: ✅ PostgreSQL connected via Sequelize.

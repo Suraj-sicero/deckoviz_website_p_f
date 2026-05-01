@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
 
 const VisualAudiobookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [voice, setVoice] = useState("calm-warm");
   const [frames, setFrames] = useState(8);
@@ -23,6 +25,8 @@ const VisualAudiobookTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!file) { setError("Please upload a PDF first."); return; }
     setError(""); setStatus("uploading"); setStatusMsg("Uploading PDF…");
 

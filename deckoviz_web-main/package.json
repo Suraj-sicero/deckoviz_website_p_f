@@ -12,6 +12,7 @@
   "dependencies": {
     "@mediapipe/camera_utils": "^0.3.1675466862",
     "@mediapipe/pose": "^0.5.1675469404",
+    "@sparkjsdev/spark": "^2.0.0",
     "@supabase/supabase-js": "^2.98.0",
     "@types/three": "^0.183.1",
     "axios": "^1.14.0",
@@ -20,6 +21,7 @@
     "framer-motion": "^11.18.2",
     "front-matter": "^4.0.2",
     "github-slugger": "^2.0.0",
+    "jspdf": "^4.2.1",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

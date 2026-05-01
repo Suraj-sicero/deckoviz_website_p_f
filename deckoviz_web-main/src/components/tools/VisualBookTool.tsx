@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
@@ -19,6 +20,7 @@ interface VisualBookResult {
 }
 
 const VisualBookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [style, setStyle] = useState("memoir");
@@ -64,6 +66,8 @@ const VisualBookTool: React.FC = () => {
   }, []);
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (images.length < 2) { setError("Please upload at least 2 images."); return; }
     setError(""); setStatus("uploading"); setResult(null);
 

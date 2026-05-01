@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
 
 const AudiobookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [voice, setVoice] = useState("calm-warm");
   const [frames, setFrames] = useState(5);
@@ -23,6 +25,8 @@ const AudiobookTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!file) { setError("Please upload a PDF first."); return; }
     setError(""); setStatus("uploading"); setStatusMsg("Uploading PDF...");
 
