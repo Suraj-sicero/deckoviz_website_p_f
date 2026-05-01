@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
 
@@ -13,6 +14,7 @@ interface MusicResult {
 }
 
 const MusicTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [description, setDescription] = useState("");
   const [mood, setMood] = useState("calm");
   const [genre, setGenre] = useState("ambient");
@@ -40,6 +42,8 @@ const MusicTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!description.trim()) { setError("Please describe the music you want."); return; }
     setError(""); setStatus("loading"); setResult(null);
 

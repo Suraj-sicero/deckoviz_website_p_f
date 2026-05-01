@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
@@ -22,6 +23,7 @@ interface LearningBookResult {
 }
 
 const LearningBookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [topic, setTopic] = useState("");
   const [level, setLevel] = useState("beginner");
   const [chapters, setChapters] = useState(5);
@@ -37,6 +39,8 @@ const LearningBookTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!topic.trim()) { setError("Please enter a topic to learn about."); return; }
     setError(""); setStatus("loading"); setResult(null);
 

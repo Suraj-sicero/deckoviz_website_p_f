@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
 
@@ -13,6 +14,7 @@ interface StoryPage {
 }
 
 const StorybookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [idea, setIdea] = useState("");
   const [genre, setGenre] = useState("fantasy");
   const [ageGroup, setAgeGroup] = useState("children");
@@ -37,6 +39,8 @@ const StorybookTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!idea.trim()) { setError("Please describe your story idea."); return; }
     setError(""); setStatus("loading"); setPages([]);
 

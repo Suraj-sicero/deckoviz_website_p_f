@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
@@ -18,6 +19,7 @@ interface StorybookStudioResult {
 }
 
 const StorybookStudioTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [idea, setIdea] = useState("");
   const [genre, setGenre] = useState("fantasy");
   const [result, setResult] = useState<StorybookStudioResult | null>(null);
@@ -38,6 +40,8 @@ const StorybookStudioTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!idea.trim()) { setError("Please describe your story idea."); return; }
     setError(""); setStatus("loading"); setResult(null);
 

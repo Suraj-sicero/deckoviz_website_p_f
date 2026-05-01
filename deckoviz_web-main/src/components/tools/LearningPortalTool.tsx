@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
@@ -13,6 +14,7 @@ interface Message {
 }
 
 const LearningPortalTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [topic, setTopic] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
