@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
 
 const MATERIALS = [
   { id: 0, name: "Biological Tissue", color: "#e88" },
@@ -183,7 +182,7 @@ const MicroscopeWorld: React.FC = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Lab UI Overlay */}
-      <div className="absolute inset-0 z-10 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-10 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         
         {/* Top Section */}
         <div className="flex justify-between items-start pointer-events-auto">

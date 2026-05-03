@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useFluidSimulation } from './useFluidSimulation';
-import { Settings, RefreshCw, Download, Play, Pause, Palette } from 'lucide-react';
+import { Settings, RefreshCw, Download, Play, Pause, Palette, Maximize2 } from 'lucide-react';
 
 const PRESETS = {
     Water: {
@@ -43,6 +43,16 @@ const FluidDreams: React.FC = () => {
     const [currentPreset, setCurrentPreset] = useState<keyof typeof PRESETS>('Water');
     const [isPaused, setIsPaused] = useState(false);
     const [showUI, setShowUI] = useState(true);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    };
 
     const lastPos = useRef({ x: 0, y: 0 });
 
@@ -125,7 +135,7 @@ const FluidDreams: React.FC = () => {
                 </div>
 
                 {/* Controls - Bottom */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl">
                     {Object.keys(PRESETS).map((p) => (
                         <button
                             key={p}
@@ -168,13 +178,21 @@ const FluidDreams: React.FC = () => {
                 </div>
             </div>
 
-            {/* Always Visible Toggle */}
-            <button 
-                onClick={() => setShowUI(!showUI)}
-                className="absolute top-8 right-8 z-30 p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 pointer-events-auto hover:bg-white/20 transition-all shadow-xl"
-            >
-                <Settings className={`w-6 h-6 text-white transition-transform duration-500 ${showUI ? 'rotate-90' : ''}`} />
-            </button>
+            {/* Always Visible Toggle & Fullscreen */}
+            <div className="absolute top-8 right-8 z-30 flex gap-3 pointer-events-auto">
+                <button 
+                    onClick={toggleFullscreen}
+                    className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all shadow-xl"
+                >
+                    <Maximize2 className="w-6 h-6 text-white" />
+                </button>
+                <button 
+                    onClick={() => setShowUI(!showUI)}
+                    className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all shadow-xl"
+                >
+                    <Settings className={`w-6 h-6 text-white transition-transform duration-500 ${showUI ? 'rotate-90' : ''}`} />
+                </button>
+            </div>
 
             <style dangerouslySetInnerHTML={{ __html: `
                 canvas {

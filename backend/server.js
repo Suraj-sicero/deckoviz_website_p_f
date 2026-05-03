@@ -20,6 +20,9 @@ import dreamRoutes from "./routes/dreamRoutes.js";
 import memoryRoutes from "./routes/memoryRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+
+import solarWindRouter from "./routes/solarWind.js";
+import earthquakesRouter from "./routes/earthquakes.js";
 import { User } from "./models/User.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
@@ -145,6 +148,9 @@ app.use("/api/wizzy", wizzyRoutes);
 app.use("/api", dreamRoutes);
 app.use("/api/memory", memoryRoutes);
 app.use("/api", worldRoutes);
+
+app.use("/api/solar-wind", solarWindRouter);
+app.use("/api/earthquakes", earthquakesRouter);
 app.use("/api/auth", authRoutes);
 
 // ✅ EJS routes (for admin panel / UI)

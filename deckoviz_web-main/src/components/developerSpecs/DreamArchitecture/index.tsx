@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
-import { Maximize2, RefreshCw, Layers, Box, Cpu, Zap, Camera, Eye, X, Info } from "lucide-react";
+import { motion } from "framer-motion";
+import { RefreshCw, Layers, Box, Cpu, Zap, Camera, Eye, X, Info } from "lucide-react";
 
 const STYLES = [
   { 
@@ -109,7 +109,7 @@ const DreamArchitecture: React.FC = () => {
     for (let i = 0; i < 10; i++) {
       scene.add(createSegment(-i * 20));
     }
-  }, [style, seed]);
+  }, [style]);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -196,7 +196,7 @@ const DreamArchitecture: React.FC = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Interface Overlay */}
-      <div className="absolute inset-0 z-30 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-30 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         {/* Header */}
         <div className="flex justify-between items-start">
           <motion.div 
@@ -297,7 +297,7 @@ const DreamArchitecture: React.FC = () => {
       {/* Cinematic Overlays */}
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_350px_rgba(0,0,0,0.95)]" />
       <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-screen" />
-      <div className="absolute bottom-8 right-12 z-30 text-[8px] text-white/5 tracking-[1.5em] uppercase pointer-events-none">
+      <div className="absolute bottom-400 right-12 z-30 text-[8px] text-white/5 tracking-[1.5em] uppercase pointer-events-none">
         Simulated Spatial Paradox // Memory Core 0xAE
       </div>
     </div>

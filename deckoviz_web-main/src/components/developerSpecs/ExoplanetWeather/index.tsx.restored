@@ -1,0 +1,51 @@
+"  return (\
+    <div ref={containerRef} className=\\"relative w-full h-screen bg-[#020205] overflow-hidden selection:bg-cyan-500/30\\">\
+      <canvas ref={canvasRef} className=\\"block w-full h-full z-0\\" />"","StartLine":"325","TargetContent":""  return (\
+      <canvas ref={canvasRef} className=\\"block w-full h-full z-0\\" />"","TargetFile":""/home/shashank/Documents/work2/deckoviz-demo/deckoviz_web-main/src/components/developerSpecs/ExoplanetWeather/index.tsx"","toolAction":""Restoring the parent div."","toolSummary":""Restore parent div"
+"            <div className=\\"absolute inset-0 z-10 pointer-events-none p-12 pb-40 flex flex-col justify-between\\">"","StartLine":"377","TargetContent":""            <div className=\\"absolute inset-0 z-10 pointer-events-none p-12 flex flex-col justify-between\\">"","TargetFile":""/home/shashank/Documents/work2/deckoviz-demo/deckoviz_web-main/src/components/developerSpecs/GriefCartographer/index.tsx"","toolAction":""Adjusting bottom padding in Grief Cartographer."","toolSummary":""Adjust bottom padding GC"
+"const skyFragmentShader = `\
+  uniform vec3 uBaseColor;\
+  uniform float uElevation;\
+  uniform float uTime;\
+  varying vec2 vUv;\
+  varying vec3 vPosition;\
+\
+  float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }\
+\
+  vo
+<truncated 1316 bytes>","StartLine":"25","TargetContent":""const skyFragmentShader = `\
+  uniform vec3 uBaseColor;\
+  uniform float uElevation;\
+  varying vec2 vUv;\
+\
+  void main() {\
+    vec3 col = uBaseColor;\
+    \
+    // 1. Vertical Gradient\
+    float topShift = smoothstep(0.0, 1.0, vUv.y);\
+    vec3 skyCol
+<truncated 647 bytes>","TargetFile":""/home/shashank/Documents/work2/deckoviz-demo/deckoviz_web-main/src/components/developerSpecs/SkyChronometer/index.tsx"","toolAction":""Updating the shaders for Sky Chronometer."","toolSummary":""Update shaders fix SC"
+"    const animate = (time: number) => {\
+      animationId = requestAnimationFrame(animate);"","StartLine":"170","TargetContent":""    const update = (time: number) => {\
+      animationId = requestAnimationFrame(update);"","TargetFile":""/home/shashank/Documents/work2/deckoviz-demo/deckoviz_web-main/src/components/developerSpecs/SkyChronometer/index.tsx"","toolAction":""Fixing naming inconsistency in Sky Chronometer."","toolSummary":""Fix naming inconsistency SC"
+"                  <button\
+                    onClick={toggleFullscreen}\
+                    className=\\"w-12 h-12 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl flex items-center justify-center text-white hover:bg-white/10 transition-al
+<truncated 408 bytes>","StartLine":"427","TargetContent":""                  <button\
+                    onClick={() => setIsSimulating(false)}\
+                    className=\\"p-3 px-6 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl 
+<truncated 47 bytes>","TargetFile":""/home/shashank/Documents/work2/deckoviz-demo/deckoviz_web-main/src/components/developerSpecs/GriefCartographer/index.tsx"","toolAction":""Fixing button placement in Grief Cartographer."","toolSummary":""Fix FS button placement GC"
+"import { \
+  Scale, Zap, Box, Activity, Layers, Scan, \
+  Brain, Cpu, Database, Info, RefreshCw, Maximize2\
+} from \\"lucide-react\\";"","StartLine":"9","TargetContent":""  Brain, Cpu, Database, Info, RefreshCw, Maximize2\
+} from \\"lucide-react\\";"","TargetFile":""/home/shashank/Documents/work2/deckoviz-demo/deckoviz_web-main/src/components/developerSpecs/ArgumentSculptor/index.tsx"","toolAction":""Fixing imports and adding full-screen button to Argument Sculptor."","toolSummary":""Fix imports ArgumentSculptor"
+"          <div className=\\"flex flex-col items-end gap-2\\">\
+            <button \
+              onClick={toggleFullscreen}\
+              className=\\"p-3 rounded-xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transi
+<truncated 674 bytes>","StartLine":"264","TargetContent":""          <div className=\\"flex flex-col items-end gap-2\\">\
+            <div className=\\"flex items-center space-x-3 text-white/40\\">\
+              <Cpu size={14} />\
+              <span className=\\"text-[10px] uppercase font-bold tracking-[0.3em]\\">Neu
+<truncated 366 bytes>","TargetFile":""/home/shashank/Documents/work2/deckoviz-demo/deckoviz_web-main/src/components/developerSpecs/ArgumentSculptor/index.tsx"","toolAction":""Adding full-screen button to Argument Sculptor UI."","toolSummary":""Add FS button UI ArgumentSculptor"

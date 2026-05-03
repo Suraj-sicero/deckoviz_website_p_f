@@ -113,7 +113,7 @@ const WeatherSimulations: React.FC = () => {
                 </div>
 
                 {/* Controls - Bottom */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-8 pointer-events-auto bg-black/40 backdrop-blur-2xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-8 pointer-events-auto bg-black/40 backdrop-blur-2xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl">
                     
                     <div className="flex flex-col space-y-2">
                         <div className="flex justify-between text-[9px] text-gray-500 uppercase tracking-widest font-bold">

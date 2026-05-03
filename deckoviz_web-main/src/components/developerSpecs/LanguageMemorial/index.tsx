@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wind, MapPin, Calendar, Users, Info, ChevronRight, X } from "lucide-react";
+import { MapPin, Calendar, Users, Info, ChevronRight, X } from "lucide-react";
 
 const LANGUAGES = [
   {
@@ -37,6 +37,20 @@ const LANGUAGES = [
   }
 ];
 
+const GLYPHS = ["シ", "ム", "キ", "ハ", "ヌ", "ヲ", "ル", "𐎀", "𐎁", "𐎂", "𐎃", "𐎄"];
+
+const createParticle = (width: number, height: number): Particle => ({
+  x: Math.random() * width,
+  y: Math.random() * height,
+  vx: (Math.random() - 0.5) * 0.2,
+  vy: (Math.random() - 0.5) * 0.2,
+  size: 8 + Math.random() * 20,
+  alpha: Math.random() * 0.5,
+  char: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
+  rotation: Math.random() * Math.PI * 2,
+  rv: (Math.random() - 0.5) * 0.01
+});
+
 interface Particle {
   x: number;
   y: number;
@@ -69,21 +83,7 @@ const LanguageMemorial: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const GLYPHS = ["シ", "ム", "キ", "ハ", "ヌ", "ヲ", "ル", "𐎀", "𐎁", "𐎂", "𐎃", "𐎄"];
-
   const current = LANGUAGES[index];
-
-  const createParticle = (width: number, height: number): Particle => ({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    vx: (Math.random() - 0.5) * 0.2,
-    vy: (Math.random() - 0.5) * 0.2,
-    size: 8 + Math.random() * 20,
-    alpha: Math.random() * 0.5,
-    char: GLYPHS[Math.floor(Math.random() * GLYPHS.length)],
-    rotation: Math.random() * Math.PI * 2,
-    rv: (Math.random() - 0.5) * 0.01
-  });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -288,7 +288,7 @@ const LanguageMemorial: React.FC = () => {
       {/* Cinematic Overlays */}
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_350px_rgba(0,0,0,1)]" />
       <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 text-[9px] font-mono text-white/10 tracking-[1.5em] uppercase">
+      <div className="absolute bottom-400 left-1/2 -translate-x-1/2 z-20 text-[9px] font-mono text-white/10 tracking-[1.5em] uppercase">
         Echoes of the Unspoken // Memory Core 0x4F
       </div>
     </div>

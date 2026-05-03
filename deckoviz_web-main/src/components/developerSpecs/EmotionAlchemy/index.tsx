@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Node {
@@ -155,7 +155,7 @@ const EmotionAlchemy: React.FC = () => {
           <button 
             onClick={() => generateMolecule(input)}
             disabled={!input || isGenerating}
-            className="absolute right-2 top-2 bottom-2 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-sm font-bold transition-all disabled:opacity-20"
+            className="absolute right-2 top-2 bottom-40 px-6 rounded-xl bg-blue-600 hover:bg-blue-500 text-sm font-bold transition-all disabled:opacity-20"
           >
             {isGenerating ? "Synthesizing..." : "Generate"}
           </button>
@@ -230,7 +230,7 @@ const EmotionAlchemy: React.FC = () => {
           </AnimatePresence>
 
           {molecule && (
-            <div className="absolute bottom-6 left-6 text-left">
+            <div className="absolute bottom-400 left-6 text-left">
               <div className="text-[10px] text-white/20 uppercase tracking-widest mb-1">Synthesized Molecule</div>
               <div className="text-xl font-bold text-blue-400">{molecule.name}</div>
             </div>

@@ -140,6 +140,26 @@ import BioluminescentAbyss from "./components/developerSpecs/BioluminescentAbyss
 import LanguageMemorial from "./components/developerSpecs/LanguageMemorial";
 import FermentingWorld from "./components/developerSpecs/FermentingWorld";
 import LastLight from "./components/developerSpecs/LastLight";
+import SolarWindPainter from "./components/developerSpecs/SolarWindPainter";
+import NeuralFirestorm from "./components/developerSpecs/NeuralFirestorm";
+import GriefCartographer from "./components/developerSpecs/GriefCartographer";
+import SymmetryCrystals from "./components/developerSpecs/SymmetryCrystals";
+import AncientTradeRoutes from "./components/developerSpecs/AncientTradeRoutes";
+import SynesthesiaEngine from "./components/developerSpecs/SynesthesiaEngine";
+import MurmurationEngine from "./components/developerSpecs/MurmurationEngine";
+import SeismicMemory from "./components/developerSpecs/SeismicMemory";
+import DreamTaxonomy from "./components/developerSpecs/DreamTaxonomy";
+import CosmicBackground from "./components/developerSpecs/CosmicBackground";
+import HumanConnectivity from "./components/developerSpecs/HumanConnectivity";
+import QuantumFoam from "./components/developerSpecs/QuantumFoam";
+import OralHistoryFire from "./components/developerSpecs/OralHistoryFire";
+import SlimeMould from "./components/developerSpecs/SlimeMould";
+import SkyChronometer from "./components/developerSpecs/SkyChronometer";
+import ArgumentSculptor from "./components/developerSpecs/ArgumentSculptor";
+import ExoplanetWeather from "./components/developerSpecs/ExoplanetWeather";
+import InternetHeartbeat from "./components/developerSpecs/InternetHeartbeat";
+import HapticMemory from "./components/developerSpecs/HapticMemory";
+import SilenceArchitecture from "./components/developerSpecs/SilenceArchitecture";
 import CreateWorld from "./pages/CreateWorld";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
@@ -394,6 +414,26 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/developer-specs/language-memorial" element={<LanguageMemorial />} />
         <Route path="/developer-specs/fermenting-world" element={<FermentingWorld />} />
         <Route path="/developer-specs/last-light" element={<LastLight />} />
+        <Route path="/developer-specs/solar-wind-painter" element={<SolarWindPainter />} />
+        <Route path="/developer-specs/neural-firestorm" element={<NeuralFirestorm />} />
+        <Route path="/developer-specs/grief-cartographer" element={<GriefCartographer />} />
+        <Route path="/developer-specs/symmetry-crystals" element={<SymmetryCrystals />} />
+        <Route path="/developer-specs/trade-atlas" element={<AncientTradeRoutes />} />
+        <Route path="/developer-specs/synesthesia-engine" element={<SynesthesiaEngine />} />
+        <Route path="/developer-specs/murmuration-engine" element={<MurmurationEngine />} />
+        <Route path="/developer-specs/seismic-memory" element={<SeismicMemory />} />
+        <Route path="/developer-specs/dream-taxonomy" element={<DreamTaxonomy />} />
+        <Route path="/developer-specs/cosmic-background" element={<CosmicBackground />} />
+        <Route path="/developer-specs/human-connectivity" element={<HumanConnectivity />} />
+        <Route path="/developer-specs/quantum-foam" element={<QuantumFoam />} />
+        <Route path="/developer-specs/oral-history-fire" element={<OralHistoryFire />} />
+        <Route path="/developer-specs/slime-mould" element={<SlimeMould />} />
+        <Route path="/developer-specs/sky-chronometer" element={<SkyChronometer />} />
+        <Route path="/developer-specs/argument-sculptor" element={<ArgumentSculptor />} />
+        <Route path="/developer-specs/exoplanet-weather" element={<ExoplanetWeather />} />
+        <Route path="/developer-specs/internet-heartbeat" element={<InternetHeartbeat />} />
+        <Route path="/developer-specs/haptic-memory" element={<HapticMemory />} />
+        <Route path="/developer-specs/silence-architecture" element={<SilenceArchitecture />} />
         <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
         <Route path="/create-world" element={<ProtectedRoute><CreateWorld /></ProtectedRoute>} />
       </Routes>

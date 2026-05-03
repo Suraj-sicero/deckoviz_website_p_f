@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { History, Globe, Beaker, Info, ChevronRight, ChevronLeft, Pause, Play, X, Layers, Droplets } from "lucide-react";
+import { Globe, Beaker, ChevronRight, ChevronLeft, Pause, Play, X, Droplets } from "lucide-react";
 
 const PIGMENTS = [
   {
@@ -270,7 +270,7 @@ const PigmentReconstruction: React.FC = () => {
         />
       </div>
 
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-40 text-[9px] font-mono text-white/10 tracking-[2em] uppercase">
+      <div className="absolute bottom-400 left-1/2 -translate-x-1/2 z-40 text-[9px] font-mono text-white/10 tracking-[2em] uppercase">
         Memory Fragment // Reconstruction 0xCF
       </div>
     </div>

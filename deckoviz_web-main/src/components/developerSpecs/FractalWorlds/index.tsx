@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Settings, RefreshCw, Move, Target, Play, Pause, Camera, Download, Layers, Palette, Zap } from 'lucide-react';
+import { Settings, RefreshCw, Play, Pause, Camera, Layers, Zap, Maximize2 } from 'lucide-react';
 import { FractalSimulation } from './FractalSimulation';
 
 const FRACTALS = ['Mandelbrot', 'Julia', 'Burning Ship', 'Multibrot'];
@@ -12,6 +12,16 @@ const FractalWorlds: React.FC = () => {
     
     // UI State
     const [showUI, setShowUI] = useState(true);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    };
     const [autoZoom, setAutoZoom] = useState(false);
     const [currentFractal, setCurrentFractal] = useState(0);
     const [currentMode, setCurrentMode] = useState(0);
@@ -257,7 +267,7 @@ const FractalWorlds: React.FC = () => {
                 </div>
 
                 {/* Left Panel - Status */}
-                <div className="absolute bottom-8 left-8 space-y-4 pointer-events-auto">
+                <div className="absolute bottom-400 left-8 space-y-4 pointer-events-auto">
                     <div className="p-6 bg-black/60 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-2xl space-y-4">
                         <div className="flex items-center space-x-6">
                             <div className="text-[10px] font-mono">
@@ -277,7 +287,7 @@ const FractalWorlds: React.FC = () => {
                 </div>
 
                 {/* Bottom Center - Palettes & Actions */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-3 rounded-[2rem] border border-white/10 shadow-2xl">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-3 rounded-[2rem] border border-white/10 shadow-2xl">
                     <div className="flex items-center space-x-2 px-2">
                         {PALETTES.map((p, i) => (
                             <button 
@@ -305,13 +315,21 @@ const FractalWorlds: React.FC = () => {
                     </button>
                 </div>
 
-                {/* Settings Toggle */}
-                <button 
-                    onClick={() => setShowUI(!showUI)}
-                    className="absolute top-8 right-8 z-50 p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 pointer-events-auto hover:bg-white/20 transition-all shadow-xl"
-                >
-                    <Settings className={`w-6 h-6 text-white transition-transform duration-500 ${showUI ? 'rotate-90' : ''}`} />
-                </button>
+                {/* Settings & Fullscreen Toggles */}
+                <div className="absolute top-8 right-8 z-50 flex gap-3 pointer-events-auto">
+                    <button 
+                        onClick={toggleFullscreen}
+                        className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all shadow-xl"
+                    >
+                        <Maximize2 className="w-6 h-6 text-white" />
+                    </button>
+                    <button 
+                        onClick={() => setShowUI(!showUI)}
+                        className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all shadow-xl"
+                    >
+                        <Settings className={`w-6 h-6 text-white transition-transform duration-500 ${showUI ? 'rotate-90' : ''}`} />
+                    </button>
+                </div>
             </div>
         </div>
     );

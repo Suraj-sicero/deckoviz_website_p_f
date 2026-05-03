@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Beaker, Activity, Thermometer, Droplet, Microscope, Zap, Plus, Minus, X } from "lucide-react";
+import { Activity, Thermometer, Droplet, Microscope, Zap, X } from "lucide-react";
 
 const SUBSTANCES = [
   { id: "sourdough", name: "Sourdough Starter", bg: "#fef3c7", colors: ["#d97706", "#92400e"], ph: 4.2, temp: 24, bubbleRate: 0.08 },
@@ -34,7 +34,7 @@ const FermentingWorld: React.FC = () => {
   const particlesRef = useRef<Particle[]>([]);
   const frameRef = useRef(0);
 
-  const createParticle = (x: number, y: number, type?: Particle["type"]): Particle => {
+  const createParticle = useCallback((x: number, y: number, type?: Particle["type"]): Particle => {
     const t = type || (Math.random() > 0.4 ? "bacillus" : Math.random() > 0.5 ? "yeast" : "phage");
     const size = t === "yeast" ? 4 + Math.random() * 6 : t === "bacillus" ? 2 + Math.random() * 3 : 2;
     return {
@@ -50,7 +50,7 @@ const FermentingWorld: React.FC = () => {
       rv: (Math.random() - 0.5) * 0.05,
       focus: Math.random()
     };
-  };
+  }, [substance]);
 
   const initParticles = useCallback(() => {
     const newParticles: Particle[] = [];
@@ -58,7 +58,7 @@ const FermentingWorld: React.FC = () => {
       newParticles.push(createParticle(Math.random() * 800, Math.random() * 800));
     }
     particlesRef.current = newParticles;
-  }, [substance]);
+  }, [createParticle]);
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current;
@@ -180,7 +180,7 @@ const FermentingWorld: React.FC = () => {
     }
 
     requestAnimationFrame(draw);
-  }, [substance]);
+  }, [substance, createParticle]);
 
   useEffect(() => {
     initParticles();
@@ -220,7 +220,7 @@ const FermentingWorld: React.FC = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Lab Console UI */}
-      <div className="absolute inset-0 z-30 pointer-events-none flex flex-col p-12 justify-between">
+      <div className="absolute inset-0 z-30 pointer-events-none flex flex-col p-12 pb-40 justify-between">
         {/* Header */}
         <div className="flex justify-between items-start">
           <motion.div 
