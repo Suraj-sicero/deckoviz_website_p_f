@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Zap, Activity, RefreshCw, X, Maximize2, Layers, PenTool, Wind, Shield, Settings2, Trash2, Cpu } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { Zap, Activity, Wind, Shield, Trash2, Cpu } from "lucide-react";
 
 interface Point {
   x: number;
@@ -11,10 +11,7 @@ interface Point {
   pressure: number;
 }
 
-interface Stroke {
-  points: Point[];
-  reality: 'WARM' | 'COOL';
-}
+
 
 const ParadoxMirror: React.FC = () => {
   const leftCanvasRef = useRef<HTMLCanvasElement>(null);
@@ -53,9 +50,9 @@ const ParadoxMirror: React.FC = () => {
       const devY = (Math.random() - 0.5) * 10 * deviation;
       
       let x1 = p1.x + devX;
-      let y1 = p1.y + devY;
+      const y1 = p1.y + devY;
       let x2 = p2.x + devX;
-      let y2 = p2.y + devY;
+      const y2 = p2.y + devY;
 
       if (isSymmetric) {
         x1 = ctx.canvas.width - x1;
@@ -112,7 +109,7 @@ const ParadoxMirror: React.FC = () => {
     }
 
     lastPointRef.current = currentPoint;
-    setAlignment(prev => Math.max(0, 100 - (deviation * 30)));
+    setAlignment(Math.max(0, 100 - (deviation * 30)));
   };
 
   const handleMouseUp = () => {
@@ -186,7 +183,7 @@ const ParadoxMirror: React.FC = () => {
       </div>
 
       {/* Paradox Telemetry HUD */}
-      <div className="absolute inset-x-0 bottom-12 z-50 flex justify-center pointer-events-none px-12">
+      <div className="absolute inset-x-0 bottom-400 z-50 flex justify-center pointer-events-none px-12">
         <div className="w-full max-w-6xl flex justify-between items-end">
           
           {/* Left Stats */}
@@ -277,7 +274,7 @@ const ParadoxMirror: React.FC = () => {
          />
       </div>
       <div className="absolute inset-0 z-30 pointer-events-none shadow-[inset_0_0_300px_rgba(0,0,0,0.95)]" />
-      <div className="absolute bottom-8 right-12 z-40 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
+      <div className="absolute bottom-400 right-12 z-40 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
         Reality Paradox // Node 0xCF
       </div>
     </div>

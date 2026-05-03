@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 const SHAPES = [
   {
@@ -145,7 +145,7 @@ const ShadowPuppetry: React.FC = () => {
       </div>
 
       {/* UI Overlay */}
-      <div className="absolute bottom-12 left-12 z-50 text-amber-100/50 font-serif italic text-lg tracking-widest pointer-events-none">
+      <div className="absolute bottom-400 left-12 z-50 text-amber-100/50 font-serif italic text-lg tracking-widest pointer-events-none">
         Shadow Puppetry Engine
         <div className="text-xs uppercase mt-2 tracking-[0.5em] opacity-50 not-italic">
           Experimental Art Mode

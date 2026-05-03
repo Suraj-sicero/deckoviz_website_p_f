@@ -2318,3 +2318,17 @@
 [2026-05-01T06:57:54.142Z] LOG: ✅ Redis Connected
 [2026-05-01T06:57:54.143Z] LOG: Dekoviz
 [2026-05-01T06:57:54.151Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-03T12:12:49.525Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-03T12:12:49.545Z] LOG: ✅ Redis Connected
+[2026-05-03T12:12:49.550Z] LOG: Dekoviz
+[2026-05-03T12:12:49.570Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-03T12:12:54.389Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-03T12:12:54.397Z] LOG: ✅ Redis Connected
+[2026-05-03T12:12:54.398Z] LOG: Dekoviz
+[2026-05-03T12:12:54.404Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-03T12:59:56.792Z] LOG: Redis Error: Error: Socket closed unexpectedly
+[2026-05-03T12:59:56.796Z] LOG: Redis Error: Error: connect ECONNREFUSED 127.0.0.1:6379
+[2026-05-03T16:25:20.463Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-03T16:25:20.470Z] LOG: ✅ Redis Connected
+[2026-05-03T16:25:20.471Z] LOG: Dekoviz
+[2026-05-03T16:25:20.479Z] LOG: ✅ PostgreSQL connected via Sequelize.

@@ -186,7 +186,7 @@ const ConstellationBuilder: React.FC = () => {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 1.1 }}
-            className="absolute bottom-24 max-w-xl p-10 rounded-3xl bg-white/[0.03] border border-white/5 backdrop-blur-2xl shadow-2xl pointer-events-none"
+            className="absolute bottom-404 max-w-xl p-10 rounded-3xl bg-white/[0.03] border border-white/5 backdrop-blur-2xl shadow-2xl pointer-events-none"
           >
             <h2 className="text-5xl font-serif text-white mb-6 italic tracking-tight">{myth.name}</h2>
             <p className="text-lg text-white/60 leading-relaxed font-serif">

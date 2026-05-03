@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
-import { Mic, Radio, Activity, Zap, History, Globe, Info, X, Maximize2, Layers, Music } from "lucide-react";
+import { motion } from "framer-motion";
+import { Mic, Radio, Activity, History, Globe, X, Music } from "lucide-react";
 
 const CULTURES = [
   { 
@@ -53,7 +53,8 @@ const SoundArchaeology: React.FC = () => {
   const startAudio = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const audioCtx = new AudioContextClass();
       const source = audioCtx.createMediaStreamSource(stream);
       const analyser = audioCtx.createAnalyser();
       analyser.fftSize = 128;
@@ -158,7 +159,7 @@ const SoundArchaeology: React.FC = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Interface HUD */}
-      <div className="absolute inset-0 z-30 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-30 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         
         {/* Top: Header & Culture Selector */}
         <div className="flex justify-between items-start">
@@ -286,7 +287,7 @@ const SoundArchaeology: React.FC = () => {
       {/* Atmospheric Overlays */}
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_350px_rgba(0,0,0,0.95)]" />
       <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-screen" />
-      <div className="absolute bottom-8 right-12 z-30 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
+      <div className="absolute bottom-400 right-12 z-30 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
         Sonic Excavation // Unit 0x01
       </div>
     </div>

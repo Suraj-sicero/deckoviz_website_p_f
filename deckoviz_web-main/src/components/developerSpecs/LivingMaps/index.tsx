@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Layers, Activity, Compass, Wind, Droplets, Mountain } from "lucide-react";
+import { Layers, Activity, Compass, Droplets, Mountain } from "lucide-react";
 
 // --- Advanced Noise Implementation ---
 class Noise {
@@ -74,14 +74,14 @@ const LivingMaps: React.FC = () => {
   const [tectonicShift, setTectonicShift] = useState({ x: 0, y: 0 });
   const [isEvolving, setIsEvolving] = useState(true);
   const [currentEvent, setCurrentEvent] = useState<string | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
   const [impacts, setImpacts] = useState<{x: number, y: number, r: number, alpha: number}[]>([]);
 
-  const stateRef = useRef({ seed, waterLevel, complexity, tectonicShift, isEvolving, mousePos, impacts });
+  const stateRef = useRef({ seed, waterLevel, complexity, tectonicShift, isEvolving, impacts });
 
   useEffect(() => {
-    stateRef.current = { seed, waterLevel, complexity, tectonicShift, isEvolving, mousePos, impacts };
-  }, [seed, waterLevel, complexity, tectonicShift, isEvolving, mousePos, impacts]);
+    stateRef.current = { seed, waterLevel, complexity, tectonicShift, isEvolving, impacts };
+  }, [seed, waterLevel, complexity, tectonicShift, isEvolving, impacts]);
 
   const getHeight = useCallback((x: number, y: number) => {
     const { seed, complexity: comp, tectonicShift: ts, impacts } = stateRef.current;
@@ -143,11 +143,10 @@ const LivingMaps: React.FC = () => {
         // Calculate Hillshading (Slope based)
         const dx = (hRight - h) * 10;
         const dy = (hDown - h) * 10;
-        const slope = Math.sqrt(dx*dx + dy*dy);
         const shade = Math.max(0, Math.min(1, 0.5 + (dx - dy) * 2));
 
         // Biome Color
-        let color = getBiomeColor(h);
+        const color = getBiomeColor(h);
         
         // Water Handling
         if (h < wl) {
@@ -216,7 +215,7 @@ const LivingMaps: React.FC = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Modern UI Layout */}
-      <div className="absolute inset-0 pointer-events-none flex flex-col p-12 justify-between">
+      <div className="absolute inset-0 pointer-events-none flex flex-col p-12 pb-40 justify-between">
         {/* Top Header */}
         <div className="flex justify-between items-start">
           <div className="flex flex-col gap-1">
@@ -349,7 +348,7 @@ const LivingMaps: React.FC = () => {
       {/* Decorative Overlays */}
       <div className="absolute inset-0 pointer-events-none z-10 border-[32px] border-[#0f172a]" />
       <div className="absolute inset-0 pointer-events-none z-10 shadow-[inset_0_0_200px_rgba(0,0,0,0.8)]" />
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 text-[10px] font-mono text-white/20 tracking-[0.8em] uppercase">
+      <div className="absolute bottom-400 left-1/2 -translate-x-1/2 z-20 text-[10px] font-mono text-white/20 tracking-[0.8em] uppercase">
         Autonomous Geological Intelligence // Core v4.1.0
       </div>
     </div>

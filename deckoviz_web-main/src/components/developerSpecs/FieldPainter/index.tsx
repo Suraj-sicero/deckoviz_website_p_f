@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { } from "framer-motion";
 
 interface Charge {
   id: string;
@@ -241,7 +241,7 @@ const FieldPainter: React.FC = () => {
       </div>
 
       {/* Preset configurations */}
-      <div className="absolute bottom-8 right-8 z-10 flex flex-wrap justify-end max-w-md gap-2">
+      <div className="absolute bottom-400 right-8 z-10 flex flex-wrap justify-end max-w-md gap-2">
         {[
           { label: "Dipole", config: [{ x: 400, y: 300, q: 10 }, { x: 600, y: 300, q: -10 }] },
           { label: "Quadrupole", config: [{ x: 400, y: 200, q: 10 }, { x: 600, y: 200, q: -10 }, { x: 400, y: 400, q: -10 }, { x: 600, y: 400, q: 10 }] },

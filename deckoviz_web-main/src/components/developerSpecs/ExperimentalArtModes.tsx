@@ -7,7 +7,9 @@ import {
   Sprout, Cloud, Type, Thermometer, Wind, Shield, 
   Activity, BarChart3, Mountain, Star, Gem, Building2, 
   Microscope, Flame, ArrowRight, Code, Sun, Droplets,
-  MessageSquare, Dna, Brain, MapPin, Leaf
+  MessageSquare, Dna, Brain, MapPin, Leaf, Snowflake,
+  Compass, Volume2, Bird, Moon, Maximize2, Users,
+  Atom, BrainCircuit, Scale, Hand
 } from "lucide-react";
 
 const developerTools = [
@@ -330,6 +332,166 @@ const developerTools = [
     icon: <Flame size={24} className="text-orange-500" />,
     color: "from-orange-500/20 to-red-500/20",
     borderColor: "group-hover:border-orange-500/50"
+  },
+  {
+    title: "Solar Wind Painter",
+    description: "Physically-responsive aurora visualization driven by real-time solar wind data from DSCOVR",
+    route: "/developer-specs/solar-wind-painter",
+    icon: <Wind size={24} className="text-cyan-400" />,
+    color: "from-cyan-400/20 to-emerald-400/20",
+    borderColor: "group-hover:border-cyan-400/50"
+  },
+  {
+    title: "Neural Firestorm",
+    description: "Stable, emergent spiking neural network exhibiting coherent wave dynamics and brain states",
+    route: "/developer-specs/neural-firestorm",
+    icon: <Brain size={24} className="text-purple-500" />,
+    color: "from-purple-500/20 to-pink-500/20",
+    borderColor: "group-hover:border-purple-500/50"
+  },
+  {
+    title: "The Grief Cartographer",
+    description: "Translate unspoken thoughts into a subtle, evolving 3D emotional landscape system",
+    route: "/developer-specs/grief-cartographer",
+    icon: <Mountain size={24} className="text-emerald-400" />,
+    color: "from-emerald-500/20 to-stone-500/20",
+    borderColor: "group-hover:border-emerald-500/50"
+  },
+  {
+    title: "Supercooled Symmetry",
+    description: "Physically-plausible crystallisation system with 6-fold hexagonal growth and dissolution",
+    route: "/developer-specs/symmetry-crystals",
+    icon: <Snowflake size={24} className="text-blue-300" />,
+    color: "from-blue-300/20 to-cyan-300/20",
+    borderColor: "group-hover:border-blue-300/50"
+  },
+  {
+    title: "Ancient Trade Atlas",
+    description: "Living historical system where trade networks evolve and flow across time (3000 BCE - 1500 CE)",
+    route: "/developer-specs/trade-atlas",
+    icon: <Compass size={24} className="text-amber-700" />,
+    color: "from-amber-700/20 to-orange-700/20",
+    borderColor: "group-hover:border-amber-700/50"
+  },
+  {
+    title: "Synesthesia Engine",
+    description: "Immersive perceptual field mapping sound into spatial colour landscapes across multiple modes",
+    route: "/developer-specs/synesthesia-engine",
+    icon: <Volume2 size={24} className="text-pink-400" />,
+    color: "from-pink-400/20 to-purple-400/20",
+    borderColor: "group-hover:border-pink-400/50"
+  },
+  {
+    title: "Murmuration Engine",
+    description: "Large-scale coherent flock simulation exhibiting realistic starling murmuration dynamics",
+    route: "/developer-specs/murmuration-engine",
+    icon: <Bird size={24} className="text-blue-400" />,
+    color: "from-blue-400/20 to-indigo-400/20",
+    borderColor: "group-hover:border-blue-400/50"
+  },
+  {
+    title: "Seismic Memory Wall",
+    description: "Living seismic memorial transforming earthquake data into a continuously evolving visual record",
+    route: "/developer-specs/seismic-memory",
+    icon: <Activity size={24} className="text-orange-500" />,
+    color: "from-orange-500/20 to-red-500/20",
+    borderColor: "group-hover:border-orange-500/50"
+  },
+  {
+    title: "The Dream Taxonomy",
+    description: "Living, evolving personal constellation of dreams where symbolic patterns emerge over time",
+    route: "/developer-specs/dream-taxonomy",
+    icon: <Moon size={24} className="text-purple-400" />,
+    color: "from-purple-400/20 to-indigo-400/20",
+    borderColor: "group-hover:border-purple-400/50"
+  },
+  {
+    title: "Cosmic Background Portrait",
+    description: "Minimal, meditative cosmic viewing experience presenting the Planck CMB map as a living artifact",
+    route: "/developer-specs/cosmic-background",
+    icon: <Maximize2 size={24} className="text-cyan-400" />,
+    color: "from-cyan-400/20 to-black/40",
+    borderColor: "group-hover:border-cyan-400/50"
+  },
+  {
+    title: "Six Degrees of Humanity",
+    description: "Cinematic, evolving network revealing the structure of global human connectivity and community clusters",
+    route: "/developer-specs/human-connectivity",
+    icon: <Users size={24} className="text-blue-500" />,
+    color: "from-blue-500/20 to-indigo-500/20",
+    borderColor: "group-hover:border-blue-500/50"
+  },
+  {
+    title: "Quantum Foam",
+    description: "Non-repeating, sub-perceptual dynamic surface simulating the chaotic fluctuations of space-time",
+    route: "/developer-specs/quantum-foam",
+    icon: <Atom size={24} className="text-cyan-500" />,
+    color: "from-cyan-500/20 to-slate-900/40",
+    borderColor: "group-hover:border-cyan-500/50"
+  },
+  {
+    title: "Oral History Fire",
+    description: "Living fire-driven storytelling system where text emerges from and dissolves into the flame",
+    route: "/developer-specs/oral-history-fire",
+    icon: <Flame size={24} className="text-orange-500" />,
+    color: "from-red-500/20 to-orange-500/20",
+    borderColor: "group-hover:border-orange-500/50"
+  },
+  {
+    title: "Slime Mould Intelligence",
+    description: "High-performance Physarum simulation producing realistic network optimization behavior and route reinforcement",
+    route: "/developer-specs/slime-mould",
+    icon: <BrainCircuit size={24} className="text-amber-500" />,
+    color: "from-amber-500/20 to-yellow-500/20",
+    borderColor: "group-hover:border-amber-500/50"
+  },
+  {
+    title: "Sky Chronometer",
+    description: "Physically grounded sky-light simulation reflecting real-world solar conditions and Kelvin temperatures",
+    route: "/developer-specs/sky-chronometer",
+    icon: <Sun size={24} className="text-yellow-400" />,
+    color: "from-yellow-400/20 to-blue-400/20",
+    borderColor: "group-hover:border-yellow-400/50"
+  },
+  {
+    title: "Argument Sculptor",
+    description: "Structurally meaningful 3D system where logical relationships directly affect physical stability and form",
+    route: "/developer-specs/argument-sculptor",
+    icon: <Scale size={24} className="text-blue-400" />,
+    color: "from-blue-400/20 to-slate-800/40",
+    borderColor: "group-hover:border-blue-400/50"
+  },
+  {
+    title: "Exoplanet Weather Station",
+    description: "Scientifically grounded atmospheric renderer where visual behavior is directly tied to real planetary data",
+    route: "/developer-specs/exoplanet-weather",
+    icon: <Cloud size={24} className="text-cyan-400" />,
+    color: "from-cyan-400/20 to-indigo-900/40",
+    borderColor: "group-hover:border-cyan-400/50"
+  },
+  {
+    title: "Internet Heartbeat",
+    description: "Living global system where internet infrastructure and data flow behave like a biological circulatory network",
+    route: "/developer-specs/internet-heartbeat",
+    icon: <Activity size={24} className="text-teal-400" />,
+    color: "from-teal-400/20 to-emerald-900/40",
+    borderColor: "group-hover:border-teal-400/50"
+  },
+  {
+    title: "Haptic Memory Theatre",
+    description: "Slow, sensory-driven material experience where surfaces evoke tactile memory through raking light and PBR detail",
+    route: "/developer-specs/haptic-memory",
+    icon: <Hand size={24} className="text-amber-500" />,
+    color: "from-amber-500/20 to-stone-900/40",
+    borderColor: "group-hover:border-amber-500/50"
+  },
+  {
+    title: "Silence Between Notes",
+    description: "Temporal composition system where silence becomes structured visual architecture through real-time audio analysis",
+    route: "/developer-specs/silence-architecture",
+    icon: <Music size={24} className="text-blue-400" />,
+    color: "from-blue-400/20 to-slate-900/40",
+    borderColor: "group-hover:border-blue-400/50"
   },
 ];
 

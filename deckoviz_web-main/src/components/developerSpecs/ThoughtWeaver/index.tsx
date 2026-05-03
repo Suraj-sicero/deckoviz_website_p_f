@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
-import { Brain, Cpu, Activity, Zap, Search, Layers, RefreshCw, X, Maximize2, Share2, Info } from "lucide-react";
+import { motion } from "framer-motion";
+import { Brain, Activity, Zap, Search, Layers, X, Share2 } from "lucide-react";
 
 interface NodeData {
   id: string;
@@ -33,7 +33,7 @@ const ThoughtWeaver: React.FC = () => {
   
   const sceneRef = useRef<THREE.Scene | null>(null);
   const nodesRef = useRef<NodeData[]>([]);
-  const linesRef = useRef<THREE.LineSegments | null>(null);
+
 
   const addNode = useCallback((label: string, parentPos?: THREE.Vector3) => {
     const id = Math.random().toString(36).substr(2, 9);
@@ -142,14 +142,14 @@ const ThoughtWeaver: React.FC = () => {
       window.removeEventListener("resize", handleResize);
       renderer.dispose();
     };
-  }, []);
+  }, [addNode]);
 
   return (
     <div ref={containerRef} className="relative w-full h-screen bg-[#020205] overflow-hidden font-mono selection:bg-cyan-500/30">
       <canvas ref={canvasRef} className="absolute inset-0 z-0 cursor-move" />
 
       {/* Interface HUD */}
-      <div className="absolute inset-0 z-30 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-30 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         
         {/* Top: Branding & Search */}
         <div className="flex justify-between items-start">
@@ -193,7 +193,7 @@ const ThoughtWeaver: React.FC = () => {
 
         {/* Center Indicators */}
         <div className="absolute top-1/2 right-12 -translate-y-1/2 space-y-4">
-           {nodes.slice(-5).reverse().map((n, i) => (
+           {nodes.slice(-5).reverse().map((n) => (
               <motion.div 
                 key={n.id}
                 initial={{ opacity: 0, x: 20 }}
@@ -260,7 +260,7 @@ const ThoughtWeaver: React.FC = () => {
       {/* Atmospheric Overlays */}
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_350px_rgba(0,0,0,0.95)]" />
       <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-screen" />
-      <div className="absolute bottom-8 right-12 z-30 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
+      <div className="absolute bottom-400 right-12 z-30 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
         Neural Core // Fragment 0x99
       </div>
     </div>

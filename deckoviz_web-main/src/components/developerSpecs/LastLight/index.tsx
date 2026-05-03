@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
-import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Radio, Activity, Zap, Info, ChevronRight, X } from "lucide-react";
+import { Zap, Info, ChevronRight, X, Maximize2, RefreshCw } from "lucide-react";
 
 const EVENTS = [
   { id: "red_giant", name: "Red Giant Sunset", color: "#f87171", bg: "#450a0a", years: "4.2M", desc: "Thermal expansion of a dying solar core." },
@@ -22,6 +22,16 @@ const LastLight: React.FC = () => {
   const [event, setEvent] = useState(EVENTS[0]);
   const [progress, setProgress] = useState(0);
   const [showInfo, setShowInfo] = useState(true);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   const stateRef = useRef({ event, progress });
 
@@ -112,12 +122,10 @@ const LastLight: React.FC = () => {
     }
     scene.add(nebulaGroup);
 
-    let frame = 0;
     const duration = 90000;
     const startTime = performance.now();
 
     const animate = () => {
-      frame++;
       const time = performance.now();
       const p = Math.min((time - startTime) / duration, 1);
       setProgress(p);
@@ -166,14 +174,14 @@ const LastLight: React.FC = () => {
       renderer.dispose();
       composer.dispose();
     };
-  }, [event.id]);
+  }, [event.id, event.bg, event.color]);
 
   return (
     <div ref={containerRef} className="relative w-full h-screen bg-black overflow-hidden font-mono selection:bg-white/20">
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Cinematic HUD Overlay */}
-      <div className="absolute inset-0 z-10 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-10 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         
         {/* Top Section: System Status */}
         <div className="flex justify-between items-start">
@@ -203,6 +211,18 @@ const LastLight: React.FC = () => {
                 ))}
               </div>
             </div>
+            <button 
+              onClick={toggleFullscreen}
+              className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group"
+            >
+              <Maximize2 size={20} />
+            </button>
+            <button 
+              onClick={() => window.location.reload()}
+              className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group"
+            >
+              <RefreshCw size={20} />
+            </button>
             <button 
               onClick={() => window.history.back()}
               className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group"
@@ -312,7 +332,7 @@ const LastLight: React.FC = () => {
 
       {/* Cinematic Vignette */}
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.9)]" />
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 text-[10px] font-mono text-white/10 tracking-[1em] uppercase">
+      <div className="absolute bottom-400 left-1/2 -translate-x-1/2 z-20 text-[10px] font-mono text-white/10 tracking-[1em] uppercase">
         Observed Event Horizon // Static Timeframe
       </div>
     </div>

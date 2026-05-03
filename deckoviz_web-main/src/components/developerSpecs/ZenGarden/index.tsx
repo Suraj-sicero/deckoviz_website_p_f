@@ -171,7 +171,7 @@ const ZenGarden: React.FC = () => {
                 </div>
 
                 {/* Footer Controls */}
-                <div className="absolute bottom-12 left-12 flex items-center space-x-6 pointer-events-auto">
+                <div className="absolute bottom-400 left-12 flex items-center space-x-6 pointer-events-auto">
                     <button onClick={handleExport} className="p-4 bg-white/5 backdrop-blur-xl rounded-full border border-white/10 text-white/40 hover:text-white transition-all">
                         <Download size={20} />
                     </button>

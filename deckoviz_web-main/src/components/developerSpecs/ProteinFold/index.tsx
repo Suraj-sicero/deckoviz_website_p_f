@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
-import { Activity, Beaker, Atom, Zap, Database, Info, RefreshCw, X, ChevronRight, Globe } from "lucide-react";
+import { motion } from "framer-motion";
+import { Activity, Atom, X, Maximize2, RefreshCw } from "lucide-react";
 
 const PROTEINS = [
   { 
@@ -55,6 +55,16 @@ const ProteinFold: React.FC = () => {
   const [progress, setProgress] = useState(0);
   const [energy, setEnergy] = useState(100);
   const [sequenceIndex, setSequenceIndex] = useState(0);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   const sceneRef = useRef<THREE.Scene | null>(null);
   const meshRef = useRef<THREE.Mesh | null>(null);
@@ -127,7 +137,7 @@ const ProteinFold: React.FC = () => {
       cancelAnimationFrame(animationId);
       renderer.dispose();
     };
-  }, []);
+  }, [protein.color]);
 
   useEffect(() => {
     if (!sceneRef.current) return;
@@ -185,7 +195,7 @@ const ProteinFold: React.FC = () => {
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
       {/* Synthesis HUD */}
-      <div className="absolute inset-0 z-30 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-30 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         {/* Top: Branding & Sequence */}
         <div className="flex justify-between items-start">
           <motion.div 
@@ -211,11 +221,23 @@ const ProteinFold: React.FC = () => {
                 <span className="text-emerald-400 text-sm font-bold font-mono">NOMINAL_99.8%</span>
              </div>
              <button 
-              onClick={() => window.history.back()}
-              className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/20 hover:text-white transition-all backdrop-blur-xl group"
-            >
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+               onClick={toggleFullscreen}
+               className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group"
+             >
+               <Maximize2 size={20} />
+             </button>
+             <button 
+               onClick={() => window.location.reload()}
+               className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group"
+             >
+               <RefreshCw size={20} />
+             </button>
+             <button 
+               onClick={() => window.history.back()}
+               className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/20 hover:text-white transition-all backdrop-blur-xl group"
+             >
+               <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
+             </button>
           </div>
         </div>
 
@@ -323,7 +345,7 @@ const ProteinFold: React.FC = () => {
       {/* Atmospheric Overlays */}
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_350px_rgba(0,0,0,0.95)]" />
       <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-screen" />
-      <div className="absolute bottom-8 right-12 z-30 text-[8px] text-white/5 tracking-[1.5em] uppercase pointer-events-none">
+      <div className="absolute bottom-400 right-12 z-30 text-[8px] text-white/5 tracking-[1.5em] uppercase pointer-events-none">
         Structural Archive // Core Link 0x2A
       </div>
     </div>

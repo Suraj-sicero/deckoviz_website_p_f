@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 const SUBJECTS = [
   { id: "apple", name: "Apple", color: "#4ade80", decayColor: "#451a03" },
@@ -14,7 +14,7 @@ const SUBJECTS = [
 const DecayBloom: React.FC = () => {
   const [subject, setSubject] = useState(SUBJECTS[0]);
   const [progress, setProgress] = useState(0); // 0 to 100
-  const [speed, setSpeed] = useState(1);
+  const [speed] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,7 +36,7 @@ const DecayBloom: React.FC = () => {
     let saturation = 100;
     let brightness = 100;
     let blur = 0;
-    let color = subject.color;
+
 
     if (phase === "GROWTH") {
       const p = progress / 20;

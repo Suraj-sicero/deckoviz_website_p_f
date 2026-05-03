@@ -249,7 +249,7 @@ const PhysicsSandbox: React.FC = () => {
                 </div>
 
                 {/* Controls - Bottom */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-8 pointer-events-auto bg-black/60 backdrop-blur-2xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-8 pointer-events-auto bg-black/60 backdrop-blur-2xl p-6 rounded-[2.5rem] border border-white/10 shadow-2xl">
                     <button 
                         onClick={() => setIsPaused(!isPaused)}
                         className={`p-4 rounded-full transition-all ${isPaused ? 'bg-white text-black' : 'text-gray-400 hover:text-white bg-white/10'}`}
@@ -315,7 +315,7 @@ const PhysicsSandbox: React.FC = () => {
                 </div>
 
                 {/* Interaction Help */}
-                <div className="absolute bottom-8 right-8 text-[10px] text-gray-500 uppercase tracking-[0.2em] italic font-medium">
+                <div className="absolute bottom-400 right-8 text-[10px] text-gray-500 uppercase tracking-[0.2em] italic font-medium">
                    Drag to interact • Tool active: {tool}
                 </div>
 

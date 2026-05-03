@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
-import { motion, AnimatePresence } from "framer-motion";
-import { Radio, ShieldAlert, Cpu, Activity, Zap, Globe, Target, Terminal, X, Maximize2, Layers, Search } from "lucide-react";
+import { motion } from "framer-motion";
+import { ShieldAlert, Activity, Target, X, Radio, Terminal, Cpu, Maximize2, RefreshCw } from "lucide-react";
 
 const SIGNAL_TYPES = [
   { id: "RADIO", name: "Terrestrial Radio", freq: "104.2 MHz", strength: 88, origin: "Sector 01-A // Earth" },
@@ -23,6 +23,16 @@ const SignalInterception: React.FC = () => {
   
   const sceneRef = useRef<THREE.Scene | null>(null);
   const globeRef = useRef<THREE.Group | null>(null);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   // Decryption Simulation
   useEffect(() => {
@@ -126,7 +136,7 @@ const SignalInterception: React.FC = () => {
       <div className="absolute inset-0 z-10 pointer-events-none shadow-[inset_0_0_200px_rgba(0,255,136,0.15)]" />
 
       {/* Intelligence HUD */}
-      <div className="absolute inset-0 z-30 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-30 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         
         {/* Top: Branding & Decryption Progress */}
         <div className="flex justify-between items-start">
@@ -161,11 +171,23 @@ const SignalInterception: React.FC = () => {
                 </div>
              </div>
              <button 
-              onClick={() => window.history.back()}
-              className="p-5 rounded-2xl bg-[#00ff88]/5 border border-[#00ff88]/20 text-[#00ff88]/40 hover:text-[#00ff88] hover:bg-[#00ff88]/10 transition-all backdrop-blur-xl group"
-            >
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+               onClick={toggleFullscreen}
+               className="p-5 rounded-2xl bg-[#00ff88]/5 border border-[#00ff88]/20 text-[#00ff88]/40 hover:text-[#00ff88] hover:bg-[#00ff88]/10 transition-all backdrop-blur-xl group"
+             >
+               <Maximize2 size={20} />
+             </button>
+             <button 
+               onClick={() => window.location.reload()}
+               className="p-5 rounded-2xl bg-[#00ff88]/5 border border-[#00ff88]/20 text-[#00ff88]/40 hover:text-[#00ff88] hover:bg-[#00ff88]/10 transition-all backdrop-blur-xl group"
+             >
+               <RefreshCw size={20} />
+             </button>
+             <button 
+               onClick={() => window.history.back()}
+               className="p-5 rounded-2xl bg-[#00ff88]/5 border border-[#00ff88]/20 text-[#00ff88]/40 hover:text-[#00ff88] hover:bg-[#00ff88]/10 transition-all backdrop-blur-xl group"
+             >
+               <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
+             </button>
           </div>
         </div>
 
@@ -258,7 +280,7 @@ const SignalInterception: React.FC = () => {
 
       {/* Static Overlays */}
       <div className="absolute inset-0 z-40 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-screen" />
-      <div className="absolute bottom-8 right-12 z-30 text-[8px] text-[#00ff88]/10 tracking-[2.5em] uppercase pointer-events-none">
+      <div className="absolute bottom-400 right-12 z-30 text-[8px] text-[#00ff88]/10 tracking-[2.5em] uppercase pointer-events-none">
         Sigma Intelligence // Fragment 0xAA
       </div>
     </div>

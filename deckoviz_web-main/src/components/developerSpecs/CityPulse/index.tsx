@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const CITIES = [
   { id: "nyc", name: "New York", center: { x: 50, y: 50 }, traffic: 0.8, parks: [{ x: 50, y: 35, r: 15 }] },
@@ -20,10 +20,7 @@ const CityPulse: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const isNight = useMemo(() => {
-    const hour = time.getHours();
-    return hour < 6 || hour > 19;
-  }, [time]);
+
 
   return (
     <div className="relative w-full h-screen bg-[#05070a] overflow-hidden flex flex-col items-center justify-center font-mono">
@@ -127,7 +124,7 @@ const CityPulse: React.FC = () => {
         </svg>
 
         {/* HUD Metadata */}
-        <div className="absolute bottom-8 left-8 flex gap-8">
+        <div className="absolute bottom-400 left-8 flex gap-8">
           <div className="text-left">
             <div className="text-[10px] text-white/20 uppercase tracking-widest mb-1">Density</div>
             <div className="text-xl font-bold text-white">{(city.traffic * 100).toFixed(0)}%</div>
@@ -143,7 +140,7 @@ const CityPulse: React.FC = () => {
         </div>
 
         {/* City Selector */}
-        <div className="absolute bottom-8 right-8 flex gap-2">
+        <div className="absolute bottom-400 right-8 flex gap-2">
           {CITIES.map(c => (
             <button
               key={c.id}

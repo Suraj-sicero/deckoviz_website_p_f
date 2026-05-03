@@ -114,10 +114,10 @@ export class FluidSimulation {
         const dyeRes = this.params.DYE_RESOLUTION;
 
         // Try to find the best available float format
-        let texType = gl.HALF_FLOAT;
-        let rgba = gl.RGBA16F;
-        let rg = gl.RG16F;
-        let r = gl.R16F;
+        const texType = gl.HALF_FLOAT;
+        const rgba = gl.RGBA16F;
+        const rg = gl.RG16F;
+        const r = gl.R16F;
 
         // Check for float support specifically
         if (!gl.getExtension('EXT_color_buffer_float')) {

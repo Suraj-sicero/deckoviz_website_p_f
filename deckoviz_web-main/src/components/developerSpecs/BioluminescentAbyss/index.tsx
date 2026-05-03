@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
-import { Radar, Droplet, Thermometer, X, Globe } from "lucide-react";
+import { Radar, Droplet, Thermometer, X, Globe, Maximize2, RefreshCw } from "lucide-react";
 
 const DEPTHS = [
   { level: "200m", pressure: "20 atm", temp: "12°C", color: "#001a2c", count: 80, speed: 1.2 },
@@ -14,11 +14,29 @@ const DEPTHS = [
 
 const SPECIES = ["Aequorea Victoria", "Pelagia Noctiluca", "Chrysaora Fuscescens", "Cyanea Capillata"];
 
+interface Creature {
+  mesh: THREE.Group;
+  vel: THREE.Vector3;
+  phase: number;
+  tentacles: THREE.Line[];
+  species: string;
+}
+
 const BioluminescentAbyss: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [depth, setDepth] = useState(DEPTHS[1]);
-  const creaturesRef = useRef<any[]>([]);
+  const creaturesRef = useRef<Creature[]>([]);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -136,10 +154,11 @@ const BioluminescentAbyss: React.FC = () => {
         
         const pulse = Math.sin(time * 1.5 + c.phase);
         const scale = 1 + pulse * 0.2;
-        c.mesh.children[0].scale.set(scale, 0.8 / scale, scale);
-        (c.mesh.children[0] as THREE.Mesh).material.emissiveIntensity = 2 + pulse;
+        const headMesh = c.mesh.children[0] as THREE.Mesh;
+        headMesh.scale.set(scale, 0.8 / scale, scale);
+        (headMesh.material as THREE.MeshStandardMaterial).emissiveIntensity = 2 + pulse;
         
-        c.tentacles.forEach((t: any, i: number) => {
+        c.tentacles.forEach((t, i: number) => {
           const pos = t.geometry.attributes.position;
           for (let j = 1; j < 10; j++) {
             const wave = Math.sin(time * 3 + j * 0.5 + c.phase + i) * (j * 0.1);
@@ -174,7 +193,7 @@ const BioluminescentAbyss: React.FC = () => {
     <div ref={containerRef} className="relative w-full h-screen bg-black overflow-hidden font-mono selection:bg-cyan-500/30">
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
 
-      <div className="absolute inset-0 z-30 pointer-events-none p-12 flex flex-col justify-between">
+      <div className="absolute inset-0 z-30 pointer-events-none p-12 pb-40 flex flex-col justify-between">
         <div className="flex justify-between items-start">
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="flex items-center gap-6">
             <div className="relative">
@@ -197,6 +216,18 @@ const BioluminescentAbyss: React.FC = () => {
                 <span className="text-[10px] text-white/30 uppercase font-bold tracking-[0.3em]">Telemetry Status</span>
                 <span className="text-emerald-400 text-sm font-bold">NOMINAL_CONNECTION</span>
              </div>
+             <button 
+               onClick={toggleFullscreen}
+               className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group"
+             >
+               <Maximize2 size={20} />
+             </button>
+             <button 
+               onClick={() => window.location.reload()}
+               className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group"
+             >
+               <RefreshCw size={20} />
+             </button>
              <button onClick={() => window.history.back()} className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/20 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group">
               <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
             </button>
