@@ -6,6 +6,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  NPM_CONFIG_LEGACY_PEER_DEPS = "true"
 
 [[redirects]]
   from = "/*"
@@ -15,9 +16,8 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=0, must-revalidate"
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
-
