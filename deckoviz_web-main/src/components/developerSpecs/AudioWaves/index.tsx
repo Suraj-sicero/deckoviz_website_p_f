@@ -115,9 +115,12 @@ const AudioWaves: React.FC = () => {
                 console.error("Mic access denied", err);
             }
         } else {
-            // How to stop mic? Re-init analyzer or close stream?
-            // Simplified: just toggle off
+            analyzerRef.current.stopMic();
             setIsMic(false);
+            // Restore file source if it exists
+            if (audioRef.current && audioRef.current.src) {
+                analyzerRef.current.initFile(audioRef.current);
+            }
         }
     };
 

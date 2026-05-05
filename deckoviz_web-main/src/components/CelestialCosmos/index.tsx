@@ -28,7 +28,7 @@ const CelestialCosmos: React.FC = () => {
         
         engineRef.current = new CelestialEngine(containerRef.current);
         engineRef.current.updateMode(config);
-        engineRef.current.animate(config);
+        engineRef.current.animate();
 
         return () => {
             engineRef.current?.dispose();
@@ -46,6 +46,8 @@ const CelestialCosmos: React.FC = () => {
         setConfig(newConfig);
         if (key === 'mode') {
             engineRef.current?.updateMode(newConfig);
+        } else {
+            engineRef.current?.setParams(newConfig);
         }
     };
 

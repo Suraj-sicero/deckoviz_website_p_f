@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Settings, Camera, CameraOff, RefreshCw, Layers, Sparkles, Activity, Zap, Download } from 'lucide-react';
+import { Settings, Camera, CameraOff, RefreshCw, Layers, Sparkles, Activity, Zap } from 'lucide-react';
 import { PoseTracker } from './PoseTracker';
 import { MotionRenderer, MotionMode } from './MotionRenderer';
 
@@ -62,14 +62,6 @@ const MotionArt: React.FC = () => {
         }
     };
 
-    const handleExport = () => {
-        if (canvasRef.current) {
-            const link = document.createElement('a');
-            link.download = 'motion-art.png';
-            link.href = canvasRef.current.toDataURL();
-            link.click();
-        }
-    };
 
     return (
         <div className="relative w-full h-full bg-black overflow-hidden font-sans select-none">
@@ -174,10 +166,6 @@ const MotionArt: React.FC = () => {
 
                     <div className="w-px h-10 bg-white/10" />
 
-                    <button onClick={handleExport} className="p-4 text-cyan-400 hover:text-white bg-white/10 rounded-full transition-all">
-                        <Download size={20} />
-                    </button>
-                    
                     <button onClick={() => {
                         if (rendererRef.current) {
                             rendererRef.current.trails.clear();
