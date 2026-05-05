@@ -21,6 +21,7 @@ export class CelestialEngine {
     
     private modeGroup: THREE.Group;
     private stars: THREE.Points | null = null;
+    private currentConfig: CosmicConfig;
     
     constructor(container: HTMLElement) {
         this.container = container;
@@ -29,6 +30,7 @@ export class CelestialEngine {
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         this.clock = new THREE.Clock();
         this.modeGroup = new THREE.Group();
+        this.currentConfig = MODE_DEFAULTS.nebula;
         
         this.setupRenderer();
         this.setupPostProcessing();
@@ -42,7 +44,7 @@ export class CelestialEngine {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         this.container.appendChild(this.renderer.domElement);
-        this.camera.position.z = 100;
+        this.camera.position.z = 150;
     }
 
     private setupPostProcessing() {
@@ -60,20 +62,25 @@ export class CelestialEngine {
     private createStarfield() {
         const geometry = new THREE.BufferGeometry();
         const vertices = [];
-        for (let i = 0; i < 10000; i++) {
+        const colors = [];
+        for (let i = 0; i < 15000; i++) {
             vertices.push(
-                THREE.MathUtils.randFloatSpread(2000),
-                THREE.MathUtils.randFloatSpread(2000),
-                THREE.MathUtils.randFloatSpread(2000)
+                THREE.MathUtils.randFloatSpread(2500),
+                THREE.MathUtils.randFloatSpread(2500),
+                THREE.MathUtils.randFloatSpread(2500)
             );
+            const c = new THREE.Color().setHSL(Math.random() * 0.2 + 0.5, 0.5, 0.8);
+            colors.push(c.r, c.g, c.b);
         }
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-        const material = new THREE.PointsMaterial({ color: 0xffffff, size: 0.7, transparent: true, opacity: 0.8 });
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        const material = new THREE.PointsMaterial({ size: 0.8, vertexColors: true, transparent: true, opacity: 0.6 });
         this.stars = new THREE.Points(geometry, material);
         this.scene.add(this.stars);
     }
 
     public updateMode(config: CosmicConfig) {
+        this.currentConfig = config;
         this.clearModeGroup();
         this.bloomPass.strength = config.bloomStrength;
         
@@ -84,6 +91,11 @@ export class CelestialEngine {
             case 'meteors': this.createMeteors(config); break;
             case 'starbirth': this.createStarBirth(config); break;
         }
+    }
+
+    public setParams(config: CosmicConfig) {
+        this.currentConfig = config;
+        this.bloomPass.strength = config.bloomStrength;
     }
 
     private clearModeGroup() {
@@ -99,15 +111,15 @@ export class CelestialEngine {
     }
 
     private createNebula(config: CosmicConfig) {
-        const geometry = new THREE.SphereGeometry(150, 64, 64);
+        const geometry = new THREE.SphereGeometry(200, 64, 64);
         const material = new THREE.ShaderMaterial({
             vertexShader: nebulaVertexShader,
             fragmentShader: nebulaFragmentShader,
             uniforms: {
                 uTime: { value: 0 },
                 uIntensity: { value: config.intensity },
-                uColor1: { value: new THREE.Color(0x7000ff) },
-                uColor2: { value: new THREE.Color(0x00f2ff) }
+                uColor1: { value: new THREE.Color(0x4f46e5) },
+                uColor2: { value: new THREE.Color(0xec4899) }
             },
             transparent: true,
             side: THREE.BackSide,
@@ -118,43 +130,51 @@ export class CelestialEngine {
     }
 
     private createOrbits(config: CosmicConfig) {
-        // Sun
-        const sunGeo = new THREE.SphereGeometry(10, 32, 32);
-        const sunMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const sunGeo = new THREE.SphereGeometry(15, 32, 32);
+        const sunMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
         const sun = new THREE.Mesh(sunGeo, sunMat);
         this.modeGroup.add(sun);
 
-        // Planets
         const planetData = [
-            { dist: 25, size: 2, color: 0xff4400, speed: 1.2 },
-            { dist: 45, size: 4, color: 0x00aaff, speed: 0.8 },
-            { dist: 70, size: 6, color: 0xaa8866, speed: 0.5 },
+            { dist: 40, size: 3, color: 0x6366f1, speed: 0.8, ring: true },
+            { dist: 70, size: 5, color: 0xfb7185, speed: 0.5, ring: false },
+            { dist: 110, size: 8, color: 0x2dd4bf, speed: 0.3, ring: true },
         ];
 
         planetData.forEach(p => {
-            const orbitGroup = new THREE.Group();
+            const system = new THREE.Group();
+            
             const planetGeo = new THREE.SphereGeometry(p.size, 32, 32);
-            const planetMat = new THREE.MeshStandardMaterial({ color: p.color });
+            const planetMat = new THREE.MeshStandardMaterial({ color: p.color, roughness: 0.4, metalness: 0.6 });
             const planet = new THREE.Mesh(planetGeo, planetMat);
             planet.position.x = p.dist;
-            
-            // Orbit trail
-            const trailGeo = new THREE.TorusGeometry(p.dist, 0.2, 16, 100);
-            const trailMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.1 });
+            system.add(planet);
+
+            if (p.ring) {
+                const ringGeo = new THREE.TorusGeometry(p.size * 1.8, 0.1, 2, 64);
+                const ringMat = new THREE.MeshBasicMaterial({ color: p.color, transparent: true, opacity: 0.4 });
+                const ring = new THREE.Mesh(ringGeo, ringMat);
+                ring.rotation.x = Math.PI / 2.5;
+                ring.position.x = p.dist;
+                system.add(ring);
+            }
+
+            const trailGeo = new THREE.TorusGeometry(p.dist, 0.1, 8, 128);
+            const trailMat = new THREE.MeshBasicMaterial({ color: 0x6366f1, transparent: true, opacity: 0.1 });
             const trail = new THREE.Mesh(trailGeo, trailMat);
             trail.rotation.x = Math.PI / 2;
+            this.modeGroup.add(trail);
 
-            orbitGroup.add(planet, trail);
-            (orbitGroup as any).orbitSpeed = p.speed * config.speed;
-            this.modeGroup.add(orbitGroup);
+            (system as any).orbitSpeed = p.speed * config.speed;
+            this.modeGroup.add(system);
         });
 
-        const light = new THREE.PointLight(0xffffff, 2, 500);
+        const light = new THREE.PointLight(0xffffff, 3, 600);
         this.modeGroup.add(light);
     }
 
     private createBlackHole(config: CosmicConfig) {
-        const geometry = new THREE.PlaneGeometry(100, 100);
+        const geometry = new THREE.PlaneGeometry(250, 250);
         const material = new THREE.ShaderMaterial({
             vertexShader: blackHoleVertexShader,
             fragmentShader: blackHoleFragmentShader,
@@ -166,23 +186,29 @@ export class CelestialEngine {
             side: THREE.DoubleSide
         });
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.lookAt(this.camera.position);
+        mesh.rotation.x = -Math.PI / 6;
         this.modeGroup.add(mesh);
     }
 
     private createMeteors(config: CosmicConfig) {
         const group = new THREE.Group();
-        for (let i = 0; i < 50; i++) {
-            const geometry = new THREE.ConeGeometry(0.5, 5, 8);
-            const material = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.8 });
+        for (let i = 0; i < 80; i++) {
+            const geometry = new THREE.CylinderGeometry(0.1, 0.8, 15, 8);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x6366f1, 
+                transparent: true, 
+                opacity: 0.6,
+                blending: THREE.AdditiveBlending 
+            });
             const meteor = new THREE.Mesh(geometry, material);
             meteor.position.set(
-                THREE.MathUtils.randFloatSpread(500),
-                THREE.MathUtils.randFloatSpread(500),
-                THREE.MathUtils.randFloatSpread(500)
+                THREE.MathUtils.randFloatSpread(800),
+                THREE.MathUtils.randFloatSpread(800),
+                THREE.MathUtils.randFloatSpread(800)
             );
-            meteor.lookAt(0, 0, 0);
-            (meteor as any).velocity = new THREE.Vector3(0, 0, 0).randomDirection().multiplyScalar(config.speed * 2);
+            (meteor as any).velocity = new THREE.Vector3().randomDirection().multiplyScalar(config.speed * 4);
+            meteor.lookAt(meteor.position.clone().add((meteor as any).velocity));
+            meteor.rotateX(Math.PI / 2);
             group.add(meteor);
         }
         this.modeGroup.add(group);
@@ -191,54 +217,66 @@ export class CelestialEngine {
     private createStarBirth(config: CosmicConfig) {
         const geometry = new THREE.BufferGeometry();
         const vertices = [];
-        for (let i = 0; i < 5000; i++) {
+        const sizes = [];
+        for (let i = 0; i < 8000; i++) {
             vertices.push(
-                THREE.MathUtils.randFloatSpread(300),
-                THREE.MathUtils.randFloatSpread(300),
-                THREE.MathUtils.randFloatSpread(300)
+                THREE.MathUtils.randFloatSpread(400),
+                THREE.MathUtils.randFloatSpread(400),
+                THREE.MathUtils.randFloatSpread(400)
             );
+            sizes.push(Math.random());
         }
         geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
-        const material = new THREE.PointsMaterial({ color: 0xffaa00, size: 1, transparent: true, blending: THREE.AdditiveBlending });
+        geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
+        
+        const material = new THREE.PointsMaterial({ 
+            color: 0x6366f1, 
+            size: 1.5, 
+            transparent: true, 
+            blending: THREE.AdditiveBlending,
+            opacity: 0.8
+        });
         const particles = new THREE.Points(geometry, material);
         this.modeGroup.add(particles);
+
+        const coreGeo = new THREE.SphereGeometry(2, 32, 32);
+        const coreMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const core = new THREE.Mesh(coreGeo, coreMat);
+        this.modeGroup.add(core);
     }
 
-    public animate(config: CosmicConfig) {
-        const delta = this.clock.getDelta();
+    public animate() {
+        const delta = Math.min(this.clock.getDelta(), 0.1);
         const time = this.clock.getElapsedTime();
+        const config = this.currentConfig;
 
         if (config.driftEnabled) {
-            this.camera.position.x += Math.sin(time * 0.2) * 0.1;
-            this.camera.position.y += Math.cos(time * 0.2) * 0.1;
+            this.camera.position.x += Math.sin(time * 0.1) * 0.05;
+            this.camera.position.y += Math.cos(time * 0.1) * 0.05;
             this.camera.lookAt(0, 0, 0);
         }
 
         this.modeGroup.children.forEach(child => {
-            // Nebula shader update
             if (child instanceof THREE.Mesh && child.material instanceof THREE.ShaderMaterial) {
                 child.material.uniforms.uTime.value = time * config.speed;
             }
             
-            // Orbits update
             if ((child as any).orbitSpeed) {
                 child.rotation.y += (child as any).orbitSpeed * delta * config.speed;
             }
 
-            // Meteors update
             if ((child as any).velocity) {
-                child.position.add((child as any).velocity.clone().multiplyScalar(delta));
-                if (child.position.length() > 500) child.position.setLength(0);
+                child.position.add((child as any).velocity.clone().multiplyScalar(delta * config.speed));
+                if (child.position.length() > 600) child.position.setLength(0);
             }
             
-            // Star Birth contraction
             if (child instanceof THREE.Points && config.mode === 'starbirth') {
                 const pos = child.geometry.attributes.position.array as Float32Array;
                 for (let i = 0; i < pos.length; i += 3) {
                     const v = new THREE.Vector3(pos[i], pos[i+1], pos[i+2]);
                     const dist = v.length();
-                    v.multiplyScalar(0.99); // Contract
-                    if (dist < 5) v.setLength(300); // Reset after collapse
+                    v.multiplyScalar(0.995); 
+                    if (dist < 2) v.setLength(THREE.MathUtils.randFloat(300, 400)); 
                     pos[i] = v.x; pos[i+1] = v.y; pos[i+2] = v.z;
                 }
                 child.geometry.attributes.position.needsUpdate = true;
@@ -246,11 +284,11 @@ export class CelestialEngine {
         });
 
         if (this.stars) {
-            this.stars.rotation.y += 0.0002;
+            this.stars.rotation.y += 0.0001;
         }
 
         this.composer.render();
-        requestAnimationFrame(() => this.animate(config));
+        requestAnimationFrame(() => this.animate());
     }
 
     private onResize() {

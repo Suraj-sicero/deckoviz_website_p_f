@@ -2332,3 +2332,7 @@
 [2026-05-03T16:25:20.470Z] LOG: ✅ Redis Connected
 [2026-05-03T16:25:20.471Z] LOG: Dekoviz
 [2026-05-03T16:25:20.479Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-05T14:08:17.241Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-05T14:08:17.246Z] LOG: ✅ Redis Connected
+[2026-05-05T14:08:17.246Z] LOG: Dekoviz
+[2026-05-05T14:08:17.255Z] LOG: ✅ PostgreSQL connected via Sequelize.
