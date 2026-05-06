@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import ToolLayout from "./ToolLayout";
 import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "http://localhost:5000"}`);
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
 const HF_AUDIOBOOK_URL = "https://sudharsan051006-visual-audiobook-api.hf.space";
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";

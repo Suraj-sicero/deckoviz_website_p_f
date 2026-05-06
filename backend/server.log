@@ -2371,3 +2371,9 @@
 [2026-05-06T07:46:00.378Z] ERROR: [Marble] Error: Request failed with status code 402
 [2026-05-06T07:46:35.589Z] LOG: [Marble] Starting world generation — prompt: "An island surrounded by turquoise water with a few cottages" | image: no
 [2026-05-06T07:46:39.995Z] ERROR: [Marble] Error: Request failed with status code 402
+[2026-05-06T12:47:18.072Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-06T12:47:18.075Z] LOG: ✅ Redis Connected
+[2026-05-06T12:47:18.076Z] LOG: Dekoviz
+[2026-05-06T12:47:26.627Z] ERROR: Profile fetch error: JsonWebTokenError: invalid signature
+[2026-05-06T12:47:26.680Z] ERROR: Profile fetch error: JsonWebTokenError: invalid signature
+[2026-05-06T12:47:37.172Z] LOG: ✅ PostgreSQL connected via Sequelize.
