@@ -103,7 +103,7 @@ const BlogDetail = () => {
     })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-purple-50 to-blue-50 text-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-gray-900">
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16 flex flex-col lg:flex-row gap-8">
 
@@ -112,7 +112,7 @@ const BlogDetail = () => {
 
           <Link
             to="/blog"
-            className="flex items-center gap-2 bg-white border border-purple-200 text-purple-700 px-4 py-2 rounded-full text-xs font-medium hover:bg-purple-50 transition"
+            className="flex items-center gap-2 bg-white border border-violet-200 text-violet-700 px-4 py-2 rounded-full text-xs font-medium hover:bg-violet-50 transition"
             style={{ width: "140px" }}
           >
             <ChevronLeft size={24} />
@@ -125,12 +125,12 @@ const BlogDetail = () => {
         <div className="flex-1 min-w-0">
 
           {/* Title */}
-          <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight bg-gradient-to-r from-pink-500 via-purple-600 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight bg-gradient-to-r from-pink-500 via-violet-600 to-blue-500 bg-clip-text text-transparent">
             {post.title}
           </h1>
 
           {/* Meta */}
-          <div className="flex items-center gap-3 mb-8 text-sm text-purple-500">
+          <div className="flex items-center gap-3 mb-8 text-sm text-violet-500">
             <span>{post.date}</span>
             <span>•</span>
             <span>{post.readTime}</span>
@@ -150,7 +150,7 @@ const BlogDetail = () => {
   rounded-[32px]
   backdrop-blur-xl
   bg-white/60
-  border border-purple-200/60
+  border border-violet-200/60
   shadow-[0_20px_60px_rgba(168,85,247,0.25)]
   px-8 py-10 md:px-12
 "
@@ -166,7 +166,7 @@ const BlogDetail = () => {
     prose-p:text-gray-700
     prose-li:text-gray-700
     prose-strong:text-gray-900
-    prose-a:text-purple-500
+    prose-a:text-violet-500
     prose-a:no-underline
     prose-a:font-medium
     prose-a:hover:text-pink-500
@@ -187,13 +187,13 @@ const BlogDetail = () => {
               <Link
                 to={`/blog/${article.slug}`}
                 key={article.slug}
-                className="bg-white rounded-2xl overflow-hidden border border-purple-200 p-4 hover:border-pink-300 hover:shadow-lg transition"
+                className="bg-white rounded-2xl overflow-hidden border border-violet-200 p-4 hover:border-pink-300 hover:shadow-lg transition"
               >
                 <span className="text-sm font-bold block mb-2">
                   {article.title}
                 </span>
 
-                <span className="text-[10px] text-purple-400">
+                <span className="text-[10px] text-violet-400">
                   {article.date}
                 </span>
               </Link>
@@ -206,13 +206,13 @@ const BlogDetail = () => {
         {headings.length > 0 && (
           <aside className="hidden xl:block w-[260px] sticky top-24 self-start">
 
-            <div className="bg-white border border-purple-200 rounded-2xl p-6 shadow-sm">
+            <div className="bg-white border border-violet-200 rounded-2xl p-6 shadow-sm">
 
-              <p className="text-sm font-semibold text-purple-700 mb-4">
+              <p className="text-sm font-semibold text-violet-700 mb-4">
                 Table of Contents
               </p>
 
-              <ul className="space-y-3 text-sm text-purple-500">
+              <ul className="space-y-3 text-sm text-violet-500">
 
                 {headings.map((h) => (
                   <li

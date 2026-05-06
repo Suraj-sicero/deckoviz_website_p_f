@@ -3,7 +3,7 @@ import React from 'react';
 import { DreamData, Emotion } from './dreamEngine';
 
 const EMOTION_PALETTES: Record<Emotion, string> = {
-  fear: '#4a3b4f', // Deep purple
+  fear: '#4a3b4f', // Deep violet
   joy: '#f7e1a0',  // Muted gold
   sadness: '#5e7b8c', // Desaturated blue
   anger: '#8c4b4b', // Muted red

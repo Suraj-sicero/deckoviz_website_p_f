@@ -28,7 +28,7 @@ const FeatureBlock = ({ title, content, delay = 0 }: { title: string, content: s
     transition={{ duration: 0.7, delay }}
     className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-500"
   >
-    <h3 className="text-2xl font-semibold text-white mb-4 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+    <h3 className="text-2xl font-semibold text-white mb-4 bg-gradient-to-r from-indigo-400 to-indigo-400 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
       {title}
     </h3>
     <p className="text-gray-300 leading-relaxed text-lg">
@@ -84,7 +84,7 @@ export const HotelExperienceJourney: React.FC = () => {
       {/* Intro Section */}
       <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 px-6 overflow-hidden">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
@@ -95,7 +95,7 @@ export const HotelExperienceJourney: React.FC = () => {
           >
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[1.1]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               The Future of Hospitality: <br />
-              <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
                 Beyond the Stay
               </span>
             </h1>
@@ -434,7 +434,7 @@ export const HotelExperienceJourney: React.FC = () => {
           
           <div className="mt-32 pt-16 border-t border-white/10">
             <div className="text-center mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 The Full Deckoviz Hospitality Experience
               </h3>
               <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
@@ -444,7 +444,7 @@ export const HotelExperienceJourney: React.FC = () => {
 
             <div className="max-w-4xl mx-auto relative py-8">
               {/* Vertical line connecting steps */}
-              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-indigo-500/50 via-purple-500/50 to-pink-500/0 md:-translate-x-1/2" />
+              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-indigo-500/50 via-violet-500/50 to-pink-500/0 md:-translate-x-1/2" />
 
               {[
                 { icon: "✨", text: "A guest arrives and feels welcomed personally." },
@@ -487,11 +487,11 @@ export const HotelExperienceJourney: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-center mt-20 relative px-4"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-pink-500/10 blur-[100px] rounded-full pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-violet-500/10 to-pink-500/10 blur-[100px] rounded-full pointer-events-none" />
               <div className="relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 p-10 md:p-16 rounded-3xl max-w-4xl mx-auto shadow-2xl">
                 <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                   That is no longer just hospitality. <br className="hidden md:block" />
-                  <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent inline-block mt-2">That becomes an experience.</span>
+                  <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent inline-block mt-2">That becomes an experience.</span>
                 </h4>
                 <p className="text-xl md:text-3xl text-gray-400 font-light mt-8">
                   And experiences are what guests return for.

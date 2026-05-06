@@ -5,7 +5,7 @@ import { Settings, RefreshCw, Download, Zap, Eye, EyeOff, MousePointer2, ZoomIn,
 const PRESETS = {
     Galaxy: {
         color1: [0.2, 0.4, 1.0], // Deep Blue
-        color2: [0.8, 0.3, 1.0], // Purple
+        color2: [0.8, 0.3, 1.0], // Violet
         force: 0.15,
         damping: 0.97
     },
@@ -180,7 +180,7 @@ const ParticleGalaxy: React.FC = () => {
 
                         <button 
                             onClick={handleExport}
-                            className="p-2.5 text-purple-400 hover:text-purple-300 hover:bg-white/5 rounded-xl transition-colors"
+                            className="p-2.5 text-violet-400 hover:text-violet-300 hover:bg-white/5 rounded-xl transition-colors"
                             title="Export Frame"
                         >
                             <Download className="w-5 h-5" />

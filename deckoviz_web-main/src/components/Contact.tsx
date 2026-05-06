@@ -220,9 +220,9 @@ export default function Contact() {
                     <input
                       type="text"
                       placeholder="John"
-                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors duration-300 text-lg"
+                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors duration-300 text-lg"
                     />
-                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
+                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
                   </div>
                 </div>
                 <div className="group">
@@ -233,9 +233,9 @@ export default function Contact() {
                     <input
                       type="text"
                       placeholder="Smith"
-                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors duration-300 text-lg"
+                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors duration-300 text-lg"
                     />
-                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
+                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
                   </div>
                 </div>
               </div>
@@ -249,14 +249,14 @@ export default function Contact() {
                   <input
                     type="email"
                     placeholder="business@mail.com"
-                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors duration-300 text-lg"
+                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors duration-300 text-lg"
                   />
                   <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
+                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
                 </div>
               </div>
 
@@ -269,14 +269,14 @@ export default function Contact() {
                   <input
                     type="tel"
                     placeholder="+1 234 567 89 00"
-                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors duration-300 text-lg"
+                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors duration-300 text-lg"
                   />
                   <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
+                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
                 </div>
               </div>
 
@@ -289,14 +289,14 @@ export default function Contact() {
                   <input
                     type="text"
                     placeholder="Online Shopping Business"
-                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500 transition-colors duration-300 text-lg"
+                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors duration-300 text-lg"
                   />
                   <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                     </svg>
                   </div>
-                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
+                  <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
                 </div>
               </div>
 
@@ -309,7 +309,7 @@ export default function Contact() {
                   <textarea
                     rows={4}
                     placeholder="Leave us a message..."
-                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-purple-500  transition-colors duration-300 resize-none text-lg"
+                    className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 pr-10 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500  transition-colors duration-300 resize-none text-lg"
                   ></textarea>
                   <div className="absolute right-0 top-4">
                     <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,17 +319,17 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Privacy Policy Checkbox - FIXED: Purple rounded checkbox */}
+              {/* Privacy Policy Checkbox - FIXED: Violet rounded checkbox */}
               <div className="flex items-start space-x-3 pt-4">
                 <div className="relative mt-0.5">
                   <input
                     type="checkbox"
                     id="privacy-policy"
-                    className="w-5 h-5 text-purple-600 bg-white border-gray-300 rounded-md focus:ring-purple-100 focus:ring-2 checked:bg-purple-600 checked:border-purple-600"
+                    className="w-5 h-5 text-violet-600 bg-white border-gray-300 rounded-md focus:ring-violet-100 focus:ring-2 checked:bg-violet-600 checked:border-violet-600"
                   />
                 </div>
                 <label htmlFor="privacy-policy" className="text-sm text-gray-600 cursor-pointer">
-                  I Agree to the <span className="text-purple-600 hover:text-purple-700 transition-colors duration-200">Privacy Policy</span>
+                  I Agree to the <span className="text-violet-600 hover:text-violet-700 transition-colors duration-200">Privacy Policy</span>
                 </label>
               </div>
 

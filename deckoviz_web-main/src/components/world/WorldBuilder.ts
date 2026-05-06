@@ -147,7 +147,7 @@ function buildSky(scene: THREE.Scene, s: WorldSchema) {
     }
   }
 
-  if (s.sky.mood==='night_stars'||s.sky.mood==='twilight_purple') {
+  if (s.sky.mood==='night_stars'||s.sky.mood==='twilight_violet') {
     const sg=new THREE.BufferGeometry();
     const sp=new Float32Array(4000*3);
     for (let i=0; i<sp.length; i++) sp[i]=(Math.random()-0.5)*1800;

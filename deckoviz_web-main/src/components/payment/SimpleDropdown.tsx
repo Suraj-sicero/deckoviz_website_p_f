@@ -21,7 +21,7 @@ export const SimpleDropdown: React.FC<SimpleDropdownProps> = ({
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-3 py-2 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300/50 focus:border-purple-300 transition-all duration-300 text-left flex items-center justify-between hover:bg-white/90 hover:shadow-md text-sm"
+        className="w-full px-3 py-2 bg-white/80 backdrop-blur-sm border border-gray-200/60 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-300/50 focus:border-violet-300 transition-all duration-300 text-left flex items-center justify-between hover:bg-white/90 hover:shadow-md text-sm"
       >
         <span className={value ? "text-gray-900" : "text-gray-500"}>
           {value || placeholder}
@@ -46,11 +46,11 @@ export const SimpleDropdown: React.FC<SimpleDropdownProps> = ({
                   onChange(option);
                   setIsOpen(false);
                 }}
-                className="flex items-center justify-between px-3 py-2 hover:bg-purple-50/80 cursor-pointer transition-colors duration-200 border-b border-gray-100/50 last:border-b-0 text-sm"
+                className="flex items-center justify-between px-3 py-2 hover:bg-violet-50/80 cursor-pointer transition-colors duration-200 border-b border-gray-100/50 last:border-b-0 text-sm"
               >
                 <span className="text-gray-900">{option}</span>
                 {value === option && (
-                  <Check className="w-4 h-4 text-purple-600" />
+                  <Check className="w-4 h-4 text-violet-600" />
                 )}
               </div>
             ))}

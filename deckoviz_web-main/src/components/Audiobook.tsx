@@ -106,7 +106,7 @@ const Audiobook: React.FC = () => {
       <div className="max-w-5xl mx-auto bg-white/30 backdrop-blur-xl border border-white/40 rounded-3xl shadow-[0_60px_140px_rgba(0,0,0,0.15)] p-8 sm:p-12 md:p-16 space-y-20">
 
         {/* Page Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-purple-700 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-violet-700 via-pink-600 to-blue-600 bg-clip-text text-transparent">
           Audiobook Creator: Turn Any Book Into a Voice You’ll Want to Listen To
         </h1>
 
@@ -143,8 +143,8 @@ const Audiobook: React.FC = () => {
     }
   }}
   className="w-full rounded-xl p-3 sm:p-3.5 text-sm
-  bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100 
-  border border-purple-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+  bg-gradient-to-r from-violet-100 via-pink-100 to-blue-100 
+  border border-violet-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
 />
 
             <p className="text-xs sm:text-sm text-gray-600">
@@ -208,8 +208,8 @@ const Audiobook: React.FC = () => {
     value={frames}
     onChange={(e) => setFrames(Number(e.target.value))}
     className="w-full rounded-xl p-3 text-sm
-    bg-gradient-to-r from-purple-100 via-pink-100 to-blue-100
-    border border-purple-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    bg-gradient-to-r from-violet-100 via-pink-100 to-blue-100
+    border border-violet-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
   />
 
   <p className="text-xs text-gray-600">
@@ -223,7 +223,7 @@ const Audiobook: React.FC = () => {
   onClick={generateAudiobook}
   disabled={loading}
   className="w-full py-3 rounded-xl font-semibold text-white text-sm sm:text-base
-  bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
+  bg-gradient-to-r from-violet-600 via-pink-500 to-blue-500
   active:scale-[0.98] sm:hover:scale-105
   hover:shadow-[0_10px_30px_rgba(168,85,247,0.35)]
   transition"
@@ -365,7 +365,7 @@ const Audiobook: React.FC = () => {
             {/* <button
               onClick={generateAudiobook}
               className="px-6 py-3 rounded-xl text-white font-semibold
-              bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
+              bg-gradient-to-r from-violet-600 via-pink-500 to-blue-500
               hover:scale-105 transition"
               disabled
             >
@@ -388,7 +388,7 @@ const Audiobook: React.FC = () => {
                   href={audioUrl}
                   download
                   className="inline-block px-5 py-2 rounded-lg text-white
-                  bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500
+                  bg-gradient-to-r from-violet-600 via-pink-500 to-blue-500
                   hover:opacity-90 transition"
                 >
                   Download MP3

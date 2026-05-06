@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import ToolLayout from "./ToolLayout";
 import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "http://localhost:5000"}`);
 
 type Status = "idle" | "uploading" | "loading" | "done" | "error";
 
@@ -102,7 +102,7 @@ const VisualBookTool: React.FC = () => {
       icon="📸"
       title="Visual Book Creator"
       subtitle="Upload your photos — Gemini creates captions and weaves them into a visual story"
-      gradient="from-violet-600 via-purple-700 to-fuchsia-800"
+      gradient="from-violet-600 via-violet-700 to-fuchsia-800"
     >
       <div className="space-y-8">
 
@@ -240,7 +240,7 @@ const VisualBookTool: React.FC = () => {
             {/* Page viewer */}
             <div className="bg-white/80 backdrop-blur-sm border border-white/60 rounded-3xl overflow-hidden shadow-2xl">
               {/* Photo */}
-              <div className="w-full h-80 bg-gradient-to-br from-violet-100 to-purple-100 flex items-center justify-center overflow-hidden">
+              <div className="w-full h-80 bg-gradient-to-br from-violet-100 to-indigo-100 flex items-center justify-center overflow-hidden">
                 {result.pages[currentPage]?.imageUrl ? (
                   <img
                     src={result.pages[currentPage].imageUrl}

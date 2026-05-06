@@ -273,7 +273,7 @@ export default function Leaderboard() {
   const getArtworkSoldColor = (value: number): string => {
     if (value >= 70) return "text-red-500"
     if (value >= 60) return "text-orange-500"
-    if (value >= 50) return "text-purple-500"
+    if (value >= 50) return "text-violet-500"
     if (value >= 40) return "text-violet-500"
     if (value >= 30) return "text-blue-500"
     if (value >= 20) return "text-indigo-500"
@@ -732,7 +732,7 @@ export default function Leaderboard() {
        
        {/* Most Expensive Painting */}
        <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
-         <div className="absolute inset-0 bg-gradient-to-br from-red-50/50 via-pink-50/30 to-purple-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+         <div className="absolute inset-0 bg-gradient-to-br from-red-50/50 via-pink-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
            <svg width="65" height="65" viewBox="0 0 100 100" className="transform -rotate-12 group-hover:rotate-6 group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-500 drop-shadow-xl">
@@ -805,7 +805,7 @@ export default function Leaderboard() {
 
        {/* Most Artworks Collected */}
        <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
-         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-purple-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+         <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
            <svg width="65" height="65" viewBox="0 0 100 100" className="transform -rotate-12 group-hover:rotate-6 group-hover:scale-125 group-hover:-translate-y-2 transition-all duration-500 drop-shadow-xl">
@@ -970,7 +970,7 @@ export default function Leaderboard() {
 
        {/* Most Shared via Social */}
        <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
-         <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-violet-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+         <div className="absolute inset-0 bg-gradient-to-br from-violet-50/50 via-violet-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
            <img 
@@ -981,7 +981,7 @@ export default function Leaderboard() {
          </div>
          
          <div className="flex flex-col items-center text-center relative z-10 pt-6">
-           <h3 className="text-lg font-bold text-gray-900 mb-4 leading-tight group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-violet-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-500">
+           <h3 className="text-lg font-bold text-gray-900 mb-4 leading-tight group-hover:bg-gradient-to-r group-hover:from-violet-600 group-hover:to-violet-500 group-hover:bg-clip-text group-hover:text-transparent transition-all duration-500">
              Most shared via<br />social
            </h3>
            <div className="mt-4">
@@ -992,7 +992,7 @@ export default function Leaderboard() {
            </div>
          </div>
          
-         <div className="absolute top-4 right-4 w-2 h-2 bg-purple-300 rounded-full opacity-0 group-hover:opacity-60 group-hover:animate-pulse transition-all duration-700 z-30"></div>
+         <div className="absolute top-4 right-4 w-2 h-2 bg-violet-300 rounded-full opacity-0 group-hover:opacity-60 group-hover:animate-pulse transition-all duration-700 z-30"></div>
        </div>
      </div>
    </div>
@@ -1147,19 +1147,19 @@ export default function Leaderboard() {
      </div>
 
      {/* Sharing Card */}
-     <div className="group relative bg-white rounded-3xl p-8 border border-gray-200 cursor-pointer hover:shadow-lg hover:border-purple-300 transition-all duration-300">
-       <div className="absolute inset-0 bg-gradient-to-br from-purple-50/0 to-violet-50/0 group-hover:from-purple-50/60 group-hover:to-violet-50/40 rounded-3xl transition-all duration-300"></div>
+     <div className="group relative bg-white rounded-3xl p-8 border border-gray-200 cursor-pointer hover:shadow-lg hover:border-violet-300 transition-all duration-300">
+       <div className="absolute inset-0 bg-gradient-to-br from-violet-50/0 to-violet-50/0 group-hover:from-violet-50/60 group-hover:to-violet-50/40 rounded-3xl transition-all duration-300"></div>
        
        <div className="relative z-10 text-center">
          <div className="mx-auto mb-6">
-           <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-100 to-violet-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-purple-700">
+           <div className="w-20 h-20 mx-auto bg-gradient-to-br from-violet-100 to-violet-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-violet-700">
                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.50-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" fill="currentColor"/>
              </svg>
            </div>
          </div>
          
-         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-purple-700 transition-colors duration-300">
+         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-violet-700 transition-colors duration-300">
            Sharing your space, your story,<br />and your beauty
          </h4>
        </div>

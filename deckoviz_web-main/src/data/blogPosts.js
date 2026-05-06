@@ -5,7 +5,7 @@ export const blogPosts = [
     id: 1,
     slug: "introducing-new-ai-powered-art-analysis",
     tag: "Announcements",
-    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
+    tagColor: "bg-gradient-to-r from-violet-100 to-pink-100 text-violet-700",
     title: "Introducing New AI-Powered Art Analysis",
     description:
       "This release marks the end of traditional art analysis. Our AI workflows and nodes let anyone analyze artworks with AI writing all the insights for you.",
@@ -18,7 +18,7 @@ export const blogPosts = [
     readTime: "5 min read",
     date: "March 16, 2025",
     image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-purple-400 via-pink-400 to-orange-400",
+    gradient: "from-violet-400 via-pink-400 to-orange-400",
     size: "large",
   },
   {
@@ -33,7 +33,7 @@ export const blogPosts = [
     readTime: "8 min read",
     date: "March 15, 2025",
     image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-blue-400 via-purple-400 to-pink-400",
+    gradient: "from-blue-400 via-violet-400 to-pink-400",
     size: "medium",
   },
   {
@@ -48,7 +48,7 @@ export const blogPosts = [
     readTime: "6 min read",
     date: "March 14, 2025",
     image: "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-green-400 via-blue-400 to-purple-400",
+    gradient: "from-green-400 via-blue-400 to-indigo-400",
     size: "medium",
   },
   {
@@ -78,14 +78,14 @@ export const blogPosts = [
     readTime: "7 min read",
     date: "March 12, 2025",
     image: "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-cyan-400 via-blue-400 to-purple-400",
+    gradient: "from-cyan-400 via-blue-400 to-indigo-400",
     size: "small",
   },
   {
     id: 6,
     slug: "new-partnership-with-getty-images",
     tag: "Announcements",
-    tagColor: "bg-gradient-to-r from-purple-100 to-pink-100 text-purple-700",
+    tagColor: "bg-gradient-to-r from-violet-100 to-pink-100 text-violet-700",
     title: "New Partnership with Getty Images",
     description:
       "Creative inspiration that grows every day through our expanded image library and AI-powered recommendations.",
@@ -93,7 +93,7 @@ export const blogPosts = [
     readTime: "3 min read",
     date: "March 11, 2025",
     image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=1000&auto=format&fit=crop",
-    gradient: "from-pink-400 via-purple-400 to-orange-400",
+    gradient: "from-pink-400 via-violet-400 to-orange-400",
     size: "medium",
   },
   {

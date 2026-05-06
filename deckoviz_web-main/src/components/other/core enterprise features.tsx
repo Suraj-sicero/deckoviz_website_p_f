@@ -6,11 +6,11 @@ export default function EnterpriseFeatures({ enterpriseFeatures }: any) {
 
   // Define different gradient colors for each feature
   const gradients = [
-    "from-purple-600 to-pink-600",      // Feature 1
+    "from-violet-600 to-pink-600",      // Feature 1
     "from-blue-600 to-cyan-600",        // Feature 2
     "from-emerald-600 to-teal-600",     // Feature 3
     "from-orange-600 to-red-600",       // Feature 4
-    "from-indigo-600 to-purple-600",    // Feature 5
+    "from-indigo-600 to-indigo-600",    // Feature 5
     "from-rose-600 to-pink-600",        // Feature 6
   ];
 

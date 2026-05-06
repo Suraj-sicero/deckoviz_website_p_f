@@ -3,7 +3,7 @@ id: 21
 title: "Vision & Philosophy: The Soul of Deckoviz"
 description: "The deeper philosophy behind Deckoviz   where spaces become living, emotional extensions of the people within them."
 tag: "Innovations"
-tagColor: "bg-purple-100 text-purple-700"
+tagColor: "bg-violet-100 text-violet-700"
 date: "March 18, 2025"
 readTime: "5 min read"
 pinned: false

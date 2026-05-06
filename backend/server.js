@@ -84,8 +84,8 @@ const stripe = new Stripe(
 );
 
 // ===== Middlewares =====
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true, limit: "200mb" }));
+app.use(bodyParser.json({ limit: "200mb" }));
 app.use(methodOverride("_method"));
 app.use(expressLayouts);
 

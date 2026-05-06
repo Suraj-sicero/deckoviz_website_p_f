@@ -48,10 +48,10 @@ const ThreeBackground: React.FC = () => {
     const posArray = new Float32Array(particlesCount * 3)
     const colorArray = new Float32Array(particlesCount * 3)
 
-    // Purple to cyan gradient colors
+    // Violet to cyan gradient colors
     const colors = [
-      new THREE.Color(0x8B5CF6), // Purple
-      new THREE.Color(0xA78BFA), // Light purple
+      new THREE.Color(0x8B5CF6), // Violet
+      new THREE.Color(0xA78BFA), // Light violet
       new THREE.Color(0x06B6D4), // Cyan
       new THREE.Color(0x14B8A6), // Teal
       new THREE.Color(0x6366F1), // Indigo
@@ -346,7 +346,7 @@ const Hero: React.FC = () => {
         100% { background-position: 300px 0px, -300px 0px; }
       }
 
-      .liquid-gradient-purple {
+      .liquid-gradient-violet {
         background: 
           url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%238B5CF6' d='M0,140 Q100,80 200,140 T400,140 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
           url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%23C084FC' opacity='0.6' d='M0,100 Q100,40 200,100 T400,100 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
@@ -398,7 +398,7 @@ const Hero: React.FC = () => {
         <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
           <div className="inline">
             <span className="text-black">Make Your Space Come </span>
-            <span className="italic liquid-gradient-purple">
+            <span className="italic liquid-gradient-violet">
               Alive
             </span>
             <span className="text-black">,</span>
@@ -415,13 +415,13 @@ const Hero: React.FC = () => {
         {/* Subheading */}
         <p className="text-center text-gray-600 text-xl mb-10 max-w-3xl leading-relaxed">
           Deckoviz DAS Portal is an{" "}
-          <span className="text-purple-600 font-semibold">AI-powered art frame</span>{" "}
+          <span className="text-violet-600 font-semibold">AI-powered art frame</span>{" "}
           that learns your taste and evolves with you, to paint your{" "}
           <span className="text-indigo-600 font-semibold">
             inner world, memories, and imagination
           </span>{" "}
           on your walls as your evolving{" "}
-          <span className="inline-block font-semibold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent">
+          <span className="inline-block font-semibold bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent">
             {rotatingTexts[rotatingIndex]}
           </span>.
         </p>
@@ -475,7 +475,7 @@ const Hero: React.FC = () => {
                 className="group relative px-5 py-2.5 rounded-3xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105"
               >
                 {/* Animated gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 bg-[length:200%_100%]" style={{ animation: 'gradient-flow 3s ease infinite' }} />
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-violet-600 to-indigo-600 bg-[length:200%_100%]" style={{ animation: 'gradient-flow 3s ease infinite' }} />
                 
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
@@ -483,7 +483,7 @@ const Hero: React.FC = () => {
                 </div>
                 
                 {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-3xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-3xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
                 
                 {/* Floating particles */}
                 <div className="absolute inset-0 overflow-hidden rounded-3xl">
@@ -501,21 +501,21 @@ const Hero: React.FC = () => {
                 className="group relative px-5 py-2.5 rounded-3xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105"
               >
                 {/* Glassmorphism background */}
-                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border-2 border-purple-200 rounded-3xl transition-all duration-300 group-hover:border-purple-400 group-hover:bg-white/90" />
+                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border-2 border-violet-200 rounded-3xl transition-all duration-300 group-hover:border-violet-400 group-hover:bg-white/90" />
                 
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-50 via-violet-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                <div className="absolute inset-0 bg-gradient-to-r from-violet-50 via-violet-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                 
                 {/* Ripple effect */}
                 <div className="absolute inset-0 rounded-3xl overflow-hidden">
-                  <div className="absolute w-0 h-0 rounded-full bg-purple-400/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:w-full group-hover:h-full group-hover:scale-150 transition-all duration-700" />
+                  <div className="absolute w-0 h-0 rounded-full bg-violet-400/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:w-full group-hover:h-full group-hover:scale-150 transition-all duration-700" />
                 </div>
                 
                 {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-400 to-indigo-400 rounded-3xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+                <div className="absolute -inset-1 bg-gradient-to-r from-violet-400 to-indigo-400 rounded-3xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
                 
                 {/* Button text with arrow */}
-                <span className="relative z-10 flex items-center gap-2 text-gray-800 group-hover:text-purple-700 transition-colors duration-300">
+                <span className="relative z-10 flex items-center gap-2 text-gray-800 group-hover:text-violet-700 transition-colors duration-300">
                   Learn More
                   <ArrowRight
                     size={20}
@@ -554,11 +554,11 @@ const Hero: React.FC = () => {
             <div className="relative group w-full max-w-2xl">
               {/* Floating decorative elements */}
               <div className="absolute -left-8 top-1/4 w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-60 blur-sm animate-float-slow" />
-              <div className="absolute -right-6 bottom-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-purple-500 opacity-50 blur-sm animate-float-slower" />
+              <div className="absolute -right-6 bottom-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-indigo-500 opacity-50 blur-sm animate-float-slower" />
               <div className="absolute -bottom-4 left-1/3 w-10 h-10 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 opacity-60 blur-sm animate-float-medium" />
               
               {/* Glow effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-violet-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
               
               {/* Main card */}
               <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl px-6 py-6 border border-white/50 w-full overflow-hidden">
@@ -599,19 +599,19 @@ const Hero: React.FC = () => {
                 </div>
 
                 {/* Divider with gradient */}
-                <div className="relative h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent mb-6" />
+                <div className="relative h-px bg-gradient-to-r from-transparent via-violet-300 to-transparent mb-6" />
 
                 {/* Infinity stat */}
                 <div className="text-center relative">
-                  <div className="absolute -inset-4 bg-gradient-to-br from-purple-400/20 to-indigo-500/20 rounded-2xl blur-xl" />
+                  <div className="absolute -inset-4 bg-gradient-to-br from-violet-400/20 to-indigo-500/20 rounded-2xl blur-xl" />
                   <div className="relative flex flex-col items-center">
                     {/* Animated infinity symbol */}
                     <div className="inline-block relative mb-2">
-                      <div className="text-5xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
+                      <div className="text-5xl font-bold bg-gradient-to-r from-violet-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
                         ∞
                       </div>
                       {/* Orbiting dots */}
-                      <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-purple-500 rounded-full animate-orbit" />
+                      <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-violet-500 rounded-full animate-orbit" />
                       <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-indigo-500 rounded-full animate-orbit-reverse" />
                     </div>
                     <div className="text-gray-600 font-medium text-sm">Ways of Exploring</div>
@@ -620,7 +620,7 @@ const Hero: React.FC = () => {
 
                 {/* Decorative dots */}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                  <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
                   <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
                   <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
                 </div>

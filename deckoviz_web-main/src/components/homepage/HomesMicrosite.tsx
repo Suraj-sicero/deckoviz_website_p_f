@@ -31,10 +31,10 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] overflow-y-auto bg-black text-white font-sans selection:bg-purple-500/30">
+    <div className="fixed inset-0 z-[100] overflow-y-auto bg-black text-white font-sans selection:bg-violet-500/30">
       {/* Background Ambience */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-purple-900/20 to-transparent blur-3xl opacity-50" />
+        <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-violet-900/20 to-transparent blur-3xl opacity-50" />
         <div className="absolute top-1/4 -left-1/4 w-[50vw] h-[50vw] rounded-full bg-pink-600/10 blur-[120px] animate-pulse" style={{ animationDuration: '8s' }} />
         <div className="absolute bottom-1/4 -right-1/4 w-[40vw] h-[40vw] rounded-full bg-indigo-600/10 blur-[100px] animate-pulse" style={{ animationDuration: '12s' }} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full bg-blue-900/5 blur-[150px] pointer-events-none" />
@@ -54,13 +54,13 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
           
           {/* Header Section */}
           <motion.div variants={fadeUp} className="text-center space-y-6 mb-20">
-            <div className="inline-block px-4 py-1.5 bg-purple-500/20 border border-purple-500/30 rounded-full text-purple-300 text-xs font-bold tracking-[0.2em] uppercase mb-4">
+            <div className="inline-block px-4 py-1.5 bg-violet-500/20 border border-violet-500/30 rounded-full text-violet-300 text-xs font-bold tracking-[0.2em] uppercase mb-4">
               The Problem It Solves
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-gray-400" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-violet-100 to-gray-400" style={{ fontFamily: "'Playfair Display', serif" }}>
               Why Deckoviz for Homes
             </h1>
-            <p className="text-xl md:text-2xl text-purple-200/80 font-light italic">
+            <p className="text-xl md:text-2xl text-violet-200/80 font-light italic">
               From static walls to living, adaptive spaces
             </p>
           </motion.div>
@@ -77,7 +77,7 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
             <p className="text-gray-300 leading-relaxed">
               The walls freeze. The environment stabilises. What once felt intentional slowly becomes background. A painting that once felt meaningful becomes invisible. A photo frame blends into the wall. Over time, the very surfaces that dominate our space stop contributing anything at all.
             </p>
-            <p className="text-gray-300 leading-relaxed font-medium text-purple-200">
+            <p className="text-gray-300 leading-relaxed font-medium text-violet-200">
               This isn’t because we designed poorly. It’s because the systems we use to design spaces are fundamentally static.
             </p>
           </motion.div>
@@ -123,19 +123,19 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
               <p className="text-gray-400">Imagine a space that understands:</p>
               <ul className="mt-4 space-y-3">
                 {['your moods', 'your rhythms', 'your preferences', 'your memories', 'your inner world'].map((item, i) => (
-                  <li key={i} className="flex items-center text-purple-200">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mr-3"></span>
+                  <li key={i} className="flex items-center text-violet-200">
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-500 mr-3"></span>
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="bg-gradient-to-br from-purple-900/40 to-indigo-900/40 border border-purple-500/20 rounded-3xl p-8 backdrop-blur-md">
+            <div className="bg-gradient-to-br from-violet-900/40 to-indigo-900/40 border border-violet-500/20 rounded-3xl p-8 backdrop-blur-md">
               <p className="text-xl text-gray-200 leading-relaxed italic">
                 "A space that shifts through the day. That evolves across seasons. That reflects your life as it changes, instead of freezing a single version of it in time."
               </p>
               <div className="mt-6 pt-6 border-t border-white/10">
-                <p className="text-sm tracking-widest text-purple-300 uppercase font-bold">This is the shift from designed spaces to living spaces.</p>
+                <p className="text-sm tracking-widest text-violet-300 uppercase font-bold">This is the shift from designed spaces to living spaces.</p>
               </div>
             </div>
           </motion.div>
@@ -143,7 +143,7 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
           {/* Section: Why Deckoviz exists */}
           <motion.div variants={fadeUp} className="text-center bg-white/5 border border-white/10 rounded-3xl p-10 backdrop-blur-sm">
             <h2 className="text-3xl font-semibold text-white mb-6">Why Deckoviz exists</h2>
-            <p className="text-2xl text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-purple-300 font-medium mb-8">
+            <p className="text-2xl text-transparent bg-clip-text bg-gradient-to-r from-pink-300 to-indigo-300 font-medium mb-8">
               Your space should give something back.
             </p>
             <p className="text-gray-400 leading-relaxed max-w-2xl mx-auto">
@@ -166,7 +166,7 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
                 { title: "Your space evolves with your life", desc: "Your environment adapts to time of day, seasons, occasions, and personal milestones. Instead of staying fixed, it moves with you." }
               ].map((feature, idx) => (
                 <div key={idx} className="bg-white/5 border border-white/10 hover:bg-white/10 transition-colors duration-300 rounded-2xl p-6">
-                  <h3 className="text-xl font-medium text-purple-200 mb-3">{feature.title}</h3>
+                  <h3 className="text-xl font-medium text-violet-200 mb-3">{feature.title}</h3>
                   <p className="text-gray-400 text-sm leading-relaxed">{feature.desc}</p>
                 </div>
               ))}
@@ -179,7 +179,7 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
             <p className="text-gray-300 leading-relaxed mb-6">For the first time, art becomes:</p>
             <div className="flex flex-wrap justify-center gap-4 mb-8">
               {['Personal, not generic', 'Dynamic, not static', 'Contextual, not random', 'Continuous, not occasional'].map((tag, i) => (
-                <span key={i} className="px-5 py-2 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-200 text-sm">{tag}</span>
+                <span key={i} className="px-5 py-2 rounded-full border border-violet-500/30 bg-violet-500/10 text-violet-200 text-sm">{tag}</span>
               ))}
             </div>
             <p className="text-xl text-white font-medium italic">
@@ -189,13 +189,13 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
           </motion.div>
 
           {/* Section: The future */}
-          <motion.div variants={fadeUp} className="bg-gradient-to-r from-purple-900/50 via-pink-900/30 to-indigo-900/50 border border-white/20 rounded-3xl p-10 md:p-16 text-center shadow-[0_0_50px_rgba(168,85,247,0.15)] relative overflow-hidden">
+          <motion.div variants={fadeUp} className="bg-gradient-to-r from-violet-900/50 via-pink-900/30 to-indigo-900/50 border border-white/20 rounded-3xl p-10 md:p-16 text-center shadow-[0_0_50px_rgba(168,85,247,0.15)] relative overflow-hidden">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070')] bg-cover bg-center opacity-10 mix-blend-overlay"></div>
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-8">The future of homes</h2>
               <p className="text-gray-300 mb-6">We believe homes are entering a new phase.</p>
               
-              <div className="space-y-4 mb-10 text-lg md:text-xl font-medium text-purple-200">
+              <div className="space-y-4 mb-10 text-lg md:text-xl font-medium text-violet-200">
                 <p>From <span className="text-white">static</span> to <span className="text-pink-400">adaptive</span>.</p>
                 <p>From <span className="text-white">aesthetic</span> to <span className="text-pink-400">experiential</span>.</p>
                 <p>From <span className="text-white">designed once</span> to <span className="text-pink-400">evolving continuously</span>.</p>
@@ -215,7 +215,7 @@ const HomesMicrosite: React.FC<HomesMicrositeProps> = ({ onClose }) => {
                   <span>•</span>
                   <span>It evolves.</span>
                 </div>
-                <div className="text-2xl md:text-3xl font-['Playfair_Display'] italic text-transparent bg-clip-text bg-gradient-to-r from-purple-200 to-pink-200">
+                <div className="text-2xl md:text-3xl font-['Playfair_Display'] italic text-transparent bg-clip-text bg-gradient-to-r from-violet-200 to-pink-200">
                   A home that doesn’t just look like you.<br/>
                   A home that keeps becoming you.
                 </div>

@@ -386,7 +386,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     transition-all duration-500 cursor-pointer"
   >
       {/* Gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50/50 via-pink-50/30 to-blue-50/20
+      <div className="absolute inset-0 bg-gradient-to-br from-violet-50/50 via-pink-50/30 to-blue-50/20
                       opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" />
 
       {/* Icon */}
@@ -404,7 +404,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 
       <div className="flex flex-col items-center text-center relative z-10">
         <h3 className="text-xl font-bold text-gray-900 mb-4 leading-tight
-                      group-hover:bg-gradient-to-r group-hover:from-purple-600
+                      group-hover:bg-gradient-to-r group-hover:from-violet-600
                       group-hover:to-pink-500 group-hover:bg-clip-text
                       group-hover:text-transparent transition-all duration-500">
           {title}
@@ -473,10 +473,10 @@ export default function AllFeatures() {
   }, []);
   return (
 <section className="min-h-screen px-6 py-20 relative overflow-hidden
-  bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+  bg-gradient-to-br from-indigo-50 via-violet-50 to-pink-50">
 {/* Background glow blobs */}
 <div className="absolute inset-0 -z-10">
-  <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-purple-400/30 rounded-full blur-[120px]" />
+  <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-violet-400/30 rounded-full blur-[120px]" />
   <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-indigo-400/30 rounded-full blur-[120px]" />
 </div>
 

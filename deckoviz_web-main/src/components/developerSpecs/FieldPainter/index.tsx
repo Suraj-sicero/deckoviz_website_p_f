@@ -226,7 +226,7 @@ const FieldPainter: React.FC = () => {
           <div className="flex gap-2">
             <button 
               onClick={(e) => { e.stopPropagation(); setShowEquipotentials(!showEquipotentials); }}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${showEquipotentials ? 'bg-purple-600 text-white' : 'bg-white/10 text-gray-400'}`}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${showEquipotentials ? 'bg-violet-600 text-white' : 'bg-white/10 text-gray-400'}`}
             >
               Equipotentials
             </button>

@@ -32,7 +32,7 @@ const OrderConfirmed = () => {
     const sessionId = urlParams.get('session_id');
 
     if (sessionId) {
-      fetch(`http://localhost:5000/order-details?session_id=${sessionId}`)
+      fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "http://localhost:5000"}`)}/order-details?session_id=${sessionId}`)
         .then(res => {
           if (!res.ok) {
             throw new Error('Could not fetch order details.');
@@ -43,7 +43,7 @@ const OrderConfirmed = () => {
           setOrderData(data);
           setIsLoading(false);
           // Try to fulfill credits if it was a credit purchase
-          fetch(`http://localhost:5000/fulfill-credits`, {
+          fetch(`${import.meta.env.VITE_API_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "http://localhost:5000"}`)}/fulfill-credits`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ session_id: sessionId })

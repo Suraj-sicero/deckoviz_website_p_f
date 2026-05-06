@@ -76,7 +76,7 @@ const HumanConnectivity: React.FC = () => {
         pos, 
         cluster: clusterIdx, 
         degree: 0,
-        hue: (clusterIdx / CLUSTERS) * 0.2 + 0.5 // Blues to Purples
+        hue: (clusterIdx / CLUSTERS) * 0.2 + 0.5 // Blues to Violets
       });
       
       // Connect to someone in same cluster

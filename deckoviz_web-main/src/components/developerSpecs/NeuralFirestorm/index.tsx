@@ -212,8 +212,8 @@ const NeuralFirestorm: React.FC = () => {
             className="absolute inset-0 flex items-center justify-center bg-black z-50"
           >
             <div className="flex flex-col items-center space-y-4">
-              <Brain className="w-12 h-12 text-purple-500 animate-pulse" />
-              <p className="text-purple-400 font-mono text-sm tracking-widest">INITIALIZING SYNAPSES...</p>
+              <Brain className="w-12 h-12 text-violet-500 animate-pulse" />
+              <p className="text-violet-400 font-mono text-sm tracking-widest">INITIALIZING SYNAPSES...</p>
             </div>
           </motion.div>
         )}
@@ -223,7 +223,7 @@ const NeuralFirestorm: React.FC = () => {
       <div className="absolute top-10 left-10 flex items-center space-x-6 pointer-events-none">
           <div className="flex items-center gap-4">
              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-xl">
-                <Brain className="w-6 h-6 text-purple-400" />
+                <Brain className="w-6 h-6 text-violet-400" />
              </div>
              <div>
                 <h1 className="text-xl font-black text-white tracking-tighter uppercase italic">Neural Firestorm</h1>
@@ -265,7 +265,7 @@ const NeuralFirestorm: React.FC = () => {
             onClick={() => changeState(s.id as BrainState)}
             className={`flex items-center space-x-2 px-6 py-2.5 rounded-full transition-all duration-500 ${
               brainState === s.id 
-                ? "bg-purple-600 text-white shadow-[0_0_20px_rgba(147,51,234,0.5)]" 
+                ? "bg-violet-600 text-white shadow-[0_0_20px_rgba(147,51,234,0.5)]" 
                 : "text-gray-400 hover:bg-white/10 hover:text-white"
             }`}
           >
@@ -280,15 +280,15 @@ const NeuralFirestorm: React.FC = () => {
         <div className="flex flex-col space-y-1">
           <div className="flex justify-between space-x-8">
             <span>NEURON COUNT</span>
-            <span className="text-purple-400">2,000 LIF NODES</span>
+            <span className="text-violet-400">2,000 LIF NODES</span>
           </div>
           <div className="flex justify-between space-x-8">
             <span>SYNAPTIC DENSITY</span>
-            <span className="text-purple-400">3.4% SPARSE</span>
+            <span className="text-violet-400">3.4% SPARSE</span>
           </div>
           <div className="flex justify-between space-x-8">
             <span>CURRENT MODE</span>
-            <span className="text-purple-400 uppercase">{brainState}</span>
+            <span className="text-violet-400 uppercase">{brainState}</span>
           </div>
           <div className="mt-4 pt-2 border-t border-white/10">
             <span>MOVE POINTER TO STIMULATE REGIONS</span>

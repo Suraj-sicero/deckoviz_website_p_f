@@ -151,8 +151,8 @@ const FAQ: React.FC = () => {
     {
       name: "General",
       icon: Home,
-      color: "from-violet-500 via-purple-500 to-fuchsia-500",
-      bgColor: "from-violet-50 to-purple-50",
+      color: "from-violet-500 via-violet-500 to-fuchsia-500",
+      bgColor: "from-violet-50 to-indigo-50",
       description: "Get Started",
     },
     {
@@ -221,8 +221,8 @@ const FAQ: React.FC = () => {
             backgroundSize: "50px 50px",
           }}
         />
-        <div className="absolute left-1/2 top-1/4 -translate-x-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200/15 via-purple-200/10 to-pink-200/15 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/4 w-[60%] h-[30%] rounded-full bg-gradient-to-tl from-purple-300/10 via-pink-200/8 to-orange-200/12 blur-2xl"></div>
+        <div className="absolute left-1/2 top-1/4 -translate-x-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200/15 via-violet-200/10 to-pink-200/15 blur-3xl"></div>
+        <div className="absolute right-1/4 bottom-1/4 w-[60%] h-[30%] rounded-full bg-gradient-to-tl from-violet-300/10 via-pink-200/8 to-orange-200/12 blur-2xl"></div>
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -230,12 +230,12 @@ const FAQ: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-6 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">Questions?</span>{" "}
-            <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               We've got answers.
             </span>
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Everything you need to know about <span className="text-purple-600 font-semibold">Deckoviz</span> and how it
+            Everything you need to know about <span className="text-violet-600 font-semibold">Deckoviz</span> and how it
             can <span className="text-indigo-600 font-semibold">revolutionize your space</span> with{" "}
             <span className="text-fuchsia-500 font-semibold">AI-powered art</span>.
           </p>
@@ -248,7 +248,7 @@ const FAQ: React.FC = () => {
               {/* Navigation Title */}
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Browse Topics</h3>
-                <div className="w-12 h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full"></div>
+                <div className="w-12 h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full"></div>
               </div>
 
               {/* Interactive Category Navigation */}
@@ -386,8 +386,8 @@ const FAQ: React.FC = () => {
                     key={index}
                     className={`group relative bg-white rounded-2xl border transition-all duration-500 ${
                       isOpen
-                        ? "border-purple-200 shadow-xl"
-                        : "border-gray-100 shadow-md hover:shadow-lg hover:border-purple-100"
+                        ? "border-violet-200 shadow-xl"
+                        : "border-gray-100 shadow-md hover:shadow-lg hover:border-violet-100"
                     }`}
                   >
                     {/* Gradient accent bar */}
@@ -403,7 +403,7 @@ const FAQ: React.FC = () => {
                       onClick={() => setActiveIndex(isOpen ? null : index)}
                     >
                       <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-base font-bold text-gray-900 leading-tight group-hover:text-purple-700 transition-colors duration-300 flex-1">
+                        <h3 className="text-base font-bold text-gray-900 leading-tight group-hover:text-violet-700 transition-colors duration-300 flex-1">
                           {item.question}
                         </h3>
                         <div className={`flex-shrink-0 transition-all duration-500 ${isOpen ? "rotate-180" : ""}`}>
@@ -411,7 +411,7 @@ const FAQ: React.FC = () => {
                             className={`p-2 rounded-xl transition-all duration-300 ${
                               isOpen
                                 ? `bg-gradient-to-r ${activeCategoryData?.color} text-white shadow-lg`
-                                : "bg-gray-100 text-gray-500 group-hover:bg-purple-100 group-hover:text-purple-600"
+                                : "bg-gray-100 text-gray-500 group-hover:bg-violet-100 group-hover:text-violet-600"
                             }`}
                           >
                             <ChevronDown size={18} />
@@ -449,16 +449,16 @@ const FAQ: React.FC = () => {
               <img src="/images/mailnoti.png" alt="Mail Notification" className="w-32 h-32 object-contain" />
             </div>
 
-            {/* Purple background section with dotted texture - wider and more faint */}
+            {/* Violet background section with dotted texture - wider and more faint */}
             <div
               className="relative -mt-32 pt-20 pb-16 px-12 rounded-3xl"
               style={{
                           background: `radial-gradient(circle at 50% 60%, 
-        rgba(168, 85, 247, 0.4) 0%, /* purple-500 */
-        rgba(180, 83, 220, 0.3) 10%, /* purple-pink blend */
-        rgba(195, 80, 190, 0.2) 18%, /* purple-pink blend */
-        rgba(215, 75, 165, 0.15) 27%, /* purple-pink blend */
-        rgba(226, 73, 155, 0.08) 39%, /* purple-pink blend */
+        rgba(168, 85, 247, 0.4) 0%, /* violet-500 */
+        rgba(180, 83, 220, 0.3) 10%, /* violet-pink blend */
+        rgba(195, 80, 190, 0.2) 18%, /* violet-pink blend */
+        rgba(215, 75, 165, 0.15) 27%, /* violet-pink blend */
+        rgba(226, 73, 155, 0.08) 39%, /* violet-pink blend */
         rgba(236, 72, 153, 0.03) 45%, /* pink-500 */
         transparent 50%)`,
                 backgroundImage: "radial-gradient(circle, rgba(147,51,234,0.06) 1px, transparent 1px)",
@@ -507,7 +507,7 @@ boxShadow: `
                 <div className="max-w-sm sm:max-w-md mx-auto">
                   <div className="relative group">
                     {/* Glow effect */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
 
                     {/* Form container */}
                     <div className="relative bg-white rounded-2xl p-2 shadow-xl border border-gray-200">
@@ -517,7 +517,7 @@ boxShadow: `
                           <input
                             type="email"
                             placeholder="Email address..."
-                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all duration-300"
                           />
                           {/* Subtle icon */}
                           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -538,7 +538,7 @@ boxShadow: `
                         </div>
 
                         {/* Submit button */}
-                        <button className="bg-gradient-to-r from-[#6670d8] to-purple-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
+                        <button className="bg-gradient-to-r from-[#6670d8] to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
                           <span>Submit</span>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path
@@ -558,7 +558,7 @@ boxShadow: `
   <div className="relative rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm p-6 sm:p-8 shadow-lg">
 
     {/* Glow */}
-    <div className="absolute -inset-10 bg-purple-500/5 blur-[80px] pointer-events-none"></div>
+    <div className="absolute -inset-10 bg-violet-500/5 blur-[80px] pointer-events-none"></div>
 
     {/* Header */}
     <div className="text-center mb-6">
@@ -575,7 +575,7 @@ boxShadow: `
 <form onSubmit={handleSubmit} className="max-w-md mx-auto w-full">
 
   <div className="flex items-center gap-2 rounded-full border bg-white px-3 py-2 w-full
-  focus-within:border-purple-400 focus-within:shadow-[0_0_12px_rgba(168,85,247,0.5)]">
+  focus-within:border-violet-400 focus-within:shadow-[0_0_12px_rgba(168,85,247,0.5)]">
 
     <input
       type="email"
@@ -589,7 +589,7 @@ boxShadow: `
       type="submit"
       disabled={isSubmitting}
       className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full 
-      bg-gradient-to-r from-purple-600 via-purple-500 to-violet-600 
+      bg-gradient-to-r from-violet-600 via-violet-500 to-violet-600 
       text-white shadow-[0_4px_14px_rgba(124,58,237,0.45)]
       transition-all duration-300 md:hover:scale-110 md:hover:shadow-[0_6px_22px_rgba(124,58,237,0.65)]
       disabled:opacity-50"

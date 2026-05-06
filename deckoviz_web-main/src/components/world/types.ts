@@ -1,6 +1,6 @@
 export type TerrainType = 'island' | 'lava' | 'forest' | 'underwater' | 'city' | 'desert' | 'snow' | 'space' | 'canyon' | 'generic';
 export type ParticleType = 'embers' | 'dust' | 'bubbles' | 'snow' | 'fireflies' | 'rain' | 'none';
-export type SkyMood = 'clear_day' | 'sunset' | 'dramatic_red' | 'deep_forest' | 'night_stars' | 'storm' | 'underwater_blue' | 'twilight_purple';
+export type SkyMood = 'clear_day' | 'sunset' | 'dramatic_red' | 'deep_forest' | 'night_stars' | 'storm' | 'underwater_blue' | 'twilight_violet';
 
 export interface NpcConfig {
   count: number;

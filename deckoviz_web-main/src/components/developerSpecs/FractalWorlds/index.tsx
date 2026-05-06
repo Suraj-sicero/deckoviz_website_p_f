@@ -238,7 +238,7 @@ const FractalWorlds: React.FC = () => {
                                 </label>
                                 <input 
                                     type="range" min="1" max="10" step="0.1" value={power}
-                                    className="w-full accent-purple-500"
+                                    className="w-full accent-violet-500"
                                     onChange={(e) => {
                                         const val = parseFloat(e.target.value);
                                         setPower(val);

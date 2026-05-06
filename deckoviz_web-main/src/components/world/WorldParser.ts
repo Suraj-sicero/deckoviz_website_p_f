@@ -59,7 +59,7 @@ const PRESETS: Record<string, Partial<WorldSchema>> = {
   },
   city: {
     terrain: 'city',
-    sky: { mood: 'twilight_purple', horizonColor: 0x330044, zenithColor: 0x000011, entities: [] },
+    sky: { mood: 'twilight_violet', horizonColor: 0x330044, zenithColor: 0x000011, entities: [] },
     features: { water: false, grass: false, island: false, pathways: true, houses: false, npc: { count: 0, color: 0xffdbac } },
     lighting: {
       ambientColor: 0x220033, ambientIntensity: 0.3,

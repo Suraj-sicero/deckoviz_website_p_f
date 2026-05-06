@@ -31,7 +31,7 @@ const AIDreamWorlds: React.FC = () => {
         generatingRef.current = true;
         setIsGenerating(true);
         try {
-            const response = await fetch('http://localhost:5000/api/dream/generate', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dream/generate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: p, style: s }),

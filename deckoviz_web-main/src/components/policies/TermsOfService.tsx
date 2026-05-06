@@ -2,7 +2,7 @@ import React from "react";
 
 const TermsOfService: React.FC = () => {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 px-4 bg-gradient-to-br from-pink-500 via-purple-600 to-fuchsia-600 overflow-hidden">
+    <section className="relative py-16 sm:py-20 lg:py-24 px-4 bg-gradient-to-br from-pink-500 via-violet-600 to-fuchsia-600 overflow-hidden">
 
       {/* Pattern */}
       <div className="absolute inset-0 pointer-events-none z-0 grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-12 gap-6 opacity-20 text-white text-xl sm:text-2xl lg:text-3xl">
@@ -13,7 +13,7 @@ const TermsOfService: React.FC = () => {
 
       {/* Glow blobs */}
       <div className="absolute -top-40 -left-40 w-72 sm:w-96 h-72 sm:h-96 bg-pink-400 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-0 right-0 w-72 sm:w-96 h-72 sm:h-96 bg-purple-400 rounded-full blur-3xl opacity-40" />
+      <div className="absolute bottom-0 right-0 w-72 sm:w-96 h-72 sm:h-96 bg-violet-400 rounded-full blur-3xl opacity-40" />
 
       <div className="relative max-w-6xl mx-auto">
         <div className="relative bg-white/60 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/40 p-6 sm:p-10 lg:p-14">

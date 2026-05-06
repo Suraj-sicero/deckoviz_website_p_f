@@ -84,7 +84,7 @@ const HomeMeansSomething: React.FC = () => {
   const sparkLayer = useRef<HTMLDivElement>(null);
 const [visibleLines, setVisibleLines] = React.useState(0);
 const [typedText, setTypedText] = React.useState("");
-  /* Mouse particles (theme match: cyan + purple + pink) */
+  /* Mouse particles (theme match: cyan + violet + pink) */
   useEffect(() => {
     const handleMove = (e: MouseEvent) => {
       if (!sparkLayer.current) return;
@@ -146,7 +146,7 @@ const [typedText, setTypedText] = React.useState("");
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/10" />
         <div className="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full bg-white/30 blur-[75px]" />
-        <div className="absolute top-20 left-28 h-[360px] w-[360px] rounded-full bg-purple-200/35 blur-[85px]" />
+        <div className="absolute top-20 left-28 h-[360px] w-[360px] rounded-full bg-violet-200/35 blur-[85px]" />
         <div className="absolute -top-20 right-0 h-[520px] w-[520px] rounded-full bg-sky-200/35 blur-[90px]" />
         <div className="absolute -bottom-40 left-10 h-[520px] w-[520px] rounded-full bg-pink-200/35 blur-[95px]" />
       </div>

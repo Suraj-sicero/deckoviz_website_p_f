@@ -3,7 +3,7 @@ id: 26
 title: "DASP User’s Guide: How to Make the Most of Deckoviz DASP"
 description: "Ideas, inspiration, and everyday magic for your home."
 tag: "Guides"
-tagColor: "bg-purple-100 text-purple-700"
+tagColor: "bg-violet-100 text-violet-700"
 date: "March 20, 2025"
 readTime: "12 min read"
 pinned: false

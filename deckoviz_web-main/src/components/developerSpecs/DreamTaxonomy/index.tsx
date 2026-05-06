@@ -175,7 +175,7 @@ const DreamTaxonomy: React.FC = () => {
       {/* Title */}
       <div className="absolute top-10 left-10 pointer-events-none">
         <h1 className="text-xl font-light text-white tracking-[0.3em] uppercase flex items-center gap-3">
-          <Moon size={18} className="text-purple-400" />
+          <Moon size={18} className="text-violet-400" />
           The Dream Taxonomy
         </h1>
       </div>
@@ -198,13 +198,13 @@ const DreamTaxonomy: React.FC = () => {
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
                 placeholder="Briefly describe the vision... (50-300 chars)"
-                className="w-full h-40 bg-black/40 border border-white/10 rounded-xl p-4 text-white placeholder:text-gray-700 focus:outline-none focus:border-purple-500/50 transition-all mb-6 resize-none"
+                className="w-full h-40 bg-black/40 border border-white/10 rounded-xl p-4 text-white placeholder:text-gray-700 focus:outline-none focus:border-violet-500/50 transition-all mb-6 resize-none"
                 maxLength={300}
               />
               <button
                 onClick={addDream}
                 disabled={inputText.length < 10}
-                className="w-full py-4 rounded-xl bg-purple-600 text-white font-bold hover:bg-purple-500 disabled:opacity-30 transition-all flex items-center justify-center space-x-2"
+                className="w-full py-4 rounded-xl bg-violet-600 text-white font-bold hover:bg-violet-500 disabled:opacity-30 transition-all flex items-center justify-center space-x-2"
               >
                 <Sparkles size={18} />
                 <span>ETCH INTO CONSTELLATION</span>
@@ -251,7 +251,7 @@ const DreamTaxonomy: React.FC = () => {
       {/* Side HUD */}
       <div className="absolute top-10 right-10 flex flex-col items-end text-[10px] text-gray-600 uppercase tracking-widest pointer-events-none">
         <div className="flex items-center space-x-2 mb-1">
-          <div className="w-2 h-2 rounded-full bg-purple-500" />
+          <div className="w-2 h-2 rounded-full bg-violet-500" />
           <span>Pattern Emergence Active</span>
         </div>
         <span>{dreams.length} Symbolic Entries</span>

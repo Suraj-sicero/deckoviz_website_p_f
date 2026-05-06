@@ -6,7 +6,7 @@ import { Globe, Beaker, ChevronRight, ChevronLeft, Pause, Play, X, Droplets } fr
 
 const PIGMENTS = [
   {
-    name: "Tyrian Purple",
+    name: "Tyrian Violet",
     color: "#4a042d",
     extraction: "Murex Trunculus (Sea Snails)",
     civilisation: "Phoenician Empire",
@@ -15,7 +15,7 @@ const PIGMENTS = [
     narrative: "Extracted with immense labor from thousands of sea snails. It was so rare that it was reserved exclusively for imperial royalty. The process involved fermenting the glands of the snails for weeks."
   },
   {
-    name: "Han Purple",
+    name: "Han Violet",
     color: "#4b307d",
     extraction: "Barium Copper Silicate",
     civilisation: "Han Dynasty",

@@ -215,7 +215,7 @@ const Benefits = () => {
 
   return (
     <>
-<section className="relative py-24 bg-gradient-to-b from-slate-50 via-purple-50/20 to-pink-50/20 overflow-visible">
+<section className="relative py-24 bg-gradient-to-b from-slate-50 via-violet-50/20 to-pink-50/20 overflow-visible">
 
       {/* Enhanced floating decorative elements with softer colors */}
       <motion.div
@@ -225,7 +225,7 @@ const Benefits = () => {
           scale: [1, 1.1, 1]
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-32 left-20 w-40 h-40 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-3xl"
+        className="absolute top-32 left-20 w-40 h-40 bg-gradient-to-br from-violet-200/30 to-pink-200/30 rounded-full blur-3xl"
       />
       <motion.div
         animate={{ 
@@ -243,7 +243,7 @@ const Benefits = () => {
           rotate: [0, 180, 360]
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 rounded-full blur-3xl"
+        className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-br from-indigo-200/20 to-indigo-200/20 rounded-full blur-3xl"
       />
       <motion.div
         animate={{ 
@@ -262,14 +262,14 @@ const Benefits = () => {
           {/* Homes Microsite Trigger Button - Premium Aesthetic */}
           <div className="relative group">
             {/* Outer Glow Aura */}
-            <div className="absolute -inset-1.5 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 rounded-full blur-md opacity-40 group-hover:opacity-75 group-hover:blur-lg transition-all duration-500" />
+            <div className="absolute -inset-1.5 bg-gradient-to-r from-fuchsia-600 via-violet-600 to-indigo-600 rounded-full blur-md opacity-40 group-hover:opacity-75 group-hover:blur-lg transition-all duration-500" />
             
             <button
               onClick={() => setShowHomesMicrosite(true)}
               className="relative flex items-center gap-4 p-2 pr-6 bg-gray-900 border border-white/10 rounded-full shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(168,85,247,0.4)]"
             >
               {/* Subtle gradient background inside button */}
-              <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-900/40 via-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-900/40 via-violet-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Shimmer sweep */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-in-out" />
@@ -356,7 +356,7 @@ const Benefits = () => {
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.35, duration: 0.7, type: "spring", bounce: 0.4 }}
-              className="italic bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent inline-block"
+              className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent inline-block"
             >
               Deckoviz
             </motion.span>{" "}
@@ -431,7 +431,7 @@ const Benefits = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileHover={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute inset-0 bg-gradient-to-br from-purple-50/80 via-pink-50/60 to-indigo-50/80 rounded-[2rem] -z-10"
+                  className="absolute inset-0 bg-gradient-to-br from-violet-50/80 via-pink-50/60 to-indigo-50/80 rounded-[2rem] -z-10"
                 />
                 
                 {/* Soft glow effect */}
@@ -439,7 +439,7 @@ const Benefits = () => {
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute -inset-1 bg-gradient-to-br from-purple-200/20 via-pink-200/20 to-indigo-200/20 rounded-[2rem] blur-xl -z-20"
+                  className="absolute -inset-1 bg-gradient-to-br from-violet-200/20 via-pink-200/20 to-indigo-200/20 rounded-[2rem] blur-xl -z-20"
                 />
 
                 {/* Floating sparkles */}
@@ -467,7 +467,7 @@ const Benefits = () => {
                     repeat: Infinity,
                     delay: index * 0.3 + 0.5
                   }}
-                  className="absolute top-10 right-10 w-1.5 h-1.5 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full"
+                  className="absolute top-10 right-10 w-1.5 h-1.5 bg-gradient-to-br from-pink-300 to-indigo-300 rounded-full"
                 />
 
                 {/* Emoji with enhanced animation */}
@@ -488,7 +488,7 @@ const Benefits = () => {
                 </motion.div>
 
                 {/* Title with refined typography */}
-                <h3 className="text-xl font-semibold mb-4 text-gray-800 group-hover:text-purple-700 transition-colors duration-400 leading-snug">
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 group-hover:text-violet-700 transition-colors duration-400 leading-snug">
                   {benefit.title}
                 </h3>
 
@@ -502,7 +502,7 @@ const Benefits = () => {
                   initial={{ scaleX: 0, opacity: 0 }}
                   whileHover={{ scaleX: 1, opacity: 1 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-0.5 bg-gradient-to-r from-transparent via-purple-300 to-transparent rounded-full"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-0.5 bg-gradient-to-r from-transparent via-violet-300 to-transparent rounded-full"
                 />
               </motion.div>
             ))}
@@ -525,7 +525,7 @@ const Benefits = () => {
               className="
                 relative
                 px-10 py-4 rounded-full
-                bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+                bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500
                 text-white font-semibold text-base
                 shadow-[0_10px_40px_rgba(139,92,246,0.3)]
                 hover:shadow-[0_20px_60px_rgba(139,92,246,0.5)]

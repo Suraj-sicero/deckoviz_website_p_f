@@ -188,7 +188,7 @@ A controversial yet stylistically brilliant exploration of obsession and manipul
 
 <br>
 
-## 24. The Color Purple by Alice Walker
+## 24. The Color Violet by Alice Walker
 <br>
 A story of survival, voice, and resilience against systemic oppression.
 

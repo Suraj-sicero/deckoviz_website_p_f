@@ -264,12 +264,12 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
                 // Different color schemes for each card
                 const colorSchemes = [
                   {
-                    bg: "from-purple-50/50 via-violet-50/40 to-indigo-50/30",
-                    border: "border-purple-200/50 hover:border-purple-300/70",
+                    bg: "from-violet-50/50 via-violet-50/40 to-indigo-50/30",
+                    border: "border-violet-200/50 hover:border-violet-300/70",
                     shadow: "shadow-[0_4px_16px_rgba(139,92,246,0.1)] hover:shadow-[0_12px_32px_rgba(139,92,246,0.2)]",
-                    textColor: "#5b21b6", // darker purple for visibility
+                    textColor: "#5b21b6", // darker violet for visibility
                     orb: "rgba(139,92,246,0.3)",
-                    dots: "bg-purple-300/60"
+                    dots: "bg-violet-300/60"
                   },
                   {
                     bg: "from-pink-50/50 via-rose-50/40 to-red-50/30",
@@ -304,7 +304,7 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
                     dots: "bg-emerald-300/60"
                   },
                   {
-                    bg: "from-fuchsia-50/50 via-purple-50/40 to-violet-50/30",
+                    bg: "from-fuchsia-50/50 via-violet-50/40 to-violet-50/30",
                     border: "border-fuchsia-200/50 hover:border-fuchsia-300/70",
                     shadow: "shadow-[0_4px_16px_rgba(217,70,239,0.1)] hover:shadow-[0_12px_32px_rgba(217,70,239,0.2)]",
                     textColor: "#a21caf", // darker fuchsia for visibility
