@@ -3,6 +3,7 @@ import ToolLayout from "./ToolLayout";
 import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+const HF_AUDIOBOOK_URL = "https://sudharsan051006-visual-audiobook-api.hf.space";
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
 
@@ -36,7 +37,7 @@ const AudiobookTool: React.FC = () => {
     formData.append("style", voice);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/audiobook/generate`, {
+      const res = await fetch(`${HF_AUDIOBOOK_URL}/generate`, {
         method: "POST",
         body: formData,
       });
@@ -54,9 +55,11 @@ const AudiobookTool: React.FC = () => {
 
       intervalRef.current = setInterval(async () => {
         try {
-          const poll = await fetch(`${BACKEND_URL}/api/audiobook/status/${jobId}`);
+          const poll = await fetch(`${HF_AUDIOBOOK_URL}/result/${jobId}`);
           if (!poll.ok) return;
           const json = await poll.json();
+          // The HF API returns status in the format: { status: "processing" | "done" | "error" }
+          // If the endpoint is different (e.g., /status vs /result), HF uses /result/:jobId
           if (json.status === "processing") return;
           clearInterval(intervalRef.current!);
 
@@ -81,7 +84,7 @@ const AudiobookTool: React.FC = () => {
 
   const handleDownload = () => {
     if (!downloadId) return;
-    const url = `${BACKEND_URL}/api/audiobook/download/${downloadId}`;
+    const url = `${HF_AUDIOBOOK_URL}/download/${downloadId}`;
     const a = document.createElement("a");
     a.href = url; a.download = "visual_audiobook.zip";
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
@@ -100,7 +103,7 @@ const AudiobookTool: React.FC = () => {
       icon="🎧"
       title="Audiobook Creator"
       subtitle="Turn any PDF into a beautifully narrated audiobook with AI voice"
-      gradient="from-violet-600 via-purple-700 to-indigo-800"
+      gradient="from-violet-600 via-violet-700 to-indigo-800"
     >
       <div className="space-y-8">
 
@@ -200,7 +203,7 @@ const AudiobookTool: React.FC = () => {
             className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 ${
               isRunning
                 ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+                : "bg-gradient-to-r from-violet-600 via-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] shadow-lg"
             }`}
           >
             {isRunning ? (

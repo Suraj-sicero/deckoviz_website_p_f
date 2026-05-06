@@ -2336,3 +2336,38 @@
 [2026-05-05T14:08:17.246Z] LOG: ✅ Redis Connected
 [2026-05-05T14:08:17.246Z] LOG: Dekoviz
 [2026-05-05T14:08:17.255Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-05T18:22:15.600Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-05T18:22:15.606Z] LOG: ✅ Redis Connected
+[2026-05-05T18:22:15.607Z] LOG: Dekoviz
+[2026-05-05T18:22:15.611Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-05T18:22:25.048Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-05T18:22:25.054Z] LOG: ✅ Redis Connected
+[2026-05-05T18:22:25.055Z] LOG: Dekoviz
+[2026-05-05T18:22:25.058Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-05T18:23:48.617Z] ERROR: MulterError: File too large
+    at abortWithCode (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/multer/lib/make-middleware.js:85:22)
+    at FileStream.<anonymous> (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/multer/lib/make-middleware.js:155:11)
+    at FileStream.emit (node:events:519:28)
+    at SBMH.ssCb [as _cb] (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/busboy/lib/types/multipart.js:479:32)
+    at feed (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/streamsearch/lib/sbmh.js:248:10)
+    at SBMH.push (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/busboy/lib/types/multipart.js:567:19)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+    at _write (node:internal/streams/writable:501:10)
+    at Writable.write (node:internal/streams/writable:510:10)
+[2026-05-05T18:25:09.781Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-05T18:25:09.786Z] LOG: ✅ Redis Connected
+[2026-05-05T18:25:09.786Z] LOG: Dekoviz
+[2026-05-05T18:25:09.791Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-05T18:25:20.218Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-05T18:25:20.224Z] LOG: ✅ Redis Connected
+[2026-05-05T18:25:20.225Z] LOG: Dekoviz
+[2026-05-05T18:25:20.230Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-06T07:16:44.979Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-06T07:16:44.985Z] LOG: ✅ Redis Connected
+[2026-05-06T07:16:44.985Z] LOG: Dekoviz
+[2026-05-06T07:16:44.993Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-06T07:45:54.909Z] LOG: [Marble] Starting world generation — prompt: "A dark cyberpunk city with neon lights and flying ships at night" | image: no
+[2026-05-06T07:46:00.378Z] ERROR: [Marble] Error: Request failed with status code 402
+[2026-05-06T07:46:35.589Z] LOG: [Marble] Starting world generation — prompt: "An island surrounded by turquoise water with a few cottages" | image: no
+[2026-05-06T07:46:39.995Z] ERROR: [Marble] Error: Request failed with status code 402

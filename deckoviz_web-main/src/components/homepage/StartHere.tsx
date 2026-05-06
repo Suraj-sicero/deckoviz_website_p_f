@@ -8,11 +8,11 @@ export default function StartHere() {
     <section className="relative py-32 overflow-hidden">
 
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-pink-200 via-purple-200 to-fuchsia-200" />
+      <div className="absolute inset-0 bg-gradient-to-br from-pink-200 via-violet-200 to-fuchsia-200" />
 
       {/* Floating blobs */}
       <div className="absolute w-[420px] h-[420px] bg-pink-300/50 rounded-full blur-3xl top-10 left-10" />
-      <div className="absolute w-[320px] h-[320px] bg-purple-300/50 rounded-full blur-3xl bottom-10 right-10" />
+      <div className="absolute w-[320px] h-[320px] bg-violet-300/50 rounded-full blur-3xl bottom-10 right-10" />
       <div className="absolute w-[220px] h-[220px] bg-fuchsia-300/40 rounded-full blur-2xl top-1/2 left-1/3" />
 
       {/* Glass Card */}
@@ -24,7 +24,7 @@ export default function StartHere() {
           <div className="p-12 md:p-16 text-center">
 
             {/* CENTERED HEADING */}
-            <h2 className="text-4xl font-semibold bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-500 bg-clip-text text-transparent mb-8">
+            <h2 className="text-4xl font-semibold bg-gradient-to-r from-violet-600 via-pink-500 to-fuchsia-500 bg-clip-text text-transparent mb-8">
               Start Here
             </h2>
 
@@ -45,7 +45,7 @@ export default function StartHere() {
 
             <button
               onClick={() => navigate("/core-reading")}
-              className="px-12 py-3 rounded-xl bg-gradient-to-r from-purple-600 via-pink-500 to-fuchsia-500 text-white font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+              className="px-12 py-3 rounded-xl bg-gradient-to-r from-violet-600 via-pink-500 to-fuchsia-500 text-white font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
             >
               Core Reading
             </button>
@@ -53,7 +53,7 @@ export default function StartHere() {
           </div>
 
           {/* Bottom gradient bar ONLY (no text) */}
-          <div className="h-16 bg-gradient-to-r from-purple-500 via-pink-400 to-fuchsia-500" />
+          <div className="h-16 bg-gradient-to-r from-violet-500 via-pink-400 to-fuchsia-500" />
 
         </div>
 

@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/auth";
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_URL = `${BASE_URL}/api/auth`;
 
 interface User {
   id: string;
@@ -94,7 +95,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, isAuthModalOpen, openAuthModal, closeAuthModal, login, logout, refreshProfile, deductCredits }}>
+    <AuthContext.Provider value={{ user, token, isAuthModalOpen, isAuthModalForced, openAuthModal, closeAuthModal, login, logout, refreshProfile, deductCredits }}>
       {children}
     </AuthContext.Provider>
   );

@@ -141,7 +141,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
   alt,
   className = "",
-  fallbackColor = "bg-gradient-to-br from-purple-100 to-purple-200",
+  fallbackColor = "bg-gradient-to-br from-violet-100 to-indigo-200",
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -350,7 +350,7 @@ const Navbar: React.FC = () => {
             <button
               onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
-              className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-purple-50 transform hover:scale-110 bg-white/90 backdrop-blur-sm shadow-sm border border-gray-100"
+              className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-violet-50 transform hover:scale-110 bg-white/90 backdrop-blur-sm shadow-sm border border-gray-100"
             >
               <Menu size={20} />
             </button>
@@ -379,7 +379,7 @@ const Navbar: React.FC = () => {
                 <div className="p-3 space-y-1">
                   <a
                     href="/Wall-Of-Love"
-                    className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50"
+                    className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-pink-50 hover:to-indigo-50"
                   >
                     <div className="w-6 h-6 flex items-center justify-center">
                       <svg
@@ -768,11 +768,11 @@ const Navbar: React.FC = () => {
                     onMouseEnter={() => setIsUserDropdownOpen(true)}
                     onMouseLeave={() => setIsUserDropdownOpen(false)}
                   >
-                    <button className="flex items-center gap-2 p-1.5 rounded-full bg-purple-50 border border-purple-100 hover:bg-purple-100 transition-colors">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                    <button className="flex items-center gap-2 p-1.5 rounded-full bg-violet-50 border border-violet-100 hover:bg-violet-100 transition-colors">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
                         <User size={16} />
                       </div>
-                      <ChevronDown size={14} className={`text-purple-600 transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown size={14} className={`text-violet-600 transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
 
                     {/* User Dropdown */}
@@ -781,7 +781,7 @@ const Navbar: React.FC = () => {
                         <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
                           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Account</p>
                           <p className="text-sm font-semibold text-gray-800 truncate">{user.email}</p>
-                          <p className="text-xs text-purple-600 font-bold mt-1">🪙 {user.credits} Credits</p>
+                          <p className="text-xs text-violet-600 font-bold mt-1">🪙 {user.credits} Credits</p>
                         </div>
                         <div className="p-2">
                           <button 
@@ -798,7 +798,7 @@ const Navbar: React.FC = () => {
                 ) : (
                   <button 
                     onClick={() => openAuthModal()}
-                    className="px-5 py-2.5 rounded-xl border-2 border-purple-100 text-purple-600 font-bold text-sm hover:bg-purple-50 transition-all"
+                    className="px-5 py-2.5 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-sm hover:bg-violet-50 transition-all"
                   >
                     Login
                   </button>
@@ -840,7 +840,7 @@ const Navbar: React.FC = () => {
             {/* Mobile Menu Button with cool animation */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-purple-50 transform hover:scale-110"
+              className="md:hidden text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-violet-50 transform hover:scale-110"
             >
               <div className="relative w-6 h-6">
                 <Menu
@@ -872,7 +872,7 @@ const Navbar: React.FC = () => {
                 onClick={() =>
                   setIsBusinessDropdownOpen(!isBusinessDropdownOpen)
                 }
-                className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-purple-50 flex items-center justify-between"
+                className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-violet-50 flex items-center justify-between"
               >
                 <span>Deckoviz For Business</span>
                 <ChevronDown
@@ -890,7 +890,7 @@ const Navbar: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => handleBusinessNavigation(category.route)}
-                      className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
+                      className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
                     >
                       <div className="w-6 h-6 flex-shrink-0">
                         {/* OPTIMIZATION 2: Use OptimizedImage in mobile too */}
@@ -921,7 +921,7 @@ const Navbar: React.FC = () => {
             <div className="border-t border-gray-200 pt-4 space-y-0">
               <a
                 href="/Wall-Of-Love"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Wall Of Love
@@ -929,7 +929,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/Leaderboard"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Leaderboard
@@ -937,7 +937,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/contact"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Contact Us
@@ -945,7 +945,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Pricing
@@ -953,7 +953,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/blog"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Blog
@@ -961,7 +961,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/about"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 About us
@@ -969,14 +969,14 @@ const Navbar: React.FC = () => {
 
               <div className="pt-4 space-y-3">
                 {user ? (
-                  <div className="p-4 rounded-2xl bg-purple-50 border border-purple-100">
+                  <div className="p-4 rounded-2xl bg-violet-50 border border-violet-100">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
                         <User size={20} />
                       </div>
                       <div>
                         <p className="text-sm font-bold text-gray-800 truncate">{user.email}</p>
-                        <p className="text-xs text-purple-600 font-bold">🪙 {user.credits} Credits</p>
+                        <p className="text-xs text-violet-600 font-bold">🪙 {user.credits} Credits</p>
                       </div>
                     </div>
                     <button 
@@ -990,7 +990,7 @@ const Navbar: React.FC = () => {
                 ) : (
                   <button 
                     onClick={() => { openAuthModal(); setIsOpen(false); }}
-                    className="w-full py-3 rounded-xl border-2 border-purple-100 text-purple-600 font-bold text-sm hover:bg-purple-50 transition-all"
+                    className="w-full py-3 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-sm hover:bg-violet-50 transition-all"
                   >
                     Login / Sign Up
                   </button>

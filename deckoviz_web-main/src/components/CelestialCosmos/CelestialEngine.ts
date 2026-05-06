@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-import { CosmicMode, CosmicConfig } from './types';
+import { CosmicConfig, MODE_DEFAULTS } from './types';
 import { 
     nebulaVertexShader, 
     nebulaFragmentShader, 
@@ -14,8 +14,8 @@ export class CelestialEngine {
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
     private renderer: THREE.WebGLRenderer;
-    private composer: EffectComposer;
-    private bloomPass: UnrealBloomPass;
+    private composer!: EffectComposer;
+    private bloomPass!: UnrealBloomPass;
     private clock: THREE.Clock;
     private container: HTMLElement;
     
@@ -89,7 +89,7 @@ export class CelestialEngine {
             case 'orbits': this.createOrbits(config); break;
             case 'blackhole': this.createBlackHole(config); break;
             case 'meteors': this.createMeteors(config); break;
-            case 'starbirth': this.createStarBirth(config); break;
+            case 'starbirth': this.createStarBirth(); break;
         }
     }
 
@@ -214,7 +214,7 @@ export class CelestialEngine {
         this.modeGroup.add(group);
     }
 
-    private createStarBirth(config: CosmicConfig) {
+    private createStarBirth() {
         const geometry = new THREE.BufferGeometry();
         const vertices = [];
         const sizes = [];

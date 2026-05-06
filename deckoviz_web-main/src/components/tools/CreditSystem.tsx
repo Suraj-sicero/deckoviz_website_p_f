@@ -52,7 +52,7 @@ export const CreditSystemModal: React.FC<CreditSystemModalProps> = ({ isOpen, on
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5000/create-checkout-session", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/create-checkout-session`, {
         email: user.email,
         productName: `${credits} Creative Studio Credits`,
         amount: price,
@@ -77,27 +77,27 @@ export const CreditSystemModal: React.FC<CreditSystemModalProps> = ({ isOpen, on
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="px-8 py-6 bg-gradient-to-r from-violet-600 to-purple-600 text-white flex justify-between items-center">
+        <div className="px-8 py-6 bg-gradient-to-r from-violet-600 to-indigo-600 text-white flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-bold">Creative Studio Credits</h2>
-            <p className="text-purple-100 text-sm mt-1">Manage your balance and estimate costs</p>
+            <p className="text-violet-100 text-sm mt-1">Manage your balance and estimate costs</p>
           </div>
           <div className="text-right">
             <div className="text-3xl font-black">{user ? user.credits : 0} 🪙</div>
-            <div className="text-purple-200 text-xs uppercase tracking-wider font-bold">Available Balance</div>
+            <div className="text-violet-200 text-xs uppercase tracking-wider font-bold">Available Balance</div>
           </div>
         </div>
 
         {/* Tabs */}
         <div className="flex border-b">
           <button 
-            className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === "recharge" ? "text-purple-600 border-b-2 border-purple-600 bg-purple-50/50" : "text-gray-500 hover:bg-gray-50"}`}
+            className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === "recharge" ? "text-violet-600 border-b-2 border-violet-600 bg-violet-50/50" : "text-gray-500 hover:bg-gray-50"}`}
             onClick={() => setActiveTab("recharge")}
           >
             Recharge
           </button>
           <button 
-            className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === "estimator" ? "text-purple-600 border-b-2 border-purple-600 bg-purple-50/50" : "text-gray-500 hover:bg-gray-50"}`}
+            className={`flex-1 py-4 text-sm font-bold uppercase tracking-wider transition-colors ${activeTab === "estimator" ? "text-violet-600 border-b-2 border-violet-600 bg-violet-50/50" : "text-gray-500 hover:bg-gray-50"}`}
             onClick={() => setActiveTab("estimator")}
           >
             Cost Estimator
@@ -115,9 +115,9 @@ export const CreditSystemModal: React.FC<CreditSystemModalProps> = ({ isOpen, on
                     key={pkg.credits}
                     disabled={loading}
                     onClick={() => handleRecharge(pkg.credits, pkg.price)}
-                    className="flex flex-col items-center justify-center p-6 border-2 border-purple-100 rounded-2xl hover:border-purple-400 hover:bg-purple-50 transition-all group disabled:opacity-50"
+                    className="flex flex-col items-center justify-center p-6 border-2 border-violet-100 rounded-2xl hover:border-violet-400 hover:bg-violet-50 transition-all group disabled:opacity-50"
                   >
-                    <span className="text-3xl font-black text-gray-900 group-hover:text-purple-700 transition-colors mb-2">
+                    <span className="text-3xl font-black text-gray-900 group-hover:text-violet-700 transition-colors mb-2">
                       {pkg.credits} <span className="text-2xl">🪙</span>
                     </span>
                     <span className="text-lg font-bold text-gray-500">${pkg.price}</span>
@@ -136,7 +136,7 @@ export const CreditSystemModal: React.FC<CreditSystemModalProps> = ({ isOpen, on
                 <div>
                   <label className="block text-sm font-bold text-gray-600 mb-2">Select Feature</label>
                   <select 
-                    className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-purple-500 outline-none"
+                    className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-violet-500 outline-none"
                     value={estTool.id}
                     onChange={(e) => setEstTool(ESTIMATOR_TOOLS.find(t => t.id === e.target.value)!)}
                   >
@@ -153,23 +153,23 @@ export const CreditSystemModal: React.FC<CreditSystemModalProps> = ({ isOpen, on
                   <input 
                     type="number" 
                     min="1"
-                    className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-purple-500 outline-none"
+                    className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 focus:ring-2 focus:ring-violet-500 outline-none"
                     value={estAmount}
                     onChange={(e) => setEstAmount(Math.max(1, parseInt(e.target.value) || 1))}
                   />
                 </div>
 
-                <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
-                  <div className="flex justify-between items-center mb-4 border-b border-purple-100 pb-4">
+                <div className="bg-violet-50 rounded-2xl p-6 border border-violet-100">
+                  <div className="flex justify-between items-center mb-4 border-b border-violet-100 pb-4">
                     <span className="font-bold text-gray-600">Total Credits Needed:</span>
-                    <span className="text-2xl font-black text-purple-700">{estTool.creditsPerUnit * estAmount} 🪙</span>
+                    <span className="text-2xl font-black text-violet-700">{estTool.creditsPerUnit * estAmount} 🪙</span>
                   </div>
-                  <div className="flex justify-between items-center mb-4 border-b border-purple-100 pb-4">
+                  <div className="flex justify-between items-center mb-4 border-b border-violet-100 pb-4">
                     <span className="font-bold text-gray-600">Dollar Equivalent:</span>
                     <span className="text-xl font-bold text-gray-800">${((estTool.creditsPerUnit * estAmount) * 0.05).toFixed(2)}</span>
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-purple-400 uppercase tracking-wider mb-1">Model Breakdown (Placeholder)</span>
+                    <span className="block text-xs font-bold text-violet-400 uppercase tracking-wider mb-1">Model Breakdown (Placeholder)</span>
                     <span className="text-sm text-gray-600">{estTool.breakdown}</span>
                   </div>
                 </div>

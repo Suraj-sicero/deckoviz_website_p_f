@@ -159,7 +159,7 @@ const GuestReactionsTestimonials: React.FC = () => {
   </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
           <span className="text-gray-900">Testimonials from our</span>{" "}
-          <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
             Users
           </span>{" "}
           😊
@@ -217,7 +217,7 @@ const GuestReactionsTestimonials: React.FC = () => {
               <div
   className={`h-full rounded-2xl p-[1px] ${
     index % 3 === 0
-      ? "bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500"
+      ? "bg-gradient-to-br from-pink-500 via-violet-500 to-indigo-500"
       : index % 3 === 1
       ? "bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-600"
       : "bg-gradient-to-br from-emerald-500 via-teal-500 to-green-600"

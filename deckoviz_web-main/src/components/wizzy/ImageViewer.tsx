@@ -18,7 +18,7 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
       {/* Header */}
       <div className="flex justify-between items-end gap-10">
         <div className="space-y-4 flex-1">
-          <div className="flex items-center space-x-3 text-purple-600 font-bold tracking-widest text-xs uppercase animate-pulse">
+          <div className="flex items-center space-x-3 text-violet-600 font-bold tracking-widest text-xs uppercase animate-pulse">
              <Sparkles size={16} />
              <span>Your AI Powered Masterpiece</span>
           </div>
@@ -40,7 +40,7 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
            </button>
            <button
              onClick={() => window.print()}
-             className="px-6 py-4 bg-purple-600 text-white rounded-2xl font-bold flex items-center space-x-2 hover:bg-purple-700 transition-all shadow-xl shadow-purple-200"
+             className="px-6 py-4 bg-violet-600 text-white rounded-2xl font-bold flex items-center space-x-2 hover:bg-violet-700 transition-all shadow-xl shadow-violet-200"
            >
              <Download size={20} />
              <span>Export PDF</span>
@@ -73,12 +73,12 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
                 </>
               ) : (
                 <div className="w-full h-full bg-gray-100 flex flex-col items-center justify-center space-y-4">
-                   <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin"></div>
+                   <div className="w-16 h-16 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin"></div>
                    <p className="text-gray-400 font-bold">Wizzy is drawing...</p>
                 </div>
               )}
               {/* Page Number Badge */}
-              <div className="absolute top-8 left-8 w-14 h-14 bg-purple-600 text-white flex items-center justify-center font-black text-2xl rounded-2xl shadow-xl rotate-[-4deg] print:hidden">
+              <div className="absolute top-8 left-8 w-14 h-14 bg-violet-600 text-white flex items-center justify-center font-black text-2xl rounded-2xl shadow-xl rotate-[-4deg] print:hidden">
                  {page.pageNumber}
               </div>
             </div>
@@ -86,15 +86,15 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
             {/* Content Container */}
             <div className="flex-1 space-y-8 print:space-y-3 print:flex-none print:w-full">
                <div className="space-y-4 print:hidden">
-                  <div className="w-12 h-1 bg-purple-600 rounded-full"></div>
+                  <div className="w-12 h-1 bg-violet-600 rounded-full"></div>
                   <h3 className="text-sm font-black text-gray-300 uppercase tracking-[0.2em]">Scene Narrative</h3>
                </div>
                <p className="text-3xl font-bold text-gray-800 leading-[1.4] print:text-base print:font-medium print:leading-normal print:bg-gray-100 print:p-4 print:rounded-b-2xl print:border-x-4 print:border-b-4 print:border-gray-900 print:-mt-4 relative z-10 print:text-justify max-w-full">
                  "{page.description}"
                </p>
-               <div className="p-8 bg-purple-50 rounded-3xl border border-purple-100/50 print:hidden">
+               <div className="p-8 bg-violet-50 rounded-3xl border border-violet-100/50 print:hidden">
                   <div className="flex items-start space-x-4">
-                     <Share2 className="text-purple-400 mt-1" size={24} />
+                     <Share2 className="text-violet-400 mt-1" size={24} />
                      <p className="text-gray-500 font-medium italic">
                         Characters in scene: {structure.characters.map(c => c.name).join(", ")}
                      </p>
@@ -106,13 +106,13 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
       </div>
 
       {/* Footer CTA */}
-      <div className="bg-gradient-to-r from-indigo-900 to-purple-900 rounded-[3rem] p-20 text-center space-y-10 shadow-2xl relative overflow-hidden print:hidden">
-         <div className="absolute -top-20 -right-20 w-80 h-80 bg-purple-500/20 blur-[100px] rounded-full"></div>
+      <div className="bg-gradient-to-r from-indigo-900 to-indigo-900 rounded-[3rem] p-20 text-center space-y-10 shadow-2xl relative overflow-hidden print:hidden">
+         <div className="absolute -top-20 -right-20 w-80 h-80 bg-violet-500/20 blur-[100px] rounded-full"></div>
          <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-indigo-500/20 blur-[100px] rounded-full"></div>
          
          <div className="relative space-y-4">
             <h2 className="text-5xl font-black text-white">Share Your Creation</h2>
-            <p className="text-purple-200 text-xl font-medium max-w-2xl mx-auto opacity-80">
+            <p className="text-violet-200 text-xl font-medium max-w-2xl mx-auto opacity-80">
               You've just created something magical. Download the full storybook or share it with the world!
             </p>
          </div>

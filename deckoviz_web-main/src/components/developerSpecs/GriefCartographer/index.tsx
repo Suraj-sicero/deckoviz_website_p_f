@@ -326,7 +326,7 @@ const GriefCartographer: React.FC = () => {
   }, [isSimulating, emotionalState]); // Re-init only when starting or changing state significantly
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen bg-[#020205] overflow-hidden selection:bg-purple-500/30">
+    <div ref={containerRef} className="relative w-full h-screen bg-[#020205] overflow-hidden selection:bg-violet-500/30">
       <AnimatePresence>
         {!isSimulating ? (
           <div className="absolute inset-0 flex items-center justify-center z-20 px-4">
@@ -343,14 +343,14 @@ const GriefCartographer: React.FC = () => {
               <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-white/10 rounded-tl-3xl" />
               <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-white/10 rounded-br-3xl" />
 
-              <div className="w-20 h-20 rounded-full bg-purple-500/10 flex items-center justify-center mx-auto mb-8 border border-purple-500/20">
-                <Wind className="text-purple-400 w-10 h-10 animate-pulse" />
+              <div className="w-20 h-20 rounded-full bg-violet-500/10 flex items-center justify-center mx-auto mb-8 border border-violet-500/20">
+                <Wind className="text-violet-400 w-10 h-10 animate-pulse" />
               </div>
 
               <h1 className="text-4xl font-black text-white mb-4 tracking-tighter uppercase italic">Grief Cartographer</h1>
               <p className="text-white/40 text-sm mb-10 leading-relaxed max-w-md mx-auto font-medium">
                 Translate the architecture of your internal landscape into a living, GPU-accelerated simulation.
-                <br /><span className="text-purple-400/60 text-[10px] uppercase tracking-widest mt-2 block">Neural Resonance Mapping // v.4.1</span>
+                <br /><span className="text-violet-400/60 text-[10px] uppercase tracking-widest mt-2 block">Neural Resonance Mapping // v.4.1</span>
               </p>
 
               <div className="relative group mb-8">
@@ -358,7 +358,7 @@ const GriefCartographer: React.FC = () => {
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   placeholder="Describe what you carry..."
-                  className="w-full h-40 bg-black/40 border border-white/10 rounded-3xl p-6 text-white placeholder:text-gray-600 focus:outline-none focus:border-purple-500/40 transition-all resize-none font-medium leading-relaxed"
+                  className="w-full h-40 bg-black/40 border border-white/10 rounded-3xl p-6 text-white placeholder:text-gray-600 focus:outline-none focus:border-violet-500/40 transition-all resize-none font-medium leading-relaxed"
                 />
                 <div className="absolute bottom-4 right-6 text-[10px] text-white/20 uppercase tracking-widest pointer-events-none">
                   Secure Local Processing
@@ -374,7 +374,7 @@ const GriefCartographer: React.FC = () => {
               </button>
 
               <div className="mt-10 flex items-center justify-center space-x-3 text-[10px] text-white/20 uppercase tracking-[0.4em] font-bold">
-                <ShieldCheck size={14} className="text-purple-500" />
+                <ShieldCheck size={14} className="text-violet-500" />
                 <span>Privacy Encrypted Simulation</span>
               </div>
             </motion.div>
@@ -394,16 +394,16 @@ const GriefCartographer: React.FC = () => {
                   className="flex items-center gap-6"
                 >
                   <div className="relative">
-                    <div className="w-16 h-16 rounded-full border-2 border-purple-500/20 flex items-center justify-center backdrop-blur-xl">
-                      <Scan className="w-8 h-8 text-purple-400 animate-pulse" />
+                    <div className="w-16 h-16 rounded-full border-2 border-violet-500/20 flex items-center justify-center backdrop-blur-xl">
+                      <Scan className="w-8 h-8 text-violet-400 animate-pulse" />
                     </div>
-                    <div className="absolute inset-0 border-t-2 border-purple-400 rounded-full animate-spin duration-[4000ms]" />
+                    <div className="absolute inset-0 border-t-2 border-violet-400 rounded-full animate-spin duration-[4000ms]" />
                   </div>
                   <div>
                     <h2 className="text-2xl font-black text-white tracking-tighter uppercase italic">Neural Landscape</h2>
                     <div className="flex items-center gap-2 mt-1">
-                      <span className="w-2 h-2 rounded-full bg-purple-500 animate-ping" />
-                      <p className="text-[10px] text-purple-400/60 uppercase tracking-[0.6em]">Emotional Topology Capture // Active</p>
+                      <span className="w-2 h-2 rounded-full bg-violet-500 animate-ping" />
+                      <p className="text-[10px] text-violet-400/60 uppercase tracking-[0.6em]">Emotional Topology Capture // Active</p>
                     </div>
                   </div>
                 </motion.div>
@@ -452,7 +452,7 @@ const GriefCartographer: React.FC = () => {
                     <Activity size={80} />
                   </div>
 
-                  <div className="flex items-center gap-3 text-purple-400 border-b border-white/10 pb-4">
+                  <div className="flex items-center gap-3 text-violet-400 border-b border-white/10 pb-4">
                     <Layers size={18} className="animate-pulse" />
                     <span className="text-[10px] font-bold uppercase tracking-[0.4em]">Environmental Telemetry</span>
                   </div>
@@ -473,7 +473,7 @@ const GriefCartographer: React.FC = () => {
                           <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: `${m.val * 100}%` }}
-                            className="h-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                            className="h-full bg-violet-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"
                           />
                         </div>
                       </div>
@@ -491,14 +491,14 @@ const GriefCartographer: React.FC = () => {
 
                   <div className="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-3xl flex gap-12 w-[30rem] relative overflow-hidden">
                     <div className="flex-1 space-y-4">
-                      <div className="flex items-center gap-2 text-purple-400">
+                      <div className="flex items-center gap-2 text-violet-400">
                         <Box size={14} />
                         <span className="text-[10px] font-bold uppercase tracking-widest">Neural Load</span>
                       </div>
                       <div className="h-1 bg-white/5 rounded-full overflow-hidden">
                         <motion.div
                           animate={{ width: isPaused ? "0%" : "85%" }}
-                          className="h-full bg-purple-400 shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                          className="h-full bg-violet-400 shadow-[0_0_10px_rgba(168,85,247,0.5)]"
                           transition={{ duration: 2, repeat: Infinity }}
                         />
                       </div>

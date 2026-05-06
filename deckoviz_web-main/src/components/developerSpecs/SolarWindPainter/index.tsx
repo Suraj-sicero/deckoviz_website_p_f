@@ -405,10 +405,10 @@ const SolarWindPainter: React.FC = () => {
 
               <div className="flex items-center justify-between space-x-8">
                 <div className="flex items-center space-x-2">
-                  <Database size={14} className="text-purple-400" />
+                  <Database size={14} className="text-violet-400" />
                   <span className="text-gray-400 text-[11px]">PROTON DENSITY</span>
                 </div>
-                <span className="text-purple-400 text-[11px]">{data.density.toFixed(1)} p/cc</span>
+                <span className="text-violet-400 text-[11px]">{data.density.toFixed(1)} p/cc</span>
               </div>
 
               <div className="flex items-center justify-between space-x-8">

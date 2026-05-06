@@ -280,7 +280,7 @@ export function buildSparkAtmosphere(
     }
 
     // Stars (night / space / twilight)
-    if (['night_stars','twilight_purple','space'].includes(schema.sky.mood) || schema.terrain === 'space') {
+    if (['night_stars','twilight_violet','space'].includes(schema.sky.mood) || schema.terrain === 'space') {
       const stars = buildStars(animateT);
       scene.add(stars);
     }

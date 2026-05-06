@@ -3,7 +3,7 @@ id: 26
 title: "The Future of Hotels Is Emotional, Not Transactional"
 description: "How Deckoviz DASP redefines hospitality by turning hotels into living, emotional experiences guests remember."
 tag: "Enterprise"
-tagColor: "bg-purple-100 text-purple-700"
+tagColor: "bg-violet-100 text-violet-700"
 date: "January 29, 2026"
 readTime: "10 min read"
 pinned: false

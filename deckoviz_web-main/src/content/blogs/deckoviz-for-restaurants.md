@@ -3,7 +3,7 @@ id: 26
 title: "The Future of Restaurants Is Experiential"
 description: "How Deckoviz DASP transforms dining spaces into living brand experiences."
 tag: "Enterprise"
-tagColor: "bg-purple-100 text-purple-700"
+tagColor: "bg-violet-100 text-violet-700"
 date: "March 2025"
 readTime: "10 min read"
 pinned: false

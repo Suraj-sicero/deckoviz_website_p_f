@@ -10,8 +10,8 @@ const toolCategories = [
     id: "audio-story",
     label: "Audio & Story Creation",
     emoji: "🎙️",
-    color: "from-violet-500 to-purple-600",
-    bg: "from-violet-50 to-purple-50",
+    color: "from-violet-500 to-indigo-600",
+    bg: "from-violet-50 to-indigo-50",
     border: "border-violet-200",
     tools: [
       {
@@ -41,7 +41,7 @@ const toolCategories = [
         icon: "📖",
         route: "/tools/storybook",
         badge: "Beta",
-        accent: "purple",
+        accent: "violet",
         creditCost: "5 credits / 10 pages",
       },
       {
@@ -51,7 +51,7 @@ const toolCategories = [
         icon: "✍️",
         route: "/tools/short-story",
         badge: "New",
-        accent: "purple",
+        accent: "violet",
         creditCost: "5 credits / 10 pages",
       },
       {
@@ -61,7 +61,7 @@ const toolCategories = [
         icon: "💥",
         route: "/tools/comic",
         badge: "New",
-        accent: "purple",
+        accent: "violet",
         creditCost: "5 credits / 10 pages",
       },
       {
@@ -251,15 +251,11 @@ const toolCategories = [
 // Accent colour maps for Tailwind
 const accentMap: Record<string, { btn: string; ring: string; glow: string }> = {
   violet: {
-    btn: "bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500",
+    btn: "bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500",
     ring: "ring-violet-400",
     glow: "shadow-violet-200",
   },
-  purple: {
-    btn: "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500",
-    ring: "ring-purple-400",
-    glow: "shadow-purple-200",
-  },
+
   pink: {
     btn: "bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-400 hover:to-rose-500",
     ring: "ring-pink-400",
@@ -323,31 +319,29 @@ const ToolCard: React.FC<ToolCardProps> = ({
     >
       {/* Background glow */}
       <div
-        className={`absolute inset-0 bg-gradient-to-br ${
-          accent === "violet"
-            ? "from-violet-50/60 to-purple-50/60"
-            : accent === "purple"
-            ? "from-purple-50/60 to-indigo-50/60"
+        className={`absolute inset-0 bg-gradient-to-br ${accent === "violet"
+          ? "from-violet-50/60 to-indigo-50/60"
+          : accent === "violet"
+            ? "from-violet-50/60 to-indigo-50/60"
             : accent === "pink"
-            ? "from-pink-50/60 to-rose-50/60"
-            : accent === "blue"
-            ? "from-blue-50/60 to-indigo-50/60"
-            : accent === "amber"
-            ? "from-amber-50/60 to-orange-50/60"
-            : "from-cyan-50/60 to-teal-50/60"
-        } opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`}
+              ? "from-pink-50/60 to-rose-50/60"
+              : accent === "blue"
+                ? "from-blue-50/60 to-indigo-50/60"
+                : accent === "amber"
+                  ? "from-amber-50/60 to-orange-50/60"
+                  : "from-cyan-50/60 to-teal-50/60"
+          } opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl`}
       />
 
       {/* Badge */}
       {badge && (
         <span
-          className={`absolute top-4 right-4 text-xs font-bold px-2.5 py-1 rounded-full text-white ${
-            badge === "Live"
-              ? "bg-emerald-500"
-              : badge === "New"
+          className={`absolute top-4 right-4 text-xs font-bold px-2.5 py-1 rounded-full text-white ${badge === "Live"
+            ? "bg-emerald-500"
+            : badge === "New"
               ? "bg-pink-500"
               : "bg-amber-500"
-          }`}
+            }`}
         >
           {badge}
         </span>
@@ -355,19 +349,18 @@ const ToolCard: React.FC<ToolCardProps> = ({
 
       {/* Icon */}
       <div
-        className={`relative text-4xl mb-4 w-16 h-16 flex items-center justify-center rounded-2xl bg-gradient-to-br ${
-          accent === "violet"
-            ? "from-violet-100 to-purple-100"
-            : accent === "purple"
-            ? "from-purple-100 to-indigo-100"
+        className={`relative text-4xl mb-4 w-16 h-16 flex items-center justify-center rounded-2xl bg-gradient-to-br ${accent === "violet"
+          ? "from-violet-100 to-indigo-100"
+          : accent === "violet"
+            ? "from-violet-100 to-indigo-100"
             : accent === "pink"
-            ? "from-pink-100 to-rose-100"
-            : accent === "blue"
-            ? "from-blue-100 to-indigo-100"
-            : accent === "amber"
-            ? "from-amber-100 to-orange-100"
-            : "from-cyan-100 to-teal-100"
-        } transition-transform duration-300 group-hover:scale-110`}
+              ? "from-pink-100 to-rose-100"
+              : accent === "blue"
+                ? "from-blue-100 to-indigo-100"
+                : accent === "amber"
+                  ? "from-amber-100 to-orange-100"
+                  : "from-cyan-100 to-teal-100"
+          } transition-transform duration-300 group-hover:scale-110`}
       >
         {icon}
       </div>
@@ -410,7 +403,7 @@ const FloatingOrb: React.FC<{
 
 const Particle: React.FC<{ style: React.CSSProperties }> = ({ style }) => (
   <div
-    className="absolute w-1 h-1 rounded-full bg-purple-400 opacity-60 animate-float pointer-events-none"
+    className="absolute w-1 h-1 rounded-full bg-violet-400 opacity-60 animate-float pointer-events-none"
     style={style}
   />
 );
@@ -480,9 +473,9 @@ const CreativeStudio: React.FC = () => {
           style={{ transform: `translate(${parallaxX * 0.5}px, ${parallaxY * 0.5}px)` }}
         >
           {/* Pill badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-purple-100 shadow-md mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur border border-violet-100 shadow-md mb-8">
             <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-            <span className="text-sm font-semibold text-purple-700">Powered by Vizzy AI · 17 Creative Tools</span>
+            <span className="text-sm font-semibold text-violet-700">Powered by Vizzy AI · 17 Creative Tools</span>
           </div>
 
           {/* Title */}
@@ -517,7 +510,7 @@ const CreativeStudio: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
               href="#tools"
-              className="px-8 py-4 rounded-2xl text-white font-bold text-base shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-purple-300"
+              className="px-8 py-4 rounded-2xl text-white font-bold text-base shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-violet-300"
               style={{
                 background: "linear-gradient(135deg, #7c3aed, #a855f7, #ec4899)",
                 boxShadow: "0 8px 32px rgba(124,58,237,0.35)",
@@ -527,7 +520,7 @@ const CreativeStudio: React.FC = () => {
             </a>
             <button
               onClick={() => user ? setIsCreditModalOpen(true) : openAuthModal()}
-              className="px-8 py-4 rounded-2xl font-bold text-base border-2 border-purple-200 text-purple-700 bg-white/70 backdrop-blur hover:bg-purple-50 hover:border-purple-400 transition-all duration-300 hover:scale-105 flex items-center gap-2"
+              className="px-8 py-4 rounded-2xl font-bold text-base border-2 border-violet-200 text-violet-700 bg-white/70 backdrop-blur hover:bg-violet-50 hover:border-violet-400 transition-all duration-300 hover:scale-105 flex items-center gap-2"
             >
               <span className="text-xl">🪙</span> {credits} Credits
             </button>
@@ -537,7 +530,7 @@ const CreativeStudio: React.FC = () => {
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-60">
           <span className="text-xs font-medium text-gray-400 tracking-widest uppercase">Scroll</span>
-          <div className="w-px h-12 bg-gradient-to-b from-purple-400 to-transparent animate-pulse" />
+          <div className="w-px h-12 bg-gradient-to-b from-violet-400 to-transparent animate-pulse" />
         </div>
       </section>
 
@@ -546,7 +539,7 @@ const CreativeStudio: React.FC = () => {
 
         {/* Section header */}
         <div className="text-center mb-20">
-          <p className="text-sm font-bold uppercase tracking-widest text-purple-500 mb-3">Available Now</p>
+          <p className="text-sm font-bold uppercase tracking-widest text-violet-500 mb-3">Available Now</p>
           <h2
             className="text-4xl md:text-5xl font-black text-gray-900 mb-4"
             style={{ letterSpacing: "-0.02em" }}
@@ -575,11 +568,10 @@ const CreativeStudio: React.FC = () => {
 
               {/* Cards */}
               <div
-                className={`grid gap-6 ${
-                  category.tools.length === 1
-                    ? "grid-cols-1 max-w-md"
-                    : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-                }`}
+                className={`grid gap-6 ${category.tools.length === 1
+                  ? "grid-cols-1 max-w-md"
+                  : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+                  }`}
               >
                 {category.tools.map((tool, idx) => (
                   <ToolCard
@@ -601,7 +593,7 @@ const CreativeStudio: React.FC = () => {
       </section>
 
       {/* ── HOW IT WORKS ─────────────────────────────────────────────────── */}
-      <section className="px-6 py-24 bg-gradient-to-br from-purple-900 via-violet-900 to-indigo-900 relative overflow-hidden">
+      <section className="px-6 py-24 bg-gradient-to-br from-violet-900 via-violet-900 to-indigo-900 relative overflow-hidden">
         {/* BG decoration */}
         <div className="absolute inset-0 opacity-10">
           {Array.from({ length: 30 }).map((_, i) => (
@@ -620,7 +612,7 @@ const CreativeStudio: React.FC = () => {
         </div>
 
         <div className="relative max-w-5xl mx-auto text-center">
-          <p className="text-sm font-bold uppercase tracking-widest text-purple-300 mb-3">Universal Flow</p>
+          <p className="text-sm font-bold uppercase tracking-widest text-violet-300 mb-3">Universal Flow</p>
           <h2 className="text-4xl md:text-5xl font-black text-white mb-16" style={{ letterSpacing: "-0.02em" }}>
             Every Tool. One Flow.
           </h2>
@@ -640,7 +632,7 @@ const CreativeStudio: React.FC = () => {
                   <div className="hidden md:block absolute top-1/2 -right-3 w-6 h-0.5 bg-white/30 z-10" />
                 )}
                 <div className="text-3xl mb-3">{item.icon}</div>
-                <span className="text-xs font-bold text-purple-300 tracking-widest">{item.step}</span>
+                <span className="text-xs font-bold text-violet-300 tracking-widest">{item.step}</span>
                 <h4 className="text-lg font-bold text-white mt-1 mb-1">{item.label}</h4>
                 <p className="text-sm text-white/60">{item.desc}</p>
               </div>
@@ -655,7 +647,7 @@ const CreativeStudio: React.FC = () => {
         <div className="flex flex-wrap justify-center gap-4">
           {[
             { name: "Google Gemini", icon: "🧠", color: "from-blue-50 to-indigo-50 border-blue-200 text-blue-700" },
-            { name: "ElevenLabs", icon: "🎙️", color: "from-violet-50 to-purple-50 border-violet-200 text-violet-700" },
+            { name: "ElevenLabs", icon: "🎙️", color: "from-violet-50 to-indigo-50 border-violet-200 text-violet-700" },
             { name: "Stable Diffusion", icon: "🎨", color: "from-orange-50 to-amber-50 border-orange-200 text-orange-700" },
             { name: "MusicGen AI", icon: "🎵", color: "from-cyan-50 to-teal-50 border-cyan-200 text-teal-700" },
           ].map((api) => (
@@ -691,13 +683,13 @@ const CreativeStudio: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <a
                 href="#tools"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-purple-700 font-bold text-base hover:bg-purple-50 transition-all duration-300 hover:scale-105 shadow-xl"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-white text-violet-700 font-bold text-base hover:bg-violet-50 transition-all duration-300 hover:scale-105 shadow-xl"
               >
                 ✨ Start Creating Now
               </a>
               <button
                 onClick={() => user ? setIsCreditModalOpen(true) : openAuthModal()}
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-purple-800/80 text-white font-bold text-base hover:bg-purple-700 transition-all duration-300 hover:scale-105 shadow-xl"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-violet-800/80 text-white font-bold text-base hover:bg-violet-700 transition-all duration-300 hover:scale-105 shadow-xl"
               >
                 🪙 Top Up Credits
               </button>
@@ -705,11 +697,9 @@ const CreativeStudio: React.FC = () => {
           </div>
         </div>
       </section>
-      <CreditSystemModal 
-        isOpen={isCreditModalOpen} 
-        onClose={() => setIsCreditModalOpen(false)} 
-        credits={credits}
-        
+      <CreditSystemModal
+        isOpen={isCreditModalOpen}
+        onClose={() => setIsCreditModalOpen(false)}
       />
     </div>
   );

@@ -223,9 +223,9 @@ const WorldScene: React.FC<WorldSceneProps> = ({ textureUrl, prompt, marbleWorld
       {/* Splat loading indicator */}
       {splatLoading && (
         <div className="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2
-                        bg-black/60 backdrop-blur-sm border border-purple-500/30 px-4 py-2 rounded-full">
-          <span className="w-3 h-3 border-2 border-purple-400 border-t-transparent rounded-full animate-spin" />
-          <span className="text-purple-300 text-xs font-mono">Loading Marble Gaussian Splats…</span>
+                        bg-black/60 backdrop-blur-sm border border-violet-500/30 px-4 py-2 rounded-full">
+          <span className="w-3 h-3 border-2 border-violet-400 border-t-transparent rounded-full animate-spin" />
+          <span className="text-violet-300 text-xs font-mono">Loading Marble Gaussian Splats…</span>
         </div>
       )}
 

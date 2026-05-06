@@ -34,7 +34,7 @@ const developerTools = [
     description: "Elegant sound visualization with frequency analysis",
     route: "/developer-specs/audio-waves",
     icon: <Music size={24} className="text-pink-500" />,
-    color: "from-pink-500/20 to-purple-500/20",
+    color: "from-pink-500/20 to-indigo-500/20",
     borderColor: "group-hover:border-pink-500/50"
   },
   {
@@ -122,7 +122,7 @@ const developerTools = [
     description: "Beautiful generative visualizations of complex data",
     route: "/developer-specs/data-as-art",
     icon: <BarChart3 size={24} className="text-indigo-400" />,
-    color: "from-indigo-400/20 to-purple-400/20",
+    color: "from-indigo-400/20 to-indigo-400/20",
     borderColor: "group-hover:border-indigo-400/50"
   },
   {
@@ -153,9 +153,9 @@ const developerTools = [
     title: "Dream Architecture",
     description: "Impossible and surreal spatial structures",
     route: "/developer-specs/dream-architecture",
-    icon: <Building2 size={24} className="text-purple-400" />,
-    color: "from-purple-400/20 to-pink-400/20",
-    borderColor: "group-hover:border-purple-400/50"
+    icon: <Building2 size={24} className="text-violet-400" />,
+    color: "from-violet-400/20 to-pink-400/20",
+    borderColor: "group-hover:border-violet-400/50"
   },
   {
     title: "Organism Sim",
@@ -218,16 +218,16 @@ const developerTools = [
     description: "Full-screen immersive experience reconstructing historical pigments with narrative context",
     route: "/developer-specs/extinct-color",
     icon: <Palette size={24} className="text-pink-500" />,
-    color: "from-pink-500/20 to-purple-500/20",
+    color: "from-pink-500/20 to-indigo-500/20",
     borderColor: "group-hover:border-pink-500/50"
   },
   {
     title: "Thought Weaver",
     description: "A living knowledge graph that expands and behaves like a thinking mind",
     route: "/developer-specs/thought-weaver",
-    icon: <Brain size={24} className="text-purple-400" />,
-    color: "from-purple-400/20 to-pink-400/20",
-    borderColor: "group-hover:border-purple-400/50"
+    icon: <Brain size={24} className="text-violet-400" />,
+    color: "from-violet-400/20 to-pink-400/20",
+    borderColor: "group-hover:border-violet-400/50"
   },
   {
     title: "Sound Archaeology",
@@ -298,7 +298,7 @@ const developerTools = [
     description: "Convert emotions and memories into deterministic molecular diagrams",
     route: "/developer-specs/emotion-alchemy",
     icon: <Microscope size={24} className="text-blue-400" />,
-    color: "from-blue-400/20 to-purple-400/20",
+    color: "from-blue-400/20 to-indigo-400/20",
     borderColor: "group-hover:border-blue-400/50"
   },
   {
@@ -345,9 +345,9 @@ const developerTools = [
     title: "Neural Firestorm",
     description: "Stable, emergent spiking neural network exhibiting coherent wave dynamics and brain states",
     route: "/developer-specs/neural-firestorm",
-    icon: <Brain size={24} className="text-purple-500" />,
-    color: "from-purple-500/20 to-pink-500/20",
-    borderColor: "group-hover:border-purple-500/50"
+    icon: <Brain size={24} className="text-violet-500" />,
+    color: "from-violet-500/20 to-pink-500/20",
+    borderColor: "group-hover:border-violet-500/50"
   },
   {
     title: "The Grief Cartographer",
@@ -378,7 +378,7 @@ const developerTools = [
     description: "Immersive perceptual field mapping sound into spatial colour landscapes across multiple modes",
     route: "/developer-specs/synesthesia-engine",
     icon: <Volume2 size={24} className="text-pink-400" />,
-    color: "from-pink-400/20 to-purple-400/20",
+    color: "from-pink-400/20 to-indigo-400/20",
     borderColor: "group-hover:border-pink-400/50"
   },
   {
@@ -401,9 +401,9 @@ const developerTools = [
     title: "The Dream Taxonomy",
     description: "Living, evolving personal constellation of dreams where symbolic patterns emerge over time",
     route: "/developer-specs/dream-taxonomy",
-    icon: <Moon size={24} className="text-purple-400" />,
-    color: "from-purple-400/20 to-indigo-400/20",
-    borderColor: "group-hover:border-purple-400/50"
+    icon: <Moon size={24} className="text-violet-400" />,
+    color: "from-violet-400/20 to-indigo-400/20",
+    borderColor: "group-hover:border-violet-400/50"
   },
   {
     title: "Cosmic Background Portrait",
@@ -500,7 +500,7 @@ const ExperimentalArtModes: React.FC = () => {
     <div className="min-h-screen bg-[#050505] text-white pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       {/* Background Glow */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/10 rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-violet-600/10 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px]" />
       </div>
 
@@ -511,7 +511,7 @@ const ExperimentalArtModes: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent mb-4">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-violet-200 to-white bg-clip-text text-transparent mb-4">
               Experimental Art Modes
             </h1>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -543,7 +543,7 @@ const ExperimentalArtModes: React.FC = () => {
                 <p className="text-gray-400 text-sm leading-relaxed mb-4 group-hover:text-gray-200 transition-colors">
                   {tool.description}
                 </p>
-                <div className="flex items-center text-xs font-semibold text-purple-400 group-hover:text-white transition-colors">
+                <div className="flex items-center text-xs font-semibold text-violet-400 group-hover:text-white transition-colors">
                   <span>ACTIVATE MODE</span>
                   <ArrowRight size={14} className="ml-2 transform group-hover:translate-x-1 transition-transform" />
                 </div>

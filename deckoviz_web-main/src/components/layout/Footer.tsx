@@ -92,7 +92,7 @@ const Footer = () => {
           {/* Glowing orbs in background */}
           <div className="absolute inset-0 pointer-events-none">
             <motion.div
-              className="absolute top-20 left-10 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl"
+              className="absolute top-20 left-10 w-64 h-64 bg-violet-500/20 rounded-full blur-3xl"
               animate={{
                 scale: [1, 1.2, 1],
                 opacity: [0.3, 0.5, 0.3],

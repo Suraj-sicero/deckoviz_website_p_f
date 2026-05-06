@@ -117,7 +117,7 @@ const MemoryLandscapes: React.FC = () => {
                             <button 
                                 onClick={handleGenerate}
                                 disabled={isGenerating}
-                                className={`p-4 rounded-full transition-all ${isGenerating ? 'bg-indigo-500/50 cursor-wait' : 'bg-gradient-to-tr from-indigo-600 to-purple-600 hover:scale-105 active:scale-95'} text-white shadow-xl`}
+                                className={`p-4 rounded-full transition-all ${isGenerating ? 'bg-indigo-500/50 cursor-wait' : 'bg-gradient-to-tr from-indigo-600 to-indigo-600 hover:scale-105 active:scale-95'} text-white shadow-xl`}
                             >
                                 {isGenerating ? <RotateCcw className="animate-spin" size={20} /> : <Send size={20} />}
                             </button>

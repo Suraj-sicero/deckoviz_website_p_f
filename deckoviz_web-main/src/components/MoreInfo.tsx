@@ -4,8 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 const GradientTable = ({ headers, rows }: any) => {
   const gradients = [
-    "from-indigo-500 to-purple-500",
-    "from-purple-500 to-pink-500",
+    "from-indigo-500 to-indigo-500",
+    "from-violet-500 to-pink-500",
     "from-pink-500 to-rose-500",
     "from-orange-400 to-amber-400"
   ];
@@ -45,7 +45,7 @@ export default function MoreInfo() {
 
       {/* Fairy Light Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-purple-400/30 rounded-full blur-[160px]" />
+        <div className="absolute -top-40 left-1/4 w-[500px] h-[500px] bg-violet-400/30 rounded-full blur-[160px]" />
         <div className="absolute top-1/3 right-1/4 w-[500px] h-[500px] bg-pink-400/25 rounded-full blur-[160px]" />
         <div className="absolute bottom-0 left-1/3 w-[500px] h-[500px] bg-indigo-400/25 rounded-full blur-[160px]" />
       </div>
@@ -67,7 +67,7 @@ shadow-[0_40px_120px_rgba(168,85,247,0.20)]"
 
           >
 
-            <h2 className="text-3xl font-semibold mb-6 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent tracking-wide">
+            <h2 className="text-3xl font-semibold mb-6 bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent tracking-wide">
               {section.title}
             </h2>
 

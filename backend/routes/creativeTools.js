@@ -23,7 +23,7 @@ dotenv.config();
 const router = express.Router();
 
 // Multer — memory storage for PDFs
-const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 20 * 1024 * 1024 } });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 200 * 1024 * 1024 } });
 
 // ──────────────────────────────────────────────────────────────────────────────
 // HELPERS

@@ -46,7 +46,7 @@ export default function DASPGuide() {
         <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/10" />
         <div className="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full bg-pink-200/40 blur-[75px]" />
         <div className="absolute top-20 left-28 h-[360px] w-[360px] rounded-full bg-fuchsia-200/40 blur-[85px]" />
-        <div className="absolute -top-20 right-0 h-[520px] w-[520px] rounded-full bg-purple-200/40 blur-[90px]" />
+        <div className="absolute -top-20 right-0 h-[520px] w-[520px] rounded-full bg-violet-200/40 blur-[90px]" />
         <div className="absolute -bottom-40 left-10 h-[520px] w-[520px] rounded-full bg-pink-300/35 blur-[95px]" />
       </div>
 

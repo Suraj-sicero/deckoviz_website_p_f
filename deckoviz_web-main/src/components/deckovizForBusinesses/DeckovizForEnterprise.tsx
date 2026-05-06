@@ -119,10 +119,10 @@ const EnterpriseFeatureCard = ({
   const themes: {
     [key: string]: { gradient: string; text: string; accent: string };
   } = {
-    purple: {
-      gradient: "from-purple-500 to-indigo-500",
-      text: "text-purple-600",
-      accent: "group-hover:from-purple-400",
+    violet: {
+      gradient: "from-violet-500 to-indigo-500",
+      text: "text-violet-600",
+      accent: "group-hover:from-violet-400",
     },
     blue: {
       gradient: "from-blue-500 to-cyan-500",
@@ -136,7 +136,7 @@ const EnterpriseFeatureCard = ({
     },
   };
 
-  const theme = themes[themeColor] || themes.purple;
+  const theme = themes[themeColor] || themes.violet;
 
 
 
@@ -255,7 +255,7 @@ if (error) {
 
       <div className="relative w-full max-w-lg">
 
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-30"></div>
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500 rounded-2xl blur opacity-30"></div>
 
         <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full border border-white/40">
 
@@ -351,7 +351,7 @@ if (error) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition disabled:opacity-50"
                 >
                   {loading ? "Submitting..." : "Submit Request"}
                 </button>
@@ -718,10 +718,10 @@ const extraFeatures = [
     <Link
       key={post.slug}
       to={`/blog/${post.slug}`}
-      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-purple-400 transition"
+      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-violet-400 transition"
     >
       <div className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition pointer-events-none
-        bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
+        bg-gradient-to-r from-violet-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
 
       <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
         <img
@@ -732,7 +732,7 @@ const extraFeatures = [
       </div>
 
       <div className="relative flex-grow">
-        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition">
+        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-violet-600 transition">
           {post.title}
         </h3>
 
@@ -742,7 +742,7 @@ const extraFeatures = [
           </p>
         )}
 
-        <div className="mt-2 text-sm text-purple-600 opacity-0 group-hover:opacity-100 transition">
+        <div className="mt-2 text-sm text-violet-600 opacity-0 group-hover:opacity-100 transition">
           Read →
         </div>
       </div>
@@ -763,14 +763,14 @@ const extraFeatures = [
             {/* Badge */}
             <div className="mb-6">
               <span className="inline-flex items-center px-4 py-1.5 
-              bg-gradient-to-r from-indigo-600 to-purple-600 
+              bg-gradient-to-r from-indigo-600 to-indigo-600 
               text-white text-xs font-semibold rounded-full shadow-lg">
                 ✦ Deckoviz For Business
               </span>
             </div>
                   <div className="
             absolute inset-0 rounded-[40px] 
-            bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
+            bg-gradient-to-r from-violet-500/20 via-indigo-500/20 to-pink-500/20 
             blur-3xl opacity-40 
             group-hover:opacity-70 
             transition duration-500
@@ -801,7 +801,7 @@ const extraFeatures = [
               
               <Button
                 onClick={() => setIsModalOpen(true)}
-                className="w-full sm:w-auto bg-gradient-to-r from-red-600 via-purple-600 to-violet-600 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-gradient-to-r from-red-600 via-violet-600 to-violet-600 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
               >
                 <Calendar size={18} />
                 <span className="text-center">Schedule Your Enterprise Demo</span>
@@ -815,7 +815,7 @@ const extraFeatures = [
               >
                 <Button
                   variant="secondary"
-                  className="w-full sm:w-auto bg-gradient-to-r from-violet-600 via-purple-600 to-red-600 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto bg-gradient-to-r from-violet-600 via-violet-600 to-red-600 text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
                 >
                   Download Brochure
                 </Button>
@@ -831,7 +831,7 @@ const extraFeatures = [
             {/* glow on hover */}
             <div className="
             absolute inset-0 rounded-[40px] 
-            bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
+            bg-gradient-to-r from-violet-500/20 via-indigo-500/20 to-pink-500/20 
             blur-3xl opacity-40 
             group-hover:opacity-70 
             transition duration-500
@@ -883,7 +883,7 @@ const extraFeatures = [
         {/* Ambient Glow */}
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 
         w-[400px] h-[400px] md:w-[700px] md:h-[700px] 
-        bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 
+        bg-gradient-to-br from-violet-500/30 via-pink-500/25 to-indigo-500/20 
         blur-[120px] md:blur-[160px]" />
 
         <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
@@ -1268,7 +1268,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
       <motion.div
         animate={{ y: [0, -60, 0], x: [0, 50, 0], scale: [1, 1.15, 1], rotate: [0, 45, 0] }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[-15%] right-[-10%] w-[800px] h-[800px] bg-gradient-to-br from-indigo-400/30 via-purple-300/30 to-fuchsia-300/20 rounded-[40%] blur-[120px] pointer-events-none"
+        className="absolute top-[-15%] right-[-10%] w-[800px] h-[800px] bg-gradient-to-br from-indigo-400/30 via-violet-300/30 to-fuchsia-300/20 rounded-[40%] blur-[120px] pointer-events-none"
       />
       <motion.div
         animate={{ y: [0, 60, 0], x: [0, -50, 0], scale: [1, 1.2, 1], rotate: [0, -45, 0] }}
@@ -1296,7 +1296,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             The Intelligent Ambience & Storytelling Layer
-            <span className="block mt-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500 bg-clip-text text-transparent pb-2 drop-shadow-md">
+            <span className="block mt-4 bg-gradient-to-r from-indigo-500 via-violet-500 to-rose-500 bg-clip-text text-transparent pb-2 drop-shadow-md">
               for Enterprise Spaces
             </span>
           </motion.h1>
@@ -1314,7 +1314,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
             variants={fadeUp}
             className="mt-10 text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
           >
-            Deckoviz for Enterprise is an <strong className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">AI-powered ambience, storytelling, and personalization platform </strong>that transforms
+            Deckoviz for Enterprise is an <strong className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-indigo-600 font-bold">AI-powered ambience, storytelling, and personalization platform </strong>that transforms
             physical spaces into adaptive, expressive, revenue-supporting environments.
           </motion.p>
 
@@ -1367,11 +1367,11 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
         }}
       >
 
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-purple-400/30 via-pink-400/25 to-indigo-400/20 blur-[140px]" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-violet-400/30 via-pink-400/25 to-indigo-400/20 blur-[140px]" />
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
 
-          <h2 className="text-4xl font-semibold text-center mb-14 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h2 className="text-4xl font-semibold text-center mb-14 bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
             Additional Enterprise Features and Highlights
           </h2>
 
@@ -1388,7 +1388,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
               >
                 <div className="text-3xl mb-3">{feature.icon}</div>
 
-                <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-600 transition">
+                <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-violet-600 transition">
                   {feature.title}
                 </h3>
 
@@ -1396,7 +1396,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
                   {feature.description}
                 </p>
 
-                <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
+                <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-violet-500 via-pink-500 to-indigo-500 transition-all duration-500" />
               </motion.div>
             ))}
             <AnimatePresence>
@@ -1412,7 +1412,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
                   >
                     <div className="text-3xl mb-3">{feature.icon}</div>
 
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-600 transition">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-violet-600 transition">
                       {feature.title}
                     </h3>
 
@@ -1420,7 +1420,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
                       {feature.description}
                     </p>
 
-                    <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
+                    <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-violet-500 via-pink-500 to-indigo-500 transition-all duration-500" />
                   </motion.div>
                 ))}
             </AnimatePresence>
@@ -1430,7 +1430,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
           <div className="flex justify-center mt-14">
             <button
               onClick={() => setShowMore(!showMore)}
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white font-medium shadow-lg hover:scale-105 transition-all duration-300"
+              className="px-8 py-3 rounded-full bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 text-white font-medium shadow-lg hover:scale-105 transition-all duration-300"
             >
               {showMore ? "Show Less" : "View More Features"}
             </button>
@@ -1446,7 +1446,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
           <div className="text-center mb-10">
             <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight mb-7" style={{ fontFamily: "'Playfair Display', serif" }}>
               Learn More About
-              <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-pink-600 bg-clip-text text-transparent">
                 {" "}
                 Deckoviz
               </span>
@@ -1584,7 +1584,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
         style={{ fontFamily: "'Playfair Display', serif" }}
       >
         Benefits that{" "}
-        <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+        <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-pink-500">
           compound
         </span>
         , with enterprise-grade solutions
@@ -1594,7 +1594,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: false }}
-        className="p-8 rounded-3xl border border-purple-100/50 shadow-sm bg-white/40 backdrop-blur-md"
+        className="p-8 rounded-3xl border border-violet-100/50 shadow-sm bg-white/40 backdrop-blur-md"
       >
 
         <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
@@ -1621,7 +1621,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
         className="
         absolute left-5 md:left-1/2 top-0
         w-[2px]
-        bg-gradient-to-b from-purple-400 via-pink-400 to-transparent
+        bg-gradient-to-b from-violet-400 via-pink-400 to-transparent
         md:-translate-x-1/2
         origin-top
         "
@@ -1659,17 +1659,17 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
                 className="w-full md:w-[46%] pl-12 md:pl-0"
               >
 
-                <div className="p-6 md:p-8 rounded-[2.5rem] border border-purple-100 shadow-lg hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-500 bg-white group relative overflow-hidden">
+                <div className="p-6 md:p-8 rounded-[2.5rem] border border-violet-100 shadow-lg hover:shadow-2xl hover:shadow-violet-500/20 transition-all duration-500 bg-white group relative overflow-hidden">
 
                   <div className="flex items-center gap-5 mb-6">
 
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 to-pink-500 
                                     flex items-center justify-center text-white shadow-lg shrink-0 
                                     transform group-hover:scale-110 group-hover:rotate-3 transition-transform">
                       {feature.icon}
                     </div>
 
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-violet-600 transition-colors">
                       {feature.title}
                     </h3>
 
@@ -1681,7 +1681,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
 
                   {/* Glow */}
                   <div className="absolute bottom-0 left-0 h-1 w-full 
-                                  bg-gradient-to-r from-transparent via-purple-500 to-transparent 
+                                  bg-gradient-to-r from-transparent via-violet-500 to-transparent 
                                   opacity-0 group-hover:opacity-100 transition-opacity" />
 
                 </div>
@@ -1696,7 +1696,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: false }}
                   transition={{ delay: 0.3 }}
-                  className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-[4px] md:border-[5px] border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.6)]"
+                  className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-[4px] md:border-[5px] border-violet-500 shadow-[0_0_20px_rgba(168,85,247,0.6)]"
                 />
 
               </div>
@@ -1762,7 +1762,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
       px-6 py-3 sm:px-10 sm:py-4
       rounded-full
       text-sm sm:text-lg
-      bg-gradient-to-r from-red-600 via-purple-600 to-violet-600
+      bg-gradient-to-r from-red-600 via-violet-600 to-violet-600
       text-white
       shadow-[0_10px_30px_rgba(124,58,237,0.35)]
       hover:shadow-[0_20px_50px_rgba(124,58,237,0.55)]
@@ -1807,7 +1807,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
               rounded-[999px]
               text-center
               items-center justify-center
-              bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500
+              bg-gradient-to-r from-violet-500 via-pink-500 to-rose-500
               shadow-[0_12px_30px_rgba(168,85,247,0.35)]
               hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
               hover:scale-[1.02]
@@ -1850,7 +1850,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
               rounded-[999px]
               text-center
               items-center justify-center
-              bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500
+              bg-gradient-to-r from-blue-500 via-violet-500 to-indigo-500
               shadow-[0_12px_30px_rgba(99,102,241,0.35)]
               hover:shadow-[0_24px_60px_rgba(99,102,241,0.55)]
               hover:scale-[1.02]
@@ -1884,10 +1884,10 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
 
       <section className="bg-white py-20 border-t border-gray-100">
 {/* ================= EXPLORE FURTHER PREMIUM ================= */}
-<section className="relative py-28 bg-gradient-to-b from-white via-purple-50/40 to-white overflow-hidden">
+<section className="relative py-28 bg-gradient-to-b from-white via-violet-50/40 to-white overflow-hidden">
 
   {/* background glow orbs */}
-  <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-purple-400/20 blur-[120px] rounded-full" />
+  <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-violet-400/20 blur-[120px] rounded-full" />
   <div className="absolute bottom-[-120px] right-[-120px] w-[400px] h-[400px] bg-indigo-400/20 blur-[120px] rounded-full" />
 
   <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -1895,7 +1895,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
     {/* ===== Header ===== */}
     <div className="text-center mb-20">
       <h2 className="text-3xl md:text-5xl font-semibold tracking-tight mb-6 
-      bg-gradient-to-r from-purple-700 via-pink-600 to-indigo-600 
+      bg-gradient-to-r from-violet-700 via-pink-600 to-indigo-600 
       bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
         Explore Further
       </h2>
@@ -1918,8 +1918,8 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
       transition-all duration-300 border backdrop-blur-xl
       ${
         activeCategory === cat
-          ? "text-white border-transparent shadow-xl scale-[1.02] bg-gradient-to-r from-purple-600 to-pink-500"
-          : "bg-white/60 border-gray-200 text-gray-700 hover:border-purple-300 hover:shadow-md hover:bg-white"
+          ? "text-white border-transparent shadow-xl scale-[1.02] bg-gradient-to-r from-violet-600 to-pink-500"
+          : "bg-white/60 border-gray-200 text-gray-700 hover:border-violet-300 hover:shadow-md hover:bg-white"
       }`}
     >
       {cat}
@@ -1970,7 +1970,7 @@ index === hotelIndex ? "opacity-100" : "opacity-0"
             onClick={() => navigate("/more-info")}
             className="
       px-10 py-3 rounded-full
-      bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600
+      bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600
       text-white font-medium
       shadow-[0_20px_50px_rgba(168,85,247,0.35)]
       hover:shadow-[0_30px_70px_rgba(236,72,153,0.45)]

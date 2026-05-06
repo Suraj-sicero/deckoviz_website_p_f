@@ -21,8 +21,10 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
     setLoading(true);
 
     const endpoint = isLogin ? "/signin" : "/signup";
+    const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_URL = `${BASE_URL}/api/auth`;
     try {
-      const res = await axios.post(`http://localhost:5000/api/auth${endpoint}`, { email, password });
+      const res = await axios.post(`${API_URL}${endpoint}`, { email, password });
       login(res.data.token, res.data.user);
     } catch (err: any) {
       setError(err.response?.data?.error || "Authentication failed");
@@ -35,10 +37,10 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
       <div className="bg-white rounded-3xl w-full max-w-md overflow-hidden shadow-2xl relative">
         {/* Header */}
-        <div className="px-8 py-6 bg-gradient-to-r from-violet-600 to-purple-600 text-white flex justify-between items-center">
+        <div className="px-8 py-6 bg-gradient-to-r from-violet-600 to-indigo-600 text-white flex justify-between items-center">
           <div>
             <h2 className="text-2xl font-bold">{isLogin ? "Welcome Back" : "Create Account"}</h2>
-            <p className="text-purple-100 text-sm mt-1">
+            <p className="text-violet-100 text-sm mt-1">
               {isLogin ? "Login to continue your creative journey" : "Sign up and get 50 free credits"}
             </p>
           </div>
@@ -61,7 +63,7 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
               <input 
                 type="email" 
                 required
-                className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-purple-500 outline-none"
+                className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-violet-500 outline-none"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
@@ -71,7 +73,7 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
               <input 
                 type="password" 
                 required
-                className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-purple-500 outline-none"
+                className="w-full p-4 rounded-xl border border-gray-200 bg-gray-50 text-gray-900 focus:ring-2 focus:ring-violet-500 outline-none"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
@@ -80,7 +82,7 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full py-4 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-bold hover:scale-[1.02] transition-transform flex justify-center items-center gap-2"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 text-white font-bold hover:scale-[1.02] transition-transform flex justify-center items-center gap-2"
             >
               {loading ? "Processing..." : (isLogin ? "Sign In" : "Sign Up & Get 50 Credits 🪙")}
             </button>
@@ -89,7 +91,7 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
           <div className="mt-6 text-center">
             <button 
               onClick={() => setIsLogin(!isLogin)}
-              className="text-purple-600 font-bold hover:underline"
+              className="text-violet-600 font-bold hover:underline"
             >
               {isLogin ? "Need an account? Sign up" : "Already have an account? Sign in"}
             </button>

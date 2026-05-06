@@ -5,7 +5,7 @@ import { WaveSimulation } from './WaveSimulation';
 
 const PRESETS = {
     Ethereal: {
-        color1: [0.5, 0.2, 1.0], // Purple
+        color1: [0.5, 0.2, 1.0], // Violet
         color2: [0.0, 0.8, 1.0], // Cyan
         intensity: 0.8,
         patternMode: 0
@@ -199,7 +199,7 @@ const AudioWaves: React.FC = () => {
                                 onClick={() => handlePresetChange(p as keyof typeof PRESETS)}
                                 className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
                                     currentPreset === p 
-                                    ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white scale-105 shadow-lg' 
+                                    ? 'bg-gradient-to-r from-pink-500 to-indigo-600 text-white scale-105 shadow-lg' 
                                     : 'text-gray-400 hover:text-white hover:bg-white/5'
                                 }`}
                             >

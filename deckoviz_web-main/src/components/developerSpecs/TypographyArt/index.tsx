@@ -183,7 +183,7 @@ const TypographyArt: React.FC = () => {
                                 rendererRef.current.params.strength = Math.random() * 2;
                                 rendererRef.current.updateText(text);
                             }
-                        }} className="p-4 text-purple-400 hover:text-white bg-white/5 rounded-full transition-all group">
+                        }} className="p-4 text-violet-400 hover:text-white bg-white/5 rounded-full transition-all group">
                             <Wand2 size={20} className="group-hover:rotate-12 transition-transform" />
                         </button>
                 </div>

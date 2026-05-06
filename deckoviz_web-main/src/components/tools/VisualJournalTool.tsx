@@ -20,7 +20,7 @@ const moodPalettes: Record<string, { bg: string; text: string; border: string }>
   sad: { bg: "from-blue-100 to-indigo-100", text: "text-indigo-700", border: "border-indigo-200" },
   calm: { bg: "from-teal-100 to-cyan-100", text: "text-teal-700", border: "border-teal-200" },
   anxious: { bg: "from-red-100 to-rose-100", text: "text-rose-700", border: "border-rose-200" },
-  inspired: { bg: "from-violet-100 to-purple-100", text: "text-purple-700", border: "border-purple-200" },
+  inspired: { bg: "from-violet-100 to-indigo-100", text: "text-violet-700", border: "border-violet-200" },
   nostalgic: { bg: "from-amber-100 to-yellow-100", text: "text-amber-700", border: "border-amber-200" },
   default: { bg: "from-gray-100 to-slate-100", text: "text-gray-700", border: "border-gray-200" },
 };
