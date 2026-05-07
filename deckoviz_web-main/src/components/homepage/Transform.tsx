@@ -54,7 +54,7 @@ export default function TransformWalls() {
               transition={{ duration: 0.5 }}
               className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-cyan-100 to-teal-100 border border-cyan-200"
             >
-              <span className="text-teal-700 text-sm font-semibold italic">Introduction</span>
+              <span className="text-teal-700 text-sm font-semibold italic">Introducing The DAS Portal</span>
             </motion.div>
 
             {/* Animated Heading */}
@@ -164,12 +164,12 @@ export default function TransformWalls() {
             {/* Animated Feature Points */}
             <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 1.1, duration: 0.6 }} className="space-y-3 text-gray-600 text-sm md:text-base pt-2">
               {[
-                { text: "Effortlessly controlled through your Deckoviz mobile companion create, curate, schedule, and shape every experience.", color: "text-cyan-500", delay: 0 },
-                { text: "Built on the Google TV platform for fluid performance, streaming versatility, and seamless smart integration.", color: "text-orange-500", delay: 0.1 },
-                { text: "Emotionally intelligent at its core. Designed for your inner world.", color: "text-emerald-500", delay: 0.2, italic: true }
+                { text: "Effortlessly controlled through your Deckoviz mobile companion create, curate, schedule, and shape every experience.", color: "bg-cyan-500", delay: 0 },
+                { text: "Built on the Google TV platform for fluid performance, streaming versatility, and seamless smart integration.", color: "bg-orange-500", delay: 0.1 },
+                { text: "Emotionally intelligent at its core. Designed for your inner world.", color: "bg-emerald-500", delay: 0.2, italic: true }
               ].map((feature, index) => (
                 <motion.div key={index} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: feature.delay, duration: 0.5 }} className="flex items-start gap-3 group">
-                  <span className={`${feature.color} mt-1 text-lg group-hover:scale-125 transition-transform duration-300`}>•</span>
+                  <span className={`${feature.color} mt-2 w-1.5 h-1.5 rounded-full flex-shrink-0 group-hover:scale-150 transition-transform duration-300`}></span>
                   <p className={feature.italic ? "italic" : ""}>{feature.text}</p>
                 </motion.div>
               ))}
@@ -178,7 +178,7 @@ export default function TransformWalls() {
             {/* Animated CTA Button */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 1.3, duration: 0.6 }} className="pt-4">
               <motion.button onClick={() => window.location.href = '/place-order'} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all duration-300 text-base overflow-hidden group">
-                <span className="relative z-10">Pre Order Now</span>
+                <span className="relative z-10">Order Now</span>
                 <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.3 }}></motion.div>
               </motion.button>
             </motion.div>

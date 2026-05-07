@@ -325,9 +325,9 @@ export default function Pricing() {
     rounded-[999px]
     text-left
     mt-4
-    bg-gradient-to-br from-violet-300 via-fuchsia-400 to-pink-400
-    shadow-[0_16px_40px_rgba(168,85,247,0.35)]
-    hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
+    bg-gradient-to-br from-violet-500 via-indigo-500 to-violet-600
+    shadow-[0_0_40px_rgba(99,102,241,0.5)]
+    hover:shadow-[0_0_60px_rgba(99,102,241,0.7)]
     transition-all duration-500
     animate-[float_6s_ease-in-out_infinite]
   "
@@ -335,12 +335,12 @@ export default function Pricing() {
   <div className="flex flex-col gap-0.5 ">
     
 
-    <span className="text-sm font-medium text-violet-950 leading-snug flex items-center gap-2">
+    <span className="text-sm font-medium text-white leading-snug flex items-center gap-2">
       <Sparkles className="w-4 h-4" />
       Our Founding Thesis
     </span>
 
-    <span className="text-xs text-violet-900 opacity-80">
+    <span className="text-xs text-indigo-100 opacity-90">
       Everything you need to know before choosing your perfect smart art frame.
     </span>
   </div>

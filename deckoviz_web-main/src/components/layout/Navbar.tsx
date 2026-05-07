@@ -22,10 +22,10 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg px-8 py-2.5 text-sm tracking-wide relative z-10";
+    "inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-6 py-2.5 text-sm tracking-widest uppercase overflow-hidden relative z-10 group whitespace-nowrap";
 
   const variantClasses = {
-    primary: "text-white transform hover:scale-[1.05] hover:-translate-y-1",
+    primary: "text-white transform hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98]",
     secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
   };
 
@@ -33,58 +33,101 @@ const Button: React.FC<ButtonProps> = ({
 
   if (variant === "primary") {
     return (
-      <div className="relative inline-block">
-        {/* Animated Border Glow - Colors flow around perimeter */}
+      <div className="relative inline-block group">
+        {/* Intense Animated Outer Glow */}
         <div
-          className="absolute -inset-[1px] rounded-lg opacity-60 transition-opacity duration-300 group-hover:opacity-100"
+          className="absolute -inset-[1px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[3px] group-hover:blur-md blur-sm"
           style={{
-            background: `linear-gradient(90deg, 
-              #3B82F6, #8B5CF6, #3B82F6, #8B5CF6)`,
+            background: `linear-gradient(90deg, #1B2A4A, #2563EB, #1B2A4A)`,
             backgroundSize: "300% 100%",
-            filter: "blur(6px)",
             zIndex: -1,
-            animation: "flowColors 4s linear infinite",
+            animation: "flowColors 3s linear infinite",
+          }}
+        />
+        
+        {/* Secondary inner glow to add depth */}
+        <div
+          className="absolute -inset-[1px] rounded-full opacity-100 transition-all duration-300 blur-[2px]"
+          style={{
+            background: `linear-gradient(90deg, #0B1220, #1B2A4A, #0B1220)`,
+            backgroundSize: "200% 100%",
+            zIndex: -1,
+            animation: "flowColors 2s linear infinite reverse",
           }}
         />
 
         <button
-          className={`${classes} group`}
+          className={`${classes}`}
           style={{
-            background: `linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%)`,
+            background: `linear-gradient(135deg, #0B1220 0%, #1B2A4A 50%, #2563EB 100%)`,
+            backgroundSize: "200% 200%",
             boxShadow: `
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-              0 4px 12px rgba(29, 78, 216, 0.4)
+              inset 0 2px 4px rgba(255, 255, 255, 0.2),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.3),
+              0 5px 15px rgba(27, 42, 74, 0.5)
             `,
-            textShadow: `0 1px 2px rgba(0, 0, 0, 0.2)`,
-            border: "1px solid rgba(30, 58, 138, 0.5)",
+            textShadow: `0 1px 2px rgba(0, 0, 0, 0.5)`,
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            animation: "gradientShift 4s ease infinite",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 1px 0 rgba(255, 255, 255, 0.3),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-              0 6px 16px rgba(37, 99, 235, 0.6)
+              inset 0 2px 4px rgba(255, 255, 255, 0.3),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.4),
+              0 10px 25px rgba(37, 99, 235, 0.6)
             `;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-              0 4px 12px rgba(29, 78, 216, 0.4)
+              inset 0 2px 4px rgba(255, 255, 255, 0.2),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.3),
+              0 5px 15px rgba(27, 42, 74, 0.5)
             `;
           }}
           {...props}
         >
-          {children}
+          {/* Liquid flow internal effect */}
+          <div 
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 60%)',
+              mixBlendMode: 'overlay',
+            }}
+          />
+
+          {/* Sweeping shine effect */}
+          <div 
+            className="absolute top-0 -left-[100%] w-[50%] h-full transform skew-x-[-25deg] transition-all duration-700 ease-out z-0 group-hover:left-[200%]"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)'
+            }}
+          />
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            {children}
+            <svg
+              className="w-4 h-4 transform group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </span>
         </button>
 
-        {/* Keyframes for color flow */}
+        {/* Keyframes for animations */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
             @keyframes flowColors {
-              0% { background-position: 0% 0%; }
-              100% { background-position: 100% 0%; }
+              0% { background-position: 0% 50%; }
+              100% { background-position: 100% 50%; }
+            }
+            @keyframes gradientShift {
+              0% { background-position: 0% 50%; }
+              50% { background-position: 100% 50%; }
+              100% { background-position: 0% 50%; }
             }
           `,
           }}
@@ -543,9 +586,9 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between h-16 md:pl-16">
+          <div className="flex items-center justify-between h-16 md:pl-16 w-full relative">
             {/* Desktop Main Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 flex-1">
               <div
                 className="relative"
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
@@ -718,40 +761,41 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
+                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
               >
                 Pricing
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
-
-            </div>
-
-            {/* Center Logo */}
-            <a href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center space-x-1 z-50">
-              <img
-                src="/images/deckovizlogo.png"
-                alt="Deckoviz Symbol"
-                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
-              />
-              <img
-                src="/images/new_logoo.jpeg"
-                alt="Deckoviz Space Labs Logo"
-                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
-              />
-            </a>
-
-            {/* Right Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
               <a
                 href="/blog"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
+                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
               >
                 Blog
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
+            </div>
+
+            {/* Center Logo */}
+            <div className="flex-shrink-0 flex justify-center items-center z-50">
+              <a href="/" className="flex items-center space-x-1">
+                <img
+                  src="/images/deckovizlogo.png"
+                  alt="Deckoviz Symbol"
+                  className="h-7 sm:h-8 md:h-12 w-auto object-contain"
+                />
+                <img
+                  src="/images/new_logoo.jpeg"
+                  alt="Deckoviz Space Labs Logo"
+                  className="h-7 sm:h-8 md:h-12 w-auto object-contain"
+                />
+              </a>
+            </div>
+
+            {/* Right Navigation */}
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-end">
               <a
                 href="/about"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
+                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
               >
                 About us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
@@ -798,41 +842,40 @@ const Navbar: React.FC = () => {
                 ) : (
                   <button 
                     onClick={() => openAuthModal()}
-                    className="px-5 py-2.5 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-sm hover:bg-violet-50 transition-all"
+                    className="px-4 py-2 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-xs hover:bg-violet-50 transition-all whitespace-nowrap"
                   >
                     Login
                   </button>
                 )}
               </div>
 
-              <div className="flex items-center space-x-2 z-50 pl-2">
+              <div className="flex items-center space-x-1 z-50 pl-2">
                 {/* Previous */}
                 <button
                   onClick={prev}
-                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
                 >
-                  <SkipBack size={18} className="text-blue-600" />
+                  <SkipBack size={16} className="text-blue-600" />
                 </button>
-
 
                 {/* Play / Pause */}
                 <button
                   onClick={toggle}
-                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
                 >
                   {isPlaying ? (
-                    <Volume2 size={20} className="text-blue-600" />
+                    <Volume2 size={16} className="text-blue-600" />
                   ) : (
-                    <VolumeX size={20} className="text-gray-400" />
+                    <VolumeX size={16} className="text-gray-400" />
                   )}
                 </button>
 
                 {/* Next */}
                 <button
                   onClick={next}
-                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
                 >
-                  <SkipForward size={18} className="text-blue-600" />
+                  <SkipForward size={16} className="text-blue-600" />
                 </button>
               </div>
             </div>

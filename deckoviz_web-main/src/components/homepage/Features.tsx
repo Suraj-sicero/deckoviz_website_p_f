@@ -320,7 +320,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       viewport={{ once: true, amount: 0.2 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative rounded-3xl p-10 pt-20 shadow-xl border-2 ${borderColors[index]}
+      className={`group relative rounded-3xl p-5 sm:p-8 pt-14 sm:pt-20 shadow-xl border-2 ${borderColors[index]}
       bg-gradient-to-br ${gradients[index]}
       hover:shadow-2xl hover:scale-[1.03] transition-all duration-500 backdrop-blur-md
       ${shouldShowContent ? 'ring-4 ring-violet-300/30' : ''}`}
@@ -337,7 +337,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
       {/* Icon with enhanced animation */}
       <motion.div 
-        className="absolute -top-12 left-1/2 -translate-x-1/2 z-50"
+        className="absolute -top-8 sm:-top-12 left-1/2 -translate-x-1/2 z-50"
         whileHover={{ scale: 1.2, rotate: 5, y: -8 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
@@ -346,7 +346,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
           <div className="absolute inset-0 bg-gradient-to-br from-violet-400 to-pink-400 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity" />
           <img
             src={`/images/${getIconForFeature(title)}`}
-            className="relative w-24 h-24 object-contain drop-shadow-2xl transition-all duration-500"
+            className="relative w-16 h-16 sm:w-24 sm:h-24 object-contain drop-shadow-2xl transition-all duration-500"
           />
         </div>
       </motion.div>
@@ -372,7 +372,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
       <div className="relative z-10 text-center space-y-4">
         <motion.h3 
-          className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${titleGradients[index]} bg-clip-text text-transparent`}
+          className={`text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r ${titleGradients[index]} bg-clip-text text-transparent`}
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400 }}
         >
@@ -450,13 +450,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
         {/* Intro Card */}
         <div className="mb-20">
           <div className="relative overflow-hidden rounded-[32px] p-[2px] bg-gradient-to-r from-violet-500 via-pink-500 to-indigo-500 shadow-2xl">
-            <div className="bg-white rounded-[30px] p-12 md:p-16 relative">
+            <div className="bg-white rounded-[30px] p-6 sm:p-12 md:p-16 relative">
               {/* soft glow blobs */}
               <div className="absolute -top-24 -left-24 w-64 h-64 bg-violet-200 rounded-full blur-3xl opacity-40"></div>
               <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40"></div>
  {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">Features &</span>{" "}
             <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               Highlights
@@ -466,7 +466,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
               <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
                 {/* Gradient Heading */}
                 <h2
-                  className="text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   What Can{" "}
@@ -578,7 +578,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
         </div>
 
         {/* Main Features Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-20">
           {mainFeatures.map((feature, index) => (
             <FeatureCard
               key={index}

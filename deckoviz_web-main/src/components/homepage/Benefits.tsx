@@ -40,7 +40,7 @@ export const benefitsData = [
     showOnHome: true
   },
   {
-    icon: "✨",
+    icon: "💡",
     title: "A Spark for Creativity",
     description:
       "Ideas flow when your space inspires you. Deckoviz nudges you to imagine more, create more, and see beauty where you didn’t before.",
@@ -54,14 +54,14 @@ export const benefitsData = [
     showOnHome: true
   },
   {
-    icon: "🖼️",
+    icon: "🔮",
     title: "One Frame, A Thousand Roles",
     description:
       "Art gallery. Memory wall. Vision board. Meditation space. Storybook. TV. One intelligent presence replaces clutter.",
     showOnHome: true
   },
   {
-    icon: "🔁",
+    icon: "🌱",
     title: "Always Fresh, Always Growing",
     description:
       "New art. New modes. New features. Every week. Deckoviz never gets old because it keeps becoming more.",
@@ -313,14 +313,14 @@ const Benefits = () => {
               text-left
 
               bg-gradient-to-r 
-              from-[#ffb088] 
-              via-[#ff9966] 
-              to-[#ff874d]
+              from-violet-500 
+              via-indigo-500 
+              to-violet-600
 
-              text-[#6b2f16]
+              text-white
 
-              shadow-[0_18px_45px_rgba(255,135,77,0.45)]
-              hover:shadow-[0_28px_70px_rgba(255,135,77,0.65)]
+              shadow-[0_0_50px_rgba(99,102,241,0.5)]
+              hover:shadow-[0_0_70px_rgba(99,102,241,0.7)]
 
               transition-all duration-500
               animate-[float_7s_ease-in-out_infinite]
@@ -341,7 +341,7 @@ const Benefits = () => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             <motion.span 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -398,7 +398,7 @@ const Benefits = () => {
   initial="hidden"
   whileInView="visible"
   viewport={{ once: true, amount: 0.15 }}
-  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
 >
           {benefitsData
             .filter((benefit) => benefit.showOnHome)
@@ -414,11 +414,12 @@ const Benefits = () => {
                 }}
                 className="
                   relative
-                  p-8 rounded-[2rem]
+                  p-5 sm:p-8 rounded-[2rem]
                   bg-white/80 backdrop-blur-sm
-                  border border-gray-100
-                  shadow-[0_8px_30px_rgba(0,0,0,0.04)]
-                  hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+                  border border-blue-100/50
+                  shadow-[0_12px_40px_rgba(59,130,246,0.25)]
+                  hover:shadow-[0_24px_70px_rgba(59,130,246,0.45)]
+                  hover:-translate-y-2
                   transition-all duration-500
                   transform-gpu
                   text-center
@@ -506,66 +507,61 @@ const Benefits = () => {
                 />
               </motion.div>
             ))}
-        </motion.div>
 
-        {/* Enhanced CTA button */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.9, duration: 0.7 }}
-          className="flex justify-center mt-16"
-        >
+          {/* 9th Grid Cell: See More Magic Button Card */}
           <motion.div
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
+            variants={cardVariants}
+            whileHover={{ 
+              y: -16,
+              scale: 1.03,
+              transition: { duration: 0.4, type: "spring", stiffness: 300, damping: 20 }
+            }}
+            className="
+              relative
+              rounded-[2rem]
+              bg-gradient-to-br from-indigo-500 via-blue-600 to-indigo-800
+              shadow-[0_12px_40px_rgba(79,70,229,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)]
+              hover:shadow-[0_24px_70px_rgba(79,70,229,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)]
+              hover:-translate-y-2
+              transition-all duration-500
+              overflow-hidden
+              group
+              flex items-center justify-center
+              min-h-[200px] sm:min-h-[250px]
+            "
           >
-            <Link
-              to="/benefits"
-              className="
-                relative
-                px-10 py-4 rounded-full
-                bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500
-                text-white font-semibold text-base
-                shadow-[0_10px_40px_rgba(139,92,246,0.3)]
-                hover:shadow-[0_20px_60px_rgba(139,92,246,0.5)]
-                transition-all duration-500
-                overflow-hidden
-                group
-                inline-flex items-center gap-3
-              "
-            >
-              <span className="relative z-10">
-                See More Magic
-              </span>
+            <Link to="/benefits" className="absolute inset-0 flex flex-col items-center justify-center w-full h-full p-8 z-10 text-center">
               <motion.span
                 animate={{ 
                   rotate: [0, 14, -14, 0],
-                  scale: [1, 1.3, 1.3, 1]
+                  scale: [1, 1.2, 1.2, 1]
                 }}
                 transition={{ 
                   duration: 2.5,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="relative z-10 text-xl"
+                className="text-6xl mb-4 drop-shadow-xl inline-block filter"
               >
                 ✨
               </motion.span>
-              
-              {/* Shimmer effect */}
-              <motion.div
-                initial={{ x: "-100%", opacity: 0.5 }}
-                animate={{ x: "200%" }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 1
-                }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
-              />
+              <span className="text-3xl font-bold text-white drop-shadow-md leading-tight group-hover:scale-105 transition-transform duration-300">
+                See More<br/>Magic
+              </span>
             </Link>
+            
+            {/* Shimmer effect */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: "200%" }}
+              transition={{ 
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "linear",
+                repeatDelay: 1
+              }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 z-0"
+            />
           </motion.div>
         </motion.div>
       </div>

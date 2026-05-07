@@ -18,10 +18,10 @@ const FloatingNervousSystemButton: React.FC = () => {
           relative group
           px-6 py-2
           rounded-full
-          bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400
+          bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-500
           text-white
-          shadow-[0_15px_40px_rgba(34,197,94,0.45)]
-          hover:shadow-[0_25px_60px_rgba(16,185,129,0.7)]
+          shadow-[0_0_50px_rgba(45,212,191,0.5)]
+          hover:shadow-[0_0_70px_rgba(45,212,191,0.7)]
           transition-all duration-500
           backdrop-blur-xl
           max-w-[360px]
@@ -32,9 +32,9 @@ const FloatingNervousSystemButton: React.FC = () => {
         <div
           className="
           absolute inset-0
-          bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300
-          opacity-40 blur-xl
-          group-hover:opacity-70
+          bg-gradient-to-r from-teal-300 via-cyan-300 to-teal-400
+          opacity-50 blur-2xl
+          group-hover:opacity-80
           transition
         "
         />
