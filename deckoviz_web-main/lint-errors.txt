@@ -1,0 +1,22 @@
+﻿
+D:\deckoviz-demo\deckoviz_web-main\src\components\deckovizForBusinesses\DeckovizForEnterprise.tsx
+   18:10  error    'DynamicImageGrid' is defined but never used                                                                                                       @typescript-eslint/no-unused-vars
+   24:10  error    'image' is defined but never used                                                                                                                  @typescript-eslint/no-unused-vars
+  108:7   error    'EnterpriseFeatureCard' is assigned a value but never used                                                                                         @typescript-eslint/no-unused-vars
+  245:19  error    Unexpected any. Specify a different type                                                                                                           @typescript-eslint/no-explicit-any
+  370:9   error    'enterpriseImages' is assigned a value but never used                                                                                              @typescript-eslint/no-unused-vars
+  611:12  error    'sparks' is assigned a value but never used                                                                                                        @typescript-eslint/no-unused-vars
+  698:4   warning  React Hook useEffect has missing dependencies: 'hotelImages.length' and 'retailImages.length'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+  705:10  error    'showBenefits' is assigned a value but never used                                                                                                  @typescript-eslint/no-unused-vars
+  705:24  error    'setShowBenefits' is assigned a value but never used                                                                                               @typescript-eslint/no-unused-vars
+  806:13  error    Unexpected newline between object and [ of property access                                                                                         no-unexpected-multiline
+  829:9   error    'speed' is never reassigned. Use 'const' instead                                                                                                   prefer-const
+  836:51  error    Empty block statement                                                                                                                              no-empty
+  850:6   warning  React Hook useEffect has a missing dependency: 'words'. Either include it or remove the dependency array                                           react-hooks/exhaustive-deps
+
+D:\deckoviz-demo\deckoviz_web-main\src\components\deckovizForBusinesses\EnterpriseHorizontalScrollingFeatures.tsx
+  128:6  warning  React Hook useEffect has a missing dependency: 'features.length'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+Γ£û 14 problems (11 errors, 3 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+

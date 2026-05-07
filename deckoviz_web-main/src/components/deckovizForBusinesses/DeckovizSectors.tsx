@@ -215,7 +215,7 @@ const DeckovizSectors: React.FC = () => {
             {capabilities.map((capability, index) => (
               <div
                 key={index}
-                className="group relative bg-white/60 backdrop-blur-xl rounded-3xl p-8 border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(147,51,234,0.1)] hover:-translate-y-2 transition-all duration-500 overflow-hidden"
+                className="group relative bg-white/60 backdrop-blur-xl rounded-3xl p-8 border border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.07)] hover:shadow-[0_24px_64px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:border-violet-300/80 hover:-translate-y-2 transition-all duration-500 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">
@@ -238,8 +238,8 @@ const DeckovizSectors: React.FC = () => {
               </p>
             </div>
 
-            {/* Sector Cards */}
-            <div className="max-w-4xl mx-auto space-y-5">
+            {/* Sector Cards — 2-column grid → 4 rows */}
+            <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
               {sectors.map((sector, index) => (
                 <div
                   key={index}
@@ -247,8 +247,8 @@ const DeckovizSectors: React.FC = () => {
                   className={`
                     group relative bg-white/80 backdrop-blur-md rounded-3xl p-6 border transition-all duration-500 cursor-pointer overflow-hidden
                     ${sector.highlighted 
-                      ? 'border-orange-300 shadow-[0_8px_30px_rgba(251,146,60,0.2)] hover:shadow-[0_15px_40px_rgba(251,146,60,0.3)] hover:-translate-y-1' 
-                      : 'border-white/80 shadow-[0_8px_20px_rgb(0,0,0,0.03)] hover:border-purple-200 hover:shadow-[0_15px_30px_rgba(147,51,234,0.1)] hover:-translate-y-1'
+                      ? 'border-orange-300 shadow-[0_8px_30px_rgba(251,146,60,0.18),0_2px_8px_rgba(251,146,60,0.10)] hover:shadow-[0_20px_50px_rgba(251,146,60,0.32),0_4px_16px_rgba(251,146,60,0.16)] hover:-translate-y-1' 
+                      : 'border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.07)] hover:border-violet-300/80 hover:shadow-[0_20px_56px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:-translate-y-1'
                     }
                   `}
                 >
@@ -256,12 +256,12 @@ const DeckovizSectors: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-purple-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   
                   <div className="relative z-10 flex items-center justify-between">
-                    <div className="flex items-center gap-6">
-                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${sector.gradient} flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-[-5deg] transition-all duration-500`}>
+                    <div className="flex items-center gap-5">
+                      <div className={`w-14 h-14 flex-shrink-0 rounded-2xl bg-gradient-to-br ${sector.gradient} flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-[-5deg] transition-all duration-500`}>
                         {sector.icon}
                       </div>
                       <div>
-                        <h3 className="text-xl font-semibold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">
+                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors duration-300 leading-tight">
                           {sector.title}
                         </h3>
                         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">
@@ -270,13 +270,13 @@ const DeckovizSectors: React.FC = () => {
                       </div>
                     </div>
                     <div className={`
-                      w-12 h-12 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110
+                      flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110
                       ${sector.highlighted 
                         ? 'bg-gradient-to-br from-orange-400 to-amber-500 text-white shadow-lg shadow-orange-500/30' 
                         : 'bg-gray-50 text-gray-400 group-hover:bg-gradient-to-br group-hover:from-purple-500 group-hover:to-indigo-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-purple-500/30'
                       }
                     `}>
-                      <svg className="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
                       </svg>
                     </div>

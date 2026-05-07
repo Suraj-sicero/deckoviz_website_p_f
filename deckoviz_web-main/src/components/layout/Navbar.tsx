@@ -20,10 +20,10 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-semibold transition-all duration-300 rounded-lg px-8 py-2.5 text-sm tracking-wide relative z-10";
+    "inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-8 py-3 text-sm tracking-widest uppercase overflow-hidden relative z-10 group";
 
   const variantClasses = {
-    primary: "text-white transform hover:scale-[1.05] hover:-translate-y-1",
+    primary: "text-white transform hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98]",
     secondary: "bg-gray-200 hover:bg-gray-300 text-gray-800",
   };
 
@@ -31,58 +31,101 @@ const Button: React.FC<ButtonProps> = ({
 
   if (variant === "primary") {
     return (
-      <div className="relative inline-block">
-        {/* Animated Border Glow - Colors flow around perimeter */}
+      <div className="relative inline-block group">
+        {/* Intense Animated Outer Glow */}
         <div
-          className="absolute -inset-[1px] rounded-lg opacity-60 transition-opacity duration-300 group-hover:opacity-100"
+          className="absolute -inset-[3px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[5px] group-hover:blur-xl blur-lg"
           style={{
-            background: `linear-gradient(90deg, 
-              #3B82F6, #8B5CF6, #3B82F6, #8B5CF6)`,
+            background: `linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #3B82F6)`,
             backgroundSize: "300% 100%",
-            filter: "blur(6px)",
             zIndex: -1,
-            animation: "flowColors 4s linear infinite",
+            animation: "flowColors 3s linear infinite",
+          }}
+        />
+        
+        {/* Secondary inner glow to add depth */}
+        <div
+          className="absolute -inset-[1px] rounded-full opacity-100 transition-all duration-300 blur-[2px]"
+          style={{
+            background: `linear-gradient(90deg, #2563EB, #7C3AED, #2563EB)`,
+            backgroundSize: "200% 100%",
+            zIndex: -1,
+            animation: "flowColors 2s linear infinite reverse",
           }}
         />
 
         <button
-          className={`${classes} group`}
+          className={`${classes}`}
           style={{
-            background: `linear-gradient(180deg, #2563EB 0%, #1D4ED8 100%)`,
+            background: `linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #8B5CF6 100%)`,
+            backgroundSize: "200% 200%",
             boxShadow: `
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-              0 4px 12px rgba(29, 78, 216, 0.4)
+              inset 0 2px 4px rgba(255, 255, 255, 0.4),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+              0 5px 15px rgba(59, 130, 246, 0.5)
             `,
-            textShadow: `0 1px 2px rgba(0, 0, 0, 0.2)`,
-            border: "1px solid rgba(30, 58, 138, 0.5)",
+            textShadow: `0 1px 2px rgba(0, 0, 0, 0.3)`,
+            border: "1px solid rgba(255, 255, 255, 0.3)",
+            animation: "gradientShift 4s ease infinite",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 1px 0 rgba(255, 255, 255, 0.3),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-              0 6px 16px rgba(37, 99, 235, 0.6)
+              inset 0 2px 4px rgba(255, 255, 255, 0.5),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+              0 10px 25px rgba(59, 130, 246, 0.8)
             `;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 1px 0 rgba(255, 255, 255, 0.2),
-              inset 0 -1px 0 rgba(0, 0, 0, 0.1),
-              0 4px 12px rgba(29, 78, 216, 0.4)
+              inset 0 2px 4px rgba(255, 255, 255, 0.4),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+              0 5px 15px rgba(59, 130, 246, 0.5)
             `;
           }}
           {...props}
         >
-          {children}
+          {/* Liquid flow internal effect */}
+          <div 
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 60%)',
+              mixBlendMode: 'overlay',
+            }}
+          />
+
+          {/* Sweeping shine effect */}
+          <div 
+            className="absolute top-0 -left-[100%] w-[50%] h-full transform skew-x-[-25deg] transition-all duration-700 ease-out z-0 group-hover:left-[200%]"
+            style={{
+              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)'
+            }}
+          />
+          <span className="relative z-10 flex items-center justify-center gap-2">
+            {children}
+            <svg
+              className="w-4 h-4 transform group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+            </svg>
+          </span>
         </button>
 
-        {/* Keyframes for color flow */}
+        {/* Keyframes for animations */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
             @keyframes flowColors {
-              0% { background-position: 0% 0%; }
-              100% { background-position: 100% 0%; }
+              0% { background-position: 0% 50%; }
+              100% { background-position: 100% 50%; }
+            }
+            @keyframes gradientShift {
+              0% { background-position: 0% 50%; }
+              50% { background-position: 100% 50%; }
+              100% { background-position: 0% 50%; }
             }
           `,
           }}
