@@ -19,6 +19,14 @@ interface frameTypeOptions {
   image: string;
 }
 
+const ElegantDivider = () => (
+  <div className="flex items-center justify-center py-1 opacity-60">
+    <div className="h-[1px] w-12 sm:w-24 bg-gradient-to-r from-transparent to-purple-400"></div>
+    <div className="mx-3 w-1.5 h-1.5 rotate-45 bg-indigo-500"></div>
+    <div className="h-[1px] w-12 sm:w-24 bg-gradient-to-l from-transparent to-purple-400"></div>
+  </div>
+);
+
 const DeckovizCustomizer = () => {
   const [showPreviewModal, setShowPreviewModal] = useState(false);
   const [selectedFrameSize, setSelectedFrameSize] = useState("Default Frame");
@@ -202,6 +210,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         <li>95 inch Deckoviz DASP – 6 months of Diamond Sub</li>
                       </ul>
 
+                      <ElegantDivider />
+
                       <p>
                         <strong>Learn more about subscriptions</strong>
                         <br />
@@ -209,12 +219,16 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         our Subscriptions page.
                       </p>
 
+                      <ElegantDivider />
+
                       <p>
                         <strong>Lifetime subscriptions coming soon</strong>
                         <br />
                         We are actively working on lifetime subscription options
                         and will share updates as they become available.
                       </p>
+
+                      <ElegantDivider />
 
                       <p>
                         <strong>
@@ -228,6 +242,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         your estimated delivery date.
                       </p>
 
+                      <ElegantDivider />
+
                       <p>
                         <strong>Bulk orders and special pricing</strong>
                         <br />
@@ -237,6 +253,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         exclusive bulk pricing and discounted shipping rates.
                       </p>
 
+                      <ElegantDivider />
+
                       <p>
                         <strong>Getting started with Deckoviz</strong>
                         <br />
@@ -244,6 +262,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         a detailed onboarding email with a simple, step-by-step
                         guide to help you get the most out of your device.
                       </p>
+
+                      <ElegantDivider />
 
                       <p>
                         <strong>We’re here to help</strong>
@@ -253,6 +273,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         reach out to us at support@deckoviz.com. We’re always
                         happy to help.
                       </p>
+
+                      <ElegantDivider />
 
                       <p>
                         <strong>Shipping Costs</strong>
@@ -500,6 +522,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       <li>95 inch Deckoviz DASP – 6 months of Diamond Sub</li>
                     </ul>
 
+                    <ElegantDivider />
+
                     <p>
                       <strong>Learn more about subscriptions</strong>
                       <br />
@@ -507,12 +531,16 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       our Subscriptions page.
                     </p>
 
+                    <ElegantDivider />
+
                     <p>
                       <strong>Lifetime subscriptions coming soon</strong>
                       <br />
                       We are actively working on lifetime subscription options
                       and will share updates as they become available.
                     </p>
+
+                    <ElegantDivider />
 
                     <p>
                       <strong>
@@ -526,6 +554,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       your estimated delivery date.
                     </p>
 
+                    <ElegantDivider />
+
                     <p>
                       <strong>Bulk orders and special pricing</strong>
                       <br />
@@ -535,6 +565,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       exclusive bulk pricing and discounted shipping rates.
                     </p>
 
+                    <ElegantDivider />
+
                     <p>
                       <strong>Getting started with Deckoviz</strong>
                       <br />
@@ -542,6 +574,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       a detailed onboarding email with a simple, step-by-step
                       guide to help you get the most out of your device.
                     </p>
+
+                    <ElegantDivider />
 
                     <p>
                       <strong>We’re here to help</strong>
@@ -551,6 +585,8 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       reach out to us at support@deckoviz.com. We’re always
                       happy to help.
                     </p>
+
+                    <ElegantDivider />
 
                     <p>
                       <strong>Shipping Costs</strong>

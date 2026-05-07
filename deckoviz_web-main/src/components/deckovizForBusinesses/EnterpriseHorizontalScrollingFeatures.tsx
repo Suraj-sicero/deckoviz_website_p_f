@@ -125,7 +125,7 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
         cancelAnimationFrame(animationId);
       }
     };
-  }, [isHovering, isDragging]);
+  }, [isHovering, isDragging, features.length]);
 
   useEffect(() => {
     const handleScroll = () => {

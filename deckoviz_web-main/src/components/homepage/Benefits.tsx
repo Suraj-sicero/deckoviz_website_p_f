@@ -416,9 +416,10 @@ const Benefits = () => {
                   relative
                   p-8 rounded-[2rem]
                   bg-white/80 backdrop-blur-sm
-                  border border-gray-100
-                  shadow-[0_8px_30px_rgba(0,0,0,0.04)]
-                  hover:shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+                  border border-blue-100/50
+                  shadow-[0_12px_40px_rgba(59,130,246,0.25)]
+                  hover:shadow-[0_24px_70px_rgba(59,130,246,0.45)]
+                  hover:-translate-y-2
                   transition-all duration-500
                   transform-gpu
                   text-center
@@ -514,7 +515,7 @@ const Benefits = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.9, duration: 0.7 }}
-          className="flex justify-center mt-16"
+          className="flex justify-center mt-32 pb-8"
         >
           <motion.div
             whileHover={{ scale: 1.08 }}
@@ -525,10 +526,10 @@ const Benefits = () => {
               className="
                 relative
                 px-10 py-4 rounded-full
-                bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
+                bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500
                 text-white font-semibold text-base
-                shadow-[0_10px_40px_rgba(139,92,246,0.3)]
-                hover:shadow-[0_20px_60px_rgba(139,92,246,0.5)]
+                shadow-[0_10px_40px_rgba(59,130,246,0.35)]
+                hover:shadow-[0_20px_60px_rgba(59,130,246,0.55)]
                 transition-all duration-500
                 overflow-hidden
                 group
