@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
 
 type Status = "idle" | "loading" | "done" | "error";
 
@@ -14,6 +15,7 @@ interface StoryResult {
 }
 
 const ShortStoryTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [prompt, setPrompt] = useState("");
   const [genre, setGenre] = useState("drama");
   const [length, setLength] = useState("medium");
@@ -39,6 +41,8 @@ const ShortStoryTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!prompt.trim()) { setError("Please enter a story prompt."); return; }
     setError(""); setStatus("loading"); setResult(null);
 

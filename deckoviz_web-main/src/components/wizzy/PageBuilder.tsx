@@ -40,15 +40,15 @@ const PageBuilder: React.FC<PageBuilderProps> = ({
   return (
     <div className="w-full max-w-5xl mx-auto space-y-10 py-10 px-6">
       {/* Header & Meta */}
-      <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-purple-50 space-y-8">
+      <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-violet-50 space-y-8">
         <div className="flex justify-between items-start">
           <div className="space-y-4 flex-1">
-            <label className="text-xs font-bold text-purple-600 uppercase tracking-widest flex items-center space-x-2">
+            <label className="text-xs font-bold text-violet-600 uppercase tracking-widest flex items-center space-x-2">
               <Home size={14} />
               <span>Project Title</span>
             </label>
             <input
-              className="text-4xl font-extrabold text-gray-800 bg-transparent border-none focus:outline-none focus:ring-0 w-full hover:bg-purple-50 transition-colors rounded-xl px-2 -ml-2"
+              className="text-4xl font-extrabold text-gray-800 bg-transparent border-none focus:outline-none focus:ring-0 w-full hover:bg-violet-50 transition-colors rounded-xl px-2 -ml-2"
               value={structure.title}
               onChange={(e) => onUpdateStructure({ ...structure, title: e.target.value })}
             />
@@ -56,7 +56,7 @@ const PageBuilder: React.FC<PageBuilderProps> = ({
           <button 
              onClick={onGenerateImages}
              disabled={isGeneratingImages}
-             className="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl font-bold text-lg shadow-xl shadow-purple-200 hover:scale-[1.02] hover:-translate-y-1 transition-all flex items-center space-x-3 group disabled:opacity-50"
+             className="px-8 py-4 bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-2xl font-bold text-lg shadow-xl shadow-violet-200 hover:scale-[1.02] hover:-translate-y-1 transition-all flex items-center space-x-3 group disabled:opacity-50"
           >
             {isGeneratingImages ? (
               <Loader2 className="w-6 h-6 animate-spin" />
@@ -77,8 +77,8 @@ const PageBuilder: React.FC<PageBuilderProps> = ({
                <span>Character Reference</span>
             </h3>
             {structure.characters.map((char, i) => (
-              <div key={i} className="p-6 bg-purple-50/50 rounded-2xl border border-purple-100 flex items-start space-x-4">
-                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-purple-600 font-bold border border-purple-100">
+              <div key={i} className="p-6 bg-violet-50/50 rounded-2xl border border-violet-100 flex items-start space-x-4">
+                <div className="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-violet-600 font-bold border border-violet-100">
                   {char.name[0]}
                 </div>
                 <div className="flex-1">
@@ -116,12 +116,12 @@ const PageBuilder: React.FC<PageBuilderProps> = ({
       <div className="space-y-6">
         <div className="flex justify-between items-center px-4">
           <h2 className="text-2xl font-bold text-gray-800 flex items-center space-x-3">
-             <span className="p-2 bg-white rounded-xl shadow-sm border border-gray-100"><ArrowRight size={20} className="text-purple-600"/></span>
+             <span className="p-2 bg-white rounded-xl shadow-sm border border-gray-100"><ArrowRight size={20} className="text-violet-600"/></span>
              <span>Storyboard Sequences</span>
           </h2>
           <button
             onClick={addPage}
-            className="p-3 bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors shadow-sm text-purple-600 font-bold flex items-center space-x-2"
+            className="p-3 bg-white border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors shadow-sm text-violet-600 font-bold flex items-center space-x-2"
           >
             <Plus size={20} />
             <span>Add Sequence</span>
@@ -132,7 +132,7 @@ const PageBuilder: React.FC<PageBuilderProps> = ({
           {structure.pages.map((p, i) => (
             <div key={i} className="group relative bg-white/80 backdrop-blur hover:bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl border border-gray-100 transition-all">
               <div className="flex justify-between items-start mb-4">
-                <span className="text-xs font-black text-white px-3 py-1 bg-purple-500 rounded-full shadow-sm">
+                <span className="text-xs font-black text-white px-3 py-1 bg-violet-500 rounded-full shadow-sm">
                   SEQUENCE {p.pageNumber}
                 </span>
                 <button

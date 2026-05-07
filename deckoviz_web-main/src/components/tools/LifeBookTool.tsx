@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
 
 type Status = "idle" | "loading" | "done" | "error";
 
@@ -25,6 +26,7 @@ interface LifeBookResult {
 }
 
 const LifeBookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [memories, setMemories] = useState<MemoryEntry[]>([
     { title: "", year: "", description: "" },
   ]);
@@ -49,6 +51,8 @@ const LifeBookTool: React.FC = () => {
   };
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     const validMemories = memories.filter(m => m.description.trim());
     if (validMemories.length < 2) { setError("Please add at least 2 memory descriptions."); return; }
     setError(""); setStatus("loading"); setResult(null);
@@ -81,7 +85,7 @@ const LifeBookTool: React.FC = () => {
     youth: "from-green-100 to-emerald-100 border-green-300",
     adventure: "from-blue-100 to-indigo-100 border-blue-300",
     love: "from-pink-100 to-rose-100 border-pink-300",
-    growth: "from-purple-100 to-violet-100 border-purple-300",
+    growth: "from-violet-100 to-violet-100 border-violet-300",
     wisdom: "from-orange-100 to-amber-100 border-orange-300",
     default: "from-gray-50 to-slate-100 border-gray-300",
   };

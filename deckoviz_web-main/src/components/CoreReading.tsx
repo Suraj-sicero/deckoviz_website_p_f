@@ -111,7 +111,7 @@ const ReadingCard = ({ title, description, slug, index }: any) => {
       </div>
 
       <h3 className="text-xl font-bold mb-3 text-gray-900
-        group-hover:bg-gradient-to-r group-hover:from-purple-600
+        group-hover:bg-gradient-to-r group-hover:from-violet-600
         group-hover:to-pink-500 group-hover:bg-clip-text
         group-hover:text-transparent transition-all">
         {title}
@@ -161,7 +161,7 @@ useEffect(() => {
     
     
     <section className="min-h-screen px-6 py-24 relative overflow-hidden
-      bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      bg-gradient-to-br from-indigo-50 via-violet-50 to-pink-50">
 
     <div className="pointer-events-none fixed inset-0 z-50">
   {sparks.map(spark => (
@@ -184,7 +184,7 @@ useEffect(() => {
 
       {/* Glow blobs */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-purple-400/30 rounded-full blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-violet-400/30 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-pink-400/30 rounded-full blur-[120px]" />
       </div>
 
@@ -221,7 +221,7 @@ useEffect(() => {
         </p>
 <p
   onClick={() => navigate("/blog")}
-  className="text-center mt-4 font-semibold text-purple-600 cursor-pointer hover:underline"
+  className="text-center mt-4 font-semibold text-violet-600 cursor-pointer hover:underline"
 >
   → Explore the Deckoviz Journal
 </p>

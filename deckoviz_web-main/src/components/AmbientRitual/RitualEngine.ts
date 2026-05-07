@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { RitualConfig, RitualMode } from './types';
+import { RitualConfig, RitualMode, RITUAL_PRESETS } from './types';
 import { 
     backgroundFragmentShader, 
     particleVertexShader, 
@@ -16,6 +16,7 @@ export class RitualEngine {
     private background: THREE.Mesh;
     private particles: THREE.Points | null = null;
     private bgMaterial: THREE.ShaderMaterial;
+    private currentConfig: RitualConfig;
 
     constructor(container: HTMLElement) {
         this.container = container;
@@ -23,6 +24,7 @@ export class RitualEngine {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         this.clock = new THREE.Clock();
+        this.currentConfig = RITUAL_PRESETS.focus;
         
         this.setupRenderer();
         this.bgMaterial = new THREE.ShaderMaterial({
@@ -50,9 +52,18 @@ export class RitualEngine {
     }
 
     public updateMode(config: RitualConfig) {
+        this.currentConfig = config;
         this.clearParticles();
         this.updateBackground(config);
         this.createParticles(config);
+        
+        // Force an immediate redraw if necessary
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    public setParams(config: RitualConfig) {
+        this.currentConfig = config;
+        this.updateBackground(config);
     }
 
     private clearParticles() {
@@ -60,27 +71,33 @@ export class RitualEngine {
             this.particles.geometry.dispose();
             (this.particles.material as THREE.Material).dispose();
             this.scene.remove(this.particles);
+            this.particles = null;
         }
     }
 
     private updateBackground(config: RitualConfig) {
-        this.bgMaterial.uniforms.uColor1.value.set(config.color1);
-        this.bgMaterial.uniforms.uColor2.value.set(config.color2);
-        this.scene.fog = new THREE.FogExp2(config.color1, config.fogDensity);
+        const c1 = new THREE.Color(config.color1);
+        const c2 = new THREE.Color(config.color2);
+        
+        this.bgMaterial.uniforms.uColor1.value.copy(c1);
+        this.bgMaterial.uniforms.uColor2.value.copy(c2);
+        
+        // Update fog and scene background for consistency
+        this.scene.fog = new THREE.FogExp2(c1, config.fogDensity);
+        this.scene.background = c1;
     }
 
     private createParticles(config: RitualConfig) {
         const count = config.particleCount;
         const geometry = new THREE.BufferGeometry();
-        const positions = new Float32Array(count * 3);
         const sizes = new Float32Array(count);
         const offsets = new Float32Array(count * 3);
 
         for (let i = 0; i < count; i++) {
-            offsets[i * 3] = (Math.random() - 0.5) * 10;
-            offsets[i * 3 + 1] = (Math.random() - 0.5) * 10;
-            offsets[i * 3 + 2] = (Math.random() - 0.5) * 10;
-            sizes[i] = Math.random() * 5 + 1;
+            offsets[i * 3] = (THREE.MathUtils.randFloatSpread(20));
+            offsets[i * 3 + 1] = (THREE.MathUtils.randFloatSpread(20));
+            offsets[i * 3 + 2] = (THREE.MathUtils.randFloatSpread(10));
+            sizes[i] = Math.random() * 10 + 2;
         }
 
         geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(count * 3), 3));
@@ -104,8 +121,9 @@ export class RitualEngine {
         this.scene.add(this.particles);
     }
 
-    public animate(config: RitualConfig) {
+    public animate() {
         const time = this.clock.getElapsedTime();
+        const config = this.currentConfig;
         
         this.bgMaterial.uniforms.uTime.value = time;
         
@@ -118,21 +136,21 @@ export class RitualEngine {
             const pos = this.particles.geometry.attributes.aOffset.array as Float32Array;
             for (let i = 0; i < config.particleCount; i++) {
                 if (config.motionStyle === 'rising') {
-                    pos[i * 3 + 1] += 0.01 * config.speed;
-                    if (pos[i * 3 + 1] > 5) pos[i * 3 + 1] = -5;
+                    pos[i * 3 + 1] += 0.02 * config.speed;
+                    if (pos[i * 3 + 1] > 10) pos[i * 3 + 1] = -10;
                 } else if (config.motionStyle === 'rain') {
                     pos[i * 3 + 1] -= 0.05 * config.speed;
-                    if (pos[i * 3 + 1] < -5) pos[i * 3 + 1] = 5;
+                    if (pos[i * 3 + 1] < -10) pos[i * 3 + 1] = 10;
                 } else if (config.motionStyle === 'drifting') {
-                    pos[i * 3] += Math.sin(time * 0.1 + i) * 0.001;
-                    pos[i * 3 + 1] += Math.cos(time * 0.1 + i) * 0.001;
+                    pos[i * 3] += Math.sin(time * 0.3 + i) * 0.003 * config.speed;
+                    pos[i * 3 + 1] += Math.cos(time * 0.3 + i) * 0.003 * config.speed;
                 }
             }
             this.particles.geometry.attributes.aOffset.needsUpdate = true;
         }
 
         this.renderer.render(this.scene, this.camera);
-        requestAnimationFrame(() => this.animate(config));
+        requestAnimationFrame(() => this.animate());
     }
 
     private onResize() {

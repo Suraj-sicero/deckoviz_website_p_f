@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
 
 type Status = "idle" | "loading" | "done" | "error";
 
@@ -14,6 +15,7 @@ interface CardResult {
 }
 
 const GreetingCardTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [recipient, setRecipient] = useState("");
   const [occasion, setOccasion] = useState("birthday");
   const [tone, setTone] = useState("warm");
@@ -42,6 +44,8 @@ const GreetingCardTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!recipient.trim()) { setError("Please enter the recipient's name."); return; }
     setError(""); setStatus("loading"); setResult(null);
 

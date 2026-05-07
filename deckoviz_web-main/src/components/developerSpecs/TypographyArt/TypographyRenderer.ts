@@ -11,6 +11,7 @@ export class TypographyRenderer {
         color: [0.0, 0.8, 1.0],
         strength: 0.5,
         mouse: [0.5, 0.5],
+        font: 'Inter, sans-serif'
     };
 
     constructor(gl: WebGL2RenderingContext) {
@@ -56,7 +57,7 @@ export class TypographyRenderer {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         ctx.fillStyle = 'white';
-        ctx.font = 'bold 120px Inter, sans-serif';
+        ctx.font = `bold 120px ${this.params.font}`;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         
@@ -65,7 +66,7 @@ export class TypographyRenderer {
         const lines = [];
         let currentLine = words[0];
         for(let i = 1; i < words.length; i++) {
-            if(currentLine.length + words[i].length > 10) {
+            if(currentLine.length + words[i].length > 12) {
                 lines.push(currentLine);
                 currentLine = words[i];
             } else {

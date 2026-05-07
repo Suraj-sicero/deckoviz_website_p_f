@@ -67,7 +67,7 @@ const DeckovizSetup: React.FC = () => {
         "Take your Deckoviz out of the box, plug it in, and connect to Wi-Fi   just like setting up a smart TV. Instantly comes to life with a calming welcome screen.",
       icon: <CustomIcons.Package />,
       features: ["Simple plug-and-play setup", "Wi-Fi connection in seconds", "Calming welcome experience"],
-      color: "from-orange-400 via-pink-400 to-purple-500",
+      color: "from-orange-400 via-pink-400 to-indigo-500",
     },
     {
       number: "02",
@@ -76,7 +76,7 @@ const DeckovizSetup: React.FC = () => {
         "Download the Deckoviz app on your phone (iOS & Android). Sign in to personalize your experience, sync your mood, and control what's on display.",
       icon: <CustomIcons.Smartphone />,
       features: ["Available on iOS & Android", "Seamless device pairing", "Personalized experience sync"],
-      color: "from-pink-400 via-purple-400 to-indigo-500",
+      color: "from-pink-400 via-violet-400 to-indigo-500",
     },
     {
       number: "03",
@@ -112,7 +112,7 @@ const DeckovizSetup: React.FC = () => {
         "From sunrise to nightfall, Deckoviz adapts and transforms your space. Perfect for living rooms, bedrooms, offices, and more.",
       icon: <CustomIcons.Sunrise />,
       features: ["Adaptive daily transformations", "Perfect for any space", "Feel more present, feel more you"],
-      color: "from-purple-400 via-pink-400 to-orange-400",
+      color: "from-violet-400 via-pink-400 to-orange-400",
     },
   ]
 
@@ -123,9 +123,9 @@ const DeckovizSetup: React.FC = () => {
       {/* Subtle Background Glow */}
       <div className="absolute inset-0">
         {/* Left side glow */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-pink-200/50 via-purple-200/35 to-orange-200/50 rounded-full blur-3xl opacity-60"></div>
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-pink-200/50 via-violet-200/35 to-orange-200/50 rounded-full blur-3xl opacity-60"></div>
         {/* Right side glow */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-orange-200/60 via-pink-200/45 to-purple-200/60 rounded-full blur-3xl opacity-70"></div>
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-orange-200/60 via-pink-200/45 to-indigo-200/60 rounded-full blur-3xl opacity-70"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -135,7 +135,7 @@ const DeckovizSetup: React.FC = () => {
 
           <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-slate-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">How to Set Up</span>{" "}
-            <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               Deckoviz?
             </span>
           </h1>
@@ -150,7 +150,7 @@ const DeckovizSetup: React.FC = () => {
           {/* Progress Timeline */}
           <div className="relative">
             {/* Progress Line */}
-            <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-orange-200 to-purple-200">
+            <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-orange-200 to-indigo-200">
               {/* Static decorative line, no scroll-based progress */}
             </div>
 

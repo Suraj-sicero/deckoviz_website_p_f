@@ -113,7 +113,7 @@ export default function AboutUs() {
               <div
                 className={`absolute inset-0 rounded-3xl bg-gradient-to-r opacity-0 group-hover:opacity-20 transition-opacity duration-300 ${
                   img.accent === "violet"
-                    ? "from-violet-400 to-purple-500"
+                    ? "from-violet-400 to-indigo-500"
                     : img.accent === "fuchsia"
                       ? "from-fuchsia-400 to-pink-500"
                       : "from-orange-400 to-red-400"
@@ -519,7 +519,7 @@ export default function AboutUs() {
 
               {/* Right Column - Image with Browser Frame */}
               <div className="relative">
-                {/* Pink/Purple gradient background like in your image */}
+                {/* Pink/Violet gradient background like in your image */}
                 <div
                   className="absolute -inset-20 transform"
                   style={{
@@ -590,7 +590,7 @@ export default function AboutUs() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               {/* Left Column - Image with Browser Frame */}
               <div className="relative">
-                {/* Pink/Purple gradient background */}
+                {/* Pink/Violet gradient background */}
                 <div
                   className="absolute -inset-20 transform"
                   style={{
@@ -769,8 +769,8 @@ export default function AboutUs() {
 
               {/* Card 2 - Dream & Moods */}
               <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                {/* Image container with purple gradient */}
-                <div className="bg-gradient-to-br from-purple-100 via-purple-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+                {/* Image container with violet gradient */}
+                <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
                   <img
                     src="/images/doodle2.png"
                     alt="AI character representing dreams and moods"
@@ -874,10 +874,10 @@ export default function AboutUs() {
               {/* Capability 1 */}
               <div className="relative group">
                 {/* Background glow effect */}
-                <div className="absolute -inset-2 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute -inset-2 bg-gradient-to-br from-violet-200/30 to-pink-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                 <div
-                  className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-purple-200 h-80 flex flex-col"
+                  className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-violet-200 h-80 flex flex-col"
                   style={{
                     background:
                       "radial-gradient(circle at 30% 20%, rgba(147, 51, 234, 0.05) 0%, rgba(236, 72, 153, 0.03) 40%, rgba(255, 255, 255, 1) 70%)",
@@ -886,8 +886,8 @@ export default function AboutUs() {
                   {/* Icon with enhanced styling - positioned lower */}
                   <div className="flex justify-center mb-4 mt-4">
                     <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl blur-lg opacity-30"></div>
-                      <div className="relative w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-violet-400 to-pink-400 rounded-2xl blur-lg opacity-30"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-violet-400 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
                         <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
@@ -898,7 +898,7 @@ export default function AboutUs() {
                   {/* Text with enhanced styling */}
                   <div className="flex-1 flex flex-col justify-center">
                     <h4
-                      className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-purple-700 transition-colors duration-300"
+                      className="text-lg font-bold text-gray-900 mb-2 leading-tight group-hover:text-violet-700 transition-colors duration-300"
                       style={{ fontFamily: "Bricolage Grotesque, sans-serif" }}
                     >
                       Understand and model
@@ -910,14 +910,14 @@ export default function AboutUs() {
                   </div>
 
                   {/* Decorative line */}
-                  <div className="w-12 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
               </div>
 
               {/* Capability 2 */}
               <div className="relative group">
                 {/* Background glow effect */}
-                <div className="absolute -inset-2 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute -inset-2 bg-gradient-to-br from-blue-200/30 to-indigo-200/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                 <div
                   className="relative rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-blue-200 h-80 flex flex-col"
@@ -929,8 +929,8 @@ export default function AboutUs() {
                   {/* Icon with enhanced styling - positioned lower */}
                   <div className="flex justify-center mb-4 mt-4">
                     <div className="relative">
-                      <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-400 rounded-2xl blur-lg opacity-30"></div>
-                      <div className="relative w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-2xl blur-lg opacity-30"></div>
+                      <div className="relative w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
                         <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
                           <path d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a2 2 0 114 0 2 2 0 01-4 0zm8-2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -955,7 +955,7 @@ export default function AboutUs() {
                   </div>
 
                   {/* Decorative line */}
-                  <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full mx-auto mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
               </div>
 
@@ -1193,7 +1193,7 @@ export default function AboutUs() {
               <img src="/images/mailnoti.png" alt="Mail Notification" className="w-32 h-32 object-contain" />
             </div>
 
-            {/* Purple background section with dotted texture - wider and more faint */}
+            {/* Violet background section with dotted texture - wider and more faint */}
             <div
               className="relative -mt-32 pt-20 pb-16 px-12 rounded-3xl"
               style={{
@@ -1238,7 +1238,7 @@ export default function AboutUs() {
                 <div className="max-w-sm sm:max-w-md mx-auto">
                   <div className="relative group">
                     {/* Glow effect */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
 
                     {/* Form container */}
                     <div className="relative bg-white rounded-2xl p-2 shadow-xl border border-gray-200">
@@ -1248,7 +1248,7 @@ export default function AboutUs() {
                           <input
                             type="email"
                             placeholder="Email address..."
-                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-purple-500/20 transition-all duration-300"
+                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all duration-300"
                           />
                           {/* Subtle icon */}
                           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -1269,7 +1269,7 @@ export default function AboutUs() {
                         </div>
 
                         {/* Submit button */}
-                        <button className="bg-gradient-to-r from-[#6670d8] to-purple-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
+                        <button className="bg-gradient-to-r from-[#6670d8] to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
                           <span>Submit</span>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path

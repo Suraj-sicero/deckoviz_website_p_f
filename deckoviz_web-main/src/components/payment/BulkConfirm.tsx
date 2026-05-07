@@ -5,9 +5,9 @@ const BulkConfirm = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 relative">
       {/* Subtle Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-gradient-to-bl from-purple-100/30 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-gradient-to-bl from-violet-100/30 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 bg-gradient-to-tr from-blue-100/20 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-r from-emerald-100/20 to-purple-100/20 rounded-full blur-2xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 sm:w-48 sm:h-48 bg-gradient-to-r from-emerald-100/20 to-indigo-100/20 rounded-full blur-2xl"></div>
       </div>
 
       <div className="relative z-10 px-4 sm:px-6 py-8 sm:py-12 md:py-16">
@@ -51,7 +51,7 @@ const BulkConfirm = () => {
                     
                     <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
                       We're thrilled that you've chosen to bring the magic of 
-                      <span className="font-semibold text-purple-600"> Deckoviz</span> to your space   and we're excited to help you craft a powerful visual experience across your environments.
+                      <span className="font-semibold text-violet-600"> Deckoviz</span> to your space   and we're excited to help you craft a powerful visual experience across your environments.
                     </p>
                   </div>
                   
@@ -83,7 +83,7 @@ const BulkConfirm = () => {
                 
                 <div className="space-y-6 sm:space-y-8">
                   <div className="flex gap-4 sm:gap-6">
-                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-purple-500 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-md">
+                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-violet-500 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-md">
                       <span className="text-white font-bold text-sm sm:text-base">1</span>
                     </div>
                     <div className="pt-1">
@@ -175,7 +175,7 @@ const BulkConfirm = () => {
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-6">Your Bulk Order Benefits</h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-violet-500 rounded-full"></div>
                     <span className="text-sm sm:text-base text-gray-700">Exclusive volume pricing</span>
                   </div>
                   <div className="flex items-center gap-3">
@@ -196,11 +196,11 @@ const BulkConfirm = () => {
           </div>
 
           {/* Inspirational Message */}
-          <div className="bg-gradient-to-r from-gray-900 via-purple-900 to-gray-900 rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-16 lg:p-20 text-center text-white mb-8 sm:mb-12 md:mb-16 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/10 to-blue-600/20"></div>
+          <div className="bg-gradient-to-r from-gray-900 via-violet-900 to-gray-900 rounded-2xl sm:rounded-3xl p-8 sm:p-12 md:p-16 lg:p-20 text-center text-white mb-8 sm:mb-12 md:mb-16 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 via-pink-600/10 to-blue-600/20"></div>
             <div className="relative z-10">
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-4xl font-bold mb-6 sm:mb-8 tracking-tight leading-tight">
-                Welcome to the Future of <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Dynamic Spaces.</span>
+                Welcome to the Future of <span className="bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">Dynamic Spaces.</span>
               </h2>
               <p className="text-gray-300 text-base sm:text-lg md:text-xl lg:text-lg font-light max-w-5xl mx-auto leading-relaxed mb-6 sm:mb-8 px-4">
                 You're about to transform your environment with the world's most advanced AI-powered art system. 
@@ -216,7 +216,7 @@ const BulkConfirm = () => {
 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4">
   <button
     type="button"
-    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-2.5 sm:py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base hover:from-purple-700 hover:to-pink-700 transition-all duration-300 hover:shadow-md"
+    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-2.5 sm:py-3 bg-gradient-to-r from-violet-600 to-pink-600 text-white rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base hover:from-violet-700 hover:to-pink-700 transition-all duration-300 hover:shadow-md"
   >
     <Mail className="w-4 h-4 sm:w-5 sm:h-5" />
     Check Your Email
@@ -225,7 +225,7 @@ const BulkConfirm = () => {
 
   <button
     type="button"
-    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-2.5 sm:py-3 bg-white text-gray-900 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base border border-gray-200 hover:border-purple-300 hover:bg-purple-50 transition-all duration-300 hover:shadow-md"
+    className="group inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-2.5 sm:py-3 bg-white text-gray-900 rounded-lg sm:rounded-xl font-semibold text-sm sm:text-base border border-gray-200 hover:border-violet-300 hover:bg-violet-50 transition-all duration-300 hover:shadow-md"
   >
     <Building2 className="w-4 h-4 sm:w-5 sm:h-5" />
     View Enterprise Solutions

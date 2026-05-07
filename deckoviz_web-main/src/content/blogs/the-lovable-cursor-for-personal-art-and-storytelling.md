@@ -2,7 +2,7 @@
 id: 11
 title: "The Lovable/Cursor for Personal Art and Storytelling"
 tag: "Innovation"
-tagColor: "bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700"
+tagColor: "bg-gradient-to-r from-indigo-100 to-indigo-100 text-indigo-700"
 date: "November 28, 2025"
 readTime: "7 min read"
 pinned: true

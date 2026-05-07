@@ -18,10 +18,10 @@ const FloatingNervousSystemButton: React.FC = () => {
           relative group
           px-6 py-2
           rounded-full
-          bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400
+          bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-500
           text-white
-          shadow-[0_15px_40px_rgba(34,197,94,0.45)]
-          hover:shadow-[0_25px_60px_rgba(16,185,129,0.7)]
+          shadow-[0_0_50px_rgba(45,212,191,0.5)]
+          hover:shadow-[0_0_70px_rgba(45,212,191,0.7)]
           transition-all duration-500
           backdrop-blur-xl
           max-w-[360px]
@@ -32,9 +32,9 @@ const FloatingNervousSystemButton: React.FC = () => {
         <div
           className="
           absolute inset-0
-          bg-gradient-to-r from-emerald-300 via-green-300 to-teal-300
-          opacity-40 blur-xl
-          group-hover:opacity-70
+          bg-gradient-to-r from-teal-300 via-cyan-300 to-teal-400
+          opacity-50 blur-2xl
+          group-hover:opacity-80
           transition
         "
         />
@@ -171,7 +171,7 @@ const FloatingDASPGuideButton: React.FC = () => {
 
           {/* CTA pill */}
           <div
-            className="mt-1.5 px-3 py-[3px] rounded-full text-[10px] font-bold text-purple-900 group-hover:scale-105 transition-transform duration-300"
+            className="mt-1.5 px-3 py-[3px] rounded-full text-[10px] font-bold text-violet-900 group-hover:scale-105 transition-transform duration-300"
             style={{ background: "rgba(255,255,255,0.9)" }}
           >
             Read →
@@ -200,7 +200,7 @@ const FloatingMinimalistButton: React.FC = () => {
       {" "}
       <button
         onClick={() => navigate("/minimalist")}
-        className=" px-10 py-3 rounded-[36px] bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500 text-white text-sm font-semibold shadow-[0_0_20px_rgba(168,85,247,0.7)] hover:shadow-[0_0_35px_rgba(236,72,153,0.9)] transition-all duration-500 backdrop-blur-md "
+        className=" px-10 py-3 rounded-[36px] bg-gradient-to-br from-pink-400 via-violet-500 to-indigo-500 text-white text-sm font-semibold shadow-[0_0_20px_rgba(168,85,247,0.7)] hover:shadow-[0_0_35px_rgba(236,72,153,0.9)] transition-all duration-500 backdrop-blur-md "
       >
         {" "}
         <div className="flex items-center gap-2 text-left leading-tight">
@@ -338,14 +338,14 @@ const frameImages = [
       title: "For those seeking more beauty and meaning, more wonder and joy",
       caption:
         " More intentional living. More love. More presence in everyday moments.",
-      gradient: "from-pink-200 via-purple-100 to-pink-300",
+      gradient: "from-pink-200 via-violet-100 to-pink-300",
       image:
         "https://i.pinimg.com/736x/e8/28/11/e828112ea1446c27a69ce9fd789804ac.jpg",
     },
     {
       title:
         "For those who want a personal painter to paint their inner worlds and dreams, their hopes and their journeys",
-      gradient: "from-purple-200 via-blue-100 to-indigo-300",
+      gradient: "from-violet-200 via-blue-100 to-indigo-300",
       caption:
         " More self-expression. More creativity. More inspiration in everyday life.",
       image:
@@ -355,7 +355,7 @@ const frameImages = [
       title: "For those who want to write odes to their memories",
       caption:
         " More nostalgia. More sentimentality. More connection to the past.",
-      gradient: "from-orange-200 via-pink-100 to-purple-300",
+      gradient: "from-orange-200 via-pink-100 to-indigo-300",
       image:
         "https://i.pinimg.com/736x/d3/2d/cb/d32dcb7469c4b31f7979eb98dbdb557c.jpg",
     },
@@ -373,14 +373,14 @@ const frameImages = [
         "For those who want more dynamism, novelty, vividity, animation, in their spaces",
       caption:
         " More energy. More life. More movement in everyday environments.",
-      gradient: "from-purple-200 via-pink-100 to-rose-300",
+      gradient: "from-violet-200 via-pink-100 to-rose-300",
       image:
         "https://i.pinimg.com/736x/ed/3d/1f/ed3d1f63878a4f606ef8ed170834b330.jpg",
     },
     {
       title:
         "For those who want spaces that transform and evolve, according to moods and states, times and dates",
-      gradient: "from-blue-200 via-purple-100 to-pink-300",
+      gradient: "from-blue-200 via-violet-100 to-pink-300",
       caption:
         " More adaptability. More fluidity. More responsiveness in everyday settings.",
       image:
@@ -391,7 +391,7 @@ const frameImages = [
   const additionalDesignedFor = [
     {
       title: "For those who want more soul, more spirit, in their spaces",
-      gradient: "from-indigo-200 via-purple-100 to-blue-300",
+      gradient: "from-indigo-200 via-violet-100 to-blue-300",
       caption:
         " More depth. More meaning. More connection to the transcendent.",
       image:
@@ -408,7 +408,7 @@ const frameImages = [
     {
       title:
         "For those who love exploring and painting around the possibilities of AI and tech",
-      gradient: "from-cyan-200 via-blue-100 to-purple-300",
+      gradient: "from-cyan-200 via-blue-100 to-indigo-300",
       caption:
         " More innovation. More futurism. More exploration in everyday life.",
       image:
@@ -416,7 +416,7 @@ const frameImages = [
     },
     {
       title: "For those seeking more intentionality, depth and love",
-      gradient: "from-purple-200 via-pink-100 to-orange-300",
+      gradient: "from-violet-200 via-pink-100 to-orange-300",
       caption:
         " More mindfulness. More presence. More connection in everyday moments.",
       image:
@@ -433,7 +433,7 @@ const frameImages = [
     {
       title:
         "For couples who want to infuse their relationship with more joy, intimacy, growth, beauty, passion, and romance",
-      gradient: "from-rose-200 via-pink-100 to-purple-300",
+      gradient: "from-rose-200 via-pink-100 to-indigo-300",
       caption: " More connection. More love. More shared experiences.",
       image:
         "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&h=400&fit=crop",
@@ -449,7 +449,7 @@ const frameImages = [
     {
       title:
         "For those who want every room in their home, every space, to be evolving and sacred in its own special way",
-      gradient: "from-purple-200 via-indigo-100 to-blue-300",
+      gradient: "from-violet-200 via-indigo-100 to-blue-300",
       caption:
         " More sanctity. More uniqueness. More atmosphere in everyday environments.",
       image:
@@ -466,7 +466,7 @@ const frameImages = [
     },
     {
       title: "For minimalists who want to pack a thousand things in one frame",
-      gradient: "from-gray-200 via-purple-100 to-gray-300",
+      gradient: "from-gray-200 via-violet-100 to-gray-300",
       caption:
         " More simplicity. More elegance. More functionality in everyday design.",
       image:
@@ -499,7 +499,7 @@ const frameImages = [
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
       </div>
       <div className="p-6 flex flex-col items-center justify-center text-center gap-3">
-        <p className="text-lg leading-relaxed bg-gradient-to-r from-gray-700 via-purple-600 to-pink-600 bg-clip-text text-transparent font-medium">
+        <p className="text-lg leading-relaxed bg-gradient-to-r from-gray-700 via-violet-600 to-pink-600 bg-clip-text text-transparent font-medium">
           {title}
         </p>
 
@@ -508,7 +508,7 @@ const frameImages = [
         </p>
       </div>
 
-      <div className="absolute inset-0 rounded-2xl border-2 border-purple-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+      <div className="absolute inset-0 rounded-2xl border-2 border-violet-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </motion.div>
   );
 
@@ -517,8 +517,8 @@ const frameImages = [
       <FloatingMinimalistButton />
 
       <div className="absolute inset-0">
-        <div className="absolute left-1/3 top-1/3 w-[40%] h-[30%] bg-gradient-to-br from-purple-100/30 via-pink-100/20 to-blue-100/30 rounded-full blur-3xl opacity-50"></div>
-        <div className="absolute right-1/4 bottom-1/3 w-[35%] h-[25%] bg-gradient-to-br from-pink-100/25 via-purple-100/15 to-orange-100/25 rounded-full blur-3xl opacity-40"></div>
+        <div className="absolute left-1/3 top-1/3 w-[40%] h-[30%] bg-gradient-to-br from-violet-100/30 via-pink-100/20 to-blue-100/30 rounded-full blur-3xl opacity-50"></div>
+        <div className="absolute right-1/4 bottom-1/3 w-[35%] h-[25%] bg-gradient-to-br from-pink-100/25 via-violet-100/15 to-orange-100/25 rounded-full blur-3xl opacity-40"></div>
 
         {/* Central gradient splash - like your other components */}
         <div
@@ -535,7 +535,7 @@ const frameImages = [
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             Who have we designed{" "}
-            <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               Deckoviz
             </span>{" "}
             for
@@ -565,7 +565,7 @@ const frameImages = [
           <div className="text-center mb-8">
             <button
               onClick={() => setShowMore(true)}
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-700 font-medium hover:text-purple-700 hover:border-purple-300 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-700 font-medium hover:text-violet-700 hover:border-violet-300 transition-all duration-300 shadow-sm hover:shadow-md"
             >
               <span className="transform transition-transform duration-300 group-hover:translate-y-1">
                 <ChevronDown size={20} />
@@ -601,7 +601,7 @@ const frameImages = [
           <div className="text-center mb-8">
             <button
               onClick={() => setShowMore(false)}
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-700 font-medium hover:text-purple-700 hover:border-purple-300 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-700 font-medium hover:text-violet-700 hover:border-violet-300 transition-all duration-300 shadow-sm hover:shadow-md"
             >
               <span className="transform transition-transform duration-300 group-hover:-translate-y-1">
                 <ChevronUp size={20} />
@@ -617,7 +617,7 @@ const frameImages = [
             <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
               And so, in essence, we have designed Deckoviz to be for those who
               want more{" "}
-              <span className="text-purple-600 font-semibold">
+              <span className="text-violet-600 font-semibold">
                 life in their life
               </span>
               , more{" "}
@@ -628,7 +628,7 @@ const frameImages = [
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-lg font-semibold">
               <span className="text-indigo-600">Deckoviz for You,</span>
-              <span className="text-purple-600">Deckoviz for All.</span>
+              <span className="text-violet-600">Deckoviz for All.</span>
             </div>
           </div>
         </div>
@@ -646,7 +646,7 @@ const frameImages = [
   <div className="relative w-[520px] rounded-2xl overflow-hidden">
 
     {/* glow */}
-     <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-purple-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
+     <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-violet-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
      
      
     {/* FULL furniture image */}

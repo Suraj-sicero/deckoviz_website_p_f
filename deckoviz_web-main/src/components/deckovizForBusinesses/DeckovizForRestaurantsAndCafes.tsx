@@ -60,7 +60,7 @@ const useCaseCategories = [
     id: 'ambience',
     label: 'Ambience & Mood',
     icon: '◎',
-    color: 'from-violet-500 to-purple-600',
+    color: 'from-violet-500 to-indigo-600',
     accent: '#a78bfa',
     items: [
       { title: 'Dynamic ambience engine', desc: 'Vizzy becomes your ambience layer, adapting lights, visuals, sounds, and mood depending on customer profile, time of day, and occasion.' },
@@ -192,7 +192,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           </div>
           <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
             Deckoviz becomes your restaurant's{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-indigo-400">
               everything layer
             </span>
           </h2>
@@ -311,7 +311,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           transition={{ duration: 1 }}
           className="relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-purple-500/5 to-rose-500/5 rounded-3xl pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 via-violet-500/5 to-rose-500/5 rounded-3xl pointer-events-none" />
           <div className="border border-white/8 rounded-3xl p-10 md:p-16 backdrop-blur-sm">
             <div className="text-center mb-14">
               <h3 className="text-3xl md:text-5xl font-['Playfair_Display'] font-semibold text-white mb-4" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
@@ -322,7 +322,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
 
             {/* Journey Steps — staggered narrative */}
             <div className="relative max-w-2xl mx-auto mb-16">
-              <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-orange-500/40 via-rose-500/40 to-purple-500/40" />
+              <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-orange-500/40 via-rose-500/40 to-indigo-500/40" />
               {journeySteps.map((step, i) => (
                 <motion.div
                   key={i}
@@ -354,7 +354,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
               className="text-center space-y-6 max-w-3xl mx-auto"
             >
               <p className="text-2xl text-gray-300 font-light">That is no longer just dinner.</p>
-              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-purple-400" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-indigo-400" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 That becomes an experience.
               </p>
               <p className="text-2xl text-gray-300 font-light">And experiences are what people remember.</p>
@@ -433,7 +433,7 @@ const DeckovizForRestaurantsAndCafes = () => {
               opacity: [0.3, 0.6, 0.3]
             }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] bg-purple-600/10 rounded-full blur-[100px] mix-blend-screen" 
+            className="absolute top-[20%] left-[30%] w-[40vw] h-[40vw] bg-violet-600/10 rounded-full blur-[100px] mix-blend-screen" 
           />
 
           {/* Curved Grid Pattern - Barrel Distortion Effect */}
@@ -523,7 +523,7 @@ const DeckovizForRestaurantsAndCafes = () => {
                 backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
               }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-purple-500 bg-[length:200%_auto]"
+              className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-rose-400 to-indigo-500 bg-[length:200%_auto]"
             >
               Dining Atmosphere
             </motion.span>
@@ -600,7 +600,7 @@ const DeckovizForRestaurantsAndCafes = () => {
               {
                 title: 'Atmospheric Stagnation',
                 desc: 'Static décor cannot adapt. Deckoviz solves the "vibe gap" by automatically transitioning your space from a bright brunch energy to an intimate dinner glow.',
-                icon: <Sparkles className="w-8 h-8 text-purple-400" />
+                icon: <Sparkles className="w-8 h-8 text-violet-400" />
               },
               {
                 title: 'Visual Noise vs. Resonance',
@@ -692,7 +692,7 @@ const DeckovizForRestaurantsAndCafes = () => {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-purple-500/20 blur-3xl rounded-full" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-indigo-500/20 blur-3xl rounded-full" />
               <div className="relative bg-white/5 border border-white/10 rounded-3xl p-4 backdrop-blur-xl">
                 {/* Main rotating image */}
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden relative">

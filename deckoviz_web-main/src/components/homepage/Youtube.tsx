@@ -32,11 +32,11 @@ const Youtube: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-28 text-center overflow-hidden
-      bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50">
+      bg-gradient-to-br from-indigo-50 via-violet-50 to-pink-50">
 
       {/* Glow blobs */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-purple-400/30 rounded-full blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-violet-400/30 rounded-full blur-[120px]" />
         <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-indigo-400/30 rounded-full blur-[120px]" />
       </div>
 
@@ -66,7 +66,7 @@ const Youtube: React.FC = () => {
         {/* Heading */}
         <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
           <span className="text-gray-900">See</span>{" "}
-          <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
             Deckoviz
           </span>{" "}
           <span className="text-gray-900">in</span>{" "}
@@ -85,7 +85,7 @@ const Youtube: React.FC = () => {
 
           {/* Pulse glow ring */}
           <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r
-            from-purple-500/40 via-pink-500/40 to-indigo-500/40 blur-xl
+            from-violet-500/40 via-pink-500/40 to-indigo-500/40 blur-xl
             opacity-60 group-hover:opacity-100 transition" />
 
           <div

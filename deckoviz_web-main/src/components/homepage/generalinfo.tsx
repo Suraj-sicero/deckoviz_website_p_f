@@ -147,10 +147,10 @@ onClick={() => moveCarousel("next")}
             key={index}
 onMouseEnter={() => (isPaused.current = true)}
 onMouseLeave={() => (isPaused.current = false)}
-            className="relative min-w-[320px] flex-shrink-0 p-[2px] rounded-3xl bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 transition-all duration-500 hover:scale-105"
+            className="relative min-w-[320px] flex-shrink-0 p-[2px] rounded-3xl bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 transition-all duration-500 hover:scale-105"
           >
             {/* Glow Effect */}
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 blur-xl opacity-30 group-hover:opacity-60 transition-all duration-500"></div>
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 blur-xl opacity-30 group-hover:opacity-60 transition-all duration-500"></div>
 
             {/* Glass Card */}
             <div className="relative backdrop-blur-xl bg-white/70 rounded-3xl p-6 shadow-2xl border border-indigo-100">
@@ -247,18 +247,18 @@ const GeneralInfo = () => {
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -left-48 w-[110%] h-60 sm:h-80 bg-gradient-to-r from-blue-300 via-indigo-100 to-transparent rounded-full blur-3xl rotate-8"></div>
         <div className="absolute top-1/4 -right-64 w-[120%] h-48 sm:h-64 bg-gradient-to-l from-indigo-100 via-blue-100 to-transparent rounded-full blur-3xl -rotate-[35deg]"></div>
-        <div className="absolute -bottom-32 -left-32 w-[125%] h-60 sm:h-72 bg-gradient-to-r from-purple-200 via-indigo-100 to-blue-100 rounded-full blur-3xl rotate-[4deg]"></div>
+        <div className="absolute -bottom-32 -left-32 w-[125%] h-60 sm:h-72 bg-gradient-to-r from-violet-200 via-indigo-100 to-blue-100 rounded-full blur-3xl rotate-[4deg]"></div>
       </div>
 
       <div className="absolute inset-0">
         <div className="absolute top-[12%] left-[18%] w-[600px] sm:w-[900px] h-32 sm:h-40 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-2xl rotate-[28deg] opacity-80"></div>
-        <div className="absolute bottom-[65%] right-[25%] w-[700px] sm:w-[1100px] h-36 sm:h-48 bg-gradient-to-l from-purple-200 to-transparent rounded-full blur-2xl -rotate-[42deg] opacity-70"></div>
+        <div className="absolute bottom-[65%] right-[25%] w-[700px] sm:w-[1100px] h-36 sm:h-48 bg-gradient-to-l from-violet-200 to-transparent rounded-full blur-2xl -rotate-[42deg] opacity-70"></div>
         <div className="absolute top-[55%] left-[45%] w-[550px] sm:w-[850px] h-28 sm:h-36 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-2xl rotate-[62deg] opacity-65"></div>
         <div className="absolute top-[38%] right-[8%] w-[800px] sm:w-[1200px] h-40 sm:h-52 bg-gradient-to-l from-blue-200 to-transparent rounded-full blur-3xl -rotate-[18deg] opacity-60"></div>
-        <div className="absolute bottom-[38%] left-[12%] w-[650px] sm:w-[1000px] h-36 sm:h-44 bg-gradient-to-r from-purple-100 to-transparent rounded-full blur-3xl rotate-[75deg] opacity-55"></div>
+        <div className="absolute bottom-[38%] left-[12%] w-[650px] sm:w-[1000px] h-36 sm:h-44 bg-gradient-to-r from-violet-100 to-transparent rounded-full blur-3xl rotate-[75deg] opacity-55"></div>
         <div className="absolute top-[72%] right-[35%] w-[600px] sm:w-[950px] h-32 sm:h-40 bg-gradient-to-l from-indigo-300 to-transparent rounded-full blur-2xl -rotate-[55deg] opacity-70"></div>
         <div className="absolute top-[85%] left-[28%] w-[500px] sm:w-[800px] h-24 sm:h-32 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-xl rotate-[15deg] opacity-50"></div>
-        <div className="absolute top-[25%] right-[45%] w-[450px] sm:w-[750px] h-28 sm:h-36 bg-gradient-to-l from-purple-100 to-transparent rounded-full blur-xl -rotate-[68deg] opacity-45"></div>
+        <div className="absolute top-[25%] right-[45%] w-[450px] sm:w-[750px] h-28 sm:h-36 bg-gradient-to-l from-violet-100 to-transparent rounded-full blur-xl -rotate-[68deg] opacity-45"></div>
         <div className="absolute bottom-[18%] left-[55%] w-[400px] sm:w-[700px] h-20 sm:h-28 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-xl rotate-[38deg] opacity-60"></div>
       </div>
 
@@ -277,7 +277,7 @@ const GeneralInfo = () => {
 
 {/* Decorative divider */}
 <div className="flex justify-center mb-16">
-  <div className="w-32 h-[3px] rounded-full bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500"></div>
+  <div className="w-32 h-[3px] rounded-full bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500"></div>
 </div>
 
         {/* SINGLE GLASS CARD */}
@@ -329,7 +329,7 @@ const GeneralInfo = () => {
             <div className="overflow-x-auto mt-6">
   <table className="min-w-full text-sm rounded-2xl overflow-hidden shadow-xl backdrop-blur-lg bg-white/70 border border-indigo-100">
 
-    <thead className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white text-sm uppercase tracking-wider">
+    <thead className="bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 text-white text-sm uppercase tracking-wider">
       <tr>
         <th className="py-4 px-6 text-left">Feature</th>
         <th className="py-4 px-6 text-left">Silver</th>
@@ -764,7 +764,7 @@ const GeneralInfo = () => {
                   </p>
                 </div>
 
-                <div className="font-semibold text-purple-800 whitespace-nowrap">
+                <div className="font-semibold text-violet-800 whitespace-nowrap">
                   {item.price}
                 </div>
               </div>
@@ -831,7 +831,7 @@ const GeneralInfo = () => {
             <div className="overflow-x-auto mt-6">
   <table className="min-w-full rounded-2xl overflow-hidden shadow-xl bg-white/70 backdrop-blur-lg border border-indigo-100">
 
-    <thead className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white">
+    <thead className="bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 text-white">
       <tr>
         <th className="py-4 px-6 text-left">Carving Type</th>
         <th className="py-4 px-6 text-left">Description</th>
@@ -846,7 +846,7 @@ const GeneralInfo = () => {
         <td className="py-4 px-6">
           Waves, flowers, geometric patterns
         </td>
-        <td className="py-4 px-6 font-semibold text-purple-800">
+        <td className="py-4 px-6 font-semibold text-violet-800">
           + $80
         </td>
       </tr>
@@ -856,7 +856,7 @@ const GeneralInfo = () => {
         <td className="py-4 px-6">
           Detailed themes and cursive designs
         </td>
-        <td className="py-4 px-6 font-semibold text-purple-800">
+        <td className="py-4 px-6 font-semibold text-violet-800">
           + $150
         </td>
       </tr>
@@ -866,7 +866,7 @@ const GeneralInfo = () => {
         <td className="py-4 px-6">
           Logos and brand-themed designs
         </td>
-        <td className="py-4 px-6 font-semibold text-purple-800">
+        <td className="py-4 px-6 font-semibold text-violet-800">
           + $200
         </td>
       </tr>
@@ -884,7 +884,7 @@ const GeneralInfo = () => {
     <table className="min-w-full text-sm text-gray-800 bg-white/70 backdrop-blur-lg border border-indigo-100 rounded-2xl overflow-hidden">
 
       {/* HEADER */}
-      <thead className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white">
+      <thead className="bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 text-white">
         <tr>
           <th className="py-4 px-6 text-left font-semibold">Finish Type</th>
           <th className="py-4 px-6 text-left font-semibold">Extra Cost</th>
@@ -911,7 +911,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Matte Black / White / Charcoal
           </td>
-          <td className="py-4 px-6 font-semibold text-purple-800">
+          <td className="py-4 px-6 font-semibold text-violet-800">
             + $35
           </td>
           <td className="py-4 px-6">
@@ -923,7 +923,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Custom Pantone Colour
           </td>
-          <td className="py-4 px-6 font-semibold text-purple-800">
+          <td className="py-4 px-6 font-semibold text-violet-800">
             + $65
           </td>
           <td className="py-4 px-6">
@@ -935,7 +935,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Dual-Tone (Two Colours)
           </td>
-          <td className="py-4 px-6 font-semibold text-purple-800">
+          <td className="py-4 px-6 font-semibold text-violet-800">
             + $85
           </td>
           <td className="py-4 px-6">
@@ -947,7 +947,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Hand-Painted Artwork
           </td>
-          <td className="py-4 px-6 font-semibold text-purple-800">
+          <td className="py-4 px-6 font-semibold text-violet-800">
             + $120
           </td>
           <td className="py-4 px-6">
@@ -959,7 +959,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Colour + Carving Combo
           </td>
-          <td className="py-4 px-6 font-semibold text-purple-800">
+          <td className="py-4 px-6 font-semibold text-violet-800">
             + $160 / + $230
           </td>
           <td className="py-4 px-6">
@@ -989,21 +989,21 @@ const GeneralInfo = () => {
               <tbody className="divide-y divide-white/[0.05]">
                 <tr>
                   <td className="py-3 px-4">Simple Carving + Colour</td>
-                  <td className="py-3 px-4 font-semibold text-purple-800">
+                  <td className="py-3 px-4 font-semibold text-violet-800">
                     + $145
                   </td>
                   <td className="py-3 px-4">Waves carved + Matte Black</td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4">Ornate Carving + Colour</td>
-                  <td className="py-3 px-4 font-semibold text-purple-800">
+                  <td className="py-3 px-4 font-semibold text-violet-800">
                     + $215
                   </td>
                   <td className="py-3 px-4">Floral motifs + Gold metallic</td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4">Carving + Dual-Tone Finish</td>
-                  <td className="py-3 px-4 font-semibold text-purple-800">
+                  <td className="py-3 px-4 font-semibold text-violet-800">
                     + $240
                   </td>
                   <td className="py-3 px-4">
@@ -1012,7 +1012,7 @@ const GeneralInfo = () => {
                 </tr>
                 <tr>
                   <td className="py-3 px-4">Carving + Hand-Painted Details</td>
-                  <td className="py-3 px-4 font-semibold text-purple-800">
+                  <td className="py-3 px-4 font-semibold text-violet-800">
                     + $250
                   </td>
                   <td className="py-3 px-4">Hand-painted cursive or motifs</td>
@@ -1021,7 +1021,7 @@ const GeneralInfo = () => {
                   <td className="py-3 px-4">
                     Full Custom (Carving + Colour + Paint)
                   </td>
-                  <td className="py-3 px-4 font-semibold text-purple-800">
+                  <td className="py-3 px-4 font-semibold text-violet-800">
                     + $325
                   </td>
                   <td className="py-3 px-4">

@@ -3,7 +3,7 @@ export default function AboutDeckoviz() {
     <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 px-4 py-20">
 
       {/* 🌈 Floating Gradient Blobs */}
-      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-gradient-to-br from-pink-400 via-purple-400 to-indigo-400 rounded-full blur-3xl opacity-40" />
+      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-gradient-to-br from-pink-400 via-violet-400 to-indigo-400 rounded-full blur-3xl opacity-40" />
       <div className="absolute top-1/4 -right-40 w-[450px] h-[450px] bg-gradient-to-br from-sky-400 via-cyan-400 to-blue-500 rounded-full blur-3xl opacity-40" />
       <div className="absolute bottom-[-200px] left-1/3 w-[500px] h-[500px] bg-gradient-to-br from-indigo-400 via-blue-400 to-pink-400 rounded-full blur-3xl opacity-30" />
 
@@ -12,7 +12,7 @@ export default function AboutDeckoviz() {
 
         {/* Header */}
         <div className="text-center mb-14">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent">
             🌌 About Deckoviz DASP
           </h1>
           <p className="mt-4 text-gray-600 text-lg">

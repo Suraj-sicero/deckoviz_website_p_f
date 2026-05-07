@@ -1,11 +1,14 @@
 import React, { useState, useRef } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
+const HF_AUDIOBOOK_URL = "https://sudharsan051006-visual-audiobook-api.hf.space";
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
 
 const VisualAudiobookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [voice, setVoice] = useState("calm-warm");
   const [frames, setFrames] = useState(8);
@@ -23,6 +26,8 @@ const VisualAudiobookTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!file) { setError("Please upload a PDF first."); return; }
     setError(""); setStatus("uploading"); setStatusMsg("Uploading PDF…");
 
@@ -32,7 +37,7 @@ const VisualAudiobookTool: React.FC = () => {
     formData.append("style", voice);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/api/audiobook/generate`, {
+      const res = await fetch(`${HF_AUDIOBOOK_URL}/generate`, {
         method: "POST",
         body: formData,
       });
@@ -47,9 +52,10 @@ const VisualAudiobookTool: React.FC = () => {
 
       intervalRef.current = setInterval(async () => {
         try {
-          const poll = await fetch(`${BACKEND_URL}/api/audiobook/status/${jobId}`);
+          const poll = await fetch(`${HF_AUDIOBOOK_URL}/result/${jobId}`);
           if (!poll.ok) return;
           const json = await poll.json();
+          // HF Space API returns { status: "processing" | "done" | "error" } on the /result endpoint
           if (json.status === "processing") return;
           clearInterval(intervalRef.current!);
 
@@ -74,7 +80,7 @@ const VisualAudiobookTool: React.FC = () => {
 
   const handleDownload = () => {
     if (!downloadId) return;
-    const url = `${BACKEND_URL}/api/audiobook/download/${downloadId}`;
+    const url = `${HF_AUDIOBOOK_URL}/download/${downloadId}`;
     const a = document.createElement("a");
     a.href = url; a.download = "visual_audiobook.zip";
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
@@ -93,7 +99,7 @@ const VisualAudiobookTool: React.FC = () => {
       icon="🎬"
       title="Visual Audiobook"
       subtitle="Transform PDFs into scene-by-scene visual audiobooks with narration and AI art"
-      gradient="from-fuchsia-600 via-purple-700 to-violet-800"
+      gradient="from-fuchsia-600 via-violet-700 to-violet-800"
     >
       <div className="space-y-8">
 
@@ -180,7 +186,7 @@ const VisualAudiobookTool: React.FC = () => {
             className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 ${
               isRunning
                 ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-fuchsia-600 via-purple-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 hover:shadow-xl hover:scale-[1.02] shadow-lg"
+                : "bg-gradient-to-r from-fuchsia-600 via-violet-600 to-violet-600 hover:from-fuchsia-500 hover:to-violet-500 hover:shadow-xl hover:scale-[1.02] shadow-lg"
             }`}
           >
             {isRunning ? (

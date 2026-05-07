@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 const Sitemap: React.FC = () => {
   return (
-    <section className="py-24 bg-gradient-to-br from-white via-purple-50/50 to-pink-50/50">
+    <section className="py-24 bg-gradient-to-br from-white via-violet-50/50 to-pink-50/50">
       <div className="w-full px-6 xl:px-12 2xl:px-20">
         {/* Header */}
         <div className="relative mb-14">
-          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-pink-200/30 via-purple-200/30 to-indigo-200/30"></div>
+          <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-pink-200/30 via-violet-200/30 to-indigo-200/30"></div>
 
           <h1
             className="
@@ -17,7 +17,7 @@ const Sitemap: React.FC = () => {
       font-extrabold
       text-center
       bg-clip-text text-transparent
-      bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-600
+      bg-gradient-to-r from-pink-500 via-violet-500 to-indigo-600
     "
           >
             Site Map
@@ -298,7 +298,7 @@ const SitemapBox = ({
       px-8 py-10
       bg-gradient-to-br
       from-pink-200/90
-      via-purple-200/85
+      via-violet-200/85
       to-indigo-200/90
       shadow-[0_25px_60px_rgba(0,0,0,0.15)]
       overflow-hidden
@@ -311,7 +311,7 @@ const SitemapBox = ({
         text-2xl font-extrabold
         text-center mb-8
         bg-clip-text text-transparent
-        bg-gradient-to-r from-pink-600 via-purple-600 to-indigo-600
+        bg-gradient-to-r from-pink-600 via-violet-600 to-indigo-600
         drop-shadow-md
         flex items-center justify-center gap-2
       "
@@ -349,7 +349,7 @@ const BoxSection = ({
     {to ? (
       <Link
         to={to}
-        className="block font-medium mb-2 text-gray-800 hover:text-purple-600 transition"
+        className="block font-medium mb-2 text-gray-800 hover:text-violet-600 transition"
       >
         {title}
       </Link>

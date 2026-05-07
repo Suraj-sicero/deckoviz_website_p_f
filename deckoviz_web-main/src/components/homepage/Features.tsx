@@ -237,18 +237,18 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
   // Unique gradient combinations for each card
   const gradients = [
-    "from-violet-100 via-purple-100 to-fuchsia-100",
+    "from-violet-100 via-violet-100 to-fuchsia-100",
     "from-rose-100 via-pink-100 to-red-100",
     "from-cyan-100 via-sky-100 to-blue-100",
     "from-amber-100 via-orange-100 to-yellow-100",
     "from-emerald-100 via-teal-100 to-green-100",
-    "from-indigo-100 via-blue-100 to-purple-100",
-    "from-pink-100 via-rose-100 to-purple-100",
+    "from-indigo-100 via-blue-100 to-indigo-100",
+    "from-pink-100 via-rose-100 to-indigo-100",
     "from-lime-100 via-green-100 to-emerald-100",
     "from-fuchsia-100 via-pink-100 to-rose-100",
     "from-sky-100 via-cyan-100 to-teal-100",
     "from-orange-100 via-amber-100 to-yellow-100",
-    "from-purple-100 via-violet-100 to-indigo-100",
+    "from-violet-100 via-violet-100 to-indigo-100",
   ];
 
   const borderColors = [
@@ -263,22 +263,22 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
     "border-fuchsia-200/60",
     "border-sky-200/60",
     "border-orange-200/60",
-    "border-purple-200/60",
+    "border-violet-200/60",
   ];
 
   const titleGradients = [
-    "from-violet-600 via-purple-600 to-fuchsia-600",
+    "from-violet-600 via-violet-600 to-fuchsia-600",
     "from-rose-600 via-pink-600 to-red-600",
     "from-cyan-600 via-sky-600 to-blue-600",
     "from-amber-600 via-orange-600 to-yellow-600",
     "from-emerald-600 via-teal-600 to-green-600",
-    "from-indigo-600 via-blue-600 to-purple-600",
-    "from-pink-600 via-rose-600 to-purple-600",
+    "from-indigo-600 via-blue-600 to-indigo-600",
+    "from-pink-600 via-rose-600 to-indigo-600",
     "from-lime-600 via-green-600 to-emerald-600",
     "from-fuchsia-600 via-pink-600 to-rose-600",
     "from-sky-600 via-cyan-600 to-teal-600",
     "from-orange-600 via-amber-600 to-yellow-600",
-    "from-purple-600 via-violet-600 to-indigo-600",
+    "from-violet-600 via-violet-600 to-indigo-600",
   ];
 
   const buttonGradients = [
@@ -287,13 +287,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
     "from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600",
     "from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",
     "from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600",
-    "from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600",
+    "from-indigo-500 to-indigo-500 hover:from-indigo-600 hover:to-indigo-600",
     "from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600",
     "from-lime-500 to-green-500 hover:from-lime-600 hover:to-green-600",
     "from-fuchsia-500 to-pink-500 hover:from-fuchsia-600 hover:to-pink-600",
     "from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600",
     "from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600",
-    "from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600",
+    "from-violet-500 to-violet-500 hover:from-violet-600 hover:to-violet-600",
   ];
 
   const dividerGradients = [
@@ -308,7 +308,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
     "from-transparent via-fuchsia-300 to-transparent",
     "from-transparent via-sky-300 to-transparent",
     "from-transparent via-orange-300 to-transparent",
-    "from-transparent via-purple-300 to-transparent",
+    "from-transparent via-violet-300 to-transparent",
   ];
 
   return (
@@ -320,10 +320,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       viewport={{ once: true, amount: 0.2 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative rounded-3xl p-10 pt-20 shadow-xl border-2 ${borderColors[index]}
+      className={`group relative rounded-3xl p-5 sm:p-8 pt-14 sm:pt-20 shadow-xl border-2 ${borderColors[index]}
       bg-gradient-to-br ${gradients[index]}
       hover:shadow-2xl hover:scale-[1.03] transition-all duration-500 backdrop-blur-md
-      ${shouldShowContent ? 'ring-4 ring-purple-300/30' : ''}`}
+      ${shouldShowContent ? 'ring-4 ring-violet-300/30' : ''}`}
     >
       {/* Animated gradient overlay on hover */}
       <motion.div 
@@ -337,16 +337,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
       {/* Icon with enhanced animation */}
       <motion.div 
-        className="absolute -top-12 left-1/2 -translate-x-1/2 z-50"
+        className="absolute -top-8 sm:-top-12 left-1/2 -translate-x-1/2 z-50"
         whileHover={{ scale: 1.2, rotate: 5, y: -8 }}
         transition={{ type: "spring", stiffness: 300 }}
       >
         <div className="relative">
           {/* Icon glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity" />
+          <div className="absolute inset-0 bg-gradient-to-br from-violet-400 to-pink-400 rounded-full blur-2xl opacity-40 group-hover:opacity-70 transition-opacity" />
           <img
             src={`/images/${getIconForFeature(title)}`}
-            className="relative w-24 h-24 object-contain drop-shadow-2xl transition-all duration-500"
+            className="relative w-16 h-16 sm:w-24 sm:h-24 object-contain drop-shadow-2xl transition-all duration-500"
           />
         </div>
       </motion.div>
@@ -372,7 +372,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
       <div className="relative z-10 text-center space-y-4">
         <motion.h3 
-          className={`text-2xl md:text-3xl font-bold bg-gradient-to-r ${titleGradients[index]} bg-clip-text text-transparent`}
+          className={`text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r ${titleGradients[index]} bg-clip-text text-transparent`}
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400 }}
         >
@@ -427,16 +427,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       id="features"
       className="min-h-screen bg-white relative overflow-visible"
     >
-      {/* Purple to pink spiral gradient background */}
+      {/* Violet to pink spiral gradient background */}
       <div
         className="absolute inset-0"
         style={{
           background: `radial-gradient(circle at 50% 60%, 
-        rgba(168, 85, 247, 0.4) 0%, /* purple-500 */
-        rgba(180, 83, 220, 0.3) 10%, /* purple-pink blend */
-        rgba(195, 80, 190, 0.2) 18%, /* purple-pink blend */
-        rgba(215, 75, 165, 0.15) 27%, /* purple-pink blend */
-        rgba(226, 73, 155, 0.08) 39%, /* purple-pink blend */
+        rgba(168, 85, 247, 0.4) 0%, /* violet-500 */
+        rgba(180, 83, 220, 0.3) 10%, /* violet-pink blend */
+        rgba(195, 80, 190, 0.2) 18%, /* violet-pink blend */
+        rgba(215, 75, 165, 0.15) 27%, /* violet-pink blend */
+        rgba(226, 73, 155, 0.08) 39%, /* violet-pink blend */
         rgba(236, 72, 153, 0.03) 45%, /* pink-500 */
         transparent 50%)`,
         }}
@@ -449,16 +449,16 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
         {/* Intro Card */}
         <div className="mb-20">
-          <div className="relative overflow-hidden rounded-[32px] p-[2px] bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 shadow-2xl">
-            <div className="bg-white rounded-[30px] p-12 md:p-16 relative">
+          <div className="relative overflow-hidden rounded-[32px] p-[2px] bg-gradient-to-r from-violet-500 via-pink-500 to-indigo-500 shadow-2xl">
+            <div className="bg-white rounded-[30px] p-6 sm:p-12 md:p-16 relative">
               {/* soft glow blobs */}
-              <div className="absolute -top-24 -left-24 w-64 h-64 bg-purple-200 rounded-full blur-3xl opacity-40"></div>
+              <div className="absolute -top-24 -left-24 w-64 h-64 bg-violet-200 rounded-full blur-3xl opacity-40"></div>
               <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-pink-200 rounded-full blur-3xl opacity-40"></div>
  {/* Header */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">Features &</span>{" "}
-            <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
               Highlights
             </span>
           </h1>
@@ -466,11 +466,11 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
               <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
                 {/* Gradient Heading */}
                 <h2
-                  className="text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   What Can{" "}
-                  <span className="italic bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+                  <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
                     Deckoviz
                   </span>{" "}
                   Do
@@ -479,7 +479,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                 {/* Soft underline glow */}
                 <div
                   className="mx-auto w-32 h-1 rounded-full
-                  bg-gradient-to-r from-purple-400 to-pink-400
+                  bg-gradient-to-r from-violet-400 to-pink-400
                   opacity-60 mb-6"
                 ></div>
 
@@ -508,13 +508,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1, type: "spring", bounce: 0.3 }}
                   whileHover={{ scale: 1.02, y: -4 }}
-                  className="bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 rounded-2xl p-6 border-2 border-purple-200 shadow-sm hover:shadow-lg transition-shadow cursor-default"
+                  className="bg-gradient-to-br from-violet-50 via-pink-50 to-indigo-50 rounded-2xl p-6 border-2 border-violet-200 shadow-sm hover:shadow-lg transition-shadow cursor-default"
                 >
                   <p className="text-base md:text-lg text-gray-700 leading-relaxed">
                     Today, Deckoviz includes{" "}
                     <motion.span 
                       whileHover={{ scale: 1.1 }}
-                      className="inline-block font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent"
+                      className="inline-block font-bold text-xl bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent"
                     >
                       hundreds of individual features
                     </motion.span>
@@ -578,7 +578,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
         </div>
 
         {/* Main Features Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 mb-16 md:mb-20">
           {mainFeatures.map((feature, index) => (
             <FeatureCard
               key={index}
@@ -596,9 +596,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
             onClick={() => (window.location.href = "/all-features")}
             className="group relative inline-flex items-center gap-4 px-10 py-4
                rounded-full font-bold text-white text-lg
-               bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500
-               hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700
-               shadow-xl hover:shadow-purple-500/40
+               bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500
+               hover:from-indigo-700 hover:via-violet-700 hover:to-pink-700
+               shadow-xl hover:shadow-violet-500/40
                transition-all duration-300 hover:scale-105"
           >
             <span className="relative z-10"> See More Magic 🌟</span>

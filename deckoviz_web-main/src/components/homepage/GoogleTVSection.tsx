@@ -143,9 +143,9 @@ const GoogleTVSection: React.FC = () => {
               transition={{ duration: 0.7, delay: 0.5 }}
               className="relative"
             >
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-100 via-pink-50 to-orange-100 rounded-[2rem] opacity-60 blur-xl" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-violet-100 via-pink-50 to-orange-100 rounded-[2rem] opacity-60 blur-xl" />
               <div className="relative bg-white/90 backdrop-blur-sm rounded-[1.5rem] p-6 md:p-8 shadow-xl border border-gray-100">
-                <div className="absolute top-6 left-6 w-16 h-16 bg-gradient-to-br from-purple-400 to-pink-500 rounded-3xl opacity-10 rotate-45" />
+                <div className="absolute top-6 left-6 w-16 h-16 bg-gradient-to-br from-violet-400 to-pink-500 rounded-3xl opacity-10 rotate-45" />
                 <div className="absolute bottom-6 right-6 w-12 h-12 bg-gradient-to-br from-orange-400 to-yellow-500 rounded-2xl opacity-10 -rotate-45" />
                 
                 <h3
@@ -162,7 +162,7 @@ const GoogleTVSection: React.FC = () => {
                 {/* Creative Bullet Points */}
                 <ul className="space-y-3 mb-6 relative">
                   {[
-                    { text: "Netflix, YouTube, Prime Video, Disney+, Spotify, and more", color: "from-purple-500 to-pink-500" },
+                    { text: "Netflix, YouTube, Prime Video, Disney+, Spotify, and more", color: "from-violet-500 to-pink-500" },
                     { text: "Google Play Store with thousands of apps", color: "from-green-500 to-emerald-500" },
                     { text: "Voice search with Google Assistant", color: "from-blue-500 to-cyan-500" },
                     { text: "Seamless casting from your phone", color: "from-orange-500 to-yellow-500" },

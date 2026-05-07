@@ -2,8 +2,10 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
+import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight, User, LogOut, Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
+
 import { useAudio } from "../AudioProvider";
+import { useAuth } from "../../context/AuthContext";
 
 // Button component with proper types
 interface ButtonProps {
@@ -20,7 +22,7 @@ const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseClasses =
-    "inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-8 py-3 text-sm tracking-widest uppercase overflow-hidden relative z-10 group";
+    "inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-6 py-2.5 text-sm tracking-widest uppercase overflow-hidden relative z-10 group whitespace-nowrap";
 
   const variantClasses = {
     primary: "text-white transform hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98]",
@@ -34,9 +36,9 @@ const Button: React.FC<ButtonProps> = ({
       <div className="relative inline-block group">
         {/* Intense Animated Outer Glow */}
         <div
-          className="absolute -inset-[3px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[5px] group-hover:blur-xl blur-lg"
+          className="absolute -inset-[1px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[3px] group-hover:blur-md blur-sm"
           style={{
-            background: `linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #3B82F6)`,
+            background: `linear-gradient(90deg, #1B2A4A, #2563EB, #1B2A4A)`,
             backgroundSize: "300% 100%",
             zIndex: -1,
             animation: "flowColors 3s linear infinite",
@@ -47,7 +49,7 @@ const Button: React.FC<ButtonProps> = ({
         <div
           className="absolute -inset-[1px] rounded-full opacity-100 transition-all duration-300 blur-[2px]"
           style={{
-            background: `linear-gradient(90deg, #2563EB, #7C3AED, #2563EB)`,
+            background: `linear-gradient(90deg, #0B1220, #1B2A4A, #0B1220)`,
             backgroundSize: "200% 100%",
             zIndex: -1,
             animation: "flowColors 2s linear infinite reverse",
@@ -57,29 +59,29 @@ const Button: React.FC<ButtonProps> = ({
         <button
           className={`${classes}`}
           style={{
-            background: `linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #8B5CF6 100%)`,
+            background: `linear-gradient(135deg, #0B1220 0%, #1B2A4A 50%, #2563EB 100%)`,
             backgroundSize: "200% 200%",
             boxShadow: `
-              inset 0 2px 4px rgba(255, 255, 255, 0.4),
-              inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-              0 5px 15px rgba(59, 130, 246, 0.5)
+              inset 0 2px 4px rgba(255, 255, 255, 0.2),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.3),
+              0 5px 15px rgba(27, 42, 74, 0.5)
             `,
-            textShadow: `0 1px 2px rgba(0, 0, 0, 0.3)`,
-            border: "1px solid rgba(255, 255, 255, 0.3)",
+            textShadow: `0 1px 2px rgba(0, 0, 0, 0.5)`,
+            border: "1px solid rgba(255, 255, 255, 0.2)",
             animation: "gradientShift 4s ease infinite",
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 2px 4px rgba(255, 255, 255, 0.5),
-              inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-              0 10px 25px rgba(59, 130, 246, 0.8)
+              inset 0 2px 4px rgba(255, 255, 255, 0.3),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.4),
+              0 10px 25px rgba(37, 99, 235, 0.6)
             `;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.boxShadow = `
-              inset 0 2px 4px rgba(255, 255, 255, 0.4),
-              inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-              0 5px 15px rgba(59, 130, 246, 0.5)
+              inset 0 2px 4px rgba(255, 255, 255, 0.2),
+              inset 0 -2px 5px rgba(0, 0, 0, 0.3),
+              0 5px 15px rgba(27, 42, 74, 0.5)
             `;
           }}
           {...props}
@@ -154,8 +156,9 @@ const ImagePreloader: React.FC = () => {
       "/images/therapistnavbar.png",
       "/images/schoolnavbar.png",
       "/images/retailnavbar.png",
-      "/images/newenterprisenavbar.png",
+      "/images/newenterpriselogo.png",
     ];
+
 
     // Preload all images
     imagesToPreload.forEach((src) => {
@@ -181,7 +184,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   src,
   alt,
   className = "",
-  fallbackColor = "bg-gradient-to-br from-purple-100 to-purple-200",
+  fallbackColor = "bg-gradient-to-br from-violet-100 to-indigo-200",
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -231,6 +234,8 @@ const Navbar: React.FC = () => {
     useState<boolean>(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState<boolean>(true);
   const { isPlaying, toggle, next, prev } = useAudio();
+  const { user, logout, openAuthModal } = useAuth();
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   useEffect(() => {
     setCurrentPath(window.location.pathname);
@@ -388,7 +393,7 @@ const Navbar: React.FC = () => {
             <button
               onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
-              className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-purple-50 transform hover:scale-110 bg-white/90 backdrop-blur-sm shadow-sm border border-gray-100"
+              className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-violet-50 transform hover:scale-110 bg-white/90 backdrop-blur-sm shadow-sm border border-gray-100"
             >
               <Menu size={20} />
             </button>
@@ -417,7 +422,7 @@ const Navbar: React.FC = () => {
                 <div className="p-3 space-y-1">
                   <a
                     href="/Wall-Of-Love"
-                    className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-pink-50 hover:to-purple-50"
+                    className="group relative p-3 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden flex items-center space-x-3 bg-white/90 hover:bg-gradient-to-r hover:from-pink-50 hover:to-indigo-50"
                   >
                     <div className="w-6 h-6 flex items-center justify-center">
                       <svg
@@ -581,9 +586,9 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between h-16 md:pl-16">
+          <div className="flex items-center justify-between h-16 md:pl-16 w-full relative">
             {/* Desktop Main Navigation */}
-            <div className="hidden md:flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4 flex-1">
               <div
                 className="relative"
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
@@ -756,40 +761,41 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
+                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
               >
                 Pricing
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
-
-            </div>
-
-            {/* Center Logo */}
-            <a href="/" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center space-x-1 z-50">
-              <img
-                src="/images/deckovizlogo.png"
-                alt="Deckoviz Symbol"
-                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
-              />
-              <img
-                src="/images/new_logoo.jpeg"
-                alt="Deckoviz Space Labs Logo"
-                className="h-7 sm:h-8 md:h-12 w-auto object-contain"
-              />
-            </a>
-
-            {/* Right Navigation */}
-            <div className="hidden md:flex items-center space-x-6">
               <a
                 href="/blog"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
+                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
               >
                 Blog
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
+            </div>
+
+            {/* Center Logo */}
+            <div className="flex-shrink-0 flex justify-center items-center z-50">
+              <a href="/" className="flex items-center space-x-1">
+                <img
+                  src="/images/deckovizlogo.png"
+                  alt="Deckoviz Symbol"
+                  className="h-7 sm:h-8 md:h-12 w-auto object-contain"
+                />
+                <img
+                  src="/images/new_logoo.jpeg"
+                  alt="Deckoviz Space Labs Logo"
+                  className="h-7 sm:h-8 md:h-12 w-auto object-contain"
+                />
+              </a>
+            </div>
+
+            {/* Right Navigation */}
+            <div className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-end">
               <a
                 href="/about"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group"
+                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
               >
                 About us
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
@@ -798,33 +804,78 @@ const Navbar: React.FC = () => {
                 Buy Now
               </Button>
 
-              <div className="flex items-center space-x-2 z-50 pl-2">
+              {/* User Profile / Login */}
+              <div className="relative ml-2">
+                {user ? (
+                  <div 
+                    className="relative"
+                    onMouseEnter={() => setIsUserDropdownOpen(true)}
+                    onMouseLeave={() => setIsUserDropdownOpen(false)}
+                  >
+                    <button className="flex items-center gap-2 p-1.5 rounded-full bg-violet-50 border border-violet-100 hover:bg-violet-100 transition-colors">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                        <User size={16} />
+                      </div>
+                      <ChevronDown size={14} className={`text-violet-600 transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* User Dropdown */}
+                    <div className={`absolute top-full right-0 mt-2 w-48 transition-all duration-300 ${isUserDropdownOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'}`}>
+                      <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+                        <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Account</p>
+                          <p className="text-sm font-semibold text-gray-800 truncate">{user.email}</p>
+                          <p className="text-xs text-violet-600 font-bold mt-1">🪙 {user.credits} Credits</p>
+                        </div>
+                        <div className="p-2">
+                          <button 
+                            onClick={logout}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 font-semibold hover:bg-red-50 rounded-xl transition-colors"
+                          >
+                            <LogOut size={16} />
+                            Logout
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => openAuthModal()}
+                    className="px-4 py-2 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-xs hover:bg-violet-50 transition-all whitespace-nowrap"
+                  >
+                    Login
+                  </button>
+                )}
+              </div>
+
+              <div className="flex items-center space-x-1 z-50 pl-2">
                 {/* Previous */}
                 <button
                   onClick={prev}
-                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
                 >
-                  <SkipBack size={18} className="text-blue-600" />
+                  <SkipBack size={16} className="text-blue-600" />
                 </button>
 
                 {/* Play / Pause */}
                 <button
                   onClick={toggle}
-                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
                 >
                   {isPlaying ? (
-                    <Volume2 size={20} className="text-blue-600" />
+                    <Volume2 size={16} className="text-blue-600" />
                   ) : (
-                    <VolumeX size={20} className="text-gray-400" />
+                    <VolumeX size={16} className="text-gray-400" />
                   )}
                 </button>
 
                 {/* Next */}
                 <button
                   onClick={next}
-                  className="p-2 rounded-full bg-white/80 backdrop-blur shadow border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
                 >
-                  <SkipForward size={18} className="text-blue-600" />
+                  <SkipForward size={16} className="text-blue-600" />
                 </button>
               </div>
             </div>
@@ -832,7 +883,7 @@ const Navbar: React.FC = () => {
             {/* Mobile Menu Button with cool animation */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-purple-50 transform hover:scale-110"
+              className="md:hidden text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-violet-50 transform hover:scale-110"
             >
               <div className="relative w-6 h-6">
                 <Menu
@@ -864,7 +915,7 @@ const Navbar: React.FC = () => {
                 onClick={() =>
                   setIsBusinessDropdownOpen(!isBusinessDropdownOpen)
                 }
-                className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-purple-50 flex items-center justify-between"
+                className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-violet-50 flex items-center justify-between"
               >
                 <span>Deckoviz For Business</span>
                 <ChevronDown
@@ -882,7 +933,7 @@ const Navbar: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => handleBusinessNavigation(category.route)}
-                      className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
+                      className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
                     >
                       <div className="w-6 h-6 flex-shrink-0">
                         {/* OPTIMIZATION 2: Use OptimizedImage in mobile too */}
@@ -913,7 +964,7 @@ const Navbar: React.FC = () => {
             <div className="border-t border-gray-200 pt-4 space-y-0">
               <a
                 href="/Wall-Of-Love"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Wall Of Love
@@ -921,7 +972,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/Leaderboard"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Leaderboard
@@ -929,7 +980,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/contact"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Contact Us
@@ -937,7 +988,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Pricing
@@ -945,7 +996,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/blog"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Blog
@@ -953,13 +1004,41 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/about"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-purple-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 About us
               </a>
 
-              <div className="pt-4">
+              <div className="pt-4 space-y-3">
+                {user ? (
+                  <div className="p-4 rounded-2xl bg-violet-50 border border-violet-100">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                        <User size={20} />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-gray-800 truncate">{user.email}</p>
+                        <p className="text-xs text-violet-600 font-bold">🪙 {user.credits} Credits</p>
+                      </div>
+                    </div>
+                    <button 
+                      onClick={() => { logout(); setIsOpen(false); }}
+                      className="w-full flex items-center justify-center gap-2 py-3 text-sm text-red-600 font-bold bg-white border border-red-100 rounded-xl hover:bg-red-50 transition-colors"
+                    >
+                      <LogOut size={16} />
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <button 
+                    onClick={() => { openAuthModal(); setIsOpen(false); }}
+                    className="w-full py-3 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-sm hover:bg-violet-50 transition-all"
+                  >
+                    Login / Sign Up
+                  </button>
+                )}
+                
                 <Button
                   variant="primary"
                   className="w-full"

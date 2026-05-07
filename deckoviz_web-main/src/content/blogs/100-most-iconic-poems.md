@@ -3,7 +3,7 @@ id: 101
 title: "100 Most Iconic Poems"
 description: "A timeless collection of 100 iconic poems from ancient epics to modern voices, celebrating human emotion, imagination, resistance, love, and identity."
 tag: "Guides"
-tagColor: "bg-purple-100 text-purple-700"
+tagColor: "bg-violet-100 text-violet-700"
 date: "March 22, 2025"
 readTime: "20 min read"
 pinned: false

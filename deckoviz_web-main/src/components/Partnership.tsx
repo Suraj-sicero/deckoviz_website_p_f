@@ -9,7 +9,7 @@ const Partnership: React.FC = () => {
       <div className="pointer-events-none fixed inset-0">
         <div className="absolute -top-24 -left-24 h-[380px] w-[380px] rounded-full bg-white/55 blur-[100px]" />
         <div className="absolute top-28 -right-28 h-[460px] w-[460px] rounded-full bg-blue-500/45 blur-[115px]" />
-        <div className="absolute bottom-[-160px] left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-purple-500/45 blur-[125px]" />
+        <div className="absolute bottom-[-160px] left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-violet-500/45 blur-[125px]" />
       </div>
 
       {/* glass card wrapper */}

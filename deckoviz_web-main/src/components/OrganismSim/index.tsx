@@ -31,7 +31,7 @@ const OrganismSim: React.FC = () => {
         
         engineRef.current = new SimulationEngine(containerRef.current);
         engineRef.current.updateConfig(config);
-        engineRef.current.animate(config);
+        engineRef.current.animate();
 
         return () => {
             engineRef.current?.dispose();
@@ -49,6 +49,8 @@ const OrganismSim: React.FC = () => {
         setConfig(newConfig);
         if (key === 'type' || key === 'population' || key === 'environment') {
             engineRef.current?.updateConfig(newConfig);
+        } else {
+            engineRef.current?.setParams(newConfig);
         }
     };
 

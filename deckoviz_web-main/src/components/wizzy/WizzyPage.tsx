@@ -90,14 +90,14 @@ const WizzyPage: React.FC = () => {
     <div className="min-h-screen bg-slate-50 pt-24 pb-20 font-inter print:bg-white print:pt-0 print:pb-0">
       {/* Dynamic Background Blur */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10 print:hidden">
-         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-200/40 blur-[120px] rounded-full"></div>
+         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-violet-200/40 blur-[120px] rounded-full"></div>
          <div className="absolute bottom-[10%] right-[-5%] w-[35%] h-[35%] bg-indigo-200/30 blur-[120px] rounded-full"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 print:px-0">
         {/* Progress Bar */}
         <div className="mb-20 flex justify-center print:hidden">
-           <div className="flex items-center space-x-6 bg-white/60 backdrop-blur p-4 rounded-3xl border border-white shadow-xl shadow-purple-900/5 transition-all">
+           <div className="flex items-center space-x-6 bg-white/60 backdrop-blur p-4 rounded-3xl border border-white shadow-xl shadow-violet-900/5 transition-all">
               {[
                 { id: "ideation", label: "Idea", icon: Bot },
                 { id: "builder", label: "Builder", icon: Sparkles },
@@ -105,7 +105,7 @@ const WizzyPage: React.FC = () => {
               ].map((s, i) => (
                 <React.Fragment key={s.id}>
                   <div className={`flex items-center space-x-3 px-6 py-3 rounded-2xl transition-all duration-500 ${
-                    step === s.id ? "bg-purple-600 text-white shadow-lg shadow-purple-200 scale-105" : "text-gray-400"
+                    step === s.id ? "bg-violet-600 text-white shadow-lg shadow-violet-200 scale-105" : "text-gray-400"
                   }`}>
                     <s.icon size={18} />
                     <span className="font-bold text-sm">{s.label}</span>

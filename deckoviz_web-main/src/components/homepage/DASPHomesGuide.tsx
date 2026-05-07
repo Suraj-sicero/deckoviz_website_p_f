@@ -45,8 +45,8 @@ const pillars = [
     icon: "📖",
     title: "Visual Storytelling & Story Immersion",
     subtitle: "Stories you don't just read or watch, but stories live with and live in",
-    gradient: "from-violet-500 via-purple-400 to-indigo-400",
-    bg: "from-violet-50 to-purple-50",
+    gradient: "from-violet-500 via-violet-400 to-indigo-400",
+    bg: "from-violet-50 to-indigo-50",
     border: "border-violet-200/60",
     shadow: "shadow-violet-200/40",
     whatItDoes: [
@@ -290,10 +290,10 @@ const pillars = [
     icon: "🎮",
     title: "Games & Interactive Generative Experiences",
     subtitle: "Play as connection, not consumption, for depth, not distraction",
-    gradient: "from-purple-500 via-violet-400 to-indigo-400",
-    bg: "from-purple-50 to-violet-50",
-    border: "border-purple-200/60",
-    shadow: "shadow-purple-200/40",
+    gradient: "from-violet-500 via-violet-400 to-indigo-400",
+    bg: "from-violet-50 to-violet-50",
+    border: "border-violet-200/60",
+    shadow: "shadow-violet-200/40",
     whatItDoes: [
       "50+ social generative games, with more added regularly",
       "Creativity-based games",
@@ -427,13 +427,13 @@ export default function DASPHomesGuide() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.4 }}
-          className="relative rounded-3xl border border-white/60 bg-white/60 backdrop-blur-xl shadow-xl shadow-purple-100/50 px-8 py-10 mb-16"
+          className="relative rounded-3xl border border-white/60 bg-white/60 backdrop-blur-xl shadow-xl shadow-violet-100/50 px-8 py-10 mb-16"
         >
-          <div className="absolute -top-3 left-10 px-4 py-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs font-bold tracking-wider shadow-md">
+          <div className="absolute -top-3 left-10 px-4 py-1 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 text-white text-xs font-bold tracking-wider shadow-md">
             A comprehensive guide to the Deckoviz DASP
           </div>
           <p className="text-gray-700 leading-relaxed text-lg mb-5 mt-3">
-            Most screens in our lives are <span className="font-semibold text-purple-700">extractive</span>. They ask for attention, fragment
+            Most screens in our lives are <span className="font-semibold text-violet-700">extractive</span>. They ask for attention, fragment
             it, and give very little back.
           </p>
           <p className="text-gray-700 leading-relaxed text-lg mb-5">
@@ -452,9 +452,9 @@ export default function DASPHomesGuide() {
             home experience.
           </p>
 
-          <div className="mt-8 pt-6 border-t border-purple-100">
+          <div className="mt-8 pt-6 border-t border-violet-100">
             <p className="text-center text-gray-600 font-medium">
-              Below is a deep dive into the <span className="text-purple-700 font-bold">12 core pillars</span> of Deckoviz for homes,
+              Below is a deep dive into the <span className="text-violet-700 font-bold">12 core pillars</span> of Deckoviz for homes,
               each representing an entire universe of features, use cases, and everyday magic.
             </p>
           </div>
@@ -605,7 +605,7 @@ export default function DASPHomesGuide() {
                         key={i}
                         className="flex items-start gap-2 rounded-xl bg-white/60 border border-white/80 px-4 py-2.5 text-[14px] text-gray-700"
                       >
-                        <span className="text-purple-400 font-bold mt-0.5 flex-shrink-0">→</span>
+                        <span className="text-violet-400 font-bold mt-0.5 flex-shrink-0">→</span>
                         {use}
                       </div>
                     ))}
@@ -656,7 +656,7 @@ export default function DASPHomesGuide() {
             </p>
             <p className="text-gray-700 text-lg leading-relaxed mb-5 max-w-3xl mx-auto">
               Deckoviz is not about screens. It is about{" "}
-              <span className="font-semibold text-purple-700">spaces</span>, it is about{" "}
+              <span className="font-semibold text-violet-700">spaces</span>, it is about{" "}
               <span className="font-semibold text-pink-600">souls</span>, and it is about the soul of your space.
             </p>
 
@@ -683,7 +683,7 @@ export default function DASPHomesGuide() {
             <p className="text-gray-700 text-lg leading-relaxed mb-5 max-w-3xl mx-auto">
               Your home is the most important interface you have — it's your sacred space. Deckoviz
               exists to make that interface{" "}
-              <span className="font-semibold text-purple-700">alive</span>,{" "}
+              <span className="font-semibold text-violet-700">alive</span>,{" "}
               <span className="font-semibold text-pink-600">intentional</span>, and{" "}
               <span className="font-semibold text-amber-600">beautiful</span>.
             </p>

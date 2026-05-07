@@ -114,7 +114,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       id: "0.2",
       title: "Select Your Frame Type",
       icon: Star,
-      color: "purple",
+      color: "violet",
       content: (
         <div className="w-full">
           <EnhancedDropdown
@@ -140,7 +140,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
             onChange={(e) => formData.setCustomFrameRequest(e.target.value)}
             placeholder="Describe your Custom Frame request..."
             rows={3}
-            className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+            className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 resize-none text-gray-700 placeholder-gray-600 text-sm sm:text-base"
           />
           <button
             type="button"
@@ -177,7 +177,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       id: "0.5",
       title: "Choose Your Subscription Plan",
       icon: Calendar,
-      color: "purple",
+      color: "violet",
       content: (
         <div className="w-full">
           <div className="space-y-4 sm:space-y-6">
@@ -227,7 +227,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.name}
                 onChange={(e) => formData.setName(e.target.value)}
                 placeholder="Your Full Name"
-                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
             <div>
@@ -237,7 +237,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.email}
                 onChange={(e) => formData.setEmail(e.target.value)}
                 placeholder="your@email.com"
-                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
             <div>
@@ -247,7 +247,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 onChange={(e) => formData.setShippingAddress(e.target.value)}
                 placeholder="Enter Your Full Shipping Address"
                 rows={3}
-                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 resize-none text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 resize-none text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
           </div>
@@ -391,7 +391,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
       id: "0.9",
       title: "Payment Details",
       icon: CreditCard,
-      color: "purple",
+      color: "violet",
       content: (
         <div className="w-full">
           <div className="space-y-4 sm:space-y-6">
@@ -402,7 +402,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.cardNumber}
                 onChange={(e) => formData.setCardNumber(e.target.value)}
                 placeholder="1234 567 8910 1234"
-                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -413,7 +413,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                   value={formData.expiryDate}
                   onChange={(e) => formData.setExpiryDate(e.target.value)}
                   placeholder="MM/YYYY"
-                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
                 />
               </div>
               <div>
@@ -423,7 +423,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                   value={formData.cvv}
                   onChange={(e) => formData.setCvv(e.target.value)}
                   placeholder="123"
-                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+                  className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
                 />
               </div>
             </div>
@@ -434,7 +434,7 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
                 value={formData.cardHolderName}
                 onChange={(e) => formData.setCardHolderName(e.target.value)}
                 placeholder="Your Name"
-                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-purple-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
+                className="w-full px-3 py-2 sm:px-4 sm:py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-300 focus:border-violet-300 text-gray-700 placeholder-gray-600 text-sm sm:text-base"
               />
             </div>
           </div>
@@ -458,9 +458,9 @@ export const ConfigurationSteps: React.FC<ConfigurationStepsProps> = ({
         badge: "bg-blue-100 text-blue-700 border-blue-200",
         icon: "text-blue-600"
       },
-      purple: {
-        badge: "bg-purple-100 text-purple-700 border-purple-200",
-        icon: "text-purple-600"
+      violet: {
+        badge: "bg-violet-100 text-violet-700 border-violet-200",
+        icon: "text-violet-600"
       },
       pink: {
         badge: "bg-pink-100 text-pink-700 border-pink-200",

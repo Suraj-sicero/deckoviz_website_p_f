@@ -40,7 +40,7 @@ export const benefitsData = [
     showOnHome: true
   },
   {
-    icon: "✨",
+    icon: "💡",
     title: "A Spark for Creativity",
     description:
       "Ideas flow when your space inspires you. Deckoviz nudges you to imagine more, create more, and see beauty where you didn’t before.",
@@ -54,14 +54,14 @@ export const benefitsData = [
     showOnHome: true
   },
   {
-    icon: "🖼️",
+    icon: "🔮",
     title: "One Frame, A Thousand Roles",
     description:
       "Art gallery. Memory wall. Vision board. Meditation space. Storybook. TV. One intelligent presence replaces clutter.",
     showOnHome: true
   },
   {
-    icon: "🔁",
+    icon: "🌱",
     title: "Always Fresh, Always Growing",
     description:
       "New art. New modes. New features. Every week. Deckoviz never gets old because it keeps becoming more.",
@@ -215,7 +215,7 @@ const Benefits = () => {
 
   return (
     <>
-<section className="relative py-24 bg-gradient-to-b from-slate-50 via-purple-50/20 to-pink-50/20 overflow-visible">
+<section className="relative py-24 bg-gradient-to-b from-slate-50 via-violet-50/20 to-pink-50/20 overflow-visible">
 
       {/* Enhanced floating decorative elements with softer colors */}
       <motion.div
@@ -225,7 +225,7 @@ const Benefits = () => {
           scale: [1, 1.1, 1]
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-32 left-20 w-40 h-40 bg-gradient-to-br from-purple-200/30 to-pink-200/30 rounded-full blur-3xl"
+        className="absolute top-32 left-20 w-40 h-40 bg-gradient-to-br from-violet-200/30 to-pink-200/30 rounded-full blur-3xl"
       />
       <motion.div
         animate={{ 
@@ -243,7 +243,7 @@ const Benefits = () => {
           rotate: [0, 180, 360]
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-br from-indigo-200/20 to-purple-200/20 rounded-full blur-3xl"
+        className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-br from-indigo-200/20 to-indigo-200/20 rounded-full blur-3xl"
       />
       <motion.div
         animate={{ 
@@ -262,14 +262,14 @@ const Benefits = () => {
           {/* Homes Microsite Trigger Button - Premium Aesthetic */}
           <div className="relative group">
             {/* Outer Glow Aura */}
-            <div className="absolute -inset-1.5 bg-gradient-to-r from-fuchsia-600 via-purple-600 to-indigo-600 rounded-full blur-md opacity-40 group-hover:opacity-75 group-hover:blur-lg transition-all duration-500" />
+            <div className="absolute -inset-1.5 bg-gradient-to-r from-fuchsia-600 via-violet-600 to-indigo-600 rounded-full blur-md opacity-40 group-hover:opacity-75 group-hover:blur-lg transition-all duration-500" />
             
             <button
               onClick={() => setShowHomesMicrosite(true)}
               className="relative flex items-center gap-4 p-2 pr-6 bg-gray-900 border border-white/10 rounded-full shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(168,85,247,0.4)]"
             >
               {/* Subtle gradient background inside button */}
-              <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-900/40 via-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-900/40 via-violet-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               {/* Shimmer sweep */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-in-out" />
@@ -313,14 +313,14 @@ const Benefits = () => {
               text-left
 
               bg-gradient-to-r 
-              from-[#ffb088] 
-              via-[#ff9966] 
-              to-[#ff874d]
+              from-violet-500 
+              via-indigo-500 
+              to-violet-600
 
-              text-[#6b2f16]
+              text-white
 
-              shadow-[0_18px_45px_rgba(255,135,77,0.45)]
-              hover:shadow-[0_28px_70px_rgba(255,135,77,0.65)]
+              shadow-[0_0_50px_rgba(99,102,241,0.5)]
+              hover:shadow-[0_0_70px_rgba(99,102,241,0.7)]
 
               transition-all duration-500
               animate-[float_7s_ease-in-out_infinite]
@@ -341,7 +341,7 @@ const Benefits = () => {
           transition={{ duration: 1, ease: "easeOut" }}
           className="mb-16"
         >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             <motion.span 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -356,7 +356,7 @@ const Benefits = () => {
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.35, duration: 0.7, type: "spring", bounce: 0.4 }}
-              className="italic bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent inline-block"
+              className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent inline-block"
             >
               Deckoviz
             </motion.span>{" "}
@@ -398,7 +398,7 @@ const Benefits = () => {
   initial="hidden"
   whileInView="visible"
   viewport={{ once: true, amount: 0.15 }}
-  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8"
 >
           {benefitsData
             .filter((benefit) => benefit.showOnHome)
@@ -414,7 +414,7 @@ const Benefits = () => {
                 }}
                 className="
                   relative
-                  p-8 rounded-[2rem]
+                  p-5 sm:p-8 rounded-[2rem]
                   bg-white/80 backdrop-blur-sm
                   border border-blue-100/50
                   shadow-[0_12px_40px_rgba(59,130,246,0.25)]
@@ -432,7 +432,7 @@ const Benefits = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileHover={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute inset-0 bg-gradient-to-br from-purple-50/80 via-pink-50/60 to-indigo-50/80 rounded-[2rem] -z-10"
+                  className="absolute inset-0 bg-gradient-to-br from-violet-50/80 via-pink-50/60 to-indigo-50/80 rounded-[2rem] -z-10"
                 />
                 
                 {/* Soft glow effect */}
@@ -440,7 +440,7 @@ const Benefits = () => {
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.5 }}
-                  className="absolute -inset-1 bg-gradient-to-br from-purple-200/20 via-pink-200/20 to-indigo-200/20 rounded-[2rem] blur-xl -z-20"
+                  className="absolute -inset-1 bg-gradient-to-br from-violet-200/20 via-pink-200/20 to-indigo-200/20 rounded-[2rem] blur-xl -z-20"
                 />
 
                 {/* Floating sparkles */}
@@ -468,7 +468,7 @@ const Benefits = () => {
                     repeat: Infinity,
                     delay: index * 0.3 + 0.5
                   }}
-                  className="absolute top-10 right-10 w-1.5 h-1.5 bg-gradient-to-br from-pink-300 to-purple-300 rounded-full"
+                  className="absolute top-10 right-10 w-1.5 h-1.5 bg-gradient-to-br from-pink-300 to-indigo-300 rounded-full"
                 />
 
                 {/* Emoji with enhanced animation */}
@@ -489,7 +489,7 @@ const Benefits = () => {
                 </motion.div>
 
                 {/* Title with refined typography */}
-                <h3 className="text-xl font-semibold mb-4 text-gray-800 group-hover:text-purple-700 transition-colors duration-400 leading-snug">
+                <h3 className="text-xl font-semibold mb-4 text-gray-800 group-hover:text-violet-700 transition-colors duration-400 leading-snug">
                   {benefit.title}
                 </h3>
 
@@ -503,70 +503,65 @@ const Benefits = () => {
                   initial={{ scaleX: 0, opacity: 0 }}
                   whileHover={{ scaleX: 1, opacity: 1 }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-0.5 bg-gradient-to-r from-transparent via-purple-300 to-transparent rounded-full"
+                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-0.5 bg-gradient-to-r from-transparent via-violet-300 to-transparent rounded-full"
                 />
               </motion.div>
             ))}
-        </motion.div>
 
-        {/* Enhanced CTA button */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.9, duration: 0.7 }}
-          className="flex justify-center mt-32 pb-8"
-        >
+          {/* 9th Grid Cell: See More Magic Button Card */}
           <motion.div
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.95 }}
+            variants={cardVariants}
+            whileHover={{ 
+              y: -16,
+              scale: 1.03,
+              transition: { duration: 0.4, type: "spring", stiffness: 300, damping: 20 }
+            }}
+            className="
+              relative
+              rounded-[2rem]
+              bg-gradient-to-br from-indigo-500 via-blue-600 to-indigo-800
+              shadow-[0_12px_40px_rgba(79,70,229,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)]
+              hover:shadow-[0_24px_70px_rgba(79,70,229,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)]
+              hover:-translate-y-2
+              transition-all duration-500
+              overflow-hidden
+              group
+              flex items-center justify-center
+              min-h-[200px] sm:min-h-[250px]
+            "
           >
-            <Link
-              to="/benefits"
-              className="
-                relative
-                px-10 py-4 rounded-full
-                bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500
-                text-white font-semibold text-base
-                shadow-[0_10px_40px_rgba(59,130,246,0.35)]
-                hover:shadow-[0_20px_60px_rgba(59,130,246,0.55)]
-                transition-all duration-500
-                overflow-hidden
-                group
-                inline-flex items-center gap-3
-              "
-            >
-              <span className="relative z-10">
-                See More Magic
-              </span>
+            <Link to="/benefits" className="absolute inset-0 flex flex-col items-center justify-center w-full h-full p-8 z-10 text-center">
               <motion.span
                 animate={{ 
                   rotate: [0, 14, -14, 0],
-                  scale: [1, 1.3, 1.3, 1]
+                  scale: [1, 1.2, 1.2, 1]
                 }}
                 transition={{ 
                   duration: 2.5,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="relative z-10 text-xl"
+                className="text-6xl mb-4 drop-shadow-xl inline-block filter"
               >
                 ✨
               </motion.span>
-              
-              {/* Shimmer effect */}
-              <motion.div
-                initial={{ x: "-100%", opacity: 0.5 }}
-                animate={{ x: "200%" }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "linear",
-                  repeatDelay: 1
-                }}
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12"
-              />
+              <span className="text-3xl font-bold text-white drop-shadow-md leading-tight group-hover:scale-105 transition-transform duration-300">
+                See More<br/>Magic
+              </span>
             </Link>
+            
+            {/* Shimmer effect */}
+            <motion.div
+              initial={{ x: "-100%", opacity: 0 }}
+              animate={{ x: "200%" }}
+              transition={{ 
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "linear",
+                repeatDelay: 1
+              }}
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 z-0"
+            />
           </motion.div>
         </motion.div>
       </div>

@@ -47,12 +47,12 @@ const DeckovizSectors: React.FC = () => {
     {
       icon: "🎭",
       title: "Create immersive environments instead of static interiors",
-      gradient: "from-purple-400 to-indigo-400"
+      gradient: "from-violet-400 to-indigo-400"
     },
     {
       icon: "🎮",
       title: "Control everything remotely through a unified system",
-      gradient: "from-pink-400 to-purple-400"
+      gradient: "from-pink-400 to-indigo-400"
     }
   ];
 
@@ -86,7 +86,7 @@ const DeckovizSectors: React.FC = () => {
       icon: "🧘",
       title: "Spas & Wellness Centers",
       category: "WELLNESS",
-      gradient: "from-purple-400 to-pink-400",
+      gradient: "from-violet-400 to-pink-400",
       highlighted: false
     },
     {
@@ -128,12 +128,12 @@ const DeckovizSectors: React.FC = () => {
       <section className="relative py-32 bg-[#fafcff] overflow-hidden">
         {/* Animated Orbs */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-purple-300/30 to-indigo-300/30 rounded-full blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
+          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-violet-300/30 to-indigo-300/30 rounded-full blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-gradient-to-tl from-pink-300/30 to-orange-300/30 rounded-full blur-[120px] animate-[pulse_10s_ease-in-out_infinite_reverse]" />
           <div className="absolute top-[40%] left-[50%] w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-300/20 to-cyan-300/20 rounded-full blur-[100px] animate-pulse" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           
           {/* Enterprise Vision Microsite Trigger Button */}
           <div className="flex justify-center mb-20">
@@ -180,18 +180,18 @@ const DeckovizSectors: React.FC = () => {
 
           {/* Badge */}
           <div className="text-center mb-8 relative z-10">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-purple-100 shadow-[0_8px_16px_rgba(147,51,234,0.1)] text-purple-600 text-sm font-bold tracking-widest uppercase">
-              <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-violet-100 shadow-[0_8px_16px_rgba(147,51,234,0.1)] text-violet-600 text-sm font-bold tracking-widest uppercase">
+              <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
               Built For
             </span>
           </div>
 
           {/* Heading */}
-          <h2 className="text-center text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] mb-8 leading-tight tracking-tight text-gray-900 relative z-10 drop-shadow-sm">
+          <h2 className="text-center text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] mb-8 leading-tight tracking-tight text-gray-900 relative z-10 drop-shadow-sm">
             What Businesses <span className="italic text-gray-400">&</span>{" "}
             <span className="italic relative inline-block">
-              <span className="absolute -inset-2 bg-gradient-to-r from-purple-100 to-indigo-100 blur-xl opacity-50 rounded-full"></span>
-              <span className="relative bg-gradient-to-r from-purple-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent pb-2">
+              <span className="absolute -inset-2 bg-gradient-to-r from-violet-100 to-indigo-100 blur-xl opacity-50 rounded-full"></span>
+              <span className="relative bg-gradient-to-r from-violet-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent pb-2">
                 Spaces
               </span>
             </span>{" "}
@@ -219,7 +219,7 @@ const DeckovizSectors: React.FC = () => {
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${capability.gradient} flex items-center justify-center text-3xl mb-6 shadow-lg shadow-purple-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${capability.gradient} flex items-center justify-center text-3xl mb-6 shadow-lg shadow-violet-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
                     {capability.icon}
                   </div>
                   <p className="text-gray-800 text-sm leading-relaxed font-medium">
@@ -253,7 +253,7 @@ const DeckovizSectors: React.FC = () => {
                   `}
                 >
                   {/* Hover glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-violet-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   
                   <div className="relative z-10 flex items-center justify-between">
                     <div className="flex items-center gap-5">
@@ -273,7 +273,7 @@ const DeckovizSectors: React.FC = () => {
                       flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110
                       ${sector.highlighted 
                         ? 'bg-gradient-to-br from-orange-400 to-amber-500 text-white shadow-lg shadow-orange-500/30' 
-                        : 'bg-gray-50 text-gray-400 group-hover:bg-gradient-to-br group-hover:from-purple-500 group-hover:to-indigo-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-purple-500/30'
+                        : 'bg-gray-50 text-gray-400 group-hover:bg-gradient-to-br group-hover:from-violet-500 group-hover:to-indigo-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-violet-500/30'
                       }
                     `}>
                       <svg className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -287,10 +287,10 @@ const DeckovizSectors: React.FC = () => {
 
             {/* Bottom Message */}
             <div className="mt-24 text-center relative max-w-3xl mx-auto group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-violet-500 via-pink-500 to-orange-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
               <div className="relative bg-white/90 backdrop-blur-xl rounded-[2.5rem] p-12 border border-white/50 shadow-2xl">
                 <div className="flex justify-center mb-4">
-                  <span className="w-2 h-2 rounded-full bg-purple-400 mx-1"></span>
+                  <span className="w-2 h-2 rounded-full bg-violet-400 mx-1"></span>
                   <span className="w-2 h-2 rounded-full bg-pink-400 mx-1"></span>
                   <span className="w-2 h-2 rounded-full bg-orange-400 mx-1"></span>
                 </div>
@@ -369,13 +369,13 @@ const RestaurantMicrosite: React.FC<{ onClose: () => void }> = ({ onClose }) => 
         
         {/* Global floating food emojis for entire page */}
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-          {/* Glowing light orbs - Purple/Lavender theme */}
-          <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-purple-400/15 blur-3xl animate-pulse" />
+          {/* Glowing light orbs - Violet/Lavender theme */}
+          <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-violet-400/15 blur-3xl animate-pulse" />
           <div className="absolute top-40 right-20 w-40 h-40 rounded-full bg-violet-400/12 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
           <div className="absolute top-1/4 left-1/3 w-36 h-36 rounded-full bg-indigo-400/10 blur-3xl animate-pulse" style={{ animationDelay: '2s' }} />
-          <div className="absolute top-1/2 right-1/4 w-32 h-32 rounded-full bg-purple-300/15 blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute top-1/2 right-1/4 w-32 h-32 rounded-full bg-violet-300/15 blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
           <div className="absolute bottom-1/3 left-1/4 w-40 h-40 rounded-full bg-violet-300/12 blur-3xl animate-pulse" style={{ animationDelay: '0.5s' }} />
-          <div className="absolute bottom-20 right-1/3 w-36 h-36 rounded-full bg-purple-400/10 blur-3xl animate-pulse" style={{ animationDelay: '2.5s' }} />
+          <div className="absolute bottom-20 right-1/3 w-36 h-36 rounded-full bg-violet-400/10 blur-3xl animate-pulse" style={{ animationDelay: '2.5s' }} />
           
           {/* Floating food emojis */}
           <div className="absolute top-20 left-10 text-4xl opacity-20 animate-float-slow">�</div>
@@ -530,9 +530,9 @@ const RestaurantMicrosite: React.FC<{ onClose: () => void }> = ({ onClose }) => 
               </div>
 
               {/* Feature Card 3 */}
-              <div className="group relative bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-3xl p-8 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-3xl mb-6">
+              <div className="group relative bg-gradient-to-br from-violet-900/20 to-pink-900/20 backdrop-blur-sm rounded-3xl p-8 border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-3xl mb-6">
                   🖼️
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Chef Storytelling Walls</h3>
@@ -591,7 +591,7 @@ const RestaurantMicrosite: React.FC<{ onClose: () => void }> = ({ onClose }) => 
                 <p className="text-gray-400">Luxury hospitality experiences</p>
               </div>
 
-              <div className="bg-gradient-to-br from-purple-900/30 to-black rounded-3xl p-8 text-center border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105">
+              <div className="bg-gradient-to-br from-violet-900/30 to-black rounded-3xl p-8 text-center border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300 hover:scale-105">
                 <div className="text-6xl mb-4">🌃</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Rooftop Bars</h3>
                 <p className="text-gray-400">Dynamic nightlife ambience</p>

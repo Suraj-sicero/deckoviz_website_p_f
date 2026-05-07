@@ -71,22 +71,22 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
   };
 
   return (
-    <div className="flex flex-col h-[600px] w-full max-w-4xl mx-auto bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl border border-purple-100 overflow-hidden">
+    <div className="flex flex-col h-[600px] w-full max-w-4xl mx-auto bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl border border-violet-100 overflow-hidden">
       {/* Header */}
-      <div className="p-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white flex justify-between items-center">
+      <div className="p-6 bg-gradient-to-r from-violet-600 to-indigo-600 text-white flex justify-between items-center">
         <div className="flex items-center space-x-3">
           <div className="p-2 bg-white/20 rounded-xl">
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
             <h2 className="text-xl font-bold">Chat with Wizzy</h2>
-            <p className="text-xs text-purple-100 opacity-80">Ideating your masterpiece</p>
+            <p className="text-xs text-violet-100 opacity-80">Ideating your masterpiece</p>
           </div>
         </div>
         <button
           onClick={generateStructure}
           disabled={messages.length < 3 || isGeneratingStructure}
-          className="px-4 py-2 bg-white text-purple-600 rounded-xl font-semibold text-sm hover:bg-purple-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
+          className="px-4 py-2 bg-white text-violet-600 rounded-xl font-semibold text-sm hover:bg-violet-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
         >
           {isGeneratingStructure ? (
             <Loader2 className="w-4 h-4 animate-spin" />
@@ -113,7 +113,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
               }`}
             >
               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                m.role === "user" ? "bg-indigo-100 text-indigo-600" : "bg-purple-100 text-purple-600"
+                m.role === "user" ? "bg-indigo-100 text-indigo-600" : "bg-violet-100 text-violet-600"
               }`}>
                 {m.role === "user" ? <User size={18} /> : <Bot size={18} />}
               </div>
@@ -132,7 +132,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
         {isLoading && (
           <div className="flex justify-start">
             <div className="flex space-x-3">
-              <div className="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center animate-pulse">
+              <div className="w-8 h-8 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center animate-pulse">
                 <Bot size={18} />
               </div>
               <div className="bg-gray-50 p-4 rounded-2xl rounded-tl-none border border-gray-100 italic text-gray-400 text-sm">
@@ -147,7 +147,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
       <div className="p-6 border-t border-gray-100 bg-gray-50/50">
         <div className="relative flex items-center">
           <input
-            className="w-full bg-white border border-gray-200 rounded-2xl py-4 pl-6 pr-14 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all shadow-sm"
+            className="w-full bg-white border border-gray-200 rounded-2xl py-4 pl-6 pr-14 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition-all shadow-sm"
             placeholder="Type your ideas here..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -156,7 +156,7 @@ const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
           <button
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
-            className="absolute right-2 p-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="absolute right-2 p-3 bg-violet-600 text-white rounded-xl hover:bg-violet-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Send size={18} />
           </button>

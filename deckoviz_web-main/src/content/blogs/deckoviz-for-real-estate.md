@@ -3,7 +3,7 @@ id: 27
 title: "Real Estate Is No Longer About Square Footage"
 description: "How Deckoviz DASP transforms listings into lived emotional experiences."
 tag: "Enterprise"
-tagColor: "bg-purple-100 text-purple-700"
+tagColor: "bg-violet-100 text-violet-700"
 date: "March 2025"
 readTime: "12 min read"
 pinned: false

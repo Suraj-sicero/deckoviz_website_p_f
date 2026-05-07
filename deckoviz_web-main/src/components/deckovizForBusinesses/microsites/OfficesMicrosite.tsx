@@ -133,9 +133,9 @@ const OfficesMicrosite: React.FC<OfficesMicrositeProps> = ({ onClose }) => {
                 </p>
               </div>
 
-              <div className="group relative bg-gradient-to-br from-indigo-900/20 to-purple-900/20 backdrop-blur-sm rounded-3xl p-8 border border-indigo-500/20 hover:border-indigo-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-3xl mb-6">
+              <div className="group relative bg-gradient-to-br from-indigo-900/20 to-indigo-900/20 backdrop-blur-sm rounded-3xl p-8 border border-indigo-500/20 hover:border-indigo-500/40 transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-500 flex items-center justify-center text-3xl mb-6">
                   📊
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Dynamic Dashboards & Communications</h3>
@@ -180,7 +180,7 @@ const OfficesMicrosite: React.FC<OfficesMicrositeProps> = ({ onClose }) => {
                 <p className="text-gray-400">Creative, dynamic spaces</p>
               </div>
 
-              <div className="bg-gradient-to-br from-purple-900/30 to-indigo-950 rounded-3xl p-8 text-center border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105">
+              <div className="bg-gradient-to-br from-violet-900/30 to-indigo-950 rounded-3xl p-8 text-center border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300 hover:scale-105">
                 <div className="text-6xl mb-4">🤝</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Coworking Spaces</h3>
                 <p className="text-gray-400">Flexible, collaborative environments</p>

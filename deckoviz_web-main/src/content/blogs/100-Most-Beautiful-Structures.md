@@ -474,7 +474,7 @@ A living façade shaped like bone and water.
 
 <br>
 
-## 63. Forbidden Purple City, China
+## 63. Forbidden Violet City, China
 <br>
 Symbolic axial planning defining imperial power.
 

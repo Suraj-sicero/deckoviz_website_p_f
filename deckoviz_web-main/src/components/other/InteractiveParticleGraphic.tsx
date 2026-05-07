@@ -24,10 +24,10 @@ const InteractiveParticleGraphic = () => {
       this.y = y;
       this.baseSize = Math.random() * 4 + 4; // Bigger particles like in the image
       this.size = this.baseSize;
-      // Orange, pink, purple color range (15-60 for orange, 280-340 for purple/pink)
+      // Orange, pink, violet color range (15-60 for orange, 280-340 for violet/pink)
       this.hue = Math.random() < 0.33 
         ? Math.random() * 30 + 15   // Orange range (15-45)
-        : Math.random() * 60 + 280; // Purple to pink range (280-340)
+        : Math.random() * 60 + 280; // Violet to pink range (280-340)
       this.baseOpacity = Math.random() * 0.3 + 0.7; // Higher opacity for visibility
       this.opacity = this.baseOpacity;
     }
@@ -68,7 +68,7 @@ const InteractiveParticleGraphic = () => {
         this.x, this.y, this.size * 2
       );
       
-      // More saturated colors for orange, pink, purple
+      // More saturated colors for orange, pink, violet
       gradient.addColorStop(0, `hsla(${this.hue}, 85%, 60%, ${this.opacity})`);
       gradient.addColorStop(0.5, `hsla(${this.hue}, 80%, 65%, ${this.opacity * 0.7})`);
       gradient.addColorStop(1, `hsla(${this.hue}, 70%, 70%, 0)`);
