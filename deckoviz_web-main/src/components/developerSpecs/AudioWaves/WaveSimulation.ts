@@ -11,7 +11,7 @@ export class WaveSimulation {
         treble: 0,
         intensity: 0.8,
         patternMode: 0,
-        color1: [0.5, 0.0, 1.0], // Purple
+        color1: [0.5, 0.0, 1.0], // Violet
         color2: [0.0, 1.0, 1.0], // Cyan
     };
 

@@ -126,10 +126,10 @@ const EnterpriseFeatureCard = ({
   const themes: {
     [key: string]: { gradient: string; text: string; accent: string };
   } = {
-    purple: {
-      gradient: "from-purple-500 to-indigo-500",
-      text: "text-purple-600",
-      accent: "group-hover:from-purple-400",
+    violet: {
+      gradient: "from-violet-500 to-indigo-500",
+      text: "text-violet-600",
+      accent: "group-hover:from-violet-400",
     },
     blue: {
       gradient: "from-blue-500 to-cyan-500",
@@ -143,7 +143,7 @@ const EnterpriseFeatureCard = ({
     },
   };
 
-  const theme = themes[themeColor] || themes.purple;
+  const theme = themes[themeColor] || themes.violet;
 
 
 
@@ -262,7 +262,7 @@ const DemoRequestModal = ({ onClose }: DemoRequestModalProps) => {
 
       <div className="relative w-full max-w-lg">
 
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-30"></div>
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500 rounded-2xl blur opacity-30"></div>
 
         <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full border border-white/40">
 
@@ -358,7 +358,7 @@ const DemoRequestModal = ({ onClose }: DemoRequestModalProps) => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition disabled:opacity-50"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition disabled:opacity-50"
                 >
                   {loading ? "Submitting..." : "Submit Request"}
                 </button>
@@ -952,10 +952,10 @@ export default function DeckovizForEnterprise() {
     <Link
       key={post.slug}
       to={`/blog/${post.slug}`}
-      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-purple-400 transition"
+      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-violet-400 transition"
     >
       <div className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition pointer-events-none
-        bg-gradient-to-r from-purple-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
+        bg-gradient-to-r from-violet-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
 
       <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
         <img
@@ -966,7 +966,7 @@ export default function DeckovizForEnterprise() {
       </div>
 
       <div className="relative flex-grow">
-        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition">
+        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-violet-600 transition">
           {post.title}
         </h3>
 
@@ -976,7 +976,7 @@ export default function DeckovizForEnterprise() {
           </p>
         )}
 
-        <div className="mt-2 text-sm text-purple-600 opacity-0 group-hover:opacity-100 transition">
+        <div className="mt-2 text-sm text-violet-600 opacity-0 group-hover:opacity-100 transition">
           Read →
         </div>
       </div>
@@ -997,14 +997,14 @@ export default function DeckovizForEnterprise() {
             {/* Badge */}
             <div className="mb-6">
               <span className="inline-flex items-center px-4 py-1.5 
-              bg-gradient-to-r from-indigo-600 to-purple-600 
+              bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] 
               text-white text-xs font-semibold rounded-full shadow-lg">
                 ✦ Elevate your Customer Experience
               </span>
             </div>
             <div className="
             absolute inset-0 rounded-[40px] 
-            bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
+            bg-gradient-to-r from-[#1B2A4A]/20 via-[#2563EB]/20 to-[#0B1220]/20 
             blur-3xl opacity-40 
             group-hover:opacity-70 
             transition duration-500
@@ -1016,7 +1016,7 @@ export default function DeckovizForEnterprise() {
                 className="bg-clip-text text-transparent animate-gradient"
                 style={{
                   backgroundImage:
-                    "linear-gradient(90deg,#6366f1,#a855f7,#ec4899,#f59e0b,#6366f1)",
+                    "linear-gradient(90deg, #1B2A4A, #2563EB, #1B2A4A)",
                   backgroundSize: "300% auto"
                 }}
               >
@@ -1035,7 +1035,7 @@ export default function DeckovizForEnterprise() {
 
               <Button
                 onClick={() => setIsModalOpen(true)}
-                className="w-full sm:w-auto bg-gradient-to-r from-[#1B2A4A] to-[#7C3AED] text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] text-white px-6 py-3 rounded-full flex items-center justify-center gap-2 hover:from-[#0B1220] hover:to-[#1B2A4A] transition-all duration-300 shadow-md"
               >
                 <Calendar size={18} />
                 <span className="text-center">Schedule Your Enterprise Demo</span>
@@ -1049,7 +1049,7 @@ export default function DeckovizForEnterprise() {
               >
                 <Button
                   variant="secondary"
-                  className="w-full sm:w-auto bg-gradient-to-r from-[#7C3AED] to-[#1B2A4A] text-white px-6 py-3 rounded-full flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto bg-gradient-to-r from-[#2563EB] to-[#1B2A4A] text-white px-6 py-3 rounded-full flex items-center justify-center gap-2 hover:from-[#1B2A4A] hover:to-[#0B1220] transition-all duration-300 shadow-md"
                 >
                   Download Brochure
                 </Button>
@@ -1065,7 +1065,7 @@ export default function DeckovizForEnterprise() {
             {/* glow on hover */}
             <div className="
             absolute inset-0 rounded-[40px] 
-            bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-pink-500/20 
+            bg-gradient-to-r from-violet-500/20 via-indigo-500/20 to-pink-500/20 
             blur-3xl opacity-40 
             group-hover:opacity-70 
             transition duration-500
@@ -1117,7 +1117,7 @@ export default function DeckovizForEnterprise() {
         {/* Ambient Glow */}
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 
         w-[400px] h-[400px] md:w-[700px] md:h-[700px] 
-        bg-gradient-to-br from-purple-500/30 via-pink-500/25 to-indigo-500/20 
+        bg-gradient-to-br from-violet-500/30 via-pink-500/25 to-indigo-500/20 
         blur-[120px] md:blur-[160px]" />
 
         <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
@@ -1498,6 +1498,7 @@ export default function DeckovizForEnterprise() {
             </SlideRight>
           </div>
 
+
         </div>
 
       </section>
@@ -1527,48 +1528,61 @@ export default function DeckovizForEnterprise() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative max-w-5xl mx-auto z-10"
+          className="relative w-full max-w-[85rem] mx-auto z-10 px-4"
         >
-          <div className="relative text-center py-10 md:py-16">
+          <div className="relative">
+            {/* Ambient Light from Behind */}
+            <div className="absolute -inset-2 bg-[#2563EB]/20 rounded-[3rem] blur-3xl opacity-100 pointer-events-none"></div>
+            
+            <div className="relative text-center py-8 md:py-16 px-4 sm:px-6 md:px-12 bg-white/95 backdrop-blur-xl border border-[#2563EB]/20 rounded-[2.5rem] shadow-[0_0_60px_rgba(37,99,235,0.15)] group hover:shadow-[0_0_80px_rgba(37,99,235,0.25)] transition-all duration-700">
 
-            {/* Heading */}
-            <motion.h1
-              variants={fadeUp}
-              className="text-4xl md:text-5xl lg:text-7xl font-semibold leading-[1.1] text-gray-900 tracking-tight drop-shadow-sm"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              The Intelligent Ambience & Storytelling Layer
-              <span className="block mt-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-rose-500 bg-clip-text text-transparent pb-2 drop-shadow-md">
-                for Enterprise Spaces
-              </span>
-            </motion.h1>
+              {/* Heading */}
+              <motion.h1
+                variants={fadeUp}
+                className="text-3xl md:text-4xl lg:text-5xl xl:text-[3.5rem] font-semibold leading-[1.2] text-gray-900 tracking-tight drop-shadow-sm"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                The Intelligent{" "}
+                <span className="italic bg-gradient-to-r from-[#1B2A4A] via-[#2563EB] to-[#1B2A4A] animate-gradient bg-[length:200%_auto] bg-clip-text text-transparent pr-[2px]">Ambiance</span>,{" "}
+                <span className="italic bg-gradient-to-r from-[#1B2A4A] via-[#2563EB] to-[#1B2A4A] animate-gradient bg-[length:200%_auto] bg-clip-text text-transparent pr-2">
+                  Storytelling
+                </span>
+                <br className="hidden md:block" />
+                <span className="inline-block mt-2">
+                  And{" "}
+                  <span className="italic bg-gradient-to-r from-[#1B2A4A] via-[#2563EB] to-[#1B2A4A] animate-gradient bg-[length:200%_auto] bg-clip-text text-transparent pr-2">
+                    Brand AI
+                  </span>
+                  {" "}Layer For Enterprise Spaces
+                </span>
+              </motion.h1>
 
-            {/* Subtext */}
-            <motion.p
-              variants={fadeUp}
-              className="mt-14 text-xl md:text-3xl font-medium text-gray-700 max-w-4xl mx-auto leading-relaxed"
-            >
-              Most enterprise spaces still rely on static frames, screens, and signage.
-              <span className="block mt-3 font-semibold text-gray-900"> Deckoviz replaces that with a living system.</span>
-            </motion.p>
+              {/* Subtext */}
+              <motion.p
+                variants={fadeUp}
+                className="mt-14 text-xl md:text-3xl font-medium text-gray-700 max-w-4xl mx-auto leading-relaxed"
+              >
+                Most enterprise spaces still rely on static frames, screens, and signage.
+                <span className="block mt-3 font-semibold text-gray-900"> Deckoviz replaces that with a living system.</span>
+              </motion.p>
 
-            <motion.p
-              variants={fadeUp}
-              className="mt-10 text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-            >
-              Deckoviz for Enterprise is an <strong className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 font-bold">AI-powered ambience, storytelling, and personalization platform </strong>that transforms
-              physical spaces into adaptive, expressive, revenue-supporting environments.
-            </motion.p>
+              <motion.p
+                variants={fadeUp}
+                className="mt-10 text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+              >
+                Deckoviz for Enterprise is an <strong className="text-transparent bg-clip-text bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] font-bold">AI-powered ambience, storytelling, and personalization platform </strong>that transforms
+                physical spaces into adaptive, expressive, revenue-supporting environments.
+              </motion.p>
 
-            {/* Premium Divider */}
-            <motion.div
-              variants={fadeUp}
-              className="mt-16 mb-16 flex justify-center items-center gap-4"
-            >
-              <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-indigo-400 to-indigo-500"></div>
-              <div className="w-3 h-3 rounded-full bg-gradient-to-r from-indigo-500 to-rose-500 shadow-[0_0_15px_rgba(168,85,247,0.6)] animate-pulse"></div>
-              <div className="w-24 h-[2px] bg-gradient-to-l from-transparent via-rose-400 to-rose-500"></div>
-            </motion.div>
+              {/* Premium Divider */}
+              <motion.div
+                variants={fadeUp}
+                className="mt-16 mb-16 flex justify-center items-center gap-4"
+              >
+                <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#2563EB]/60 to-[#2563EB]"></div>
+                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] shadow-[0_0_15px_rgba(37,99,235,0.6)] animate-pulse"></div>
+                <div className="w-24 h-[2px] bg-gradient-to-l from-transparent via-[#2563EB]/60 to-[#2563EB]"></div>
+              </motion.div>
 
             {/* Description */}
             <motion.p
@@ -1578,12 +1592,13 @@ export default function DeckovizForEnterprise() {
               It blends generative visuals, sound, lighting, memory, and intelligence to help businesses tell better stories,
               create stronger emotional connections, and deliver experiences that evolve over time.
               <br /><br />
-              <span className="inline-block mt-8 text-indigo-600 font-semibold tracking-widest text-sm md:text-base uppercase">
+              <span className="inline-block mt-8 text-[#2563EB] font-semibold tracking-widest text-sm md:text-base uppercase">
                 Below are some of the core, general-purpose capabilities that
                 power Deckoviz across retail, hospitality, real estate, wellness,
                 offices, and public spaces.
               </span>
             </motion.p>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -1654,7 +1669,7 @@ export default function DeckovizForEnterprise() {
                   >
                     <div className="text-3xl mb-3">{feature.icon}</div>
 
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-600 transition">
+                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-violet-600 transition">
                       {feature.title}
                     </h3>
 
@@ -1662,7 +1677,7 @@ export default function DeckovizForEnterprise() {
                       {feature.description}
                     </p>
 
-                    <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
+                    <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-violet-500 via-pink-500 to-indigo-500 transition-all duration-500" />
                   </motion.div>
                 ))}
             </AnimatePresence>
@@ -1672,7 +1687,7 @@ export default function DeckovizForEnterprise() {
           <div className="flex justify-center mt-14">
             <button
               onClick={() => setShowMore(!showMore)}
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 text-white font-medium shadow-lg hover:scale-105 transition-all duration-300"
+              className="px-8 py-3 rounded-full bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 text-white font-medium shadow-lg hover:scale-105 transition-all duration-300"
             >
               {showMore ? "Show Less" : "View More Features"}
             </button>
@@ -1779,7 +1794,7 @@ export default function DeckovizForEnterprise() {
                         src="https://www.instagram.com/p/DT5DTtdjPmh/embed"
                         frameBorder="0"
                         scrolling="no"
-                        allowTransparency="true"
+                        allowTransparency={true}
                       ></iframe>
                     </div>
                     {/* Caption */}
@@ -1833,7 +1848,7 @@ export default function DeckovizForEnterprise() {
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
               Benefits that{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600">
+              <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-[#0B1220] via-[#1B2A4A] to-[#2563EB]">
                 compound
               </span>
               , with enterprise-grade solutions
@@ -1870,7 +1885,7 @@ export default function DeckovizForEnterprise() {
               className="
         absolute left-5 md:left-1/2 top-0
         w-[2px]
-        bg-gradient-to-b from-purple-400 via-pink-400 to-transparent
+        bg-gradient-to-b from-violet-400 via-pink-400 to-transparent
         md:-translate-x-1/2
         origin-top
         "
@@ -2013,10 +2028,10 @@ export default function DeckovizForEnterprise() {
       px-6 py-3 sm:px-10 sm:py-4
       rounded-full
       text-sm sm:text-lg
-      bg-gradient-to-r from-red-600 via-purple-600 to-violet-600
+      bg-gradient-to-r from-[#0B1220] via-[#1B2A4A] to-[#2563EB]
       text-white
-      shadow-[0_10px_30px_rgba(124,58,237,0.35)]
-      hover:shadow-[0_20px_50px_rgba(124,58,237,0.55)]
+      shadow-[0_10px_30px_rgba(37,99,235,0.35)]
+      hover:shadow-[0_20px_50px_rgba(37,99,235,0.55)]
       hover:scale-[1.05]
       transition-all duration-300
       whitespace-nowrap
@@ -2098,7 +2113,7 @@ export default function DeckovizForEnterprise() {
               rounded-[999px]
               text-center
               items-center justify-center
-              bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500
+              bg-gradient-to-r from-violet-500 via-pink-500 to-rose-500
               shadow-[0_12px_30px_rgba(168,85,247,0.35)]
               hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
               hover:scale-[1.02]
@@ -2143,7 +2158,7 @@ export default function DeckovizForEnterprise() {
               rounded-[999px]
               text-center
               items-center justify-center
-              bg-gradient-to-r from-blue-500 via-violet-500 to-purple-500
+              bg-gradient-to-r from-blue-500 via-violet-500 to-indigo-500
               shadow-[0_12px_30px_rgba(99,102,241,0.35)]
               hover:shadow-[0_24px_60px_rgba(99,102,241,0.55)]
               hover:scale-[1.02]
@@ -2266,7 +2281,7 @@ export default function DeckovizForEnterprise() {
             onClick={() => navigate("/more-info")}
             className="
       px-10 py-3 rounded-full
-      bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600
+      bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600
       text-white font-medium
       shadow-[0_20px_50px_rgba(168,85,247,0.35)]
       hover:shadow-[0_30px_70px_rgba(236,72,153,0.45)]

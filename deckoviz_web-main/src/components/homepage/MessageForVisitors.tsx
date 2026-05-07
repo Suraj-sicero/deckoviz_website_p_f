@@ -50,14 +50,14 @@ export default function MessageForVisitors() {
       transition={{ duration: 1.2, ease: "easeOut" }}
       className="
         relative min-h-screen overflow-hidden px-6 py-28
-        bg-gradient-to-br from-indigo-800 via-purple-800 to-slate-800
+        bg-gradient-to-br from-indigo-800 via-violet-800 to-slate-800
         text-white
       "
     >
       {/* Background aurora glows */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-[-30%] left-[-15%] w-[700px] h-[700px]
-          bg-purple-500/30 rounded-full blur-[160px]" />
+          bg-violet-500/30 rounded-full blur-[160px]" />
         <div className="absolute bottom-[-30%] right-[-15%] w-[700px] h-[700px]
           bg-indigo-500/30 rounded-full blur-[160px]" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/30" />
@@ -91,7 +91,7 @@ export default function MessageForVisitors() {
           <h1
             className="
               text-5xl md:text-6xl font-bold tracking-tight
-              bg-gradient-to-r from-purple-300 via-indigo-200 to-blue-300
+              bg-gradient-to-r from-violet-300 via-indigo-200 to-blue-300
               bg-clip-text text-transparent
             "
           >
@@ -145,12 +145,12 @@ export default function MessageForVisitors() {
             A living mirror for your moods, your passions, your becoming.
           </p>
 
-          <p className="font-semibold text-purple-200">
+          <p className="font-semibold text-violet-200">
             This is not just technology.  
             This is not just art.
           </p>
 
-          <p className="font-bold text-purple-300">
+          <p className="font-bold text-violet-300">
             This is the future of space.  
             This is Deckoviz.
           </p>
@@ -165,7 +165,7 @@ export default function MessageForVisitors() {
             shadow-[0_30px_80px_rgba(0,0,0,0.45)]
           "
         >
-          <h2 className="text-2xl font-bold text-purple-200">
+          <h2 className="text-2xl font-bold text-violet-200">
             🎯 Mission
           </h2>
 
@@ -190,7 +190,7 @@ export default function MessageForVisitors() {
             shadow-[0_30px_80px_rgba(0,0,0,0.45)]
           "
         >
-          <h2 className="text-2xl font-bold text-purple-200">
+          <h2 className="text-2xl font-bold text-violet-200">
             🌌 Vision
           </h2>
 
@@ -200,7 +200,7 @@ export default function MessageForVisitors() {
             powered by intelligent, evolving, personalized art.
           </p>
 
-          <p className="font-medium text-purple-300">
+          <p className="font-medium text-violet-300">
             Art that isn’t just seen.  
             It’s felt.  
             It’s lived.  

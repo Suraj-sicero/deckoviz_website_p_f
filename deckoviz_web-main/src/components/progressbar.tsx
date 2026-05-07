@@ -19,7 +19,7 @@ const ProgressBar = ({ value = 95, delay = 600 }) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             setStart(true);
-          }, delay); 
+          }, delay);
 
           observer.disconnect();
         }
@@ -39,8 +39,8 @@ const ProgressBar = ({ value = 95, delay = 600 }) => {
   return (
     <div ref={ref} className="w-full h-2 rounded-full overflow-hidden">
       <div
-        className="h-full rounded-full transition-all duration-1000 ease-out"
-        style={{ 
+        className="h-full rounded-full"
+        style={{
           width: start ? `${value}%` : "0%",
           background: `linear-gradient(90deg, hsl(${hue1}, 90%, 60%), hsl(${hue2}, 90%, 55%))`,
           transition: "width 1s ease-out, background 0.3s ease"

@@ -16,7 +16,6 @@ uniform vec3 uColor2;
 varying vec2 vUv;
 varying vec3 vPosition;
 
-// Simple 3D noise
 float mod289(float x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
 vec4 mod289(vec4 x){return x - floor(x * (1.0 / 289.0)) * 289.0;}
 vec4 permute(vec4 x){return mod289(((x*34.0)+1.0)*x);}
@@ -62,17 +61,19 @@ float snoise(vec3 v){
   vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
   m = m * m;
   return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), 
-                                dot(p2,x2), dot(p3,x3) ) );
+                                 dot(p2,x2), dot(p3,x3) ) );
 }
 
 void main() {
-    float n = snoise(vPosition * 0.1 + uTime * 0.1);
-    n += 0.5 * snoise(vPosition * 0.2 - uTime * 0.05);
-    n = max(0.0, n);
+    vec3 p = vPosition * 0.01;
+    float n = snoise(p + uTime * 0.1);
+    n += 0.5 * snoise(p * 2.0 - uTime * 0.05);
+    n += 0.25 * snoise(p * 4.0 + uTime * 0.2);
     
-    vec3 color = mix(uColor1, uColor2, n);
-    float alpha = n * uIntensity;
+    float mask = smoothstep(-0.2, 0.5, n);
+    vec3 color = mix(uColor1, uColor2, mask);
     
+    float alpha = mask * uIntensity * 0.8;
     gl_FragColor = vec4(color, alpha);
 }
 `;
@@ -95,22 +96,28 @@ varying vec2 vUv;
 void main() {
     vec2 uv = vUv - 0.5;
     float dist = length(uv);
+    float angle = atan(uv.y, uv.x);
     
-    // Event horizon
-    if (dist < 0.1) {
+    // Event Horizon
+    if (dist < 0.08) {
         gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
         return;
     }
     
-    // Accretion disk
-    float ring = smoothstep(0.12, 0.1, dist) - smoothstep(0.15, 0.13, dist);
-    ring += (smoothstep(0.4, 0.3, dist) - smoothstep(0.45, 0.35, dist)) * 0.5;
+    // Accretion Disk (Rotating)
+    float disk = smoothstep(0.4, 0.1, dist) * smoothstep(0.08, 0.12, dist);
+    float spiral = sin(angle * 3.0 + dist * 10.0 - uTime * 5.0) * 0.5 + 0.5;
+    disk *= (0.8 + 0.2 * spiral);
     
-    vec3 color = vec3(1.0, 0.6, 0.2) * ring * uIntensity;
+    // Einstein Ring (Lensing)
+    float ring = smoothstep(0.12, 0.1, dist) * 2.0;
     
-    // Gravitational lensing distortion feel
-    float distortion = 0.05 / dist;
-    color += vec3(0.1, 0.2, 0.5) * distortion * 0.2;
+    vec3 color = vec3(0.4, 0.3, 1.0) * disk * uIntensity; // Accretion blue
+    color += vec3(1.0, 0.8, 0.5) * ring * uIntensity;    // Lensing gold
+    
+    // Outer Glow
+    float glow = exp(-dist * 4.0) * 0.5;
+    color += vec3(0.2, 0.4, 1.0) * glow;
     
     gl_FragColor = vec4(color, 1.0);
 }

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef, useState } from 'react';
 import { RitualEngine } from './RitualEngine';
 import { RitualMode, RitualConfig, RITUAL_PRESETS } from './types';
@@ -34,7 +36,7 @@ const AmbientRitual: React.FC = () => {
         
         engineRef.current = new RitualEngine(containerRef.current);
         engineRef.current.updateMode(config);
-        engineRef.current.animate(config);
+        engineRef.current.animate();
 
         return () => {
             engineRef.current?.dispose();
@@ -43,17 +45,27 @@ const AmbientRitual: React.FC = () => {
 
     useEffect(() => {
         let timer: any;
-        if (isPlaying && config.mode === 'focus' && timeLeft > 0) {
+        if (isPlaying && timeLeft > 0) {
             timer = setInterval(() => setTimeLeft(t => t - 1), 1000);
         }
         return () => clearInterval(timer);
-    }, [isPlaying, config.mode, timeLeft]);
+    }, [isPlaying, timeLeft]);
 
     const updateMode = (mode: RitualMode) => {
         const newConfig = { ...RITUAL_PRESETS[mode] };
         setConfig(newConfig);
         engineRef.current?.updateMode(newConfig);
-        if (mode === 'focus') setTimeLeft(1500);
+        
+        // Context-aware timer defaults
+        const times: Record<RitualMode, number> = {
+            focus: 1500,     // 25m
+            gratitude: 600,  // 10m
+            morning: 1800,   // 30m
+            sleep: 28800,    // 8h
+            rainy: 3600,     // 1h
+            romance: 3600    // 1h
+        };
+        setTimeLeft(times[mode]);
     };
 
     const updateParam = (key: keyof RitualConfig, val: any) => {
@@ -61,12 +73,19 @@ const AmbientRitual: React.FC = () => {
         setConfig(newConfig);
         if (key === 'mode') {
             engineRef.current?.updateMode(newConfig);
+        } else {
+            engineRef.current?.setParams(newConfig);
         }
     };
 
     const formatTime = (seconds: number) => {
-        const m = Math.floor(seconds / 60);
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
         const s = seconds % 60;
+        
+        if (h > 0) {
+            return `${h}:${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+        }
         return `${m}:${s < 10 ? '0' : ''}${s}`;
     };
 
@@ -97,7 +116,7 @@ const AmbientRitual: React.FC = () => {
             )}
 
             {/* UI Overlay */}
-            <div className={`relative z-20 w-full h-full p-12 flex flex-col justify-between pointer-events-none transition-all duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 scale-105'}`}>
+            <div className={`relative z-20 w-full h-full p-8 pb-32 flex flex-col justify-between pointer-events-none transition-all duration-1000 ${showUI ? 'opacity-100' : 'opacity-0 scale-105'}`}>
                 
                 {/* Header Section */}
                 <header className="flex justify-between items-start">
@@ -135,8 +154,8 @@ const AmbientRitual: React.FC = () => {
                                         onClick={() => updateMode(m)}
                                         className={`flex flex-col items-center justify-center p-6 rounded-[2rem] transition-all border ${
                                             config.mode === m 
-                                            ? 'bg-white/20 border-white/40 text-white shadow-xl' 
-                                            : 'bg-white/5 border-white/5 text-white/20 hover:bg-white/10 hover:text-white/60'
+                                            ? 'bg-white/30 border-white/50 text-white shadow-xl scale-105' 
+                                            : 'bg-white/10 border-white/10 text-white/40 hover:bg-white/20 hover:text-white/80'
                                         }`}
                                     >
                                         {m === 'focus' && <Focus size={20} className="mb-2" />}
@@ -153,7 +172,7 @@ const AmbientRitual: React.FC = () => {
                     </div>
 
                     {/* Center: Playback / Timer Controls */}
-                    <div className="flex flex-col items-center pointer-events-auto mb-12">
+                    <div className="flex flex-col items-center pointer-events-auto mb-6">
                         <div className="flex items-center space-x-8 bg-white/5 backdrop-blur-3xl px-12 py-6 rounded-full border border-white/10 shadow-2xl">
                             <button onClick={() => setIsMuted(!isMuted)} className="text-white/40 hover:text-white transition-colors">
                                 {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}

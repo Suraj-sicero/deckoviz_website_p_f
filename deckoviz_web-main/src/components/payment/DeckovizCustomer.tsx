@@ -114,18 +114,18 @@ const DeckovizCustomizer = () => {
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -left-48 w-[110%] h-60 sm:h-80 bg-gradient-to-r from-blue-300 via-indigo-100 to-transparent rounded-full blur-3xl rotate-8"></div>
         <div className="absolute top-1/4 -right-64 w-[120%] h-48 sm:h-64 bg-gradient-to-l from-indigo-100 via-blue-100 to-transparent rounded-full blur-3xl -rotate-[35deg]"></div>
-        <div className="absolute -bottom-32 -left-32 w-[125%] h-60 sm:h-72 bg-gradient-to-r from-purple-200 via-indigo-100 to-blue-100 rounded-full blur-3xl rotate-[4deg]"></div>
+        <div className="absolute -bottom-32 -left-32 w-[125%] h-60 sm:h-72 bg-gradient-to-r from-violet-200 via-indigo-100 to-blue-100 rounded-full blur-3xl rotate-[4deg]"></div>
       </div>
 
       <div className="absolute inset-0">
         <div className="absolute top-[12%] left-[18%] w-[600px] sm:w-[900px] h-32 sm:h-40 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-2xl rotate-[28deg] opacity-80"></div>
-        <div className="absolute bottom-[65%] right-[25%] w-[700px] sm:w-[1100px] h-36 sm:h-48 bg-gradient-to-l from-purple-200 to-transparent rounded-full blur-2xl -rotate-[42deg] opacity-70"></div>
+        <div className="absolute bottom-[65%] right-[25%] w-[700px] sm:w-[1100px] h-36 sm:h-48 bg-gradient-to-l from-violet-200 to-transparent rounded-full blur-2xl -rotate-[42deg] opacity-70"></div>
         <div className="absolute top-[55%] left-[45%] w-[550px] sm:w-[850px] h-28 sm:h-36 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-2xl rotate-[62deg] opacity-65"></div>
         <div className="absolute top-[38%] right-[8%] w-[800px] sm:w-[1200px] h-40 sm:h-52 bg-gradient-to-l from-blue-200 to-transparent rounded-full blur-3xl -rotate-[18deg] opacity-60"></div>
-        <div className="absolute bottom-[38%] left-[12%] w-[650px] sm:w-[1000px] h-36 sm:h-44 bg-gradient-to-r from-purple-100 to-transparent rounded-full blur-3xl rotate-[75deg] opacity-55"></div>
+        <div className="absolute bottom-[38%] left-[12%] w-[650px] sm:w-[1000px] h-36 sm:h-44 bg-gradient-to-r from-violet-100 to-transparent rounded-full blur-3xl rotate-[75deg] opacity-55"></div>
         <div className="absolute top-[72%] right-[35%] w-[600px] sm:w-[950px] h-32 sm:h-40 bg-gradient-to-l from-indigo-300 to-transparent rounded-full blur-2xl -rotate-[55deg] opacity-70"></div>
         <div className="absolute top-[85%] left-[28%] w-[500px] sm:w-[800px] h-24 sm:h-32 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-xl rotate-[15deg] opacity-50"></div>
-        <div className="absolute top-[25%] right-[45%] w-[450px] sm:w-[750px] h-28 sm:h-36 bg-gradient-to-l from-purple-100 to-transparent rounded-full blur-xl -rotate-[68deg] opacity-45"></div>
+        <div className="absolute top-[25%] right-[45%] w-[450px] sm:w-[750px] h-28 sm:h-36 bg-gradient-to-l from-violet-100 to-transparent rounded-full blur-xl -rotate-[68deg] opacity-45"></div>
         <div className="absolute bottom-[18%] left-[55%] w-[400px] sm:w-[700px] h-20 sm:h-28 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-xl rotate-[38deg] opacity-60"></div>
       </div>
 
@@ -141,7 +141,7 @@ const DeckovizCustomizer = () => {
               <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 text-center">
-                  <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mt-6 sm:mt-4 font-semibold mb-2 sm:mb-3 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-800 font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-6 sm:mt-4 font-bold tracking-tight mb-2 sm:mb-3 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #7C3AED, #D946EF, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                     Get Your Deckoviz
                   </h1>
                   <p className="text-gray-600 font-medium text-xs sm:text-sm md:text-base mt-3 sm:mt-4 md:mt-6 mb-2 px-4">
@@ -162,7 +162,7 @@ const DeckovizCustomizer = () => {
                   {/* Glow border */}
                   <div
                     className="absolute -inset-[2px] rounded-[32px]
-bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400
+bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-400
 opacity-70 blur-md group-hover:opacity-100 transition"
                   />
 
@@ -184,7 +184,7 @@ font-[450]
                   >
                     <h3
                       className="text-2xl font-semibold mb-2
-bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600
+bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600
 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
                     >
                       Pre-checkout notes ✨
@@ -303,7 +303,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         joyous, and beautiful.
                       </p>
 
-                      <div className="border-t border-purple-200 pt-4 space-y-3">
+                      <div className="border-t border-violet-200 pt-4 space-y-3">
                         <p className="font-medium text-gray-900">
                           A note for our early believers 💜
                         </p>
@@ -337,9 +337,9 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
 
                 {/* ================= NEW CONTENT ADDED HERE ================= */}
                 <div className="group relative mt-8 mb-10 smooth-enter smooth-enter-active">
-                  <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 opacity-70 blur-md group-hover:opacity-100 transition" />
+                  <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-400 opacity-70 blur-md group-hover:opacity-100 transition" />
                   <div className="relative rounded-[30px] bg-white/85 backdrop-blur-xl shadow-[0_30px_90px_rgba(79,70,229,0.25)] border border-white/50 p-8 sm:p-10 space-y-6 text-[15px] leading-relaxed text-gray-700 font-[450]">
-                    <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                    <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                       ✨ Almost There! Here’s What Happens Next
                     </h3>
                     <p>
@@ -431,7 +431,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
             {/* Mobile Preview Button - Only show when frame is selected and on smaller screens */}
             <button
               onClick={() => setShowPreviewModal(true)}
-              className="lg:hidden fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-purple-500/25 hover:scale-105 transition-all duration-300 border border-white/20 backdrop-blur-sm flex items-center gap-2"
+              className="lg:hidden fixed bottom-6 right-6 z-50 bg-gradient-to-r from-violet-600 to-indigo-600 text-white px-4 py-3 rounded-full shadow-2xl hover:shadow-violet-500/25 hover:scale-105 transition-all duration-300 border border-white/20 backdrop-blur-sm flex items-center gap-2"
               style={{
                 background:
                   "linear-gradient(135deg, #7c3aed 0%, #4338ca 50%, #1e1b4b 100%)",
@@ -449,7 +449,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
             <div className="max-w-4xl mx-auto">
               {/* Header - now scrollable */}
               <div className="relative z-10 text-center pt-12 sm:pt-16 md:pt-20 pb-3">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl mt-6 font-semibold mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-800 font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl mt-6 font-bold tracking-tight mb-3 sm:mb-4 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #7C3AED, #D946EF, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                   Get Your Deckoviz
                 </h1>
                 <p className="text-gray-800 font-medium text-xs sm:text-sm md:text-base mb-2 px-4">
@@ -474,7 +474,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                 {/* Glow border */}
                 <div
                   className="absolute -inset-[2px] rounded-[32px]
-bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400
+bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-400
 opacity-70 blur-md group-hover:opacity-100 transition"
                 />
 
@@ -496,7 +496,7 @@ font-[450]
                 >
                   <h3
                     className="text-2xl font-semibold mb-2
-bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600
+bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600
 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
                   >
                     Pre-checkout notes ✨
@@ -615,7 +615,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       joyous, and beautiful.
                     </p>
 
-                    <div className="border-t border-purple-200 pt-4 space-y-3">
+                    <div className="border-t border-violet-200 pt-4 space-y-3">
                       <p className="font-medium text-gray-900">
                         A note for our early believers 💜
                       </p>
@@ -649,9 +649,9 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
 
               {/* ================= NEW CONTENT ADDED HERE ================= */}
               <div className="group relative mt-8 mb-10 smooth-enter smooth-enter-active">
-                <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 opacity-70 blur-md group-hover:opacity-100 transition" />
+                <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-400 opacity-70 blur-md group-hover:opacity-100 transition" />
                 <div className="relative rounded-[30px] bg-white/85 backdrop-blur-xl shadow-[0_30px_90px_rgba(79,70,229,0.25)] border border-white/50 p-8 sm:p-10 space-y-6 text-[15px] leading-relaxed text-gray-700 font-[450]">
-                  <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                  <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                     ✨ Almost There! Here’s What Happens Next
                   </h3>
                   <p>

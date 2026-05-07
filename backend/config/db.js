@@ -3,14 +3,21 @@ import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const sequelize = new Sequelize(
-  process.env.PG_DATABASE,
-  process.env.PG_USER,
-  process.env.PG_PASSWORD,
-  {
-    host: process.env.PG_HOST,
-    dialect: "postgres",
-    port: process.env.PG_PORT || 5432,
-    logging: false,
-  }
-);
+// Use DATABASE_URL if available (for production/PostgreSQL), otherwise fallback to local SQLite
+export const sequelize = process.env.DATABASE_URL 
+  ? new Sequelize(process.env.DATABASE_URL, {
+      dialect: "postgres",
+      protocol: "postgres",
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false
+        }
+      },
+      logging: false,
+    })
+  : new Sequelize({
+      dialect: "sqlite",
+      storage: "./database.sqlite",
+      logging: false,
+    });

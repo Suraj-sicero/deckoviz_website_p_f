@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+import { useAuth } from "../../context/AuthContext";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
 
 type Status = "idle" | "loading" | "done" | "error";
 
@@ -14,6 +16,7 @@ interface InspirationResult {
 }
 
 const DailyInspirationTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [theme, setTheme] = useState("general");
   const [result, setResult] = useState<InspirationResult | null>(null);
   const [status, setStatus] = useState<Status>("idle");
@@ -33,6 +36,12 @@ const DailyInspirationTool: React.FC = () => {
 
   const generate = async () => {
     setError(""); setStatus("loading"); setResult(null);
+
+    const hasCredits = await deductCredits(1);
+    if (!hasCredits) {
+      setStatus("idle");
+      return;
+    }
 
     try {
       const res = await fetch(`${BACKEND_URL}/api/daily/generate`, {

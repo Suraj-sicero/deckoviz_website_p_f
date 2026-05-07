@@ -100,9 +100,9 @@ const BulkOrder = () => {
       <div className="min-h-screen bg-white">
         {/* Light background similar to your existing components */}
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-purple-100/40 via-pink-50/30 to-transparent blur-3xl"></div>
+          <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-violet-100/40 via-pink-50/30 to-transparent blur-3xl"></div>
           <div className="absolute top-1/4 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-pink-100/40 via-orange-50/30 to-transparent blur-3xl"></div>
-          <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-100/40 via-purple-50/30 to-transparent blur-3xl"></div>
+          <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-100/40 via-violet-50/30 to-transparent blur-3xl"></div>
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-6 py-16">
@@ -127,19 +127,19 @@ const BulkOrder = () => {
               </p>
               
               <p className="text-lg text-gray-600 leading-relaxed">
-                We're thrilled that you've chosen to bring the magic of <span className="text-purple-600 font-semibold">Deckoviz</span> to your space   and we're excited to help you craft a powerful visual experience across your environments.
+                We're thrilled that you've chosen to bring the magic of <span className="text-violet-600 font-semibold">Deckoviz</span> to your space   and we're excited to help you craft a powerful visual experience across your environments.
               </p>
             </div>
 
             {/* What happens next */}
             <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-8">
-                What happens <span className="text-purple-600">next?</span>
+                What happens <span className="text-violet-600">next?</span>
               </h2>
               
               <div className="space-y-6 text-left max-w-2xl mx-auto">
                 <div className="flex gap-4">
-                  <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-violet-500 flex items-center justify-center flex-shrink-0">
                     <div className="w-3 h-3 bg-white rounded-full"></div>
                   </div>
                   <div>
@@ -187,7 +187,7 @@ const BulkOrder = () => {
 
             <button
               onClick={() => window.history.back()}
-              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
+              className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-violet-600 to-pink-600 text-white rounded-lg font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
             >
               Go Back
               <ArrowRight className="w-5 h-5" />
@@ -202,9 +202,9 @@ const BulkOrder = () => {
     <div className="min-h-screen bg-white">
       {/* Light background similar to your existing components */}
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-purple-200 via-pink-200 to-transparent blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-violet-200 via-pink-200 to-transparent blur-3xl"></div>
         <div className="absolute top-1/4 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-pink-300 via-orange-100 to-transparent blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-200 via-purple-200 to-transparent blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-200 via-violet-200 to-transparent blur-3xl"></div>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-16">
@@ -224,10 +224,10 @@ const BulkOrder = () => {
           
           <div className="max-w-4xl mx-auto mb-12">
             <p className="text-lg text-gray-700 leading-relaxed mb-6">
-              <span className="text-purple-600 font-semibold">Deckoviz</span> is the world's first <span className="text-indigo-600 font-semibold">AI-powered dynamic art frame</span>   a powerful, beautiful blend of <span className="text-fuchsia-500 font-semibold">technology</span>, <span className="text-rose-500 font-semibold">creativity</span>, and <span className="text-purple-600 font-semibold">personalization</span>. Whether you're designing for homes, hotels, offices, or commercial spaces, Deckoviz helps you transform walls into <span className="text-indigo-600 font-semibold">living, evolving experiences</span>.
+              <span className="text-violet-600 font-semibold">Deckoviz</span> is the world's first <span className="text-indigo-600 font-semibold">AI-powered dynamic art frame</span>   a powerful, beautiful blend of <span className="text-fuchsia-500 font-semibold">technology</span>, <span className="text-rose-500 font-semibold">creativity</span>, and <span className="text-violet-600 font-semibold">personalization</span>. Whether you're designing for homes, hotels, offices, or commercial spaces, Deckoviz helps you transform walls into <span className="text-indigo-600 font-semibold">living, evolving experiences</span>.
             </p>
             <p className="text-lg text-gray-800 font-medium">
-              Order in bulk and enjoy <span className="text-pink-600 font-bold">exclusive pricing</span>, <span className="text-blue-600 font-bold">dedicated support</span>, and <span className="text-purple-600 font-bold">seamless customization</span>.
+              Order in bulk and enjoy <span className="text-pink-600 font-bold">exclusive pricing</span>, <span className="text-blue-600 font-bold">dedicated support</span>, and <span className="text-violet-600 font-bold">seamless customization</span>.
             </p>
           </div>
 
@@ -265,7 +265,7 @@ const BulkOrder = () => {
         {/* Why Bulk Order Section */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12">
-            Why Bulk Order with <span className="text-purple-600">Deckoviz?</span>
+            Why Bulk Order with <span className="text-violet-600">Deckoviz?</span>
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8 mb-8">
@@ -282,7 +282,7 @@ const BulkOrder = () => {
           <div className="text-center mb-8">
             <button
               onClick={() => setShowMoreBenefits(!showMoreBenefits)}
-              className="inline-flex items-center gap-2 text-gray-700 font-semibold hover:text-purple-700 transition-colors duration-300"
+              className="inline-flex items-center gap-2 text-gray-700 font-semibold hover:text-violet-700 transition-colors duration-300"
             >
               {showMoreBenefits ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               {showMoreBenefits ? 'Show Less' : 'Show More Benefits'}
@@ -305,15 +305,15 @@ const BulkOrder = () => {
         {/* How It Works */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-center mb-12">
-            How It <span className="text-purple-600">Works?</span>
+            How It <span className="text-violet-600">Works?</span>
           </h2>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="w-16 h-16 mx-auto mb-6 relative">
-                <div className="absolute inset-0 bg-purple-500 rounded-full"></div>
+                <div className="absolute inset-0 bg-violet-500 rounded-full"></div>
                 <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                  <span className="text-xl font-bold text-purple-600">1</span>
+                  <span className="text-xl font-bold text-violet-600">1</span>
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-4">Submit Your Requirements</h3>
@@ -349,10 +349,10 @@ const BulkOrder = () => {
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold mb-4">
-                Get a <span className="text-purple-600">Custom Quote</span>
+                Get a <span className="text-violet-600">Custom Quote</span>
               </h2>
               <p className="text-gray-600 text-lg">
-                Please fill in your requirements and our team will get back to you within <span className="text-purple-600 font-semibold">24–48 hours</span>.
+                Please fill in your requirements and our team will get back to you within <span className="text-violet-600 font-semibold">24–48 hours</span>.
               </p>
             </div>
 
@@ -366,7 +366,7 @@ const BulkOrder = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                     placeholder="Your full name"
                   />
                 </div>
@@ -379,7 +379,7 @@ const BulkOrder = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -394,7 +394,7 @@ const BulkOrder = () => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                     placeholder="+1 (555) 123-4567"
                   />
                 </div>
@@ -407,7 +407,7 @@ const BulkOrder = () => {
                     value={formData.company}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                     placeholder="Your company name"
                   />
                 </div>
@@ -421,7 +421,7 @@ const BulkOrder = () => {
                     value={formData.quantity}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                   >
                     <option value="">Select quantity</option>
                     <option value="5-10">5-10 units</option>
@@ -438,7 +438,7 @@ const BulkOrder = () => {
                     name="preferredSizes"
                     value={formData.preferredSizes}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                   >
                     <option value="">Select preferred sizes</option>
                     <option value="43-inch">43" (Starter)</option>
@@ -460,7 +460,7 @@ const BulkOrder = () => {
                     value={formData.locations}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                     placeholder="City, State/Country"
                   />
                 </div>
@@ -471,7 +471,7 @@ const BulkOrder = () => {
                     name="deliveryTimeframe"
                     value={formData.deliveryTimeframe}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 transition-all duration-300"
+                    className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 transition-all duration-300"
                   >
                     <option value="">Select timeframe</option>
                     <option value="1-2-weeks">1-2 weeks</option>
@@ -490,7 +490,7 @@ const BulkOrder = () => {
                   value={formData.customizationNotes}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-300 resize-none transition-all duration-300"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-200 focus:border-violet-300 resize-none transition-all duration-300"
                   placeholder="Please describe your specific use case, any customization requirements, branding needs, or other special considerations..."
                 />
               </div>
@@ -515,11 +515,11 @@ const BulkOrder = () => {
                 </div>
                 <p className="text-sm text-gray-700">
                   <strong>For urgent requirements or orders above 50 units,</strong> you can directly email us at{' '}
-                  <a href="mailto:orders@deckoviz.com" className="text-purple-600 hover:text-purple-700 font-bold underline">
+                  <a href="mailto:orders@deckoviz.com" className="text-violet-600 hover:text-violet-700 font-bold underline">
                     orders@deckoviz.com
                   </a>{' '}
                   or call us at{' '}
-                  <a href="tel:+44-XXXXXXXXXX" className="text-purple-600 hover:text-purple-700 font-bold underline">
+                  <a href="tel:+44-XXXXXXXXXX" className="text-violet-600 hover:text-violet-700 font-bold underline">
                     +44-XXXXXXXXXX
                   </a>
                 </p>

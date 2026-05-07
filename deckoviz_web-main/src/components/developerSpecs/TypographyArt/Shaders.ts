@@ -23,22 +23,52 @@ uniform vec3 uColor;
 void main() {
     vec2 uv = vUv;
     
-    // Dynamic distortion based on mouse and time
+    // Multi-layered distortion
     float distToMouse = length(uv - uMouse);
-    vec2 warp = normalize(uv - uMouse) * (uStrength * 0.05 / (distToMouse + 0.1)) * sin(uTime + distToMouse * 10.0);
+    float warpAmount = uStrength * 0.15 / (distToMouse + 0.15);
+    vec2 warpDir = normalize(uv - uMouse);
     
-    // Sample SDF
-    float sdf = texture(uSdfTex, uv + warp).r;
+    vec2 warp = warpDir * warpAmount * (sin(uTime * 1.5 + distToMouse * 8.0) * 0.5 + 0.5);
+    warp += vec2(sin(uv.y * 10.0 + uTime), cos(uv.x * 10.0 + uTime)) * 0.005 * uStrength;
+
+    // Chromatic Aberration
+    float aberration = 0.015 * uStrength;
+    float r = texture(uSdfTex, uv + warp + vec2(aberration, 0.0)).r;
+    float g = texture(uSdfTex, uv + warp).r;
+    float b = texture(uSdfTex, uv + warp - vec2(aberration, 0.0)).r;
     
-    // SDF thresholding with smoothing (anti-aliasing)
-    float edge = 0.5;
+    // SDF edge detection with anti-aliasing
+    float threshold = 0.5;
     float smoothing = 0.02;
-    float alpha = smoothstep(edge - smoothing, edge + smoothing, sdf);
     
-    // Color and glow
-    vec3 color = uColor;
-    float glow = smoothstep(edge + 0.2, edge, sdf) * 0.5;
+    float alphaR = smoothstep(threshold - smoothing, threshold + smoothing, r);
+    float alphaG = smoothstep(threshold - smoothing, threshold + smoothing, g);
+    float alphaB = smoothstep(threshold - smoothing, threshold + smoothing, b);
     
-    outColor = vec4(color + glow, alpha);
+    // Combine channels for final text
+    vec3 textColor = vec3(
+        alphaR * uColor.r,
+        alphaG * uColor.g,
+        alphaB * uColor.b
+    );
+    
+    float mask = max(alphaR, max(alphaG, alphaB));
+
+    // Volumetric Bloom / Glow
+    float glowMask = smoothstep(0.4, 0.6, g);
+    vec3 glow = uColor * glowMask * 1.2;
+    
+    // Subtle Scanlines
+    float scanline = sin(uv.y * 800.0) * 0.04;
+    textColor -= scanline * mask;
+
+    // Final composition
+    vec3 finalColor = textColor + glow * 0.2;
+    
+    // Background Vignette
+    float vignette = 1.0 - smoothstep(0.5, 1.5, distToMouse);
+    finalColor += vec3(0.01, 0.02, 0.03) * vignette; // Subtle deep blue tint
+
+    outColor = vec4(finalColor, 1.0);
 }
 `;

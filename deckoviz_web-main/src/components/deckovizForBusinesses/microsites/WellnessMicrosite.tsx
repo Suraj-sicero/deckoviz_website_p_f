@@ -18,7 +18,7 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-gradient-to-br from-purple-950 via-pink-950 to-purple-900">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-gradient-to-br from-violet-950 via-pink-950 to-indigo-900">
       <button
         onClick={onClose}
         className="fixed top-4 right-4 sm:top-6 sm:right-6 z-50 w-14 h-14 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-all duration-300 active:scale-95"
@@ -28,9 +28,9 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
       </button>
 
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-purple-400/15 blur-3xl animate-pulse" />
+        <div className="absolute top-20 left-10 w-40 h-40 rounded-full bg-violet-400/15 blur-3xl animate-pulse" />
         <div className="absolute top-40 right-20 w-48 h-48 rounded-full bg-pink-400/12 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-purple-300/15 blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+        <div className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-violet-300/15 blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
         
         <div className="absolute top-20 left-10 text-4xl opacity-15 animate-float-slow">🧘</div>
         <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">🌸</div>
@@ -72,17 +72,17 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
       <div className="relative z-10">
         <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
           <div className="mb-8">
-            <span className="inline-block px-4 py-2 bg-gradient-to-r from-purple-900/80 to-pink-900/80 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/20">
+            <span className="inline-block px-4 py-2 bg-gradient-to-r from-violet-900/80 to-pink-900/80 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/20">
               🧘 SPAS & WELLNESS CENTERS 🧘
             </span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-['Playfair_Display'] mb-8">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-pink-300 to-purple-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-300 via-pink-300 to-indigo-300">
               Spaces That Support
             </span>
             <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-purple-200 to-pink-200">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-200 via-violet-200 to-pink-200">
               Energy, Focus, and Calm
             </span>
           </h1>
@@ -94,14 +94,14 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
           <div className="flex flex-col sm:flex-row gap-4">
             <button 
               onClick={handleScheduleDemo}
-              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
+              className="px-8 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105"
             >
               ✨ Schedule a Demo →
             </button>
           </div>
         </div>
 
-        <div className="py-20 px-6 bg-gradient-to-b from-transparent to-purple-950/50">
+        <div className="py-20 px-6 bg-gradient-to-b from-transparent to-indigo-950/50">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] text-center mb-6 text-white">
               Transform Wellness Spaces Into Sensory Experiences
@@ -111,9 +111,9 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="group relative bg-gradient-to-br from-purple-900/20 to-pink-900/20 backdrop-blur-sm rounded-3xl p-8 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-3xl mb-6">
+              <div className="group relative bg-gradient-to-br from-violet-900/20 to-pink-900/20 backdrop-blur-sm rounded-3xl p-8 border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-3xl mb-6">
                   🧘
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Calming Visuals for Yoga & Meditation</h3>
@@ -122,9 +122,9 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
                 </p>
               </div>
 
-              <div className="group relative bg-gradient-to-br from-pink-900/20 to-purple-900/20 backdrop-blur-sm rounded-3xl p-8 border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-purple-500 flex items-center justify-center text-3xl mb-6">
+              <div className="group relative bg-gradient-to-br from-pink-900/20 to-indigo-900/20 backdrop-blur-sm rounded-3xl p-8 border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-indigo-500 rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500 to-indigo-500 flex items-center justify-center text-3xl mb-6">
                   💪
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Dynamic Workout Visuals</h3>
@@ -133,9 +133,9 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
                 </p>
               </div>
 
-              <div className="group relative bg-gradient-to-br from-purple-900/20 to-indigo-900/20 backdrop-blur-sm rounded-3xl p-8 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-indigo-500 flex items-center justify-center text-3xl mb-6">
+              <div className="group relative bg-gradient-to-br from-violet-900/20 to-indigo-900/20 backdrop-blur-sm rounded-3xl p-8 border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-3xl mb-6">
                   🌅
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Circadian Synchronicity</h3>
@@ -158,7 +158,7 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
           </div>
         </div>
 
-        <div className="py-20 px-6 bg-purple-950/30">
+        <div className="py-20 px-6 bg-violet-950/30">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] text-center mb-6 text-white">
               Perfect For Every Wellness Space
@@ -168,19 +168,19 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-gradient-to-br from-purple-900/30 to-purple-950 rounded-3xl p-8 text-center border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 hover:scale-105">
+              <div className="bg-gradient-to-br from-violet-900/30 to-indigo-950 rounded-3xl p-8 text-center border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300 hover:scale-105">
                 <div className="text-6xl mb-4">🧘</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Yoga Studios</h3>
                 <p className="text-gray-400">Mindful, calming environments</p>
               </div>
 
-              <div className="bg-gradient-to-br from-pink-900/30 to-purple-950 rounded-3xl p-8 text-center border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300 hover:scale-105">
+              <div className="bg-gradient-to-br from-pink-900/30 to-indigo-950 rounded-3xl p-8 text-center border border-pink-500/20 hover:border-pink-500/40 transition-all duration-300 hover:scale-105">
                 <div className="text-6xl mb-4">💆</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Luxury Spas</h3>
                 <p className="text-gray-400">Restorative, serene spaces</p>
               </div>
 
-              <div className="bg-gradient-to-br from-indigo-900/30 to-purple-950 rounded-3xl p-8 text-center border border-indigo-500/20 hover:border-indigo-500/40 transition-all duration-300 hover:scale-105">
+              <div className="bg-gradient-to-br from-indigo-900/30 to-indigo-950 rounded-3xl p-8 text-center border border-indigo-500/20 hover:border-indigo-500/40 transition-all duration-300 hover:scale-105">
                 <div className="text-6xl mb-4">💪</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Fitness Centers</h3>
                 <p className="text-gray-400">Energizing, motivational spaces</p>
@@ -191,7 +191,7 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
 
         <div className="py-20 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-gradient-to-br from-purple-900/40 to-pink-900/40 backdrop-blur-sm rounded-3xl p-12 border border-purple-500/30">
+            <div className="bg-gradient-to-br from-violet-900/40 to-pink-900/40 backdrop-blur-sm rounded-3xl p-12 border border-violet-500/30">
               <div className="text-4xl mb-6">✨</div>
               <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] text-white mb-6">
                 Ready to Transform Your Wellness Space?
@@ -201,7 +201,7 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
               </p>
               <button 
                 onClick={handleGetStarted}
-                className="px-10 py-5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-lg rounded-full font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105"
+                className="px-10 py-5 bg-gradient-to-r from-violet-500 to-pink-500 text-white text-lg rounded-full font-semibold hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105"
               >
                 ✨ Get Started Today →
               </button>

@@ -1,11 +1,11 @@
 import React, { useRef, useState } from 'react';
 import { useParticleSimulation } from './useParticleSimulation';
-import { Settings, RefreshCw, Download, Zap, Eye, EyeOff, MousePointer2, ZoomIn, ZoomOut } from 'lucide-react';
+import { Settings, RefreshCw, Download, Zap, Eye, EyeOff, MousePointer2, ZoomIn, ZoomOut, Maximize2, X } from 'lucide-react';
 
 const PRESETS = {
     Galaxy: {
         color1: [0.2, 0.4, 1.0], // Deep Blue
-        color2: [0.8, 0.3, 1.0], // Purple
+        color2: [0.8, 0.3, 1.0], // Violet
         force: 0.15,
         damping: 0.97
     },
@@ -37,6 +37,16 @@ const ParticleGalaxy: React.FC = () => {
     const [isAttract, setIsAttract] = useState(true);
     const [showTrails, setShowTrails] = useState(true);
     const [showUI, setShowUI] = useState(true);
+
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    };
 
     const handlePointerMove = (e: React.PointerEvent) => {
         if (!systemRef.current) return;
@@ -124,7 +134,7 @@ const ParticleGalaxy: React.FC = () => {
                 </div>
 
                 {/* Controls - Bottom */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl overflow-x-auto max-w-[95vw]">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl overflow-x-auto max-w-[95vw]">
                     <div className="flex items-center space-x-2 px-2">
                         {Object.keys(PRESETS).map((p) => (
                             <button
@@ -170,7 +180,7 @@ const ParticleGalaxy: React.FC = () => {
 
                         <button 
                             onClick={handleExport}
-                            className="p-2.5 text-purple-400 hover:text-purple-300 hover:bg-white/5 rounded-xl transition-colors"
+                            className="p-2.5 text-violet-400 hover:text-violet-300 hover:bg-white/5 rounded-xl transition-colors"
                             title="Export Frame"
                         >
                             <Download className="w-5 h-5" />
@@ -186,12 +196,26 @@ const ParticleGalaxy: React.FC = () => {
                 </div>
 
                 {/* Info Toggle */}
-                <button 
-                    onClick={() => setShowUI(!showUI)}
-                    className="absolute top-8 right-8 p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 pointer-events-auto hover:bg-white/20 transition-all"
-                >
-                    <Settings className="w-6 h-6 text-white" />
-                </button>
+                <div className="absolute top-8 right-8 flex gap-3 pointer-events-auto">
+                    <button 
+                        onClick={toggleFullscreen}
+                        className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all shadow-xl"
+                    >
+                        <Maximize2 className="w-6 h-6 text-white" />
+                    </button>
+                    <button 
+                        onClick={() => setShowUI(!showUI)}
+                        className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all shadow-xl"
+                    >
+                        <Settings className="w-6 h-6 text-white" />
+                    </button>
+                    <button 
+                        onClick={() => window.history.back()}
+                        className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all shadow-xl"
+                    >
+                        <X className="w-6 h-6 text-white" />
+                    </button>
+                </div>
             </div>
         </div>
     );

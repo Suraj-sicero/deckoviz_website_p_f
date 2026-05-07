@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
-import { Settings, Sparkles, Download, RefreshCw, Play, Pause, Cloud } from 'lucide-react';
+import { Settings, Sparkles, Download, RefreshCw, Play, Pause, Cloud, Maximize2 } from 'lucide-react';
 import { DreamRenderer } from './DreamRenderer';
 
 const STYLES = ['Abstract', 'Cosmic', 'Organic', 'Cyberpunk', 'Liquid Surrealism'];
@@ -16,12 +16,22 @@ const AIDreamWorlds: React.FC = () => {
     const [speed, setSpeed] = useState(0.005);
     const [showUI, setShowUI] = useState(true);
 
+    const toggleFullscreen = () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    };
+
     const generateDream = useCallback(async (p: string, s: string) => {
         if (generatingRef.current) return;
         generatingRef.current = true;
         setIsGenerating(true);
         try {
-            const response = await fetch('http://localhost:5000/api/dream/generate', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}/api/dream/generate`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: p, style: s }),
@@ -118,7 +128,7 @@ const AIDreamWorlds: React.FC = () => {
                 </div>
 
                 {/* Controls - Bottom */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-6 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl overflow-x-auto max-w-[95vw]">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-6 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl overflow-x-auto max-w-[95vw]">
                     <div className="flex items-center space-x-2 px-2">
                         {STYLES.map((s) => (
                             <button
@@ -160,13 +170,21 @@ const AIDreamWorlds: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Settings Toggle */}
-                <button 
-                    onClick={() => setShowUI(!showUI)}
-                    className="absolute top-8 right-8 p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 pointer-events-auto hover:bg-white/20 transition-all"
-                >
-                    <Settings className="w-6 h-6 text-white" />
-                </button>
+                {/* Settings & Fullscreen Toggles */}
+                <div className="absolute top-8 right-8 flex gap-3 pointer-events-auto">
+                    <button 
+                        onClick={toggleFullscreen}
+                        className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all"
+                    >
+                        <Maximize2 className="w-6 h-6 text-white" />
+                    </button>
+                    <button 
+                        onClick={() => setShowUI(!showUI)}
+                        className="p-3 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 hover:bg-white/20 transition-all"
+                    >
+                        <Settings className="w-6 h-6 text-white" />
+                    </button>
+                </div>
             </div>
 
             {isGenerating && (

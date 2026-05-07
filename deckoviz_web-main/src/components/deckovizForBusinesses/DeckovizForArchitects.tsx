@@ -28,7 +28,7 @@ const DeckovizArchitectsLanding = () => {
   };
 
   return (
-    <div className="bg-[#0f0f13] min-h-screen text-gray-100 font-sans selection:bg-purple-500/30">
+    <div className="bg-[#0f0f13] min-h-screen text-gray-100 font-sans selection:bg-violet-500/30">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden">
         {/* Background elements */}
@@ -41,7 +41,7 @@ const DeckovizArchitectsLanding = () => {
               y: [0, 30, 0]
             }}
             transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-600/20 rounded-full blur-[120px] mix-blend-screen" 
+            className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-violet-600/20 rounded-full blur-[120px] mix-blend-screen" 
           />
           <motion.div 
             animate={{ 
@@ -80,8 +80,8 @@ const DeckovizArchitectsLanding = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8"
           >
-            <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-            <span className="text-sm font-medium tracking-wider text-purple-200 uppercase">Deckoviz For Architects and Interior Designers</span>
+            <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
+            <span className="text-sm font-medium tracking-wider text-violet-200 uppercase">Deckoviz For Architects and Interior Designers</span>
           </motion.div>
           
           {/* Hero Title */}
@@ -97,7 +97,7 @@ const DeckovizArchitectsLanding = () => {
             <motion.span 
               animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              className="italic text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-400 to-pink-500 bg-[length:200%_auto]"
+              className="italic text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-indigo-400 to-pink-500 bg-[length:200%_auto]"
             >
               to Living Environments
             </motion.span>
@@ -110,7 +110,7 @@ const DeckovizArchitectsLanding = () => {
             className="text-xl md:text-2xl text-gray-400 font-light max-w-3xl mx-auto mb-16 leading-relaxed tracking-wide"
           >
             An Architectural Partnership for the Era of{" "}
-            <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-indigo-300">Intelligent Spaces.</span>
+            <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-indigo-300">Intelligent Spaces.</span>
           </motion.p>
 
           {/* Story Cards — break up the dense text */}
@@ -120,8 +120,8 @@ const DeckovizArchitectsLanding = () => {
                 delay: 0.5,
                 label: "The Problem",
                 icon: "◈",
-                color: "border-purple-500/30 bg-purple-500/5",
-                accent: "text-purple-400",
+                color: "border-violet-500/30 bg-violet-500/5",
+                accent: "text-violet-400",
                 quote: "For decades, one of the most significant elements of a space has remained stubbornly static:",
                 highlight: "the walls."
               },
@@ -186,7 +186,7 @@ const DeckovizArchitectsLanding = () => {
             >
               <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 The Emotionally Intelligent Layer: <br />
-                <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-indigo-400">The GAVP Platform</span>
+                <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-indigo-400">The GAVP Platform</span>
               </h2>
               <div className="space-y-6 text-gray-300 text-lg leading-relaxed mb-10">
                 <p>
@@ -206,7 +206,7 @@ const DeckovizArchitectsLanding = () => {
               transition={{ duration: 0.8 }}
               className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 to-indigo-500/20 blur-3xl rounded-full" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-violet-500/20 to-indigo-500/20 blur-3xl rounded-full" />
               <div className="relative bg-white/5 border border-white/10 rounded-3xl p-4 backdrop-blur-xl shadow-2xl">
                 <div className="aspect-[4/3] rounded-2xl overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-10" />
@@ -216,7 +216,7 @@ const DeckovizArchitectsLanding = () => {
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-                    <div className="flex items-center gap-3 text-purple-400 mb-2">
+                    <div className="flex items-center gap-3 text-violet-400 mb-2">
                       <Sparkles className="w-5 h-5" />
                       <span className="text-sm font-semibold tracking-wider uppercase">Living Canvas</span>
                     </div>
@@ -239,7 +239,7 @@ const DeckovizArchitectsLanding = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Key Highlights Across Every Vertical</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-indigo-500 mx-auto rounded-full" />
+            <div className="w-24 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 mx-auto rounded-full" />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -248,7 +248,7 @@ const DeckovizArchitectsLanding = () => {
                 id: 1,
                 title: 'For the Modern Home',
                 subtitle: 'The Living Canvas',
-                icon: <Home className="w-8 h-8 text-purple-400" />,
+                icon: <Home className="w-8 h-8 text-violet-400" />,
                 desc: 'In residential design, Deckoviz becomes a member of the family. It moves beyond "décor" to become a ritual-driven centerpiece.',
                 points: [
                   'Circadian Rhythm Sync: Visuals and light frequencies that shift from morning clarity to evening warmth.',
@@ -289,13 +289,13 @@ const DeckovizArchitectsLanding = () => {
                 transition={{ duration: 0.6, delay: idx * 0.15 }}
                 className="group relative bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-all duration-500 flex flex-col h-full"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+                <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 to-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="p-4 bg-black/50 rounded-2xl border border-white/5 w-fit mb-6 group-hover:scale-110 transition-transform duration-500">
                     {vertical.icon}
                   </div>
                   <h3 className="text-2xl font-semibold mb-1 text-white">{vertical.title}</h3>
-                  <h4 className="text-lg font-medium mb-4 text-purple-300">{vertical.subtitle}</h4>
+                  <h4 className="text-lg font-medium mb-4 text-violet-300">{vertical.subtitle}</h4>
                   <p className="text-gray-400 leading-relaxed mb-6">{vertical.desc}</p>
                   
                   <ul className="space-y-4 mt-auto">
@@ -303,7 +303,7 @@ const DeckovizArchitectsLanding = () => {
                       const [title, desc] = point.split(': ');
                       return (
                         <li key={pIdx} className="flex gap-3 items-start">
-                          <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 shrink-0" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-violet-500 mt-2 shrink-0" />
                           <p className="text-sm text-gray-300 leading-relaxed">
                             <strong className="text-white font-semibold">{title}:</strong> {desc}
                           </p>
@@ -351,7 +351,7 @@ const DeckovizArchitectsLanding = () => {
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
                 className="group p-8 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex items-start gap-5"
               >
-                <div className="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-violet-500/20 text-violet-400 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-violet-500 group-hover:text-white transition-all duration-300">
                   {React.cloneElement(useCase.icon as React.ReactElement, { size: 24 })}
                 </div>
                 <div>
@@ -406,9 +406,9 @@ const DeckovizArchitectsLanding = () => {
       {/* The Partnership Model */}
       <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="bg-gradient-to-br from-purple-900/30 via-indigo-900/20 to-black border border-purple-500/20 rounded-[3rem] p-8 md:p-16 overflow-hidden relative shadow-2xl">
+          <div className="bg-gradient-to-br from-violet-900/30 via-indigo-900/20 to-black border border-violet-500/20 rounded-[3rem] p-8 md:p-16 overflow-hidden relative shadow-2xl">
             {/* Background elements */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute top-0 right-0 w-96 h-96 bg-violet-500/10 rounded-full blur-[100px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-[100px] pointer-events-none" />
             
             <motion.div 
@@ -419,13 +419,13 @@ const DeckovizArchitectsLanding = () => {
               className="relative z-10 max-w-4xl mx-auto"
             >
               <div className="text-center mb-16">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <Handshake className="w-8 h-8 text-white" />
                 </div>
                 <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6 text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                   The Partnership Model
                 </h2>
-                <h3 className="text-2xl text-purple-300 font-medium mb-6">Effortless Value, Generous Rewards</h3>
+                <h3 className="text-2xl text-violet-300 font-medium mb-6">Effortless Value, Generous Rewards</h3>
                 <p className="text-xl text-gray-300 font-light leading-relaxed">
                   We believe that those who shape the physical world should be the ones to lead its digital evolution. We have designed a low-friction, high-reward partnership specifically for architects and interior designers who care about long-term value.
                 </p>
@@ -444,7 +444,7 @@ const DeckovizArchitectsLanding = () => {
                       { step: 'The Fulfillment', text: 'We handle the demos, the technical integration, the shipping, and the white-glove setup.' }
                     ].map((item, i) => (
                       <li key={i} className="flex gap-4">
-                        <div className="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 font-bold text-sm border border-purple-500/30">
+                        <div className="w-8 h-8 rounded-full bg-violet-500/20 text-violet-400 flex items-center justify-center shrink-0 font-bold text-sm border border-violet-500/30">
                           {i + 1}
                         </div>
                         <div>
@@ -521,7 +521,7 @@ const DeckovizArchitectsLanding = () => {
               <p>
                 Deckoviz is the tool that allows you to deliver that future today. It is a win-win: your clients get the most unique, intelligent design feature on the market, and you enhance your reputation as a forward-thinking designer while receiving a generous share of the value created.
               </p>
-              <p className="font-semibold text-purple-300 italic text-2xl py-6">
+              <p className="font-semibold text-violet-300 italic text-2xl py-6">
                 Great design is about more than what people see. It is about how they live.
               </p>
             </div>
@@ -534,16 +534,16 @@ const DeckovizArchitectsLanding = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={handlePartnerClick}
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg text-white bg-gradient-to-r from-purple-600 to-indigo-600 shadow-[0_0_40px_rgba(147,51,234,0.3)] hover:shadow-[0_0_60px_rgba(147,51,234,0.5)] transition-all duration-400 mb-6"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg text-white bg-gradient-to-r from-violet-600 to-indigo-600 shadow-[0_0_40px_rgba(147,51,234,0.3)] hover:shadow-[0_0_60px_rgba(147,51,234,0.5)] transition-all duration-400 mb-6"
               >
                 <span>Partner With Us</span>
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
               
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-sm text-gray-400">
-                <a href="mailto:partners@deckoviz.com" className="hover:text-purple-400 transition-colors">📩 partners@deckoviz.com</a>
+                <a href="mailto:partners@deckoviz.com" className="hover:text-violet-400 transition-colors">📩 partners@deckoviz.com</a>
                 <span className="hidden sm:inline">•</span>
-                <a href="https://www.deckoviz.com" className="hover:text-purple-400 transition-colors">🌐 www.deckoviz.com</a>
+                <a href="https://www.deckoviz.com" className="hover:text-violet-400 transition-colors">🌐 www.deckoviz.com</a>
               </div>
             </div>
             

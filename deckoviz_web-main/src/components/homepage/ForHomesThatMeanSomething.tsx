@@ -55,7 +55,7 @@ const ForHomesThatMeanSomething: React.FC = () => {
           rounded-3xl
           px-8 py-12 md:px-14 md:py-16
           bg-white/70 backdrop-blur-xl
-          border border-purple-200/50
+          border border-violet-200/50
           shadow-[0_30px_80px_rgba(124,58,237,0.18)]
         "
       >
@@ -64,7 +64,7 @@ const ForHomesThatMeanSomething: React.FC = () => {
           className="
             text-3xl md:text-5xl mb-10 text-center
             font-semibold tracking-wide
-            bg-gradient-to-r from-purple-600 via-indigo-600 to-pink-500
+            bg-gradient-to-r from-violet-600 via-indigo-600 to-pink-500
             bg-clip-text text-transparent
           "
         >

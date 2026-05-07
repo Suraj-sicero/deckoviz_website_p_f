@@ -49,7 +49,7 @@ const AllBenefits = () => {
         className="
           pointer-events-none fixed top-0 left-0
           w-6 h-6 rounded-full
-          bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400
+          bg-gradient-to-r from-pink-400 via-violet-400 to-indigo-400
           opacity-40 blur-md z-50
         "
       />
@@ -95,8 +95,8 @@ const AllBenefits = () => {
                 className="
                   relative overflow-hidden
                   p-8 rounded-2xl
-                  bg-gradient-to-br from-indigo-50 via-pink-50 to-purple-50
-                  hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700
+                  bg-gradient-to-br from-indigo-50 via-pink-50 to-indigo-50
+                  hover:from-indigo-700 hover:via-violet-700 hover:to-pink-700
                   text-gray-800 hover:text-white
                   shadow-sm hover:shadow-xl
                   transform-gpu transition-colors
@@ -126,7 +126,7 @@ const AllBenefits = () => {
   variants={cardVariants}
                   animate={{ opacity: [0.1, 0.5, 0.1] }}
                   transition={{ repeat: Infinity, duration: 3 }}
-                  className="absolute bottom-6 left-6 w-2 h-2 rounded-full bg-purple-400"
+                  className="absolute bottom-6 left-6 w-2 h-2 rounded-full bg-violet-400"
                 />
 
                 {/* Emoji */}

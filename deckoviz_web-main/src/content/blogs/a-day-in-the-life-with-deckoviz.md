@@ -2,7 +2,7 @@
 id: 10
 title: "A Day in the Life With Deckoviz"
 tag: "Use Cases"
-tagColor: "bg-gradient-to-r from-pink-100 to-purple-100 text-purple-700"
+tagColor: "bg-gradient-to-r from-pink-100 to-indigo-100 text-violet-700"
 date: "December 18, 2025"
 readTime: "6 min read"
 pinned: false

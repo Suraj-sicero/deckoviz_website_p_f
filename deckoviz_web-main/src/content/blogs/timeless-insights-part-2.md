@@ -3,7 +3,7 @@ id: 119
 title: "Deckoviz: Finding Inspiration, Joy, and Inner Strength Through Personal Art"
 description: "How Deckoviz’s Personal Painter helps cultivate joy, calm, belief, hope, confidence, and inspiration through deeply personal, conversation-driven AI art."
 tag: "Use Cases"
-tagColor: "bg-purple-100 text-purple-700"
+tagColor: "bg-violet-100 text-violet-700"
 date: "March 26, 2025"
 readTime: "10 min read"
 pinned: false

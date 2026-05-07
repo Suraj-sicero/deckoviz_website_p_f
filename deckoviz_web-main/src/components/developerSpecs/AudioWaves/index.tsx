@@ -5,7 +5,7 @@ import { WaveSimulation } from './WaveSimulation';
 
 const PRESETS = {
     Ethereal: {
-        color1: [0.5, 0.2, 1.0], // Purple
+        color1: [0.5, 0.2, 1.0], // Violet
         color2: [0.0, 0.8, 1.0], // Cyan
         intensity: 0.8,
         patternMode: 0
@@ -115,9 +115,12 @@ const AudioWaves: React.FC = () => {
                 console.error("Mic access denied", err);
             }
         } else {
-            // How to stop mic? Re-init analyzer or close stream?
-            // Simplified: just toggle off
+            analyzerRef.current.stopMic();
             setIsMic(false);
+            // Restore file source if it exists
+            if (audioRef.current && audioRef.current.src) {
+                analyzerRef.current.initFile(audioRef.current);
+            }
         }
     };
 
@@ -147,7 +150,7 @@ const AudioWaves: React.FC = () => {
                 </div>
 
                 {/* Controls - Bottom */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl overflow-x-auto max-w-[95vw]">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-4 pointer-events-auto bg-black/40 backdrop-blur-xl p-4 rounded-[2rem] border border-white/10 shadow-2xl overflow-x-auto max-w-[95vw]">
                     
                     <div className="flex items-center space-x-1">
                         <button 
@@ -196,7 +199,7 @@ const AudioWaves: React.FC = () => {
                                 onClick={() => handlePresetChange(p as keyof typeof PRESETS)}
                                 className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
                                     currentPreset === p 
-                                    ? 'bg-gradient-to-r from-pink-500 to-purple-600 text-white scale-105 shadow-lg' 
+                                    ? 'bg-gradient-to-r from-pink-500 to-indigo-600 text-white scale-105 shadow-lg' 
                                     : 'text-gray-400 hover:text-white hover:bg-white/5'
                                 }`}
                             >

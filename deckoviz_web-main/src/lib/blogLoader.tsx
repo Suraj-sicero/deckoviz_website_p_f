@@ -35,7 +35,7 @@ export async function loadBlogs(): Promise<MarkdownBlog[]> {
       title: String(data.title ?? ""),
       tag: String(data.tag ?? "General"),
       tagColor: String(
-        data.tagColor ?? "bg-purple-100 text-purple-700"
+        data.tagColor ?? "bg-violet-100 text-violet-700"
       ),
       date: String(data.date ?? ""),
       readTime: String(data.readTime ?? ""),

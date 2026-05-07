@@ -39,17 +39,17 @@ export default function PragmaticBuyerGuide() {
           animation: gradient 8s ease infinite;
         }
       `}</style>
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-violet-50 via-pink-50 to-indigo-50">
 
       {/* Mouse sparks */}
       <div ref={sparkLayer} className="absolute inset-0 pointer-events-none z-20" />
 
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 -left-20 w-96 h-96 bg-purple-400/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-violet-400/30 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute top-40 right-10 w-80 h-80 bg-pink-400/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         <div className="absolute bottom-20 left-1/3 w-72 h-72 bg-indigo-400/30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-10 -right-10 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-10 -right-10 w-96 h-96 bg-violet-300/20 rounded-full blur-3xl"></div>
       </div>
 
       {/* Gradient mesh overlay */}
@@ -58,7 +58,7 @@ export default function PragmaticBuyerGuide() {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,rgba(99,102,241,0.1),transparent_50%)]"></div>
 
       {/* Top gradient bar */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 shadow-lg shadow-purple-500/50"></div>
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 shadow-lg shadow-violet-500/50"></div>
 
       {/* Content */}
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
@@ -70,7 +70,7 @@ export default function PragmaticBuyerGuide() {
           <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/40 via-transparent to-transparent pointer-events-none"></div>
           
           {/* Inner glow */}
-          <div className="absolute inset-0 rounded-3xl shadow-inner shadow-purple-500/10 pointer-events-none"></div>
+          <div className="absolute inset-0 rounded-3xl shadow-inner shadow-violet-500/10 pointer-events-none"></div>
           
           <div className="relative space-y-12 leading-relaxed">
           
@@ -78,23 +78,23 @@ export default function PragmaticBuyerGuide() {
           <div className="space-y-6 text-center relative">
             
             {/* Decorative elements */}
-            <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
+            <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-32 h-32 bg-gradient-to-br from-violet-400 to-pink-400 rounded-full blur-3xl opacity-30 animate-pulse"></div>
             
             {/* Main title with multiple effects */}
             <div className="relative">
               {/* Background glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 blur-2xl opacity-20"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 blur-2xl opacity-20"></div>
               
               <h1 className="relative text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
-                <span className="inline-block bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                <span className="inline-block bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
                   The Deckoviz Guide
                 </span>
                 <br />
-                <span className="inline-block mt-2 bg-gradient-to-r from-indigo-600 via-purple-500 to-pink-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]" style={{ animationDelay: '0.5s' }}>
-                  for the <span className="italic bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent">Pragmatic</span>
+                <span className="inline-block mt-2 bg-gradient-to-r from-indigo-600 via-violet-500 to-pink-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]" style={{ animationDelay: '0.5s' }}>
+                  for the <span className="italic bg-gradient-to-r from-pink-600 via-rose-500 to-indigo-600 bg-clip-text text-transparent">Pragmatic</span>
                 </span>
                 <br />
-                <span className="inline-block mt-2 bg-gradient-to-r from-pink-600 via-purple-500 to-indigo-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]" style={{ animationDelay: '1s' }}>
+                <span className="inline-block mt-2 bg-gradient-to-r from-pink-600 via-violet-500 to-indigo-600 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]" style={{ animationDelay: '1s' }}>
                   Enterprise Buyer
                 </span>
               </h1>
@@ -102,14 +102,14 @@ export default function PragmaticBuyerGuide() {
             
             {/* Decorative line */}
             <div className="flex items-center justify-center gap-3 pt-4">
-              <div className="h-px w-16 bg-gradient-to-r from-transparent to-purple-400"></div>
-              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse"></div>
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-indigo-400"></div>
+              <div className="w-2 h-2 rounded-full bg-gradient-to-r from-violet-500 to-pink-500 animate-pulse"></div>
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-pink-400"></div>
             </div>
           </div>
 
           {/* Introduction */}
-          <div className="space-y-6 bg-gradient-to-br from-purple-50/50 to-indigo-50/50 rounded-3xl p-8 border border-purple-100/50">
+          <div className="space-y-6 bg-gradient-to-br from-violet-50/50 to-indigo-50/50 rounded-3xl p-8 border border-violet-100/50">
             <p className="text-xl text-slate-700 leading-relaxed">
               This guide is for the rational buyer. The unsentimental one. The person who thinks in practicalities, costs, margins, retention, throughput, and ROI.
             </p>
@@ -118,7 +118,7 @@ export default function PragmaticBuyerGuide() {
               This is for the enterprise buyer who may not care about art for art's sake. Who does not wake up thinking about stories, posters, or ambiance. Who is busy running a business, managing people, watching numbers, and trying to survive in an increasingly competitive, commoditized world.
             </p>
 
-            <p className="text-2xl text-purple-900 leading-relaxed font-semibold text-center py-4">
+            <p className="text-2xl text-violet-900 leading-relaxed font-semibold text-center py-4">
               And yet.
             </p>
 
@@ -130,7 +130,7 @@ export default function PragmaticBuyerGuide() {
               You may or may not care about art. We know business is all-consuming. But you care about outcomes.
             </p>
 
-            <p className="text-xl text-purple-900 leading-relaxed font-semibold text-center">
+            <p className="text-xl text-violet-900 leading-relaxed font-semibold text-center">
               This guide is written for that mindset.
             </p>
           </div>
@@ -138,7 +138,7 @@ export default function PragmaticBuyerGuide() {
           {/* Section 1 */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-indigo-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-indigo-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 The Enterprise Reality: Static Environments Are Quietly Expensive
               </h2>
@@ -148,38 +148,38 @@ export default function PragmaticBuyerGuide() {
               Most enterprises underestimate how much they already spend on:
             </p>
 
-            <div className="bg-white/60 rounded-2xl p-6 border border-purple-100">
+            <div className="bg-white/60 rounded-2xl p-6 border border-violet-100">
               <ul className="space-y-3 text-lg text-slate-700">
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>printing posters and signage</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>seasonal decor</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>product and dish photography</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>videography</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>marketing creatives</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>models, photographers, agencies</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>replacing outdated visuals</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>managing multiple vendors</span>
                 </li>
               </ul>
@@ -193,8 +193,8 @@ export default function PragmaticBuyerGuide() {
               Deckoviz changes the equation by collapsing all of this into one evolving visual system.
             </p>
 
-            <div className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-6 border border-purple-200">
-              <p className="text-xl text-purple-900 leading-relaxed font-semibold">
+            <div className="bg-gradient-to-r from-violet-100 to-indigo-100 rounded-2xl p-6 border border-violet-200">
+              <p className="text-xl text-violet-900 leading-relaxed font-semibold">
                 For enterprises, Deckoviz is not about decoration. It is about eliminating friction, reducing recurring costs, and unlocking new revenue behaviors.
               </p>
             </div>
@@ -203,7 +203,7 @@ export default function PragmaticBuyerGuide() {
           {/* Section 2 */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-indigo-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 One Frame, Infinite Outputs, Zero Marginal Cost
               </h2>
@@ -238,7 +238,7 @@ export default function PragmaticBuyerGuide() {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl p-6 border border-indigo-200">
+            <div className="bg-gradient-to-r from-indigo-100 to-indigo-100 rounded-2xl p-6 border border-indigo-200">
               <p className="text-xl text-indigo-900 leading-relaxed font-semibold text-center">
                 No printing. No shipping. No storage. No waste.
               </p>
@@ -267,8 +267,8 @@ export default function PragmaticBuyerGuide() {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-6 border border-purple-200">
-              <p className="text-xl text-purple-900 leading-relaxed font-semibold text-center">
+            <div className="bg-gradient-to-r from-violet-100 to-indigo-100 rounded-2xl p-6 border border-violet-200">
+              <p className="text-xl text-violet-900 leading-relaxed font-semibold text-center">
                 And it updates instantly.
               </p>
             </div>
@@ -277,7 +277,7 @@ export default function PragmaticBuyerGuide() {
           {/* Section 3 */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-pink-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 Cost Replacement Is Only the First Layer
               </h2>
@@ -287,7 +287,7 @@ export default function PragmaticBuyerGuide() {
               Most enterprise buyers stop their analysis at cost replacement. That alone already justifies Deckoviz.
             </p>
 
-            <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-6 border border-pink-200">
+            <div className="bg-gradient-to-r from-pink-100 to-indigo-100 rounded-2xl p-6 border border-pink-200">
               <p className="text-xl text-pink-900 leading-relaxed font-semibold text-center">
                 But the real upside is revenue.
               </p>
@@ -310,26 +310,26 @@ export default function PragmaticBuyerGuide() {
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">alive</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">personalized</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">intentional</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">emotionally coherent</span>
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 border border-purple-200">
-              <p className="text-xl text-purple-900 leading-relaxed font-semibold text-center">
+            <div className="bg-gradient-to-r from-violet-100 to-pink-100 rounded-2xl p-6 border border-violet-200">
+              <p className="text-xl text-violet-900 leading-relaxed font-semibold text-center">
                 Static spaces fade into the background. Dynamic spaces stay in memory.
               </p>
             </div>
@@ -399,7 +399,7 @@ export default function PragmaticBuyerGuide() {
           {/* Section 5 */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-indigo-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-indigo-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 Deckoviz as a Revenue-Facing System
               </h2>
@@ -409,26 +409,26 @@ export default function PragmaticBuyerGuide() {
               For enterprises, Deckoviz functions as:
             </p>
 
-            <div className="bg-white/60 rounded-2xl p-6 border border-purple-100">
+            <div className="bg-white/60 rounded-2xl p-6 border border-violet-100">
               <ul className="space-y-3 text-lg text-slate-700">
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>a complete visual creation and display engine</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>an adaptive merchandising system</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>a living brand surface</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>an in-store marketing channel</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-purple-600 mt-1.5 text-xl">•</span>
+                  <span className="text-violet-600 mt-1.5 text-xl">•</span>
                   <span>a silent salesperson</span>
                 </li>
               </ul>
@@ -471,8 +471,8 @@ export default function PragmaticBuyerGuide() {
               </ul>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-6 border border-purple-200">
-              <p className="text-xl text-purple-900 leading-relaxed font-semibold text-center">
+            <div className="bg-gradient-to-r from-violet-100 to-indigo-100 rounded-2xl p-6 border border-violet-200">
+              <p className="text-xl text-violet-900 leading-relaxed font-semibold text-center">
                 But again, replacement is not the headline.
               </p>
             </div>
@@ -481,7 +481,7 @@ export default function PragmaticBuyerGuide() {
           {/* Section 6 */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-pink-500 to-purple-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-pink-500 to-indigo-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 Vizzy: Your Business's Storyteller and Vibe Curator
               </h2>
@@ -515,20 +515,20 @@ export default function PragmaticBuyerGuide() {
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">your brand assets</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">your tone</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">your customer context</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">your business rhythms</span>
               </div>
             </div>
@@ -541,7 +541,7 @@ export default function PragmaticBuyerGuide() {
               Morning looks different from evening. Weekdays feel different from weekends. A slow Tuesday is not a busy Saturday.
             </p>
 
-            <div className="bg-gradient-to-r from-pink-100 to-purple-100 rounded-2xl p-6 border border-pink-200">
+            <div className="bg-gradient-to-r from-pink-100 to-indigo-100 rounded-2xl p-6 border border-pink-200">
               <p className="text-xl text-pink-900 leading-relaxed font-semibold text-center">
                 Your visuals shouldn't be static when your business isn't.
               </p>
@@ -551,7 +551,7 @@ export default function PragmaticBuyerGuide() {
           {/* Section 7 */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-indigo-500 to-indigo-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 Why Art and Stories Matter, Even for Hard-Nosed Businesses
               </h2>
@@ -565,7 +565,7 @@ export default function PragmaticBuyerGuide() {
               Products can be copied. Prices can be undercut. Locations can be replicated.
             </p>
 
-            <div className="bg-gradient-to-r from-indigo-100 to-purple-100 rounded-2xl p-6 border border-indigo-200">
+            <div className="bg-gradient-to-r from-indigo-100 to-indigo-100 rounded-2xl p-6 border border-indigo-200">
               <p className="text-xl text-indigo-900 leading-relaxed font-semibold text-center">
                 What cannot be easily copied is how a place made someone feel.
               </p>
@@ -591,7 +591,7 @@ export default function PragmaticBuyerGuide() {
           {/* Section 8 */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-pink-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 Art as a Monetizable Asset
               </h2>
@@ -606,20 +606,20 @@ export default function PragmaticBuyerGuide() {
             </p>
 
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">a loyalty driver</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">a differentiation layer</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">a social sharing trigger</span>
               </div>
-              <div className="bg-white/60 rounded-xl p-4 border border-purple-100 flex items-center gap-3">
-                <span className="text-purple-600 text-xl">•</span>
+              <div className="bg-white/60 rounded-xl p-4 border border-violet-100 flex items-center gap-3">
+                <span className="text-violet-600 text-xl">•</span>
                 <span className="text-lg text-slate-700">a memory anchor</span>
               </div>
             </div>
@@ -628,8 +628,8 @@ export default function PragmaticBuyerGuide() {
               A customer who receives a personalized visual memento does not forget you. A couple whose anniversary is acknowledged visually does not treat you as interchangeable. A family whose moment is honored tells others.
             </p>
 
-            <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-2xl p-6 border border-purple-200">
-              <p className="text-xl text-purple-900 leading-relaxed font-semibold text-center">
+            <div className="bg-gradient-to-r from-violet-100 to-pink-100 rounded-2xl p-6 border border-violet-200">
+              <p className="text-xl text-violet-900 leading-relaxed font-semibold text-center">
                 Experience becomes marketing. Art becomes revenue-adjacent.
               </p>
             </div>
@@ -681,13 +681,13 @@ export default function PragmaticBuyerGuide() {
           {/* Closing */}
           <div className="space-y-6 pt-8">
             <div className="relative">
-              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
+              <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-violet-500 to-pink-500 rounded-full"></div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 pl-6">
                 Closing Thought
               </h2>
             </div>
 
-            <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-3xl p-8 border border-purple-100 space-y-6">
+            <div className="bg-gradient-to-br from-violet-50 to-pink-50 rounded-3xl p-8 border border-violet-100 space-y-6">
               <p className="text-xl text-slate-700 leading-relaxed">
                 Deckoviz is not a cost. It is a compression of costs, capabilities, and creative power into a single system.
               </p>
@@ -696,7 +696,7 @@ export default function PragmaticBuyerGuide() {
                 For enterprises that understand where differentiation is heading, this is not a question of "why". It is a question of how soon.
               </p>
 
-              <div className="bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl p-6">
+              <div className="bg-gradient-to-r from-violet-600 to-pink-600 rounded-2xl p-6">
                 <p className="text-2xl text-white leading-relaxed font-bold text-center">
                   The businesses that win will not be the loudest or the cheapest. They will be the ones that make people feel something worth remembering.
                 </p>

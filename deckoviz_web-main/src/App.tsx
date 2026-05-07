@@ -120,6 +120,50 @@ import OrganismSim from "./components/OrganismSim";
 import AmbientRitual from "./components/AmbientRitual";
 import SymmetryMachine from "./components/SymmetryMachine";
 import ExperimentalArtModes from "./components/developerSpecs/ExperimentalArtModes";
+import ShadowPuppetry from "./components/developerSpecs/ShadowPuppetry";
+import FieldPainter from "./components/developerSpecs/FieldPainter";
+import LivingMaps from "./components/developerSpecs/LivingMaps";
+import EmotionAlchemy from "./components/developerSpecs/EmotionAlchemy";
+import TidalRooms from "./components/developerSpecs/TidalRooms";
+import MicroscopeWorld from "./components/developerSpecs/MicroscopeWorld";
+import ConstellationBuilder from "./components/developerSpecs/ConstellationBuilder";
+import DecayBloom from "./components/developerSpecs/DecayBloom";
+import CityPulse from "./components/developerSpecs/CityPulse";
+import SignalInterception from "./components/developerSpecs/SignalInterception";
+import MirrorPainter from "./components/developerSpecs/MirrorPainter";
+import SoundArchaeology from "./components/developerSpecs/SoundArchaeology";
+import ThoughtWeaver from "./components/developerSpecs/ThoughtWeaver";
+import ExtinctColor from "./components/developerSpecs/ExtinctColor";
+import ProteinFold from "./components/developerSpecs/ProteinFold";
+import DreamLogic from "./components/developerSpecs/DreamArchitecture";
+import BioluminescentAbyss from "./components/developerSpecs/BioluminescentAbyss";
+import LanguageMemorial from "./components/developerSpecs/LanguageMemorial";
+import FermentingWorld from "./components/developerSpecs/FermentingWorld";
+import LastLight from "./components/developerSpecs/LastLight";
+import SolarWindPainter from "./components/developerSpecs/SolarWindPainter";
+import NeuralFirestorm from "./components/developerSpecs/NeuralFirestorm";
+import GriefCartographer from "./components/developerSpecs/GriefCartographer";
+import SymmetryCrystals from "./components/developerSpecs/SymmetryCrystals";
+import AncientTradeRoutes from "./components/developerSpecs/AncientTradeRoutes";
+import SynesthesiaEngine from "./components/developerSpecs/SynesthesiaEngine";
+import MurmurationEngine from "./components/developerSpecs/MurmurationEngine";
+import SeismicMemory from "./components/developerSpecs/SeismicMemory";
+import DreamTaxonomy from "./components/developerSpecs/DreamTaxonomy";
+import CosmicBackground from "./components/developerSpecs/CosmicBackground";
+import HumanConnectivity from "./components/developerSpecs/HumanConnectivity";
+import QuantumFoam from "./components/developerSpecs/QuantumFoam";
+import OralHistoryFire from "./components/developerSpecs/OralHistoryFire";
+import SlimeMould from "./components/developerSpecs/SlimeMould";
+import SkyChronometer from "./components/developerSpecs/SkyChronometer";
+import ArgumentSculptor from "./components/developerSpecs/ArgumentSculptor";
+import ExoplanetWeather from "./components/developerSpecs/ExoplanetWeather";
+import InternetHeartbeat from "./components/developerSpecs/InternetHeartbeat";
+import HapticMemory from "./components/developerSpecs/HapticMemory";
+import SilenceArchitecture from "./components/developerSpecs/SilenceArchitecture";
+import CreateWorld from "./pages/CreateWorld";
+import VisualBookCompanion from "./components/tools/VisualBookCompanion";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import AuthModal from "./components/auth/AuthModal";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -183,6 +227,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
       </AnimatePresence>
 
       <ScrollToTop />
+      <AuthModal />
       <ScrollToSectionOnHome />
       {!isDeveloperTool && <MouseSparkles />}
 
@@ -305,27 +350,27 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/order-confirmed" element={<OrderConfirmed />} />
         <Route path="bulk-orders" element={<BulkOrder />} />
         <Route path="/bulk-confirm" element={<BulkConfirm />} />
-        <Route path="/audiobook" element={<Audiobook />} />
+        <Route path="/audiobook" element={<ProtectedRoute><Audiobook /></ProtectedRoute>} />
 
         {/* ── Creative Studio Hub ── */}
-        <Route path="/creative-studio" element={<CreativeStudio />} />
-        <Route path="/tools/audiobook" element={<AudiobookTool />} />
-        <Route path="/tools/visual-audiobook" element={<VisualAudiobookTool />} />
-        <Route path="/tools/storybook" element={<StorybookTool />} />
-        <Route path="/tools/short-story" element={<ShortStoryTool />} />
-        <Route path="/tools/comic" element={<ComicTool />} />
-        <Route path="/tools/life-book" element={<LifeBookTool />} />
-        <Route path="/tools/visual-journal" element={<VisualJournalTool />} />
-        <Route path="/tools/greeting-card" element={<GreetingCardTool />} />
-        <Route path="/tools/song" element={<SongTool />} />
-        <Route path="/tools/learning-book" element={<LearningBookTool />} />
-        <Route path="/tools/learning-portal" element={<LearningPortalTool />} />
-        <Route path="/tools/visual-book" element={<VisualBookTool />} />
-        <Route path="/tools/storybook-studio" element={<StorybookStudioTool />} />
-        <Route path="/tools/daily" element={<DailyInspirationTool />} />
-        <Route path="/tools/music" element={<MusicTool />} />
-        <Route path="/tools/postcard" element={<PostcardTool />} />
-        <Route path="/wizzy" element={<WizzyPage />} />
+        <Route path="/creative-studio" element={<ProtectedRoute><CreativeStudio /></ProtectedRoute>} />
+        <Route path="/tools/audiobook" element={<ProtectedRoute><AudiobookTool /></ProtectedRoute>} />
+        <Route path="/tools/visual-audiobook" element={<ProtectedRoute><VisualAudiobookTool /></ProtectedRoute>} />
+        <Route path="/tools/storybook" element={<ProtectedRoute><StorybookTool /></ProtectedRoute>} />
+        <Route path="/tools/short-story" element={<ProtectedRoute><ShortStoryTool /></ProtectedRoute>} />
+        <Route path="/tools/comic" element={<ProtectedRoute><ComicTool /></ProtectedRoute>} />
+        <Route path="/tools/life-book" element={<ProtectedRoute><LifeBookTool /></ProtectedRoute>} />
+        <Route path="/tools/visual-journal" element={<ProtectedRoute><VisualJournalTool /></ProtectedRoute>} />
+        <Route path="/tools/greeting-card" element={<ProtectedRoute><GreetingCardTool /></ProtectedRoute>} />
+        <Route path="/tools/song" element={<ProtectedRoute><SongTool /></ProtectedRoute>} />
+        <Route path="/tools/learning-book" element={<ProtectedRoute><LearningBookTool /></ProtectedRoute>} />
+        <Route path="/tools/learning-portal" element={<ProtectedRoute><LearningPortalTool /></ProtectedRoute>} />
+        <Route path="/tools/visual-book" element={<ProtectedRoute><VisualBookTool /></ProtectedRoute>} />
+        <Route path="/tools/storybook-studio" element={<ProtectedRoute><StorybookStudioTool /></ProtectedRoute>} />
+        <Route path="/tools/daily" element={<ProtectedRoute><DailyInspirationTool /></ProtectedRoute>} />
+        <Route path="/tools/music" element={<ProtectedRoute><MusicTool /></ProtectedRoute>} />
+        <Route path="/tools/postcard" element={<ProtectedRoute><PostcardTool /></ProtectedRoute>} />
+        <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
         <Route path="/experimental-art-modes" element={<ExperimentalArtModes />} />
         
         {/* ── Developer Specs ── */}
@@ -349,6 +394,48 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/developer-specs/organism-sim" element={<OrganismSim />} />
         <Route path="/developer-specs/ambient-ritual" element={<AmbientRitual />} />
         <Route path="/developer-specs/symmetry-machine" element={<SymmetryMachine />} />
+        <Route path="/developer-specs/shadow-puppetry" element={<ShadowPuppetry />} />
+        <Route path="/developer-specs/field-painter" element={<FieldPainter />} />
+        <Route path="/developer-specs/living-maps" element={<LivingMaps />} />
+        <Route path="/developer-specs/emotion-alchemy" element={<EmotionAlchemy />} />
+        <Route path="/developer-specs/tidal-rooms" element={<TidalRooms />} />
+        <Route path="/developer-specs/microscope-world" element={<MicroscopeWorld />} />
+        <Route path="/developer-specs/constellation-builder" element={<ConstellationBuilder />} />
+        <Route path="/developer-specs/decay-bloom" element={<DecayBloom />} />
+        <Route path="/developer-specs/city-pulse" element={<CityPulse />} />
+        <Route path="/developer-specs/signal-interception" element={<SignalInterception />} />
+        <Route path="/developer-specs/mirror-painter" element={<MirrorPainter />} />
+        <Route path="/developer-specs/sound-archaeology" element={<SoundArchaeology />} />
+        <Route path="/developer-specs/thought-weaver" element={<ThoughtWeaver />} />
+        <Route path="/developer-specs/extinct-color" element={<ExtinctColor />} />
+        <Route path="/developer-specs/protein-fold" element={<ProteinFold />} />
+        <Route path="/developer-specs/dream-logic" element={<DreamLogic />} />
+        <Route path="/developer-specs/bioluminescent-abyss" element={<BioluminescentAbyss />} />
+        <Route path="/developer-specs/language-memorial" element={<LanguageMemorial />} />
+        <Route path="/developer-specs/fermenting-world" element={<FermentingWorld />} />
+        <Route path="/developer-specs/last-light" element={<LastLight />} />
+        <Route path="/developer-specs/solar-wind-painter" element={<SolarWindPainter />} />
+        <Route path="/developer-specs/neural-firestorm" element={<NeuralFirestorm />} />
+        <Route path="/developer-specs/grief-cartographer" element={<GriefCartographer />} />
+        <Route path="/developer-specs/symmetry-crystals" element={<SymmetryCrystals />} />
+        <Route path="/developer-specs/trade-atlas" element={<AncientTradeRoutes />} />
+        <Route path="/developer-specs/synesthesia-engine" element={<SynesthesiaEngine />} />
+        <Route path="/developer-specs/murmuration-engine" element={<MurmurationEngine />} />
+        <Route path="/developer-specs/seismic-memory" element={<SeismicMemory />} />
+        <Route path="/developer-specs/dream-taxonomy" element={<DreamTaxonomy />} />
+        <Route path="/developer-specs/cosmic-background" element={<CosmicBackground />} />
+        <Route path="/developer-specs/human-connectivity" element={<HumanConnectivity />} />
+        <Route path="/developer-specs/quantum-foam" element={<QuantumFoam />} />
+        <Route path="/developer-specs/oral-history-fire" element={<OralHistoryFire />} />
+        <Route path="/developer-specs/slime-mould" element={<SlimeMould />} />
+        <Route path="/developer-specs/sky-chronometer" element={<SkyChronometer />} />
+        <Route path="/developer-specs/argument-sculptor" element={<ArgumentSculptor />} />
+        <Route path="/developer-specs/exoplanet-weather" element={<ExoplanetWeather />} />
+        <Route path="/developer-specs/internet-heartbeat" element={<InternetHeartbeat />} />
+        <Route path="/developer-specs/haptic-memory" element={<HapticMemory />} />
+        <Route path="/developer-specs/silence-architecture" element={<SilenceArchitecture />} />
+        <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
+        <Route path="/create-world" element={<ProtectedRoute><CreateWorld /></ProtectedRoute>} />
       </Routes>
       </main>
       <Footer />

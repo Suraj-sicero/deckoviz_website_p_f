@@ -106,13 +106,13 @@ const Referral: React.FC = () => {
   }, []);
 
   return (
-    <section className="section-padding relative overflow-hidden bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
+    <section className="section-padding relative overflow-hidden bg-gradient-to-br from-violet-50 via-pink-50 to-indigo-50">
       <StarSparkles />
       <MoneyRain />
 
       {/* Ambient gradient background */}
       <div className="absolute inset-0">
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-purple-300/30 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-violet-300/30 rounded-full blur-3xl" />
         <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-pink-300/30 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-1/3 w-[700px] h-[700px] bg-indigo-300/20 rounded-full blur-[100px]" />
       </div>
@@ -139,12 +139,12 @@ const Referral: React.FC = () => {
           </motion.div>
 
           <h2 className="text-5xl md:text-6xl font-extrabold mb-6">
-            <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent drop-shadow-sm">
+            <span className="bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent drop-shadow-sm">
               Referral Bonus ✨
             </span>
           </h2>
 
-          <div className="mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-purple-400 to-pink-400 opacity-70 mb-6"></div>
+          <div className="mx-auto w-24 h-1 rounded-full bg-gradient-to-r from-violet-400 to-pink-400 opacity-70 mb-6"></div>
 
           <p className="text-xl text-gray-700 max-w-2xl mx-auto font-medium">
             If you refer Deckoviz to friends, family, or anyone else who might
@@ -158,7 +158,7 @@ const Referral: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-2xl text-purple-600 font-bold mt-4 flex items-center justify-center gap-2"
+            className="text-2xl text-violet-600 font-bold mt-4 flex items-center justify-center gap-2"
           >
             <Sparkles className="animate-pulse" />
             Yes, it is as simple as that!
@@ -176,10 +176,10 @@ const Referral: React.FC = () => {
           {/* Left Card - Referral Rewards */}
           <motion.div
             variants={meetLeft}
-            className="group relative p-8 rounded-3xl bg-white/90 backdrop-blur-xl border-2 border-purple-200 shadow-[0_20px_60px_rgba(168,85,247,0.25)] hover:shadow-[0_30px_90px_rgba(168,85,247,0.4)] transition-all duration-500 hover:-translate-y-2 overflow-hidden"
+            className="group relative p-8 rounded-3xl bg-white/90 backdrop-blur-xl border-2 border-violet-200 shadow-[0_20px_60px_rgba(168,85,247,0.25)] hover:shadow-[0_30px_90px_rgba(168,85,247,0.4)] transition-all duration-500 hover:-translate-y-2 overflow-hidden"
           >
             {/* Animated background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-100/50 via-pink-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-violet-100/50 via-pink-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             
             {/* Floating coins decoration */}
             <motion.div
@@ -192,10 +192,10 @@ const Referral: React.FC = () => {
 
             <div className="relative z-10">
               <div className="flex items-center mb-6">
-                <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-3 rounded-2xl mr-4 shadow-lg">
+                <div className="bg-gradient-to-br from-violet-500 to-pink-500 p-3 rounded-2xl mr-4 shadow-lg">
                   <Gift className="text-white" size={28} />
                 </div>
-                <h3 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">
                   Referral Rewards
                 </h3>
               </div>
@@ -213,28 +213,28 @@ const Referral: React.FC = () => {
                 send a sweet <span className="font-bold text-green-600">$20</span> straight to your bank account.
               </p>
               
-              <div className="bg-purple-50 border-2 border-purple-200 rounded-2xl p-5 mb-4">
+              <div className="bg-violet-50 border-2 border-violet-200 rounded-2xl p-5 mb-4">
                 <p className="text-gray-700 font-semibold mb-3 flex items-center gap-2">
-                  <Sparkles className="text-purple-600" size={20} />
+                  <Sparkles className="text-violet-600" size={20} />
                   Or choose subscription bonuses:
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-center text-gray-700 bg-white rounded-lg p-3 shadow-sm">
-                    <CheckCircle className="text-purple-600 mr-3 flex-shrink-0" size={20} />
+                    <CheckCircle className="text-violet-600 mr-3 flex-shrink-0" size={20} />
                     <span className="font-medium">2 months of Ultra Premium</span>
                   </li>
                   <li className="flex items-center text-gray-700 bg-white rounded-lg p-3 shadow-sm">
-                    <CheckCircle className="text-purple-600 mr-3 flex-shrink-0" size={20} />
+                    <CheckCircle className="text-violet-600 mr-3 flex-shrink-0" size={20} />
                     <span className="font-medium">3 months of Premium</span>
                   </li>
                   <li className="flex items-center text-gray-700 bg-white rounded-lg p-3 shadow-sm">
-                    <CheckCircle className="text-purple-600 mr-3 flex-shrink-0" size={20} />
+                    <CheckCircle className="text-violet-600 mr-3 flex-shrink-0" size={20} />
                     <span className="font-medium">4 months of Basic</span>
                   </li>
                 </ul>
               </div>
 
-              <div className="text-sm text-purple-600 font-medium text-center bg-purple-100 rounded-lg py-2">
+              <div className="text-sm text-violet-600 font-medium text-center bg-violet-100 rounded-lg py-2">
                 💡 Psst... subscription rewards are better value!
               </div>
             </div>
@@ -246,10 +246,10 @@ const Referral: React.FC = () => {
             className="group relative p-8 rounded-3xl bg-white/90 backdrop-blur-xl border-2 border-indigo-200 shadow-[0_20px_60px_rgba(99,102,241,0.25)] hover:shadow-[0_30px_90px_rgba(99,102,241,0.4)] transition-all duration-500 hover:-translate-y-2 overflow-hidden"
           >
             {/* Animated background gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/50 via-purple-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-100/50 via-violet-100/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-8 bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              <h3 className="text-2xl font-bold mb-8 bg-gradient-to-r from-indigo-600 to-indigo-600 bg-clip-text text-transparent">
                 How do referrals work?
               </h3>
 
@@ -275,9 +275,9 @@ const Referral: React.FC = () => {
                 {/* Step 2 */}
                 <motion.div
                   whileHover={{ x: 5 }}
-                  className="flex items-start bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-5 border-2 border-purple-200 transition-all duration-300"
+                  className="flex items-start bg-gradient-to-r from-violet-50 to-pink-50 rounded-2xl p-5 border-2 border-violet-200 transition-all duration-300"
                 >
-                  <div className="bg-gradient-to-br from-purple-500 to-pink-500 p-3 rounded-xl mr-4 shadow-lg flex-shrink-0">
+                  <div className="bg-gradient-to-br from-violet-500 to-pink-500 p-3 rounded-xl mr-4 shadow-lg flex-shrink-0">
                     <CreditCard className="text-white" size={24} />
                   </div>
                   <div>
@@ -287,8 +287,8 @@ const Referral: React.FC = () => {
                     <p className="text-gray-600 leading-relaxed">
                       Once they buy a Deckoviz Smart Frame through your link, they're automatically tagged as your referral.
                     </p>
-                    <div className="mt-3 bg-white rounded-lg p-3 border border-purple-200">
-                      <p className="text-sm text-purple-700 font-semibold">
+                    <div className="mt-3 bg-white rounded-lg p-3 border border-violet-200">
+                      <p className="text-sm text-violet-700 font-semibold">
                         💰 10 referrals = $200 in your pocket!
                       </p>
                     </div>
@@ -349,9 +349,9 @@ const Referral: React.FC = () => {
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative inline-flex items-center justify-center gap-3 px-12 py-5 rounded-full font-bold text-xl text-white bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 overflow-hidden"
+            className="group relative inline-flex items-center justify-center gap-3 px-12 py-5 rounded-full font-bold text-xl text-white bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 overflow-hidden"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-purple-700 via-pink-600 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+            <span className="absolute inset-0 bg-gradient-to-r from-violet-700 via-pink-600 to-indigo-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             <DollarSign className="relative z-10" size={28} strokeWidth={3} />
             <span className="relative z-10">Start Referring Now</span>
             <Sparkles className="relative z-10 group-hover:animate-spin" size={24} />
@@ -360,7 +360,7 @@ const Referral: React.FC = () => {
           <p className="mt-6 text-gray-600">
             <a
               href="terms-conditions"
-              className="text-purple-600 hover:text-purple-700 font-semibold hover:underline transition-colors"
+              className="text-violet-600 hover:text-violet-700 font-semibold hover:underline transition-colors"
             >
               Terms of Service
             </a>

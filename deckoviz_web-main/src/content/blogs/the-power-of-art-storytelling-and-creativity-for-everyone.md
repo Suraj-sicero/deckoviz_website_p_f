@@ -2,7 +2,7 @@
 id: 17
 title: "The Power of Art, Storytelling, and Creativity - For Everyone"
 tag: "Innovation"
-tagColor: "bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700"
+tagColor: "bg-gradient-to-r from-violet-100 to-indigo-100 text-violet-700"
 date: "October 11, 2025"
 readTime: "4 min read"
 pinned: true

@@ -187,7 +187,7 @@ const SymmetryMachine: React.FC = () => {
                 </div>
 
                 {/* Footer Controls */}
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center space-x-6 pointer-events-auto">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-6 pointer-events-auto">
                     <button onClick={handleSave} className="flex items-center space-x-3 px-8 py-4 bg-white text-black rounded-full font-bold text-xs uppercase tracking-widest hover:scale-105 transition-all shadow-xl shadow-cyan-500/20">
                         <Save size={18} />
                         <span>Export Art</span>

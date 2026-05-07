@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
 
@@ -13,6 +14,7 @@ interface StoryPage {
 }
 
 const StorybookTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [idea, setIdea] = useState("");
   const [genre, setGenre] = useState("fantasy");
   const [ageGroup, setAgeGroup] = useState("children");
@@ -37,6 +39,8 @@ const StorybookTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!idea.trim()) { setError("Please describe your story idea."); return; }
     setError(""); setStatus("loading"); setPages([]);
 
@@ -67,7 +71,7 @@ const StorybookTool: React.FC = () => {
       icon="📖"
       title="Storybook Creator"
       subtitle="Describe your idea — Gemini writes an illustrated story just for you"
-      gradient="from-purple-600 via-indigo-700 to-blue-800"
+      gradient="from-violet-600 via-indigo-700 to-blue-800"
     >
       <div className="space-y-8">
 
@@ -83,7 +87,7 @@ const StorybookTool: React.FC = () => {
                 onChange={(e) => setIdea(e.target.value)}
                 placeholder="e.g. A brave little fox discovers a magical library hidden inside an ancient oak tree, where every book comes to life…"
                 rows={4}
-                className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-violet-400 focus:border-transparent transition-all"
               />
               <p className="text-xs text-gray-400 mt-1">{idea.length}/500 characters</p>
             </div>
@@ -98,8 +102,8 @@ const StorybookTool: React.FC = () => {
                     onClick={() => setGenre(g.value)}
                     className={`flex items-center justify-center gap-2 p-3 rounded-2xl border-2 text-sm font-medium transition-all duration-200 ${
                       genre === g.value
-                        ? "border-purple-500 bg-purple-50 text-purple-700"
-                        : "border-gray-100 bg-white text-gray-600 hover:border-purple-200"
+                        ? "border-violet-500 bg-violet-50 text-violet-700"
+                        : "border-gray-100 bg-white text-gray-600 hover:border-violet-200"
                     }`}
                   >
                     <span>{g.emoji}</span> {g.label}
@@ -118,8 +122,8 @@ const StorybookTool: React.FC = () => {
                     onClick={() => setAgeGroup(a.value)}
                     className={`px-4 py-2 rounded-xl border-2 text-sm font-medium transition-all duration-200 ${
                       ageGroup === a.value
-                        ? "border-purple-500 bg-purple-50 text-purple-700"
-                        : "border-gray-200 bg-white text-gray-500 hover:border-purple-200"
+                        ? "border-violet-500 bg-violet-50 text-violet-700"
+                        : "border-gray-200 bg-white text-gray-500 hover:border-violet-200"
                     }`}
                   >
                     {a.label}
@@ -138,7 +142,7 @@ const StorybookTool: React.FC = () => {
               className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 ${
                 status === "loading"
                   ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 hover:shadow-xl hover:scale-[1.02] shadow-lg"
+                  : "bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 hover:shadow-xl hover:scale-[1.02] shadow-lg"
               }`}
             >
               {status === "loading" ? (
@@ -156,10 +160,10 @@ const StorybookTool: React.FC = () => {
 
         {/* Processing state */}
         {status === "loading" && (
-          <div className="bg-purple-50 border border-purple-200 rounded-3xl p-10 text-center">
+          <div className="bg-violet-50 border border-violet-200 rounded-3xl p-10 text-center">
             <div className="text-6xl mb-4 animate-bounce">📖</div>
-            <h3 className="text-lg font-bold text-purple-800 mb-2">Gemini is writing your story…</h3>
-            <p className="text-sm text-purple-600">Crafting characters, scenes, and illustrations. Takes ~30 seconds.</p>
+            <h3 className="text-lg font-bold text-violet-800 mb-2">Gemini is writing your story…</h3>
+            <p className="text-sm text-violet-600">Crafting characters, scenes, and illustrations. Takes ~30 seconds.</p>
           </div>
         )}
 
@@ -168,7 +172,7 @@ const StorybookTool: React.FC = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-900">Your Storybook ✨</h2>
-              <button onClick={reset} className="px-4 py-2 rounded-xl border-2 border-gray-200 text-sm font-semibold text-gray-600 hover:border-purple-300 hover:bg-purple-50 transition-all">
+              <button onClick={reset} className="px-4 py-2 rounded-xl border-2 border-gray-200 text-sm font-semibold text-gray-600 hover:border-violet-300 hover:bg-violet-50 transition-all">
                 🔄 New Story
               </button>
             </div>
@@ -176,7 +180,7 @@ const StorybookTool: React.FC = () => {
             {/* Page viewer */}
             <div className="bg-white/80 backdrop-blur-sm border border-white/60 rounded-3xl overflow-hidden shadow-2xl">
               {/* Image placeholder */}
-              <div className="w-full h-64 bg-gradient-to-br from-purple-100 via-indigo-100 to-blue-100 flex items-center justify-center">
+              <div className="w-full h-64 bg-gradient-to-br from-violet-100 via-indigo-100 to-blue-100 flex items-center justify-center">
                 {pages[currentPage]?.imageUrl ? (
                   <img src={pages[currentPage].imageUrl} alt={`Page ${currentPage + 1}`} className="w-full h-full object-cover" />
                 ) : (
@@ -191,7 +195,7 @@ const StorybookTool: React.FC = () => {
               </div>
 
               <div className="p-8">
-                <p className="text-xs font-bold uppercase tracking-widest text-purple-500 mb-3">
+                <p className="text-xs font-bold uppercase tracking-widest text-violet-500 mb-3">
                   Page {currentPage + 1} of {pages.length}
                 </p>
                 <p className="text-gray-800 text-base leading-relaxed font-medium">
@@ -215,7 +219,7 @@ const StorybookTool: React.FC = () => {
                       key={i}
                       onClick={() => setCurrentPage(i)}
                       className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                        i === currentPage ? "bg-purple-500 scale-125" : "bg-gray-300 hover:bg-purple-300"
+                        i === currentPage ? "bg-violet-500 scale-125" : "bg-gray-300 hover:bg-violet-300"
                       }`}
                     />
                   ))}
@@ -224,7 +228,7 @@ const StorybookTool: React.FC = () => {
                 <button
                   onClick={() => setCurrentPage((p) => Math.min(pages.length - 1, p + 1))}
                   disabled={currentPage === pages.length - 1}
-                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 text-white font-semibold text-sm hover:bg-purple-500 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 text-white font-semibold text-sm hover:bg-violet-500 transition-all disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Next →
                 </button>

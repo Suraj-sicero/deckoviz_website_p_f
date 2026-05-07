@@ -49,7 +49,7 @@ const WhoIsDeckovizFor: React.FC = () => {
       title: "Hotels and Hospitality Spaces",
       description:
         "Elevate lobbies, suites, lounges, and premium experiences with dynamic, ever-evolving visuals that captivate guests, spark conversation, and express your brand's essence.",
-      haloColorRgb: "192, 132, 252", // Purple glow
+      haloColorRgb: "192, 132, 252", // Violet glow
       route: "/deckoviz-for-hotels"
     },
     {
@@ -150,7 +150,7 @@ const WhoIsDeckovizFor: React.FC = () => {
   {/* Title */}
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
     Who is{" "}
-    <span className="italic bg-gradient-to-r from-purple-600 via-blue-600 to-pink-600 bg-clip-text text-transparent">
+    <span className="italic bg-gradient-to-r from-violet-600 via-blue-600 to-pink-600 bg-clip-text text-transparent">
       Deckoviz
     </span>{" "}
     For?
@@ -186,7 +186,7 @@ const WhoIsDeckovizFor: React.FC = () => {
               </div>
 
               {/* Icon */}
-              <div className="bg-white bg-opacity-80 w-12 h-12 rounded-full flex items-center justify-center text-purple-700 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm -mt-3">
+              <div className="bg-white bg-opacity-80 w-12 h-12 rounded-full flex items-center justify-center text-violet-700 mb-4 group-hover:scale-110 transition-transform duration-300 shadow-sm -mt-3">
                 {segment.icon}
               </div>
 
@@ -200,14 +200,14 @@ const WhoIsDeckovizFor: React.FC = () => {
                   className="group/link cursor-pointer"
                   onClick={() => handleLearnMore(segment.route)}
                 >
-                  <span className="text-gray-700 hover:text-purple-700 font-medium text-sm transition-all duration-300 hover:font-semibold">
+                  <span className="text-gray-700 hover:text-violet-700 font-medium text-sm transition-all duration-300 hover:font-semibold">
                     Learn more
                   </span>
                   <span className="ml-2 relative inline-block w-4 h-5 overflow-hidden">
-                    <span className="absolute text-gray-600 group-hover/link:text-purple-600 group-hover/link:translate-x-6 group-hover/link:opacity-0 transition-all duration-500 ease-out">
+                    <span className="absolute text-gray-600 group-hover/link:text-violet-600 group-hover/link:translate-x-6 group-hover/link:opacity-0 transition-all duration-500 ease-out">
                       →
                     </span>
-                    <span className="absolute text-purple-600 -translate-x-6 opacity-0 group-hover/link:translate-x-0 group-hover/link:opacity-100 transition-all duration-500 ease-out delay-200">
+                    <span className="absolute text-violet-600 -translate-x-6 opacity-0 group-hover/link:translate-x-0 group-hover/link:opacity-100 transition-all duration-500 ease-out delay-200">
                       →
                     </span>
                   </span>
@@ -220,10 +220,10 @@ const WhoIsDeckovizFor: React.FC = () => {
 
         <div className="text-center mt-16 space-y-4">
           <p className="text-xl text-gray-600 font-semibold">
-            Deckoviz is for spaces that want to feel <span className="text-purple-600 font-bold">alive</span>.
+            Deckoviz is for spaces that want to feel <span className="text-violet-600 font-bold">alive</span>.
           </p>
           <p className="text-lg text-gray-500">
-            For people who value <span className="text-indigo-600 font-semibold">beauty</span>, <span className="text-purple-600 font-semibold">emotion</span>, and <span className="text-rose-500 font-semibold">expression</span>. For environments that deserve more than <span className="text-gray-700 font-semibold">static walls</span> and spaces.
+            For people who value <span className="text-indigo-600 font-semibold">beauty</span>, <span className="text-violet-600 font-semibold">emotion</span>, and <span className="text-rose-500 font-semibold">expression</span>. For environments that deserve more than <span className="text-gray-700 font-semibold">static walls</span> and spaces.
           </p>
         </div>
       </div>

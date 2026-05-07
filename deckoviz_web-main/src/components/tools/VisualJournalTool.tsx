@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
 
@@ -19,12 +20,13 @@ const moodPalettes: Record<string, { bg: string; text: string; border: string }>
   sad: { bg: "from-blue-100 to-indigo-100", text: "text-indigo-700", border: "border-indigo-200" },
   calm: { bg: "from-teal-100 to-cyan-100", text: "text-teal-700", border: "border-teal-200" },
   anxious: { bg: "from-red-100 to-rose-100", text: "text-rose-700", border: "border-rose-200" },
-  inspired: { bg: "from-violet-100 to-purple-100", text: "text-purple-700", border: "border-purple-200" },
+  inspired: { bg: "from-violet-100 to-indigo-100", text: "text-violet-700", border: "border-violet-200" },
   nostalgic: { bg: "from-amber-100 to-yellow-100", text: "text-amber-700", border: "border-amber-200" },
   default: { bg: "from-gray-100 to-slate-100", text: "text-gray-700", border: "border-gray-200" },
 };
 
 const VisualJournalTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [entry, setEntry] = useState("");
   const [style, setStyle] = useState("watercolor");
   const [result, setResult] = useState<JournalResult | null>(null);
@@ -41,6 +43,8 @@ const VisualJournalTool: React.FC = () => {
   ];
 
   const generate = async () => {
+    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
+    if (!hasCredits) return;
     if (!entry.trim()) { setError("Please write your journal entry first."); return; }
     setError(""); setStatus("loading"); setResult(null);
 

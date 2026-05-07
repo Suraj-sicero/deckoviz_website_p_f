@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Settings, Palette, Image as ImageIcon, Wind, Sparkles, Sun, Moon, Clock } from 'lucide-react';
+import { Settings, Image as ImageIcon, Wind, Sparkles, Sun, Moon, Clock } from 'lucide-react';
 import { PaintingSimulation } from './PaintingSimulation';
 
 const ARTWORKS = [
@@ -129,7 +129,7 @@ const LivingPaintings: React.FC = () => {
                 </div>
 
                 {/* Controls - Bottom */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center space-x-8 pointer-events-auto bg-black/60 backdrop-blur-2xl px-10 py-6 rounded-[3rem] border border-white/10 shadow-2xl">
+                <div className="absolute bottom-400 left-1/2 -translate-x-1/2 flex items-center space-x-8 pointer-events-auto bg-black/60 backdrop-blur-2xl px-10 py-6 rounded-[3rem] border border-white/10 shadow-2xl">
                     <div className="flex flex-col space-y-2">
                         <div className="flex items-center space-x-2 text-white/40">
                             <Wind size={14} />

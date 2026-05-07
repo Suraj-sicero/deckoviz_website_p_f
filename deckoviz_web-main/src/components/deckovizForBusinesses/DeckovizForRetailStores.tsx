@@ -9,7 +9,7 @@ const retailUseCaseCategories = [
     id: 'customer',
     label: 'Customer Experience & Personalisation',
     icon: '✦',
-    color: 'from-violet-500 to-purple-600',
+    color: 'from-violet-500 to-indigo-600',
     accent: '#a78bfa',
     items: [
       { title: 'Personalized customer greetings', desc: 'Welcome VIP customers, repeat buyers, and special guests with personalised visual greetings and tailored experiences.' },
@@ -111,7 +111,7 @@ const retailUseCaseCategories = [
     id: 'interactive',
     label: 'Interactive Shopping Experiences',
     icon: '◐',
-    color: 'from-fuchsia-500 to-purple-500',
+    color: 'from-fuchsia-500 to-indigo-500',
     accent: '#d946ef',
     items: [
       { title: 'Virtual styling inspiration', desc: 'Show how products work together in complete lifestyle or styling contexts.' },

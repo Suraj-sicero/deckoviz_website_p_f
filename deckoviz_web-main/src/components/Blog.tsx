@@ -198,10 +198,10 @@ const Blog: React.FC = () => {
         <div className="absolute inset-0 bg-white"></div>
 
         {/* Light gradient overlays */}
-        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-purple-100/40 via-pink-50/30 to-transparent blur-3xl"></div>
+        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-violet-100/40 via-pink-50/30 to-transparent blur-3xl"></div>
         <div className="absolute top-1/4 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-pink-100/40 via-orange-50/30 to-transparent blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-100/40 via-purple-50/30 to-transparent blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/4 h-1/4 bg-gradient-to-r from-pink-100/30 via-purple-100/30 to-orange-100/30 blur-2xl rounded-full"></div>
+        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-100/40 via-violet-50/30 to-transparent blur-3xl"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/4 h-1/4 bg-gradient-to-r from-pink-100/30 via-violet-100/30 to-orange-100/30 blur-2xl rounded-full"></div>
 
         {/* Very subtle dot pattern */}
         <div
@@ -230,12 +230,12 @@ const Blog: React.FC = () => {
 
           <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
             Discover{" "}
-            <span className="text-purple-600 font-semibold">insights</span>,{" "}
+            <span className="text-violet-600 font-semibold">insights</span>,{" "}
             <span className="text-pink-600 font-semibold">guides</span>, and{" "}
             <span className="text-orange-600 font-semibold">stories</span> that
             inspire{" "}
             <span className="text-blue-600 font-semibold">creativity</span> and{" "}
-            <span className="text-purple-600 font-semibold">innovation</span> in
+            <span className="text-violet-600 font-semibold">innovation</span> in
             art and{" "}
             <span className="text-indigo-600 font-semibold">technology</span>.
           </p>
@@ -245,7 +245,7 @@ const Blog: React.FC = () => {
           <div className="mt-16 mb-24 w-full">
             {/* Section Header */}
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+              <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
                 📍Pinned Blogs
               </h2>
               <span className="text-sm text-gray-500">
@@ -308,7 +308,7 @@ const Blog: React.FC = () => {
 
                         <span
                           className="absolute top-4 right-4 bg-white/90
-                           text-purple-600 text-xs font-bold
+                           text-violet-600 text-xs font-bold
                            px-3 py-1 rounded-full shadow"
                         >
                           PINNED
@@ -325,7 +325,7 @@ const Blog: React.FC = () => {
                         </p>
                         <div className="flex items-center justify-between text-sm text-gray-500">
                           <span>{post.readTime}</span>
-                          <span className="flex items-center gap-1 text-purple-600 font-medium">
+                          <span className="flex items-center gap-1 text-violet-600 font-medium">
                             Read
                             <ArrowRight className="w-4 h-4" />
                           </span>
@@ -362,15 +362,15 @@ const Blog: React.FC = () => {
           {!showAllHero && blogs.length > 5 && (
             <div className="flex justify-center mt-12">
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full opacity-30 blur-sm group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="absolute -inset-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full opacity-30 blur-sm group-hover:opacity-50 transition-opacity duration-300"></div>
                 <button
                   onClick={() => setShowAllHero(true)}
-                  className="relative flex items-center px-8 py-4 bg-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 border border-purple-200 hover:border-purple-300 group"
+                  className="relative flex items-center px-8 py-4 bg-white rounded-full shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105 border border-violet-200 hover:border-violet-300 group"
                 >
-                  <span className="mr-3 font-bold text-gray-700 group-hover:text-purple-600 transition-colors duration-300">
+                  <span className="mr-3 font-bold text-gray-700 group-hover:text-violet-600 transition-colors duration-300">
                     Show more articles
                   </span>
-                  <ChevronDown className="w-6 h-6 text-gray-700 group-hover:text-purple-600 transition-all duration-300 group-hover:translate-y-1 group-hover:scale-110" />
+                  <ChevronDown className="w-6 h-6 text-gray-700 group-hover:text-violet-600 transition-all duration-300 group-hover:translate-y-1 group-hover:scale-110" />
                 </button>
               </div>
             </div>
@@ -396,7 +396,7 @@ const Blog: React.FC = () => {
         {/* Revolutionary Card-Based Category Filter System */}
         <div className="mb-16">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+            <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
               Explore by Category
             </h2>
 
@@ -425,7 +425,7 @@ const Blog: React.FC = () => {
                     <div
                       className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
                         isActive
-                          ? "bg-gradient-to-br from-purple-600 via-pink-600 to-orange-500 p-1 shadow-2xl"
+                          ? "bg-gradient-to-br from-violet-600 via-pink-600 to-orange-500 p-1 shadow-2xl"
                           : "bg-white shadow-lg hover:shadow-xl"
                       }`}
                     >
@@ -507,7 +507,7 @@ const Blog: React.FC = () => {
 
                         {/* Hover Effect for Non-Active Cards */}
                         {!isActive && (
-                          <div className="absolute inset-0 bg-gradient-to-t from-purple-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-violet-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         )}
                       </div>
                     </div>
@@ -531,7 +531,7 @@ const Blog: React.FC = () => {
 
             {/* Active Category Info Bar */}
             {activeTag !== "View all" && (
-              <div className="mt-8 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-100">
+              <div className="mt-8 bg-gradient-to-r from-violet-50 to-pink-50 rounded-2xl p-6 border border-violet-100">
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-gray-800 mb-1">
@@ -589,7 +589,7 @@ const Blog: React.FC = () => {
         {/* CONTENT */}
         <div className="p-6 flex flex-col flex-1">
           <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 
-                         group-hover:text-purple-600 transition-colors duration-300">
+                         group-hover:text-violet-600 transition-colors duration-300">
             {post.title}
           </h3>
 
@@ -603,7 +603,7 @@ const Blog: React.FC = () => {
               <span>{post.readTime}</span>
             </div>
 
-            <span className="flex items-center gap-2 text-purple-600 font-semibold group-hover:gap-3 transition-all">
+            <span className="flex items-center gap-2 text-violet-600 font-semibold group-hover:gap-3 transition-all">
               Read <ArrowRight className="w-4 h-4" />
             </span>
           </div>
@@ -618,11 +618,11 @@ const Blog: React.FC = () => {
         <div className="mt-24 relative overflow-hidden rounded-3xl">
           {/* Subtle background */}
           <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-100 via-pink-50 to-orange-50"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-violet-100 via-pink-50 to-orange-50"></div>
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent"></div>
 
             {/* Subtle floating elements */}
-            <div className="absolute top-8 left-8 w-12 h-12 bg-purple-200/30 rounded-full blur-xl"></div>
+            <div className="absolute top-8 left-8 w-12 h-12 bg-violet-200/30 rounded-full blur-xl"></div>
             <div className="absolute bottom-8 right-8 w-16 h-16 bg-pink-200/30 rounded-full blur-xl"></div>
             <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-orange-200/30 rounded-full blur-xl"></div>
           </div>
@@ -644,15 +644,15 @@ const Blog: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
-                  className="w-full px-8 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-purple-200 transition-all duration-300 shadow-lg bg-white border border-gray-200"
+                  className="w-full px-8 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-violet-200 transition-all duration-300 shadow-lg bg-white border border-gray-200"
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full flex items-center justify-center">
+                  <div className="w-8 h-8 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center">
                     <Search className="w-4 h-4 text-white" />
                   </div>
                 </div>
               </div>
-              <button className="px-10 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full font-bold hover:from-purple-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <button className="px-10 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-full font-bold hover:from-violet-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                 Subscribe Now
               </button>
             </div>

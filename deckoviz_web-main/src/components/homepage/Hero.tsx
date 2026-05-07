@@ -48,10 +48,10 @@ const ThreeBackground: React.FC = () => {
     const posArray = new Float32Array(particlesCount * 3)
     const colorArray = new Float32Array(particlesCount * 3)
 
-    // Purple to cyan gradient colors
+    // Violet to cyan gradient colors
     const colors = [
-      new THREE.Color(0x8B5CF6), // Purple
-      new THREE.Color(0xA78BFA), // Light purple
+      new THREE.Color(0x8B5CF6), // Violet
+      new THREE.Color(0xA78BFA), // Light violet
       new THREE.Color(0x06B6D4), // Cyan
       new THREE.Color(0x14B8A6), // Teal
       new THREE.Color(0x6366F1), // Indigo
@@ -346,7 +346,7 @@ const Hero: React.FC = () => {
         100% { background-position: 300px 0px, -300px 0px; }
       }
 
-      .liquid-gradient-purple {
+      .liquid-gradient-violet {
         background: 
           url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%238B5CF6' d='M0,140 Q100,80 200,140 T400,140 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
           url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%23C084FC' opacity='0.6' d='M0,100 Q100,40 200,100 T400,100 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
@@ -395,10 +395,10 @@ const Hero: React.FC = () => {
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
 
         {/* Heading */}
-        <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
+        <h1 className="text-center font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
           <div className="inline">
             <span className="text-black">Make Your Space Come </span>
-            <span className="italic liquid-gradient-purple">
+            <span className="italic liquid-gradient-violet">
               Alive
             </span>
             <span className="text-black">,</span>
@@ -413,15 +413,15 @@ const Hero: React.FC = () => {
         </h1>
 
         {/* Subheading */}
-        <p className="text-center text-gray-600 text-xl mb-10 max-w-3xl leading-relaxed">
+        <p className="text-center text-gray-600 text-base sm:text-xl mb-8 sm:mb-10 max-w-3xl leading-relaxed px-2">
           Deckoviz DAS Portal is an{" "}
-          <span className="text-purple-600 font-semibold">AI-powered art frame</span>{" "}
+          <span className="text-violet-600 font-semibold">AI-powered art frame</span>{" "}
           that learns your taste and evolves with you, to paint your{" "}
           <span className="text-indigo-600 font-semibold">
             inner world, memories, and imagination
           </span>{" "}
           on your walls as your evolving{" "}
-          <span className="inline-block font-semibold bg-gradient-to-r from-purple-600 to-indigo-500 bg-clip-text text-transparent">
+          <span className="inline-block font-semibold bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent">
             {rotatingTexts[rotatingIndex]}
           </span>.
         </p>
@@ -431,7 +431,7 @@ const Hero: React.FC = () => {
 
           {/* LEFT IMAGE */}
         <div className="relative flex justify-center lg:justify-end w-full lg:w-auto flex-shrink-0 max-w-[400px] lg:max-w-[480px] xl:max-w-[520px]">
-          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[400px] md:h-[340px] lg:w-[440px] lg:h-[380px] xl:w-[480px] xl:h-[420px]">
+          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[400px] md:h-[340px] lg:w-[440px] lg:h-[380px] xl:w-[480px] xl:h-[420px] overflow-visible">
 
           {/* Room image */}
           <img
@@ -468,25 +468,25 @@ const Hero: React.FC = () => {
         </div>
 
           {/* CENTER */}
-          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0">
+          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0 order-first lg:order-none">
             <div className="flex gap-5 flex-wrap justify-center">
               <div className="relative inline-block group">
                 {/* Intense Animated Outer Glow */}
                 <div
                   className="absolute -inset-[3px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[5px] group-hover:blur-xl blur-lg"
                   style={{
-                    background: `linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899, #3B82F6)`,
+                    background: `linear-gradient(90deg, #0B1220, #1B2A4A, #2563EB, #1B2A4A, #0B1220)`,
                     backgroundSize: "300% 100%",
                     zIndex: -1,
                     animation: "heroFlowColors 3s linear infinite",
                   }}
                 />
                 
-                {/* Secondary inner glow to add depth */}
+                {/* Secondary inner glow */}
                 <div
                   className="absolute -inset-[1px] rounded-full opacity-100 transition-all duration-300 blur-[2px]"
                   style={{
-                    background: `linear-gradient(90deg, #2563EB, #7C3AED, #2563EB)`,
+                    background: `linear-gradient(90deg, #1B2A4A, #2563EB, #1B2A4A)`,
                     backgroundSize: "200% 100%",
                     zIndex: -1,
                     animation: "heroFlowColors 2s linear infinite reverse",
@@ -497,12 +497,12 @@ const Hero: React.FC = () => {
                   onClick={() => (window.location.href = "/place-order")}
                   className="inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-8 py-3 text-sm tracking-widest uppercase overflow-hidden relative z-10 group text-white transform hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98]"
                   style={{
-                    background: `linear-gradient(135deg, #1E3A8A 0%, #3B82F6 50%, #8B5CF6 100%)`,
+                    background: `linear-gradient(135deg, #0B1220 0%, #1B2A4A 50%, #2563EB 100%)`,
                     backgroundSize: "200% 200%",
                     boxShadow: `
                       inset 0 2px 4px rgba(255, 255, 255, 0.4),
                       inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-                      0 5px 15px rgba(59, 130, 246, 0.5)
+                      0 5px 15px rgba(37, 99, 235, 0.5)
                     `,
                     textShadow: `0 1px 2px rgba(0, 0, 0, 0.3)`,
                     border: "1px solid rgba(255, 255, 255, 0.3)",
@@ -512,14 +512,14 @@ const Hero: React.FC = () => {
                     e.currentTarget.style.boxShadow = `
                       inset 0 2px 4px rgba(255, 255, 255, 0.5),
                       inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-                      0 10px 25px rgba(59, 130, 246, 0.8)
+                      0 10px 25px rgba(37, 99, 235, 0.8)
                     `;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.boxShadow = `
                       inset 0 2px 4px rgba(255, 255, 255, 0.4),
                       inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-                      0 5px 15px rgba(59, 130, 246, 0.5)
+                      0 5px 15px rgba(37, 99, 235, 0.5)
                     `;
                   }}
                 >
@@ -581,11 +581,11 @@ const Hero: React.FC = () => {
             <div className="relative group w-full max-w-2xl">
               {/* Floating decorative elements */}
               <div className="absolute -left-8 top-1/4 w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-60 blur-sm animate-float-slow" />
-              <div className="absolute -right-6 bottom-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-purple-500 opacity-50 blur-sm animate-float-slower" />
+              <div className="absolute -right-6 bottom-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-indigo-500 opacity-50 blur-sm animate-float-slower" />
               <div className="absolute -bottom-4 left-1/3 w-10 h-10 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 opacity-60 blur-sm animate-float-medium" />
               
               {/* Glow effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-purple-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-violet-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
               
               {/* Main card */}
               <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl px-6 py-6 border border-white/50 w-full overflow-hidden">
@@ -626,19 +626,19 @@ const Hero: React.FC = () => {
                 </div>
 
                 {/* Divider with gradient */}
-                <div className="relative h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent mb-6" />
+                <div className="relative h-px bg-gradient-to-r from-transparent via-violet-300 to-transparent mb-6" />
 
                 {/* Infinity stat */}
                 <div className="text-center relative">
-                  <div className="absolute -inset-4 bg-gradient-to-br from-purple-400/20 to-indigo-500/20 rounded-2xl blur-xl" />
+                  <div className="absolute -inset-4 bg-gradient-to-br from-violet-400/20 to-indigo-500/20 rounded-2xl blur-xl" />
                   <div className="relative flex flex-col items-center">
                     {/* Animated infinity symbol */}
                     <div className="inline-block relative mb-2">
-                      <div className="text-5xl font-bold bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
+                      <div className="text-5xl font-bold bg-gradient-to-r from-violet-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
                         ∞
                       </div>
                       {/* Orbiting dots */}
-                      <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-purple-500 rounded-full animate-orbit" />
+                      <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-violet-500 rounded-full animate-orbit" />
                       <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-indigo-500 rounded-full animate-orbit-reverse" />
                     </div>
                     <div className="text-gray-600 font-medium text-sm">Ways of Exploring</div>
@@ -647,7 +647,7 @@ const Hero: React.FC = () => {
 
                 {/* Decorative dots */}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-                  <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
                   <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
                   <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
                 </div>

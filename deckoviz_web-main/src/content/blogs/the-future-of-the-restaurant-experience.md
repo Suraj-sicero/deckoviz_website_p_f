@@ -2,7 +2,7 @@
 id: 9
 title: "The Future of the Restaurant Experience"
 tag: "Innovation"
-tagColor: "bg-gradient-to-r from-purple-100 to-indigo-100 text-purple-700"
+tagColor: "bg-gradient-to-r from-violet-100 to-indigo-100 text-violet-700"
 date: "December 12, 2025"
 readTime: "6 min read"
 pinned: true

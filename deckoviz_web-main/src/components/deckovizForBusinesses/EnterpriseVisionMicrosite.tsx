@@ -234,8 +234,8 @@ const EnterpriseVisionMicrosite: React.FC<EnterpriseVisionMicrositeProps> = ({ o
                   <p className="text-white font-medium">And talk about.</p>
                 </div>
 
-                <div className="bg-slate-800/30 p-6 rounded-2xl border border-slate-700/30 hover:border-purple-500/30 transition-colors">
-                  <h4 className="text-xl text-white font-semibold mb-4 text-purple-400">You tell your story, not just show your product</h4>
+                <div className="bg-slate-800/30 p-6 rounded-2xl border border-slate-700/30 hover:border-violet-500/30 transition-colors">
+                  <h4 className="text-xl text-white font-semibold mb-4 text-violet-400">You tell your story, not just show your product</h4>
                   <p className="mb-4">Instead of just displaying offerings, you can show:</p>
                   <ul className="list-disc pl-6 mb-4 space-y-2 text-slate-400">
                     <li>inspiration behind dishes</li>

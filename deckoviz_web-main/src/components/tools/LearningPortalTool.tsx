@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import ToolLayout from "./ToolLayout";
+import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
 
 interface Message {
   id: string;
@@ -13,6 +14,7 @@ interface Message {
 }
 
 const LearningPortalTool: React.FC = () => {
+  const { deductCredits } = useAuth();
   const [topic, setTopic] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -123,7 +125,7 @@ const LearningPortalTool: React.FC = () => {
 
           {/* Quiz card */}
           {msg.quiz && (
-            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-200 rounded-2xl p-5">
+            <div className="bg-gradient-to-br from-indigo-50 to-indigo-50 border border-indigo-200 rounded-2xl p-5">
               <p className="text-xs font-bold uppercase tracking-widest text-indigo-600 mb-3">🧪 Quiz Question</p>
               <p className="font-bold text-gray-900 mb-4">{msg.quiz.question}</p>
               <div className="space-y-2">
