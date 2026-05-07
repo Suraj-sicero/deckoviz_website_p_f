@@ -395,7 +395,7 @@ const Hero: React.FC = () => {
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
 
         {/* Heading */}
-        <h1 className="text-center font-['Playfair_Display'] text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
+        <h1 className="text-center font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
           <div className="inline">
             <span className="text-black">Make Your Space Come </span>
             <span className="italic liquid-gradient-violet">
@@ -413,7 +413,7 @@ const Hero: React.FC = () => {
         </h1>
 
         {/* Subheading */}
-        <p className="text-center text-gray-600 text-xl mb-10 max-w-3xl leading-relaxed">
+        <p className="text-center text-gray-600 text-base sm:text-xl mb-8 sm:mb-10 max-w-3xl leading-relaxed px-2">
           Deckoviz DAS Portal is an{" "}
           <span className="text-violet-600 font-semibold">AI-powered art frame</span>{" "}
           that learns your taste and evolves with you, to paint your{" "}
@@ -431,7 +431,7 @@ const Hero: React.FC = () => {
 
           {/* LEFT IMAGE */}
         <div className="relative flex justify-center lg:justify-end w-full lg:w-auto flex-shrink-0 max-w-[400px] lg:max-w-[480px] xl:max-w-[520px]">
-          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[400px] md:h-[340px] lg:w-[440px] lg:h-[380px] xl:w-[480px] xl:h-[420px]">
+          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[400px] md:h-[340px] lg:w-[440px] lg:h-[380px] xl:w-[480px] xl:h-[420px] overflow-visible">
 
           {/* Room image */}
           <img
@@ -468,58 +468,96 @@ const Hero: React.FC = () => {
         </div>
 
           {/* CENTER */}
-          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0">
+          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0 order-first lg:order-none">
             <div className="flex gap-5 flex-wrap justify-center">
-              <button
-                onClick={() => (window.location.href = "/place-order")}
-                className="group relative px-5 py-2.5 rounded-3xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105"
-              >
-                {/* Animated gradient background */}
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-600 via-violet-600 to-indigo-600 bg-[length:200%_100%]" style={{ animation: 'gradient-flow 3s ease infinite' }} />
+              <div className="relative inline-block group">
+                {/* Intense Animated Outer Glow */}
+                <div
+                  className="absolute -inset-[3px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[5px] group-hover:blur-xl blur-lg"
+                  style={{
+                    background: `linear-gradient(90deg, #0B1220, #1B2A4A, #2563EB, #1B2A4A, #0B1220)`,
+                    backgroundSize: "300% 100%",
+                    zIndex: -1,
+                    animation: "heroFlowColors 3s linear infinite",
+                  }}
+                />
                 
-                {/* Shimmer effect */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                </div>
-                
-                {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 to-indigo-600 rounded-3xl blur-xl opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
-                
-                {/* Floating particles */}
-                <div className="absolute inset-0 overflow-hidden rounded-3xl">
-                  <div className="absolute w-2 h-2 bg-white/40 rounded-full top-1/4 left-1/4" style={{ animation: 'float-particle 3s ease-in-out infinite' }} />
-                  <div className="absolute w-1.5 h-1.5 bg-white/30 rounded-full top-3/4 left-2/3" style={{ animation: 'float-particle-delayed 4s ease-in-out infinite 1s' }} />
-                  <div className="absolute w-2 h-2 bg-white/40 rounded-full top-1/2 right-1/4" style={{ animation: 'float-particle-slow 5s ease-in-out infinite 0.5s' }} />
-                </div>
-                
-                {/* Button text */}
-                <span className="relative z-10 text-white drop-shadow-lg">Shop Now</span>
-              </button>
+                {/* Secondary inner glow */}
+                <div
+                  className="absolute -inset-[1px] rounded-full opacity-100 transition-all duration-300 blur-[2px]"
+                  style={{
+                    background: `linear-gradient(90deg, #1B2A4A, #2563EB, #1B2A4A)`,
+                    backgroundSize: "200% 100%",
+                    zIndex: -1,
+                    animation: "heroFlowColors 2s linear infinite reverse",
+                  }}
+                />
+
+                <button
+                  onClick={() => (window.location.href = "/place-order")}
+                  className="inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-8 py-3 text-sm tracking-widest uppercase overflow-hidden relative z-10 group text-white transform hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98]"
+                  style={{
+                    background: `linear-gradient(135deg, #0B1220 0%, #1B2A4A 50%, #2563EB 100%)`,
+                    backgroundSize: "200% 200%",
+                    boxShadow: `
+                      inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                      inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+                      0 5px 15px rgba(37, 99, 235, 0.5)
+                    `,
+                    textShadow: `0 1px 2px rgba(0, 0, 0, 0.3)`,
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                    animation: "heroGradientShift 4s ease infinite",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = `
+                      inset 0 2px 4px rgba(255, 255, 255, 0.5),
+                      inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+                      0 10px 25px rgba(37, 99, 235, 0.8)
+                    `;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = `
+                      inset 0 2px 4px rgba(255, 255, 255, 0.4),
+                      inset 0 -2px 5px rgba(0, 0, 0, 0.2),
+                      0 5px 15px rgba(37, 99, 235, 0.5)
+                    `;
+                  }}
+                >
+                  {/* Liquid flow internal effect */}
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+                    style={{
+                      background: 'radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 60%)',
+                      mixBlendMode: 'overlay',
+                    }}
+                  />
+
+                  {/* Sweeping shine effect */}
+                  <div 
+                    className="absolute top-0 -left-[100%] w-[50%] h-full transform skew-x-[-25deg] transition-all duration-700 ease-out z-0 group-hover:left-[200%]"
+                    style={{
+                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)'
+                    }}
+                  />
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    Shop Now
+                  </span>
+                </button>
+              </div>
 
               <button
                 onClick={() => (window.location.href = "/about")}
-                className="group relative px-5 py-2.5 rounded-3xl font-semibold text-sm overflow-hidden transition-all duration-500 hover:scale-105"
+                className="inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-8 py-3 text-sm tracking-widest uppercase overflow-hidden relative z-10 group bg-white/90 backdrop-blur-sm border-2 border-blue-200 text-blue-700 hover:border-blue-400 hover:bg-white hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98] shadow-sm hover:shadow-lg hover:shadow-blue-500/20"
               >
-                {/* Glassmorphism background */}
-                <div className="absolute inset-0 bg-white/80 backdrop-blur-sm border-2 border-violet-200 rounded-3xl transition-all duration-300 group-hover:border-violet-400 group-hover:bg-white/90" />
-                
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-50 via-violet-50 to-indigo-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
-                
-                {/* Ripple effect */}
-                <div className="absolute inset-0 rounded-3xl overflow-hidden">
-                  <div className="absolute w-0 h-0 rounded-full bg-violet-400/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group-hover:w-full group-hover:h-full group-hover:scale-150 transition-all duration-700" />
-                </div>
-                
-                {/* Glow effect */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-violet-400 to-indigo-400 rounded-3xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full z-0" />
                 
                 {/* Button text with arrow */}
-                <span className="relative z-10 flex items-center gap-2 text-gray-800 group-hover:text-violet-700 transition-colors duration-300">
+                <span className="relative z-10 flex items-center gap-2">
                   Learn More
                   <ArrowRight
-                    size={20}
-                    className="transition-all duration-300 group-hover:translate-x-2 group-hover:scale-110"
+                    size={16}
+                    className="transition-all duration-300 group-hover:translate-x-1"
                   />
                 </span>
               </button>
@@ -527,25 +565,14 @@ const Hero: React.FC = () => {
             
             <style dangerouslySetInnerHTML={{
               __html: `
-                @keyframes gradient-flow {
+                @keyframes heroFlowColors {
+                  0% { background-position: 0% 50%; }
+                  100% { background-position: 100% 50%; }
+                }
+                @keyframes heroGradientShift {
                   0% { background-position: 0% 50%; }
                   50% { background-position: 100% 50%; }
                   100% { background-position: 0% 50%; }
-                }
-                
-                @keyframes float-particle {
-                  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
-                  50% { transform: translateY(-20px) translateX(10px); opacity: 0.8; }
-                }
-                
-                @keyframes float-particle-delayed {
-                  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.3; }
-                  50% { transform: translateY(-15px) translateX(-10px); opacity: 0.7; }
-                }
-                
-                @keyframes float-particle-slow {
-                  0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.4; }
-                  50% { transform: translateY(-25px) translateX(5px); opacity: 0.9; }
                 }
               `
             }} />

@@ -128,14 +128,17 @@ export default function EnterpriseFeatures({ enterpriseFeatures }: any) {
             </div>
           </div>
 
-          {/* Feature Display - Clean centered layout */}
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-            className="text-center px-4 md:px-8 min-h-[300px] flex flex-col items-center justify-center"
-          >
+          <div className="relative">
+            {/* Ambient Light from Behind */}
+            <div className="absolute -inset-2 bg-[#2563EB]/20 rounded-[3rem] blur-3xl opacity-100"></div>
+            
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              className="relative bg-white rounded-[2.5rem] border border-[#2563EB]/30 shadow-[0_0_60px_rgba(37,99,235,0.25)] p-10 md:p-16 text-center min-h-[300px] flex flex-col items-center justify-center mx-4 md:mx-auto max-w-4xl"
+            >
             {/* Icon with dark blue gradient */}
             <motion.div 
               initial={{ scale: 0.8, opacity: 0 }}
@@ -144,7 +147,7 @@ export default function EnterpriseFeatures({ enterpriseFeatures }: any) {
               className="flex justify-center mb-10"
             >
               <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${brandGradient} 
-                             flex items-center justify-center shadow-2xl shadow-[#1e3a8a]/40`}>
+                             flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.6)] border border-white/20`}>
                 <div className="scale-[1.3] md:scale-[1.6] text-white">{enterpriseFeatures[index].icon}</div>
               </div>
             </motion.div>
@@ -168,7 +171,8 @@ export default function EnterpriseFeatures({ enterpriseFeatures }: any) {
             >
               {enterpriseFeatures[index].description}
             </motion.p>
-          </motion.div>
+            </motion.div>
+          </div>
 
         </div>
       </div>
