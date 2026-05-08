@@ -2377,3 +2377,14 @@
 [2026-05-06T12:47:26.627Z] ERROR: Profile fetch error: JsonWebTokenError: invalid signature
 [2026-05-06T12:47:26.680Z] ERROR: Profile fetch error: JsonWebTokenError: invalid signature
 [2026-05-06T12:47:37.172Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-08T14:13:57.058Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-08T14:13:57.062Z] LOG: ✅ Redis Connected
+[2026-05-08T14:13:57.063Z] LOG: Dekoviz
+[2026-05-08T14:24:57.070Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-08T14:24:57.075Z] LOG: ✅ Redis Connected
+[2026-05-08T14:24:57.076Z] LOG: Dekoviz
+[2026-05-08T14:24:57.087Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-08T14:58:24.913Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-08T14:58:24.917Z] LOG: ✅ Redis Connected
+[2026-05-08T14:58:24.917Z] LOG: Dekoviz
+[2026-05-08T14:58:24.924Z] LOG: ✅ PostgreSQL connected via Sequelize.
