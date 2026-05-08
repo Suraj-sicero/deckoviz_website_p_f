@@ -1,6 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
+import PixelatedBackground from "./PixelatedBackground";
+
 import { motion } from "framer-motion";
 import { 
   Palette, Zap, Music, Image as ImageIcon, Target, Box, 
@@ -496,13 +498,12 @@ const developerTools = [
 ];
 
 const ExperimentalArtModes: React.FC = () => {
+  const [variant, setVariant] = useState<'glacial' | 'volcano' | 'forest' | 'nebula'>('glacial');
+
   return (
     <div className="min-h-screen bg-[#050505] text-white pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-      {/* Background Glow */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-violet-600/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px]" />
-      </div>
+      {/* Pixelated Background */}
+      <PixelatedBackground variant={variant} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
@@ -514,9 +515,32 @@ const ExperimentalArtModes: React.FC = () => {
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight bg-gradient-to-r from-white via-violet-200 to-white bg-clip-text text-transparent mb-4">
               Experimental Art Modes
             </h1>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-6">
               A collection of advanced generative art experiments and developer utilities pushing the boundaries of digital expression.
             </p>
+
+            {/* Background Controls */}
+            <div className="flex justify-center space-x-4 mb-8">
+              {[
+                { id: 'glacial', label: 'Glacial', color: 'bg-blue-500' },
+                { id: 'volcano', label: 'Volcano', color: 'bg-red-500' },
+                { id: 'forest', label: 'Forest', color: 'bg-green-500' },
+                { id: 'nebula', label: 'Nebula', color: 'bg-purple-500' },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setVariant(item.id as any)}
+                  className={`px-4 py-2 rounded-full text-xs font-semibold uppercase transition-all duration-300 flex items-center space-x-2 ${
+                    variant === item.id
+                      ? 'bg-white text-black scale-105'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                >
+                  <span className={`w-3 h-3 rounded-full ${item.color}`}></span>
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </div>
           </motion.div>
         </div>
 
