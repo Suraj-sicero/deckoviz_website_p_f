@@ -10,7 +10,7 @@ type Status = "idle" | "uploading" | "processing" | "done" | "error";
 const VisualAudiobookTool: React.FC = () => {
   const { deductCredits } = useAuth();
   const [file, setFile] = useState<File | null>(null);
-  const [voice, setVoice] = useState("calm-warm");
+  const [voice, setVoice] = useState("british-male");
   const [frames, setFrames] = useState(8);
   const [status, setStatus] = useState<Status>("idle");
   const [statusMsg, setStatusMsg] = useState("");
@@ -19,10 +19,12 @@ const VisualAudiobookTool: React.FC = () => {
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const voiceOptions = [
-    { value: "calm-warm", label: "Calm & Warm", emoji: "🌙" },
-    { value: "clear-professional", label: "Clear & Professional", emoji: "💼" },
-    { value: "expressive-narrative", label: "Expressive & Narrative", emoji: "🎭" },
-    { value: "neutral-academic", label: "Neutral & Academic", emoji: "📚" },
+    { value: "british-male", label: "British Male", emoji: "🇬🇧👨" },
+    { value: "british-female", label: "British Female", emoji: "🇬🇧👩" },
+    { value: "australian-male", label: "Australian Male", emoji: "🇦🇺👨" },
+    { value: "australian-female", label: "Australian Female", emoji: "🇦🇺👩" },
+    { value: "american-male", label: "American Male", emoji: "🇺🇸👨" },
+    { value: "american-female", label: "American Female", emoji: "🇺🇸👩" },
   ];
 
   const generate = async () => {
@@ -88,7 +90,7 @@ const VisualAudiobookTool: React.FC = () => {
 
   const reset = () => {
     setFile(null); setStatus("idle"); setStatusMsg("");
-    setDownloadId(null); setError(""); setFrames(8); setVoice("calm-warm");
+    setDownloadId(null); setError(""); setFrames(8); setVoice("british-male");
     if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
