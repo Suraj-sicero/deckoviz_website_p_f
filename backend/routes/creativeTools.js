@@ -142,7 +142,7 @@ router.post("/audiobook/generate", upload.single("pdf"), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: "Missing PDF file" });
 
-    const { frames = "5", style = "calm-warm" } = req.body;
+    const { frames = "5", style = "british-male" } = req.body;
 
     // Build FormData to forward to HF Space
     const { Blob } = await import("node:buffer");

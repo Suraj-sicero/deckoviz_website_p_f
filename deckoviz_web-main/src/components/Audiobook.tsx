@@ -7,7 +7,7 @@ const Audiobook: React.FC = () => {
 
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [file, setFile] = useState<File | null>(null);
-  const [style, setStyle] = useState("Calm and warm");
+  const [style, setStyle] = useState("british-male");
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [frames, setFrames] = useState(5);
@@ -173,10 +173,12 @@ const Audiobook: React.FC = () => {
     fontSize: "14px"
   }}
 >
-  <option>Calm and warm</option>
-  <option>Clear and professional</option>
-  <option>Expressive and narrative</option>
-  <option>Neutral and academic</option>
+  <option value="british-male">British Male</option>
+  <option value="british-female">British Female</option>
+  <option value="australian-male">Australian Male</option>
+  <option value="australian-female">Australian Female</option>
+  <option value="american-male">American Male</option>
+  <option value="american-female">American Female</option>
 </select>
 
           {/* Custom Arrow */}
@@ -309,10 +311,12 @@ const Audiobook: React.FC = () => {
               <p>Select from multiple voice styles:</p>
 
               <ul className="list-disc pl-6 space-y-1 mt-3 text-gray-700">
-                <li>Calm and warm</li>
-                <li>Clear and professional</li>
-                <li>Expressive and narrative</li>
-                <li>Neutral and academic</li>
+                <li>British Male</li>
+                <li>British Female</li>
+                <li>Australian Male</li>
+                <li>Australian Female</li>
+                <li>American Male</li>
+                <li>American Female</li>
               </ul>
 
               <p className="mt-4 text-gray-700">
