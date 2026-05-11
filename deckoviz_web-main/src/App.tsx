@@ -120,6 +120,47 @@ import OrganismSim from "./components/OrganismSim";
 import AmbientRitual from "./components/AmbientRitual";
 import SymmetryMachine from "./components/SymmetryMachine";
 import ExperimentalArtModes from "./components/developerSpecs/ExperimentalArtModes";
+import DeckovizStorytelling from "./components/developerSpecs/DeckovizStorytelling";
+import NightlyRitual from "./components/developerSpecs/NightlyRitual";
+import MorningArchitecture from "./components/developerSpecs/MorningArchitecture";
+import StorySeed from "./components/developerSpecs/StorySeed";
+import DeepFocusField from "./components/developerSpecs/DeepFocusField";
+import CorrespondenceRoom from "./components/developerSpecs/CorrespondenceRoom";
+import MythologyEngine from "./components/developerSpecs/MythologyEngine";
+import MemoryPalaceBuilder from "./components/developerSpecs/MemoryPalaceBuilder";
+import ParallelLives from "./components/developerSpecs/ParallelLives";
+import UnsentLetterArchive from "./components/developerSpecs/UnsentLetterArchive";
+import WorldBuildersTable from "./components/developerSpecs/WorldBuildersTable";
+import EmotionalWeatherReport from "./components/developerSpecs/EmotionalWeatherReport";
+import AncestorTable from "./components/developerSpecs/AncestorTable";
+import ScenarioRoom from "./components/developerSpecs/ScenarioRoom";
+import LastWords from "./components/developerSpecs/LastWords";
+import TheThreshold from "./components/developerSpecs/TheThreshold";
+import ThousandYearQuestion from "./components/developerSpecs/ThousandYearQuestion";
+import CharacterWitness from "./components/developerSpecs/CharacterWitness";
+import TheRehearsal from "./components/developerSpecs/TheRehearsal";
+import PermissionSlip from "./components/developerSpecs/PermissionSlip";
+import LivingManifesto from "./components/developerSpecs/LivingManifesto";
+import DeathbedEditor from "./components/developerSpecs/DeathbedEditor";
+import CartographyOfLonging from "./components/developerSpecs/CartographyOfLonging";
+import TheInheritance from "./components/developerSpecs/TheInheritance";
+import SlowNews from "./components/developerSpecs/SlowNews";
+import CourageInventory from "./components/developerSpecs/CourageInventory";
+import UnfinishedBusinessBureau from "./components/developerSpecs/UnfinishedBusinessBureau";
+import TheSacredOrdinary from "./components/developerSpecs/TheSacredOrdinary";
+import GratitudeArchaeologist from "./components/developerSpecs/GratitudeArchaeologist";
+import HonestEulogy from "./components/developerSpecs/HonestEulogy";
+import AvoidedConversation from "./components/developerSpecs/AvoidedConversation";
+import TimeCapsuleStudio from "./components/developerSpecs/TimeCapsuleStudio";
+import TheSecondDraft from "./components/developerSpecs/TheSecondDraft";
+import TheLovingAdversary from "./components/developerSpecs/TheLovingAdversary";
+import InnerCouncil from "./components/developerSpecs/InnerCouncil";
+import TheLastGoodDay from "./components/developerSpecs/TheLastGoodDay";
+import TheForgivenessLab from "./components/developerSpecs/TheForgivenessLab";
+import FearCartographer from "./components/developerSpecs/FearCartographer";
+import LettersToUnknownSelf from "./components/developerSpecs/LettersToUnknownSelf";
+import RelationshipSeasons from "./components/developerSpecs/RelationshipSeasons";
+import TheFinalFrame from "./components/developerSpecs/TheFinalFrame";
 import ShadowPuppetry from "./components/developerSpecs/ShadowPuppetry";
 import FieldPainter from "./components/developerSpecs/FieldPainter";
 import LivingMaps from "./components/developerSpecs/LivingMaps";
@@ -164,6 +205,7 @@ import CreateWorld from "./pages/CreateWorld";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import AuthModal from "./components/auth/AuthModal";
+import VizzyChat from "./components/VizzyChat";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -372,6 +414,47 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/tools/postcard" element={<ProtectedRoute><PostcardTool /></ProtectedRoute>} />
         <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
         <Route path="/experimental-art-modes" element={<ExperimentalArtModes />} />
+        <Route path="/deckoviz-storytelling" element={<DeckovizStorytelling />} />
+        <Route path="/deckoviz-storytelling/nightly-ritual" element={<NightlyRitual />} />
+        <Route path="/deckoviz-storytelling/morning-architecture" element={<MorningArchitecture />} />
+        <Route path="/deckoviz-storytelling/story-seed" element={<StorySeed />} />
+        <Route path="/deckoviz-storytelling/deep-focus-field" element={<DeepFocusField />} />
+        <Route path="/deckoviz-storytelling/correspondence-room" element={<CorrespondenceRoom />} />
+        <Route path="/deckoviz-storytelling/mythology-engine" element={<MythologyEngine />} />
+        <Route path="/deckoviz-storytelling/memory-palace-builder" element={<MemoryPalaceBuilder />} />
+        <Route path="/deckoviz-storytelling/parallel-lives" element={<ParallelLives />} />
+        <Route path="/deckoviz-storytelling/unsent-letter-archive" element={<UnsentLetterArchive />} />
+        <Route path="/deckoviz-storytelling/world-builders-table" element={<WorldBuildersTable />} />
+        <Route path="/deckoviz-storytelling/emotional-weather-report" element={<EmotionalWeatherReport />} />
+        <Route path="/deckoviz-storytelling/ancestor-table" element={<AncestorTable />} />
+        <Route path="/deckoviz-storytelling/scenario-room" element={<ScenarioRoom />} />
+        <Route path="/deckoviz-storytelling/last-words" element={<LastWords />} />
+        <Route path="/deckoviz-storytelling/the-threshold" element={<TheThreshold />} />
+        <Route path="/deckoviz-storytelling/thousand-year-question" element={<ThousandYearQuestion />} />
+        <Route path="/deckoviz-storytelling/character-witness" element={<CharacterWitness />} />
+        <Route path="/deckoviz-storytelling/the-rehearsal" element={<TheRehearsal />} />
+        <Route path="/deckoviz-storytelling/permission-slip" element={<PermissionSlip />} />
+        <Route path="/deckoviz-storytelling/living-manifesto" element={<LivingManifesto />} />
+        <Route path="/deckoviz-storytelling/deathbed-editor" element={<DeathbedEditor />} />
+        <Route path="/deckoviz-storytelling/cartography-of-longing" element={<CartographyOfLonging />} />
+        <Route path="/deckoviz-storytelling/the-inheritance" element={<TheInheritance />} />
+        <Route path="/deckoviz-storytelling/slow-news" element={<SlowNews />} />
+        <Route path="/deckoviz-storytelling/courage-inventory" element={<CourageInventory />} />
+        <Route path="/deckoviz-storytelling/unfinished-business-bureau" element={<UnfinishedBusinessBureau />} />
+        <Route path="/deckoviz-storytelling/the-sacred-ordinary" element={<TheSacredOrdinary />} />
+        <Route path="/deckoviz-storytelling/gratitude-archaeologist" element={<GratitudeArchaeologist />} />
+        <Route path="/deckoviz-storytelling/honest-eulogy" element={<HonestEulogy />} />
+        <Route path="/deckoviz-storytelling/avoided-conversation" element={<AvoidedConversation />} />
+        <Route path="/deckoviz-storytelling/time-capsule-studio" element={<TimeCapsuleStudio />} />
+        <Route path="/deckoviz-storytelling/the-second-draft" element={<TheSecondDraft />} />
+        <Route path="/deckoviz-storytelling/loving-adversary" element={<TheLovingAdversary />} />
+        <Route path="/deckoviz-storytelling/inner-council" element={<InnerCouncil />} />
+        <Route path="/deckoviz-storytelling/last-good-day" element={<TheLastGoodDay />} />
+        <Route path="/deckoviz-storytelling/forgiveness-lab" element={<TheForgivenessLab />} />
+        <Route path="/deckoviz-storytelling/fear-cartographer" element={<FearCartographer />} />
+        <Route path="/deckoviz-storytelling/letters-to-unknown-self" element={<LettersToUnknownSelf />} />
+        <Route path="/deckoviz-storytelling/relationship-seasons" element={<RelationshipSeasons />} />
+        <Route path="/deckoviz-storytelling/final-frame" element={<TheFinalFrame />} />
         
         {/* ── Developer Specs ── */}
         <Route path="/developer-specs/fluid-dreams" element={<FluidDreams />} />
@@ -439,6 +522,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
       </Routes>
       </main>
       <Footer />
+      <VizzyChat />
     </>
   );
 };
