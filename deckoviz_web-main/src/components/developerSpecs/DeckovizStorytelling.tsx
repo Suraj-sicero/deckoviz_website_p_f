@@ -387,11 +387,20 @@ const DeckovizStorytelling: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent mb-4">
-              Deckoviz Storytelling & State Setting
+            {/* Caveat cursive sub-label */}
+            <p className="font-caveat text-amber-400/80 text-2xl mb-2 tracking-wide">
+              Deckoviz — Spaces that evolve with you.
+            </p>
+
+            {/* Playfair Display serif main heading */}
+            <h1 className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight bg-gradient-to-r from-white via-amber-200 to-white bg-clip-text text-transparent mb-4 leading-tight">
+              Storytelling, Creativity,<br />
+              <span className="italic">Mood Setting</span> &{" "}
+              <span className="italic">State Setting</span> Modes
             </h1>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-6">
-              Explore advanced tools designed for deep mood setting, state transition, and creative exploration.
+
+            <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-8 font-light leading-relaxed">
+              Explore advanced tools designed for deep mood setting, state transition, and creative exploration — where every space becomes a story.
             </p>
 
             {/* Background Controls */}
@@ -437,10 +446,10 @@ const DeckovizStorytelling: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500">
                   {tool.icon}
                 </div>
-                <span className="text-xs font-semibold text-amber-400 uppercase tracking-wider mb-1 block">
+                <span className="font-caveat text-base text-amber-400/80 mb-1 block">
                   {tool.category}
                 </span>
-                <h3 className="text-xl font-bold mb-2 group-hover:text-white transition-colors">
+                <h3 className="font-playfair text-xl font-bold mb-2 group-hover:text-white transition-colors leading-snug">
                   {tool.title}
                 </h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-4 group-hover:text-gray-200 transition-colors">
@@ -454,6 +463,7 @@ const DeckovizStorytelling: React.FC = () => {
             </motion.a>
           ))}
         </div>
+
 
         {/* Footer Info */}
         <motion.div

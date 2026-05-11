@@ -48,7 +48,7 @@ async function callLLM(prompt, isJson = false) {
   // 1. Try Gemini
   if (GEMINI_KEY) {
     try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_KEY}`;
       const body = {
         contents: [{ parts: [{ text: prompt }] }],
         generationConfig: isJson ? { responseMimeType: "application/json" } : undefined,
@@ -108,7 +108,7 @@ async function callVisionLLM(prompt, imageBuffer, isJson = false) {
   if (!GEMINI_KEY) throw new Error("Gemini API key is required for vision tasks.");
 
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key=${GEMINI_KEY}`;
     const body = {
       contents: [
         {
