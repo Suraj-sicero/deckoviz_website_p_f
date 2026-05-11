@@ -14,8 +14,9 @@ interface Message {
   timestamp: Date;
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
-const VIZZY_API = `${API_BASE}/api/wizzy`;
+import { API_BASE_URL } from "../../lib/constants";
+
+const VIZZY_API = `${API_BASE_URL}/api/wizzy`;
 
 const INITIAL_MESSAGE: Message = {
   role: "assistant",

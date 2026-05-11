@@ -20,7 +20,7 @@ async function callWizzyLLM(messages, isJson = false) {
   if (genAI) {
     try {
       const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.0-flash",
+        model: "gemini-2.0-flash-lite",
         generationConfig: isJson ? { responseMimeType: "application/json" } : undefined
       });
 

@@ -31,6 +31,10 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+        playfair: ['Playfair Display', 'Georgia', 'serif'],
+        caveat: ['Caveat', 'cursive'],
+        handwriting: ['Caveat', 'cursive'],
       },
       fontSize: {
         xxs: '.625rem',
