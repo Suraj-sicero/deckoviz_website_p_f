@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Send, X, Minimize2, Maximize2, Sparkles, 
-  ChevronDown, Zap, RotateCcw 
+  ChevronDown, Zap, RotateCcw, Plus 
 } from "lucide-react";
+import FloatingRobot from "./FloatingRobot";
 
 // ─────────────────────────────────────────────
 // Types
@@ -14,13 +15,13 @@ interface Message {
   timestamp: Date;
 }
 
-import { API_BASE_URL } from "../../lib/constants";
+import { API_BASE_URL } from "../lib/constants";
 
 const VIZZY_API = `${API_BASE_URL}/api/wizzy`;
 
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
-  content: `Hey, welcome to Deckoviz ✨\n\nI'm **Vizzy** — your guide to adaptive spaces, evolving art, mood-driven environments, and all the wonderfully futuristic ways spaces can come alive.\n\nSo… what kind of atmosphere are you dreaming about lately? Cozy? Immersive? Inspiring? Calm? Something your guests never forget?`,
+  content: `Hey, I'm Vizzy, and I am so glad to have you here. I'd love to answer any questions you have about Deckoviz and how it could help you. Anything at all, let me know. I'm right here at your service!\n\nAny curiosities you have about any features, any pricing details, etc., I'm all yours. I'm here to help you understand our philosophy, our thesis, why we built it, who it is for, and any question that you have at all. I'm happy to answer it.`,
   timestamp: new Date(),
 };
 
@@ -29,6 +30,15 @@ const SUGGESTED_PROMPTS = [
   "How can it transform my home?",
   "I run a restaurant — how can this help?",
   "Tell me about adaptive art",
+];
+
+const ADDITIONAL_PROMPTS = [
+  "How could Deckoviz be useful for me as my personal art frame?",
+  "How could I create with it?",
+  "How does it bring posters to life?",
+  "How does it set the right mood for me and my family?",
+  "How does it help with story-telling for me and my kids?",
+  "How could Deckoviz be useful for my retail shop?",
 ];
 
 // ─────────────────────────────────────────────
@@ -67,7 +77,7 @@ const MessageBubble: React.FC<{ message: Message; isLatest: boolean }> = ({
     >
       {/* Avatar */}
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
+        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
           <Sparkles size={14} className="text-white" />
         </div>
       )}
@@ -75,14 +85,14 @@ const MessageBubble: React.FC<{ message: Message; isLatest: boolean }> = ({
       <div
         className={`max-w-[78%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
           isUser
-            ? "bg-gradient-to-br from-indigo-600 to-violet-600 text-white rounded-br-sm shadow-lg shadow-indigo-500/20"
+            ? "bg-gradient-to-br from-blue-600 to-violet-600 text-white rounded-br-sm shadow-lg shadow-blue-500/20"
             : "bg-white/5 border border-white/10 text-gray-200 rounded-bl-sm backdrop-blur-sm"
         }`}
       >
         {renderContent(message.content)}
         <div
           className={`text-[10px] mt-1.5 ${
-            isUser ? "text-indigo-200" : "text-gray-600"
+            isUser ? "text-blue-200" : "text-gray-600"
           }`}
         >
           {message.timestamp.toLocaleTimeString([], {
@@ -105,7 +115,7 @@ const TypingIndicator = () => (
     exit={{ opacity: 0, y: 8 }}
     className="flex items-end gap-3"
   >
-    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
+    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
       <Sparkles size={14} className="text-white" />
     </div>
     <div className="bg-white/5 border border-white/10 rounded-2xl rounded-bl-sm px-4 py-3 backdrop-blur-sm">
@@ -115,7 +125,7 @@ const TypingIndicator = () => (
             key={i}
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.15 }}
-            className="w-1.5 h-1.5 rounded-full bg-violet-400"
+            className="w-1.5 h-1.5 rounded-full bg-blue-400"
           />
         ))}
       </div>
@@ -133,6 +143,7 @@ const VizzyChat: React.FC = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [showAllSuggestions, setShowAllSuggestions] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -217,28 +228,8 @@ const VizzyChat: React.FC = () => {
 
   return (
     <>
-      {/* ── Floating Trigger Button ── */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.button
-            id="vizzy-chat-trigger"
-            initial={{ opacity: 0, scale: 0.5, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.5, y: 20 }}
-            onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 group"
-            aria-label="Open Vizzy Chat"
-          >
-            {/* Glow ring */}
-            <span className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 blur-lg opacity-60 group-hover:opacity-90 transition-opacity duration-300 scale-110" />
-            {/* Button */}
-            <span className="relative flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-br from-violet-600 to-indigo-700 shadow-xl shadow-indigo-900/50 hover:shadow-indigo-700/60 transition-all duration-300 border border-white/10">
-              <Sparkles size={18} className="text-white" />
-              <span className="text-sm font-semibold text-white tracking-wide">Ask Vizzy</span>
-            </span>
-          </motion.button>
-        )}
-      </AnimatePresence>
+      {/* ── Floating Robot Trigger ── */}
+      <FloatingRobot onClick={() => setIsOpen(!isOpen)} isOpen={isOpen} />
 
       {/* ── Chat Window ── */}
       <AnimatePresence>
@@ -249,19 +240,19 @@ const VizzyChat: React.FC = () => {
             animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30, x: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className={`fixed bottom-6 right-6 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/60 backdrop-blur-2xl bg-[#0a0a14]/95 transition-all duration-300 ${
+            className={`fixed bottom-24 right-4 md:bottom-6 md:right-36 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/60 backdrop-blur-2xl bg-[#0a0a14]/95 transition-all duration-300 ${
               isExpanded
                 ? "w-[min(90vw,680px)] h-[80vh]"
                 : "w-[min(90vw,400px)] h-[600px]"
             }`}
           >
             {/* ── Header ── */}
-            <div className="relative flex items-center justify-between px-4 py-3 border-b border-white/5 bg-gradient-to-r from-violet-900/40 to-indigo-900/40 flex-shrink-0">
+            <div className="relative flex items-center justify-between px-4 py-3 border-b border-white/5 bg-gradient-to-r from-blue-900/40 to-indigo-900/40 flex-shrink-0">
               {/* Ambient glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-violet-500/5 to-indigo-500/5" />
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-violet-500/5" />
 
               <div className="relative flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-violet-500/40">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-blue-500/40">
                   <Sparkles size={16} className="text-white" />
                 </div>
                 <div>
@@ -325,13 +316,35 @@ const VizzyChat: React.FC = () => {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="px-4 pb-3 flex gap-2 flex-wrap"
+                  className="px-4 pb-3 flex gap-2 flex-wrap items-center"
                 >
                   {SUGGESTED_PROMPTS.map((prompt) => (
                     <button
                       key={prompt}
                       onClick={() => sendMessage(prompt)}
-                      className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-violet-500/50 hover:bg-violet-500/10 transition-all duration-200"
+                      className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+                    >
+                      {prompt}
+                    </button>
+                  ))}
+                  
+                  {/* Plus Button */}
+                  {!showAllSuggestions && (
+                    <button
+                      onClick={() => setShowAllSuggestions(true)}
+                      className="text-xs px-2 py-1.5 rounded-full bg-white/5 border border-white/10 text-blue-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 flex items-center justify-center"
+                      title="Show more questions"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  )}
+
+                  {/* Additional Prompts */}
+                  {showAllSuggestions && ADDITIONAL_PROMPTS.map((prompt) => (
+                    <button
+                      key={prompt}
+                      onClick={() => sendMessage(prompt)}
+                      className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
                     >
                       {prompt}
                     </button>
@@ -342,7 +355,7 @@ const VizzyChat: React.FC = () => {
 
             {/* ── Input Bar ── */}
             <div className="px-3 pb-3 flex-shrink-0 border-t border-white/5 pt-3">
-              <div className="relative flex items-end gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2 focus-within:border-violet-500/50 focus-within:bg-white/[0.07] transition-all duration-200">
+              <div className="relative flex items-end gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2 focus-within:border-blue-500/50 focus-within:bg-white/[0.07] transition-all duration-200">
                 <textarea
                   ref={inputRef}
                   id="vizzy-chat-input"
@@ -366,7 +379,7 @@ const VizzyChat: React.FC = () => {
                 <button
                   onClick={() => sendMessage(input)}
                   disabled={!input.trim() || isLoading}
-                  className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-violet-600 to-indigo-600 flex items-center justify-center disabled:opacity-30 hover:from-violet-500 hover:to-indigo-500 transition-all duration-200 shadow-md shadow-violet-900/50 self-end mb-0.5"
+                  className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center disabled:opacity-30 hover:from-blue-500 hover:to-violet-500 transition-all duration-200 shadow-md shadow-blue-900/50 self-end mb-0.5"
                   title="Send"
                 >
                   <Send size={13} className="text-white" />

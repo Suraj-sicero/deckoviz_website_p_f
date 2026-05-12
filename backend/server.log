@@ -2430,3 +2430,19 @@
 [2026-05-11T15:59:05.388Z] LOG: ✅ Chat endpoint hit! Messages received: 2
 [2026-05-11T15:59:57.763Z] LOG: ✅ Chat endpoint hit! Messages received: 4
 [2026-05-11T16:00:10.015Z] LOG: ✅ Chat endpoint hit! Messages received: 6
+[2026-05-11T19:10:49.625Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-11T19:10:49.631Z] LOG: ✅ Redis Connected
+[2026-05-11T19:10:49.632Z] LOG: Dekoviz
+[2026-05-11T19:10:49.635Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-12T06:48:48.268Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-12T06:48:48.277Z] LOG: ✅ Redis Connected
+[2026-05-12T06:48:48.278Z] LOG: Dekoviz
+[2026-05-12T06:48:48.288Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-12T07:09:53.036Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-12T07:09:53.042Z] LOG: ✅ Redis Connected
+[2026-05-12T07:09:53.043Z] LOG: Dekoviz
+[2026-05-12T07:09:53.047Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-12T08:03:09.431Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-12T08:03:09.435Z] LOG: ✅ Redis Connected
+[2026-05-12T08:03:09.435Z] LOG: Dekoviz
+[2026-05-12T08:03:09.438Z] LOG: ✅ PostgreSQL connected via Sequelize.

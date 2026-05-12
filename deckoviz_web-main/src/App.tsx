@@ -99,6 +99,7 @@ import VisualAudiobookTool from "./components/tools/VisualAudiobookTool";
 import PostcardTool from "./components/tools/PostcardTool";
 import WizzyPage from "./components/wizzy/WizzyPage";
 import ToolGenerator from "./components/developerSpecs/ToolGenerator";
+import InfiniteWormhole from "./components/developerSpecs/InfiniteWormhole";
 import FluidDreams from "./components/developerSpecs/FluidDreams";
 import ParticleGalaxy from "./components/developerSpecs/ParticleGalaxy";
 import AudioWaves from "./components/developerSpecs/AudioWaves";
@@ -457,6 +458,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/deckoviz-storytelling/final-frame" element={<TheFinalFrame />} />
         
         {/* ── Developer Specs ── */}
+        <Route path="/developer-specs/infinite-wormhole" element={<InfiniteWormhole />} />
         <Route path="/developer-specs/fluid-dreams" element={<FluidDreams />} />
         <Route path="/developer-specs/particle-galaxy" element={<ParticleGalaxy />} />
         <Route path="/developer-specs/audio-waves" element={<AudioWaves />} />

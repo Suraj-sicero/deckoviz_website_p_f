@@ -16,6 +16,14 @@ import {
 
 const developerTools = [
   {
+    title: "Infinite Wormhole",
+    description: "Immersive neon vortex and cinematic cosmic hyperspace tunnel",
+    route: "/developer-specs/infinite-wormhole",
+    icon: <Zap size={24} className="text-cyan-500" />,
+    color: "from-cyan-500/20 to-pink-500/20",
+    borderColor: "group-hover:border-cyan-500/50"
+  },
+  {
     title: "Fluid Dreams",
     description: "Interactive fluid simulation with real-time physics",
     route: "/developer-specs/fluid-dreams",
