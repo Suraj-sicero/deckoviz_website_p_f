@@ -77,7 +77,7 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
   return (
     <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight bg-gradient-to-r from-[#4f46e5] via-pink-500 to-indigo-600 bg-clip-text text-transparent">
           {sectionTitle}
         </h2>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">

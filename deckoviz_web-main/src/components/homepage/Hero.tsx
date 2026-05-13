@@ -421,7 +421,7 @@ const Hero: React.FC = () => {
             inner world, memories, and imagination
           </span>{" "}
           on your walls as your evolving{" "}
-          <span className="inline-block font-semibold bg-gradient-to-r from-violet-600 to-indigo-500 bg-clip-text text-transparent">
+          <span className="inline-block font-semibold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
             {rotatingTexts[rotatingIndex]}
           </span>.
         </p>
@@ -468,7 +468,7 @@ const Hero: React.FC = () => {
         </div>
 
           {/* CENTER */}
-          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0 order-first lg:order-none">
+          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0">
             <div className="flex gap-5 flex-wrap justify-center">
               <div className="relative inline-block group">
                 {/* Intense Animated Outer Glow */}
@@ -602,7 +602,7 @@ const Hero: React.FC = () => {
                   <div className="relative flex flex-col items-center">
                     <div className="absolute -inset-2 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-2xl blur-lg" />
                     <div className="relative flex flex-col items-center">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-1 animate-pulse-slow leading-none">
+                      <div className="text-4xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent mb-1 animate-pulse-slow leading-none">
                         <CountUp from={0} to={3} duration={2} suffix="M+" />
                       </div>
                       <div className="text-gray-600 font-medium text-xs whitespace-nowrap">Items in Library</div>
@@ -634,7 +634,7 @@ const Hero: React.FC = () => {
                   <div className="relative flex flex-col items-center">
                     {/* Animated infinity symbol */}
                     <div className="inline-block relative mb-2">
-                      <div className="text-5xl font-bold bg-gradient-to-r from-violet-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
+                      <div className="text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
                         ∞
                       </div>
                       {/* Orbiting dots */}
@@ -753,3 +753,4 @@ const Hero: React.FC = () => {
 }
 
 export default Hero
+

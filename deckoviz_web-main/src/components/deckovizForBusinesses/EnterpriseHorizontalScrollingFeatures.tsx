@@ -215,12 +215,9 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
           >
             <span className="text-gray-900">Discover Deckoviz for </span>
             <span
+              className="bg-gradient-to-r from-[#182A4A] via-[#2563EB] to-[#182A4A] bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]"
               style={{
-                background: "linear-gradient(135deg, #6b21a8 0%, #a855f7 25%, #ec4899 50%, #f97316 75%, #eab308 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                filter: "drop-shadow(0 2px 8px rgba(168,85,247,0.15))"
+                filter: "drop-shadow(0 2px 8px rgba(37,99,235,0.2))"
               }}
             >
               Enterprises
@@ -265,7 +262,7 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
                 const colorSchemes = [
                   {
                     bg: "from-violet-50/50 via-violet-50/40 to-indigo-50/30",
-                    border: "border-violet-200/50 hover:border-violet-300/70",
+                    border: "border-indigo-200/50 hover:border-violet-300/70",
                     shadow: "shadow-[0_4px_16px_rgba(139,92,246,0.1)] hover:shadow-[0_12px_32px_rgba(139,92,246,0.2)]",
                     textColor: "#5b21b6", // darker violet for visibility
                     orb: "rgba(139,92,246,0.3)",
@@ -273,7 +270,7 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
                   },
                   {
                     bg: "from-pink-50/50 via-rose-50/40 to-red-50/30",
-                    border: "border-pink-200/50 hover:border-pink-300/70",
+                    border: "border-indigo-200/50 hover:border-pink-300/70",
                     shadow: "shadow-[0_4px_16px_rgba(236,72,153,0.1)] hover:shadow-[0_12px_32px_rgba(236,72,153,0.2)]",
                     textColor: "#be185d", // darker pink for visibility
                     orb: "rgba(236,72,153,0.3)",

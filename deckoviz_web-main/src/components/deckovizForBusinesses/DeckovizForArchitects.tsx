@@ -239,7 +239,7 @@ const DeckovizArchitectsLanding = () => {
             className="text-center mb-20"
           >
             <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Key Highlights Across Every Vertical</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-violet-500 to-indigo-500 mx-auto rounded-full" />
+            <div className="w-24 h-1 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] mx-auto rounded-full" />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -419,7 +419,7 @@ const DeckovizArchitectsLanding = () => {
               className="relative z-10 max-w-4xl mx-auto"
             >
               <div className="text-center mb-16">
-                <div className="w-16 h-16 bg-gradient-to-br from-violet-500 to-indigo-500 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#4f46e5] to-[#2563EB] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                   <Handshake className="w-8 h-8 text-white" />
                 </div>
                 <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6 text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
