@@ -26,19 +26,19 @@ const INITIAL_MESSAGE: Message = {
 };
 
 const SUGGESTED_PROMPTS = [
-  "What is Deckoviz?",
-  "How can it transform my home?",
-  "I run a restaurant — how can this help?",
-  "Tell me about adaptive art",
+  "What is the core idea behind Deckoviz?",
+  "How does it change the vibe of a living space?",
+  "Can it be used for commercial spaces like restaurants?",
+  "What exactly is 'living' or adaptive art?",
 ];
 
 const ADDITIONAL_PROMPTS = [
-  "How could Deckoviz be useful for me as my personal art frame?",
-  "How could I create with it?",
-  "How does it bring posters to life?",
-  "How does it set the right mood for me and my family?",
-  "How does it help with story-telling for me and my kids?",
-  "How could Deckoviz be useful for my retail shop?",
+  "How does it function as a smart digital canvas?",
+  "What are the ways I can co-create with the AI?",
+  "Tell me more about the dynamic poster feature.",
+  "How does it adapt to family routines and moods?",
+  "How can we use it for interactive bedtime stories?",
+  "What benefits does it offer for retail environments?",
 ];
 
 // ─────────────────────────────────────────────

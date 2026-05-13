@@ -2,6 +2,7 @@ import express from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
+import fs from "fs";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "your_super_secret_jwt_key_here";
@@ -30,6 +31,7 @@ router.post("/signup", async (req, res) => {
     res.json({ token, user: { id: user.id, email: user.email, credits: user.credits } });
   } catch (error) {
     console.error("Signup error:", error);
+    try { fs.appendFileSync("/home/shashank/Documents/work2/deckoviz-demo/backend/scratch/signup_error.log", error.stack + "\n"); } catch(e) {}
     res.status(500).json({ error: "Internal server error" });
   }
 });

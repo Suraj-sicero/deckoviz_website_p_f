@@ -207,6 +207,7 @@ import VisualBookCompanion from "./components/tools/VisualBookCompanion";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import AuthModal from "./components/auth/AuthModal";
 import VizzyChat from "./components/VizzyChat";
+import { VizzyChat as VizzyCreationCanvas } from "./components/vizzyCanvas/vizzy-chat";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -414,6 +415,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/tools/music" element={<ProtectedRoute><MusicTool /></ProtectedRoute>} />
         <Route path="/tools/postcard" element={<ProtectedRoute><PostcardTool /></ProtectedRoute>} />
         <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
+        <Route path="/vizzy-canvas" element={<ProtectedRoute><VizzyCreationCanvas /></ProtectedRoute>} />
         <Route path="/experimental-art-modes" element={<ExperimentalArtModes />} />
         <Route path="/deckoviz-storytelling" element={<DeckovizStorytelling />} />
         <Route path="/deckoviz-storytelling/nightly-ritual" element={<NightlyRitual />} />
