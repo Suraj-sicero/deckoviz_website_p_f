@@ -13,10 +13,16 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Music } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Music, Volume2 } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL } from "../../lib/constants"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
 
 function generateId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
@@ -184,6 +190,13 @@ function generateAssistantText(numImages: number, prompt: string): string {
   return "Here's what I created for you:"
 }
 
+const VOICE_OPTIONS = [
+  { id: "21m00Tcm4TlvDq8ikWAM", name: "Rachel (EN-US)", provider: "elevenlabs" },
+  { id: "en-US-natalie", name: "Natalie (EN-US)", provider: "murf" },
+  { id: "en-US-marcus", name: "Marcus (EN-US)", provider: "murf" },
+  { id: "en-US-julie", name: "Julie (EN-US)", provider: "murf" },
+]
+
 export function VizzyChat() {
   const router = useNavigate()
   const { user, token, logout: signOut } = useAuth()
@@ -196,6 +209,7 @@ export function VizzyChat() {
   const [uploadedImage, setUploadedImage] = useState<{ url: string; fileName: string } | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const [theme, setTheme] = useState("dark")
+  const [selectedVoice, setSelectedVoice] = useState(VOICE_OPTIONS[0])
 
   const handleLogout = async () => {
     try {
@@ -507,7 +521,10 @@ export function VizzyChat() {
         console.log("[v0] Sending to chat API:", conversationMessages.length, "messages")
         const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/chat`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` }),
+          },
           body: JSON.stringify({ messages: conversationMessages }),
         })
 
@@ -623,6 +640,41 @@ export function VizzyChat() {
               </Tooltip>
             </>
           )}
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <span>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="text-muted-foreground hover:text-foreground rounded-xl"
+                      aria-label="Select Voice"
+                    >
+                      <Volume2 className="size-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">Voice: {selectedVoice.name}</TooltipContent>
+                </Tooltip>
+              </span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              {VOICE_OPTIONS.map((voice) => (
+                <DropdownMenuItem
+                  key={voice.id}
+                  onClick={() => setSelectedVoice(voice)}
+                  className={selectedVoice.id === voice.id ? "bg-accent/50" : ""}
+                >
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-sm font-medium">{voice.name}</span>
+                    <span className="text-[10px] text-muted-foreground/70 uppercase tracking-wider">{voice.provider}</span>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Link to="/gallery">
@@ -710,6 +762,7 @@ export function VizzyChat() {
               <ChatMessage
                 key={message.id}
                 message={message}
+                selectedVoice={selectedVoice}
                 onImageClick={(url, prompt) => {
                   setLightboxImage(url)
                   setLightboxPrompt(prompt)

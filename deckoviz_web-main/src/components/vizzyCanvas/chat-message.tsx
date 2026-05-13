@@ -4,6 +4,7 @@ import { useState } from "react"
 import { cn } from "./lib/utils"
 import { Skeleton } from "./ui/skeleton"
 import { Button } from "./ui/button"
+import { API_BASE_URL } from "../../lib/constants"
 import {
   Tooltip,
   TooltipContent,
@@ -16,6 +17,8 @@ import {
   Sparkles,
   Copy,
   Check,
+  Volume2,
+  Loader2,
 } from "lucide-react"
 import MusicPlayer from "./music-player"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
@@ -24,10 +27,41 @@ interface ChatMessageProps {
   message: ChatMessageType
   onImageClick: (imageUrl: string, prompt: string) => void
   onRetry?: () => void
+  selectedVoice?: { id: string; name: string; provider: string }
 }
 
-export function ChatMessage({ message, onImageClick, onRetry }: ChatMessageProps) {
+export function ChatMessage({ message, onImageClick, onRetry, selectedVoice }: ChatMessageProps) {
   const isUser = message.role === "user"
+  const [isNarrating, setIsNarrating] = useState(false)
+
+  const handleNarrate = async (text: string) => {
+    setIsNarrating(true)
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/narrate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ 
+          text, 
+          provider: selectedVoice?.provider || "murf", 
+          voiceId: selectedVoice?.id 
+        }),
+      })
+      if (response.ok) {
+        const data = await response.json()
+        const audio = new Audio(data.audioUrl)
+        audio.play()
+      } else {
+        const utterance = new SpeechSynthesisUtterance(text)
+        window.speechSynthesis.speak(utterance)
+      }
+    } catch (error) {
+      console.error("Narration failed:", error)
+      const utterance = new SpeechSynthesisUtterance(text)
+      window.speechSynthesis.speak(utterance)
+    } finally {
+      setIsNarrating(false)
+    }
+  }
 
   console.log('[CHAT MESSAGE] Rendering message:', { 
     role: message.role, 
@@ -54,13 +88,28 @@ export function ChatMessage({ message, onImageClick, onRetry }: ChatMessageProps
         {message.content && (
           <div
             className={cn(
-              "rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap break-words",
+              "rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap break-words relative group",
               isUser
                 ? "bg-accent text-accent-foreground rounded-br-lg"
                 : "bg-secondary/80 text-secondary-foreground rounded-bl-lg border border-border/40"
             )}
           >
             {message.content}
+            {!isUser && (
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
+                onClick={() => handleNarrate(message.content)}
+                disabled={isNarrating}
+              >
+                {isNarrating ? (
+                  <Loader2 className="size-3.5 animate-spin" />
+                ) : (
+                  <Volume2 className="size-3.5" />
+                )}
+              </Button>
+            )}
           </div>
         )}
 
