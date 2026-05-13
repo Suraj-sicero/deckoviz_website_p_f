@@ -11,6 +11,7 @@ interface StoryPage {
   text: string;
   imageUrl?: string;
   imagePrompt?: string;
+  audioUrl?: string;
 }
 
 const StorybookTool: React.FC = () => {
@@ -195,9 +196,23 @@ const StorybookTool: React.FC = () => {
               </div>
 
               <div className="p-8">
-                <p className="text-xs font-bold uppercase tracking-widest text-violet-500 mb-3">
-                  Page {currentPage + 1} of {pages.length}
-                </p>
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-xs font-bold uppercase tracking-widest text-violet-500">
+                    Page {currentPage + 1} of {pages.length}
+                  </p>
+                  {pages[currentPage]?.audioUrl && (
+                    <button
+                      onClick={() => {
+                        const audio = new Audio(pages[currentPage].audioUrl);
+                        audio.play();
+                      }}
+                      className="w-8 h-8 flex items-center justify-center rounded-full bg-violet-100 text-violet-600 hover:bg-violet-200 transition-all"
+                      title="Play narration"
+                    >
+                      🔊
+                    </button>
+                  )}
+                </div>
                 <p className="text-gray-800 text-base leading-relaxed font-medium">
                   {pages[currentPage]?.text}
                 </p>
