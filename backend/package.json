@@ -38,7 +38,7 @@
     "replicate": "^1.4.0",
     "sequelize": "^6.37.7",
     "sharp": "^0.34.5",
-    "sqlite3": "^6.0.1",
+    "sqlite3": "^5.1.7",
     "stripe": "^19.3.0"
   },
   "devDependencies": {
