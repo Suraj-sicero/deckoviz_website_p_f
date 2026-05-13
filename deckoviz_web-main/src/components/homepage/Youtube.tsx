@@ -66,7 +66,7 @@ const Youtube: React.FC = () => {
         {/* Heading */}
         <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
           <span className="text-gray-900">See</span>{" "}
-          <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
             Deckoviz
           </span>{" "}
           <span className="text-gray-900">in</span>{" "}
@@ -119,3 +119,4 @@ const Youtube: React.FC = () => {
 };
 
 export default Youtube;
+

@@ -215,44 +215,24 @@ const Benefits = () => {
 
   return (
     <>
-<section className="relative py-24 bg-gradient-to-b from-slate-50 via-violet-50/20 to-pink-50/20 overflow-visible">
+<section 
+  className="relative py-24 overflow-visible bg-white"
+>
+      {/* Blue Gradient Background */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-white to-cyan-100"></div>
+        <div className="absolute top-0 -left-1/4 w-[70%] h-[70%] bg-blue-400/20 blur-[100px] rounded-full mix-blend-multiply"></div>
+        <div className="absolute bottom-0 -right-1/4 w-[70%] h-[70%] bg-cyan-400/20 blur-[100px] rounded-full mix-blend-multiply"></div>
+      </div>
 
-      {/* Enhanced floating decorative elements with softer colors */}
-      <motion.div
-        animate={{ 
-          y: [0, -30, 0],
-          x: [0, 20, 0],
-          scale: [1, 1.1, 1]
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-32 left-20 w-40 h-40 bg-gradient-to-br from-violet-200/30 to-pink-200/30 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, 30, 0],
-          x: [0, -20, 0],
-          scale: [1, 1.2, 1]
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-32 right-20 w-56 h-56 bg-gradient-to-br from-cyan-200/30 to-teal-200/30 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{ 
-          scale: [1, 1.3, 1],
-          opacity: [0.2, 0.4, 0.2],
-          rotate: [0, 180, 360]
-        }}
-        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 right-1/4 w-72 h-72 bg-gradient-to-br from-indigo-200/20 to-indigo-200/20 rounded-full blur-3xl"
-      />
-      <motion.div
-        animate={{ 
-          y: [0, -20, 0],
-          scale: [1, 1.15, 1]
-        }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-1/4 left-1/3 w-48 h-48 bg-gradient-to-br from-rose-200/25 to-orange-200/25 rounded-full blur-3xl"
-      />
+      {/* Subtle overlay to ensure the same transparent look */}
+      <div className="absolute inset-0 z-0 bg-white/10 backdrop-blur-[4px]"></div>
+
+      {/* SHINY GLASS OVERLAY covering the entire section (optional, similar to enterprise) */}
+      <div className="absolute inset-0 z-0 pointer-events-none" 
+           style={{
+             background: "linear-gradient(115deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.05) 15%, transparent 30%, transparent 80%, rgba(255,255,255,0.1) 100%)",
+           }} />
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 pt-6">
         
@@ -339,9 +319,12 @@ const Benefits = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="mb-16"
+          className="mb-16 relative z-10"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+          {/* Soft white halo to ensure the text stands out from the background image */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] md:w-[60%] h-[160%] bg-white/80 blur-[60px] rounded-[100%] pointer-events-none z-[-1]" />
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-center mb-6 leading-tight relative z-10" style={{ fontFamily: "'Playfair Display', serif" }}>
             <motion.span 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -385,7 +368,7 @@ const Benefits = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.8, duration: 0.7 }}
-            className="text-gray-600 text-center text-lg max-w-3xl mx-auto leading-relaxed"
+            className="text-gray-900 font-medium text-center text-lg max-w-3xl mx-auto leading-relaxed relative z-10 drop-shadow-[0_2px_4px_rgba(255,255,255,0.8)]"
           >
             A living canvas, a creative companion, and a quiet presence that makes
             your space feel more like you.
@@ -415,10 +398,9 @@ const Benefits = () => {
                 className="
                   relative
                   p-5 sm:p-8 rounded-[2rem]
-                  bg-white/80 backdrop-blur-sm
-                  border border-blue-100/50
-                  shadow-[0_12px_40px_rgba(59,130,246,0.25)]
-                  hover:shadow-[0_24px_70px_rgba(59,130,246,0.45)]
+                  bg-white/10 backdrop-blur-xl
+                  border border-white/20
+                  shadow-2xl
                   hover:-translate-y-2
                   transition-all duration-500
                   transform-gpu
@@ -426,21 +408,14 @@ const Benefits = () => {
                   group
                   overflow-hidden
                 "
+                style={{
+                  background: "linear-gradient(115deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 25%, transparent 40%, rgba(255,255,255,0.05) 100%)",
+                  boxShadow: "inset 0 2px 4px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(255,255,255,0.3)",
+                }}
               >
-                {/* Subtle gradient overlay on hover */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileHover={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute inset-0 bg-gradient-to-br from-violet-50/80 via-pink-50/60 to-indigo-50/80 rounded-[2rem] -z-10"
-                />
-                
-                {/* Soft glow effect */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute -inset-1 bg-gradient-to-br from-violet-200/20 via-pink-200/20 to-indigo-200/20 rounded-[2rem] blur-xl -z-20"
+                {/* Back-glow on hover */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[2rem]"
+                  style={{ background: "radial-gradient(ellipse at 50% 110%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0.1) 50%, transparent 75%)" }}
                 />
 
                 {/* Floating sparkles */}
@@ -471,39 +446,29 @@ const Benefits = () => {
                   className="absolute top-10 right-10 w-1.5 h-1.5 bg-gradient-to-br from-pink-300 to-indigo-300 rounded-full"
                 />
 
-                {/* Emoji with enhanced animation */}
-                <motion.div
-                  whileHover={{ 
-                    scale: 1.4,
-                    rotate: [0, -12, 12, -8, 8, 0],
-                    y: -8,
-                    transition: { 
-                      scale: { type: "spring", stiffness: 400, damping: 15 },
-                      rotate: { duration: 0.6 },
-                      y: { type: "spring", stiffness: 300 }
-                    }
-                  }}
-                  className="text-6xl mb-5 inline-block filter drop-shadow-lg"
-                >
+                <div className="relative mb-5 mx-auto w-16 h-16 rounded-2xl flex items-center justify-center text-3xl
+                    bg-white/40 backdrop-blur-md
+                    border border-white/50
+                    shadow-[0_4px_16px_rgba(0,0,0,0.1)]
+                    group-hover:shadow-[0_6px_24px_rgba(255,255,255,0.4)]
+                    group-hover:scale-110 group-hover:rotate-3
+                    transition-all duration-500">
                   {benefit.icon}
-                </motion.div>
+                </div>
 
                 {/* Title with refined typography */}
-                <h3 className="text-xl font-semibold mb-4 text-gray-800 group-hover:text-violet-700 transition-colors duration-400 leading-snug">
+                <h3 className="text-xl font-bold mb-4 text-gray-900 group-hover:text-violet-900 transition-colors duration-400 leading-snug">
                   {benefit.title}
                 </h3>
 
                 {/* Description with better readability */}
-                <p className="text-sm text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-400">
+                <p className="text-sm font-medium text-gray-800 leading-relaxed group-hover:text-gray-900 transition-colors duration-400">
                   {benefit.description}
                 </p>
 
                 {/* Elegant bottom accent */}
-                <motion.div
-                  initial={{ scaleX: 0, opacity: 0 }}
-                  whileHover={{ scaleX: 1, opacity: 1 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-0.5 bg-gradient-to-r from-transparent via-violet-300 to-transparent rounded-full"
+                <div className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-[2rem]"
+                    style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent)", boxShadow: "0 0 20px 4px rgba(255,255,255,0.5)" }}
                 />
               </motion.div>
             ))}
@@ -519,9 +484,10 @@ const Benefits = () => {
             className="
               relative
               rounded-[2rem]
-              bg-gradient-to-br from-indigo-500 via-blue-600 to-indigo-800
-              shadow-[0_12px_40px_rgba(79,70,229,0.4),inset_0_1px_2px_rgba(255,255,255,0.4)]
-              hover:shadow-[0_24px_70px_rgba(79,70,229,0.6),inset_0_2px_4px_rgba(255,255,255,0.5)]
+              bg-white/20 backdrop-blur-xl
+              border border-white/40
+              shadow-[0_12px_40px_rgba(0,0,0,0.1),inset_0_1px_2px_rgba(255,255,255,0.6)]
+              hover:shadow-[0_24px_70px_rgba(255,255,255,0.3),inset_0_2px_4px_rgba(255,255,255,0.8)]
               hover:-translate-y-2
               transition-all duration-500
               overflow-hidden
@@ -545,7 +511,7 @@ const Benefits = () => {
               >
                 ✨
               </motion.span>
-              <span className="text-3xl font-bold text-white drop-shadow-md leading-tight group-hover:scale-105 transition-transform duration-300">
+              <span className="text-3xl font-bold text-gray-900 drop-shadow-md leading-tight group-hover:scale-105 transition-transform duration-300">
                 See More<br/>Magic
               </span>
             </Link>

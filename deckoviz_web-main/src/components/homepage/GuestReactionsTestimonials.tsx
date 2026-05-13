@@ -159,7 +159,7 @@ const GuestReactionsTestimonials: React.FC = () => {
   </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
           <span className="text-gray-900">Testimonials from our</span>{" "}
-          <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
             Users
           </span>{" "}
           😊

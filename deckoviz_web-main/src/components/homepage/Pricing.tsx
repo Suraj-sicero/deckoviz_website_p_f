@@ -369,7 +369,7 @@ export default function Pricing() {
           <div className="text-center mb-12 sm:mb-16 relative">
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-to-r from-violet-400 to-fuchsia-400 rounded-full opacity-20 blur-2xl "></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-12 mb-4 sm:mb-6 relative" style={{ fontFamily: "'Playfair Display', serif" }}>
-              <span className="text-gray-900">Simple</span> <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">Pricing</span>
+              <span className="text-gray-900">Simple</span> <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">Pricing</span>
             </h2>
 
             {/* Special Offer Banner */}
@@ -429,7 +429,7 @@ export default function Pricing() {
 
                   <div className="mb-4">
                     {tier.price === 0 ? (
-                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">
+                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
                         Custom
                       </div>
                     ) : (
@@ -444,7 +444,7 @@ export default function Pricing() {
 
                         {/* Current price with pounds */}
                         <div className="flex items-baseline justify-center flex-wrap">
-                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">${tier.price}</span>
+                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">${tier.price}</span>
                           <span className="text-2xl sm:text-3xl font-semibold text-gray-700 ml-2">
                             (£{tier.gbpPrice})
                           </span>
@@ -548,7 +548,7 @@ export default function Pricing() {
 
                         {/* Current price with pounds */}
                         <div className="flex items-baseline justify-center flex-wrap">
-                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-transparent">${tier.price}</span>
+                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">${tier.price}</span>
                           <span className="text-2xl sm:text-3xl font-semibold text-gray-700 ml-2">
                             (£{tier.gbpPrice})
                           </span>
@@ -612,7 +612,7 @@ export default function Pricing() {
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-violet-600 to-fuchsia-600 px-8 py-6 text-white">
+              <div className="bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 px-8 py-6 text-white">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">

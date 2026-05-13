@@ -161,7 +161,7 @@ onMouseLeave={() => (isPaused.current = false)}
               />
 
               {/* BEAUTIFUL TEXT */}
-              <h3 className="mt-6 text-center text-lg font-bold tracking-wide bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent drop-shadow-sm">
+              <h3 className="mt-6 text-center text-lg font-bold tracking-wide bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent drop-shadow-sm">
                 {frame.name}
               </h3>
             </div>
@@ -178,7 +178,7 @@ const ShippingCard = ({ title, items }: any) => {
     <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-xl rounded-3xl p-10 mb-16">
 
       {/* Section Title */}
-      <h3 className="text-2xl font-semibold italic mb-8 text-center bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+      <h3 className="text-2xl font-semibold italic mb-8 text-center bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
         {title}
       </h3>
 
@@ -266,10 +266,10 @@ const GeneralInfo = () => {
 
       <div className="relative max-w-6xl mx-auto">
         {/* SHINY GRADIENT MAIN HEADING */}
-        <h1 className="text-5xl md:text-6xl font-extrabold italic text-center mb-16 tracking-wide bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.15)]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+        <h1 className="text-5xl md:text-6xl font-extrabold italic text-center mb-16 tracking-wide bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.15)]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
 
   Subscriptions, Custom Options <br className="hidden md:block"/>
-  <span className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-800 via-blue-900 to-blue-800 bg-clip-text text-transparent">
+  <span className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
     & Other Info
   </span>
 
@@ -284,7 +284,7 @@ const GeneralInfo = () => {
         <ScrollReveal direction="left">
           <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12">
             {/* CENTERED SUB HEADING */}
-            <h2 className="text-4xl font-semibold text-center mb-8 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent tracking-wide">
+            <h2 className="text-4xl font-semibold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide">
               For Individuals & Homes
             </h2>
 
@@ -391,7 +391,7 @@ const GeneralInfo = () => {
         {/* SECOND GLASS CARD - BUSINESS */}
         <ScrollReveal direction="right">
           <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-4xl font-semibold italic text-center mb-8 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+            <h2 className="text-4xl font-semibold italic text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               For Businesses & Enterprises
             </h2>
 
@@ -434,7 +434,7 @@ const GeneralInfo = () => {
         {/* THIRD GLASS CARD - ENTERPRISE ADD-ON */}
         <ScrollReveal direction="left">
           <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-3xl font-semibold text-center mb-8 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent tracking-wide">
+            <h2 className="text-3xl font-semibold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide">
               Enterprise Add-On
             </h2>
 
@@ -488,7 +488,7 @@ const GeneralInfo = () => {
         {/* FOURTH GLASS CARD - WHY UPGRADE */}
         <ScrollReveal direction="right">
           <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-3xl font-semibold italic text-center mb-10 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+            <h2 className="text-3xl font-semibold italic text-center mb-10 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               Why Upgrade?
             </h2>
 
@@ -523,7 +523,7 @@ const GeneralInfo = () => {
         {/* FIFTH GLASS CARD - ENTERPRISE SUBSCRIPTIONS */}
         <ScrollReveal direction="left">
           <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-3xl font-semibold italic text-center mb-8 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+            <h2 className="text-3xl font-semibold italic text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               Enterprise Subscriptions – Deckoviz
             </h2>
 
@@ -594,7 +594,7 @@ const GeneralInfo = () => {
 
       {/* CUSTOM FRAME OPTIONS SECTION */}
       <div className="mt-24">
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
           Custom Frame Options
         </h2>
 
@@ -604,7 +604,7 @@ const GeneralInfo = () => {
         <ScrollReveal direction="left">
         <div className="mt-32">
           {/* Heading */}
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
             Shipping & Add-Ons
           </h2>
 
@@ -711,7 +711,7 @@ const GeneralInfo = () => {
         {/* COLOUR FINISH OPTIONS */}
         <ScrollReveal direction="right">
         <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-24">
-          <h2 className="text-3xl font-semibold text-center mb-12 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-semibold text-center mb-12 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
             Colour Finish Options
           </h2>
 
@@ -792,7 +792,7 @@ const GeneralInfo = () => {
         {/* FRAME CUSTOMISATION & ADD-ON OPTIONS */}
         <ScrollReveal direction="left">
         <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-24">
-          <h2 className="text-3xl font-semibold text-center mb-14 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-semibold text-center mb-14 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
             Frame Customisation & Add-On Options
           </h2>
 
@@ -1041,7 +1041,7 @@ const GeneralInfo = () => {
           <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 blur-2xl opacity-20"></div>
 
           <div className="relative">
-            <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-blue-800 via-indigo-900 to-blue-900 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
               ⚡ How Clients Build Their Perfect Frame
             </h2>
 
@@ -1077,6 +1077,7 @@ const GeneralInfo = () => {
 };
 
 export default GeneralInfo;
+
 
 
 

@@ -230,7 +230,7 @@ const FAQ: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-6 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">Questions?</span>{" "}
-            <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
               We've got answers.
             </span>
           </h2>

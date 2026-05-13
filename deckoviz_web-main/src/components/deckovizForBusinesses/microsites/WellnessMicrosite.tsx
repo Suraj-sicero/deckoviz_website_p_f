@@ -94,7 +94,7 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
           <div className="flex flex-col sm:flex-row gap-4">
             <button 
               onClick={handleScheduleDemo}
-              className="px-8 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105"
+              className="px-8 py-4 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-indigo-500/50 transition-all duration-300 hover:scale-105"
             >
               ✨ Schedule a Demo →
             </button>
@@ -112,8 +112,8 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="group relative bg-gradient-to-br from-violet-900/20 to-pink-900/20 backdrop-blur-sm rounded-3xl p-8 border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-3xl mb-6">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#2563EB] flex items-center justify-center text-3xl mb-6">
                   🧘
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Calming Visuals for Yoga & Meditation</h3>
@@ -134,8 +134,8 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
               </div>
 
               <div className="group relative bg-gradient-to-br from-violet-900/20 to-indigo-900/20 backdrop-blur-sm rounded-3xl p-8 border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-indigo-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-indigo-500 flex items-center justify-center text-3xl mb-6">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#2563EB] flex items-center justify-center text-3xl mb-6">
                   🌅
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Circadian Synchronicity</h3>
@@ -201,7 +201,7 @@ const WellnessMicrosite: React.FC<WellnessMicrositeProps> = ({ onClose }) => {
               </p>
               <button 
                 onClick={handleGetStarted}
-                className="px-10 py-5 bg-gradient-to-r from-violet-500 to-pink-500 text-white text-lg rounded-full font-semibold hover:shadow-2xl hover:shadow-violet-500/50 transition-all duration-300 hover:scale-105"
+                className="px-10 py-5 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] text-white text-lg rounded-full font-semibold hover:shadow-2xl hover:shadow-indigo-500/50 transition-all duration-300 hover:scale-105"
               >
                 ✨ Get Started Today →
               </button>

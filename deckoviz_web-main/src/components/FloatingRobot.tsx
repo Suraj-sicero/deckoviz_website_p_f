@@ -285,22 +285,22 @@ const FloatingRobot: React.FC<FloatingRobotProps> = ({ onClick, isOpen }) => {
 
         {/* Robot Image Container with 3D Transforms */}
         <motion.div 
-          className="relative w-32 h-40 md:w-40 md:h-48 flex items-center justify-center transform-style-3d"
+          className="relative w-24 h-24 md:w-28 md:h-28 flex items-center justify-center transform-style-3d"
           style={{ rotateX, rotateY }} // Applies 3D rotation tracking the mouse
         >
           {/* Ambient Glow */}
           <motion.div
             variants={glowVariants}
             animate={actionState}
-            className="absolute inset-4 rounded-full bg-gradient-to-tr from-blue-600 via-violet-500 to-purple-600 blur-2xl z-0 pointer-events-none"
+            className="absolute -inset-2 rounded-full bg-gradient-to-tr from-orange-400 via-white to-blue-400 blur-xl z-0 pointer-events-none"
             style={{ x: eyeShiftX, y: eyeShiftY }} // Glow slightly offsets to sell 3D depth
           />
           
           <motion.img 
-            src="/vizzy_robot.svg" 
+            src="/vizzy_robot_orange.png" 
             alt="Vizzy Assistant"
-            className="relative w-full h-full object-contain z-10 drop-shadow-[0_0_20px_rgba(139,92,246,0.4)] pointer-events-none"
-            style={{ originX: 0.5, originY: 0.9 }}
+            className="relative w-full h-full object-cover rounded-full border-[3px] border-white/80 z-10 shadow-[0_8px_32px_rgba(251,146,60,0.6)] pointer-events-none"
+            style={{ originX: 0.5, originY: 0.5 }}
             draggable={false}
           />
         </motion.div>
