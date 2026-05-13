@@ -1,6 +1,8 @@
 import express from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import dotenv from "dotenv";
+import fs from "fs/promises";
+import path from "path";
 
 dotenv.config();
 
@@ -88,6 +90,64 @@ You are not merely describing products. You are helping people reimagine what sp
 
 You help bring spaces to life.`;
 
+// Cache object to store file contents and avoid repeated disk reads
+const infoCache = {
+  pricing: { data: null, timestamp: 0 },
+  features: { data: null, timestamp: 0 },
+  main: { data: null, timestamp: 0 },
+  blogs: { data: null, timestamp: 0 }
+};
+
+const CACHE_DURATION_MS = 15 * 60 * 1000; // 15 minutes cache
+
+async function fetchDeckovizInfo(topic) {
+  try {
+    const now = Date.now();
+    if (infoCache[topic] && infoCache[topic].data && (now - infoCache[topic].timestamp < CACHE_DURATION_MS)) {
+      return infoCache[topic].data;
+    }
+
+    const baseDir = path.join(process.cwd(), '../deckoviz_web-main/src');
+    let content = "Information not found.";
+
+    if (topic === 'pricing') {
+      const file = await fs.readFile(path.join(baseDir, 'components/homepage/Pricing.tsx'), 'utf-8');
+      content = file.substring(0, 15000);
+    } else if (topic === 'features') {
+      const file = await fs.readFile(path.join(baseDir, 'components/homepage/Features.tsx'), 'utf-8');
+      content = file.substring(0, 15000);
+    } else if (topic === 'main') {
+      content = "Deckoviz is an adaptive space technology that transforms screens into living, breathing environmental experiences. It is for homes and enterprises.";
+    } else if (topic === 'blogs') {
+      content = "Blogs cover AI art, retail, wellness, hotels, and visual storytelling for enterprises.";
+    }
+
+    infoCache[topic] = { data: content, timestamp: now };
+    return content;
+  } catch (err) {
+    console.error("Error reading info for topic:", topic, err);
+    return "Error retrieving information. Do your best to answer without it.";
+  }
+}
+
+const vizzyTools = [{
+  functionDeclarations: [{
+    name: "get_deckoviz_info",
+    description: "Fetch live content from the Deckoviz website regarding pricing, features, main page info, or use cases. Use this whenever the user asks for specific details.",
+    parameters: {
+      type: "OBJECT",
+      properties: {
+        topic: {
+          type: "STRING",
+          description: "The topic to fetch info for (e.g., 'pricing', 'features', 'main', 'blogs').",
+          enum: ["pricing", "features", "main", "blogs"]
+        }
+      },
+      required: ["topic"]
+    }
+  }]
+}];
+
 /**
  * POST /api/vizzy/chat
  * Main Vizzy chat endpoint — supports full conversation history
@@ -107,6 +167,7 @@ router.post("/chat", async (req, res) => {
     const model = genAI.getGenerativeModel({
       model: "gemini-2.0-flash-lite",
       systemInstruction: VIZZY_SYSTEM_PROMPT,
+      tools: vizzyTools,
       generationConfig: {
         temperature: 0.85,
         maxOutputTokens: 1024,
@@ -126,8 +187,29 @@ router.post("/chat", async (req, res) => {
 
     // Start a chat session with history context
     const chat = model.startChat({ history });
-    const result = await chat.sendMessage(lastMessage.content);
-    const responseText = result.response.text();
+    let result = await chat.sendMessage([{ text: lastMessage.content }]);
+    
+    let responseText = "";
+
+    // Check for function calls
+    const calls = result.response.functionCalls ? result.response.functionCalls() : [];
+    if (calls && calls.length > 0) {
+      const call = calls[0];
+      if (call.name === "get_deckoviz_info") {
+        const topic = call.args.topic;
+        console.log(`[Vizzy Tool] Fetching info for topic: ${topic}`);
+        const info = await fetchDeckovizInfo(topic);
+        
+        result = await chat.sendMessage([{
+          functionResponse: {
+            name: "get_deckoviz_info",
+            response: { content: info }
+          }
+        }]);
+      }
+    }
+
+    responseText = result.response.text();
 
     res.status(200).json({
       message: {

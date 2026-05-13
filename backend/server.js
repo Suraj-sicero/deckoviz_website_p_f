@@ -20,6 +20,7 @@ import dreamRoutes from "./routes/dreamRoutes.js";
 import memoryRoutes from "./routes/memoryRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import vizzyCanvasRoutes from "./routes/vizzyCanvasRoutes.js";
 
 import solarWindRouter from "./routes/solarWind.js";
 import earthquakesRouter from "./routes/earthquakes.js";
@@ -145,6 +146,7 @@ app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/
 app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
 app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
+app.use("/api/vizzy-canvas", vizzyCanvasRoutes);
 app.use("/api", dreamRoutes);
 app.use("/api/memory", memoryRoutes);
 app.use("/api", worldRoutes);
