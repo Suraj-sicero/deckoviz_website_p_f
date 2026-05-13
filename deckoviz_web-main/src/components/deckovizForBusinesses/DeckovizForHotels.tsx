@@ -534,14 +534,14 @@ const DeckovizLanding: React.FC = () => {
               {/* Card 2 - Personal Experiences */}
               <div className="relative group cursor-pointer">
                 <div
-                  className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+                  className="absolute -inset-0.5 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
                 />
                 
                 <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
                   
                   <div className="mb-6 flex items-center justify-between">
                     <div className="flex items-center space-x-4">
-                      <div className="p-3 rounded-2xl bg-gradient-to-r from-violet-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+                      <div className="p-3 rounded-2xl bg-gradient-to-r from-[#4f46e5] to-[#2563EB] group-hover:scale-110 transition-transform duration-300">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                           <path d="M9 12l2 2 4-4"/>
                           <path d="M21 12c.552 0 1-.448 1-1s-.448-1-1-1-1 .448-1 1 .448 1 1 1"/>
@@ -554,7 +554,7 @@ const DeckovizLanding: React.FC = () => {
                       <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-violet-400 transition-colors duration-300" />
                     </div>
                     
-                    <div className="text-gray-400 group-hover:text-violet-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+                    <div className="text-gray-400 group-hover:text-[#2563EB] transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
@@ -567,19 +567,19 @@ const DeckovizLanding: React.FC = () => {
 
                   <div className="flex-1 space-y-4">
                     <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+                      <div className="w-2 h-2 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
                       <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
                         Display personalized welcome messages, guest names, or curated themes
                       </p>
                     </div>
                     <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+                      <div className="w-2 h-2 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
                       <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
                         Match visuals to guest mood, purpose (honeymoon, business, family), or profile
                       </p>
                     </div>
                     <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
+                      <div className="w-2 h-2 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
                       <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
                         Surprise and delight with seasonal visuals, holiday art, or special-event backdrops
                       </p>
@@ -587,7 +587,7 @@ const DeckovizLanding: React.FC = () => {
                   </div>
 
                   <div className="mt-8 pt-4 border-t border-gray-100">
-                    <div className="h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                    <div className="h-1 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                   </div>
                 </div>
               </div>

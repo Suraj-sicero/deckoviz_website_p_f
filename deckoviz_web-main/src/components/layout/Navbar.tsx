@@ -33,106 +33,23 @@ const Button: React.FC<ButtonProps> = ({
 
   if (variant === "primary") {
     return (
-      <div className="relative inline-block group">
-        {/* Intense Animated Outer Glow */}
-        <div
-          className="absolute -inset-[1px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[3px] group-hover:blur-md blur-sm"
-          style={{
-            background: `linear-gradient(90deg, #1B2A4A, #2563EB, #1B2A4A)`,
-            backgroundSize: "300% 100%",
-            zIndex: -1,
-            animation: "flowColors 3s linear infinite",
-          }}
-        />
-        
-        {/* Secondary inner glow to add depth */}
-        <div
-          className="absolute -inset-[1px] rounded-full opacity-100 transition-all duration-300 blur-[2px]"
-          style={{
-            background: `linear-gradient(90deg, #0B1220, #1B2A4A, #0B1220)`,
-            backgroundSize: "200% 100%",
-            zIndex: -1,
-            animation: "flowColors 2s linear infinite reverse",
-          }}
-        />
-
-        <button
-          className={`${classes}`}
-          style={{
-            background: `linear-gradient(135deg, #0B1220 0%, #1B2A4A 50%, #2563EB 100%)`,
-            backgroundSize: "200% 200%",
-            boxShadow: `
-              inset 0 2px 4px rgba(255, 255, 255, 0.2),
-              inset 0 -2px 5px rgba(0, 0, 0, 0.3),
-              0 5px 15px rgba(27, 42, 74, 0.5)
-            `,
-            textShadow: `0 1px 2px rgba(0, 0, 0, 0.5)`,
-            border: "1px solid rgba(255, 255, 255, 0.2)",
-            animation: "gradientShift 4s ease infinite",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = `
-              inset 0 2px 4px rgba(255, 255, 255, 0.3),
-              inset 0 -2px 5px rgba(0, 0, 0, 0.4),
-              0 10px 25px rgba(37, 99, 235, 0.6)
-            `;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = `
-              inset 0 2px 4px rgba(255, 255, 255, 0.2),
-              inset 0 -2px 5px rgba(0, 0, 0, 0.3),
-              0 5px 15px rgba(27, 42, 74, 0.5)
-            `;
-          }}
-          {...props}
-        >
-          {/* Liquid flow internal effect */}
-          <div 
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-            style={{
-              background: 'radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 60%)',
-              mixBlendMode: 'overlay',
-            }}
-          />
-
-          {/* Sweeping shine effect */}
-          <div 
-            className="absolute top-0 -left-[100%] w-[50%] h-full transform skew-x-[-25deg] transition-all duration-700 ease-out z-0 group-hover:left-[200%]"
-            style={{
-              background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)'
-            }}
-          />
-          <span className="relative z-10 flex items-center justify-center gap-2">
-            {children}
-            <svg
-              className="w-4 h-4 transform group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-            </svg>
-          </span>
-        </button>
-
-        {/* Keyframes for animations */}
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            @keyframes flowColors {
-              0% { background-position: 0% 50%; }
-              100% { background-position: 100% 50%; }
-            }
-            @keyframes gradientShift {
-              0% { background-position: 0% 50%; }
-              50% { background-position: 100% 50%; }
-              100% { background-position: 0% 50%; }
-            }
-          `,
-          }}
-        />
-      </div>
+      <button
+        className={`${classes} bg-gradient-to-r from-[#182A4A] to-[#2563EB] shadow-md border border-white/20`}
+        {...props}
+      >
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          {children}
+          <svg
+            className="w-4 h-4 transform group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+        </span>
+      </button>
     );
   }
 
@@ -385,7 +302,7 @@ const Navbar: React.FC = () => {
       <ImagePreloader />
 
       <nav
-        className={`fixed w-full z-50 transition-all duration-700 ${isScrolled ? "bg-white shadow-md" : "bg-white/95 backdrop-blur-sm"} ${!isNavbarVisible ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
+        className={`fixed w-full z-50 transition-all duration-700 ${isScrolled ? "bg-white shadow-sm border-b border-gray-200" : "bg-white border-b border-gray-100"} ${!isNavbarVisible ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* Desktop Left Corner - Wall/Leader Hamburger Menu - Extreme Left */}
@@ -393,7 +310,7 @@ const Navbar: React.FC = () => {
             <button
               onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
-              className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-violet-50 transform hover:scale-110 bg-white/90 backdrop-blur-sm shadow-sm border border-gray-100"
+              className="text-gray-700 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-xl hover:bg-blue-50 transform hover:scale-110 bg-white shadow-sm border border-gray-200"
             >
               <Menu size={20} />
             </button>
@@ -594,13 +511,12 @@ const Navbar: React.FC = () => {
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
                 onMouseLeave={() => setIsBusinessDropdownOpen(false)}
               >
-                <button className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group flex items-center space-x-1">
+                <button className={`transition-all duration-300 font-medium relative group flex items-center space-x-1 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm ${currentPath.includes('deckoviz-for') ? 'text-[#2563EB] border-blue-200' : 'text-gray-700 hover:text-[#2563EB] hover:bg-gray-50'}`}>
                   <span>Deckoviz For Businesses</span>
                   <ChevronDown
                     size={16}
                     className={`transition-transform duration-300 ${isBusinessDropdownOpen ? "rotate-180" : ""}`}
                   />
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
                 </button>
 
                 {/* Beautiful Dropdown with Optimized Images */}
@@ -761,62 +677,50 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
+                className={`transition-all duration-300 font-medium relative group whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm ${currentPath.startsWith('/pricing') ? 'text-[#2563EB] border-blue-200' : 'text-gray-700 hover:text-[#2563EB] hover:bg-gray-50'}`}
               >
                 Pricing
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
               <a
                 href="/blog"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
+                className={`transition-all duration-300 font-medium relative group whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm ${currentPath.startsWith('/blog') ? 'text-[#2563EB] border-blue-200' : 'text-gray-700 hover:text-[#2563EB] hover:bg-gray-50'}`}
               >
                 Blog
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
               </a>
             </div>
 
             {/* Center Logo */}
             <div className="flex-shrink-0 flex justify-center items-center z-50">
-              <a href="/" className="flex items-center space-x-1">
+              <a href="/" className="flex items-center">
                 <img
                   src="/images/deckovizlogo.png"
                   alt="Deckoviz Symbol"
-                  className="h-7 sm:h-8 md:h-12 w-auto object-contain"
+                  className="h-10 sm:h-12 md:h-12 w-auto object-contain"
                 />
                 <img
-                  src="/images/new_logoo.jpeg"
+                  src="/images/bg_removed_logo.png"
                   alt="Deckoviz Space Labs Logo"
-                  className="h-7 sm:h-8 md:h-12 w-auto object-contain"
+                  className="h-10 sm:h-12 md:h-12 w-auto object-contain -ml-2"
                 />
               </a>
             </div>
 
             {/* Right Navigation */}
             <div className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-end">
-              <a
-                href="/about"
-                className="text-gray-700 hover:text-[#8345EE] transition-all duration-300 font-medium relative group whitespace-nowrap"
-              >
-                About us
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-[#8345EE] to-[#6B2FD6] transition-all duration-300 group-hover:w-full rounded-full"></span>
-              </a>
-              <Button variant="primary" onClick={handleBuyNow}>
-                Buy Now
-              </Button>
 
               {/* User Profile / Login */}
-              <div className="relative ml-2">
+              <div className="relative mx-2">
                 {user ? (
                   <div 
                     className="relative"
                     onMouseEnter={() => setIsUserDropdownOpen(true)}
                     onMouseLeave={() => setIsUserDropdownOpen(false)}
                   >
-                    <button className="flex items-center gap-2 p-1.5 rounded-full bg-violet-50 border border-violet-100 hover:bg-violet-100 transition-colors">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                    <button className="flex items-center gap-2 p-1.5 rounded-full bg-blue-50 border border-blue-100 hover:bg-blue-100 transition-colors">
+                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center text-white shadow-sm">
                         <User size={16} />
                       </div>
-                      <ChevronDown size={14} className={`text-violet-600 transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
+                      <ChevronDown size={14} className={`text-[#182A4A] transition-transform duration-300 ${isUserDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
 
                     {/* User Dropdown */}
@@ -825,7 +729,7 @@ const Navbar: React.FC = () => {
                         <div className="px-4 py-3 border-b border-gray-50 bg-gray-50/50">
                           <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Account</p>
                           <p className="text-sm font-semibold text-gray-800 truncate">{user.email}</p>
-                          <p className="text-xs text-violet-600 font-bold mt-1">🪙 {user.credits} Credits</p>
+                          <p className="text-xs text-[#2563EB] font-bold mt-1">🪙 {user.credits} Credits</p>
                         </div>
                         <div className="p-2">
                           <button 
@@ -842,18 +746,22 @@ const Navbar: React.FC = () => {
                 ) : (
                   <button 
                     onClick={() => openAuthModal()}
-                    className="px-4 py-2 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-xs hover:bg-violet-50 transition-all whitespace-nowrap"
+                    className="transition-all duration-300 font-medium relative group whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm text-gray-700 hover:text-[#2563EB] hover:bg-gray-50"
                   >
                     Login
                   </button>
                 )}
               </div>
 
+              <Button variant="primary" onClick={handleBuyNow}>
+                Buy Now
+              </Button>
+
               <div className="flex items-center space-x-1 z-50 pl-2">
                 {/* Previous */}
                 <button
                   onClick={prev}
-                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-blue-50 transition transform hover:scale-110"
                 >
                   <SkipBack size={16} className="text-blue-600" />
                 </button>
@@ -861,7 +769,7 @@ const Navbar: React.FC = () => {
                 {/* Play / Pause */}
                 <button
                   onClick={toggle}
-                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-blue-50 transition transform hover:scale-110"
                 >
                   {isPlaying ? (
                     <Volume2 size={16} className="text-blue-600" />
@@ -873,7 +781,7 @@ const Navbar: React.FC = () => {
                 {/* Next */}
                 <button
                   onClick={next}
-                  className="p-1.5 rounded-full bg-white/80 backdrop-blur shadow-sm border hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-blue-50 transition transform hover:scale-110"
                 >
                   <SkipForward size={16} className="text-blue-600" />
                 </button>
@@ -883,7 +791,7 @@ const Navbar: React.FC = () => {
             {/* Mobile Menu Button with cool animation */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-gray-700 hover:text-[#8345EE] transition-all duration-300 p-2 rounded-lg hover:bg-violet-50 transform hover:scale-110"
+              className="md:hidden text-gray-700 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-lg hover:bg-blue-50 transform hover:scale-110"
             >
               <div className="relative w-6 h-6">
                 <Menu
@@ -915,7 +823,7 @@ const Navbar: React.FC = () => {
                 onClick={() =>
                   setIsBusinessDropdownOpen(!isBusinessDropdownOpen)
                 }
-                className="w-full text-left text-gray-700 hover:text-[#8345EE] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-violet-50 flex items-center justify-between"
+                className="w-full text-left text-gray-700 hover:text-[#2563EB] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-blue-50 flex items-center justify-between"
               >
                 <span>Deckoviz For Business</span>
                 <ChevronDown
@@ -933,7 +841,7 @@ const Navbar: React.FC = () => {
                     <button
                       key={index}
                       onClick={() => handleBusinessNavigation(category.route)}
-                      className="w-full text-left text-gray-600 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
+                      className="w-full text-left text-gray-600 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
                     >
                       <div className="w-6 h-6 flex-shrink-0">
                         {/* OPTIMIZATION 2: Use OptimizedImage in mobile too */}
@@ -964,7 +872,7 @@ const Navbar: React.FC = () => {
             <div className="border-t border-gray-200 pt-4 space-y-0">
               <a
                 href="/Wall-Of-Love"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Wall Of Love
@@ -972,7 +880,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/Leaderboard"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Leaderboard
@@ -980,7 +888,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/contact"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Contact Us
@@ -988,7 +896,7 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Pricing
@@ -996,30 +904,24 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/blog"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
+                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
                 onClick={() => setIsOpen(false)}
               >
                 Blog
               </a>
 
-              <a
-                href="/about"
-                className="block text-gray-700 hover:text-[#8345EE] hover:bg-violet-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                About us
-              </a>
+
 
               <div className="pt-4 space-y-3">
                 {user ? (
-                  <div className="p-4 rounded-2xl bg-violet-50 border border-violet-100">
+                  <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 flex items-center justify-center text-white shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center text-white shadow-sm">
                         <User size={20} />
                       </div>
                       <div>
                         <p className="text-sm font-bold text-gray-800 truncate">{user.email}</p>
-                        <p className="text-xs text-violet-600 font-bold">🪙 {user.credits} Credits</p>
+                        <p className="text-xs text-[#2563EB] font-bold">🪙 {user.credits} Credits</p>
                       </div>
                     </div>
                     <button 
@@ -1033,7 +935,7 @@ const Navbar: React.FC = () => {
                 ) : (
                   <button 
                     onClick={() => { openAuthModal(); setIsOpen(false); }}
-                    className="w-full py-3 rounded-xl border-2 border-violet-100 text-violet-600 font-bold text-sm hover:bg-violet-50 transition-all"
+                    className="w-full py-3 rounded-xl border-2 border-blue-100 text-[#2563EB] font-bold text-sm hover:bg-blue-50 transition-all"
                   >
                     Login / Sign Up
                   </button>

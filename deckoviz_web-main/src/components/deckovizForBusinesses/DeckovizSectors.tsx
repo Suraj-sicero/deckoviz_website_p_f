@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Palette, SunMedium, MonitorSmartphone, Box, SlidersHorizontal, Wine, Building2, ShoppingBag, Leaf, Building, Ticket, Image as ImageIcon, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // Import microsites dynamically to avoid any bundling issues
@@ -30,27 +30,27 @@ const DeckovizSectors: React.FC = () => {
 
   const capabilities = [
     {
-      icon: "🎨",
+      icon: <Palette className="w-8 h-8 text-white" />,
       title: "Generate custom art, visuals, and animations for your space",
       gradient: "from-orange-400 to-pink-400"
     },
     {
-      icon: "🌅",
+      icon: <SunMedium className="w-8 h-8 text-white" />,
       title: "Adapt content to time of day, mood, season, or audience",
       gradient: "from-yellow-400 to-orange-400"
     },
     {
-      icon: "📱",
+      icon: <MonitorSmartphone className="w-8 h-8 text-white" />,
       title: "Display dynamic signage, product visuals, or brand storytelling",
       gradient: "from-blue-400 to-cyan-400"
     },
     {
-      icon: "🎭",
+      icon: <Box className="w-8 h-8 text-white" />,
       title: "Create immersive environments instead of static interiors",
       gradient: "from-violet-400 to-indigo-400"
     },
     {
-      icon: "🎮",
+      icon: <SlidersHorizontal className="w-8 h-8 text-white" />,
       title: "Control everything remotely through a unified system",
       gradient: "from-pink-400 to-indigo-400"
     }
@@ -59,7 +59,7 @@ const DeckovizSectors: React.FC = () => {
   const sectors = [
     {
       id: "restaurants",
-      icon: "🍷",
+      icon: <Wine className="w-8 h-8 text-white" />,
       title: "Restaurants & Fine Dining",
       category: "FOOD & BEVERAGE",
       gradient: "from-red-400 to-pink-400",
@@ -67,7 +67,7 @@ const DeckovizSectors: React.FC = () => {
     },
     {
       id: "hotels",
-      icon: "🏨",
+      icon: <Building2 className="w-8 h-8 text-white" />,
       title: "Hotels & Luxury Resorts",
       category: "HOSPITALITY",
       gradient: "from-blue-400 to-cyan-400",
@@ -75,7 +75,7 @@ const DeckovizSectors: React.FC = () => {
     },
     {
       id: "retail",
-      icon: "🛍️",
+      icon: <ShoppingBag className="w-8 h-8 text-white" />,
       title: "Retail & Flagship Stores",
       category: "RETAIL",
       gradient: "from-orange-400 to-yellow-400",
@@ -83,15 +83,15 @@ const DeckovizSectors: React.FC = () => {
     },
     {
       id: "wellness",
-      icon: "🧘",
+      icon: <Leaf className="w-8 h-8 text-white" />,
       title: "Spas & Wellness Centers",
       category: "WELLNESS",
-      gradient: "from-violet-400 to-pink-400",
+      gradient: "from-[#4f46e5] to-[#2563EB]",
       highlighted: false
     },
     {
       id: "offices",
-      icon: "🏢",
+      icon: <Building className="w-8 h-8 text-white" />,
       title: "Corporate Offices & HQs",
       category: "ENTERPRISE",
       gradient: "from-indigo-400 to-blue-400",
@@ -99,7 +99,7 @@ const DeckovizSectors: React.FC = () => {
     },
     {
       id: "events",
-      icon: "🎪",
+      icon: <Ticket className="w-8 h-8 text-white" />,
       title: "Events, Galas & Venues",
       category: "EVENTS",
       gradient: "from-pink-400 to-red-400",
@@ -107,7 +107,7 @@ const DeckovizSectors: React.FC = () => {
     },
     {
       id: "arts",
-      icon: "🖼️",
+      icon: <ImageIcon className="w-8 h-8 text-white" />,
       title: "Art Galleries & Museums",
       category: "ARTS",
       gradient: "from-cyan-400 to-blue-400",
@@ -115,7 +115,7 @@ const DeckovizSectors: React.FC = () => {
     },
     {
       id: "education",
-      icon: "🎓",
+      icon: <GraduationCap className="w-8 h-8 text-white" />,
       title: "Schools & Universities",
       category: "EDUCATION",
       gradient: "from-green-400 to-teal-400",
@@ -152,8 +152,8 @@ const DeckovizSectors: React.FC = () => {
                 <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-in-out" />
                 
                 {/* Icon Container */}
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-2xl shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] relative z-10 group-hover:scale-110 transition-transform duration-500 ease-out">
-                  🏢
+                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] relative z-10 group-hover:scale-110 transition-transform duration-500 ease-out">
+                  <Building className="w-6 h-6" />
                 </div>
 
                 <div className="text-left relative z-10 py-1">
@@ -180,7 +180,7 @@ const DeckovizSectors: React.FC = () => {
 
           {/* Badge */}
           <div className="text-center mb-8 relative z-10">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-violet-100 shadow-[0_8px_16px_rgba(147,51,234,0.1)] text-violet-600 text-sm font-bold tracking-widest uppercase">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-indigo-100 shadow-[0_8px_16px_rgba(147,51,234,0.1)] text-[#2563EB] text-sm font-bold tracking-widest uppercase">
               <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse"></span>
               Built For
             </span>
@@ -190,7 +190,7 @@ const DeckovizSectors: React.FC = () => {
           <h2 className="text-center text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] mb-8 leading-tight tracking-tight text-gray-900 relative z-10 drop-shadow-sm">
             What Businesses <span className="italic text-gray-400">&</span>{" "}
             <span className="italic relative inline-block">
-              <span className="absolute -inset-2 bg-gradient-to-r from-violet-100 to-indigo-100 blur-xl opacity-50 rounded-full"></span>
+              <span className="absolute -inset-2 bg-gradient-to-r from-indigo-50 to-blue-50 blur-xl opacity-50 rounded-full"></span>
               <span className="relative bg-gradient-to-r from-violet-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent pb-2">
                 Spaces
               </span>
@@ -215,7 +215,7 @@ const DeckovizSectors: React.FC = () => {
             {capabilities.map((capability, index) => (
               <div
                 key={index}
-                className="group relative bg-white/60 backdrop-blur-xl rounded-3xl p-8 border border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.07)] hover:shadow-[0_24px_64px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:border-violet-300/80 hover:-translate-y-2 transition-all duration-500 overflow-hidden"
+                className="group relative bg-white/60 backdrop-blur-xl rounded-3xl p-8 border border-indigo-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.07)] hover:shadow-[0_24px_64px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:border-violet-300/80 hover:-translate-y-2 transition-all duration-500 overflow-hidden"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 <div className="relative z-10">
@@ -248,7 +248,7 @@ const DeckovizSectors: React.FC = () => {
                     group relative bg-white/80 backdrop-blur-md rounded-3xl p-6 border transition-all duration-500 cursor-pointer overflow-hidden
                     ${sector.highlighted 
                       ? 'border-orange-300 shadow-[0_8px_30px_rgba(251,146,60,0.18),0_2px_8px_rgba(251,146,60,0.10)] hover:shadow-[0_20px_50px_rgba(251,146,60,0.32),0_4px_16px_rgba(251,146,60,0.16)] hover:-translate-y-1' 
-                      : 'border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.07)] hover:border-violet-300/80 hover:shadow-[0_20px_56px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:-translate-y-1'
+                      : 'border-indigo-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.07)] hover:border-violet-300/80 hover:shadow-[0_20px_56px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:-translate-y-1'
                     }
                   `}
                 >
@@ -531,8 +531,8 @@ const RestaurantMicrosite: React.FC<{ onClose: () => void }> = ({ onClose }) => 
 
               {/* Feature Card 3 */}
               <div className="group relative bg-gradient-to-br from-violet-900/20 to-pink-900/20 backdrop-blur-sm rounded-3xl p-8 border border-violet-500/20 hover:border-violet-500/40 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-t-3xl" />
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-3xl mb-6">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-t-3xl" />
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#4f46e5] to-[#2563EB] flex items-center justify-center text-3xl mb-6">
                   🖼️
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Chef Storytelling Walls</h3>

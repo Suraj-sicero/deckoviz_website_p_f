@@ -24,7 +24,7 @@ export default function StartHere() {
           <div className="p-12 md:p-16 text-center">
 
             {/* CENTERED HEADING */}
-            <h2 className="text-4xl font-semibold bg-gradient-to-r from-violet-600 via-pink-500 to-fuchsia-500 bg-clip-text text-transparent mb-8">
+            <h2 className="text-4xl font-semibold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent mb-8">
               Start Here
             </h2>
 
@@ -45,7 +45,7 @@ export default function StartHere() {
 
             <button
               onClick={() => navigate("/core-reading")}
-              className="px-12 py-3 rounded-xl bg-gradient-to-r from-violet-600 via-pink-500 to-fuchsia-500 text-white font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
+              className="px-12 py-3 rounded-xl bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 text-white font-medium shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5"
             >
               Core Reading
             </button>
@@ -61,3 +61,4 @@ export default function StartHere() {
     </section>
   );
 }
+

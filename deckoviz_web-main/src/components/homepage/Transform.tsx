@@ -68,7 +68,7 @@ export default function TransformWalls() {
               </motion.h2>
               <motion.h3 initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.7 }} className="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                 <span className="text-gray-900">Transform Your</span>{" "}
-                <span className="italic text-transparent bg-gradient-to-r from-violet-600 via-blue-600 to-pink-600 bg-clip-text bg-[length:200%_auto] animate-gradient">World.</span>
+                <span className="italic text-transparent bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text bg-[length:200%_auto] animate-gradient">World.</span>
               </motion.h3>
             </motion.div>
 
@@ -681,3 +681,4 @@ export default function TransformWalls() {
     </section>
   );
 }
+
