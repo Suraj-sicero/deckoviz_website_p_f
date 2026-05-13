@@ -13,6 +13,22 @@ import {
   BarChart2,
   Shield,
   X,
+  Video,
+  Palette,
+  Megaphone,
+  Camera,
+  Bot,
+  Image as ImageIcon,
+  Users,
+  Mic,
+  Music,
+  Clock,
+  Brain,
+  Building2,
+  ShoppingBag,
+  Sparkles,
+  Star,
+  ClipboardList,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -127,8 +143,8 @@ const EnterpriseFeatureCard = ({
     [key: string]: { gradient: string; text: string; accent: string };
   } = {
     violet: {
-      gradient: "from-violet-500 to-indigo-500",
-      text: "text-violet-600",
+      gradient: "from-[#4f46e5] to-[#2563EB]",
+      text: "text-[#2563EB]",
       accent: "group-hover:from-violet-400",
     },
     blue: {
@@ -262,7 +278,7 @@ const DemoRequestModal = ({ onClose }: DemoRequestModalProps) => {
 
       <div className="relative w-full max-w-lg">
 
-        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-violet-500 to-pink-500 rounded-2xl blur opacity-30"></div>
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 via-indigo-600 to-blue-500 rounded-2xl blur opacity-30"></div>
 
         <div className="relative bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl w-full border border-white/40">
 
@@ -398,11 +414,11 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
             className="relative w-full max-w-[800px] max-h-[90vh] bg-[#fcfcfc] rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col border border-white/50"
           >
             {/* Elegant Top Gradient Bar */}
-            <div className="absolute top-0 inset-x-0 h-[6px] bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-500 opacity-90"></div>
+            <div className="absolute top-0 inset-x-0 h-[6px] bg-gradient-to-r from-indigo-700 via-indigo-500 to-blue-500 opacity-90"></div>
 
             <div className="flex justify-between items-center px-8 py-6 border-b border-gray-100 bg-white/80 backdrop-blur-md z-10 sticky top-0">
               <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 font-serif">
-                <span className="bg-gradient-to-r from-indigo-900 to-purple-800 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-indigo-900 to-indigo-700 bg-clip-text text-transparent">
                   THE DECKOVIZ THESIS
                 </span>
                 <span className="text-gray-400 font-light ml-2 tracking-normal">FOR ENTERPRISES</span>
@@ -467,7 +483,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   <h3 className="text-xl font-bold text-gray-900 mb-4 font-serif">But most spaces are still static</h3>
                   <p>Despite this shift, the tools available to physical businesses are still stuck in an earlier era. Spaces today are largely static, non-adaptive, visually limited, and disconnected from the customer.</p>
                   <p className="mt-4">Walls display the same posters. Screens loop the same content. Ambience is fixed. There is no intelligence. No responsiveness. No evolution.</p>
-                  <p className="mt-4 font-bold text-rose-900">This creates a fundamental mismatch: Dynamic customers entering static environments.</p>
+                  <p className="mt-4 font-bold text-indigo-900">This creates a fundamental mismatch: Dynamic customers entering static environments.</p>
                 </div>
               </div>
 
@@ -479,7 +495,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 <p>Not just any stories. Coherent, immersive, visually rich narratives that connect the product, the brand, and the customer in a way that feels alive.</p>
                 <p className="mt-4">Because stories are what give meaning to things. Money is a story. Nations are stories. Movements are stories. Brands, at their best, are stories.</p>
                 <p className="mt-4 font-medium text-gray-900">And the only businesses that will thrive in the future will need to become brands. Your brand must become your business differentiator, not your products or services.</p>
-                <p className="mt-6 text-lg font-bold text-center text-purple-900 tracking-wide uppercase">
+                <p className="mt-6 text-lg font-bold text-center text-indigo-900 tracking-wide uppercase">
                   In a world where creation is abundant…<br />coherence becomes the moat.
                 </p>
               </div>
@@ -548,8 +564,8 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               </div>
 
               {/* Section 9 */}
-              <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-8 border border-indigo-100 shadow-sm relative overflow-hidden">
-                <div className="absolute right-0 top-0 w-32 h-32 bg-purple-200/50 rounded-full blur-3xl"></div>
+              <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-8 border border-indigo-100 shadow-sm relative overflow-hidden">
+                <div className="absolute right-0 top-0 w-32 h-32 bg-indigo-200/50 rounded-full blur-3xl"></div>
                 <div className="absolute left-0 bottom-0 w-32 h-32 bg-indigo-200/50 rounded-full blur-3xl"></div>
 
                 <h3 className="text-xl font-bold text-indigo-900 mb-4 font-serif relative z-10">Vizzy — the brand, made alive</h3>
@@ -577,9 +593,9 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               {/* Epic Closing Block */}
               <div className="relative mt-16 rounded-3xl overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-gray-900"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-gray-900 to-purple-900/80"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-gray-900 to-indigo-900/80"></div>
                 <div className="absolute -top-24 -left-24 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-30"></div>
-                <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-pink-500 rounded-full blur-[100px] opacity-30"></div>
+                <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-30"></div>
 
                 <div className="relative p-10 md:p-14 text-center z-10 flex flex-col items-center justify-center min-h-[300px]">
                   <p className="text-lg md:text-xl font-medium text-gray-300 leading-relaxed max-w-2xl mx-auto">
@@ -589,12 +605,12 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                     Very few have a true experience layer.
                   </p>
 
-                  <div className="w-12 h-1 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto my-10 rounded-full"></div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-indigo-400 to-blue-400 mx-auto my-10 rounded-full"></div>
 
                   <p className="text-2xl md:text-4xl font-serif text-white/90 leading-tight">
                     In a world where anything can be made…
                   </p>
-                  <p className="text-3xl md:text-5xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300 mt-4 leading-tight">
+                  <p className="text-3xl md:text-5xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-indigo-300 to-indigo-300 mt-4 leading-tight">
                     what matters is how it is experienced.
                   </p>
 
@@ -717,32 +733,32 @@ export default function DeckovizForEnterprise() {
     {
       title: "Dynamic Product Display Enhancer",
       description: "Turn static product images into animated visuals, artistic loops, or short videos. Showcase products in motion, in use, or reimagined through high-production generative visuals.",
-      icon: "🎥"
+      icon: <Video size={28} className="text-[#2563EB]" />
     },
     {
       title: "AI Brand-Themed Artwork Engine",
       description: "Generate living artworks inspired by your brand identity, location, history, and values. Every space gains a unique visual language that evolves with time and context.",
-      icon: "🎨"
+      icon: <Palette size={28} className="text-[#2563EB]" />
     },
     {
       title: "Generative Marketing & Signage Suite",
       description: "Instantly create menus, posters, signage, promotions, and announcements in your brand style. Update content dynamically without design bottlenecks.",
-      icon: "📢"
+      icon: <Megaphone size={28} className="text-[#2563EB]" />
     },
     {
       title: "Customer Visual Keepsakes",
       description: "Create personalized visuals for guests or customers during special moments and let them take it home digitally. experiences turn into shareable memories.",
-      icon: "📸"
+      icon: <Camera size={28} className="text-[#2563EB]" />
     },
     {
       title: "Vizzy for Business (AI Brand Companion)",
       description: "Vizzy acts as a brand ambassador, storyteller, and guide. It answers questions, introduces offerings, and shapes experiences with personality and restraint.",
-      icon: "🤖"
+      icon: <Bot size={28} className="text-[#2563EB]" />
     },
     {
       title: "AI Montage & Memory Creator",
       description: "Instantly generate artistic montages from photos or events. ideal for hospitality, celebrations, retail milestones, or real estate walkthroughs.",
-      icon: "🖼️"
+      icon: <ImageIcon size={28} className="text-[#2563EB]" />
     }
   ];
 
@@ -750,52 +766,52 @@ export default function DeckovizForEnterprise() {
     {
       title: "Guest & Visitor Personalization",
       description: "Remember frequent guests, customer personas, or visitor types. Adapt visuals and ambience subtly to make people feel recognized, not tracked.",
-      icon: "👥"
+      icon: <Users size={28} className="text-[#2563EB]" />
     },
     {
       title: "Collections with AI Narration",
       description: "Turn products, menus, stories, or spaces into narrated visual collections. Voice adds trust, warmth, and clarity without feeling salesy.",
-      icon: "🎙️"
+      icon: <Mic size={28} className="text-[#2563EB]" />
     },
     {
       title: "AI Music & Sound Generator",
       description: "Create brand-themed music, product-specific soundscapes, or ambient audio that aligns with time of day, energy, and context.",
-      icon: "🎵"
+      icon: <Music size={28} className="text-[#2563EB]" />
     },
     {
       title: "Smart Display Scheduling",
       description: "Automate displays by time, season, event, audience type, or business rhythm. Morning, evening, weekday, festive, or campaign-specific modes run automatically.",
-      icon: "⏰"
+      icon: <Clock size={28} className="text-[#2563EB]" />
     },
     {
       title: "Adaptive Intelligence Engine",
       description: "Over time, Deckoviz learns what works in each space. Displays, moods, and stories improve continuously based on real-world interaction patterns.",
-      icon: "🧠"
+      icon: <Brain size={28} className="text-[#2563EB]" />
     },
     {
       title: "Enterprise Control & Admin Suite",
       description: "Centralized dashboard for multi-location control, scheduling, approvals, branding consistency, and future CRM or POS integrations.",
-      icon: "🏢"
+      icon: <Building2 size={28} className="text-[#2563EB]" />
     },
     {
       title: "Marketplace & Commerce Layer",
       description: "Use Deckoviz as a visual commerce surface. Showcase products, experiences, or digital items directly within the environment.",
-      icon: "🛍️"
+      icon: <ShoppingBag size={28} className="text-[#2563EB]" />
     },
     {
       title: "Multisensory Moodscapes Engine",
       description: "Sync visuals with music, adaptive backlighting, and future scent modules to create deeply immersive, emotionally resonant environments.",
-      icon: "✨"
+      icon: <Sparkles size={28} className="text-[#2563EB]" />
     },
     {
       title: "Social Proof & Testimonial Displays",
       description: "Curate reviews, testimonials, and customer moments into ambient, trust-building visual loops without turning the space into a feed.",
-      icon: "⭐"
+      icon: <Star size={28} className="text-[#2563EB]" />
     },
     {
       title: "Dynamic Visual Menus & Catalogs",
       description: "Replace static menus or catalogs with living visual systems that rotate items, highlight specials, and tell stories visually.",
-      icon: "📋"
+      icon: <ClipboardList size={28} className="text-[#2563EB]" />
     }
   ];
 
@@ -952,10 +968,10 @@ export default function DeckovizForEnterprise() {
     <Link
       key={post.slug}
       to={`/blog/${post.slug}`}
-      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-violet-400 transition"
+      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-indigo-400 transition"
     >
       <div className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition pointer-events-none
-        bg-gradient-to-r from-violet-200/40 via-pink-200/30 to-indigo-200/40 blur-xl" />
+        bg-gradient-to-r from-indigo-200/40 via-blue-200/30 to-indigo-200/40 blur-xl" />
 
       <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
         <img
@@ -966,7 +982,7 @@ export default function DeckovizForEnterprise() {
       </div>
 
       <div className="relative flex-grow">
-        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-violet-600 transition">
+        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#2563EB] transition">
           {post.title}
         </h3>
 
@@ -976,7 +992,7 @@ export default function DeckovizForEnterprise() {
           </p>
         )}
 
-        <div className="mt-2 text-sm text-violet-600 opacity-0 group-hover:opacity-100 transition">
+        <div className="mt-2 text-sm text-[#2563EB] opacity-0 group-hover:opacity-100 transition">
           Read →
         </div>
       </div>
@@ -1065,7 +1081,7 @@ export default function DeckovizForEnterprise() {
             {/* glow on hover */}
             <div className="
             absolute inset-0 rounded-[40px] 
-            bg-gradient-to-r from-violet-500/20 via-indigo-500/20 to-pink-500/20 
+            bg-gradient-to-r from-indigo-500/20 via-blue-500/20 to-indigo-500/20 
             blur-3xl opacity-40 
             group-hover:opacity-70 
             transition duration-500
@@ -1114,11 +1130,13 @@ export default function DeckovizForEnterprise() {
       {/* ================= FULL ENTERPRISE OVERVIEW - GLASS CARD ================= */}
       <section className="py-16 md:py-24 bg-white relative overflow-hidden">
 
-        {/* Ambient Glow */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 
-        w-[400px] h-[400px] md:w-[700px] md:h-[700px] 
-        bg-gradient-to-br from-violet-500/30 via-pink-500/25 to-indigo-500/20 
-        blur-[120px] md:blur-[160px]" />
+        {/* Ambient Glow / Blobs for transparent bg */}
+        <div className="absolute top-[5%] left-[5%] w-[500px] h-[500px] rounded-full blur-[90px] pointer-events-none opacity-60"
+          style={{ background: "radial-gradient(circle, #4f46e5, #6366f1)" }} />
+        <div className="absolute top-[40%] right-[5%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-50"
+          style={{ background: "radial-gradient(circle, #2563EB, #3b82f6)" }} />
+        <div className="absolute bottom-[-5%] left-[25%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-40"
+          style={{ background: "radial-gradient(circle, #818cf8, #a5b4fc)" }} />
 
         <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
 
@@ -1127,36 +1145,51 @@ export default function DeckovizForEnterprise() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: false, amount: 0.3 }}
-            className="relative rounded-[28px] md:rounded-[40px] overflow-hidden shadow-[0_40px_120px_rgba(168,85,247,0.35)]"
+            className="group relative rounded-[28px] md:rounded-[40px] overflow-hidden bg-white/40 backdrop-blur-2xl border-t-2 border-l-2 border-r border-b border-white"
+            style={{
+               boxShadow: "inset 0 4px 20px rgba(255,255,255,1), inset 0 -4px 10px rgba(255,255,255,0.3), 0 20px 60px rgba(24,42,74,0.12)",
+            }}
           >
 
+            {/* Dynamic Shine Overlay 1 (Broad Sweep) */}
+            <div className="absolute inset-0 z-0 pointer-events-none rounded-[28px] md:rounded-[40px] mix-blend-overlay"
+                 style={{
+                   background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.5) 60%, transparent 80%)",
+                   backgroundSize: "200% 100%",
+                   animation: "glassShine 3s infinite linear"
+                 }}
+            />
+
+            {/* Dynamic Shine Overlay 2 (Sharp Flare) */}
+            <div className="absolute inset-0 z-0 pointer-events-none rounded-[28px] md:rounded-[40px]"
+                 style={{
+                   background: "linear-gradient(65deg, transparent 45%, rgba(255,255,255,0.8) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.8) 51%, transparent 55%)",
+                   backgroundSize: "300% 100%",
+                   animation: "glassShine 4.5s infinite linear reverse"
+                 }}
+            />
+
             <div
-              className="text-white backdrop-blur-xl p-6 md:p-10"
+              className="text-[#182A4A] p-8 md:p-12 relative z-10"
               onMouseEnter={() => setIsHover(true)}
               onMouseLeave={() => setIsHover(false)}
-              style={{
-                background:
-                  "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 45%, #f5576c 55%, #4facfe 100%)",
-                backgroundSize: "250% 250%",
-                backgroundPosition: pos,
-              }}
             >
 
               {/* Header */}
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-6 md:mb-8">
-                <h2 className="text-xl md:text-2xl font-semibold tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight bg-gradient-to-br from-[#182A4A] via-[#2563EB] to-[#182A4A] bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Deckoviz for Enterprises
                 </h2>
 
-                <div className="px-4 py-1 rounded-full text-xs md:text-sm bg-white/10 border border-white/20 w-fit">
+                <div className="px-4 py-1.5 rounded-full text-xs md:text-sm bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100/50 text-[#2563EB] font-medium w-fit shadow-sm">
                   Quick Overview
                 </div>
               </div>
 
               {/* Progress */}
               <div className="mb-8 md:mb-10">
-                <div className="flex justify-between text-sm text-white/70 mb-3">
-                  <p className="text-white text-sm md:text-base">
+                <div className="flex justify-between text-sm text-[#1e293b] mb-3 font-medium">
+                  <p className="text-[#182A4A] text-sm md:text-base font-semibold">
                     Introducing the Generative Ambiance And Visual Portal for Enterprises
                   </p>
                 </div>
@@ -1164,7 +1197,7 @@ export default function DeckovizForEnterprise() {
               </div>
 
               {/* Content */}
-              <div className="space-y-5 text-white/80 leading-relaxed text-sm md:text-[16px]">
+              <div className="space-y-6 text-[#334155] leading-relaxed text-[15px] md:text-[17px] font-medium">
                 <p>
                   Most spaces are designed once - and then left to decay into the background.
                   Static walls. Stale visuals. Dull posters. Generic experiences. Repetitive screens.
@@ -1200,7 +1233,7 @@ export default function DeckovizForEnterprise() {
               </div>
 
               {/* Footer Pills */}
-              <div className="mt-8 md:mt-10 flex gap-3 flex-wrap">
+              <div className="mt-10 md:mt-12 flex gap-3 flex-wrap">
                 {[
                   "Dynamic Art",
                   "Brand Storyteller",
@@ -1210,7 +1243,7 @@ export default function DeckovizForEnterprise() {
                 ].map((item) => (
                   <div
                     key={item}
-                    className="px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-white/10 text-xs md:text-sm border border-white/20"
+                    className="px-4 md:px-5 py-2 md:py-2.5 rounded-2xl bg-white/60 text-xs md:text-sm border border-white shadow-sm text-[#182A4A] font-semibold hover:bg-white hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 cursor-default"
                   >
                     {item}
                   </div>
@@ -1231,6 +1264,10 @@ export default function DeckovizForEnterprise() {
                 50% { background-position: 100% 50%; }
                 100% { background-position: 0% 50%; }
               }
+              @keyframes glassShine {
+                0% { background-position: 200% 0; }
+                100% { background-position: -200% 0; }
+              }
                 /* Hide scrollbar */
               .no-scrollbar::-webkit-scrollbar {
                 display: none;
@@ -1243,134 +1280,142 @@ export default function DeckovizForEnterprise() {
         </style>
       </>
       {/* ================= SECTION 2: WHAT DECKOVIZ IS AT ITS CORE ================= */}
-      <section className="bg-gray-50 py-20">
-        <div className="max-w-6xl mx-auto px-6">
+      <section className="bg-white py-16 md:py-24 relative overflow-hidden">
+        
+        {/* Ambient Glow / Blobs for transparent bg */}
+        <div className="absolute top-[5%] right-[5%] w-[500px] h-[500px] rounded-full blur-[90px] pointer-events-none opacity-60"
+          style={{ background: "radial-gradient(circle, #4f46e5, #6366f1)" }} />
+        <div className="absolute top-[40%] left-[5%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-50"
+          style={{ background: "radial-gradient(circle, #2563EB, #3b82f6)" }} />
+        <div className="absolute bottom-[-5%] right-[25%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-40"
+          style={{ background: "radial-gradient(circle, #818cf8, #a5b4fc)" }} />
+
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: false }}
+            className="group relative rounded-[28px] md:rounded-[40px] overflow-hidden bg-white/40 backdrop-blur-2xl border-t-2 border-l-2 border-r border-b border-white"
             style={{
-              borderRadius: "24px",
-              padding: "40px",
-              background: "linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95, #2e1065)",
-              backgroundSize: "300% 300%",
-              animation: "moveGradient 8s ease infinite",
-              boxShadow: "0 15px 40px rgba(76, 29, 149, 0.4), 0 5px 15px rgba(49, 46, 129, 0.3)"
+               boxShadow: "inset 0 4px 20px rgba(255,255,255,1), inset 0 -4px 10px rgba(255,255,255,0.3), 0 20px 60px rgba(24,42,74,0.12)",
+               padding: "40px",
             }}
           >
-            <h2
-              style={{
-                fontSize: "2rem",
-                fontWeight: "600",
-                color: "#ffffff",
-                marginBottom: "32px",
-                fontFamily: "'Playfair Display', serif"
-              }}
-            >
-              What Deckoviz is, at its Core
-            </h2>
 
-            <p
-              style={{
-                fontSize: "17px",
-                color: "#e0e7ff",
-                lineHeight: "1.8",
-                marginBottom: "40px"
-              }}
-            >
-              Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal,
-              paired with a premium Smart Display system. It functions
-              simultaneously as:
-            </p>
+            {/* Dynamic Shine Overlay 1 (Broad Sweep) */}
+            <div className="absolute inset-0 z-0 pointer-events-none rounded-[28px] md:rounded-[40px] mix-blend-overlay"
+                 style={{
+                   background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.5) 60%, transparent 80%)",
+                   backgroundSize: "200% 100%",
+                   animation: "glassShine 3s infinite linear"
+                 }}
+            />
 
-            {/* ticker container */}
-            <div
-              style={{
-                overflow: "hidden",
-                width: "100%",
-                position: "relative"
-              }}
-            >
+            {/* Dynamic Shine Overlay 2 (Sharp Flare) */}
+            <div className="absolute inset-0 z-0 pointer-events-none rounded-[28px] md:rounded-[40px]"
+                 style={{
+                   background: "linear-gradient(65deg, transparent 45%, rgba(255,255,255,0.8) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.8) 51%, transparent 55%)",
+                   backgroundSize: "300% 100%",
+                   animation: "glassShine 4.5s infinite linear reverse"
+                 }}
+            />
+
+            <div className="relative z-10">
+              <h2
+                className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight bg-gradient-to-br from-[#182A4A] via-[#2563EB] to-[#182A4A] bg-clip-text text-transparent mb-8"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                What Deckoviz is, at its Core
+              </h2>
+
+              <p className="text-[17px] text-[#334155] leading-[1.8] mb-10 font-medium">
+                Deckoviz DASP is an AI-powered Dynamic Art and Storytelling Portal,
+                paired with a premium Smart Display system. It functions
+                simultaneously as:
+              </p>
+
+              {/* ticker container */}
               <div
-                className="tickerTrack"
                 style={{
-                  display: "inline-flex",
-                  gap: "80px",
-                  whiteSpace: "nowrap",
-                  animation: "tickerMove 20s linear infinite"
+                  overflow: "hidden",
+                  width: "100%",
+                  position: "relative"
                 }}
               >
-                {[
-                  "A generative visual engine",
-                  "A brand storytelling system",
-                  "A dynamic signage and merchandising platform",
-                  "A multisensory ambience controller",
-                  "An adaptive, learning companion for physical spaces"
-                ]
-                  .concat([
+                <div
+                  className="tickerTrack"
+                  style={{
+                    display: "inline-flex",
+                    gap: "80px",
+                    whiteSpace: "nowrap",
+                    animation: "tickerMove 20s linear infinite"
+                  }}
+                >
+                  {[
                     "A generative visual engine",
                     "A brand storytelling system",
                     "A dynamic signage and merchandising platform",
                     "A multisensory ambience controller",
                     "An adaptive, learning companion for physical spaces"
-                  ])
-                  .map((item, i) => (
-                    <div
-                      key={i}
-                      className="tickerItem"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "12px",
-                        fontSize: "18px",
-                        color: "#c7d2fe",
-                        cursor: "pointer",
-                        position: "relative",
-                        transition: "all 0.7s ease"
-                      }}
-                    >
-                      <span
+                  ]
+                    .concat([
+                      "A generative visual engine",
+                      "A brand storytelling system",
+                      "A dynamic signage and merchandising platform",
+                      "A multisensory ambience controller",
+                      "An adaptive, learning companion for physical spaces"
+                    ])
+                    .map((item, i) => (
+                      <div
+                        key={i}
+                        className="tickerItem group/item"
                         style={{
-                          color: "#d8b4fe",
-                          fontWeight: "600"
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "12px",
+                          fontSize: "18px",
+                          color: "#1e293b",
+                          cursor: "pointer",
+                          position: "relative",
+                          transition: "all 0.5s ease"
                         }}
                       >
-                        {["🎨", "📖", "🏬", "🎧", "🧠"][i % 5]}
-                      </span>
+                        <span
+                          style={{
+                            color: "#2563EB",
+                            fontWeight: "600"
+                          }}
+                        >
+                          {["🎨", "📖", "🏬", "🎧", "🧠"][i % 5]}
+                        </span>
 
-                      <span>{item}</span>
+                        <span className="font-medium group-hover/item:text-[#2563EB] transition-colors duration-300">{item}</span>
 
-                      {/* animated underline */}
-                      <div
-                        className="underline"
-                        style={{
-                          position: "absolute",
-                          bottom: "-6px",
-                          left: 0,
-                          height: "2px",
-                          width: "0%",
-                          background:
-                            "linear-gradient(90deg, #d8b4fe, #e9d5ff, #d8b4fe)",
-                          transition: "width 0.9s ease"
-                        }}
-                      />
-                    </div>
-                  ))}
+                        {/* animated underline */}
+                        <div
+                          className="underline"
+                          style={{
+                            position: "absolute",
+                            bottom: "-6px",
+                            left: 0,
+                            height: "2px",
+                            width: "0%",
+                            background:
+                              "linear-gradient(90deg, #182A4A, #2563EB, #182A4A)",
+                            transition: "width 0.6s ease"
+                          }}
+                        />
+                      </div>
+                    ))}
+                </div>
               </div>
-            </div>
 
-            <p
-              style={{
-                marginTop: "40px",
-                fontSize: "17px",
-                color: "#e0e7ff",
-                lineHeight: "1.8"
-              }}
-            >
-              This is not a device you “install and forget”. It is a platform that
-              learns your business and grows with it.
-            </p>
+              <p className="mt-10 text-[17px] text-[#334155] leading-[1.8] font-medium">
+                This is not a device you “install and forget”. It is a platform that
+                learns your business and grows with it.
+              </p>
+            </div>
 
             <style>
               {`
@@ -1380,12 +1425,6 @@ export default function DeckovizForEnterprise() {
                 100%{ transform:translateX(-50%); }
               }
 
-              @keyframes moveGradient{
-                0%{ background-position:0% 50% }
-                50%{ background-position:100% 50% }
-                100%{ background-position:0% 50% }
-              }
-
               /* hover slows ticker */
               .tickerTrack:hover{
                 animation-duration:40s;
@@ -1393,9 +1432,7 @@ export default function DeckovizForEnterprise() {
 
               /* premium hover effect */
               .tickerItem:hover{
-                color: #ffffff !important;
-                transform: scale(1.06);
-                text-shadow: 0 0 12px rgba(216, 180, 254, 0.6);
+                transform: scale(1.03);
               }
 
               /* underline animation */
@@ -1505,24 +1542,15 @@ export default function DeckovizForEnterprise() {
 
 
       {/* ================= INTELLIGENT AMBIENCE CARD ================= */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#fdfbfb] to-[#ebedee] py-32 px-6 md:px-12">
+      <section className="relative overflow-hidden bg-white py-32 px-6 md:px-12">
 
-        {/* Animated Background Glow - More dynamic and larger */}
-        <motion.div
-          animate={{ y: [0, -60, 0], x: [0, 50, 0], scale: [1, 1.15, 1], rotate: [0, 45, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-15%] right-[-10%] w-[800px] h-[800px] bg-gradient-to-br from-indigo-400/30 via-purple-300/30 to-fuchsia-300/20 rounded-[40%] blur-[120px] pointer-events-none"
-        />
-        <motion.div
-          animate={{ y: [0, 60, 0], x: [0, -50, 0], scale: [1, 1.2, 1], rotate: [0, -45, 0] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[-15%] left-[-10%] w-[800px] h-[800px] bg-gradient-to-tr from-violet-500/30 via-purple-400/25 to-indigo-400/20 rounded-[40%] blur-[120px] pointer-events-none"
-        />
-        <motion.div
-          animate={{ y: [-30, 30, -30], x: [-30, 30, -30], scale: [0.9, 1.1, 0.9] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] left-[20%] w-[500px] h-[500px] bg-gradient-to-r from-indigo-400/20 to-violet-300/20 rounded-full blur-[100px] pointer-events-none"
-        />
+        {/* Ambient Glow / Blobs */}
+        <div className="absolute top-[5%] right-[5%] w-[500px] h-[500px] rounded-full blur-[90px] pointer-events-none opacity-60"
+          style={{ background: "radial-gradient(circle, #4f46e5, #6366f1)" }} />
+        <div className="absolute top-[40%] left-[5%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-50"
+          style={{ background: "radial-gradient(circle, #2563EB, #3b82f6)" }} />
+        <div className="absolute bottom-[-5%] right-[25%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-40"
+          style={{ background: "radial-gradient(circle, #818cf8, #a5b4fc)" }} />
 
         <motion.div
           variants={containerVariants}
@@ -1530,11 +1558,30 @@ export default function DeckovizForEnterprise() {
           animate="visible"
           className="relative w-full max-w-[85rem] mx-auto z-10 px-4"
         >
-          <div className="relative">
-            {/* Ambient Light from Behind */}
-            <div className="absolute -inset-2 bg-[#2563EB]/20 rounded-[3rem] blur-3xl opacity-100 pointer-events-none"></div>
-            
-            <div className="relative text-center py-8 md:py-16 px-4 sm:px-6 md:px-12 bg-white/95 backdrop-blur-xl border border-[#2563EB]/20 rounded-[2.5rem] shadow-[0_0_60px_rgba(37,99,235,0.15)] group hover:shadow-[0_0_80px_rgba(37,99,235,0.25)] transition-all duration-700">
+          {/* Shiny Glass Card */}
+          <div
+            className="group relative rounded-[28px] md:rounded-[40px] overflow-hidden bg-white/40 backdrop-blur-2xl border-t-2 border-l-2 border-r border-b border-white"
+            style={{
+               boxShadow: "inset 0 4px 20px rgba(255,255,255,1), inset 0 -4px 10px rgba(255,255,255,0.3), 0 20px 60px rgba(24,42,74,0.12)",
+            }}
+          >
+            {/* Dynamic Shine Overlay 1 (Broad Sweep) */}
+            <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
+                 style={{
+                   background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.5) 60%, transparent 80%)",
+                   backgroundSize: "200% 100%",
+                   animation: "glassShine 3s infinite linear"
+                 }}
+            />
+            {/* Dynamic Shine Overlay 2 (Sharp Flare) */}
+            <div className="absolute inset-0 z-0 pointer-events-none"
+                 style={{
+                   background: "linear-gradient(65deg, transparent 45%, rgba(255,255,255,0.8) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.8) 51%, transparent 55%)",
+                   backgroundSize: "300% 100%",
+                   animation: "glassShine 4.5s infinite linear reverse"
+                 }}
+            />
+            <div className="relative text-center py-8 md:py-16 px-4 sm:px-6 md:px-12 z-10">
 
               {/* Heading */}
               <motion.h1
@@ -1560,43 +1607,50 @@ export default function DeckovizForEnterprise() {
               {/* Subtext */}
               <motion.p
                 variants={fadeUp}
-                className="mt-14 text-xl md:text-3xl font-medium text-gray-700 max-w-4xl mx-auto leading-relaxed"
+                className="mt-12 text-lg md:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                Most enterprise spaces still rely on static frames, screens, and signage.
-                <span className="block mt-3 font-semibold text-gray-900"> Deckoviz replaces that with a living system.</span>
+                Most enterprise spaces still rely on static frames, screens, and signage.{" "}
+                <span className="font-semibold text-gray-900">Deckoviz replaces that with a living system.</span>
               </motion.p>
 
               <motion.p
                 variants={fadeUp}
-                className="mt-10 text-lg md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                className="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                style={{ fontFamily: "'Inter', sans-serif" }}
               >
-                Deckoviz for Enterprise is an <strong className="text-transparent bg-clip-text bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] font-bold">AI-powered ambience, storytelling, and personalization platform </strong>that transforms
-                physical spaces into adaptive, expressive, revenue-supporting environments.
+                Deckoviz for Enterprise is an{" "}
+                <strong className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] font-semibold">AI-powered ambience, storytelling, and personalization platform</strong>{" "}
+                that transforms physical spaces into adaptive, expressive, revenue-supporting environments.
               </motion.p>
-
-              {/* Premium Divider */}
-              <motion.div
-                variants={fadeUp}
-                className="mt-16 mb-16 flex justify-center items-center gap-4"
-              >
-                <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#2563EB]/60 to-[#2563EB]"></div>
-                <div className="w-3 h-3 rounded-full bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] shadow-[0_0_15px_rgba(37,99,235,0.6)] animate-pulse"></div>
-                <div className="w-24 h-[2px] bg-gradient-to-l from-transparent via-[#2563EB]/60 to-[#2563EB]"></div>
-              </motion.div>
 
             {/* Description */}
             <motion.p
               variants={fadeUp}
-              className="text-gray-600 max-w-4xl mx-auto text-base md:text-xl leading-relaxed font-light"
+              className="mt-10 text-gray-600 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed"
+              style={{ fontFamily: "'Inter', sans-serif" }}
             >
               It blends generative visuals, sound, lighting, memory, and intelligence to help businesses tell better stories,
               create stronger emotional connections, and deliver experiences that evolve over time.
-              <br /><br />
-              <span className="inline-block mt-8 text-[#2563EB] font-semibold tracking-widest text-sm md:text-base uppercase">
-                Below are some of the core, general-purpose capabilities that
-                power Deckoviz across retail, hospitality, real estate, wellness,
-                offices, and public spaces.
-              </span>
+            </motion.p>
+
+            {/* Premium Divider — now below description, above label */}
+            <motion.div
+              variants={fadeUp}
+              className="mt-10 mb-8 flex justify-center items-center gap-4"
+            >
+              <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#2563EB]/60 to-[#2563EB]"></div>
+              <div className="w-3 h-3 rounded-full bg-gradient-to-r from-[#182A4A] to-[#2563EB] shadow-[0_0_15px_rgba(37,99,235,0.6)] animate-pulse"></div>
+              <div className="w-24 h-[2px] bg-gradient-to-l from-transparent via-[#2563EB]/60 to-[#2563EB]"></div>
+            </motion.div>
+
+            {/* Label */}
+            <motion.p
+              variants={fadeUp}
+              className="text-[#182A4A] font-semibold tracking-widest text-sm uppercase max-w-2xl mx-auto leading-relaxed"
+              style={{ fontFamily: "'Inter', sans-serif" }}
+            >
+              Below are some of the core, general-purpose capabilities that power Deckoviz across retail, hospitality, real estate, wellness, offices, and public spaces.
             </motion.p>
             </div>
           </div>
@@ -1616,46 +1670,98 @@ export default function DeckovizForEnterprise() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="relative overflow-hidden py-24 mx-5 md:mx-[110px] rounded-3xl"
+        className="relative overflow-hidden py-16 md:py-24 mx-4 md:mx-10 lg:mx-[110px] rounded-3xl md:rounded-[40px] shadow-[0_20px_60px_rgba(24,42,74,0.12)]"
         style={{
-          border: "1px solid rgba(255,255,255,0.4)",
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.6), rgba(109,40,217,0.10))",
-          backdropFilter: "blur(20px)",
+          background: "#f8fafc",
         }}
       >
 
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-gradient-to-br from-violet-500/30 via-indigo-400/25 to-purple-400/20 blur-[140px]" />
+        {/* Brand-aligned indigo/blue/violet blobs for the background */}
+        <div className="absolute top-[-10%] left-[-5%] w-[550px] h-[550px] rounded-full blur-[90px] pointer-events-none opacity-80"
+          style={{ background: "radial-gradient(circle, #4f46e5, #6366f1)" }} />
+        <div className="absolute top-[10%] right-[-8%] w-[480px] h-[480px] rounded-full blur-[90px] pointer-events-none opacity-75"
+          style={{ background: "radial-gradient(circle, #2563EB, #3b82f6)" }} />
+        <div className="absolute bottom-[5%] left-[15%] w-[420px] h-[420px] rounded-full blur-[90px] pointer-events-none opacity-70"
+          style={{ background: "radial-gradient(circle, #3730a3, #4f46e5)" }} />
+        <div className="absolute bottom-[-5%] right-[10%] w-[380px] h-[380px] rounded-full blur-[80px] pointer-events-none opacity-65"
+          style={{ background: "radial-gradient(circle, #182A4A, #2563EB)" }} />
+        <div className="absolute top-[40%] left-[38%] w-[280px] h-[280px] rounded-full blur-[80px] pointer-events-none opacity-60"
+          style={{ background: "radial-gradient(circle, #6366f1, #818cf8)" }} />
+
+        {/* SHINY GLASS OVERLAY covering the entire section */}
+        <div className="absolute inset-0 z-0 pointer-events-none rounded-3xl md:rounded-[40px]" 
+             style={{
+               background: "linear-gradient(115deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.2) 15%, transparent 30%, transparent 80%, rgba(255,255,255,0.4) 100%), radial-gradient(150% 100% at 50% 0%, rgba(255,255,255,0.6) 0%, transparent 40%)",
+               backdropFilter: "blur(100px) saturate(220%)",
+               WebkitBackdropFilter: "blur(100px) saturate(220%)",
+               borderTop: "2px solid rgba(255,255,255,1)",
+               borderLeft: "1px solid rgba(255,255,255,0.8)",
+               borderRight: "1px solid rgba(255,255,255,0.4)",
+               borderBottom: "1px solid rgba(255,255,255,0.3)",
+               boxShadow: "inset 0 4px 10px rgba(255,255,255,1), inset 0 -4px 10px rgba(255,255,255,0.4), inset 0 0 60px rgba(255,255,255,0.5)",
+             }} />
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
 
           <FadeUp>
-            <h2 className="text-4xl font-semibold text-center mb-14 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Additional Enterprise Features and Highlights
-            </h2>
+            <div className="text-center mb-16 relative">
+              {/* Soft white halo to ensure the text stands out from the colorful blobs */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[150%] bg-white/60 blur-[40px] rounded-[100%] pointer-events-none z-0" />
+              <h2
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight bg-gradient-to-br from-[#182A4A] via-[#2563EB] to-[#182A4A] bg-clip-text text-transparent pb-2 relative z-10 leading-tight"
+                style={{ fontFamily: "'Playfair Display', serif", textShadow: "0 4px 20px rgba(37,99,235,0.15)" }}
+              >
+                Additional Enterprise Features and Highlights
+              </h2>
+              <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#2563EB] to-transparent mx-auto mt-6 opacity-60 rounded-full blur-[1px]"></div>
+              <div className="w-12 h-[2px] bg-[#182A4A] mx-auto -mt-[3px] rounded-full"></div>
+            </div>
           </FadeUp>
 
           <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {mainFeatures.map((feature, i) => (
               <StaggerItem key={i}>
-                <div
-                  className="group rounded-3xl p-7 bg-white/60 backdrop-blur-xl border border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(109,40,217,0.06)] hover:-translate-y-2 hover:shadow-[0_24px_64px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:border-violet-300/80 transition-all duration-500 h-full"
-                >
-                  <div className="text-3xl mb-3">{feature.icon}</div>
+                <div className="group relative rounded-3xl p-5 md:p-7 h-full overflow-hidden hover:-translate-y-2 transition-all duration-500 bg-white/10 shadow-2xl backdrop-blur-lg border border-white/20"
+                     style={{
+                       background: "linear-gradient(115deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 25%, transparent 40%, rgba(255,255,255,0.05) 100%)",
+                       boxShadow: "inset 0 2px 4px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(255,255,255,0.3)",
+                     }}>
 
-                  <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-purple-600 transition">
+                  {/* Back-glow on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
+                    style={{ background: "radial-gradient(ellipse at 50% 110%, rgba(37,99,235,0.18) 0%, rgba(24,42,74,0.10) 50%, transparent 75%)" }}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-3xl"
+                    style={{ background: "linear-gradient(90deg, transparent, #2563EB, transparent)", boxShadow: "0 0 20px 4px rgba(37,99,235,0.35)" }}
+                  />
+
+                  {/* Emoji badge */}
+                  <div className="relative mb-5 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl
+                    bg-gradient-to-br from-[#f0f4ff] to-[#e8eeff]
+                    border border-[#182A4A]/12
+                    shadow-[0_4px_16px_rgba(24,42,74,0.12)]
+                    group-hover:shadow-[0_6px_24px_rgba(37,99,235,0.28)]
+                    group-hover:scale-110 group-hover:rotate-3
+                    transition-all duration-500">
+                    {feature.icon}
+                  </div>
+
+                  <h3 className="text-xl font-bold text-[#182A4A] mb-3 group-hover:text-[#2563EB] transition-colors duration-300">
                     {feature.title}
                   </h3>
 
-                  <p className="text-gray-600 leading-relaxed">
+                  <p className="text-[#1e293b] leading-relaxed text-[15px] font-medium">
                     {feature.description}
                   </p>
 
-                  <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-purple-500 via-pink-500 to-indigo-500 transition-all duration-500" />
+                  <div className="mt-6 h-[2px] w-0 group-hover:w-full transition-all duration-500 rounded-full"
+                    style={{ background: "linear-gradient(90deg, #182A4A, #2563EB)" }}
+                  />
                 </div>
               </StaggerItem>
             ))}
+
             <AnimatePresence>
               {showMore &&
                 extraFeatures.map((feature, i) => (
@@ -1665,19 +1771,45 @@ export default function DeckovizForEnterprise() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 20 }}
                     transition={{ duration: 0.4, delay: i * 0.05 }}
-                    className="group rounded-3xl p-7 bg-white/60 backdrop-blur-xl border border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(109,40,217,0.06)] hover:-translate-y-2 hover:shadow-[0_24px_64px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:border-violet-300/80 transition-all duration-500"
+                    className="group relative rounded-3xl p-5 md:p-7 overflow-hidden hover:-translate-y-2 transition-all duration-500 bg-white/10 shadow-2xl backdrop-blur-lg border border-white/20"
+                    style={{
+                      background: "linear-gradient(115deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1) 25%, transparent 40%, rgba(255,255,255,0.05) 100%)",
+                      boxShadow: "inset 0 2px 4px rgba(255,255,255,0.95), inset 0 -1px 2px rgba(255,255,255,0.3)",
+                    }}
                   >
-                    <div className="text-3xl mb-3">{feature.icon}</div>
+                    {/* Back-glow on hover */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
+                      style={{ background: "radial-gradient(ellipse at 50% 110%, rgba(37,99,235,0.18) 0%, rgba(24,42,74,0.10) 50%, transparent 75%)" }}
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-3xl"
+                      style={{ background: "linear-gradient(90deg, transparent, #2563EB, transparent)", boxShadow: "0 0 20px 4px rgba(37,99,235,0.35)" }}
+                    />
 
-                    <h3 className="text-xl font-semibold text-gray-900 mb-3 group-hover:text-violet-600 transition">
+                    {/* Emoji badge */}
+                    <div
+                      className="relative mb-5 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
+                      style={{
+                        background: "rgba(255,255,255,0.40)",
+                        backdropFilter: "blur(12px)",
+                        WebkitBackdropFilter: "blur(12px)",
+                        border: "1px solid rgba(255,255,255,0.70)",
+                        boxShadow: "0 4px 16px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset",
+                      }}
+                    >
+                      {feature.icon}
+                    </div>
+
+                    <h3 className="text-xl font-bold text-[#182A4A] mb-3 group-hover:text-[#2563EB] transition-colors duration-300">
                       {feature.title}
                     </h3>
 
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-[#1e293b] leading-relaxed text-[15px] font-medium">
                       {feature.description}
                     </p>
 
-                    <div className="mt-6 h-[2px] w-0 group-hover:w-full bg-gradient-to-r from-violet-500 via-pink-500 to-indigo-500 transition-all duration-500" />
+                    <div className="mt-6 h-[2px] w-0 group-hover:w-full transition-all duration-500 rounded-full"
+                      style={{ background: "linear-gradient(90deg, #182A4A, #2563EB)" }}
+                    />
                   </motion.div>
                 ))}
             </AnimatePresence>
@@ -1687,7 +1819,8 @@ export default function DeckovizForEnterprise() {
           <div className="flex justify-center mt-14">
             <button
               onClick={() => setShowMore(!showMore)}
-              className="px-8 py-3 rounded-full bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 text-white font-medium shadow-lg hover:scale-105 transition-all duration-300"
+              className="px-8 py-3 rounded-full text-white font-medium shadow-lg hover:scale-105 hover:shadow-[0_12px_36px_rgba(37,99,235,0.35)] transition-all duration-300"
+              style={{ background: "linear-gradient(135deg, #182A4A, #2563EB)" }}
             >
               {showMore ? "Show Less" : "View More Features"}
             </button>
@@ -1704,7 +1837,7 @@ export default function DeckovizForEnterprise() {
             <div className="text-center mb-10">
               <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight mb-7" style={{ fontFamily: "'Playfair Display', serif" }}>
                 Learn More About
-                <span className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-indigo-700 via-indigo-600 to-blue-500 bg-clip-text text-transparent">
                   {" "}
                   Deckoviz
                 </span>
@@ -1858,7 +1991,7 @@ export default function DeckovizForEnterprise() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: false }}
-              className="p-8 rounded-3xl border border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.08)] bg-white/40 backdrop-blur-md"
+              className="p-8 rounded-3xl border border-indigo-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.08)] bg-white/40 backdrop-blur-md"
             >
 
               <p className="text-lg md:text-xl text-gray-800 leading-relaxed">
@@ -1885,10 +2018,10 @@ export default function DeckovizForEnterprise() {
               className="
         absolute left-5 md:left-1/2 top-0
         w-[2px]
-        bg-gradient-to-b from-violet-400 via-pink-400 to-transparent
         md:-translate-x-1/2
         origin-top
         "
+      style={{ background: "linear-gradient(to bottom, #182A4A, #2563EB66, transparent)" }}
             />
 
             <div className="space-y-16 md:space-y-0">
@@ -1922,17 +2055,16 @@ export default function DeckovizForEnterprise() {
                       className="w-full md:w-[46%] pl-12 md:pl-0"
                     >
 
-                      <div className="p-6 md:p-8 rounded-[2.5rem] border border-violet-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.08)] hover:shadow-[0_28px_72px_rgba(99,40,217,0.24),0_4px_20px_rgba(79,70,229,0.14)] hover:border-violet-400/70 transition-all duration-500 bg-white group relative overflow-hidden">
+                      <div className="p-6 md:p-8 rounded-[2.5rem] border border-indigo-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.08)] hover:shadow-[0_28px_72px_rgba(99,40,217,0.24),0_4px_20px_rgba(79,70,229,0.14)] hover:border-indigo-400/70 transition-all duration-500 bg-white group relative overflow-hidden">
 
                         <div className="flex items-center gap-5 mb-6">
 
-                          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-600 
-                                    flex items-center justify-center text-white shadow-lg shrink-0 
-                                    transform group-hover:scale-110 group-hover:rotate-3 transition-transform">
+                          <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shrink-0 transform group-hover:scale-110 group-hover:rotate-3 transition-transform"
+                                    style={{ background: "linear-gradient(135deg, #182A4A, #2563EB)", boxShadow: "0 4px 20px rgba(24,42,74,0.4)" }}>
                             {feature.icon}
                           </div>
 
-                          <h3 className="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                          <h3 className="text-xl md:text-2xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
                             {feature.title}
                           </h3>
 
@@ -1944,7 +2076,7 @@ export default function DeckovizForEnterprise() {
 
                         {/* Glow */}
                         <div className="absolute bottom-0 left-0 h-1 w-full 
-                                  bg-gradient-to-r from-transparent via-purple-500 to-transparent 
+                                  bg-gradient-to-r from-transparent via-indigo-500 to-transparent 
                                   opacity-0 group-hover:opacity-100 transition-opacity" />
 
                       </div>
@@ -1959,7 +2091,8 @@ export default function DeckovizForEnterprise() {
                         whileInView={{ scale: 1, opacity: 1 }}
                         viewport={{ once: false }}
                         transition={{ delay: 0.3 }}
-                        className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white border-[4px] md:border-[5px] border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.6)]"
+                        className="w-5 h-5 md:w-6 md:h-6 rounded-full bg-white"
+                        style={{ border: "4px solid #182A4A", boxShadow: "0 0 20px rgba(24,42,74,0.6)" }}
                       />
 
                     </div>
@@ -2062,128 +2195,136 @@ export default function DeckovizForEnterprise() {
             padding: '20px'
           }}>
 
-          {/* THE HANGING BOARD BUTTON */}
-          {/* PREMIUM HANGING PLAQUE */}
-          <ScalePop delay={0.2}>
-            <motion.div
-              animate={{ y: [-4, 4, -4], rotate: [0, -0.5, 0.5, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              onClick={() => setIsThesisModalOpen(true)}
-              className="absolute left-2 md:left-8 lg:left-16 xl:left-24 top-5 flex flex-col items-center z-30 group cursor-pointer"
-            >
-              {/* The Pin - Chrome effect */}
-              <div className="w-3 h-3 rounded-full bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 shadow-[0_2px_5px_rgba(0,0,0,0.4)] z-10 relative border border-gray-400"></div>
-
-              {/* The Strings - Thin metallic wires */}
-              <div className="flex justify-between w-12 md:w-16 -mt-1">
-                <div className="w-[1px] h-10 md:h-14 bg-gradient-to-b from-gray-400 to-gray-300 rotate-[-12deg] transform origin-top shadow-sm"></div>
-                <div className="w-[1px] h-10 md:h-14 bg-gradient-to-b from-gray-400 to-gray-300 rotate-[12deg] transform origin-top shadow-sm"></div>
-              </div>
-
-              {/* The Plaque - Glassmorphism */}
-              <div className="relative -mt-1 group-hover:-rotate-2 transition-transform duration-500 transform origin-top">
-                {/* Outer glowing aura */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity duration-500 rounded-xl"></div>
-
-                {/* Premium Glass Card */}
-                <div className="relative bg-white/70 backdrop-blur-xl border border-white/60 px-5 md:px-8 py-4 md:py-6 rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.1)] group-hover:shadow-[0_20px_40px_rgba(99,102,241,0.2)] transition-all duration-500">
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-br from-indigo-900 to-purple-800 font-serif font-bold text-sm md:text-lg text-center leading-tight tracking-wide">
-                    The Deckoviz<br />Thesis
-                  </span>
-
-                  {/* Micro accent line */}
-                  <div className="w-6 h-0.5 bg-gradient-to-r from-purple-400 to-indigo-500 mx-auto mt-2 rounded-full"></div>
-                </div>
-              </div>
-            </motion.div>
-          </ScalePop>
-
           {/* 📘 Business DASP Guide Button */}
-          <ScalePop delay={0.4}>
+          <ScalePop delay={0.2}>
             <button
               onClick={() => navigate("/dasp-business-guide")}
-              className="
-              group relative overflow-hidden
-              flex lg:absolute
-              lg:left-1/2 lg:-translate-x-1/2 lg:-top-10
-              z-20
-              w-full max-w-[560px]
-              mx-auto
-              px-6 md:px-10 py-4
-              rounded-[999px]
-              text-center
-              items-center justify-center
-              bg-gradient-to-r from-violet-500 via-pink-500 to-rose-500
-              shadow-[0_12px_30px_rgba(168,85,247,0.35)]
-              hover:shadow-[0_24px_60px_rgba(168,85,247,0.55)]
-              hover:scale-[1.02]
+              className="group relative flex flex-col items-center justify-center text-center
+              w-full max-w-[500px] mx-auto
+              px-6 md:px-8 py-4
+              rounded-full
               transition-all duration-500
-              animate-pulse
-            "
-              style={{ animationDuration: '3s' }}
+              hover:scale-[1.03] hover:-translate-y-1"
+              style={{
+                background: "linear-gradient(135deg, rgba(191,219,254,0.6) 0%, rgba(147,197,253,0.6) 100%)",
+                boxShadow: "0 12px 32px rgba(37,99,235,0.1), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 20px rgba(255,255,255,0.5)",
+                border: "1px solid rgba(255,255,255,0.6)",
+                backdropFilter: "blur(20px)"
+              }}
             >
-              {/* Animated shine */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+              {/* Explosive Blue Glow Aura */}
+              <div className="absolute -inset-8 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 -z-10 group-hover:scale-110 pointer-events-none" />
+              <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 blur-xl bg-white/60 -z-10 group-hover:scale-105 pointer-events-none mix-blend-overlay" />
 
-              <div className="relative flex flex-col items-center justify-center text-center gap-1">
+              {/* Shine sweep (contained) */}
+              <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+              </div>
 
-                <span className="text-xs uppercase tracking-widest text-white/90 font-semibold">
-                  Business Guide
-                </span>
-
-                <span className="text-sm font-medium text-white leading-snug">
-                  The Ultimate Guide for Deckoviz DASP For Business
-                </span>
-
-                <span className="text-xs text-white/80">
-                  Strategy, platform intelligence, enterprise use-cases & scale.
-                </span>
-
+              <div className="relative flex items-center gap-4 w-full">
+                {/* Icon badge */}
+                <div className="shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg bg-white/90 shadow-sm border border-blue-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                  </svg>
+                </div>
+                <div className="flex flex-col items-start text-left gap-0.5">
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-blue-900/70 font-bold">Business Guide</span>
+                  <span className="text-[14px] font-bold text-[#182A4A] leading-snug">The Ultimate Guide for Deckoviz DASP For Business</span>
+                  <span className="text-[11px] text-[#1e3a8a] leading-relaxed font-medium">Strategy, platform intelligence, enterprise use-cases & scale.</span>
+                </div>
+                {/* Arrow */}
+                <div className="shrink-0 self-center ml-auto opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-blue-700 text-base">→</div>
               </div>
             </button>
           </ScalePop>
 
-          {/* 📘 Pragmatic Enterprise Buyer Guide Button */}
+          {/* THE DECKOVIZ THESIS BUTTON (CENTERED) */}
+          <ScalePop delay={0.4}>
+            <button
+              onClick={() => setIsThesisModalOpen(true)}
+              className="group relative flex flex-col items-center justify-center text-center
+              w-full max-w-[500px] mx-auto
+              px-6 md:px-8 py-4
+              rounded-full
+              transition-all duration-500
+              hover:scale-[1.03] hover:-translate-y-1"
+              style={{
+                background: "linear-gradient(135deg, rgba(204,251,241,0.6) 0%, rgba(153,246,228,0.6) 100%)",
+                boxShadow: "0 12px 32px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 20px rgba(255,255,255,0.5)",
+                border: "1px solid rgba(255,255,255,0.8)",
+                backdropFilter: "blur(20px)"
+              }}
+            >
+              {/* Explosive Blue Glow Aura */}
+              <div className="absolute -inset-8 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 -z-10 group-hover:scale-110 pointer-events-none" />
+              <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 blur-xl bg-white/60 -z-10 group-hover:scale-105 pointer-events-none mix-blend-overlay" />
+
+              {/* Shine sweep (contained) */}
+              <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+              </div>
+
+              <div className="relative flex items-center gap-4 w-full">
+                {/* Icon badge */}
+                <div className="shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg bg-white/90 shadow-sm border border-teal-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-teal-700">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                  </svg>
+                </div>
+                <div className="flex flex-col items-start text-left gap-0.5">
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-teal-900/70 font-bold">Research</span>
+                  <span className="text-[14px] font-bold text-[#182A4A] leading-snug">The Deckoviz Thesis</span>
+                </div>
+                {/* Arrow */}
+                <div className="shrink-0 self-center ml-auto opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-teal-700 text-base">→</div>
+              </div>
+            </button>
+          </ScalePop>
+
+          {/* 📙 Pragmatic Enterprise Buyer Guide Button */}
           <ScalePop delay={0.6}>
             <button
               onClick={() => navigate("/pragmatic-buyer-guide")}
-              className="
-              group relative overflow-hidden
-              flex
-              mt-0 lg:mt-20
-              z-20
-              w-full max-w-[560px]
-              mx-auto
-              px-6 md:px-10 py-4
-              rounded-[999px]
-              text-center
-              items-center justify-center
-              bg-gradient-to-r from-blue-500 via-violet-500 to-indigo-500
-              shadow-[0_12px_30px_rgba(99,102,241,0.35)]
-              hover:shadow-[0_24px_60px_rgba(99,102,241,0.55)]
-              hover:scale-[1.02]
+              className="group relative flex flex-col items-center justify-center text-center
+              w-full max-w-[500px] mx-auto
+              px-6 md:px-8 py-4
+              rounded-full
               transition-all duration-500
-              animate-pulse
-            "
-              style={{ animationDuration: '3s', animationDelay: '1.5s' }}
+              hover:scale-[1.03] hover:-translate-y-1"
+              style={{
+                background: "linear-gradient(135deg, rgba(233,213,255,0.6) 0%, rgba(216,180,254,0.6) 100%)",
+                boxShadow: "0 12px 32px rgba(124,58,237,0.1), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 20px rgba(255,255,255,0.5)",
+                border: "1px solid rgba(255,255,255,0.6)",
+                backdropFilter: "blur(20px)"
+              }}
             >
-              {/* Animated shine */}
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+              {/* Explosive Blue Glow Aura */}
+              <div className="absolute -inset-8 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 -z-10 group-hover:scale-110 pointer-events-none" />
+              <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 blur-xl bg-white/60 -z-10 group-hover:scale-105 pointer-events-none mix-blend-overlay" />
 
-              <div className="relative flex flex-col items-center justify-center text-center gap-1">
+              {/* Shine sweep (contained) */}
+              <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
+              </div>
 
-                <span className="text-xs uppercase tracking-widest text-white/90 font-semibold">
-                  Enterprise Buyer Guide
-                </span>
-
-                <span className="text-sm font-medium text-white leading-snug">
-                  The Deckoviz Guide for the Pragmatic Enterprise Buyer
-                </span>
-
-                <span className="text-xs text-white/80">
-                  ROI, cost replacement, revenue behaviors & business outcomes.
-                </span>
-
+              <div className="relative flex items-center gap-4 w-full">
+                {/* Icon badge */}
+                <div className="shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg bg-white/90 shadow-sm border border-purple-200">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-700">
+                    <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                  </svg>
+                </div>
+                <div className="flex flex-col items-start text-left gap-0.5">
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-purple-900/70 font-bold">Enterprise Buyer Guide</span>
+                  <span className="text-[14px] font-bold text-[#2e1065] leading-snug">The Deckoviz Guide for the Pragmatic Enterprise Buyer</span>
+                  <span className="text-[11px] text-[#4c1d95] leading-relaxed font-medium">ROI, cost replacement, revenue behaviors & business outcomes.</span>
+                </div>
+                {/* Arrow */}
+                <div className="shrink-0 self-center ml-auto opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-purple-700 text-base">→</div>
               </div>
             </button>
           </ScalePop>
@@ -2194,10 +2335,10 @@ export default function DeckovizForEnterprise() {
 
       <section className="bg-white py-20 border-t border-gray-100">
         {/* ================= EXPLORE FURTHER PREMIUM ================= */}
-        <section className="relative py-28 bg-gradient-to-b from-white via-purple-50/40 to-white overflow-hidden">
+        <section className="relative py-28 bg-gradient-to-b from-white via-indigo-50/40 to-white overflow-hidden">
 
           {/* background glow orbs */}
-          <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-purple-400/20 blur-[120px] rounded-full" />
+          <div className="absolute top-[-100px] left-[-100px] w-[400px] h-[400px] bg-indigo-400/20 blur-[120px] rounded-full" />
           <div className="absolute bottom-[-120px] right-[-120px] w-[400px] h-[400px] bg-indigo-400/20 blur-[120px] rounded-full" />
 
           <div className="max-w-7xl mx-auto px-6 relative z-10">
@@ -2206,7 +2347,7 @@ export default function DeckovizForEnterprise() {
             <FadeUp>
               <div className="text-center mb-20">
                 <h2 className="text-3xl md:text-5xl font-semibold tracking-tight mb-6 
-      bg-gradient-to-r from-purple-700 via-pink-600 to-indigo-600 
+      bg-gradient-to-r from-[#182A4A] via-indigo-700 to-indigo-600 
       bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', serif" }}>
                   Explore Further
                 </h2>
@@ -2229,8 +2370,8 @@ export default function DeckovizForEnterprise() {
                   className={`w-full md:w-auto text-center px-7 py-3 rounded-full text-sm font-medium 
       transition-all duration-300 border backdrop-blur-xl
       ${activeCategory === cat
-                      ? "text-white border-transparent shadow-xl scale-[1.02] bg-gradient-to-r from-purple-600 to-pink-500"
-                      : "bg-white/60 border-gray-200 text-gray-700 hover:border-purple-300 hover:shadow-md hover:bg-white"
+                      ? "text-white border-transparent shadow-xl scale-[1.02] bg-gradient-to-r from-indigo-600 to-pink-500"
+                      : "bg-white/60 border-gray-200 text-gray-700 hover:border-indigo-300 hover:shadow-md hover:bg-white"
                     }`}
                 >
                   {cat}
@@ -2281,7 +2422,7 @@ export default function DeckovizForEnterprise() {
             onClick={() => navigate("/more-info")}
             className="
       px-10 py-3 rounded-full
-      bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600
+      bg-gradient-to-r from-[#182A4A] via-[#2563EB] to-[#4f46e5]
       text-white font-medium
       shadow-[0_20px_50px_rgba(168,85,247,0.35)]
       hover:shadow-[0_30px_70px_rgba(236,72,153,0.45)]

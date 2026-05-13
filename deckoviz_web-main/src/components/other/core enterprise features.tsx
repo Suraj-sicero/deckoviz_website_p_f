@@ -6,12 +6,12 @@ export default function EnterpriseFeatures({ enterpriseFeatures }: any) {
 
   // Define different gradient colors for each feature
   const gradients = [
-    "from-violet-600 to-pink-600",      // Feature 1
+    "from-[#182A4A] to-[#2563EB]",      // Feature 1
     "from-blue-600 to-cyan-600",        // Feature 2
     "from-emerald-600 to-teal-600",     // Feature 3
     "from-orange-600 to-red-600",       // Feature 4
     "from-indigo-600 to-indigo-600",    // Feature 5
-    "from-rose-600 to-pink-600",        // Feature 6
+    "from-[#182A4A] to-[#2563EB]",        // Feature 6
   ];
 
   const brandGradient = "from-[#1e3a8a] to-[#1e40af]";
@@ -21,7 +21,15 @@ export default function EnterpriseFeatures({ enterpriseFeatures }: any) {
     <section
       className="relative pt-20 md:pt-32 pb-20 md:pb-32 overflow-hidden bg-white"
     >
-      <div className="relative max-w-7xl mx-auto px-6">
+      {/* Ambient Glow / Blobs for transparent bg */}
+      <div className="absolute top-[5%] right-[5%] w-[500px] h-[500px] rounded-full blur-[90px] pointer-events-none opacity-60"
+        style={{ background: "radial-gradient(circle, #4f46e5, #6366f1)" }} />
+      <div className="absolute top-[40%] left-[5%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-50"
+        style={{ background: "radial-gradient(circle, #2563EB, #3b82f6)" }} />
+      <div className="absolute bottom-[-5%] right-[25%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-40"
+        style={{ background: "radial-gradient(circle, #818cf8, #a5b4fc)" }} />
+
+      <div className="relative max-w-7xl mx-auto px-6 z-10">
         
         {/* Header */}
         <div className="text-center mb-12 md:mb-16">
@@ -129,53 +137,81 @@ export default function EnterpriseFeatures({ enterpriseFeatures }: any) {
           </div>
 
           <div className="relative">
-            {/* Ambient Light from Behind */}
-            <div className="absolute -inset-2 bg-[#2563EB]/20 rounded-[3rem] blur-3xl opacity-100"></div>
-            
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: "easeOut" }}
-              className="relative bg-white rounded-[2.5rem] border border-[#2563EB]/30 shadow-[0_0_60px_rgba(37,99,235,0.25)] p-10 md:p-16 text-center min-h-[300px] flex flex-col items-center justify-center mx-4 md:mx-auto max-w-4xl"
+              className="group relative overflow-hidden bg-white/40 backdrop-blur-2xl border-t-2 border-l-2 border-r border-b border-white rounded-[28px] md:rounded-[40px] p-10 md:p-16 text-center min-h-[300px] flex flex-col items-center justify-center mx-4 md:mx-auto max-w-4xl"
+              style={{
+                 boxShadow: "inset 0 4px 20px rgba(255,255,255,1), inset 0 -4px 10px rgba(255,255,255,0.3), 0 20px 60px rgba(24,42,74,0.12)",
+              }}
             >
-            {/* Icon with dark blue gradient */}
-            <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="flex justify-center mb-10"
-            >
-              <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${brandGradient} 
-                             flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.6)] border border-white/20`}>
-                <div className="scale-[1.3] md:scale-[1.6] text-white">{enterpriseFeatures[index].icon}</div>
-              </div>
-            </motion.div>
+              {/* Dynamic Shine Overlay 1 (Broad Sweep) */}
+              <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
+                   style={{
+                     background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.5) 60%, transparent 80%)",
+                     backgroundSize: "200% 100%",
+                     animation: "glassShine 3s infinite linear"
+                   }}
+              />
 
-            {/* Title */}
-            <motion.h3 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-3xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight"
-            >
-              {enterpriseFeatures[index].title}
-            </motion.h3>
-            
-            {/* Description */}
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-gray-700 leading-relaxed text-lg md:text-xl max-w-3xl mx-auto whitespace-pre-line"
-            >
-              {enterpriseFeatures[index].description}
-            </motion.p>
+              {/* Dynamic Shine Overlay 2 (Sharp Flare) */}
+              <div className="absolute inset-0 z-0 pointer-events-none"
+                   style={{
+                     background: "linear-gradient(65deg, transparent 45%, rgba(255,255,255,0.8) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.8) 51%, transparent 55%)",
+                     backgroundSize: "300% 100%",
+                     animation: "glassShine 4.5s infinite linear reverse"
+                   }}
+              />
+
+              <div className="relative z-10 w-full flex flex-col items-center">
+                {/* Icon with dark blue gradient */}
+                <motion.div 
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.1 }}
+                  className="flex justify-center mb-10"
+                >
+                  <div className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl bg-gradient-to-br ${brandGradient} 
+                                 flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.6)] border border-white/20`}>
+                    <div className="scale-[1.3] md:scale-[1.6] text-white">{enterpriseFeatures[index].icon}</div>
+                  </div>
+                </motion.div>
+
+                {/* Title */}
+                <motion.h3 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.2 }}
+                  className="text-3xl md:text-5xl font-bold text-[#182A4A] mb-8 leading-tight tracking-tight"
+                >
+                  {enterpriseFeatures[index].title}
+                </motion.h3>
+                
+                {/* Description */}
+                <motion.p 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  className="text-[#334155] leading-relaxed text-lg md:text-xl max-w-3xl mx-auto whitespace-pre-line font-medium"
+                >
+                  {enterpriseFeatures[index].description}
+                </motion.p>
+              </div>
             </motion.div>
           </div>
 
         </div>
       </div>
+      <style>
+        {`
+          @keyframes glassShine {
+            0% { background-position: 200% 50%; }
+            100% { background-position: -100% 50%; }
+          }
+        `}
+      </style>
     </section>
   );
 }

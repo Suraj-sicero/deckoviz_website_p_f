@@ -12,7 +12,7 @@ export default function AboutDeckoviz() {
 
         {/* Header */}
         <div className="text-center mb-14">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
             🌌 About Deckoviz DASP
           </h1>
           <p className="mt-4 text-gray-600 text-lg">

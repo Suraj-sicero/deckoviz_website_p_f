@@ -499,7 +499,7 @@ const frameImages = [
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
       </div>
       <div className="p-6 flex flex-col items-center justify-center text-center gap-3">
-        <p className="text-lg leading-relaxed bg-gradient-to-r from-gray-700 via-violet-600 to-pink-600 bg-clip-text text-transparent font-medium">
+        <p className="text-lg leading-relaxed bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent font-medium">
           {title}
         </p>
 
@@ -535,7 +535,7 @@ const frameImages = [
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             Who have we designed{" "}
-            <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
               Deckoviz
             </span>{" "}
             for

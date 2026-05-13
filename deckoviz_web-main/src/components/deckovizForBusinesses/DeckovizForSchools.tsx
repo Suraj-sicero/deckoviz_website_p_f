@@ -513,14 +513,14 @@ const DeckovizSchoolsLanding = () => {
     {/* Card 2 - Curiosity & Imagination */}
     <div className="relative group cursor-pointer">
       <div
-        className="absolute -inset-0.5 bg-gradient-to-r from-violet-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
+        className="absolute -inset-0.5 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
       />
       
       <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-6 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
         
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <div className="p-3 rounded-2xl bg-gradient-to-r from-violet-500 to-pink-500 group-hover:scale-110 transition-transform duration-300">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-[#4f46e5] to-[#2563EB] group-hover:scale-110 transition-transform duration-300">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
                 <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4l3 3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1l-3 3"/>
                 <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
@@ -530,7 +530,7 @@ const DeckovizSchoolsLanding = () => {
             <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-violet-400 transition-colors duration-300" />
           </div>
           
-          <div className="text-gray-400 group-hover:text-violet-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
+          <div className="text-gray-400 group-hover:text-[#2563EB] transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
@@ -548,7 +548,7 @@ const DeckovizSchoolsLanding = () => {
         </div>
 
         <div className="mt-6 pt-3 border-t border-gray-100">
-          <div className="h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+          <div className="h-1 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
         </div>
       </div>
     </div>

@@ -458,7 +458,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
         <div className="text-center mb-16">
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">Features &</span>{" "}
-            <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
               Highlights
             </span>
           </h1>
@@ -470,7 +470,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   What Can{" "}
-                  <span className="italic bg-gradient-to-r from-violet-600 via-pink-600 to-indigo-600 bg-clip-text text-transparent">
+                  <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
                     Deckoviz
                   </span>{" "}
                   Do
@@ -514,7 +514,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                     Today, Deckoviz includes{" "}
                     <motion.span 
                       whileHover={{ scale: 1.1 }}
-                      className="inline-block font-bold text-xl bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent"
+                      className="inline-block font-bold text-xl bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent"
                     >
                       hundreds of individual features
                     </motion.span>
@@ -531,7 +531,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                     organized into{" "}
                     <motion.span 
                       whileHover={{ scale: 1.1 }}
-                      className="inline-block font-bold text-xl bg-gradient-to-r from-pink-600 to-indigo-600 bg-clip-text text-transparent"
+                      className="inline-block font-bold text-xl bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent"
                     >
                       12 core themes
                     </motion.span>
@@ -623,3 +623,4 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 };
 
 export default Features;
+
