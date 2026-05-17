@@ -109,20 +109,39 @@ export default function MusicPlayer({
       case 'processing':
         return 'text-amber-500'
       default:
-        return 'text-muted-foreground'
+        return 'text-[var(--vc-text-muted)]'
     }
   }
 
   return (
-    <div className="flex flex-col gap-4 p-4 rounded-lg bg-card border border-border/50">
+    <div
+      className="flex flex-col gap-4 p-4 rounded-2xl backdrop-blur-xl"
+      style={{
+        background: "var(--vc-glass-bg)",
+        border: "1px solid var(--vc-glass-border)",
+        boxShadow: "var(--vc-glass-shadow)",
+      }}
+    >
       {/* Header */}
       <div className="flex items-start justify-between">
         <div className="flex items-start gap-3 flex-1">
-          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center">
-            <Music className="w-5 h-5 text-accent" />
+          <div
+            className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center backdrop-blur-xl"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--vc-glow-1) 0%, var(--vc-glow-3) 100%)",
+              border: "1px solid var(--vc-glass-border)",
+            }}
+          >
+            <Music className="w-5 h-5" style={{ color: "var(--vc-accent-text)" }} />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-sm text-foreground truncate">{title}</h3>
+            <h3
+              className="font-semibold text-sm truncate"
+              style={{ color: "var(--vc-text)" }}
+            >
+              {title}
+            </h3>
             <p className={`text-xs ${getStatusColor()}`}>{getStatusText()}</p>
           </div>
         </div>
@@ -140,9 +159,12 @@ export default function MusicPlayer({
             className="w-full"
             controls
           />
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <div className="flex items-center gap-2 text-xs text-[var(--vc-text-muted)]">
             <span>{Math.floor(currentTime)}s</span>
-            <div className="flex-1 h-1 bg-border rounded-full" />
+            <div
+              className="flex-1 h-1 rounded-full"
+              style={{ background: "var(--vc-divider)" }}
+            />
             <span>{Math.floor(duration)}s</span>
           </div>
         </div>
@@ -150,8 +172,13 @@ export default function MusicPlayer({
 
       {/* Prompt */}
       <div className="space-y-1.5">
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Prompt</p>
-        <p className="text-sm text-foreground/80 line-clamp-2">{prompt}</p>
+        <p className="text-xs font-medium text-[var(--vc-text-muted)] uppercase tracking-wide">Prompt</p>
+        <p
+          className="text-sm line-clamp-2"
+          style={{ color: "var(--vc-text)", opacity: 0.85 }}
+        >
+          {prompt}
+        </p>
       </div>
 
       {/* Actions */}
@@ -191,11 +218,11 @@ export default function MusicPlayer({
       {(currentStatus === 'processing' || currentStatus === 'pending') && (
         <div className="flex items-center gap-2">
           <div className="flex gap-1">
-            <div className="w-1.5 h-1.5 bg-accent/60 rounded-full animate-pulse" />
-            <div className="w-1.5 h-1.5 bg-accent/60 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
-            <div className="w-1.5 h-1.5 bg-accent/60 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
+            <div className="w-1.5 h-1.5 bg-[var(--vc-accent-text)]/70 rounded-full animate-pulse" />
+            <div className="w-1.5 h-1.5 bg-[var(--vc-accent-text)]/70 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }} />
+            <div className="w-1.5 h-1.5 bg-[var(--vc-accent-text)]/70 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }} />
           </div>
-          <span className="text-xs text-muted-foreground">Creating your music...</span>
+          <span className="text-xs text-[var(--vc-text-muted)]">Creating your music...</span>
         </div>
       )}
     </div>

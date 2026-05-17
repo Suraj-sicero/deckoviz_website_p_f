@@ -8,6 +8,8 @@ interface User {
   id: string;
   email: string;
   credits: number;
+  tier?: "starter" | "creator" | "studio";
+  emailVerified?: boolean;
 }
 
 interface AuthContextType {

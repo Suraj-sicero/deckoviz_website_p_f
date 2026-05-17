@@ -13,10 +13,17 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Music } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Music, Volume2 } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL } from "../../lib/constants"
+import { CanvasThemeProvider, useCanvasTheme } from "./lib/canvas-theme"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu"
 
 function generateId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
@@ -46,14 +53,15 @@ function isMusicGenerationIntent(input: string): boolean {
 function isImageGenerationIntent(input: string): boolean {
   try {
     const lowerInput = input.toLowerCase().trim()
-    
-    // FIRST: Check if this is music - music takes priority
+
+    // Video and music take priority over image
+    if (isVideoGenerationIntent(lowerInput)) return false
     const musicKeywords = ["song", "music", "muisc", "msuic", "beat", "compose", "melody", "track"]
     if (musicKeywords.some(kw => lowerInput.includes(kw))) {
       console.log("[v0] Music keywords detected, skipping image generation")
       return false
     }
-    
+
     // Then check for image keywords
     const imageKeywords = ["generate", "create", "make", "draw", "paint", "design", "visualize", "picture", "image", "photo", "artwork"]
     return imageKeywords.some(kw => lowerInput.includes(kw))
@@ -61,6 +69,15 @@ function isImageGenerationIntent(input: string): boolean {
     console.error("[v0] Error in isImageGenerationIntent:", error)
     return false
   }
+}
+
+function isVideoGenerationIntent(input: string): boolean {
+  const lower = input.toLowerCase().trim()
+  const videoKeywords = [
+    "video", "animate", "animation", "motion", "moving", "clip",
+    "make it move", "bring to life", "loop",
+  ]
+  return videoKeywords.some(kw => lower.includes(kw))
 }
 
 function isConversational(input: string): boolean {
@@ -184,7 +201,22 @@ function generateAssistantText(numImages: number, prompt: string): string {
   return "Here's what I created for you:"
 }
 
+const VOICE_OPTIONS = [
+  { id: "21m00Tcm4TlvDq8ikWAM", name: "Rachel (EN-US)", provider: "elevenlabs" },
+  { id: "en-US-natalie", name: "Natalie (EN-US)", provider: "murf" },
+  { id: "en-US-marcus", name: "Marcus (EN-US)", provider: "murf" },
+  { id: "en-US-julie", name: "Julie (EN-US)", provider: "murf" },
+]
+
 export function VizzyChat() {
+  return (
+    <CanvasThemeProvider>
+      <VizzyChatInner />
+    </CanvasThemeProvider>
+  )
+}
+
+function VizzyChatInner() {
   const router = useNavigate()
   const { user, token, logout: signOut } = useAuth()
   const [messages, setMessages] = useState<ChatMessageType[]>([])
@@ -195,7 +227,12 @@ export function VizzyChat() {
   const [lightboxPrompt, setLightboxPrompt] = useState("")
   const [uploadedImage, setUploadedImage] = useState<{ url: string; fileName: string } | null>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
-  const [theme, setTheme] = useState("dark")
+  const { theme, toggleTheme } = useCanvasTheme()
+  const [selectedVoice, setSelectedVoice] = useState(VOICE_OPTIONS[0])
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null)
+  // Incremented each time a template/suggestion is clicked. ChatInput uses
+  // this as a signal to focus the textarea and select the first [bracket].
+  const [templateInsertToken, setTemplateInsertToken] = useState(0)
 
   const handleLogout = async () => {
     try {
@@ -240,9 +277,11 @@ export function VizzyChat() {
     try {
       const isImageGen = isImageGenerationIntent(trimmedInput)
       const isMusicGen = isMusicGenerationIntent(trimmedInput)
+      const isVideoGen = isVideoGenerationIntent(trimmedInput)
       console.log("[v0] User input:", trimmedInput)
       console.log("[v0] Is image generation intent:", isImageGen)
       console.log("[v0] Is music generation intent:", isMusicGen)
+      console.log("[v0] Is video generation intent:", isVideoGen)
       
       // Check if user has uploaded an image and wants to enhance it
       const hasUploadedImage = uploadedImage !== null
@@ -400,6 +439,102 @@ export function VizzyChat() {
               : m
           )
         )
+      } else if (isVideoGen) {
+        // Video generation flow (fal.ai LTX-Video). Image-to-video if a prior
+        // generated image exists, else text-to-video.
+        const lastImage = [...messages].reverse().find(
+          (m) => m.role === "assistant" && m.images && m.images.length > 0
+        )
+        const sourceImageUrl = lastImage?.images?.[0]?.url
+
+        const submitRes = await fetch(`${API_BASE_URL}/api/vizzy-canvas/video/generate`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` }),
+          },
+          body: JSON.stringify({
+            prompt: trimmedInput,
+            imageUrl: sourceImageUrl,
+          }),
+        })
+
+        const submitData = await submitRes.json()
+        if (!submitRes.ok) {
+          throw new Error(submitData.error || "Failed to start video generation")
+        }
+
+        const videoId = generateId()
+        const videoModel = submitData.model || "fal-ai/ltx-video"
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMessage.id
+              ? {
+                  ...m,
+                  content: sourceImageUrl
+                    ? "Animating your image. This usually takes 15-30 seconds."
+                    : "Generating your video. This usually takes 15-30 seconds.",
+                  videos: [
+                    {
+                      id: videoId,
+                      requestId: submitData.requestId,
+                      model: videoModel,
+                      prompt: trimmedInput,
+                      sourceImageUrl,
+                      status: "in_queue",
+                      createdAt: Date.now(),
+                    },
+                  ],
+                  isLoading: true,
+                }
+              : m
+          )
+        )
+
+        // Poll for completion (up to ~2 min)
+        const maxAttempts = 40
+        let attempt = 0
+        let finalUrl: string | undefined
+        let finalStatus: "completed" | "failed" = "failed"
+        while (attempt < maxAttempts) {
+          await new Promise((r) => setTimeout(r, 3000))
+          const pollRes = await fetch(
+            `${API_BASE_URL}/api/vizzy-canvas/video/status?op=${encodeURIComponent(submitData.requestId)}`,
+            { headers: { ...(token && { "Authorization": `Bearer ${token}` }) } }
+          )
+          const pollData = await pollRes.json()
+          if (pollData.status === "completed") {
+            finalUrl = pollData.videoUrl
+            finalStatus = "completed"
+            break
+          }
+          if (pollData.status === "failed") {
+            finalStatus = "failed"
+            break
+          }
+          attempt++
+        }
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMessage.id
+              ? {
+                  ...m,
+                  content:
+                    finalStatus === "completed"
+                      ? "Here's your video:"
+                      : "Video generation timed out. Try again with a simpler prompt.",
+                  videos: m.videos?.map((v) =>
+                    v.requestId === submitData.requestId
+                      ? { ...v, status: finalStatus, videoUrl: finalUrl }
+                      : v
+                  ),
+                  isLoading: false,
+                }
+              : m
+          )
+        )
       } else if (isImageGen) {
         // Image generation flow
         const refinedPrompt = buildRefinedPrompt(
@@ -507,8 +642,14 @@ export function VizzyChat() {
         console.log("[v0] Sending to chat API:", conversationMessages.length, "messages")
         const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/chat`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: conversationMessages }),
+          headers: { 
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` }),
+          },
+          body: JSON.stringify({
+            messages: conversationMessages,
+            chatId: currentChatId,
+          }),
         })
 
         const data = await response.json()
@@ -517,6 +658,10 @@ export function VizzyChat() {
 
         if (!response.ok) {
           throw new Error(data.error || "Failed to generate response")
+        }
+
+        if (data.chatId && data.chatId !== currentChatId) {
+          setCurrentChatId(data.chatId)
         }
 
         console.log("[v0] Chat response content:", data.content)
@@ -549,6 +694,7 @@ export function VizzyChat() {
 
   const handleSuggestionClick = useCallback((suggestion: string) => {
     setInput(suggestion)
+    setTemplateInsertToken((n) => n + 1)
   }, [])
 
   const handleRetry = useCallback(
@@ -568,23 +714,60 @@ export function VizzyChat() {
     setInput("")
     setIsLoading(false)
     setLightboxImage(null)
+    setCurrentChatId(null)
   }, [])
 
   const hasMessages = messages.length > 0
 
   return (
-    <div className="flex flex-col h-dvh bg-background">
+    <div
+      data-vc-theme={theme}
+      className="relative flex flex-col h-dvh"
+      style={{ background: "var(--vc-bg-base)", color: "var(--vc-text)" }}
+    >
+      {/* Dynamic ambient gradient (drifts slowly) */}
+      <div className="vc-ambient z-0" />
+      {/* Premium paper-grain texture (visible only in light mode) */}
+      <div className="vc-paper-grain z-0" />
       {/* Premium Header */}
-      <header className="flex-shrink-0 flex items-center justify-between px-4 md:px-6 py-3 border-b border-border/60 bg-card/60 backdrop-blur-xl z-10">
+      <header
+        className="relative z-20 flex-shrink-0 flex items-center justify-between px-4 md:px-6 py-3 backdrop-blur-2xl"
+        style={{
+          borderBottom: "1px solid var(--vc-divider)",
+          background: "var(--vc-glass-bg)",
+        }}
+      >
         <div className="flex items-center gap-3">
-          <div className="relative size-9 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center">
-            <Sparkles className="size-[18px] text-accent" />
+          <div
+            className="relative size-9 rounded-xl flex items-center justify-center backdrop-blur-xl"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--vc-glow-1) 0%, var(--vc-glow-3) 100%)",
+              border: "1px solid var(--vc-glass-border)",
+              boxShadow: "0 0 24px var(--vc-glow-1)",
+            }}
+          >
+            <Sparkles
+              className="size-[18px]"
+              style={{ color: "var(--vc-accent-text)" }}
+            />
           </div>
           <div className="flex flex-col">
-            <h1 className="text-base font-bold font-[family-name:var(--font-heading)] text-foreground tracking-tight leading-none">
-              Vizzy
+            <h1 className="text-base font-serif font-semibold tracking-tight leading-none">
+              <span
+                className="bg-clip-text text-transparent italic"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(110deg, #2563EB 0%, #22D3EE 100%)",
+                }}
+              >
+                Vizzy
+              </span>
             </h1>
-            <span className="text-[10px] text-muted-foreground/70 tracking-wide uppercase leading-none mt-0.5">
+            <span
+              className="text-[10px] tracking-wide uppercase leading-none mt-0.5"
+              style={{ color: "var(--vc-text-faint)" }}
+            >
               Creative Studio
             </span>
           </div>
@@ -599,7 +782,7 @@ export function VizzyChat() {
                     variant="ghost"
                     size="icon-sm"
                     onClick={handleNewChat}
-                    className="text-muted-foreground hover:text-foreground rounded-xl"
+                    className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
                     aria-label="New conversation"
                   >
                     <Plus className="size-4" />
@@ -613,7 +796,7 @@ export function VizzyChat() {
                     variant="ghost"
                     size="icon-sm"
                     onClick={handleNewChat}
-                    className="text-muted-foreground hover:text-destructive rounded-xl"
+                    className="text-[var(--vc-text-muted)] hover:text-rose-500 hover:bg-rose-500/10 rounded-xl"
                     aria-label="Clear conversation"
                   >
                     <Trash2 className="size-4" />
@@ -623,13 +806,48 @@ export function VizzyChat() {
               </Tooltip>
             </>
           )}
+          
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <span>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon-sm"
+                      className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
+                      aria-label="Select Voice"
+                    >
+                      <Volume2 className="size-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">Voice: {selectedVoice.name}</TooltipContent>
+                </Tooltip>
+              </span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              {VOICE_OPTIONS.map((voice) => (
+                <DropdownMenuItem
+                  key={voice.id}
+                  onClick={() => setSelectedVoice(voice)}
+                  className={selectedVoice.id === voice.id ? "bg-cyan-400/20" : ""}
+                >
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-sm font-medium">{voice.name}</span>
+                    <span className="text-[10px] text-slate-400/70 uppercase tracking-wider">{voice.provider}</span>
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
           <Tooltip>
             <TooltipTrigger asChild>
               <Link to="/gallery">
                 <Button
                   variant="ghost"
                   size="icon-sm"
-                  className="text-muted-foreground hover:text-foreground rounded-xl"
+                  className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
                   aria-label="View generation history"
                 >
                   <Clock className="size-4" />
@@ -643,12 +861,15 @@ export function VizzyChat() {
               <Button
                 variant="ghost"
                 size="icon-sm"
-                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-                className="text-muted-foreground hover:text-foreground rounded-xl"
+                onClick={toggleTheme}
+                className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
                 aria-label="Toggle theme"
               >
-                <Sun className="size-4 hidden dark:block" />
-                <Moon className="size-4 block dark:hidden" />
+                {theme === "dark" ? (
+                  <Sun className="size-4" />
+                ) : (
+                  <Moon className="size-4" />
+                )}
               </Button>
             </TooltipTrigger>
             <TooltipContent side="bottom">Toggle theme</TooltipContent>
@@ -659,7 +880,7 @@ export function VizzyChat() {
                 <Button
                   variant="ghost"
                   size="icon-sm"
-                  className="text-muted-foreground hover:text-accent rounded-xl"
+                  className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
                   aria-label="Subscription and credits"
                 >
                   <Zap className="size-4" />
@@ -674,7 +895,7 @@ export function VizzyChat() {
                 <Button
                   variant="ghost"
                   size="icon-sm"
-                  className="text-muted-foreground hover:text-foreground rounded-xl"
+                  className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
                   aria-label="User profile"
                 >
                   <User className="size-4" />
@@ -689,7 +910,7 @@ export function VizzyChat() {
                 variant="ghost"
                 size="icon-sm"
                 onClick={handleLogout}
-                className="text-muted-foreground hover:text-destructive rounded-xl"
+                className="text-[var(--vc-text-muted)] hover:text-rose-500 hover:bg-rose-500/10 rounded-xl"
                 aria-label="Logout"
               >
                 <LogOut className="size-4" />
@@ -701,7 +922,7 @@ export function VizzyChat() {
       </header>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto scroll-smooth">
+      <div className="relative z-10 flex-1 overflow-y-auto scroll-smooth">
         {!hasMessages ? (
           <WelcomeScreen onSuggestionClick={handleSuggestionClick} />
         ) : (
@@ -710,6 +931,7 @@ export function VizzyChat() {
               <ChatMessage
                 key={message.id}
                 message={message}
+                selectedVoice={selectedVoice}
                 onImageClick={(url, prompt) => {
                   setLightboxImage(url)
                   setLightboxPrompt(prompt)
@@ -725,7 +947,13 @@ export function VizzyChat() {
       </div>
 
       {/* Input Area */}
-      <div className="flex-shrink-0 pb-4 pt-2 bg-gradient-to-t from-[#fdf4f6] via-[#fdf4f6]/95 to-transparent">
+      <div
+        className="relative z-20 flex-shrink-0 pb-4 pt-2"
+        style={{
+          background:
+            "linear-gradient(to top, var(--vc-bg-input-fade), color-mix(in srgb, var(--vc-bg-input-fade) 95%, transparent), transparent)",
+        }}
+      >
         <ChatInput
           value={input}
           onChange={setInput}
@@ -733,6 +961,7 @@ export function VizzyChat() {
           isLoading={isLoading}
           aspectRatio={aspectRatio}
           onAspectRatioChange={setAspectRatio}
+          templateInsertToken={templateInsertToken}
           uploadedImage={uploadedImage}
           onImageUpload={(imageUrl) => {
             setUploadedImage({

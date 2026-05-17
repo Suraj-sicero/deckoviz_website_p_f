@@ -8,6 +8,127 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============== VIZZY CANVAS THEME TOKENS ============== */
+/* Scoped to elements with [data-vc-theme]. Brand-aligned: dark uses Midnight
+   + Cosmic Blue + Icy Teal; light uses ivory + faint Lavender + Icy Teal.   */
+[data-vc-theme="dark"] {
+  --vc-bg-base: #0B1220;
+  --vc-bg-input-fade: #0B1220;
+  --vc-text: #F1F5F9;            /* slate-100 */
+  --vc-text-muted: rgb(148 163 184 / 0.85); /* slate-400 */
+  --vc-text-faint: rgb(100 116 139 / 0.7);  /* slate-500 */
+  --vc-glass-bg: rgba(255, 255, 255, 0.04);
+  --vc-glass-hover: rgba(255, 255, 255, 0.07);
+  --vc-glass-strong: rgba(15, 23, 42, 0.7);
+  --vc-glass-border: rgba(255, 255, 255, 0.10);
+  --vc-glass-border-strong: rgba(255, 255, 255, 0.15);
+  --vc-glass-shadow: 0 8px 32px rgba(11, 18, 32, 0.45);
+  --vc-glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --vc-accent-text: #67E8F9;     /* cyan-300 */
+  --vc-accent-border: rgba(34, 211, 238, 0.40);
+  --vc-glow-1: rgba(34, 211, 238, 0.22);
+  --vc-glow-2: rgba(20, 184, 166, 0.18);
+  --vc-glow-3: rgba(37, 99, 235, 0.14);
+  --vc-glow-4: rgba(27, 42, 74, 0.08);
+  --vc-placeholder-bg: rgba(34, 211, 238, 0.18);
+  --vc-placeholder-text: #A5F3FC;
+  --vc-divider: rgba(255, 255, 255, 0.06);
+}
+
+[data-vc-theme="light"] {
+  --vc-bg-base: #FAF7F2;             /* warm ivory, slightly creamier */
+  --vc-bg-input-fade: #FAF7F2;
+  --vc-text: #0F172A;                /* slate-900 — high-contrast */
+  --vc-text-muted: rgb(51 65 85 / 0.85);    /* slate-700 */
+  --vc-text-faint: rgb(100 116 139 / 0.7);  /* slate-500 */
+  --vc-glass-bg: rgba(255, 255, 255, 0.72);
+  --vc-glass-hover: rgba(255, 255, 255, 0.92);
+  --vc-glass-strong: rgba(255, 255, 255, 0.90);
+  --vc-glass-border: rgba(15, 23, 42, 0.07);
+  --vc-glass-border-strong: rgba(37, 99, 235, 0.20);
+  /* Layered shadow: tight contact + soft dispersion + cosmic-blue glow */
+  --vc-glass-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 8px 24px rgba(15, 23, 42, 0.06),
+    0 24px 60px rgba(37, 99, 235, 0.06);
+  --vc-glass-inset: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --vc-accent-text: #2563EB;         /* cosmic blue */
+  --vc-accent-border: rgba(37, 99, 235, 0.32);
+  /* Three drifting wells — icy teal, lavender, cosmic blue */
+  --vc-glow-1: rgba(34, 211, 238, 0.22);
+  --vc-glow-2: rgba(196, 181, 253, 0.28);
+  --vc-glow-3: rgba(37, 99, 235, 0.14);
+  --vc-glow-4: rgba(255, 255, 255, 0);
+  --vc-placeholder-bg: rgba(37, 99, 235, 0.10);
+  --vc-placeholder-text: #1D4ED8;
+  --vc-divider: rgba(15, 23, 42, 0.06);
+}
+
+/* Premium paper-grain overlay — visible only in light mode for a tactile
+   "fine letterpress" feel. Built from layered SVG turbulence (data URI). */
+.vc-paper-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.06  0 0 0 0 0.09  0 0 0 0 0.16  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 240px 240px;
+  transition: opacity 250ms ease;
+}
+[data-vc-theme="light"] .vc-paper-grain {
+  opacity: 0.32;
+}
+
+/* Soft luminous corner accent — adds a sun-warmed highlight in light mode */
+[data-vc-theme="light"] .vc-ambient::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(36rem 24rem at 92% -10%, rgba(255, 176, 32, 0.10), transparent 70%),
+    radial-gradient(28rem 28rem at -10% 110%, rgba(255, 106, 61, 0.06), transparent 70%);
+  pointer-events: none;
+}
+
+/* Dynamic ambient gradient — three drifting radial wells */
+.vc-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(40rem 40rem at var(--vc-amb-x1, 30%) var(--vc-amb-y1, 30%),
+      var(--vc-glow-1), transparent 70%),
+    radial-gradient(36rem 36rem at var(--vc-amb-x2, 80%) var(--vc-amb-y2, 70%),
+      var(--vc-glow-2), transparent 70%),
+    radial-gradient(50rem 50rem at var(--vc-amb-x3, 50%) var(--vc-amb-y3, 90%),
+      var(--vc-glow-3), transparent 75%);
+  animation: vc-ambient-drift 28s ease-in-out infinite alternate;
+}
+
+@keyframes vc-ambient-drift {
+  0%   { --vc-amb-x1: 20%; --vc-amb-y1: 25%;
+         --vc-amb-x2: 80%; --vc-amb-y2: 70%;
+         --vc-amb-x3: 50%; --vc-amb-y3: 95%; }
+  50%  { --vc-amb-x1: 65%; --vc-amb-y1: 45%;
+         --vc-amb-x2: 30%; --vc-amb-y2: 55%;
+         --vc-amb-x3: 75%; --vc-amb-y3: 80%; }
+  100% { --vc-amb-x1: 45%; --vc-amb-y1: 60%;
+         --vc-amb-x2: 70%; --vc-amb-y2: 30%;
+         --vc-amb-x3: 30%; --vc-amb-y3: 85%; }
+}
+
+@property --vc-amb-x1 { syntax: "<percentage>"; inherits: false; initial-value: 30%; }
+@property --vc-amb-y1 { syntax: "<percentage>"; inherits: false; initial-value: 30%; }
+@property --vc-amb-x2 { syntax: "<percentage>"; inherits: false; initial-value: 80%; }
+@property --vc-amb-y2 { syntax: "<percentage>"; inherits: false; initial-value: 70%; }
+@property --vc-amb-x3 { syntax: "<percentage>"; inherits: false; initial-value: 50%; }
+@property --vc-amb-y3 { syntax: "<percentage>"; inherits: false; initial-value: 90%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vc-ambient { animation: none; }
+}
+
 @layer base {
   html {
     -webkit-tap-highlight-color: transparent;
