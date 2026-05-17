@@ -18,6 +18,9 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const restaurantImages = Array.from({ length: 20 }, (_, i) => `/images/h${i + 1}.png`);
+const restaurantImagesTop = Array.from({ length: 11 }, (_, i) => `/images/restaurent_images/rest${i + 1}.png`);
+const restaurantImagesMiddle = Array.from({ length: 11 }, (_, i) => `/images/restaurent_images/rest${i + 12}.png`);
+
 
 // ─── Use Cases Data ───────────────────────────────────────────────────────────
 const useCaseCategories = [
@@ -379,6 +382,94 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
 
 
 
+const TopImageMarquee = () => {
+  return (
+    <div className="relative w-full overflow-hidden py-24 bg-[#0f0f13] z-10 flex flex-col items-center">
+       {/* Background ambient glows */}
+       <div className="absolute top-1/2 left-1/4 w-[500px] h-[500px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+       <div className="absolute top-1/2 right-1/4 w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[120px] pointer-events-none -translate-y-1/2" />
+       
+       <div className="text-center mb-16 relative z-20">
+         <span className="inline-block py-1.5 px-4 rounded-full bg-white/5 border border-white/10 text-white text-xs font-semibold tracking-widest uppercase mb-6 backdrop-blur-md">The Standard</span>
+         <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold text-white mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+           Visuals That Define the <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400">Experience</span>
+         </h2>
+         <p className="text-gray-400 text-xl font-light max-w-2xl mx-auto">A dynamic canvas that adapts to the rhythm of your space, setting the perfect mood from brunch to midnight.</p>
+       </div>
+
+       <div className="relative w-full flex">
+         
+         <motion.div
+          className="flex gap-6 w-max py-8"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ ease: "linear", duration: 40, repeat: Infinity }}
+         >
+           {[...restaurantImagesTop, ...restaurantImagesTop].map((src, i) => (
+             <div key={i} className="w-[85vw] h-[48vw] md:w-[700px] md:h-[394px] flex-shrink-0 rounded-[2rem] overflow-hidden relative group cursor-pointer border border-white/10 shadow-[0_15px_50px_rgb(0,0,0,0.4)] bg-[#15151a]">
+                {/* Subtle overlay on hover without text */}
+                <div className="absolute inset-0 bg-gradient-to-t from-indigo-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 z-10" />
+                {/* Glowing border effect on hover */}
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-indigo-400/40 rounded-[2rem] transition-colors duration-500 z-20 pointer-events-none" />
+                <img src={src} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-in-out" style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }} alt="Restaurant atmosphere" />
+             </div>
+           ))}
+         </motion.div>
+       </div>
+    </div>
+  )
+}
+
+const MiddleImageMarquee = () => {
+  const reversedMiddle = [...restaurantImagesMiddle].reverse();
+  return (
+    <div className="relative w-full overflow-hidden py-24 bg-[#0a0a0d] z-10 flex flex-col gap-8 border-y border-white/5">
+       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[500px] bg-indigo-600/10 rounded-[100%] blur-[100px] pointer-events-none" />
+       
+       <div className="text-center mb-10 relative z-20 px-6">
+         <span className="inline-block py-1.5 px-4 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold tracking-widest uppercase mb-4 shadow-[0_0_15px_rgba(99,102,241,0.2)]">Living Architecture</span>
+         <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+           Art that <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-violet-400">breathes</span>
+         </h2>
+       </div>
+
+       <div className="relative w-full flex flex-col gap-6">
+         
+         {/* Row 1: Left to right (using x: -50% to 0%) */}
+         <motion.div
+          className="flex gap-6 w-max"
+          animate={{ x: ["-50%", "0%"] }}
+          transition={{ ease: "linear", duration: 55, repeat: Infinity }}
+         >
+           {[...restaurantImagesMiddle, ...restaurantImagesMiddle].map((src, i) => (
+             <div key={`r1-${i}`} className="w-[85vw] h-[50vw] md:w-[550px] md:h-[310px] flex-shrink-0 rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative group cursor-pointer bg-[#15151a]">
+                <div className="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 mix-blend-overlay pointer-events-none" />
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-[2rem] transition-colors duration-500 z-20 pointer-events-none" />
+                
+                <img src={src} className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-in-out" style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }} alt="Sensory Dining" />
+             </div>
+           ))}
+         </motion.div>
+
+         {/* Row 2: Right to left (using x: 0% to -50%) */}
+         <motion.div
+          className="flex gap-6 w-max -ml-48"
+          animate={{ x: ["0%", "-50%"] }}
+          transition={{ ease: "linear", duration: 65, repeat: Infinity }}
+         >
+           {[...reversedMiddle, ...reversedMiddle].map((src, i) => (
+             <div key={`r2-${i}`} className="w-[85vw] h-[50vw] md:w-[550px] md:h-[310px] flex-shrink-0 rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative group cursor-pointer bg-[#15151a]">
+                <div className="absolute inset-0 bg-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 mix-blend-overlay pointer-events-none" />
+                <div className="absolute inset-0 border-2 border-transparent group-hover:border-white/20 rounded-[2rem] transition-colors duration-500 z-20 pointer-events-none" />
+                
+                <img src={src} className="w-full h-full object-cover grayscale-[15%] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000 ease-in-out" style={{ transitionTimingFunction: "cubic-bezier(0.25,0.46,0.45,0.94)" }} alt="Sensory Dining" />
+             </div>
+           ))}
+         </motion.div>
+       </div>
+    </div>
+  )
+}
+
 const DeckovizForRestaurantsAndCafes = () => {
   const navigate = useNavigate();
   const [currentImg, setCurrentImg] = useState(0);
@@ -571,6 +662,9 @@ const DeckovizForRestaurantsAndCafes = () => {
         </div>
       </section>
 
+      {/* Top Image Marquee */}
+      <TopImageMarquee />
+
       {/* Core Problems We Solve */}
       <section className="py-24 relative z-10 bg-black/40">
         <div className="max-w-7xl mx-auto px-6">
@@ -754,6 +848,9 @@ const DeckovizForRestaurantsAndCafes = () => {
           </div>
         </div>
       </section>
+
+      {/* Middle Image Marquee */}
+      <MiddleImageMarquee />
 
       {/* 15 High-Impact Use Cases */}
       <section className="py-24 relative z-10 bg-black/40 border-y border-white/5">

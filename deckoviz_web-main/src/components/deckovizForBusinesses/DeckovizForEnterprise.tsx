@@ -1000,7 +1000,16 @@ export default function DeckovizForEnterprise() {
   )
 
   return (
-    <div className="bg-white">
+    <div className="relative min-h-screen overflow-x-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Enterprise Indigo Blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+          <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+          <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+          <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+          <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+          <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
+      </div>
 
       {/* ================= PREMIUM SPLIT HERO ================= */}
       <div className="relative z-10 min-h-screen flex items-center px-6 pt-24">
@@ -1461,7 +1470,7 @@ export default function DeckovizForEnterprise() {
       <EnterpriseHorizontalScrollingFeatures />
 
 
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-transparent">
 
         <div className="max-w-7xl mx-auto px-6">
 
@@ -1542,7 +1551,7 @@ export default function DeckovizForEnterprise() {
 
 
       {/* ================= INTELLIGENT AMBIENCE CARD ================= */}
-      <section className="relative overflow-hidden bg-white py-32 px-6 md:px-12">
+      <section className="relative overflow-hidden bg-transparent py-32 px-6 md:px-12">
 
         {/* Ambient Glow / Blobs */}
         <div className="absolute top-[5%] right-[5%] w-[500px] h-[500px] rounded-full blur-[90px] pointer-events-none opacity-60"
@@ -1830,7 +1839,7 @@ export default function DeckovizForEnterprise() {
       </motion.section>
 
       {/* YT and Instagram */}
-      <div className="bg-white py-12 md:py-12 mt-10">
+      <div className="bg-transparent py-12 md:py-12 mt-10">
         <div className="max-w-7xl mx-auto px-4">
           {/* Enhanced Heading Section */}
           <FadeUp>
@@ -1951,7 +1960,7 @@ export default function DeckovizForEnterprise() {
 
 
       {/* Features Section */}
-      <section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-white overflow-hidden">
+      <section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-transparent overflow-hidden">
 
         {/* Brand Background Glows */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -2134,7 +2143,7 @@ export default function DeckovizForEnterprise() {
       <DeckovizSectors />
 
       {/* Bottom CTA Section */}
-      <section className="py-8 md:py-8 bg-white">
+      <section className="py-8 md:py-8 bg-transparent">
         <FadeUp>
           <div className="container mx-auto px-6 text-center">
             <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -2184,13 +2193,13 @@ export default function DeckovizForEnterprise() {
       <ThesisModal isOpen={isThesisModalOpen} onClose={() => setIsThesisModalOpen(false)} />
 
       {/* ================= EXPLORE FURTHER ================= */}
-      <section className="bg-white py-0 border-t border-gray-100"
+      <section className="bg-transparent py-0 border-t border-gray-100"
         style={{
           paddingLeft: '20px',
           paddingRight: '20px'
         }}>
 
-        <section className="relative py-28 bg-white border-t border-gray-100 flex flex-col items-center gap-6"
+        <section className="relative py-28 bg-transparent border-t border-gray-100 flex flex-col items-center gap-6"
           style={{
             padding: '20px'
           }}>
@@ -2333,7 +2342,7 @@ export default function DeckovizForEnterprise() {
       </section>
 
 
-      <section className="bg-white py-20 border-t border-gray-100">
+      <section className="bg-transparent py-20 border-t border-gray-100">
         {/* ================= EXPLORE FURTHER PREMIUM ================= */}
         <section className="relative py-28 bg-gradient-to-b from-white via-indigo-50/40 to-white overflow-hidden">
 
@@ -2370,7 +2379,7 @@ export default function DeckovizForEnterprise() {
                   className={`w-full md:w-auto text-center px-7 py-3 rounded-full text-sm font-medium 
       transition-all duration-300 border backdrop-blur-xl
       ${activeCategory === cat
-                      ? "text-white border-transparent shadow-xl scale-[1.02] bg-gradient-to-r from-indigo-600 to-pink-500"
+                      ? "text-white border-transparent shadow-xl scale-[1.02] bg-gradient-to-r from-[#182A4A] to-[#2563EB]"
                       : "bg-white/60 border-gray-200 text-gray-700 hover:border-indigo-300 hover:shadow-md hover:bg-white"
                     }`}
                 >

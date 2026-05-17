@@ -73,7 +73,16 @@ const Testimonials: React.FC = () => {
   const rightColumn = testimonials.filter((_, index) => index % 3 === 2);
 
   const TestimonialCard = ({ testimonial, index }: { testimonial: any, index: number }) => (
-    <div className="bg-gray-100 rounded-2xl p-4 md:p-6 mb-4 md:mb-6 break-inside-avoid">
+    <div className="rounded-2xl p-4 md:p-6 mb-4 md:mb-6 break-inside-avoid"
+      style={{
+        background: "rgba(255,255,255,0.25)",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        border: "1px solid rgba(255,255,255,0.45)",
+        borderTop: "1px solid rgba(255,255,255,0.75)",
+        boxShadow: "0 8px 32px rgba(31,38,135,0.07), inset 0 1px 0 rgba(255,255,255,0.65)"
+      }}
+    >
       <p className="text-gray-800 mb-4 md:mb-6 leading-relaxed text-sm md:text-base">
         "{testimonial.quote}"
       </p>
@@ -95,12 +104,16 @@ const Testimonials: React.FC = () => {
   );
 
   return (
-    <section className="relative py-12 sm:py-16 lg:py-20 bg-white">
-      {/* External top fade effect */}
-      <div className="absolute top-0 left-0 right-0 h-8 sm:h-10 bg-gradient-to-b from-white to-transparent z-10"></div>
-
-      {/* External bottom fade effect */}
-      <div className="absolute bottom-0 left-0 right-0 h-8 sm:h-10 bg-gradient-to-t from-white to-transparent z-10"></div>
+    <section className="relative py-12 sm:py-16 lg:py-20 overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(99,102,241,0.20)" }} />
+        <div className="absolute top-[30%] right-0 w-[400px] h-[400px] rounded-full blur-[90px]" style={{ background: "rgba(59,130,246,0.16)" }} />
+        <div className="absolute bottom-0 left-[20%] w-[600px] h-[300px] rounded-full blur-[110px]" style={{ background: "rgba(79,70,229,0.14)" }} />
+      </div>
+      {/* Fade edges */}
+      <div className="absolute top-0 left-0 right-0 h-8 sm:h-10 bg-gradient-to-b from-[#e8ecff] to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-8 sm:h-10 bg-gradient-to-t from-[#e0e8ff] to-transparent z-10 pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 lg:mb-16">
@@ -117,7 +130,14 @@ const Testimonials: React.FC = () => {
           {testimonials.map((testimonial, index) => (
             <div 
               key={index} 
-              className="bg-gray-100 rounded-2xl p-6 mx-2"
+              className="rounded-2xl p-6 mx-2"
+              style={{
+                background: "rgba(255,255,255,0.25)",
+                backdropFilter: "blur(20px) saturate(180%)",
+                WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                border: "1px solid rgba(255,255,255,0.45)",
+                borderTop: "1px solid rgba(255,255,255,0.75)",
+              }}
             >
               <p className="text-gray-800 mb-6 leading-relaxed text-sm">
                 "{testimonial.quote}"
@@ -179,11 +199,10 @@ const Testimonials: React.FC = () => {
               </div>
             </div>
             
-            {/* Internal top fade to prevent content from showing above container */}
-            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white to-transparent z-20 pointer-events-none"></div>
-            
-            {/* Internal bottom fade to prevent content from showing below container */}
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white to-transparent z-20 pointer-events-none"></div>
+            {/* Internal top fade */}
+            <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#e8ecff] to-transparent z-20 pointer-events-none"></div>
+            {/* Internal bottom fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#e0e8ff] to-transparent z-20 pointer-events-none"></div>
           </div>
         </div>
       </div>

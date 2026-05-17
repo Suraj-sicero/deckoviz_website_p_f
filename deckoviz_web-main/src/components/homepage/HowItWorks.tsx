@@ -119,13 +119,14 @@ const DeckovizSetup: React.FC = () => {
   const displayStep = hoveredStep !== null ? hoveredStep : activeStep
 
   return (
-    <section id="how-it-works" className="relative bg-white py-16 overflow-hidden">
-      {/* Subtle Background Glow */}
-      <div className="absolute inset-0">
-        {/* Left side glow */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-pink-200/50 via-violet-200/35 to-orange-200/50 rounded-full blur-3xl opacity-60"></div>
-        {/* Right side glow */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-l from-orange-200/60 via-pink-200/45 to-indigo-200/60 rounded-full blur-3xl opacity-70"></div>
+    <section id="how-it-works" className="relative py-16 overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Indigo Blob Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.20)" }} />
+        <div className="absolute top-[10%] right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.18)" }} />
+        <div className="absolute top-[50%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.15)" }} />
+        <div className="absolute bottom-[-60px] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.16)" }} />
+        <div className="absolute bottom-[-80px] left-[25%] w-[600px] h-[350px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.13)" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -217,20 +218,25 @@ const DeckovizSetup: React.FC = () => {
 
           {/* Step Content */}
           <div className="lg:sticky lg:top-24">
-            <div 
-              className="relative bg-white/80 backdrop-blur-sm rounded-3xl border border-pink-200/50 shadow-2xl p-8 transition-all duration-700 hover:shadow-3xl overflow-hidden"
+            <div
+              className="relative rounded-3xl p-8 transition-all duration-700 overflow-hidden"
               style={{
-                background: displayStep === 0 
-                  ? "radial-gradient(ellipse at top left, rgba(249, 168, 212, 0.55) 0%, rgba(244, 114, 182, 0.45) 30%, rgba(251, 207, 232, 0.35) 60%, rgba(236, 72, 153, 0.5) 100%), rgba(255, 255, 255, 0.7)"
+                backdropFilter: "blur(28px) saturate(180%)",
+                WebkitBackdropFilter: "blur(28px) saturate(180%)",
+                border: "1px solid rgba(255,255,255,0.50)",
+                borderTop: "1px solid rgba(255,255,255,0.80)",
+                boxShadow: "0 8px 32px rgba(31,38,135,0.12), inset 0 1px 0 rgba(255,255,255,0.65)",
+                background: displayStep === 0
+                  ? "radial-gradient(ellipse at top left, rgba(249, 168, 212, 0.45) 0%, rgba(244, 114, 182, 0.35) 30%, rgba(251, 207, 232, 0.25) 60%, transparent 100%), rgba(255,255,255,0.25)"
                   : displayStep === 1
-                  ? "radial-gradient(ellipse at top right, rgba(196, 181, 253, 0.55) 0%, rgba(167, 139, 250, 0.45) 40%, rgba(221, 214, 254, 0.35) 70%, rgba(139, 92, 246, 0.5) 100%), rgba(255, 255, 255, 0.7)"
+                  ? "radial-gradient(ellipse at top right, rgba(196, 181, 253, 0.45) 0%, rgba(167, 139, 250, 0.35) 40%, rgba(221, 214, 254, 0.25) 70%, transparent 100%), rgba(255,255,255,0.25)"
                   : displayStep === 2
-                  ? "radial-gradient(ellipse at bottom left, rgba(251, 146, 60, 0.55) 0%, rgba(249, 115, 22, 0.45) 35%, rgba(254, 215, 170, 0.35) 65%, rgba(234, 88, 12, 0.5) 100%), rgba(255, 255, 255, 0.7)"
+                  ? "radial-gradient(ellipse at bottom left, rgba(251, 146, 60, 0.45) 0%, rgba(249, 115, 22, 0.35) 35%, rgba(254, 215, 170, 0.25) 65%, transparent 100%), rgba(255,255,255,0.25)"
                   : displayStep === 3
-                  ? "radial-gradient(ellipse at center, rgba(45, 212, 191, 0.55) 0%, rgba(20, 184, 166, 0.45) 45%, rgba(94, 234, 212, 0.35) 75%, rgba(13, 148, 136, 0.5) 100%), rgba(255, 255, 255, 0.7)"
+                  ? "radial-gradient(ellipse at center, rgba(45, 212, 191, 0.45) 0%, rgba(20, 184, 166, 0.35) 45%, rgba(94, 234, 212, 0.25) 75%, transparent 100%), rgba(255,255,255,0.25)"
                   : displayStep === 4
-                  ? "radial-gradient(ellipse at top, rgba(251, 191, 36, 0.55) 0%, rgba(245, 158, 11, 0.45) 40%, rgba(254, 240, 138, 0.35) 70%, rgba(217, 119, 6, 0.5) 100%), rgba(255, 255, 255, 0.7)"
-                  : "radial-gradient(ellipse at right, rgba(168, 85, 247, 0.55) 0%, rgba(147, 51, 234, 0.45) 35%, rgba(196, 181, 253, 0.35) 70%, rgba(124, 58, 237, 0.5) 100%), rgba(255, 255, 255, 0.7)"
+                  ? "radial-gradient(ellipse at top, rgba(251, 191, 36, 0.45) 0%, rgba(245, 158, 11, 0.35) 40%, rgba(254, 240, 138, 0.25) 70%, transparent 100%), rgba(255,255,255,0.25)"
+                  : "radial-gradient(ellipse at right, rgba(168, 85, 247, 0.45) 0%, rgba(147, 51, 234, 0.35) 35%, rgba(196, 181, 253, 0.25) 70%, transparent 100%), rgba(255,255,255,0.25)"
               }}
             >
               {/* White Aura Lines for Pretty Effect */}

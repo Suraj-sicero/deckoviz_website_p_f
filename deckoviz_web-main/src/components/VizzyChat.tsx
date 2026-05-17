@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useDragControls } from "framer-motion";
 import { 
   Send, X, Minimize2, Maximize2, Sparkles, 
   ChevronDown, Zap, RotateCcw, Plus 
 } from "lucide-react";
-import FloatingRobot from "./FloatingRobot";
+
 
 // ─────────────────────────────────────────────
 // Types
@@ -21,7 +21,7 @@ const VIZZY_API = `${API_BASE_URL}/api/wizzy`;
 
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
-  content: `Hey, I'm Vizzy, and I am so glad to have you here. I'd love to answer any questions you have about Deckoviz and how it could help you. Anything at all, let me know. I'm right here at your service!\n\nAny curiosities you have about any features, any pricing details, etc., I'm all yours. I'm here to help you understand our philosophy, our thesis, why we built it, who it is for, and any question that you have at all. I'm happy to answer it.`,
+  content: `Hey, I'm Wizzy, and I am so glad to have you here. I'd love to answer any questions you have about Deckoviz and how it could help you. Anything at all, let me know. I'm right here at your service!\n\nAny curiosities you have about any features, any pricing details, etc., I'm all yours. I'm here to help you understand our philosophy, our thesis, why we built it, who it is for, and any question that you have at all. I'm happy to answer it.`,
   timestamp: new Date(),
 };
 
@@ -73,26 +73,37 @@ const MessageBubble: React.FC<{ message: Message; isLatest: boolean }> = ({
       initial={{ opacity: 0, y: 12, scale: 0.97 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className={`flex items-end gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}
+      className={`flex items-start gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}
     >
       {/* Avatar */}
       {!isUser && (
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
-          <Sparkles size={14} className="text-white" />
+        <div className="flex-shrink-0 w-12 h-12 mt-0.5 relative flex items-center justify-center rounded-full group cursor-pointer">
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#4F75FF] via-purple-500 to-fuchsia-400 rounded-full opacity-70 blur-[6px] group-hover:blur-[10px] group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
+          <div className="absolute inset-0 bg-white/90 border border-white/60 rounded-full shadow-[inset_0_-3px_8px_rgba(0,0,0,0.15)] backdrop-blur-2xl transition-all duration-300 overflow-hidden">
+            <div className="absolute -top-1 left-[15%] right-[15%] h-[40%] bg-gradient-to-b from-white to-transparent rounded-full opacity-90"></div>
+          </div>
+          <motion.img 
+            src="/vizzy-robot-transparent.png" 
+            alt="Vizzy" 
+            className="relative z-10 w-[88%] h-[88%] object-contain drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]"
+            animate={{ y: [0, -3, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            whileHover={{ scale: 1.15, rotate: [0, -5, 5, 0] }}
+          />
         </div>
       )}
 
       <div
         className={`max-w-[78%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
           isUser
-            ? "bg-gradient-to-br from-blue-600 to-violet-600 text-white rounded-br-sm shadow-lg shadow-blue-500/20"
-            : "bg-white/5 border border-white/10 text-gray-200 rounded-bl-sm backdrop-blur-sm"
+            ? "bg-gradient-to-br from-[#4F75FF] to-[#9B51E0] text-white rounded-tr-sm shadow-lg shadow-purple-900/20"
+            : "bg-[#252a50] border border-white/5 text-gray-100 rounded-tl-sm shadow-sm"
         }`}
       >
         {renderContent(message.content)}
         <div
           className={`text-[10px] mt-1.5 ${
-            isUser ? "text-blue-200" : "text-gray-600"
+            isUser ? "text-blue-100" : "text-[#8a91be]"
           }`}
         >
           {message.timestamp.toLocaleTimeString([], {
@@ -113,19 +124,30 @@ const TypingIndicator = () => (
     initial={{ opacity: 0, y: 8 }}
     animate={{ opacity: 1, y: 0 }}
     exit={{ opacity: 0, y: 8 }}
-    className="flex items-end gap-3"
+    className="flex items-start gap-3"
   >
-    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-blue-500/30">
-      <Sparkles size={14} className="text-white" />
+    <div className="flex-shrink-0 w-12 h-12 mt-0.5 relative flex items-center justify-center rounded-full group cursor-pointer">
+      <div className="absolute inset-0 bg-gradient-to-tr from-[#4F75FF] via-purple-500 to-fuchsia-400 rounded-full opacity-70 blur-[6px] group-hover:blur-[10px] group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
+      <div className="absolute inset-0 bg-white/90 border border-white/60 rounded-full shadow-[inset_0_-3px_8px_rgba(0,0,0,0.15)] backdrop-blur-2xl transition-all duration-300 overflow-hidden">
+        <div className="absolute -top-1 left-[15%] right-[15%] h-[40%] bg-gradient-to-b from-white to-transparent rounded-full opacity-90"></div>
+      </div>
+      <motion.img 
+        src="/vizzy-robot-transparent.png" 
+        alt="Vizzy" 
+        className="relative z-10 w-[88%] h-[88%] object-contain drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]"
+        animate={{ y: [0, -3, 0] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+        whileHover={{ scale: 1.15, rotate: [0, -5, 5, 0] }}
+      />
     </div>
-    <div className="bg-white/5 border border-white/10 rounded-2xl rounded-bl-sm px-4 py-3 backdrop-blur-sm">
+    <div className="bg-[#252a50] border border-white/5 shadow-sm rounded-2xl rounded-tl-sm px-4 py-3">
       <div className="flex gap-1 items-center h-4">
         {[0, 1, 2].map((i) => (
           <motion.div
             key={i}
             animate={{ y: [0, -5, 0] }}
             transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.15 }}
-            className="w-1.5 h-1.5 rounded-full bg-blue-400"
+            className="w-1.5 h-1.5 rounded-full bg-[#8a91be]"
           />
         ))}
       </div>
@@ -139,6 +161,7 @@ const TypingIndicator = () => (
 const VizzyChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const dragControls = useDragControls();
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -228,8 +251,33 @@ const VizzyChat: React.FC = () => {
 
   return (
     <>
-      {/* ── Floating Robot Trigger ── */}
-      <FloatingRobot onClick={() => setIsOpen(!isOpen)} isOpen={isOpen} />
+      {/* ── Ask Vizzy Button Trigger ── */}
+      <AnimatePresence>
+        {!isOpen && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setIsOpen(true)}
+            className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[60] flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#182a4a] to-[#2563eb] border border-white/20 shadow-[0_8px_32px_rgba(24,42,74,0.4)] hover:shadow-[0_8px_32px_rgba(37,99,235,0.55)] transition-all duration-300 group"
+          >
+            {/* Playful Colorful Orbs sticking out the left */}
+            <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 pointer-events-none">
+              <div className="absolute top-1 left-0 w-3.5 h-3.5 bg-blue-300 rounded-full mix-blend-screen opacity-90 shadow-sm" />
+              <div className="absolute top-2 left-3 w-3 h-3 bg-purple-400 rounded-full mix-blend-screen opacity-90 shadow-sm" />
+              <div className="absolute bottom-0 left-1.5 w-4.5 h-4.5 bg-indigo-400 rounded-full mix-blend-screen opacity-90 shadow-sm" />
+              <div className="absolute top-0 left-1 w-6 h-6 bg-blue-400 rounded-full mix-blend-screen opacity-50 blur-[2px]" />
+            </div>
+
+            <Sparkles size={18} className="text-white group-hover:animate-pulse z-10" />
+            <span className="font-semibold text-[15px] text-white tracking-wide z-10">
+              Ask Vizzy
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* ── Chat Window ── */}
       <AnimatePresence>
@@ -240,51 +288,69 @@ const VizzyChat: React.FC = () => {
             animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 30, x: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 28 }}
-            className={`fixed bottom-24 right-4 md:bottom-6 md:right-36 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/10 shadow-2xl shadow-black/60 backdrop-blur-2xl bg-[#0a0a14]/95 transition-all duration-300 ${
+            drag
+            dragControls={dragControls}
+            dragListener={false}
+            dragMomentum={false}
+            layout
+            className={`fixed bottom-24 right-4 md:bottom-6 md:right-8 z-50 flex flex-col overflow-hidden rounded-2xl border border-white/5 shadow-2xl shadow-black/50 bg-[#1a1f3c] ${
               isExpanded
-                ? "w-[min(90vw,680px)] h-[80vh]"
-                : "w-[min(90vw,400px)] h-[600px]"
+                ? "w-[min(95vw,900px)] h-[min(92vh,1000px)]"
+                : "w-[min(95vw,450px)] h-[min(85vh,850px)]"
             }`}
           >
             {/* ── Header ── */}
-            <div className="relative flex items-center justify-between px-4 py-3 border-b border-white/5 bg-gradient-to-r from-blue-900/40 to-indigo-900/40 flex-shrink-0">
-              {/* Ambient glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-violet-500/5" />
+            <div 
+              className="relative flex items-center justify-between px-4 py-3 border-b border-white/5 flex-shrink-0 cursor-grab active:cursor-grabbing"
+              onPointerDown={(e) => dragControls.start(e)}
+              style={{ touchAction: "none" }}
+            >
 
               <div className="relative flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center shadow-lg shadow-blue-500/40">
-                  <Sparkles size={16} className="text-white" />
+                <div className="relative flex items-center justify-center w-12 h-12 rounded-full group cursor-pointer">
+                  <div className="absolute inset-0 bg-gradient-to-tr from-[#4F75FF] via-purple-500 to-fuchsia-400 rounded-full opacity-70 blur-[6px] group-hover:blur-[10px] group-hover:opacity-100 transition-all duration-500 animate-pulse"></div>
+                  <div className="absolute inset-0 bg-white/90 border border-white/60 rounded-full shadow-[inset_0_-3px_8px_rgba(0,0,0,0.15)] backdrop-blur-2xl transition-all duration-300 overflow-hidden">
+                    <div className="absolute -top-1 left-[15%] right-[15%] h-[40%] bg-gradient-to-b from-white to-transparent rounded-full opacity-90"></div>
+                  </div>
+                  <motion.img 
+                    src="/vizzy-robot-transparent.png" 
+                    alt="Vizzy" 
+                    className="relative z-10 w-[88%] h-[88%] object-contain drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]" 
+                    animate={{ y: [0, -3, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    whileHover={{ scale: 1.2, rotate: 8 }}
+                  />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-white tracking-wide">Vizzy</span>
-                    <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-emerald-500/20 border border-emerald-500/30">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-[9px] font-semibold text-emerald-400 uppercase tracking-widest">Online</span>
+                    <span className="text-[15px] font-bold text-white tracking-wide">Vizzy</span>
+                    <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#103031]">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e]" />
+                      <span className="text-[9px] font-bold text-[#22c55e] uppercase tracking-widest">Online</span>
                     </span>
                   </div>
-                  <p className="text-[10px] text-gray-500">Deckoviz AI Concierge</p>
+                  <p className="text-[11px] text-[#8a91be]">Deckoviz AI Concierge</p>
                 </div>
               </div>
 
               <div className="relative flex items-center gap-1">
                 <button
                   onClick={resetChat}
-                  className="p-1.5 rounded-lg hover:bg-white/5 text-gray-500 hover:text-gray-300 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-white/5 text-[#7c84b1] hover:text-white transition-colors"
                   title="Reset conversation"
                 >
                   <RotateCcw size={13} />
                 </button>
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="p-1.5 rounded-lg hover:bg-white/5 text-gray-500 hover:text-gray-300 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-white/5 text-[#7c84b1] hover:text-white transition-colors"
                   title={isExpanded ? "Minimize" : "Expand"}
                 >
                   {isExpanded ? <Minimize2 size={13} /> : <Maximize2 size={13} />}
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg hover:bg-white/5 text-gray-500 hover:text-gray-300 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-white/5 text-[#7c84b1] hover:text-white transition-colors"
                   title="Close"
                 >
                   <X size={13} />
@@ -293,7 +359,7 @@ const VizzyChat: React.FC = () => {
             </div>
 
             {/* ── Messages ── */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:transparent [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full">
+            <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:transparent [&::-webkit-scrollbar-thumb]:bg-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full">
               {messages.map((message, index) => (
                 <MessageBubble
                   key={index}
@@ -316,13 +382,13 @@ const VizzyChat: React.FC = () => {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="px-4 pb-3 flex gap-2 flex-wrap items-center"
+                  className="px-4 pb-3 flex gap-2 flex-wrap items-center flex-shrink-0"
                 >
                   {SUGGESTED_PROMPTS.map((prompt) => (
                     <button
                       key={prompt}
                       onClick={() => sendMessage(prompt)}
-                      className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+                      className="text-xs px-3 py-1.5 rounded-full bg-[#252a50] border border-white/10 text-[#8a91be] hover:text-white hover:border-[#4F75FF]/50 hover:bg-white/5 transition-all duration-200"
                     >
                       {prompt}
                     </button>
@@ -332,7 +398,7 @@ const VizzyChat: React.FC = () => {
                   {!showAllSuggestions && (
                     <button
                       onClick={() => setShowAllSuggestions(true)}
-                      className="text-xs px-2 py-1.5 rounded-full bg-white/5 border border-white/10 text-blue-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200 flex items-center justify-center"
+                      className="text-xs px-2 py-1.5 rounded-full bg-[#252a50] border border-white/10 text-[#4F75FF] hover:text-[#7693FF] hover:border-[#4F75FF]/50 hover:bg-white/5 transition-all duration-200 flex items-center justify-center"
                       title="Show more questions"
                     >
                       <Plus size={14} />
@@ -344,7 +410,7 @@ const VizzyChat: React.FC = () => {
                     <button
                       key={prompt}
                       onClick={() => sendMessage(prompt)}
-                      className="text-xs px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-blue-500/50 hover:bg-blue-500/10 transition-all duration-200"
+                      className="text-xs px-3 py-1.5 rounded-full bg-[#252a50] border border-white/10 text-[#8a91be] hover:text-white hover:border-[#4F75FF]/50 hover:bg-white/5 transition-all duration-200"
                     >
                       {prompt}
                     </button>
@@ -354,8 +420,8 @@ const VizzyChat: React.FC = () => {
             </AnimatePresence>
 
             {/* ── Input Bar ── */}
-            <div className="px-3 pb-3 flex-shrink-0 border-t border-white/5 pt-3">
-              <div className="relative flex items-end gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2 focus-within:border-blue-500/50 focus-within:bg-white/[0.07] transition-all duration-200">
+            <div className="px-3 pb-3 flex-shrink-0 border-t border-white/5 pt-3 bg-[#1a1f3c]">
+              <div className="relative flex items-end gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2 focus-within:border-[#4F75FF]/50 focus-within:ring-2 focus-within:ring-[#4F75FF]/20 focus-within:bg-white/10 transition-all duration-200 shadow-inner">
                 <textarea
                   ref={inputRef}
                   id="vizzy-chat-input"
@@ -364,7 +430,7 @@ const VizzyChat: React.FC = () => {
                   onKeyDown={handleKeyDown}
                   placeholder="Ask Vizzy anything…"
                   rows={1}
-                  className="flex-1 bg-transparent text-sm text-white placeholder-gray-600 resize-none outline-none max-h-24 min-h-[24px] leading-6"
+                  className="flex-1 bg-transparent text-sm text-white placeholder-[#5e6691] resize-none outline-none max-h-24 min-h-[24px] leading-6"
                   style={{
                     height: "auto",
                     overflowY: input.split("\n").length > 3 ? "auto" : "hidden",
@@ -379,13 +445,13 @@ const VizzyChat: React.FC = () => {
                 <button
                   onClick={() => sendMessage(input)}
                   disabled={!input.trim() || isLoading}
-                  className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-violet-600 flex items-center justify-center disabled:opacity-30 hover:from-blue-500 hover:to-violet-500 transition-all duration-200 shadow-md shadow-blue-900/50 self-end mb-0.5"
+                  className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-[#4F75FF] to-[#9B51E0] flex items-center justify-center disabled:opacity-30 hover:shadow-[0_0_15px_rgba(79,117,255,0.4)] transition-all duration-200 shadow-md shadow-purple-900/40 self-end mb-0.5"
                   title="Send"
                 >
                   <Send size={13} className="text-white" />
                 </button>
               </div>
-              <p className="text-[9px] text-gray-700 text-center mt-1.5">
+              <p className="text-[9px] text-[#5e6691] text-center mt-1.5">
                 Powered by Deckoviz AI · Vizzy may occasionally make mistakes
               </p>
             </div>

@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight, User, LogOut, Volume2, VolumeX, SkipBack, SkipForward } from "lucide-react";
+import { Menu, X, ChevronDown, Code, Palette, Zap, Music, Image as ImageIcon, Target, Box, Sprout, Cloud, Type, Thermometer, Wind, Shield, Activity, BarChart3, Mountain, Star, Gem, Building2, Microscope, Flame, ArrowRight, User, LogOut, Volume2, VolumeX, SkipBack, SkipForward, ShoppingBag } from "lucide-react";
 
 import { useAudio } from "../AudioProvider";
 import { useAuth } from "../../context/AuthContext";
@@ -38,16 +38,8 @@ const Button: React.FC<ButtonProps> = ({
         {...props}
       >
         <span className="relative z-10 flex items-center justify-center gap-2">
+          <ShoppingBag size={16} strokeWidth={2.5} className="text-white/90" />
           {children}
-          <svg
-            className="w-4 h-4 transform group-hover:translate-x-1 group-hover:scale-110 transition-all duration-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-          </svg>
         </span>
       </button>
     );
@@ -302,28 +294,36 @@ const Navbar: React.FC = () => {
       <ImagePreloader />
 
       <nav
-        className={`fixed w-full z-50 transition-all duration-700 ${isScrolled ? "bg-white shadow-sm border-b border-gray-200" : "bg-white border-b border-gray-100"} ${!isNavbarVisible ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
+        className={`fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-700 pointer-events-none ${!isNavbarVisible ? "-translate-y-[150%] opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          {/* Desktop Left Corner - Wall/Leader Hamburger Menu - Extreme Left */}
-          <div className="hidden md:block fixed left-4 top-3.5 z-50">
-            <button
+        <div 
+          className={`pointer-events-auto flex items-center justify-between w-full max-w-7xl h-14 rounded-full px-2 md:px-4 transition-all duration-700 ${
+            isScrolled 
+              ? "bg-white/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.15)] border border-white/30" 
+              : "bg-white/10 backdrop-blur-md shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/20"
+          }`}
+        >
+          {/* Left Navigation */}
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-6 flex-1">
+            {/* Wall/Leader Hamburger Menu */}
+            <div 
+              className="relative"
               onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
-              className="text-gray-700 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-xl hover:bg-blue-50 transform hover:scale-110 bg-white shadow-sm border border-gray-200"
             >
-              <Menu size={20} />
-            </button>
+              <button
+                className="text-gray-600 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-xl border border-white/30 hover:bg-white/40 hover:border-white/50 shadow-sm flex items-center justify-center bg-white/20 backdrop-blur-sm"
+              >
+                <Menu size={18} />
+              </button>
 
-            {/* Wall Of Love & Leaderboard Dropdown - Enhanced Design */}
-            <div
-              className={`absolute top-full left-0 mt-2 transition-all duration-500 ease-out ${isWallLeaderDropdownOpen
-                ? "opacity-100 visible translate-y-0"
-                : "opacity-0 invisible -translate-y-4"
-                }`}
-              onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
-              onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
-            >
+              {/* Wall Of Love & Leaderboard Dropdown */}
+              <div
+                className={`absolute top-full left-0 mt-4 transition-all duration-500 ease-out z-[60] ${isWallLeaderDropdownOpen
+                  ? "opacity-100 visible translate-y-0"
+                  : "opacity-0 invisible -translate-y-4"
+                  }`}
+              >
               <div className="w-64 bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-[#8345EE]/10 via-[#7239D3]/5 to-[#6B2FD6]/10 px-4 py-3 border-b border-gray-100">
@@ -501,20 +501,19 @@ const Navbar: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+            </div>
 
-          <div className="flex items-center justify-between h-16 md:pl-16 w-full relative">
-            {/* Desktop Main Navigation */}
-            <div className="hidden md:flex items-center space-x-4 flex-1">
+            {/* Main Links */}
+            <div className="flex items-center space-x-1 lg:space-x-6">
               <div
                 className="relative"
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
                 onMouseLeave={() => setIsBusinessDropdownOpen(false)}
               >
-                <button className={`transition-all duration-300 font-medium relative group flex items-center space-x-1 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm ${currentPath.includes('deckoviz-for') ? 'text-[#2563EB] border-blue-200' : 'text-gray-700 hover:text-[#2563EB] hover:bg-gray-50'}`}>
+                <button className={`transition-colors duration-300 font-semibold text-sm relative group flex items-center space-x-1 px-2 py-2 ${currentPath.includes('deckoviz-for') ? 'text-[#2563EB]' : 'text-gray-500 hover:text-[#2563EB]'}`}>
                   <span>Deckoviz For Businesses</span>
                   <ChevronDown
-                    size={16}
+                    size={14}
                     className={`transition-transform duration-300 ${isBusinessDropdownOpen ? "rotate-180" : ""}`}
                   />
                 </button>
@@ -677,17 +676,18 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className={`transition-all duration-300 font-medium relative group whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm ${currentPath.startsWith('/pricing') ? 'text-[#2563EB] border-blue-200' : 'text-gray-700 hover:text-[#2563EB] hover:bg-gray-50'}`}
+                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/pricing') ? 'text-[#2563EB]' : 'text-gray-500 hover:text-[#2563EB]'}`}
               >
                 Pricing
               </a>
               <a
                 href="/blog"
-                className={`transition-all duration-300 font-medium relative group whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm ${currentPath.startsWith('/blog') ? 'text-[#2563EB] border-blue-200' : 'text-gray-700 hover:text-[#2563EB] hover:bg-gray-50'}`}
+                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/blog') ? 'text-[#2563EB]' : 'text-gray-500 hover:text-[#2563EB]'}`}
               >
                 Blog
               </a>
             </div>
+          </div>
 
             {/* Center Logo */}
             <div className="flex-shrink-0 flex justify-center items-center z-50">
@@ -746,7 +746,7 @@ const Navbar: React.FC = () => {
                 ) : (
                   <button 
                     onClick={() => openAuthModal()}
-                    className="transition-all duration-300 font-medium relative group whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm text-gray-700 hover:text-[#2563EB] hover:bg-gray-50"
+                    className="transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 text-gray-500 hover:text-[#2563EB]"
                   >
                     Login
                   </button>
@@ -757,164 +757,156 @@ const Navbar: React.FC = () => {
                 Buy Now
               </Button>
 
-              <div className="flex items-center space-x-1 z-50 pl-2">
+              <div className="flex items-center gap-1 z-50 pl-3 ml-2 border-l border-gray-200/30">
                 {/* Previous */}
                 <button
                   onClick={prev}
-                  className="p-1.5 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full text-[#2563EB]/70 hover:text-[#2563EB] hover:bg-white/60 transition-all duration-300 transform hover:scale-110 active:scale-95 flex items-center justify-center"
+                  title="Previous Track"
                 >
-                  <SkipBack size={16} className="text-blue-600" />
+                  <SkipBack size={15} strokeWidth={2.5} />
                 </button>
 
                 {/* Play / Pause */}
                 <button
                   onClick={toggle}
-                  className="p-1.5 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full bg-gradient-to-br from-[#182A4A] to-[#2563EB] text-white shadow-md shadow-blue-500/20 hover:shadow-blue-500/40 transition-all duration-300 transform hover:scale-110 active:scale-95 flex items-center justify-center"
+                  title={isPlaying ? "Pause Music" : "Play Music"}
                 >
                   {isPlaying ? (
-                    <Volume2 size={16} className="text-blue-600" />
+                    <Volume2 size={16} strokeWidth={2.5} className="animate-pulse" />
                   ) : (
-                    <VolumeX size={16} className="text-gray-400" />
+                    <VolumeX size={16} strokeWidth={2.5} />
                   )}
                 </button>
 
                 {/* Next */}
                 <button
                   onClick={next}
-                  className="p-1.5 rounded-full bg-white border border-gray-200 shadow-sm hover:bg-blue-50 transition transform hover:scale-110"
+                  className="p-1.5 rounded-full text-[#2563EB]/70 hover:text-[#2563EB] hover:bg-white/60 transition-all duration-300 transform hover:scale-110 active:scale-95 flex items-center justify-center"
+                  title="Next Track"
                 >
-                  <SkipForward size={16} className="text-blue-600" />
+                  <SkipForward size={15} strokeWidth={2.5} />
                 </button>
               </div>
             </div>
 
-            {/* Mobile Menu Button with cool animation */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-gray-700 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-lg hover:bg-blue-50 transform hover:scale-110"
-            >
-              <div className="relative w-6 h-6">
-                <Menu
-                  size={24}
-                  className={`absolute inset-0 transition-all duration-300 ${isOpen ? "opacity-0 rotate-180 scale-0" : "opacity-100 rotate-0 scale-100"}`}
-                />
-                <X
-                  size={24}
-                  className={`absolute inset-0 transition-all duration-300 ${isOpen ? "opacity-100 rotate-0 scale-100" : "opacity-0 rotate-180 scale-0"}`}
-                />
+            {/* Mobile controls row: audio + hamburger */}
+            <div className="md:hidden flex items-center gap-1">
+              {/* Mini audio controls */}
+              <div className="flex items-center gap-0.5">
+                <button onClick={prev} className="p-1.5 rounded-full text-[#2563EB]/70 hover:text-[#2563EB] hover:bg-white/60 transition-all duration-300 flex items-center justify-center" title="Previous">
+                  <SkipBack size={13} strokeWidth={2.5} />
+                </button>
+                <button onClick={toggle} className="p-1.5 rounded-full bg-gradient-to-br from-[#182A4A] to-[#2563EB] text-white shadow-md shadow-blue-500/20 transition-all duration-300 flex items-center justify-center" title={isPlaying ? 'Pause' : 'Play'}>
+                  {isPlaying ? <Volume2 size={13} strokeWidth={2.5} className="animate-pulse" /> : <VolumeX size={13} strokeWidth={2.5} />}
+                </button>
+                <button onClick={next} className="p-1.5 rounded-full text-[#2563EB]/70 hover:text-[#2563EB] hover:bg-white/60 transition-all duration-300 flex items-center justify-center" title="Next">
+                  <SkipForward size={13} strokeWidth={2.5} />
+                </button>
               </div>
-            </button>
-          </div>
+
+              {/* Hamburger */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="text-gray-700 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-full hover:bg-white/50 border border-white/30 bg-white/20 backdrop-blur-sm"
+              >
+                <div className="relative w-5 h-5">
+                  <Menu size={20} className={`absolute inset-0 transition-all duration-300 ${isOpen ? 'opacity-0 rotate-180 scale-0' : 'opacity-100 rotate-0 scale-100'}`} />
+                  <X size={20} className={`absolute inset-0 transition-all duration-300 ${isOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-180 scale-0'}`} />
+                </div>
+              </button>
+            </div>
         </div>
 
-        {/* Mobile Navigation with Optimized Images */}
+        {/* Mobile Navigation - Premium Glassmorphic Drawer */}
         <div
-          className={`md:hidden fixed left-0 right-0 bg-white shadow-lg border-t border-gray-100 transition-all duration-300 ease-out ${isOpen ? "top-16 opacity-100 visible" : "top-16 opacity-0 invisible"
-            }`}
-          style={{
-            maxHeight: isOpen ? "calc(100vh - 4rem)" : "0",
-            overflowY: "auto",
-          }}
+          className={`md:hidden fixed left-3 right-3 z-40 transition-all duration-500 ease-out ${
+            isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
+          }`}
+          style={{ top: '4.5rem' }}
         >
-          <div className="px-4 py-6 space-y-0">
-            {/* Mobile Business Dropdown */}
-            <div className="mb-4">
-              <button
-                onClick={() =>
-                  setIsBusinessDropdownOpen(!isBusinessDropdownOpen)
-                }
-                className="w-full text-left text-gray-700 hover:text-[#2563EB] transition-all duration-200 font-medium py-3 px-3 rounded-lg hover:bg-blue-50 flex items-center justify-between"
-              >
-                <span>Deckoviz For Business</span>
-                <ChevronDown
-                  size={16}
-                  className={`transition-transform duration-200 ${isBusinessDropdownOpen ? "rotate-180" : ""}`}
-                />
-              </button>
-
-              {/* Business Categories Dropdown */}
-              <div
-                className={`overflow-hidden transition-all duration-200 ${isBusinessDropdownOpen ? "max-h-[400px] opacity-100" : "max-h-0 opacity-0"}`}
-              >
-                <div className="pl-4 space-y-1 mt-2 max-h-[350px] overflow-y-auto">
-                  {businessCategories.map((category, index) => (
-                    <button
-                      key={index}
-                      onClick={() => handleBusinessNavigation(category.route)}
-                      className="w-full text-left text-gray-600 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 py-2 px-3 rounded-lg text-sm flex items-center space-x-3"
-                    >
-                      <div className="w-6 h-6 flex-shrink-0">
-                        {/* OPTIMIZATION 2: Use OptimizedImage in mobile too */}
-                        <OptimizedImage
-                          src={category.image}
-                          alt={category.title}
-                          className="w-6 h-6"
-                          fallbackColor={category.fallbackColor}
-                        />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-medium truncate">
-                          {category.title}
-                        </div>
-                        <p className="text-xs text-gray-500 truncate">
-                          {category.description}
-                        </p>
-                      </div>
-                    </button>
-                  ))}
-                </div>
+          <div
+            className="rounded-3xl overflow-hidden shadow-2xl border border-white/30"
+            style={{
+              background: 'rgba(255,255,255,0.75)',
+              backdropFilter: 'blur(24px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(24px) saturate(180%)',
+              boxShadow: '0 20px 60px rgba(31,38,135,0.18), inset 0 1px 0 rgba(255,255,255,0.8)',
+            }}
+          >
+            {/* Header strip */}
+            <div className="px-5 py-4 border-b border-white/40 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <img src="/images/deckovizlogo.png" alt="Deckoviz" className="h-7 w-auto" />
+                <img src="/images/bg_removed_logo.png" alt="Deckoviz" className="h-7 w-auto -ml-1" />
               </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-1.5 rounded-full bg-white/60 border border-white/40 text-gray-500 hover:text-gray-800 transition-colors"
+              >
+                <X size={16} />
+              </button>
             </div>
 
+            <div className="px-4 py-4 space-y-1 max-h-[70vh] overflow-y-auto">
 
+              {/* Business Dropdown */}
+              <div>
+                <button
+                  onClick={() => setIsBusinessDropdownOpen(!isBusinessDropdownOpen)}
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-2xl text-gray-700 font-semibold text-sm hover:bg-white/60 transition-all duration-200"
+                >
+                  <span>Deckoviz For Business</span>
+                  <ChevronDown size={16} className={`transition-transform duration-300 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
 
-            {/* Other Navigation Items */}
-            <div className="border-t border-gray-200 pt-4 space-y-0">
-              <a
-                href="/Wall-Of-Love"
-                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Wall Of Love
-              </a>
+                <div className={`overflow-hidden transition-all duration-300 ${isBusinessDropdownOpen ? 'max-h-[500px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+                  <div className="grid grid-cols-2 gap-2 px-2 pb-2">
+                    {businessCategories.map((category, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleBusinessNavigation(category.route)}
+                        className="flex items-center gap-2 p-3 rounded-xl bg-white/50 border border-white/60 hover:bg-white/80 transition-all duration-200 text-left"
+                      >
+                        <div className="w-6 h-6 flex-shrink-0">
+                          <OptimizedImage src={category.image} alt={category.title} className="w-6 h-6" fallbackColor={category.fallbackColor} />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="font-semibold text-xs text-gray-800 leading-tight truncate">{category.title}</div>
+                          <p className="text-[10px] text-gray-500 truncate">{category.description}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-              <a
-                href="/Leaderboard"
-                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Leaderboard
-              </a>
+              {/* Nav links */}
+              {[
+                { href: '/Wall-Of-Love', label: '❤️ Wall Of Love' },
+                { href: '/Leaderboard', label: '🏆 Leaderboard' },
+                { href: '/pricing', label: '💎 Pricing' },
+                { href: '/blog', label: '📝 Blog' },
+                { href: '/contact', label: '✉️ Contact Us' },
+              ].map(({ href, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center px-4 py-3 rounded-2xl text-gray-700 font-semibold text-sm hover:bg-white/60 hover:text-[#2563EB] transition-all duration-200"
+                >
+                  {label}
+                </a>
+              ))}
 
-              <a
-                href="/contact"
-                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Contact Us
-              </a>
+              {/* Divider */}
+              <div className="h-px bg-white/40 mx-2 my-2" />
 
-              <a
-                href="/pricing"
-                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Pricing
-              </a>
-
-              <a
-                href="/blog"
-                className="block text-gray-700 hover:text-[#2563EB] hover:bg-blue-50 transition-all duration-200 font-medium py-3 px-3 rounded-lg"
-                onClick={() => setIsOpen(false)}
-              >
-                Blog
-              </a>
-
-
-
-              <div className="pt-4 space-y-3">
+              {/* User / Login + Buy Now */}
+              <div className="space-y-2 pt-1 pb-2">
                 {user ? (
-                  <div className="p-4 rounded-2xl bg-blue-50 border border-blue-100">
+                  <div className="p-4 rounded-2xl bg-gradient-to-r from-indigo-50/80 to-blue-50/80 border border-blue-100/50">
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center text-white shadow-sm">
                         <User size={20} />
@@ -924,30 +916,29 @@ const Navbar: React.FC = () => {
                         <p className="text-xs text-[#2563EB] font-bold">🪙 {user.credits} Credits</p>
                       </div>
                     </div>
-                    <button 
+                    <button
                       onClick={() => { logout(); setIsOpen(false); }}
-                      className="w-full flex items-center justify-center gap-2 py-3 text-sm text-red-600 font-bold bg-white border border-red-100 rounded-xl hover:bg-red-50 transition-colors"
+                      className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-red-600 font-bold bg-white/80 border border-red-100 rounded-xl hover:bg-red-50 transition-colors"
                     >
-                      <LogOut size={16} />
-                      Logout
+                      <LogOut size={15} /> Logout
                     </button>
                   </div>
                 ) : (
-                  <button 
+                  <button
                     onClick={() => { openAuthModal(); setIsOpen(false); }}
-                    className="w-full py-3 rounded-xl border-2 border-blue-100 text-[#2563EB] font-bold text-sm hover:bg-blue-50 transition-all"
+                    className="w-full py-3 rounded-2xl border-2 border-blue-100 text-[#2563EB] font-bold text-sm hover:bg-blue-50/50 transition-all bg-white/40"
                   >
                     Login / Sign Up
                   </button>
                 )}
-                
-                <Button
-                  variant="primary"
-                  className="w-full"
-                  onClick={handleBuyNow}
+
+                <button
+                  onClick={() => { handleBuyNow(); setIsOpen(false); }}
+                  className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 flex items-center justify-center gap-2"
                 >
+                  <ShoppingBag size={16} strokeWidth={2.5} />
                   Buy Now
-                </Button>
+                </button>
               </div>
             </div>
           </div>

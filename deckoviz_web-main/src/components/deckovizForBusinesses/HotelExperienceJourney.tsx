@@ -505,7 +505,7 @@ export const HotelExperienceJourney: React.FC = () => {
 
       {/* 05. Call to Action */}
       <section className="py-32 px-6 relative overflow-hidden bg-gradient-to-br from-indigo-900 to-[#050505]">
-        <div className="absolute inset-0 bg-[url('/images/stars.svg')] opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: "url('/images/stars.svg')" }} />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <SectionHeader 
             number="05" 
