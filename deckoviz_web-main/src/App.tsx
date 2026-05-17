@@ -204,10 +204,27 @@ import HapticMemory from "./components/developerSpecs/HapticMemory";
 import SilenceArchitecture from "./components/developerSpecs/SilenceArchitecture";
 import CreateWorld from "./pages/CreateWorld";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
+import FlagshipGamesPage from "./components/flagshipGames/FlagshipGamesPage";
+import StoryForgeApp from "./components/flagshipGames/storyForge/StoryForgeApp";
+import PaletteWarsApp from "./components/flagshipGames/paletteWars/PaletteWarsApp";
+import DreamArchitectApp from "./components/flagshipGames/dreamArchitect/DreamArchitectApp";
+import MuseumOfUsApp from "./components/flagshipGames/museumOfUs/MuseumOfUsApp";
+import VerdictApp from "./components/flagshipGames/vizzysVerdict/VerdictApp";
+import OneWordApp from "./components/flagshipGames/oneWord/OneWordApp";
+import FrameApp from "./components/flagshipGames/worldInFrame/FrameApp";
+import InheritanceApp from "./components/flagshipGames/inheritance/InheritanceApp";
+import DebatingSocietyApp from "./components/flagshipGames/debatingSociety/DebatingSocietyApp";
+import CartographersApp from "./components/flagshipGames/cartographers/CartographersApp";
+import BrilliantMindsApp from "./components/flagshipGames/brilliantMinds/BrilliantMindsApp";
+import OracleApp from "./components/flagshipGames/oracle/OracleApp";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import AuthModal from "./components/auth/AuthModal";
 import VizzyChat from "./components/VizzyChat";
 import { VizzyChat as VizzyCreationCanvas } from "./components/vizzyCanvas/vizzy-chat";
+import VizzyLibrary from "./components/vizzyCanvas/vizzy-library";
+import VizzyProfilePage from "./components/vizzyCanvas/profile-page";
+import VizzySubscriptionPage from "./components/vizzyCanvas/subscription-page";
+import { CanvasErrorBoundary } from "./components/vizzyCanvas/error-boundary";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -415,7 +432,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/tools/music" element={<ProtectedRoute><MusicTool /></ProtectedRoute>} />
         <Route path="/tools/postcard" element={<ProtectedRoute><PostcardTool /></ProtectedRoute>} />
         <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
-        <Route path="/vizzy-canvas" element={<ProtectedRoute><VizzyCreationCanvas /></ProtectedRoute>} />
+        <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
+        <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><VizzyProfilePage /></ProtectedRoute>} />
+        <Route path="/subscription" element={<ProtectedRoute><VizzySubscriptionPage /></ProtectedRoute>} />
         <Route path="/experimental-art-modes" element={<ExperimentalArtModes />} />
         <Route path="/deckoviz-storytelling" element={<DeckovizStorytelling />} />
         <Route path="/deckoviz-storytelling/nightly-ritual" element={<NightlyRitual />} />
@@ -523,6 +543,21 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/developer-specs/silence-architecture" element={<SilenceArchitecture />} />
         <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
         <Route path="/create-world" element={<ProtectedRoute><CreateWorld /></ProtectedRoute>} />
+
+        {/* ── Flagship Games ── */}
+        <Route path="/flagship-games" element={<FlagshipGamesPage />} />
+        <Route path="/flagship-games/story-forge/*" element={<StoryForgeApp />} />
+        <Route path="/flagship-games/palette-wars/*" element={<PaletteWarsApp />} />
+        <Route path="/flagship-games/dream-architect/*" element={<DreamArchitectApp />} />
+        <Route path="/flagship-games/museum-of-us/*" element={<MuseumOfUsApp />} />
+        <Route path="/flagship-games/vizzys-verdict/*" element={<VerdictApp />} />
+        <Route path="/flagship-games/one-word/*" element={<OneWordApp />} />
+        <Route path="/flagship-games/world-in-frame/*" element={<FrameApp />} />
+        <Route path="/flagship-games/inheritance/*" element={<InheritanceApp />} />
+        <Route path="/flagship-games/debating-society/*" element={<DebatingSocietyApp />} />
+        <Route path="/flagship-games/cartographers/*" element={<CartographersApp />} />
+        <Route path="/flagship-games/brilliant-minds/*" element={<BrilliantMindsApp />} />
+        <Route path="/flagship-games/oracle/*" element={<OracleApp />} />
       </Routes>
       </main>
       <Footer />

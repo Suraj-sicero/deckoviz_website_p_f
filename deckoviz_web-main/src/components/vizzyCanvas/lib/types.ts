@@ -15,6 +15,17 @@ export interface MusicTrack {
   createdAt: number
 }
 
+export interface VideoClip {
+  id: string
+  requestId: string
+  model: string
+  videoUrl?: string
+  prompt: string
+  sourceImageUrl?: string
+  status: 'in_queue' | 'in_progress' | 'completed' | 'failed'
+  createdAt: number
+}
+
 export interface ChatMessage {
   id: string
   role: "user" | "assistant"
@@ -22,6 +33,7 @@ export interface ChatMessage {
   images?: GeneratedImage[]
   uploadedImages?: UploadedImage[]
   music?: MusicTrack[]
+  videos?: VideoClip[]
   isLoading?: boolean
   error?: string
   timestamp: number

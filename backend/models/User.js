@@ -23,4 +23,12 @@ export const User = sequelize.define("User", {
     type: DataTypes.INTEGER,
     defaultValue: 50, // Free credits on signup
   },
+  tier: {
+    type: DataTypes.ENUM("starter", "creator", "studio"),
+    defaultValue: "starter",
+  },
+  emailVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });

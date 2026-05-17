@@ -254,15 +254,45 @@ JSON FORMAT:
     if (!jsonMatch) throw new Error("Gemini returned invalid format");
 
     const parsed = JSON.parse(jsonMatch[0]);
+    const murfKey = process.env.MURF_API_KEY;
 
     // Generate images for each page (background)
     // We only generate for the first 3 pages to avoid extreme timeouts
-    // For a production app, this should be a background job
     for (let i = 0; i < Math.min(parsed.pages.length, 3); i++) {
         const page = parsed.pages[i];
         if (page.imagePrompt) {
             page.imageUrl = await generateSingleImage(`${page.imagePrompt}, ${genre} style, high quality children book illustration`);
         }
+    }
+
+    // Generate audio for each page using Murf.ai if available
+    if (murfKey) {
+      for (let i = 0; i < parsed.pages.length; i++) {
+        const page = parsed.pages[i];
+        if (page.text) {
+          try {
+            const response = await fetch("https://api.murf.ai/v1/speech/generate", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "api-key": murfKey,
+              },
+              body: JSON.stringify({
+                text: page.text,
+                voiceId: "en-US-natalie", // Default voice
+                format: "MP3",
+              }),
+            });
+
+            if (response.ok) {
+              const data = await response.json();
+              page.audioUrl = data.audioUrl; // Murf returns URL
+            }
+          } catch (err) {
+            console.error(`[storybook/generate] Murf error on page ${i}:`, err.message);
+          }
+        }
+      }
     }
 
     return res.json(parsed);
