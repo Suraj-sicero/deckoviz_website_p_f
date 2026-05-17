@@ -18,7 +18,8 @@ export type MarkdownBlog = {
 
 export async function loadBlogs(): Promise<MarkdownBlog[]> {
   const files = import.meta.glob("/src/content/blogs/*.md", {
-    as: "raw",
+    query: "?raw",
+    import: "default",
     eager: true,
   })
 

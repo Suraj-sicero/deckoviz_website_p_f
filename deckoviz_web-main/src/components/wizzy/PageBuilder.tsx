@@ -40,7 +40,16 @@ const PageBuilder: React.FC<PageBuilderProps> = ({
   return (
     <div className="w-full max-w-5xl mx-auto space-y-10 py-10 px-6">
       {/* Header & Meta */}
-      <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-violet-50 space-y-8">
+      <div className="rounded-3xl p-10 shadow-2xl space-y-8"
+        style={{
+          background: "rgba(255, 255, 255, 0.25)",
+          backdropFilter: "blur(24px) saturate(180%)",
+          WebkitBackdropFilter: "blur(24px) saturate(180%)",
+          border: "1px solid rgba(255, 255, 255, 0.45)",
+          borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+          boxShadow: "0 12px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.65)"
+        }}
+      >
         <div className="flex justify-between items-start">
           <div className="space-y-4 flex-1">
             <label className="text-xs font-bold text-violet-600 uppercase tracking-widest flex items-center space-x-2">
@@ -130,7 +139,16 @@ const PageBuilder: React.FC<PageBuilderProps> = ({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {structure.pages.map((p, i) => (
-            <div key={i} className="group relative bg-white/80 backdrop-blur hover:bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl border border-gray-100 transition-all">
+            <div key={i} className="group relative rounded-3xl p-8 hover:shadow-xl transition-all"
+              style={{
+                background: "rgba(255, 255, 255, 0.25)",
+                backdropFilter: "blur(24px) saturate(180%)",
+                WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                border: "1px solid rgba(255, 255, 255, 0.45)",
+                borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+                boxShadow: "0 8px 32px rgba(31, 38, 135, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.65)"
+              }}
+            >
               <div className="flex justify-between items-start mb-4">
                 <span className="text-xs font-black text-white px-3 py-1 bg-violet-500 rounded-full shadow-sm">
                   SEQUENCE {p.pageNumber}

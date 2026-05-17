@@ -125,12 +125,13 @@ const DeckovizSectors: React.FC = () => {
 
   return (
     <>
-      <section className="relative py-32 bg-[#fafcff] overflow-hidden">
-        {/* Animated Orbs */}
+      <section className="relative py-32 overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+        {/* Enterprise Indigo Blobs */}
         <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-violet-300/30 to-indigo-300/30 rounded-full blur-[100px] animate-[pulse_8s_ease-in-out_infinite]" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-gradient-to-tl from-pink-300/30 to-orange-300/30 rounded-full blur-[120px] animate-[pulse_10s_ease-in-out_infinite_reverse]" />
-          <div className="absolute top-[40%] left-[50%] w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-blue-300/20 to-cyan-300/20 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99,102,241,0.22)" }} />
+          <div className="absolute top-[30%] right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.18)" }} />
+          <div className="absolute top-[40%] left-[50%] w-[400px] h-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[100px]" style={{ background: "rgba(79,70,229,0.14)" }} />
+          <div className="absolute bottom-[-60px] left-[20%] w-[700px] h-[350px] rounded-full blur-[120px]" style={{ background: "rgba(99,102,241,0.14)" }} />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -288,7 +289,14 @@ const DeckovizSectors: React.FC = () => {
             {/* Bottom Message */}
             <div className="mt-24 text-center relative max-w-3xl mx-auto group">
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-500 via-pink-500 to-orange-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-              <div className="relative bg-white/90 backdrop-blur-xl rounded-[2.5rem] p-12 border border-white/50 shadow-2xl">
+              <div className="relative rounded-3xl p-12 border border-white/50 shadow-2xl"
+                style={{
+                  background: "rgba(255,255,255,0.30)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  borderTop: "1px solid rgba(255,255,255,0.80)"
+                }}
+              >
                 <div className="flex justify-center mb-4">
                   <span className="w-2 h-2 rounded-full bg-violet-400 mx-1"></span>
                   <span className="w-2 h-2 rounded-full bg-pink-400 mx-1"></span>

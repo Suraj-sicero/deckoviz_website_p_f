@@ -184,7 +184,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           </div>
           <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
             Deckoviz becomes your store's{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400">
               everything layer
             </span>
           </h2>
@@ -303,8 +303,8 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           transition={{ duration: 1 }}
           className="relative"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-violet-500/5 via-fuchsia-500/5 to-amber-500/5 rounded-3xl pointer-events-none" />
-          <div className="border border-white/8 rounded-3xl p-10 md:p-16 backdrop-blur-sm">
+          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-cyan-500/5 to-blue-500/5 rounded-3xl pointer-events-none" />
+          <div className="border border-white/8 rounded-3xl p-10 md:p-16 backdrop-blur-sm shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-shadow hover:shadow-[0_0_60px_rgba(255,255,255,0.25)]">
             <div className="text-center mb-14">
               <h3 className="text-3xl md:text-5xl font-['Playfair_Display'] font-semibold text-white mb-4" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 The Full Deckoviz in Retail Experience
@@ -314,7 +314,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
 
             {/* Journey Steps */}
             <div className="relative max-w-2xl mx-auto mb-16">
-              <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-violet-500/40 via-fuchsia-500/40 to-amber-500/40" />
+              <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-teal-500/40 via-cyan-500/40 to-blue-500/40" />
               {[
                 'A customer walks in and feels your brand instantly.',
                 'Products are not just displayed - they are understood.',
@@ -333,7 +333,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
                   className="relative flex items-start gap-6 mb-6 pl-2"
                 >
                   <div className="relative flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center z-10"
-                    style={{ background: `conic-gradient(from ${i * 51}deg, #7c3aed, #a855f7, #d946ef, #f59e0b, #7c3aed)` }}>
+                    style={{ background: `conic-gradient(from ${i * 51}deg, #14b8a6, #06b6d4, #0ea5e9, #3b82f6, #14b8a6)` }}>
                     <div className="w-6 h-6 rounded-full bg-[#0a0a10] flex items-center justify-center">
                       <span className="text-xs font-bold text-white">{i + 1}</span>
                     </div>
@@ -352,7 +352,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
               className="text-center space-y-6 max-w-3xl mx-auto"
             >
               <p className="text-2xl text-gray-300 font-light">That is no longer just shopping.</p>
-              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-fuchsia-400 to-amber-400" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 That becomes an experience.
               </p>
               <p className="text-2xl text-gray-300 font-light">And experiences are what people come back for.</p>
@@ -361,7 +361,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.97 }}
                   onClick={onDemo}
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg text-black bg-white shadow-[0_0_40px_rgba(139,92,246,0.3)] hover:shadow-[0_0_60px_rgba(139,92,246,0.5)] transition-all duration-300"
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg text-black bg-white shadow-[0_0_40px_rgba(45,212,191,0.3)] hover:shadow-[0_0_60px_rgba(45,212,191,0.5)] transition-all duration-300"
                 >
                   <span>See It In Your Store</span>
                   <ArrowRight className="w-5 h-5" />

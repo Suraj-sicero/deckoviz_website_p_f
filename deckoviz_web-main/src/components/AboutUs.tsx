@@ -3,45 +3,18 @@ import InteractiveParticleGraphic from "./other/InteractiveParticleGraphic";
 export default function AboutUs() {
   return (
     <div id="about" className="relative min-h-screen bg-white">
-      {/* Background gradient section */}
-      <div className="absolute inset-0 z-0">
-        {/* Base white background with subtle pattern */}
+      {/* Rich animated background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <div className="absolute inset-0 bg-white" />
-
-        {/* Subtle dot pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.12]"
-          style={{
-            
-            backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
-            backgroundSize: "30px 30px",
-          }}
-        />
- 
-        {/* Enhanced gradient with more depth and animation - extended height */}
-        <div className="absolute left-0 right-0" style={{ top: "260px", height: "480px" }}>
-          <div
-            className="mx-4 h-full overflow-hidden relative animate-pulse"
-            style={{
-              borderBottomLeftRadius: "50px",
-              borderBottomRightRadius: "50px",
-              animationDuration: "4s",
-            }}
-          >
-            {/* Multi-layered gradient for depth */}
-            <div className="w-full h-full bg-gradient-to-br from-indigo-400 via-fuchsia-300 to-orange-300" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-pink-200/30 to-yellow-200/40" />
-
-            {/* Animated gradient overlay */}
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"
-              style={{ animationDuration: "3s" }}
-            />
-
-            {/* Top fade with enhanced transition */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-transparent" />
-          </div>
-        </div>
+        {/* Subtle dot pattern */}
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle, #2563EB 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
+        {/* Animated floating blobs */}
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-[#2563EB]/10 rounded-full blur-[100px] animate-[float_14s_ease-in-out_infinite]" />
+        <div className="absolute top-60 right-0 w-[500px] h-[500px] bg-teal-300/15 rounded-full blur-[90px] animate-[float_11s_ease-in-out_infinite_reverse]" />
+        <div className="absolute top-[800px] left-1/4 w-[400px] h-[400px] bg-[#182A4A]/8 rounded-full blur-[80px] animate-[float_16s_ease-in-out_infinite]" />
+        <div className="absolute top-[1400px] right-1/4 w-[350px] h-[350px] bg-sky-200/20 rounded-full blur-[70px] animate-[float_9s_ease-in-out_infinite_reverse]" />
+        {/* Diagonal shimmer lines */}
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2563EB]/20 to-transparent" />
       </div>
 
       {/* Decorative 3D Elements with hover effects */}
@@ -63,111 +36,159 @@ export default function AboutUs() {
 
       {/* Main Content */}
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
-        {/* Top Badge with glow effect */}
-        <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
-          <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
-            About Us
+        {/* Shiny glowing Badge */}
+        <div className="flex justify-center pt-4 pb-2 mt-24 mb-6">
+          <div className="relative group cursor-default">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-40 group-hover:opacity-70 transition duration-500" />
+            <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-1.5 rounded-xl text-sm font-semibold tracking-widest uppercase shadow-xl flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
+              About Us
+              <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
+            </div>
           </div>
         </div>
 
-        {/* Heading with gradient text */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-b from-violet-900 to-violet-500 bg-clip-text text-transparent leading-tight">
+        {/* Hero heading */}
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-4 bg-gradient-to-br from-[#182A4A] via-[#2563EB] to-teal-400 bg-clip-text text-transparent leading-tight tracking-tight">
           About Us
         </h1>
 
-        {/* Subheading with enhanced styling */}
+        {/* Decorative divider */}
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#2563EB]/50" />
+          <div className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#2563EB]" />
+          <div className="w-1.5 h-1.5 rounded-full bg-teal-400" />
+          <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#182A4A]/50" />
+        </div>
+
+        {/* Subheading */}
         <div className="max-w-2xl mx-auto mb-20 sm:mb-28 px-4">
-          <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-medium">
-            At <span className="text-violet-600 font-semibold">Deckoviz</span>, we are reimagining what it means to
-            live, work,
+          <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
+            At <span className="text-[#2563EB] font-bold">Deckoviz</span>, we are reimagining what it means to live, work,
           </p>
-          <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-medium">
-            and <span className="text-fuchsia-500 font-semibold">feel</span> within a space.
+          <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
+            and <span className="text-teal-500 font-bold">feel</span> within a space.
           </p>
         </div>
 
-        {/* Enhanced Image Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-20">
-          {[
-            {
-              src: "/images/about1.png",
-              alt: "Modern living room with mountain landscape display",
-              accent: "violet",
-            },
-            {
-              src: "/images/about2.png",
-              alt: "Contemporary space with cosmic night sky display",
-              accent: "fuchsia",
-            },
-            {
-              src: "/images/about3.png",
-              alt: "Modern interior with ocean sunset display",
-              accent: "orange",
-            },
-          ].map((img, index) => (
-            <div
-              key={index}
-              className="group relative bg-white rounded-3xl p-3 shadow-2xl hover:shadow-3xl transform hover:scale-105 hover:-rotate-1 transition-all duration-500"
-            >
-              {/* Colored accent border on hover */}
-              <div
-                className={`absolute inset-0 rounded-3xl bg-gradient-to-r opacity-0 group-hover:opacity-20 transition-opacity duration-300 ${
-                  img.accent === "violet"
-                    ? "from-violet-400 to-indigo-500"
-                    : img.accent === "fuchsia"
-                      ? "from-fuchsia-400 to-pink-500"
-                      : "from-orange-400 to-red-400"
-                }`}
-              />
+        {/* Premium Staggered Image Showcase */}
+        <div className="relative max-w-6xl mx-auto mb-28">
+          {/* Ambient background glow */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#2563EB]/10 rounded-full blur-[80px]" />
+            <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-teal-300/15 rounded-full blur-[60px]" />
+          </div>
 
-              <div className="aspect-square rounded-2xl overflow-hidden relative">
-                <img
-                  src={img.src || "/placeholder.svg"}
-                  alt={img.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-end">
+            {/* Card 1 — tall, left */}
+            <div className="group relative overflow-hidden rounded-[2rem] lg:translate-y-8 cursor-pointer"
+              style={{ boxShadow: '0 24px 60px rgba(37,99,235,0.2), 0 4px 16px rgba(0,0,0,0.08)' }}>
+              {/* Glow ring */}
+              <div className="absolute -inset-1 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-[2.2rem] opacity-0 group-hover:opacity-60 transition-all duration-700 -z-10 blur-sm" />
+              {/* Corner ornament */}
+              <div className="absolute top-4 right-4 z-20 w-8 h-8 border-t-2 border-r-2 border-white/50 rounded-tr-xl" />
+              <div className="absolute bottom-4 left-4 z-20 w-8 h-8 border-b-2 border-l-2 border-white/30 rounded-bl-xl" />
 
-                {/* Overlay gradient on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="aspect-[3/4] relative overflow-hidden rounded-[2rem]">
+                <img src="/images/about1.png" alt="Modern living room with mountain landscape display"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 scale-100" />
+                {/* Always-on subtle vignette */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b36]/70 via-[#0d1b36]/10 to-transparent" />
+                {/* Hover shimmer sweep */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-full group-hover:translate-x-0" style={{ transition: 'opacity 0.7s, transform 0.9s' }} />
               </div>
 
-              {/* Floating badge */}
-              <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div
-                  className={`w-3 h-3 rounded-full ${
-                    img.accent === "violet"
-                      ? "bg-violet-400"
-                      : img.accent === "fuchsia"
-                        ? "bg-fuchsia-400"
-                        : "bg-orange-400"
-                  }`}
-                />
+              {/* Label chip */}
+              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-[#182A4A]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse" />
+                <span className="text-white text-[10px] font-bold tracking-widest uppercase">Living Space</span>
+              </div>
+              {/* Bottom caption */}
+              <div className="absolute bottom-5 inset-x-5 z-20">
+                <p className="text-white/80 text-xs font-medium leading-snug">Mountain landscape display — immersive & serene</p>
               </div>
             </div>
-          ))}
+
+            {/* Card 2 — extra tall, center */}
+            <div className="group relative overflow-hidden rounded-[2rem] cursor-pointer"
+              style={{ boxShadow: '0 32px 80px rgba(20,184,166,0.2), 0 6px 20px rgba(0,0,0,0.10)' }}>
+              <div className="absolute -inset-1 bg-gradient-to-br from-[#2563EB] to-teal-400 rounded-[2.2rem] opacity-0 group-hover:opacity-60 transition-all duration-700 -z-10 blur-sm" />
+              <div className="absolute top-4 right-4 z-20 w-8 h-8 border-t-2 border-r-2 border-teal-300/60 rounded-tr-xl" />
+              <div className="absolute bottom-4 left-4 z-20 w-8 h-8 border-b-2 border-l-2 border-teal-300/30 rounded-bl-xl" />
+
+              <div className="aspect-[3/5] relative overflow-hidden rounded-[2rem]">
+                <img src="/images/about2.png" alt="Contemporary space with cosmic night sky display"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 scale-100" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d2b2e]/70 via-[#0d2b2e]/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              </div>
+
+              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-teal-900/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-teal-300/30">
+                <div className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
+                <span className="text-teal-100 text-[10px] font-bold tracking-widest uppercase">Cosmic Art</span>
+              </div>
+              {/* Featured badge */}
+              <div className="absolute top-5 right-5 z-20 bg-gradient-to-r from-[#2563EB] to-teal-400 text-white text-[9px] font-black tracking-widest px-3 py-1.5 rounded-full uppercase">
+                ★ Featured
+              </div>
+              <div className="absolute bottom-5 inset-x-5 z-20">
+                <p className="text-white/80 text-xs font-medium leading-snug">Cosmic night sky display — wonder & depth</p>
+              </div>
+            </div>
+
+            {/* Card 3 — tall, right */}
+            <div className="group relative overflow-hidden rounded-[2rem] lg:translate-y-8 cursor-pointer"
+              style={{ boxShadow: '0 24px 60px rgba(24,42,74,0.2), 0 4px 16px rgba(0,0,0,0.08)' }}>
+              <div className="absolute -inset-1 bg-gradient-to-br from-teal-400 to-[#182A4A] rounded-[2.2rem] opacity-0 group-hover:opacity-60 transition-all duration-700 -z-10 blur-sm" />
+              <div className="absolute top-4 right-4 z-20 w-8 h-8 border-t-2 border-r-2 border-white/40 rounded-tr-xl" />
+              <div className="absolute bottom-4 left-4 z-20 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-xl" />
+
+              <div className="aspect-[3/4] relative overflow-hidden rounded-[2rem]">
+                <img src="/images/about3.png" alt="Modern interior with ocean sunset display"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 scale-100" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b2b]/70 via-[#0d1b2b]/10 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              </div>
+
+              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-[#182A4A]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+                <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+                <span className="text-white text-[10px] font-bold tracking-widest uppercase">Interior</span>
+              </div>
+              <div className="absolute bottom-5 inset-x-5 z-20">
+                <p className="text-white/80 text-xs font-medium leading-snug">Ocean sunset display — warmth & vitality</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Additional Content Section */}
         <div className="mt-20 max-w-6xl mx-auto px-4">
 
-          {/* Company Description Section - Two Column Layout */}
+          {/* Company Description Section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
-            <div className="text-left space-y-12 lg:space-y-20">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-                We are a next-generation
-                <br />
-                company innovating at
-                <br />
-                the frontier of emotional-amplifying tech.
-              </h2>
+            <div className="text-left">
+              {/* Accent bar */}
+              <div className="flex items-start gap-5">
+                <div className="flex-shrink-0 w-1 h-full min-h-[120px] rounded-full bg-gradient-to-b from-[#2563EB] to-teal-400" />
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 leading-tight">
+                  We are a <span className="bg-gradient-to-r from-[#2563EB] to-teal-400 bg-clip-text text-transparent">next-generation</span>
+                  <br />company innovating at
+                  <br />the frontier of emotional-amplifying tech.
+                </h2>
+              </div>
             </div>
-            <div className="text-left space-y-6">
-              <p className="text-gray-500 leading-relaxed text-base sm:text-lg">
-                where deep personalization, generative AI, new modalities of art and storytelling, new modalities of 
-                mood and state setting, and emotionally intelligent technology converge. Our mission is 
-                simple yet profound: to infuse  environments with more beauty, meaning, emotion, vitality, and 
-                wonder - powered by the most human-centric, expression-amplifying technologies ever created.
-              </p>
+            <div className="text-left flex items-center">
+              <div className="relative">
+                {/* Quote mark */}
+                <div className="absolute -top-4 -left-4 text-6xl text-[#2563EB]/10 font-black leading-none select-none">&ldquo;</div>
+                <p className="text-gray-500 leading-relaxed text-base sm:text-lg relative z-10">
+                  where deep personalization, generative AI, new modalities of art and storytelling, new modalities of
+                  mood and state setting, and emotionally intelligent technology converge. Our mission is
+                  simple yet profound: to infuse environments with more beauty, meaning, emotion, vitality, and
+                  wonder — powered by the most human-centric, expression-amplifying technologies ever created.
+                </p>
+              </div>
             </div>
           </div>
 
@@ -176,156 +197,119 @@ export default function AboutUs() {
 <InteractiveParticleGraphic />
 
 
-          {/* Flagship Products Container with Border and Separator */}
+          {/* Flagship Products Container — frosted glass */}
           <div className="mb-20">
-            <div className="border border-gray-200 rounded-3xl p-6 mt-8 sm:p-8 lg:p-12 relative">
-              {/* Vertical separator line - hidden on mobile */}
-              <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gray-200 transform -translate-x-1/2 hidden lg:block"></div>
+            <div className="group relative overflow-hidden rounded-3xl p-6 mt-8 sm:p-10 lg:p-14
+              bg-white/30 backdrop-blur-xl
+              border border-white/50
+              shadow-[0_8px_40px_rgba(37,99,235,0.08),inset_0_1px_1px_rgba(255,255,255,0.8)]
+              hover:shadow-[0_16px_60px_rgba(37,99,235,0.15)]
+              transition-all duration-500">
+              {/* Shimmer top edge */}
+              <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none" />
+              {/* Diagonal glare */}
+              <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white/30 to-transparent pointer-events-none opacity-70" />
+              {/* Vertical separator */}
+              <div className="absolute left-1/2 top-8 bottom-8 w-px bg-gradient-to-b from-transparent via-[#2563EB]/20 to-transparent transform -translate-x-1/2 hidden lg:block" />
 
-              {/* Two Product Cards Side by Side */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 relative z-10">
                 <div className="text-center lg:text-left lg:pr-6">
-                  <div className="text-xs font-semibold text-gray-800 tracking-wider uppercase mb-3 bg-gray-100 inline-block px-3 py-1 rounded-lg">
+                  <div className="text-xs font-bold text-[#2563EB] tracking-widest uppercase mb-3 bg-[#2563EB]/8 border border-[#2563EB]/20 inline-block px-4 py-1.5 rounded-full">
                     OUR FLAGSHIP PRODUCT
                   </div>
-                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Deckoviz DASP 1</h4>
+                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900">Deckoviz DASP 1</h4>
                 </div>
                 <div className="text-center lg:text-left lg:pl-6">
-                  <div className="text-xs font-semibold text-gray-800 tracking-wider uppercase mb-3 bg-gray-100 inline-block px-3 py-1 rounded-lg">
+                  <div className="text-xs font-bold text-teal-600 tracking-widest uppercase mb-3 bg-teal-50 border border-teal-200/50 inline-block px-4 py-1.5 rounded-full">
                     Coming Soon
                   </div>
-                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">Spatial Enhancement System</h4>
+                  <h4 className="text-xl sm:text-2xl lg:text-3xl font-black text-gray-900">Spatial Enhancement System</h4>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Final Description */}
-          <div className="text-left mb-20">
-            <p className="text-lg sm:text-xl text-gray-900 leading-relaxed font-medium max-w-5xl mx-auto">
-              Through the power of proprietary modelling and personalization engines, generative creativity, intelligent 
-              curation, and a suite of story-affirming features, Deckoviz creates deeply emotionally attuned, multisensory 
-              visual and multisensory experiences - designed to inspire, soothe, energize, or uplift, depending on your 
-              intentions and needs. Every piece of art it displays, every visual it curates, is attuned to your unique life, spirit, and essence.
-            </p>
+          {/* Final Description — highlighted pull quote */}
+          <div className="relative mb-20">
+            {/* Background glow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 via-teal-300/5 to-transparent rounded-3xl" />
+            <div className="relative border-l-4 border-gradient-to-b border-[#2563EB] pl-8 py-4">
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-[#2563EB] to-teal-400 rounded-full" />
+              <p className="text-lg sm:text-xl text-gray-800 leading-relaxed font-medium max-w-5xl">
+                Through the power of proprietary modelling and personalization engines, generative creativity, intelligent
+                curation, and a suite of story-affirming features, Deckoviz creates deeply emotionally attuned, multisensory
+                visual experiences — designed to <span className="text-[#2563EB] font-semibold">inspire</span>, <span className="text-teal-500 font-semibold">soothe</span>, <span className="font-semibold text-[#182A4A]">energize</span>, or uplift, depending on your
+                intentions and needs. Every piece of art it displays, every visual it curates, is attuned to your unique life, spirit, and essence.
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Our Philosophy Section */}
         <div className="relative mt-32 mb-32">
           <div className="relative z-10 max-w-6xl mx-auto px-4">
-            {/* Top Badge - centered like Vision section */}
-            <div className="flex justify-start mb-8">
-              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                Our Philosophy
+
+            {/* Section Header */}
+            <div className="flex items-center gap-4 mb-10">
+              <div className="relative group cursor-default">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-40 transition duration-500" />
+                <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-5 py-1.5 rounded-xl text-xs font-black tracking-widest uppercase shadow-xl flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
+                  Our Philosophy
+                </div>
               </div>
+              <div className="h-px flex-1 bg-gradient-to-r from-[#2563EB]/30 to-transparent" />
             </div>
 
-            {/* Main Content - Two Column Layout */}
+            {/* Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
               <div className="text-left">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight">
-                  We believe technology should not just be functional  
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
+                  We believe technology should not just be{' '}
+                  <span className="bg-gradient-to-r from-[#2563EB] to-teal-400 bg-clip-text text-transparent">functional</span>
                 </h2>
               </div>
               <div className="text-left flex items-center">
                 <p className="text-lg text-gray-500 leading-relaxed">
-                  At Deckoviz, we are pioneering a new category of <br />
-                  AI-powered spatial enhancement and state-setting - bringing
-                  <br />
-                  future-ready tech, personalization, and emotion
-                  <br />
-                  into homes, offices, restaurants, hotels, wellness spaces, and
-                  <br />
-                  beyond.
+                  At Deckoviz, we are pioneering a new category of<br />
+                  AI-powered spatial enhancement and state-setting — bringing<br />
+                  future-ready tech, personalization, and emotion<br />
+                  into homes, offices, restaurants, hotels, wellness spaces, and beyond.
                 </p>
               </div>
             </div>
 
-            {/* Spiral gradient positioned right below the text and above the 4 boxes */}
+            {/* Four Philosophy Cards — glassmorphic */}
             <div className="relative">
-              <div
-                className="absolute -left-1 transform -translate-x-1/2 w-[150vw] max-w-[120rem] h-[34rem] -top-32"
-                style={{
-                  background:
-                    "conic-gradient(from 0deg at center, rgba(236,72,153,0.32) 0%, rgba(147,51,234,0.22) 90deg, rgba(255,165,0,0.03) 180deg, rgba(236,72,153,0.04) 270deg, rgba(147,51,234,0.06) 360deg)",
-                  borderRadius: "60%",
-                  filter: "blur(90px)",
-                  boxShadow: "0 0 0 120px rgba(236,72,153,0.03), 0 0 0 240px rgba(147,51,234,0.02)",
-                }}
-              />
+              {/* Ambient glow */}
+              <div className="absolute inset-0 -z-10" style={{ background: 'conic-gradient(from 0deg at center, rgba(37,99,235,0.12) 0%, rgba(24,42,74,0.10) 90deg, rgba(20,184,166,0.06) 180deg, rgba(37,99,235,0.04) 270deg, rgba(24,42,74,0.06) 360deg)', borderRadius: '60%', filter: 'blur(80px)' }} />
 
-              {/* Four Philosophy Cards */}
-              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
-                  <div className="mb-6 flex justify-center">
-                    <div className="">
-                      <img
-                        src="/images/3dicons-notify-heart-dynamic-color.png"
-                        alt="Beautiful Icon"
-                        className="w-15 h-15"
-                      />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                {[
+                  { img: '/images/3dicons-notify-heart-dynamic-color.png', text: 'It should be beautiful.', accent: 'from-[#182A4A] to-[#2563EB]', glow: 'rgba(37,99,235,0.2)' },
+                  { img: '/images/3dicons-magic-trick-dynamic-color.png', text: 'It should be magical.', accent: 'from-[#2563EB] to-teal-400', glow: 'rgba(20,184,166,0.2)' },
+                  { img: '/images/3dicons-thumb-up-dynamic-color.png', text: 'It should be emotionally enriching.', accent: 'from-teal-400 to-[#182A4A]', glow: 'rgba(24,42,74,0.2)' },
+                  { img: '/images/3dicons-heart-dynamic-color.png', text: 'It should help us live more intentionally, more expressively, more joyfully', accent: 'from-[#182A4A] to-teal-400', glow: 'rgba(37,99,235,0.15)' },
+                ].map((card, i) => (
+                  <div key={i} className="group relative overflow-hidden rounded-2xl p-7 text-center
+                    bg-white/60 backdrop-blur-lg
+                    border border-white/70
+                    shadow-[0_4px_24px_rgba(37,99,235,0.07),inset_0_1px_1px_rgba(255,255,255,0.8)]
+                    hover:shadow-[0_12px_40px_rgba(37,99,235,0.15)]
+                    hover:-translate-y-2 transition-all duration-500 cursor-default">
+                    {/* Shiny edge */}
+                    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+                    {/* Bottom accent bar */}
+                    <div className={`absolute bottom-0 inset-x-0 h-1 bg-gradient-to-r ${card.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-2xl`} />
+                    {/* Icon ring */}
+                    <div className={`relative mx-auto mb-5 w-20 h-20 rounded-2xl bg-gradient-to-br ${card.accent} p-0.5`}>
+                      <div className="w-full h-full rounded-[0.9rem] bg-white/90 flex items-center justify-center">
+                        <img src={card.img} alt="" className="w-12 h-12 object-contain" />
+                      </div>
                     </div>
+                    <h3 className="text-base font-bold text-gray-900 leading-snug">{card.text}</h3>
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    It should be
-                    <br />
-                    beautiful.
-                  </h3>
-                </div>
-
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
-                  <div className="mb-6 flex justify-center">
-                    <div className="">
-                      <img
-                        src="/images/3dicons-magic-trick-dynamic-color.png"
-                        alt="Intelligent Icon"
-                        className="w-15 h-14"
-                      />
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    It should be
-                    <br />
-                    magical.
-                  </h3>
-                </div>
-
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
-                  <div className="mb-6 flex justify-center">
-                    <div className="">
-                      <img
-                        src="/images/3dicons-thumb-up-dynamic-color.png"
-                        alt="Beautiful Icon"
-                        className="w-15 h-15"
-                      />
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    It should be
-                    <br />
-                    emotionally
-                    <br />
-                    enriching.
-                  </h3>
-                </div>
-
-                <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 text-center">
-                  <div className="mb-6 flex justify-center">
-                    <div className="">
-                      <img src="/images/3dicons-heart-dynamic-color.png" alt="Beautiful Icon" className="w-15 h-15" />
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    It should help us live
-                    <br />
-                    more intentionally,
-                    <br />
-                    more expressively,
-                    <br />
-                    more joyfully
-                  </h3>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -334,124 +318,82 @@ export default function AboutUs() {
         {/* Additional Content Placeholder */}
         <div className="mt-32 mb-32">{/* Future content will go here */}</div>
 
-        {/* Our Vision Section */}
+        {/* Our Mission & Vision Section */}
         <div className="relative mt-32 mb-32">
           <div className="relative z-10 max-w-6xl mx-auto px-4">
-            {/* Top Badge */}
-            <div className="flex justify-center mb-8">
-              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                Our Mission and Vision 
+
+            {/* Full-width dark glass panel */}
+            <div className="relative overflow-hidden rounded-[2.5rem] mb-16
+              bg-gradient-to-br from-[#0d1b36] to-[#182A4A]
+              border border-white/10
+              shadow-[0_32px_80px_rgba(24,42,74,0.4),inset_0_1px_1px_rgba(255,255,255,0.08)]">
+              {/* Decorative lines */}
+              <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#2563EB]/60 to-transparent" />
+              <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-teal-400/40 to-transparent" />
+              {/* Ambient blobs inside panel */}
+              <div className="absolute -top-20 -right-20 w-72 h-72 bg-[#2563EB]/20 rounded-full blur-[80px]" />
+              <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-teal-400/10 rounded-full blur-[60px]" />
+              {/* Grid pattern */}
+              <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+              <div className="relative z-10 p-10 md:p-16 text-center">
+                {/* Badge */}
+                <div className="flex justify-center mb-6">
+                  <div className="bg-white/10 border border-white/20 text-white/90 px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase backdrop-blur-sm flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
+                    Our Mission and Vision
+                  </div>
+                </div>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight mb-6">
+                  Our Mission
+                </h2>
+                <p className="text-lg text-white/70 leading-relaxed max-w-4xl mx-auto">
+                  Our mission is to develop an ecosystem of cutting-edge, artistically rich,
+                  technologically beautiful products that continue to blur the lines between
+                  technology, art, and life design, breathing curiosity, wonder, joy, and inspiration into
+                  every corner of your world, both inner and outer.
+                </p>
               </div>
             </div>
 
-            {/* Main Heading */}
-            <div className="text-center mb-12">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-8">
-                Our Mission
-              </h2>
-              <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
-                Our mission is to develop an ecosystem of cutting-edge, artistically rich,
-                <br />
-                technologically beautiful products that continue to blur the lines between
-                <br />
-                technology, art, and life design, breathing curiosity, wonder, joy, and inspiration into
-                <br />
-                every corner of your world, both inner and outer. 
-              </p>
-            </div>
-
-            {/* Two Column Layout */}
+            {/* Two Column Vision blocks */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-              {/* Left Column - Text Content with exact line breaks */}
-              <div className="text-left space-y-12">
-                <div>
-                  <h3
-                    className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-4"
-                    style={{ fontFamily: "Bricolage Grotesque, sans-serif" }}
-                  >
-                    We envision a world where your spaces
-                    <br />
-                    are not static, but alive with your story.
-                    <br />
-                    Where art evolves with you, your moods, your states.
-                  </h3>
-                  <p className="text-gray-500 leading-relaxed">
-                    Where your home and work environments are
-                    <br />
-                    extensions of your innermost self - vibrant,
-                    <br />
-                    dynamic, evolving, richly expressed.
-                  </p>
-                </div>
-
-                <div>
-                  <h3
-                    className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 leading-tight mb-4"
-                    style={{ fontFamily: "Bricolage Grotesque, sans-serif" }}
-                  >
-                    We are building the next generation of
-                    <br />
-                    ecosystem at the crossroads of evolving art, gen AI,
-                    <br />
-                    emotional modelling, and soulful design
-                  </h3>
-                  <p className="text-gray-500 leading-relaxed">
-                    creating living environments that resonate
-                    <br />
-                    emotionally, artistically, and intelligently with
-                    <br />
-                    the people who inhabit them.
-                  </p>
-                </div>
+              {/* Left — numbered vision statements */}
+              <div className="space-y-6">
+                {[
+                  { num: '01', title: 'We envision a world where your spaces are not static, but alive with your story. Where art evolves with you, your moods, your states.', body: 'Where your home and work environments are extensions of your innermost self — vibrant, dynamic, evolving, richly expressed.' },
+                  { num: '02', title: 'We are building the next generation of ecosystem at the crossroads of evolving art, gen AI, emotional modelling, and soulful design', body: 'creating living environments that resonate emotionally, artistically, and intelligently with the people who inhabit them.' },
+                ].map((item) => (
+                  <div key={item.num} className="group flex gap-5 items-start p-6 rounded-2xl
+                    bg-white/50 backdrop-blur-md border border-white/60
+                    shadow-[0_4px_20px_rgba(37,99,235,0.06)]
+                    hover:shadow-[0_8px_32px_rgba(37,99,235,0.14)] hover:-translate-y-1 transition-all duration-400">
+                    {/* Number badge */}
+                    <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center shadow-md">
+                      <span className="text-white text-xs font-black">{item.num}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-base font-bold text-gray-900 leading-snug mb-2" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>{item.title}</h3>
+                      <p className="text-sm text-gray-500 leading-relaxed">{item.body}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              {/* Right Column - Image with Pink Spiral Gradient Background */}
+              {/* Right — image with glow frame */}
               <div className="relative">
-                {/* Pink spiral gradient glow that extends beyond the image */}
-                <div
-                  className="absolute -inset-16 transform"
-                  style={{
-                    background:
-                      "conic-gradient(from 0deg at center, rgba(236,72,153,0.25) 0%, rgba(147,51,234,0.18) 90deg, rgba(255,165,0,0.08) 180deg, rgba(236,72,153,0.12) 270deg, rgba(147,51,234,0.15) 360deg)",
-                    borderRadius: "50%",
-                    filter: "blur(60px)",
-                    zIndex: 1,
-                  }}
-                />
-
-                {/* Image container - with custom padding: equal on top/left/right, more at bottom */}
-                <div
-                  className="relative bg-gradient-to-b from-orange-300 via-[#ff5bb8] to-[#dbbbff] rounded-2xl shadow-lg max-w-sm mx-auto  ml-8 p-4 pb-2 h-[480px]"
-                  style={{
-                    zIndex: 2,
-                    padding: "16px 16px 35px 16px", // 1cm top/left/right, reduced bottom
-                    marginLeft: "2rem", // Move image more to the right
-                  }}
-                >
-                  <img
-                    src="/images/Gemini_Generated_Image_qcetl0qcetl0qcet.jpeg"
-                    alt="AI-Powered Vision That Inspires You"
-                    className="w-full h-auto object-cover rounded-xl"
-                  />
-
-                  {/* AI Badge - positioned at bottom right, 2cm above, half outside */}
-                  <div
-                    className="absolute bg-white text-gray-900 px-2 py-5 rounded-xl shadow-lg"
-                    style={{
-                      zIndex: 50,
-                      bottom: "20px", // 2cm above bottom
-                      left: "-50%", // Half outside to the left
-                      transform: "translateX(50%)",
-                    }}
-                  >
-                    <div className="flex items-center space-x-2">
-                      <div className="w-9 h-9 bg-[#6670d8] rounded-full flex items-center justify-center ">
-                        <span className="text-white text- font-light">AI</span>
-                      </div>
-                      <div>
-                        <div className="text-sm font-semibold">AI-Powered</div>
-                        <div className="text-xs opacity-70">Vision That Inspires You</div>
-                      </div>
+                <div className="absolute -inset-16 transform"
+                  style={{ background: 'conic-gradient(from 0deg at center, rgba(37,99,235,0.18) 0%, rgba(24,42,74,0.14) 90deg, rgba(20,184,166,0.06) 180deg, rgba(37,99,235,0.10) 270deg, rgba(24,42,74,0.12) 360deg)', borderRadius: '50%', filter: 'blur(60px)', zIndex: 1 }} />
+                <div className="relative bg-gradient-to-b from-[#2563EB] via-teal-400 to-[#182A4A] rounded-2xl shadow-lg max-w-sm mx-auto ml-8 overflow-hidden" style={{ zIndex: 2, padding: '4px' }}>
+                  <img src="/images/Gemini_Generated_Image_qcetl0qcetl0qcet.jpeg" alt="AI-Powered Vision That Inspires You" className="w-full h-auto object-cover rounded-xl" />
+                  {/* AI Badge */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-3 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 w-max">
+                    <div className="w-9 h-9 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center">
+                      <span className="text-white text-xs font-bold">AI</span>
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-gray-900">AI-Powered</div>
+                      <div className="text-xs text-gray-500">Vision That Inspires You</div>
                     </div>
                   </div>
                 </div>
@@ -463,10 +405,13 @@ export default function AboutUs() {
         {/* Product Section 1 - Our Product Deckoviz */}
         <div className="relative mt-32 mb-32">
           <div className="relative z-10 max-w-6xl mx-auto px-4">
-            {/* Top Badge - White bg with gray border */}
+            {/* Top Badge — brand pill */}
             <div className="flex justify-start mb-8">
-              <div className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 shadow-md">
-                The Deckoviz DASP
+              <div className="relative group cursor-default">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-30 transition duration-500" />
+                <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-5 py-1.5 rounded-xl text-xs font-black tracking-widest uppercase shadow-xl">
+                  The Deckoviz DASP
+                </div>
               </div>
             </div>
 
@@ -478,7 +423,7 @@ export default function AboutUs() {
                   <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
                     Our Product :
                     <br />
-                    <span className="text-[#6670d8]">Deckoviz DASP</span>
+                    <span className="text-[#2563EB]">Deckoviz DASP</span>
                   </h2>
                   <p className="text-gray-700 leading-relaxed text-lg mb-8">
                     Deckoviz DASP is a personalized Dynamic Art and Storytelling Portal art frame, 
@@ -492,19 +437,19 @@ export default function AboutUs() {
                     world.
                   </p>
 
-                  <button onClick={() => (window.location.href = "/transform-walls")} className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-transform duration-300 mb-8">
+                  <button onClick={() => (window.location.href = "/transform-walls")} className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 mb-8">
                     Find Out More
                   </button>
 
                   <div className="space-y-4">
                     <div className="flex items-start space-x-3">
-                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-6 h-6 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
                       <p className="text-gray-700">It evolves hourly, daily, or at any pace you choose.</p>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-6 h-6 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
                       <p className="text-gray-700">
@@ -524,7 +469,7 @@ export default function AboutUs() {
                   className="absolute -inset-20 transform"
                   style={{
                     background:
-                      "radial-gradient(ellipse at center, rgba(255,192,203,0.8) 0%, rgba(221,160,221,0.6) 40%, rgba(230,230,250,0.4) 80%, transparent 100%)",
+                      "radial-gradient(ellipse at center, rgba(37,99,235,0.15) 0%, rgba(24,42,74,0.12) 40%, rgba(20,184,166,0.08) 80%, transparent 100%)",
                     borderRadius: "50%",
                     filter: "blur(60px)",
                     zIndex: 1,
@@ -595,7 +540,7 @@ export default function AboutUs() {
                   className="absolute -inset-20 transform"
                   style={{
                     background:
-                      "radial-gradient(ellipse at center, rgba(255,192,203,0.8) 0%, rgba(221,160,221,0.6) 40%, rgba(230,230,250,0.4) 80%, transparent 100%)",
+                      "radial-gradient(ellipse at center, rgba(37,99,235,0.15) 0%, rgba(24,42,74,0.12) 40%, rgba(20,184,166,0.08) 80%, transparent 100%)",
                     borderRadius: "50%",
                     filter: "blur(60px)",
                     zIndex: 1,
@@ -636,7 +581,7 @@ export default function AboutUs() {
                   {/* Image content */}
                   <div className="aspect-square relative overflow-hidden">
                     <img
-                      src="/images/aboutusimg2.png"
+                      src="/images/aboutusimg1.png"
                       alt="Deckoviz showing mountain landscape with cosmic elements"
                       className="w-full h-full object-cover"
                     />
@@ -662,7 +607,7 @@ export default function AboutUs() {
                     stale - only ever more you.
                   </p>
 
-                  <button className="bg-[#6670d8] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
+                  <button className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-3 rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8">
                     Find Out More
                   </button>
 
@@ -703,7 +648,7 @@ export default function AboutUs() {
             className="absolute inset-0 transform translate-y-16"
             style={{
               background:
-                "radial-gradient(circle at center, rgba(255,182,193,0.5) 0%, rgba(221,160,221,0.35) 25%, rgba(230,230,250,0.25) 50%, rgba(240,248,255,0.15) 75%, transparent 100%)",
+                "radial-gradient(circle at center, rgba(37,99,235,0.18) 0%, rgba(24,42,74,0.12) 25%, rgba(20,184,166,0.08) 50%, rgba(240,248,255,0.05) 75%, transparent 100%)",
               filter: "blur(40px)",
               zIndex: 1,
             }}
@@ -712,7 +657,7 @@ export default function AboutUs() {
           <div className="relative z-10 max-w-6xl mx-auto px-4">
             {/* Top Badge */}
             <div className="flex justify-center mb-8">
-              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
+              <div className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
                 Our Technology
               </div>
             </div>
@@ -770,7 +715,7 @@ export default function AboutUs() {
               {/* Card 2 - Dream & Moods */}
               <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
                 {/* Image container with violet gradient */}
-                <div className="bg-gradient-to-br from-violet-100 via-violet-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+                <div className="bg-gradient-to-br from-blue-100 via-indigo-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
                   <img
                     src="/images/doodle2.png"
                     alt="AI character representing dreams and moods"
@@ -1184,30 +1129,47 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* Join Our Community Section */}
-        <div className="relative mt-32 mb-32">
-          {/* Main content container - made wider */}
+        {/* Join Our Community Section — Frosted Glass */}
+        <div className="relative mt-32 mb-32" style={{ isolation: 'isolate' }}>
           <div className="relative max-w-6xl mx-auto px-4">
-            {/* Large Mail Icon - positioned to overlap */}
-            <div className="flex justify-center relative z-50 mb-16">
-              <img src="/images/mailnoti.png" alt="Mail Notification" className="w-32 h-32 object-contain" />
+
+            {/* Blue glow blobs behind the glass */}
+            <div className="absolute inset-0 -z-10 overflow-visible">
+              <div className="absolute -top-16 -left-16 w-72 h-72 bg-[#2563EB]/25 rounded-full blur-[70px] animate-[float_10s_ease-in-out_infinite]" />
+              <div className="absolute -bottom-16 -right-16 w-80 h-80 bg-[#182A4A]/20 rounded-full blur-[80px] animate-[float_8s_ease-in-out_infinite_reverse]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-teal-300/20 rounded-full blur-[60px] animate-[float_12s_ease-in-out_infinite]" />
             </div>
 
-            {/* Violet background section with dotted texture - wider and more faint */}
-            <div
-              className="relative -mt-32 pt-20 pb-16 px-12 rounded-3xl"
-              style={{
-                background: "#faf9ff",
-                backgroundImage: "radial-gradient(circle, rgba(147,51,234,0.06) 1px, transparent 1px)",
-                backgroundSize: "20px 20px",
-              }}
-            >
-              {/* Content positioned below the icon */}
-              <div className="text-center pt-12">
+            {/* Mail icon overlapping the card top */}
+            <div className="flex justify-center relative z-50 mb-0">
+              <img src="/images/mailnoti.png" alt="Mail Notification" className="w-28 h-28 object-contain drop-shadow-xl" />
+            </div>
+
+            {/* Frosted Glass Card */}
+            <div className="relative -mt-14 overflow-hidden rounded-[2.5rem] group
+              bg-white/15 backdrop-blur-2xl
+              border border-white/35
+              shadow-[0_16px_60px_rgba(37,99,235,0.15),0_4px_20px_rgba(24,42,74,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
+              hover:shadow-[0_24px_80px_rgba(37,99,235,0.25),inset_0_1px_1px_rgba(255,255,255,0.8)]
+              transition-all duration-700">
+
+              {/* Shiny top edge */}
+              <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none" />
+              {/* Left edge */}
+              <div className="absolute left-0 inset-y-0 w-[1.5px] bg-gradient-to-b from-white/70 via-white/20 to-transparent pointer-events-none" />
+              {/* Diagonal glare */}
+              <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white/25 to-transparent pointer-events-none rounded-tl-[2.5rem] opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+              {/* Blue bottom accent */}
+              <div className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-[#2563EB]/40 to-transparent pointer-events-none" />
+              {/* Brand dot pattern inside glass */}
+              <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'radial-gradient(circle, #2563EB 1px, transparent 1px)', backgroundSize: '20px 20px' }} />
+
+              {/* Content */}
+              <div className="relative z-10 pt-16 pb-16 px-8 md:px-16 text-center">
                 {/* Welcome Text */}
                 <div className="mb-6">
                   <p className="text-lg text-gray-700 leading-relaxed">Welcome to a more beautiful future.</p>
-                  <p className="text-lg text-[#6670d8] font-semibold">Welcome to Deckoviz.</p>
+                  <p className="text-lg font-semibold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">Welcome to Deckoviz.</p>
                 </div>
 
                 {/* Main Heading */}
@@ -1219,92 +1181,45 @@ export default function AboutUs() {
                 </h2>
 
                 {/* Description */}
-                <div className="text-gray-700 leading-relaxed mb-12 max-w-3xl mx-auto space-y-4">
+                <div className="text-gray-600 leading-relaxed mb-12 max-w-3xl mx-auto space-y-4">
                   <p>
-                    If you believe that the spaces where we live and work should inspire us  
-                    <br />
-                    If you dream of living in environments that feel, grow, respond, and reflect
-                    <br />
-                    who you are  
+                    If you believe that the spaces where we live and work should inspire us<br />
+                    If you dream of living in environments that feel, grow, respond, and reflect<br />
+                    who you are
                   </p>
                   <p>
-                    If you believe that beauty, art, and technology can and should work together
-                    <br />
-                    to make life more vivid, joyful, and meaningful  
+                    If you believe that beauty, art, and technology can and should work together<br />
+                    to make life more vivid, joyful, and meaningful
                   </p>
                 </div>
 
-                {/* Enhanced Email Signup Form */}
+                {/* Email Signup Form */}
                 <div className="max-w-sm sm:max-w-md mx-auto">
-                  <div className="relative group">
-                    {/* Glow effect */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-
-                    {/* Form container */}
-                    <div className="relative bg-white rounded-2xl p-2 shadow-xl border border-gray-200">
+                  <div className="relative group/form">
+                    {/* Glow */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-2xl blur opacity-20 group-hover/form:opacity-40 transition duration-500" />
+                    {/* Form glass container */}
+                    <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-2 shadow-xl border border-white/60">
                       <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
-                        {/* Email input */}
                         <div className="flex-1 relative">
                           <input
                             type="email"
                             placeholder="Email address..."
-                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all duration-300"
+                            className="w-full px-4 py-3 bg-gray-50/80 border-0 rounded-xl text-gray-700 placeholder-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#2563EB]/20 transition-all duration-300"
                           />
-                          {/* Subtle icon */}
                           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                            <svg
-                              className="w-5 h-5 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                              />
+                            <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                             </svg>
                           </div>
                         </div>
-
-                        {/* Submit button */}
-                        <button className="bg-gradient-to-r from-[#6670d8] to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
+                        <button className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-[0_0_20px_rgba(37,99,235,0.4)] hover:scale-105 transform transition-all duration-300 flex items-center gap-2">
                           <span>Submit</span>
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M13 7l5 5m0 0l-5 5m5-5H6"
-                            />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                           </svg>
                         </button>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Trust indicators */}
-                  <div className="flex items-center justify-center space-x-4 mt-4 text-sm text-gray-500">
-                    <div className="flex items-center space-x-1">
-                      <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>No spam</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                          fillRule="evenodd"
-                          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>Privacy protected</span>
                     </div>
                   </div>
                 </div>
