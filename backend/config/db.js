@@ -4,8 +4,15 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Use DATABASE_URL if available (for production/PostgreSQL), otherwise fallback to local SQLite
-export const sequelize = process.env.DATABASE_URL 
-  ? new Sequelize(process.env.DATABASE_URL, {
+let dbUrl = process.env.DATABASE_URL;
+
+// If DATABASE_URL is not set but individual PG_* variables are set, construct it
+if (!dbUrl && process.env.PG_HOST) {
+  dbUrl = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
+}
+
+export const sequelize = dbUrl 
+  ? new Sequelize(dbUrl, {
       dialect: "postgres",
       protocol: "postgres",
       dialectOptions: {
