@@ -324,8 +324,8 @@ function ImageCard({
         background: "var(--vc-glass-bg)",
         border: "1px solid var(--vc-glass-border)",
         boxShadow: "var(--vc-glass-shadow)",
+        animationDelay: `${index * 100}ms`,
       }}
-      style={{ animationDelay: `${index * 100}ms` }}
     >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden">
