@@ -57,7 +57,7 @@ import client from "./redisClient.js";
   try {
     await sequelize.authenticate();
     console.log("✅ PostgreSQL connected via Sequelize.");
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
   } catch (error) {
     console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
   }
