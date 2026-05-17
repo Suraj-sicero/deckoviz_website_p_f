@@ -47,19 +47,25 @@ import client from "./redisClient.js";
 
 // ===== Startup Logic (Background) =====
 (async () => {
-  try {
-    await client.set("hello", "Dekoviz");
-    console.log(await client.get("hello"));
-  } catch (redisErr) {
-    console.warn("⚠️ Redis not available, skipping initial test.");
-  }
-
+  // 1. Database sync runs immediately and independently
   try {
     await sequelize.authenticate();
     console.log("✅ PostgreSQL connected via Sequelize.");
     await sequelize.sync({ alter: true });
   } catch (error) {
     console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
+  }
+
+  // 2. Redis test run separately so it never blocks DB operations
+  try {
+    if (client.isOpen) {
+      await client.set("hello", "Dekoviz");
+      console.log(await client.get("hello"));
+    } else {
+      console.warn("⚠️ Redis client is not connected, skipping initial test.");
+    }
+  } catch (redisErr) {
+    console.warn("⚠️ Redis not available, skipping initial test.");
   }
 })();
 
