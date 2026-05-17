@@ -175,7 +175,7 @@ const FAQ: React.FC = () => {
   const activeIndex2 = categories.findIndex((cat) => cat.name === activeCategory)
 
   return (
-    <section id="faq" className="relative py-14 bg-white overflow-hidden">
+    <section id="faq" className="relative py-14 overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
 
       {/* 🌕 Floating Philosophy Bubble */}
 <button
@@ -213,16 +213,13 @@ const FAQ: React.FC = () => {
 
 
       {/* Background Elements */}
-      <div className="absolute inset-0 w-full h-full">
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
-            backgroundSize: "50px 50px",
-          }}
-        />
-        <div className="absolute left-1/2 top-1/4 -translate-x-1/2 w-[80%] h-[40%] rounded-full bg-gradient-to-br from-blue-200/15 via-violet-200/10 to-pink-200/15 blur-3xl"></div>
-        <div className="absolute right-1/4 bottom-1/4 w-[60%] h-[30%] rounded-full bg-gradient-to-tl from-violet-300/10 via-pink-200/8 to-orange-200/12 blur-2xl"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+        <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+        <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+        <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+        <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
       </div>
 
       <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -292,9 +289,10 @@ const FAQ: React.FC = () => {
                         <div
                           className={`relative p-5 rounded-2xl transition-all duration-300 ${
                             isActive
-                              ? "bg-white shadow-xl border-2 border-transparent"
-                              : "bg-white/60 backdrop-blur-sm hover:bg-white hover:shadow-lg border border-gray-200/50"
+                              ? "bg-white/40 shadow-[0_12px_40px_rgba(37,99,235,0.2),inset_0_1px_0_rgba(255,255,255,0.8)] border border-white/60"
+                              : "bg-white/20 hover:bg-white/35 hover:shadow-[0_8px_24px_rgba(37,99,235,0.12)] border border-white/30 hover:border-white/50"
                           }`}
+                          style={{ backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)" }}
                         >
                           {/* Active Border Gradient */}
                           {isActive && (
@@ -384,11 +382,12 @@ const FAQ: React.FC = () => {
                 return (
                   <div
                     key={index}
-                    className={`group relative bg-white rounded-2xl border transition-all duration-500 ${
+                    className={`group relative rounded-2xl border transition-all duration-500 ${
                       isOpen
-                        ? "border-violet-200 shadow-xl"
-                        : "border-gray-100 shadow-md hover:shadow-lg hover:border-violet-100"
+                        ? "bg-white/35 border-white/60 shadow-[0_20px_60px_rgba(37,99,235,0.2),inset_0_1px_0_rgba(255,255,255,0.8)]"
+                        : "bg-white/22 border-white/40 shadow-[0_8px_32px_rgba(31,38,135,0.1),inset_0_1px_0_rgba(255,255,255,0.6)] hover:bg-white/30 hover:shadow-[0_16px_40px_rgba(37,99,235,0.15)] hover:border-white/55"
                     }`}
+                    style={{ backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)" }}
                   >
                     {/* Gradient accent bar */}
                     <div
@@ -510,7 +509,7 @@ boxShadow: `
                     <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
 
                     {/* Form container */}
-                    <div className="relative bg-white rounded-2xl p-2 shadow-xl border border-gray-200">
+                    <div className="relative rounded-2xl p-2 shadow-[0_8px_32px_rgba(37,99,235,0.15)] border border-white/50" style={{ background: "rgba(255,255,255,0.30)", backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)" }}>
                       <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                         {/* Email input */}
                         <div className="flex-1 relative">
@@ -555,7 +554,7 @@ boxShadow: `
 {/* Stay Connected */}
 <div className="mt-16 md:mt-20 max-w-2xl mx-auto">
 
-  <div className="relative rounded-2xl border border-gray-200 bg-white/80 backdrop-blur-sm p-6 sm:p-8 shadow-lg">
+  <div className="relative rounded-2xl p-6 sm:p-8 shadow-[0_8px_32px_rgba(31,38,135,0.12),inset_0_1px_0_rgba(255,255,255,0.65)]" style={{ background: "rgba(255,255,255,0.25)", backdropFilter: "blur(24px) saturate(180%)", WebkitBackdropFilter: "blur(24px) saturate(180%)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
 
     {/* Glow */}
     <div className="absolute -inset-10 bg-violet-500/5 blur-[80px] pointer-events-none"></div>

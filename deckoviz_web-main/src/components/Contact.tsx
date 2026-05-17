@@ -1,91 +1,91 @@
 export default function Contact() {
   return (
-    <div className="relative min-h-screen bg-white">
-      {/* Background gradient section */}
-      <div className="absolute inset-0 z-0">
-        {/* Base white background */}
-        <div className="absolute inset-0 bg-white" />
-
-        {/* Enhanced gradient with more depth and animation */}
-        <div className="absolute left-0 right-0" style={{ top: "260px", height: "550px" }}>
-          <div
-            className="mx-4 h-full overflow-hidden relative animate-pulse"
-            style={{
-              borderBottomLeftRadius: "50px",
-              borderBottomRightRadius: "50px",
-              animationDuration: "4s",
-            }}
-          >
-            {/* Multi-layered gradient for depth */}
-            <div className="w-full h-full bg-gradient-to-br from-indigo-400 via-fuchsia-300 to-orange-300" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-pink-200/30 to-yellow-200/40" />
-
-            {/* Animated gradient overlay */}
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"
-              style={{ animationDuration: "3s" }}
-            />
-
-            {/* Top fade with enhanced transition */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-transparent" />
-          </div>
-        </div>
+    <div
+      className="min-h-screen relative overflow-hidden"
+      style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}
+    >
+      {/* Soft blue blobs so frosted glass cards are clearly visible */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+        <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+        <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+        <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+        <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
       </div>
 
       {/* Main Content */}
       <div className="relative z-20 container mx-auto px-4 py-8">
-        {/* Top Badge */}
-        <div className="flex justify-center pt-16 pb-2 mb-8">
-          <div className="bg-[#7441dd] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-            Contact Us
+        {/* Shiny Badge */}
+        <div className="flex justify-center pt-20 pb-2 mb-6">
+          <div className="relative group cursor-default">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-50 group-hover:opacity-80 transition duration-500"></div>
+            <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-1.5 rounded-xl text-sm font-semibold tracking-wide shadow-xl flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
+              Contact Us
+              <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
+            </div>
           </div>
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight text-center mb-8">
+        <h1 className="text-5xl md:text-6xl font-black text-center mb-6 leading-tight bg-gradient-to-br from-gray-900 via-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
           Contact Our Team
         </h1>
 
+        {/* Decorative divider */}
+        <div className="flex items-center justify-center gap-3 mb-8">
+          <div className="h-px w-20 bg-gradient-to-r from-transparent to-[#2563EB]/50"></div>
+          <div className="w-2 h-2 rounded-full bg-[#2563EB]/60"></div>
+          <div className="w-3 h-3 rounded-full bg-[#182A4A]/80"></div>
+          <div className="w-2 h-2 rounded-full bg-[#2563EB]/60"></div>
+          <div className="h-px w-20 bg-gradient-to-l from-transparent to-[#182A4A]/50"></div>
+        </div>
+
         {/* Description */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <p className="text-lg text-gray-700 leading-relaxed mb-4">
-            We love hearing from you   whether it's feedback, ideas, creative sparks, bugs
-            <br />
+        <div className="text-center max-w-2xl mx-auto mb-14">
+          <p className="text-lg text-gray-600 leading-relaxed mb-3">
+            We love hearing from you — whether it's feedback, ideas, creative sparks, bugs
             you've noticed, feature suggestions, or simply your experience with Deckoviz.
           </p>
-          <p className="text-lg text-gray-700 leading-relaxed">
-            Every message helps us grow, improve, and create more beautiful, meaningful
-            <br />
-            experiences.
+          <p className="text-lg text-gray-600 leading-relaxed">
+            Every message helps us grow, improve, and create more beautiful, meaningful experiences.
           </p>
         </div>
 
-        {/* Contact Options */}
-        <div className="flex justify-center items-center space-x-8 mb-16 text-sm text-gray-600">
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs">✓</span>
+        {/* Contact Options — glassy pills */}
+        <div className="flex flex-wrap justify-center items-center gap-4 mb-16">
+          {[
+            { label: 'Fill out the form below' },
+            { label: 'Connect with us on Instagram' },
+            { label: 'Email us directly' },
+          ].map((opt) => (
+            <div key={opt.label} className="flex items-center gap-2 bg-white/70 backdrop-blur-md border border-white/60 shadow-[0_4px_20px_rgba(37,99,235,0.1)] px-5 py-2.5 rounded-full hover:shadow-[0_6px_28px_rgba(37,99,235,0.2)] hover:-translate-y-0.5 transition-all duration-300">
+              <div className="w-5 h-5 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center flex-shrink-0">
+                <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+              <span className="text-sm font-medium text-gray-700">{opt.label}</span>
             </div>
-            <span>Fill out the form below</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs">✓</span>
-            </div>
-            <span>Connect with us on Instagram</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs">✓</span>
-            </div>
-            <span>Email us directly</span>
-          </div>
+          ))}
         </div>
 
         {/* Contact Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Instagram Card */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 h-80 flex flex-col">
+          {/* Instagram Card — Frosted Glass */}
+          <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
+            bg-white/30 backdrop-blur-xl
+            border border-white/50
+            shadow-[0_8px_32px_rgba(37,99,235,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
+            hover:shadow-[0_20px_50px_rgba(37,99,235,0.2),inset_0_1px_1px_rgba(255,255,255,0.8)]
+            hover:-translate-y-1 transition-all duration-500 p-8">
+            {/* Shiny top edge */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+            {/* Diagonal glare */}
+            <div className="absolute top-0 left-0 w-2/3 h-1/2 bg-gradient-to-br from-white/30 to-transparent rounded-tl-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Blue glow on hover */}
+            <div className="absolute -inset-2 bg-[#2563EB]/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             {/* Icon - positioned left */}
             <div className="flex justify-start mb-6">
               <img
@@ -116,8 +116,19 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Call Us Card */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 h-80 flex flex-col">
+          {/* Call Us Card — Frosted Glass */}
+          <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
+            bg-white/30 backdrop-blur-xl
+            border border-white/50
+            shadow-[0_8px_32px_rgba(37,99,235,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
+            hover:shadow-[0_20px_50px_rgba(37,99,235,0.2),inset_0_1px_1px_rgba(255,255,255,0.8)]
+            hover:-translate-y-1 transition-all duration-500 p-8">
+            {/* Shiny top edge */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+            {/* Diagonal glare */}
+            <div className="absolute top-0 left-0 w-2/3 h-1/2 bg-gradient-to-br from-white/30 to-transparent rounded-tl-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Blue glow on hover */}
+            <div className="absolute -inset-2 bg-[#2563EB]/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             {/* Icon - positioned left */}
             <div className="flex justify-start mb-6">
               <img
@@ -142,15 +153,26 @@ export default function Contact() {
 
             {/* Phone Number with icon - positioned at bottom */}
             <div className="flex items-center space-x-2 mt-auto">
-              <svg className="w-4 h-4 text-[#6670d8]" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-4 h-4 text-[#2563EB]" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
               </svg>
-              <span className="text-gray-900 font-medium">(01) 000 123 44+</span>
+              <span className="text-gray-900 font-medium">+44 744 800 6087</span>
             </div>
           </div>
 
-          {/* Email Us Card */}
-          <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 h-80 flex flex-col">
+          {/* Email Us Card — Frosted Glass */}
+          <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
+            bg-white/30 backdrop-blur-xl
+            border border-white/50
+            shadow-[0_8px_32px_rgba(37,99,235,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
+            hover:shadow-[0_20px_50px_rgba(37,99,235,0.2),inset_0_1px_1px_rgba(255,255,255,0.8)]
+            hover:-translate-y-1 transition-all duration-500 p-8">
+            {/* Shiny top edge */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+            {/* Diagonal glare */}
+            <div className="absolute top-0 left-0 w-2/3 h-1/2 bg-gradient-to-br from-white/30 to-transparent rounded-tl-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            {/* Blue glow on hover */}
+            <div className="absolute -inset-2 bg-[#2563EB]/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             {/* Icon - positioned left */}
             <div className="flex justify-start mb-6">
               <img
@@ -167,17 +189,15 @@ export default function Contact() {
 
             {/* Description */}
             <p className="text-gray-700 text-left mb-6">
-              At [support@deckoviz.com] for any
-              <br />
-              support or feedback.
+              Email us at the following for any support, feedback, bug reporting, and more.
             </p>
 
             {/* Email with icon - positioned at bottom */}
             <div className="flex items-center space-x-2 mt-auto">
-              <svg className="w-4 h-4 text-[#6670d8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 text-[#2563EB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
-              <span className="text-gray-900 font-medium">Support@decoviz.com</span>
+              <span className="text-gray-900 font-medium">support@deckoviz.com</span>
             </div>
           </div>
         </div>
@@ -190,7 +210,7 @@ export default function Contact() {
           <div
             className="absolute inset-0 transform"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(147,51,234,0.15) 0%, rgba(99,102,241,0.10) 40%, rgba(168,85,247,0.05) 70%, transparent 100%)",
+              background: "radial-gradient(ellipse at center, rgba(37,99,235,0.12) 0%, rgba(99,102,241,0.08) 40%, rgba(56,189,248,0.05) 70%, transparent 100%)",
               filter: "blur(60px)",
               zIndex: 1,
             }}
@@ -220,9 +240,9 @@ export default function Contact() {
                     <input
                       type="text"
                       placeholder="John"
-                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors duration-300 text-lg"
+                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#2563EB] transition-colors duration-300 text-lg"
                     />
-                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
+                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] transition-all duration-300 group-focus-within:w-full"></div>
                   </div>
                 </div>
                 <div className="group">
@@ -233,9 +253,9 @@ export default function Contact() {
                     <input
                       type="text"
                       placeholder="Smith"
-                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-violet-500 transition-colors duration-300 text-lg"
+                      className="w-full bg-transparent border-0 border-b-2 border-gray-300 px-0 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#2563EB] transition-colors duration-300 text-lg"
                     />
-                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-violet-500 to-blue-500 transition-all duration-300 group-focus-within:w-full"></div>
+                    <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] transition-all duration-300 group-focus-within:w-full"></div>
                   </div>
                 </div>
               </div>
@@ -325,11 +345,11 @@ export default function Contact() {
                   <input
                     type="checkbox"
                     id="privacy-policy"
-                    className="w-5 h-5 text-violet-600 bg-white border-gray-300 rounded-md focus:ring-violet-100 focus:ring-2 checked:bg-violet-600 checked:border-violet-600"
+                    className="w-5 h-5 text-violet-600 bg-white border-gray-300 rounded-md focus:ring-blue-100 focus:ring-2 checked:bg-[#2563EB] checked:border-[#2563EB]"
                   />
                 </div>
                 <label htmlFor="privacy-policy" className="text-sm text-gray-600 cursor-pointer">
-                  I Agree to the <span className="text-violet-600 hover:text-violet-700 transition-colors duration-200">Privacy Policy</span>
+                  I Agree to the <span className="text-[#2563EB] hover:text-[#182A4A] transition-colors duration-200">Privacy Policy</span>
                 </label>
               </div>
 
@@ -352,7 +372,7 @@ export default function Contact() {
           <div
             className="absolute inset-0 transform"
             style={{
-              background: "radial-gradient(ellipse at center, rgba(255,182,193,0.4) 0%, rgba(221,160,221,0.3) 40%, rgba(168,85,247,0.2) 70%, transparent 100%)",
+              background: "radial-gradient(ellipse at center, rgba(186,230,253,0.5) 0%, rgba(147,197,253,0.35) 40%, rgba(37,99,235,0.15) 70%, transparent 100%)",
               filter: "blur(40px)",
               zIndex: 1,
             }}
@@ -378,27 +398,38 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Black container section - SOLID BLACK */}
-          <div className="relative -mt-28 pt-16 pb-12 px-8 rounded-3xl bg-gray-900" style={{ zIndex: 30 }}>
+          {/* Glass container section */}
+          <div
+            className="relative -mt-28 pt-16 pb-12 px-8 rounded-3xl"
+            style={{
+              zIndex: 30,
+              background: "rgba(255, 255, 255, 0.25)",
+              backdropFilter: "blur(24px) saturate(180%)",
+              WebkitBackdropFilter: "blur(24px) saturate(180%)",
+              border: "1px solid rgba(255, 255, 255, 0.5)",
+              borderTop: "1px solid rgba(255, 255, 255, 0.8)",
+              boxShadow: "0 8px 32px rgba(31, 38, 135, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.6)",
+            }}
+          >
             {/* Content positioned below the icon */}
             <div className="text-center pt-8">
               {/* Main Heading */}
-              <h2 className="text-3xl md:text-4xl font-bold text-white leading-tight mb-6" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-6" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
                 Get Started With Deckoviz
               </h2>
 
               {/* Description */}
-              <div className="text-gray-300 leading-relaxed mb-8 max-w-2xl mx-auto">
+              <div className="text-gray-700 leading-relaxed mb-8 max-w-2xl mx-auto">
                 <p>
                   If you'd like to share a story or memory about your experience with{' '} <br />
-                  <span className="text-white font-semibold">Deckoviz</span>, we'd love to feature it on{' '}
-                  <span className="text-white font-semibold">Our Wall of Love</span>. Just mention it when{' '} <br />
+                  <span className="text-gray-900 font-semibold">Deckoviz</span>, we'd love to feature it on{' '}
+                  <span className="text-gray-900 font-semibold">Our Wall of Love</span>. Just mention it when{' '} <br />
                   you send us a message! ✨
                 </p>
               </div>
 
               {/* Share Now Button */}
-              <button className="bg-white text-gray-900 px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 hover:bg-gray-50 transform transition-all duration-300 flex items-center justify-center space-x-2 mx-auto">
+              <button className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center justify-center space-x-2 mx-auto">
                 <span>Share Now</span>
                 <span>→</span>
               </button>

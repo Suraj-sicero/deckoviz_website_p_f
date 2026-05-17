@@ -192,64 +192,75 @@ const Blog: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Light Background with Subtle Gradients */}
+      {/* Richer Indigo Blob Background */}
       <div className="absolute inset-0">
-        {/* Pure white base */}
-        <div className="absolute inset-0 bg-white"></div>
-
-        {/* Light gradient overlays */}
-        <div className="absolute top-0 left-0 w-1/3 h-1/2 bg-gradient-to-br from-violet-100/40 via-pink-50/30 to-transparent blur-3xl"></div>
-        <div className="absolute top-1/4 right-0 w-1/2 h-1/3 bg-gradient-to-bl from-pink-100/40 via-orange-50/30 to-transparent blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/4 w-1/3 h-1/2 bg-gradient-to-tr from-orange-100/40 via-violet-50/30 to-transparent blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/4 h-1/4 bg-gradient-to-r from-pink-100/30 via-violet-100/30 to-orange-100/30 blur-2xl rounded-full"></div>
-
-        {/* Very subtle dot pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#e8ecff] via-[#f5f7ff] to-[#e0e8ff]"></div>
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99,102,241,0.22)" }} />
+        <div className="absolute top-[5%] right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.18)" }} />
+        <div className="absolute top-[35%] left-[5%] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79,70,229,0.15)" }} />
+        <div className="absolute top-[35%] right-[0] w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59,130,246,0.16)" }} />
+        <div className="absolute top-[65%] left-[30%] w-[600px] h-[400px] rounded-full blur-[110px]" style={{ background: "rgba(99,102,241,0.14)" }} />
+        <div className="absolute bottom-[-80px] right-[10%] w-[500px] h-[400px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.15)" }} />
+        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: "radial-gradient(circle, #182A4A 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-20">
         {/* Enhanced Header */}
         <div className="flex flex-col items-center mb-16">
-          {/* Badge */}
-          <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
-            <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
-              Blog Sections
+          {/* Shiny Badge */}
+          <div className="flex justify-center pt-4 pb-2 mt-24 mb-6">
+            <div className="relative group cursor-default">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-500"></div>
+              <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-1.5 rounded-xl text-sm font-semibold tracking-wide shadow-xl flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
+                Blog Sections
+                <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
+              </div>
             </div>
           </div>
 
-          <h1 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black leading-tight">
+          <h1 className="text-5xl md:text-6xl font-black text-center mb-8 leading-tight cursor-default bg-gradient-to-br from-gray-900 via-[#182A4A] to-[#2563EB] bg-clip-text text-transparent hover:scale-105 transition-transform duration-500">
             Blog And Articles
           </h1>
 
           <p className="text-gray-600 text-center text-xl max-w-3xl leading-relaxed font-medium">
             Discover{" "}
-            <span className="text-violet-600 font-semibold">insights</span>,{" "}
-            <span className="text-pink-600 font-semibold">guides</span>, and{" "}
-            <span className="text-orange-600 font-semibold">stories</span> that
+            <span className="text-[#2563EB] font-semibold hover:text-[#182A4A] transition-colors cursor-pointer underline underline-offset-4 decoration-dotted">insights</span>,{" "}
+            <span className="text-[#182A4A] font-semibold hover:text-[#2563EB] transition-colors cursor-pointer underline underline-offset-4 decoration-dotted">guides</span>, and{" "}
+            <span className="text-blue-600 font-semibold hover:text-[#182A4A] transition-colors cursor-pointer underline underline-offset-4 decoration-dotted">stories</span> that
             inspire{" "}
-            <span className="text-blue-600 font-semibold">creativity</span> and{" "}
-            <span className="text-violet-600 font-semibold">innovation</span> in
+            <span className="text-[#2563EB] font-semibold hover:text-[#182A4A] transition-colors cursor-pointer underline underline-offset-4 decoration-dotted">creativity</span> and{" "}
+            <span className="text-[#182A4A] font-semibold hover:text-[#2563EB] transition-colors cursor-pointer underline underline-offset-4 decoration-dotted">innovation</span> in
             art and{" "}
-            <span className="text-indigo-600 font-semibold">technology</span>.
+            <span className="text-blue-700 font-semibold hover:text-[#182A4A] transition-colors cursor-pointer underline underline-offset-4 decoration-dotted">technology</span>.
           </p>
+
+          {/* Decorative divider */}
+          <div className="mt-10 flex items-center gap-4 w-full max-w-xs">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#2563EB]/40"></div>
+            <div className="w-2 h-2 rounded-full bg-[#2563EB]/60"></div>
+            <div className="w-3 h-3 rounded-full bg-[#182A4A]/80"></div>
+            <div className="w-2 h-2 rounded-full bg-[#2563EB]/60"></div>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#182A4A]/40"></div>
+          </div>
         </div>
 
         {pinnedBlogs.length > 0 && (
           <div className="mt-16 mb-24 w-full">
             {/* Section Header */}
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
-                📍Pinned Blogs
-              </h2>
-              <span className="text-sm text-gray-500">
-                Featured & highlighted posts
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center shadow-lg shadow-blue-500/30">
+                  <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 3a2 2 0 0 0-2 2v16l7-3 7 3V5a2 2 0 0 0-2-2H5z"/>
+                  </svg>
+                </div>
+                <h2 className="text-3xl font-extrabold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
+                  Pinned Blogs
+                </h2>
+              </div>
+              <span className="hidden sm:block text-xs font-medium text-gray-400 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
+                Featured &amp; highlighted posts
               </span>
             </div>
 
@@ -259,11 +270,11 @@ const Blog: React.FC = () => {
               <button
                 onClick={() => moveConveyor("prev")}
                 className="absolute left-0 top-1/2 -translate-y-1/2 z-20
-               w-12 h-12 rounded-full bg-white shadow-lg
+               w-12 h-12 rounded-full bg-white/80 backdrop-blur-md shadow-[0_8px_32px_rgba(37,99,235,0.2)] border border-white/50
                flex items-center justify-center
-               hover:scale-110 transition-all duration-300"
+               hover:scale-110 hover:bg-white hover:shadow-[0_8px_32px_rgba(37,99,235,0.4)] transition-all duration-300"
               >
-                <ChevronDown className="rotate-90 w-5 h-5 text-gray-700" />
+                <ChevronDown className="rotate-90 w-5 h-5 text-[#182A4A]" />
               </button>
 
               {/* SCROLL CONTAINER */}
@@ -275,18 +286,17 @@ const Blog: React.FC = () => {
                   {infinitePinnedBlogs.map((post) => (
                     <Link
                       to={`/blog/${post.slug}`}
-                      onMouseEnter={() => (isPaused.current = true)}
-                      onMouseLeave={() => (isPaused.current = false)}
-                      className="min-w-[320px] max-w-[320px]
-             group rounded-2xl
-             transition-all duration-700
-             bg-white
-             hover:bg-gradient-to-br
-             hover:from-pink-100
-             hover:via-pink-50
-             hover:to-white
-             hover:shadow-[0_20px_60px_-15px_rgba(236,72,153,0.45)]
-             hover:-translate-y-2"
+                      className="min-w-[320px] max-w-[320px] group rounded-2xl transition-all duration-700 hover:-translate-y-2"
+                      style={{
+                        background: "rgba(255,255,255,0.28)",
+                        backdropFilter: "blur(20px) saturate(180%)",
+                        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                        border: "1px solid rgba(255,255,255,0.50)",
+                        borderTop: "1px solid rgba(255,255,255,0.75)",
+                        boxShadow: "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.60)",
+                      }}
+                      onMouseEnter={e => { isPaused.current = true; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 20px 50px rgba(37,99,235,0.25), inset 0 1px 0 rgba(255,255,255,0.80)"; }}
+                      onMouseLeave={e => { isPaused.current = false; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.60)"; }}
                     >
                       {/* Image */}
                       <div className="relative h-48 overflow-hidden rounded-t-2xl">
@@ -308,7 +318,7 @@ const Blog: React.FC = () => {
 
                         <span
                           className="absolute top-4 right-4 bg-white/90
-                           text-violet-600 text-xs font-bold
+                           text-[#2563EB] text-xs font-bold
                            px-3 py-1 rounded-full shadow"
                         >
                           PINNED
@@ -317,7 +327,7 @@ const Blog: React.FC = () => {
 
                       {/* Content */}
                       <div className="p-5">
-                        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#2563EB] transition-colors duration-300">
                           {post.title}
                         </h3>
                         <p className="text-sm text-gray-600 line-clamp-2 mb-4">
@@ -325,7 +335,7 @@ const Blog: React.FC = () => {
                         </p>
                         <div className="flex items-center justify-between text-sm text-gray-500">
                           <span>{post.readTime}</span>
-                          <span className="flex items-center gap-1 text-violet-600 font-medium">
+                          <span className="flex items-center gap-1 text-[#2563EB] font-medium group-hover:gap-2 transition-all duration-300">
                             Read
                             <ArrowRight className="w-4 h-4" />
                           </span>
@@ -339,11 +349,11 @@ const Blog: React.FC = () => {
                 <button
                   onClick={() => moveConveyor("next")}
                   className="absolute right-0 top-1/2 -translate-y-1/2 z-20
-               w-12 h-12 rounded-full bg-white shadow-lg
+               w-12 h-12 rounded-full bg-white/80 backdrop-blur-md shadow-[0_8px_32px_rgba(37,99,235,0.2)] border border-white/50
                flex items-center justify-center
-               hover:scale-110 transition-all duration-300"
+               hover:scale-110 hover:bg-white hover:shadow-[0_8px_32px_rgba(37,99,235,0.4)] transition-all duration-300"
                 >
-                  <ChevronDown className="-rotate-90 w-5 h-5 text-gray-700" />
+                  <ChevronDown className="-rotate-90 w-5 h-5 text-[#182A4A]" />
                 </button>
               </div>
             </div>
@@ -384,10 +394,10 @@ const Blog: React.FC = () => {
             <div className="flex justify-center mb-8">
               <button
                 onClick={() => setShowAllHero(false)}
-                className="flex items-center px-8 py-3 bg-white text-gray-700 rounded-full transition-all duration-300 hover:scale-105 group border border-gray-200 shadow-md hover:shadow-lg"
+                className="flex items-center px-8 py-3 bg-white text-[#182A4A] rounded-full transition-all duration-300 hover:scale-105 group border border-blue-100 shadow-md hover:shadow-[0_8px_24px_rgba(37,99,235,0.15)]"
               >
-                <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180" />
-                <span className="font-medium">Hide articles</span>
+                <ChevronDown className="w-5 h-5 mr-2 transition-transform duration-300 group-hover:scale-110 rotate-180 text-[#2563EB]" />
+                <span className="font-semibold">Hide articles</span>
               </button>
             </div>
           </>
@@ -396,9 +406,19 @@ const Blog: React.FC = () => {
         {/* Revolutionary Card-Based Category Filter System */}
         <div className="mb-16">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-4xl font-bold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
-              Explore by Category
-            </h2>
+            <div className="flex flex-col items-center mb-10 gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center shadow-md shadow-blue-500/20 text-white text-sm">⚡</div>
+                <h2 className="text-3xl font-extrabold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
+                  Explore by Category
+                </h2>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="h-px w-16 bg-gradient-to-r from-transparent to-[#2563EB]/50"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB]/60"></div>
+                <div className="h-px w-16 bg-gradient-to-l from-transparent to-[#182A4A]/50"></div>
+              </div>
+            </div>
 
             {/* Interactive Category Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -425,7 +445,7 @@ const Blog: React.FC = () => {
                     <div
                       className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
                         isActive
-                          ? "bg-gradient-to-br from-violet-600 via-pink-600 to-orange-500 p-1 shadow-2xl"
+                          ? "bg-gradient-to-br from-[#182A4A] to-[#2563EB] p-1 shadow-2xl"
                           : "bg-white shadow-lg hover:shadow-xl"
                       }`}
                     >
@@ -507,7 +527,7 @@ const Blog: React.FC = () => {
 
                         {/* Hover Effect for Non-Active Cards */}
                         {!isActive && (
-                          <div className="absolute inset-0 bg-gradient-to-t from-violet-600/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#2563EB]/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         )}
                       </div>
                     </div>
@@ -531,7 +551,17 @@ const Blog: React.FC = () => {
 
             {/* Active Category Info Bar */}
             {activeTag !== "View all" && (
-              <div className="mt-8 bg-gradient-to-r from-violet-50 to-pink-50 rounded-2xl p-6 border border-violet-100">
+              <div
+                className="mt-8 rounded-2xl p-6"
+                style={{
+                  background: "rgba(255,255,255,0.28)",
+                  backdropFilter: "blur(20px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                  border: "1px solid rgba(255,255,255,0.50)",
+                  borderTop: "1px solid rgba(255,255,255,0.75)",
+                  boxShadow: "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.60)",
+                }}
+              >
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-bold text-gray-800 mb-1">
@@ -562,9 +592,17 @@ const Blog: React.FC = () => {
       <Link
         key={post.slug}
         to={`/blog/${post.slug}`}
-        className="group bg-white rounded-3xl overflow-hidden shadow-md 
-                   hover:shadow-2xl transition-all duration-500 
-                   hover:-translate-y-2 flex flex-col"
+        className="group rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col"
+        style={{
+          background: "rgba(255,255,255,0.28)",
+          backdropFilter: "blur(20px) saturate(180%)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%)",
+          border: "1px solid rgba(255,255,255,0.50)",
+          borderTop: "1px solid rgba(255,255,255,0.75)",
+          boxShadow: "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)",
+        }}
+        onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 20px 50px rgba(37,99,235,0.22), inset 0 1px 0 rgba(255,255,255,0.80)"}
+        onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)"}
       >
         {/* IMAGE - Square */}
         <div className="aspect-square overflow-hidden relative">
@@ -589,7 +627,7 @@ const Blog: React.FC = () => {
         {/* CONTENT */}
         <div className="p-6 flex flex-col flex-1">
           <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 
-                         group-hover:text-violet-600 transition-colors duration-300">
+                         group-hover:text-[#2563EB] transition-colors duration-300">
             {post.title}
           </h3>
 
@@ -603,7 +641,7 @@ const Blog: React.FC = () => {
               <span>{post.readTime}</span>
             </div>
 
-            <span className="flex items-center gap-2 text-violet-600 font-semibold group-hover:gap-3 transition-all">
+            <span className="flex items-center gap-2 text-[#2563EB] font-semibold group-hover:gap-3 transition-all">
               Read <ArrowRight className="w-4 h-4" />
             </span>
           </div>
@@ -614,18 +652,32 @@ const Blog: React.FC = () => {
   </div>
 </div>
        
-        {/* Enhanced Newsletter Section */}
-        <div className="mt-24 relative overflow-hidden rounded-3xl">
-          {/* Subtle background */}
-          <div className="absolute inset-0">
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-100 via-pink-50 to-orange-50"></div>
-            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/20 to-transparent"></div>
+        {/* Newsletter Section — Deep Frosted Glass */}
+        <div className="mt-24 relative rounded-[2rem] group/glass overflow-hidden"
+          style={{ isolation: 'isolate' }}>
 
-            {/* Subtle floating elements */}
-            <div className="absolute top-8 left-8 w-12 h-12 bg-violet-200/30 rounded-full blur-xl"></div>
-            <div className="absolute bottom-8 right-8 w-16 h-16 bg-pink-200/30 rounded-full blur-xl"></div>
-            <div className="absolute top-1/2 left-1/4 w-8 h-8 bg-orange-200/30 rounded-full blur-xl"></div>
+          {/* === Background blobs (rendered below the glass) === */}
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute -top-16 -left-16 w-72 h-72 rounded-full bg-[#2563EB]/50 blur-[70px] animate-[float_8s_ease-in-out_infinite]"></div>
+            <div className="absolute -bottom-16 -right-16 w-80 h-80 rounded-full bg-[#182A4A]/40 blur-[80px] animate-[float_6s_ease-in-out_infinite_reverse]"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-blue-300/40 blur-[50px] animate-[float_7s_ease-in-out_infinite]"></div>
           </div>
+
+          {/* === Frosted glass panel === */}
+          <div className="absolute inset-0 backdrop-blur-[20px] bg-white/8 border border-white/25 rounded-[2rem]"></div>
+
+          {/* === Shiny top-edge highlight === */}
+          <div className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none rounded-full"></div>
+          {/* === Shiny left-edge highlight === */}
+          <div className="absolute left-0 inset-y-8 w-[1.5px] bg-gradient-to-b from-white/70 via-white/20 to-transparent pointer-events-none rounded-full"></div>
+          {/* === Subtle bottom edge === */}
+          <div className="absolute bottom-0 inset-x-8 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none"></div>
+
+          {/* === Diagonal glare sweep === */}
+          <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white/25 to-transparent pointer-events-none rounded-tl-[2rem] opacity-60 group-hover/glass:opacity-100 transition-opacity duration-700"></div>
+
+          {/* === Inner ring border for depth === */}
+          <div className="absolute inset-[1px] rounded-[calc(2rem-1px)] border border-white/10 pointer-events-none"></div>
 
           <div className="relative z-10 p-12 md:p-16 text-center">
             <h3 className="text-4xl font-bold mb-6 text-gray-900">
@@ -638,21 +690,22 @@ const Blog: React.FC = () => {
             </p>
 
             <div className="flex flex-col md:flex-row gap-6 max-w-lg mx-auto">
-              <div className="relative flex-1">
+              <div className="relative flex-1 group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-full blur opacity-30 group-hover:opacity-50 transition duration-500"></div>
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
-                  className="w-full px-8 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-violet-200 transition-all duration-300 shadow-lg bg-white border border-gray-200"
+                  className="relative w-full px-8 py-4 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#2563EB] transition-all duration-300 shadow-sm bg-white/80 backdrop-blur-sm border border-white/50"
                 />
                 <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-violet-400 to-pink-400 rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center shadow-md">
                     <Search className="w-4 h-4 text-white" />
                   </div>
                 </div>
               </div>
-              <button className="px-10 py-4 bg-gradient-to-r from-violet-500 to-pink-500 text-white rounded-full font-bold hover:from-violet-600 hover:to-pink-600 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+              <button className="relative px-10 py-4 bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white rounded-full font-bold hover:from-[#13223B] hover:to-[#1D4ED8] transition-all duration-300 hover:scale-[1.02] shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] transform border border-white/10">
                 Subscribe Now
               </button>
             </div>

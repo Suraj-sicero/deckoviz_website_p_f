@@ -482,11 +482,21 @@ const frameImages = [
     index: number;
   }> = ({ title, caption, image, index }) => (
     <motion.div
-  initial={{ opacity: 0, y: 40 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6, delay: index * 0.08 }}
-      className={`group relative bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer border border-gray-100`}
-      style={{ height: "430px" }}
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.08 }}
+      className={`group relative rounded-2xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer`}
+      style={{
+        height: "430px",
+        background: "rgba(255,255,255,0.25)",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        border: "1px solid rgba(255,255,255,0.50)",
+        borderTop: "1px solid rgba(255,255,255,0.75)",
+        boxShadow: "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)",
+      }}
+      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 15px 40px rgba(37,99,235,0.18), inset 0 1px 0 rgba(255,255,255,0.80)"}
+      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)"}
     >
       {/* Image Section */}
       <div className="relative h-52 overflow-hidden rounded-t-2xl">
@@ -513,21 +523,20 @@ const frameImages = [
   );
 
   return (
-    <section className="relative py-16 bg-white overflow-hidden">
+    <section
+      className="relative py-16 overflow-hidden"
+      style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}
+    >
       <FloatingMinimalistButton />
 
-      <div className="absolute inset-0">
-        <div className="absolute left-1/3 top-1/3 w-[40%] h-[30%] bg-gradient-to-br from-violet-100/30 via-pink-100/20 to-blue-100/30 rounded-full blur-3xl opacity-50"></div>
-        <div className="absolute right-1/4 bottom-1/3 w-[35%] h-[25%] bg-gradient-to-br from-pink-100/25 via-violet-100/15 to-orange-100/25 rounded-full blur-3xl opacity-40"></div>
-
-        {/* Central gradient splash - like your other components */}
-        <div
-          className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[80%] h-[60%] rounded-full blur-3xl opacity-70"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(244, 114, 182, 0.6) 0%, rgba(251, 207, 232, 0.4) 30%, rgba(253, 186, 116, 0.3) 60%, rgba(255, 255, 255, 0.1) 85%, transparent 100%)",
-          }}
-        ></div>
+      {/* Enterprise Indigo Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+        <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+        <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+        <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+        <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -565,7 +574,12 @@ const frameImages = [
           <div className="text-center mb-8">
             <button
               onClick={() => setShowMore(true)}
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-700 font-medium hover:text-violet-700 hover:border-violet-300 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full border text-gray-800 font-medium hover:text-violet-800 transition-all duration-300 shadow-sm hover:shadow-md"
+              style={{
+                background: "rgba(255,255,255,0.30)",
+                backdropFilter: "blur(12px) saturate(180%)",
+                borderColor: "rgba(255,255,255,0.5)"
+              }}
             >
               <span className="transform transition-transform duration-300 group-hover:translate-y-1">
                 <ChevronDown size={20} />
@@ -601,7 +615,12 @@ const frameImages = [
           <div className="text-center mb-8">
             <button
               onClick={() => setShowMore(false)}
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-gray-200 text-gray-700 font-medium hover:text-violet-700 hover:border-violet-300 transition-all duration-300 shadow-sm hover:shadow-md"
+              className="group inline-flex items-center gap-2 px-6 py-3 rounded-full border text-gray-800 font-medium hover:text-violet-800 transition-all duration-300 shadow-sm hover:shadow-md"
+              style={{
+                background: "rgba(255,255,255,0.30)",
+                backdropFilter: "blur(12px) saturate(180%)",
+                borderColor: "rgba(255,255,255,0.5)"
+              }}
             >
               <span className="transform transition-transform duration-300 group-hover:-translate-y-1">
                 <ChevronUp size={20} />

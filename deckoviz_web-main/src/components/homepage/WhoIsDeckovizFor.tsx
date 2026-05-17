@@ -121,7 +121,13 @@ const WhoIsDeckovizFor: React.FC = () => {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="relative py-20 overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99,102,241,0.22)" }} />
+        <div className="absolute top-[30%] right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.18)" }} />
+        <div className="absolute bottom-[-60px] left-[20%] w-[700px] h-[350px] rounded-full blur-[120px]" style={{ background: "rgba(79,70,229,0.14)" }} />
+      </div>
       <div className="max-w-7xl mx-auto px-6">
         <div className="relative text-center mb-16 flex items-center justify-center">
   

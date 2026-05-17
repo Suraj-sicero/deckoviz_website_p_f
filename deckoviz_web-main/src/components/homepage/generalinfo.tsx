@@ -147,10 +147,10 @@ onClick={() => moveCarousel("next")}
             key={index}
 onMouseEnter={() => (isPaused.current = true)}
 onMouseLeave={() => (isPaused.current = false)}
-            className="relative min-w-[320px] flex-shrink-0 p-[2px] rounded-3xl bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 transition-all duration-500 hover:scale-105"
+            className="relative min-w-[320px] flex-shrink-0 p-[2px] rounded-3xl bg-gradient-to-r from-[#182A4A] to-[#2563EB] transition-all duration-500 hover:scale-105"
           >
             {/* Glow Effect */}
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 blur-xl opacity-30 group-hover:opacity-60 transition-all duration-500"></div>
+            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#182A4A] to-[#2563EB] blur-xl opacity-30 group-hover:opacity-60 transition-all duration-500"></div>
 
             {/* Glass Card */}
             <div className="relative backdrop-blur-xl bg-white/70 rounded-3xl p-6 shadow-2xl border border-indigo-100">
@@ -161,7 +161,7 @@ onMouseLeave={() => (isPaused.current = false)}
               />
 
               {/* BEAUTIFUL TEXT */}
-              <h3 className="mt-6 text-center text-lg font-bold tracking-wide bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent drop-shadow-sm">
+              <h3 className="mt-6 text-center text-lg font-bold tracking-wide bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent drop-shadow-sm">
                 {frame.name}
               </h3>
             </div>
@@ -175,10 +175,24 @@ onMouseLeave={() => (isPaused.current = false)}
 
 const ShippingCard = ({ title, items }: any) => {
   return (
-    <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-xl rounded-3xl p-10 mb-16">
+    <div
+      className="group rounded-3xl p-10 mb-16 transition-all duration-300"
+      style={{
+        background: "rgba(255, 255, 255, 0.15)",
+        backdropFilter: "blur(24px) saturate(180%)",
+        WebkitBackdropFilter: "blur(24px) saturate(180%)",
+        border: "1px solid rgba(255,255,255,0.30)",
+        borderTop: "1px solid rgba(255,255,255,0.60)",
+        boxShadow: "0 8px 32px rgba(31,38,135,0.12), inset 0 1px 0 rgba(255,255,255,0.50)",
+      }}
+      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.15), inset 0 1px 0 rgba(255,255,255,0.7)"}
+      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)"}
+    >
+      {/* Glass sheen */}
+      <div className="absolute inset-0 pointer-events-none rounded-3xl" style={{ background: "linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.25) 22%, transparent 40%)" }} />
 
       {/* Section Title */}
-      <h3 className="text-2xl font-semibold italic mb-8 text-center bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+      <h3 className="text-2xl font-semibold italic mb-8 text-center bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
         {title}
       </h3>
 
@@ -187,10 +201,15 @@ const ShippingCard = ({ title, items }: any) => {
         {items.map((item: any, index: number) => (
           <div
             key={index}
-            className="flex justify-between items-start p-5 rounded-2xl
-            bg-white/70 backdrop-blur-lg border border-indigo-100
-            shadow-md hover:shadow-lg hover:scale-[1.02]
-            transition-all duration-300"
+            className="flex justify-between items-start p-5 rounded-2xl transition-all duration-300"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.15) 100%)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border: "1px solid rgba(255,255,255,0.6)",
+              borderTop: "1px solid rgba(255,255,255,0.9)",
+              boxShadow: "0 2px 12px rgba(37,99,235,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
+            }}
           >
             <div>
               <h4 className="font-semibold text-gray-800 text-lg">
@@ -202,7 +221,7 @@ const ShippingCard = ({ title, items }: any) => {
               </p>
             </div>
 
-            <div className="font-semibold text-indigo-800 text-lg whitespace-nowrap">
+            <div className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-lg whitespace-nowrap">
               {item.price}
             </div>
           </div>
@@ -242,34 +261,28 @@ const ScrollReveal = ({ children, direction = "left" }: any) => {
 
 const GeneralInfo = () => {
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden py-20 px-6">
-      {/* Enhanced Creative Gradient Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -left-48 w-[110%] h-60 sm:h-80 bg-gradient-to-r from-blue-300 via-indigo-100 to-transparent rounded-full blur-3xl rotate-8"></div>
-        <div className="absolute top-1/4 -right-64 w-[120%] h-48 sm:h-64 bg-gradient-to-l from-indigo-100 via-blue-100 to-transparent rounded-full blur-3xl -rotate-[35deg]"></div>
-        <div className="absolute -bottom-32 -left-32 w-[125%] h-60 sm:h-72 bg-gradient-to-r from-violet-200 via-indigo-100 to-blue-100 rounded-full blur-3xl rotate-[4deg]"></div>
+    <div
+      className="min-h-screen relative overflow-hidden py-20 px-6"
+      style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}
+    >
+      {/* Soft blue blobs evenly spread so glass is visible throughout */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.20)" }} />
+        <div className="absolute -top-20 right-[-80px] w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(37, 99, 235, 0.18)" }} />
+        <div className="absolute top-[25%] left-[10%] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.15)" }} />
+        <div className="absolute top-[25%] right-[5%] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+        <div className="absolute top-[50%] left-[35%] w-[600px] h-[400px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+        <div className="absolute top-[65%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.16)" }} />
+        <div className="absolute top-[70%] right-[-60px] w-[550px] h-[550px] rounded-full blur-[110px]" style={{ background: "rgba(79, 70, 229, 0.14)" }} />
+        <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(59, 130, 246, 0.16)" }} />
       </div>
-
-      <div className="absolute inset-0">
-        <div className="absolute top-[12%] left-[18%] w-[600px] sm:w-[900px] h-32 sm:h-40 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-2xl rotate-[28deg] opacity-80"></div>
-        <div className="absolute bottom-[65%] right-[25%] w-[700px] sm:w-[1100px] h-36 sm:h-48 bg-gradient-to-l from-violet-200 to-transparent rounded-full blur-2xl -rotate-[42deg] opacity-70"></div>
-        <div className="absolute top-[55%] left-[45%] w-[550px] sm:w-[850px] h-28 sm:h-36 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-2xl rotate-[62deg] opacity-65"></div>
-        <div className="absolute top-[38%] right-[8%] w-[800px] sm:w-[1200px] h-40 sm:h-52 bg-gradient-to-l from-blue-200 to-transparent rounded-full blur-3xl -rotate-[18deg] opacity-60"></div>
-        <div className="absolute bottom-[38%] left-[12%] w-[650px] sm:w-[1000px] h-36 sm:h-44 bg-gradient-to-r from-violet-100 to-transparent rounded-full blur-3xl rotate-[75deg] opacity-55"></div>
-        <div className="absolute top-[72%] right-[35%] w-[600px] sm:w-[950px] h-32 sm:h-40 bg-gradient-to-l from-indigo-300 to-transparent rounded-full blur-2xl -rotate-[55deg] opacity-70"></div>
-        <div className="absolute top-[85%] left-[28%] w-[500px] sm:w-[800px] h-24 sm:h-32 bg-gradient-to-r from-blue-100 to-transparent rounded-full blur-xl rotate-[15deg] opacity-50"></div>
-        <div className="absolute top-[25%] right-[45%] w-[450px] sm:w-[750px] h-28 sm:h-36 bg-gradient-to-l from-violet-100 to-transparent rounded-full blur-xl -rotate-[68deg] opacity-45"></div>
-        <div className="absolute bottom-[18%] left-[55%] w-[400px] sm:w-[700px] h-20 sm:h-28 bg-gradient-to-r from-indigo-100 to-transparent rounded-full blur-xl rotate-[38deg] opacity-60"></div>
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/20 pointer-events-none"></div>
 
       <div className="relative max-w-6xl mx-auto">
         {/* SHINY GRADIENT MAIN HEADING */}
-        <h1 className="text-5xl md:text-6xl font-extrabold italic text-center mb-16 tracking-wide bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.15)]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+        <h1 className="text-5xl md:text-6xl font-extrabold italic text-center mb-16 tracking-wide bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent drop-shadow-[0_6px_20px_rgba(0,0,0,0.15)]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
 
   Subscriptions, Custom Options <br className="hidden md:block"/>
-  <span className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+  <span className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
     & Other Info
   </span>
 
@@ -277,14 +290,28 @@ const GeneralInfo = () => {
 
 {/* Decorative divider */}
 <div className="flex justify-center mb-16">
-  <div className="w-32 h-[3px] rounded-full bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500"></div>
+  <div className="w-32 h-[3px] rounded-full bg-gradient-to-r from-[#182A4A] to-[#2563EB]"></div>
 </div>
 
         {/* SINGLE GLASS CARD */}
         <ScrollReveal direction="left">
-          <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12">
+          <div
+            className="relative rounded-3xl p-12 transition-all duration-300"
+            style={{
+              background: "rgba(255, 255, 255, 0.15)",
+              backdropFilter: "blur(24px) saturate(180%)",
+              WebkitBackdropFilter: "blur(24px) saturate(180%)",
+              border: "1px solid rgba(255,255,255,0.30)",
+              borderTop: "1px solid rgba(255,255,255,0.60)",
+              boxShadow: "0 8px 32px rgba(31,38,135,0.12), inset 0 1px 0 rgba(255,255,255,0.50)",
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.15), inset 0 1px 0 rgba(255,255,255,0.7)"}
+            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)"}
+          >
+            {/* Diagonal glass reflection */}
+            <div className="absolute inset-0 pointer-events-none rounded-3xl" style={{ background: "linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.2) 22%, transparent 38%)" }} />
             {/* CENTERED SUB HEADING */}
-            <h2 className="text-4xl font-semibold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide">
+            <h2 className="text-4xl font-semibold text-center mb-8 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent tracking-wide">
               For Individuals & Homes
             </h2>
 
@@ -319,7 +346,7 @@ const GeneralInfo = () => {
                 their space to feel alive, intentional, and deeply theirs.
               </p>
 
-              <p className="font-semibold text-indigo-800 text-xl">
+              <p className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-xl">
                 Choose the plan that transforms your space, your vibes, and your
                 daily inspiration ✨
               </p>
@@ -390,8 +417,21 @@ const GeneralInfo = () => {
 
         {/* SECOND GLASS CARD - BUSINESS */}
         <ScrollReveal direction="right">
-          <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-4xl font-semibold italic text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+          <div
+            className="relative rounded-3xl p-12 mt-16 transition-all duration-300"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.06) 100%)",
+              backdropFilter: "blur(36px) saturate(200%)",
+              WebkitBackdropFilter: "blur(36px) saturate(200%)",
+              border: "1px solid rgba(255,255,255,0.35)",
+              borderTop: "1px solid rgba(255,255,255,0.75)",
+              boxShadow: "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)",
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.15), inset 0 1px 0 rgba(255,255,255,0.7)"}
+            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)"}
+          >
+            <div className="absolute inset-0 pointer-events-none rounded-3xl" style={{ background: "linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.2) 22%, transparent 38%)" }} />
+            <h2 className="text-4xl font-semibold italic text-center mb-8 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               For Businesses & Enterprises
             </h2>
 
@@ -423,7 +463,7 @@ const GeneralInfo = () => {
                 how spaces look, but how they are experienced.
               </p>
 
-              <p className="font-semibold text-indigo-900 text-xl mt-6">
+              <p className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-xl mt-6">
                 Built for scale. Designed for humans and dynamic enterprise
                 spaces. ✨
               </p>
@@ -433,8 +473,21 @@ const GeneralInfo = () => {
 
         {/* THIRD GLASS CARD - ENTERPRISE ADD-ON */}
         <ScrollReveal direction="left">
-          <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-3xl font-semibold text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide">
+          <div
+            className="relative rounded-3xl p-12 mt-16 transition-all duration-300"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.06) 100%)",
+              backdropFilter: "blur(36px) saturate(200%)",
+              WebkitBackdropFilter: "blur(36px) saturate(200%)",
+              border: "1px solid rgba(255,255,255,0.35)",
+              borderTop: "1px solid rgba(255,255,255,0.75)",
+              boxShadow: "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)",
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.15), inset 0 1px 0 rgba(255,255,255,0.7)"}
+            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)"}
+          >
+            <div className="absolute inset-0 pointer-events-none rounded-3xl" style={{ background: "linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.2) 22%, transparent 38%)" }} />
+            <h2 className="text-3xl font-semibold text-center mb-8 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent tracking-wide">
               Enterprise Add-On
             </h2>
 
@@ -487,8 +540,21 @@ const GeneralInfo = () => {
         </ScrollReveal>
         {/* FOURTH GLASS CARD - WHY UPGRADE */}
         <ScrollReveal direction="right">
-          <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-3xl font-semibold italic text-center mb-10 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+          <div
+            className="relative rounded-3xl p-12 mt-16 transition-all duration-300"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.06) 100%)",
+              backdropFilter: "blur(36px) saturate(200%)",
+              WebkitBackdropFilter: "blur(36px) saturate(200%)",
+              border: "1px solid rgba(255,255,255,0.35)",
+              borderTop: "1px solid rgba(255,255,255,0.75)",
+              boxShadow: "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)",
+            }}
+            onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.15), inset 0 1px 0 rgba(255,255,255,0.7)"}
+            onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.6)"}
+          >
+            <div className="absolute inset-0 pointer-events-none rounded-3xl" style={{ background: "linear-gradient(105deg, transparent 20%, rgba(255,255,255,0.2) 22%, transparent 38%)" }} />
+            <h2 className="text-3xl font-semibold italic text-center mb-10 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               Why Upgrade?
             </h2>
 
@@ -502,7 +568,7 @@ const GeneralInfo = () => {
               </li>
 
               <li className="flex items-start gap-4">
-                <span className="text-indigo-500 text-xl">•</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-xl font-bold">•</span>
                 <span>
                   <strong>Gold Premium:</strong> For art lovers who want video,
                   voice, more storage, and richer curation.
@@ -510,7 +576,7 @@ const GeneralInfo = () => {
               </li>
 
               <li className="flex items-start gap-4">
-                <span className="text-blue-800 text-xl">•</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-xl font-bold">•</span>
                 <span>
                   <strong>Ultra Diamond:</strong> The ultimate, deeply
                   personalised Deckoviz experience with human curation,
@@ -523,7 +589,7 @@ const GeneralInfo = () => {
         {/* FIFTH GLASS CARD - ENTERPRISE SUBSCRIPTIONS */}
         <ScrollReveal direction="left">
           <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-16">
-            <h2 className="text-3xl font-semibold italic text-center mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+            <h2 className="text-3xl font-semibold italic text-center mb-8 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent tracking-wide" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               Enterprise Subscriptions – Deckoviz
             </h2>
 
@@ -551,7 +617,7 @@ const GeneralInfo = () => {
               </li>
 
               <li className="flex items-start gap-4">
-                <span className="text-indigo-500 text-xl">•</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-xl font-bold">•</span>
                 <span>
                   <strong>Unlimited Marketplace Posting</strong> – premium
                   visibility for your curated content.
@@ -559,7 +625,7 @@ const GeneralInfo = () => {
               </li>
 
               <li className="flex items-start gap-4">
-                <span className="text-blue-800 text-xl">•</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-xl font-bold">•</span>
                 <span>
                   <strong>Custom AI Features</strong> – developed for your
                   unique use case, audience, and spaces.
@@ -575,7 +641,7 @@ const GeneralInfo = () => {
               </li>
 
               <li className="flex items-start gap-4">
-                <span className="text-indigo-500 text-xl">•</span>
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-xl font-bold">•</span>
                 <span>
                   <strong>Multi-Location & Team Licensing</strong> – streamlined
                   access and management.
@@ -594,7 +660,7 @@ const GeneralInfo = () => {
 
       {/* CUSTOM FRAME OPTIONS SECTION */}
       <div className="mt-24">
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
           Custom Frame Options
         </h2>
 
@@ -604,7 +670,7 @@ const GeneralInfo = () => {
         <ScrollReveal direction="left">
         <div className="mt-32">
           {/* Heading */}
-          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
             Shipping & Add-Ons
           </h2>
 
@@ -711,7 +777,7 @@ const GeneralInfo = () => {
         {/* COLOUR FINISH OPTIONS */}
         <ScrollReveal direction="right">
         <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-24">
-          <h2 className="text-3xl font-semibold text-center mb-12 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-semibold text-center mb-12 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
             Colour Finish Options
           </h2>
 
@@ -764,7 +830,7 @@ const GeneralInfo = () => {
                   </p>
                 </div>
 
-                <div className="font-semibold text-violet-800 whitespace-nowrap">
+                <div className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] whitespace-nowrap">
                   {item.price}
                 </div>
               </div>
@@ -792,13 +858,13 @@ const GeneralInfo = () => {
         {/* FRAME CUSTOMISATION & ADD-ON OPTIONS */}
         <ScrollReveal direction="left">
         <div className="backdrop-blur-xl bg-white/70 border border-indigo-100 shadow-2xl rounded-3xl p-12 mt-24">
-          <h2 className="text-3xl font-semibold text-center mb-14 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-semibold text-center mb-14 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
             Frame Customisation & Add-On Options
           </h2>
 
           {/* BASE FRAME OPTIONS */}
           <div className="mb-14">
-            <h3 className="text-xl font-semibold text-indigo-800 mb-6">
+            <h3 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] mb-6">
               Base Frame Options
             </h3>
 
@@ -824,7 +890,7 @@ const GeneralInfo = () => {
 
           {/* CARVING OPTIONS */}
           <div className="mb-14 overflow-x-auto">
-            <h3 className="text-xl font-semibold text-indigo-800 mb-6">
+            <h3 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] mb-6">
               Carving Options
             </h3>
 
@@ -846,7 +912,7 @@ const GeneralInfo = () => {
         <td className="py-4 px-6">
           Waves, flowers, geometric patterns
         </td>
-        <td className="py-4 px-6 font-semibold text-violet-800">
+        <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
           + $80
         </td>
       </tr>
@@ -856,7 +922,7 @@ const GeneralInfo = () => {
         <td className="py-4 px-6">
           Detailed themes and cursive designs
         </td>
-        <td className="py-4 px-6 font-semibold text-violet-800">
+        <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
           + $150
         </td>
       </tr>
@@ -866,7 +932,7 @@ const GeneralInfo = () => {
         <td className="py-4 px-6">
           Logos and brand-themed designs
         </td>
-        <td className="py-4 px-6 font-semibold text-violet-800">
+        <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
           + $200
         </td>
       </tr>
@@ -876,8 +942,8 @@ const GeneralInfo = () => {
 </div>          </div>
 {/* COLOUR & FINISH OPTIONS */}
 <div className="mb-14">
-  <h3 className="text-xl font-semibold text-indigo-800 mb-6">
-    Colour & Finish Options
+  <h3 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] mb-6">
+    Colour &amp; Finish Options
   </h3>
 
   <div className="overflow-x-auto rounded-2xl shadow-xl">
@@ -911,7 +977,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Matte Black / White / Charcoal
           </td>
-          <td className="py-4 px-6 font-semibold text-violet-800">
+          <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
             + $35
           </td>
           <td className="py-4 px-6">
@@ -923,7 +989,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Custom Pantone Colour
           </td>
-          <td className="py-4 px-6 font-semibold text-violet-800">
+          <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
             + $65
           </td>
           <td className="py-4 px-6">
@@ -935,7 +1001,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Dual-Tone (Two Colours)
           </td>
-          <td className="py-4 px-6 font-semibold text-violet-800">
+          <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
             + $85
           </td>
           <td className="py-4 px-6">
@@ -947,7 +1013,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Hand-Painted Artwork
           </td>
-          <td className="py-4 px-6 font-semibold text-violet-800">
+          <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
             + $120
           </td>
           <td className="py-4 px-6">
@@ -959,7 +1025,7 @@ const GeneralInfo = () => {
           <td className="py-4 px-6 font-medium">
             Colour + Carving Combo
           </td>
-          <td className="py-4 px-6 font-semibold text-violet-800">
+          <td className="py-4 px-6 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
             + $160 / + $230
           </td>
           <td className="py-4 px-6">
@@ -974,7 +1040,7 @@ const GeneralInfo = () => {
 
           {/* PREMIUM COMBINATIONS */}
           <div className="overflow-x-auto">
-            <h3 className="text-xl font-semibold text-indigo-800 mb-6">
+            <h3 className="text-xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] mb-6">
               Premium Combinations (Carving + Colour + Hand-Paint)
             </h3>
 
@@ -989,21 +1055,21 @@ const GeneralInfo = () => {
               <tbody className="divide-y divide-white/[0.05]">
                 <tr>
                   <td className="py-3 px-4">Simple Carving + Colour</td>
-                  <td className="py-3 px-4 font-semibold text-violet-800">
+                  <td className="py-3 px-4 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
                     + $145
                   </td>
                   <td className="py-3 px-4">Waves carved + Matte Black</td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4">Ornate Carving + Colour</td>
-                  <td className="py-3 px-4 font-semibold text-violet-800">
+                  <td className="py-3 px-4 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
                     + $215
                   </td>
                   <td className="py-3 px-4">Floral motifs + Gold metallic</td>
                 </tr>
                 <tr>
                   <td className="py-3 px-4">Carving + Dual-Tone Finish</td>
-                  <td className="py-3 px-4 font-semibold text-violet-800">
+                  <td className="py-3 px-4 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
                     + $240
                   </td>
                   <td className="py-3 px-4">
@@ -1012,7 +1078,7 @@ const GeneralInfo = () => {
                 </tr>
                 <tr>
                   <td className="py-3 px-4">Carving + Hand-Painted Details</td>
-                  <td className="py-3 px-4 font-semibold text-violet-800">
+                  <td className="py-3 px-4 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
                     + $250
                   </td>
                   <td className="py-3 px-4">Hand-painted cursive or motifs</td>
@@ -1021,7 +1087,7 @@ const GeneralInfo = () => {
                   <td className="py-3 px-4">
                     Full Custom (Carving + Colour + Paint)
                   </td>
-                  <td className="py-3 px-4 font-semibold text-violet-800">
+                  <td className="py-3 px-4 font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
                     + $325
                   </td>
                   <td className="py-3 px-4">
@@ -1041,7 +1107,7 @@ const GeneralInfo = () => {
           <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-400 blur-2xl opacity-20"></div>
 
           <div className="relative">
-            <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+            <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
               ⚡ How Clients Build Their Perfect Frame
             </h2>
 

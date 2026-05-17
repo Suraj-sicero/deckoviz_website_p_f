@@ -41,7 +41,13 @@ export default function TransformWalls() {
   }, [pinImages.length]);
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 overflow-hidden relative bg-gradient-to-br from-gray-50 to-white">
+    <section className="py-12 md:py-16 lg:py-20 overflow-hidden relative" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99,102,241,0.20)" }} />
+        <div className="absolute top-[40%] right-[-60px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.16)" }} />
+        <div className="absolute bottom-[-60px] left-[20%] w-[700px] h-[350px] rounded-full blur-[120px]" style={{ background: "rgba(79,70,229,0.13)" }} />
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
           {/* Left Content - Beautiful Animated Typography */}
@@ -677,6 +683,29 @@ export default function TransformWalls() {
             </motion.div>
           </div>
         </div>
+
+        {/* Founding Thesis Section - Aligned to bottom right */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          viewport={{ once: true }} 
+          transition={{ delay: 1.5, duration: 0.8 }} 
+          className="mt-4 sm:mt-6 -mb-4 flex justify-end w-full relative z-50 px-4 sm:px-0"
+        >
+          <motion.button 
+            onClick={() => window.location.href = '/founding-thesis'}
+            whileHover={{ scale: 1.03 }} 
+            whileTap={{ scale: 0.97 }} 
+            className="relative bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-full shadow-[0_8px_30px_rgba(37,99,235,0.35)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.5)] transition-all duration-300 flex items-center gap-4 overflow-hidden group border border-white/20"
+          >
+            <div className="relative z-10 flex-shrink-0 text-xl sm:text-2xl group-hover:rotate-12 transition-transform duration-300">✨</div>
+            <div className="relative z-10 text-left">
+              <div className="font-bold text-[15px] sm:text-[16px] leading-tight mb-1 tracking-wide text-blue-50">Our Founding Thesis</div>
+              <div className="text-[12px] sm:text-[13px] text-blue-200/90 leading-tight font-medium">Everything you need to know before choosing your perfect smart art frame.</div>
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-600 to-indigo-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );

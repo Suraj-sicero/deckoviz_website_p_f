@@ -6,7 +6,7 @@ tagColor: "bg-indigo-100 text-indigo-700"
 date: "March 27, 2025"
 readTime: "12 min read"
 pinned: false
-image: "/blogs/prompt.jpg"
+image: "/blogs/abstract-prompts.jpg"
 size: "large"
 ---
 

@@ -239,7 +239,7 @@ const MicroscopeWorld: React.FC = () => {
       </div>
 
       {/* Scratched Lens Effect */}
-      <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.05] bg-[url('/images/lens-texture.png')] mix-blend-screen" />
+      <div className="absolute inset-0 z-20 pointer-events-none opacity-[0.05] mix-blend-screen" style={{ backgroundImage: "url('/images/lens-texture.png')" }} />
     </div>
   );
 };

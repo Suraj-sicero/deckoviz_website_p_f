@@ -369,7 +369,7 @@ const SlimeMould: React.FC = () => {
               <div className="w-16 h-16 rounded-full border-2 border-amber-500/20 flex items-center justify-center backdrop-blur-xl">
                  <BrainCircuit className="w-8 h-8 text-amber-400 animate-pulse" />
               </div>
-              <div className="absolute inset-0 border-t-2 border-amber-400 rounded-full animate-spin duration-[4000ms]" />
+              <div className="absolute inset-0 border-t-2 border-amber-400 rounded-full animate-spin" style={{ animationDuration: '4s' }} />
             </div>
             <div>
               <h1 className="text-3xl font-black text-white tracking-tighter uppercase italic">Slime Mould Intelligence</h1>
