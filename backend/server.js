@@ -175,6 +175,18 @@ app.get("/api/health", async (_req, res) => {
   });
 });
 
+// ===== DEBUG LOGS ENDPOINT =====
+app.get("/api/logs", (req, res) => {
+  const logPath = path.join(__dirname, "server.log");
+  if (fs.existsSync(logPath)) {
+    const logs = fs.readFileSync(logPath, "utf8");
+    res.header("Content-Type", "text/plain");
+    res.send(logs);
+  } else {
+    res.status(404).send("No log file found");
+  }
+});
+
 // ===== ROUTES =====
 // ✅ API routes (for frontend JSON calls)
 app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/blog
