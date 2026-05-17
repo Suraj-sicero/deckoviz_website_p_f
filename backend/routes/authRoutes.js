@@ -73,7 +73,7 @@ router.get("/profile", async (req, res) => {
     const token = authHeader.split(" ")[1];
     const decoded = jwt.verify(token, JWT_SECRET);
     
-    const user = await User.findByPk(decoded.id, { attributes: ['id', 'email', 'credits'] });
+    const user = await User.findByPk(decoded.id, { attributes: ['id', 'email', 'credits', 'tier', 'emailVerified'] });
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }

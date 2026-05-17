@@ -28,6 +28,7 @@ const companyLinks = [
   { name: "Support", path: "/support" },
   { name: "Partnerships", path: "/partnership" },
   { name: "Experimental Art Modes", path: "/experimental-art-modes" },
+  { name: "Flagship Games", path: "/flagship-games" },
 ]
 
 const legalLinks = [
@@ -272,6 +273,35 @@ const Footer = () => {
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 <span className="relative z-10">✨ Vizzy Creation Canvas</span>
+                <svg
+                  className="relative z-10 group-hover:translate-x-1 transition-transform"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+
+              <a
+                href="/flagship-games"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                style={{
+                  background: "linear-gradient(135deg, #f43f5e, #be123c, #9333ea, #be123c, #f43f5e)",
+                  backgroundSize: "300% 300%",
+                  animation: "footerGradientFlow 4s ease infinite",
+                  color: "white",
+                  boxShadow: "0 4px 20px rgba(244,63,94,0.4)",
+                }}
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <span className="relative z-10">🎮 Flagship Games</span>
                 <svg
                   className="relative z-10 group-hover:translate-x-1 transition-transform"
                   width="16"
