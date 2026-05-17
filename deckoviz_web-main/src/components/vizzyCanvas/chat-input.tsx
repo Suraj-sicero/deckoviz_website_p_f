@@ -17,6 +17,7 @@ import {
   X,
   Music,
 } from "lucide-react"
+import { API_BASE_URL } from "../../lib/constants"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,6 +44,9 @@ interface ChatInputProps {
   isLoading: boolean
   aspectRatio: string
   onAspectRatioChange: (ratio: string) => void
+  // Increments each time a template is inserted. Causes the textarea to
+  // focus and (if present) select the first [bracket] for inline editing.
+  templateInsertToken?: number
   uploadedImage?: { url: string; fileName: string } | null
   onImageUpload?: (imageUrl: string) => void
   onImageRemove?: () => void
@@ -55,6 +59,7 @@ export function ChatInput({
   isLoading,
   aspectRatio,
   onAspectRatioChange,
+  templateInsertToken,
   uploadedImage,
   onImageUpload,
   onImageRemove,
@@ -88,7 +93,7 @@ export function ChatInput({
         const formData = new FormData()
         formData.append('file', file)
 
-        const response = await fetch('/api/upload', {
+        const response = await fetch(`${API_BASE_URL}/api/upload`, {
           method: 'POST',
           body: formData,
         })
@@ -170,6 +175,37 @@ export function ChatInput({
     }
   }, [value])
 
+  // When a template is inserted, focus the textarea, resize to fit, and
+  // (if the inserted text contains [bracket] placeholders) select the first
+  // one so the user can start typing over it immediately.
+  useEffect(() => {
+    if (templateInsertToken === undefined || templateInsertToken === 0) return
+    const ta = textareaRef.current
+    if (!ta) return
+
+    ta.style.height = "auto"
+    ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`
+    ta.focus()
+
+    const match = ta.value.match(/\[[^\]]+\]/)
+    if (match && match.index !== undefined) {
+      const start = match.index
+      const end = start + match[0].length
+      // Defer to next tick so focus settles + scrollIntoView works
+      requestAnimationFrame(() => {
+        try {
+          ta.setSelectionRange(start, end)
+        } catch {
+          /* no-op */
+        }
+      })
+    } else {
+      // No bracket → place cursor at end
+      const end = ta.value.length
+      ta.setSelectionRange(end, end)
+    }
+  }, [templateInsertToken])
+
   const currentRatio = ASPECT_RATIOS.find((r) => r.value === aspectRatio) || ASPECT_RATIOS[0]
 
   return (
@@ -183,10 +219,14 @@ export function ChatInput({
 
       <div
         className={cn(
-          "relative flex items-end gap-2 rounded-2xl border border-violet-200/50 bg-white/70 backdrop-blur-md p-2.5 shadow-sm transition-all duration-300",
-          "focus-within:shadow-md focus-within:border-violet-400/50",
+          "relative flex items-end gap-2 rounded-2xl backdrop-blur-2xl p-2.5 transition-all duration-300 focus-within:border-[var(--vc-accent-border)]",
           isLoading && "opacity-80"
         )}
+        style={{
+          background: "var(--vc-glass-bg)",
+          border: "1px solid var(--vc-glass-border)",
+          boxShadow: "var(--vc-glass-shadow), var(--vc-glass-inset)",
+        }}
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
@@ -206,7 +246,7 @@ export function ChatInput({
           variant="ghost"
           size="icon-sm"
           disabled={isUploading}
-          className="flex-shrink-0 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl"
+          className="flex-shrink-0 text-slate-400 hover:text-cyan-300 hover:bg-white/[0.06] rounded-xl"
           aria-label="Upload image"
           title={isUploading ? 'Uploading...' : 'Upload image'}
         >
@@ -221,8 +261,8 @@ export function ChatInput({
 
         {/* Uploaded image preview */}
         {uploadedImage && (
-          <div className="absolute left-2.5 bottom-full mb-2 flex items-center gap-2 bg-card border border-accent/20 rounded-lg p-1.5 shadow-sm">
-            <div className="relative w-12 h-12 rounded-md overflow-hidden bg-secondary">
+          <div className="absolute left-2.5 bottom-full mb-2 flex items-center gap-2 bg-white/[0.06] border border-white/10 backdrop-blur-2xl rounded-lg p-1.5 shadow-[0_8px_24px_rgba(11,18,32,0.4)]">
+            <div className="relative w-12 h-12 rounded-md overflow-hidden bg-white/[0.05]">
               <img
                 src={uploadedImage.url}
                 alt={uploadedImage.fileName}
@@ -230,16 +270,16 @@ export function ChatInput({
               />
             </div>
             <div className="flex-1 min-w-0 px-1">
-              <p className="text-xs font-medium truncate text-foreground">
+              <p className="text-xs font-medium truncate text-slate-100">
                 {uploadedImage.fileName}
               </p>
-              <p className="text-[10px] text-muted-foreground">Ready to enhance</p>
+              <p className="text-[10px] text-slate-400">Ready to enhance</p>
             </div>
             <Button
               onClick={() => onImageRemove?.()}
               variant="ghost"
               size="icon-sm"
-              className="flex-shrink-0 h-6 w-6 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+              className="flex-shrink-0 h-6 w-6 text-slate-400 hover:text-rose-300 hover:bg-rose-500/10"
               aria-label="Remove image"
             >
               <X className="size-3" />
@@ -256,7 +296,8 @@ export function ChatInput({
           placeholder="Describe what you want to create..."
           rows={1}
           disabled={isLoading}
-          className="flex-1 resize-none bg-transparent border-0 outline-none text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/60 disabled:opacity-50 py-1.5 max-h-40"
+          className="flex-1 resize-none bg-transparent border-0 outline-none text-sm leading-relaxed placeholder:text-[var(--vc-text-faint)] disabled:opacity-50 py-1.5 max-h-40"
+          style={{ color: "var(--vc-text)" }}
           aria-label="Message input"
         />
 
@@ -268,11 +309,16 @@ export function ChatInput({
               disabled={!value.trim() || isLoading}
               size="icon-sm"
               className={cn(
-                "flex-shrink-0 rounded-xl transition-all duration-300",
+                "flex-shrink-0 rounded-xl transition-all duration-300 border border-white/10",
                 value.trim() && !isLoading
-                  ? "bg-accent text-accent-foreground hover:bg-accent/90 shadow-sm"
-                  : "bg-secondary text-muted-foreground"
+                  ? "text-white shadow-[0_4px_20px_rgba(37,99,235,0.4)] hover:brightness-110"
+                  : "bg-white/[0.05] text-slate-500"
               )}
+              style={
+                value.trim() && !isLoading
+                  ? { background: "linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)" }
+                  : undefined
+              }
               aria-label={isLoading ? "Generating..." : "Send message"}
             >
               {isLoading ? (
@@ -292,12 +338,12 @@ export function ChatInput({
       <div className="flex items-center justify-between px-2 pt-2">
         <div className="flex items-center gap-2">
           {aspectRatio !== "1:1" && (
-            <span className="text-xs text-accent/80 bg-accent/10 px-2 py-0.5 rounded-md font-medium">
+            <span className="text-xs text-cyan-300/90 bg-cyan-400/10 border border-cyan-400/20 px-2 py-0.5 rounded-md font-medium backdrop-blur-sm">
               {currentRatio.label} {aspectRatio}
             </span>
           )}
         </div>
-        <span className="text-[11px] text-muted-foreground/50">
+        <span className="text-[11px] text-slate-500/70">
           Shift + Enter for new line
         </span>
       </div>

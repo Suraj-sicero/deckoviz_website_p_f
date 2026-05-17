@@ -2,6 +2,7 @@ import { useState } from "react"
 import { cn } from "./lib/utils"
 import { getAllSuggestions } from "./lib/suggestions"
 import type { CreativeMode, SuggestionCategory } from "./lib/types"
+import { QuickTemplates } from "./quick-templates"
 import {
   Palette,
   Camera,
@@ -52,50 +53,76 @@ export function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
   const categories = getAllSuggestions(mode)
 
   return (
-    <div className="relative flex flex-col items-center h-full px-4 py-8 md:py-12 overflow-y-auto bg-[#fdf4f6]">
-      {/* Violet to pink spiral gradient background */}
+    <div className="relative flex flex-col items-center h-full px-4 py-8 md:py-12 overflow-y-auto">
+      {/* Subtle star/noise overlay (looks lovely in both themes) */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-[0.30]"
         style={{
-          background: `radial-gradient(circle at 50% 60%, 
-        rgba(168, 85, 247, 0.4) 0%, /* violet-500 */
-        rgba(180, 83, 220, 0.3) 10%, /* violet-pink blend */
-        rgba(195, 80, 190, 0.2) 18%, /* violet-pink blend */
-        rgba(215, 75, 165, 0.15) 27%, /* violet-pink blend */
-        rgba(226, 73, 155, 0.08) 39%, /* violet-pink blend */
-        rgba(236, 72, 153, 0.03) 45%, /* pink-500 */
-        transparent 50%)`,
+          backgroundImage:
+            "radial-gradient(1px 1px at 12% 18%, var(--vc-accent-text), transparent 60%), radial-gradient(1px 1px at 78% 28%, var(--vc-accent-text), transparent 60%), radial-gradient(1px 1px at 30% 72%, var(--vc-accent-text), transparent 60%), radial-gradient(1px 1px at 88% 80%, var(--vc-accent-text), transparent 60%), radial-gradient(1px 1px at 55% 12%, var(--vc-accent-text), transparent 60%)",
         }}
-      ></div>
+      />
 
       {/* Hero */}
-      <div className="relative z-10 flex flex-col items-center gap-4 mb-8 md:mb-10 max-w-2xl">
+      <div className="relative z-10 flex flex-col items-center gap-5 mb-8 md:mb-10 max-w-2xl">
         <div className="relative">
-          <div className="size-20 md:size-24 rounded-3xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center glow-accent float">
-            <Sparkles className="size-9 md:size-11 text-violet-600" />
+          <div
+            className="size-20 md:size-24 rounded-3xl flex items-center justify-center backdrop-blur-xl"
+            style={{
+              background:
+                "linear-gradient(135deg, var(--vc-glow-1) 0%, var(--vc-glow-3) 100%)",
+              border: "1px solid var(--vc-glass-border)",
+              boxShadow:
+                "var(--vc-glass-inset), 0 8px 40px var(--vc-glow-1)",
+            }}
+          >
+            <Sparkles
+              className="size-9 md:size-11"
+              style={{ color: "var(--vc-accent-text)" }}
+            />
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-heading)] tracking-tight text-balance">
-            <span className="bg-gradient-to-r from-violet-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">What will you create?</span>
+        <div className="flex flex-col items-center gap-3 text-center">
+          <h2 className="font-serif font-semibold tracking-tight text-balance text-4xl md:text-5xl leading-[1.1]">
+            <span
+              className="bg-clip-text text-transparent italic"
+              style={{
+                backgroundImage:
+                  "linear-gradient(110deg, #2563EB 0%, #22D3EE 55%, #14B8A6 100%)",
+              }}
+            >
+              What will you create?
+            </span>
           </h2>
-          <p className="text-sm md:text-base text-gray-600 max-w-lg leading-relaxed text-pretty">
-            Describe any visual you can imagine. Generate artwork, product shots, 
+          <p
+            className="text-sm md:text-base max-w-lg leading-relaxed text-pretty"
+            style={{ color: "var(--vc-text-muted)" }}
+          >
+            Describe any visual you can imagine. Generate artwork, product shots,
             posters, brand visuals, and more. Iterate until it is perfect.
           </p>
         </div>
       </div>
 
-      {/* Mode Toggle */}
-      <div className="relative z-10 flex items-center gap-1 p-1 rounded-2xl bg-secondary/80 border border-border/60 mb-8 backdrop-blur-sm">
+      {/* Mode Toggle - glass pill */}
+      <div
+        className="relative z-10 flex items-center gap-1 p-1 rounded-2xl mb-8 backdrop-blur-xl"
+        style={{
+          background: "var(--vc-glass-bg)",
+          border: "1px solid var(--vc-glass-border)",
+        }}
+      >
         <button
           onClick={() => { setMode("home"); setExpandedCategory(null) }}
           className={cn(
             "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300",
-            mode === "home"
-              ? "bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-md"
-              : "text-gray-400 hover:text-white"
+            mode === "home" ? "text-white shadow-[0_4px_24px_rgba(37,99,235,0.35)]" : ""
           )}
+          style={
+            mode === "home"
+              ? { background: "linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)" }
+              : { color: "var(--vc-text-muted)" }
+          }
         >
           <Home className="size-4" />
           Personal
@@ -104,10 +131,13 @@ export function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
           onClick={() => { setMode("business"); setExpandedCategory(null) }}
           className={cn(
             "flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300",
-            mode === "business"
-              ? "bg-gradient-to-r from-violet-600 to-pink-600 text-white shadow-md"
-              : "text-gray-400 hover:text-white"
+            mode === "business" ? "text-white shadow-[0_4px_24px_rgba(37,99,235,0.35)]" : ""
           )}
+          style={
+            mode === "business"
+              ? { background: "linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)" }
+              : { color: "var(--vc-text-muted)" }
+          }
         >
           <Briefcase className="size-4" />
           Business
@@ -130,22 +160,59 @@ export function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
         ))}
       </div>
 
+      {/* Quick Templates — 12 visible by default, click + to expand all 120 */}
+      <QuickTemplates onSelect={onSuggestionClick} />
+
       {/* Bottom hint */}
-      <p className="mt-8 text-xs text-muted-foreground/60 text-center">
+      <p
+        className="mt-8 text-xs text-center"
+        style={{ color: "var(--vc-text-faint)" }}
+      >
         Or just type anything below to get started
       </p>
     </div>
   )
 }
 
+// Brand-aligned accent palette: cosmic blue, icy teal, aurora, violet, lavender, indigo
 const COLOR_PALETTE = [
-  { bg: "from-violet-600 to-purple-600", border: "border-violet-500/30", text: "text-violet-400", glow: "shadow-[0_0_15px_rgba(125,57,236,0.15)]", hoverBorder: "hover:border-violet-500/50" },
-  { bg: "from-pink-600 to-rose-600", border: "border-pink-500/30", text: "text-pink-400", glow: "shadow-[0_0_15px_rgba(236,72,153,0.15)]", hoverBorder: "hover:border-pink-500/50" },
-  { bg: "from-orange-600 to-amber-600", border: "border-orange-500/30", text: "text-orange-400", glow: "shadow-[0_0_15px_rgba(245,158,11,0.15)]", hoverBorder: "hover:border-orange-500/50" },
-  { bg: "from-blue-600 to-indigo-600", border: "border-blue-500/30", text: "text-blue-400", glow: "shadow-[0_0_15px_rgba(59,130,246,0.15)]", hoverBorder: "hover:border-blue-500/50" },
-  { bg: "from-green-600 to-emerald-600", border: "border-green-500/30", text: "text-green-400", glow: "shadow-[0_0_15px_rgba(16,185,129,0.15)]", hoverBorder: "hover:border-green-500/50" },
-  { bg: "from-cyan-600 to-teal-600", border: "border-cyan-500/30", text: "text-cyan-400", glow: "shadow-[0_0_15px_rgba(6,182,212,0.15)]", hoverBorder: "hover:border-cyan-500/50" },
-];
+  {
+    gradient: "linear-gradient(135deg, #2563EB 0%, #7C3AED 100%)",
+    iconTint: "text-cyan-300",
+    glow: "shadow-[0_0_30px_rgba(37,99,235,0.18)]",
+    borderHover: "hover:border-cyan-400/40",
+  },
+  {
+    gradient: "linear-gradient(135deg, #22D3EE 0%, #14B8A6 100%)",
+    iconTint: "text-teal-300",
+    glow: "shadow-[0_0_30px_rgba(34,211,238,0.18)]",
+    borderHover: "hover:border-teal-400/40",
+  },
+  {
+    gradient: "linear-gradient(135deg, #2563EB 0%, #22D3EE 100%)",
+    iconTint: "text-sky-300",
+    glow: "shadow-[0_0_30px_rgba(34,211,238,0.18)]",
+    borderHover: "hover:border-sky-400/40",
+  },
+  {
+    gradient: "linear-gradient(135deg, #7C3AED 0%, #2563EB 100%)",
+    iconTint: "text-violet-300",
+    glow: "shadow-[0_0_30px_rgba(124,58,237,0.18)]",
+    borderHover: "hover:border-violet-400/40",
+  },
+  {
+    gradient: "linear-gradient(135deg, #14B8A6 0%, #2563EB 100%)",
+    iconTint: "text-emerald-300",
+    glow: "shadow-[0_0_30px_rgba(20,184,166,0.18)]",
+    borderHover: "hover:border-emerald-400/40",
+  },
+  {
+    gradient: "linear-gradient(135deg, #22D3EE 0%, #7C3AED 100%)",
+    iconTint: "text-cyan-300",
+    glow: "shadow-[0_0_30px_rgba(124,58,237,0.18)]",
+    borderHover: "hover:border-cyan-400/40",
+  },
+]
 
 function CategoryCard({
   category,
@@ -160,17 +227,20 @@ function CategoryCard({
   onSuggestionClick: (s: string) => void
   colorIndex: number
 }) {
-  const color = COLOR_PALETTE[colorIndex % COLOR_PALETTE.length];
+  const color = COLOR_PALETTE[colorIndex % COLOR_PALETTE.length]
   const IconComponent = ICON_MAP[category.icon] || Sparkles
 
   return (
     <div
       className={cn(
-        "group rounded-2xl border transition-all duration-300",
-        isExpanded
-          ? `bg-white ${color.border} ${color.glow} col-span-1 sm:col-span-2`
-          : `bg-white/60 border-gray-100/50 hover:bg-white ${color.hoverBorder} hover:shadow-sm`
+        "group relative rounded-2xl backdrop-blur-xl transition-all duration-300 overflow-hidden",
+        isExpanded ? `${color.glow} col-span-1 sm:col-span-2` : "",
+        !isExpanded && color.borderHover
       )}
+      style={{
+        background: isExpanded ? "var(--vc-glass-strong)" : "var(--vc-glass-bg)",
+        border: `1px solid ${isExpanded ? "var(--vc-glass-border-strong)" : "var(--vc-glass-border)"}`,
+      }}
     >
       <button
         onClick={onToggle}
@@ -178,22 +248,41 @@ function CategoryCard({
       >
         <div
           className={cn(
-            "size-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300",
-            isExpanded
-              ? `bg-gradient-to-br ${color.bg} text-white`
-              : `bg-gray-100 text-gray-400 group-hover:${color.text}`
+            "size-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300"
           )}
+          style={
+            isExpanded
+              ? {
+                  background: color.gradient,
+                  border: "1px solid var(--vc-glass-border)",
+                }
+              : {
+                  background: "var(--vc-glass-bg)",
+                  border: "1px solid var(--vc-glass-border)",
+                }
+          }
         >
-          <IconComponent className="size-4.5" />
+          <IconComponent
+            className={cn("size-4.5 transition-colors")}
+            style={{
+              color: isExpanded ? "#fff" : "var(--vc-accent-text)",
+            }}
+          />
         </div>
-        <span className={`flex-1 text-sm font-medium text-gray-900 group-hover:${color.text} transition-colors`}>
+        <span
+          className="flex-1 text-sm font-medium transition-colors"
+          style={{ color: "var(--vc-text)" }}
+        >
           {category.label}
         </span>
         <ChevronRight
           className={cn(
-            "size-4 text-muted-foreground transition-transform duration-300",
+            "size-4 transition-transform duration-300",
             isExpanded && "rotate-90"
           )}
+          style={{
+            color: isExpanded ? "var(--vc-accent-text)" : "var(--vc-text-muted)",
+          }}
         />
       </button>
 
@@ -203,10 +292,18 @@ function CategoryCard({
             <button
               key={suggestion}
               onClick={() => onSuggestionClick(suggestion)}
-              className="flex items-center gap-2 text-left px-3.5 py-3 rounded-xl bg-white/80 border border-violet-100 text-sm text-gray-800 hover:bg-gradient-to-r hover:from-violet-50 hover:to-pink-50 hover:border-violet-200 transition-all duration-200 group/item leading-relaxed"
+              className="group/item flex items-center gap-2 text-left px-3.5 py-3 rounded-xl text-sm transition-all duration-200 leading-relaxed backdrop-blur-sm"
+              style={{
+                background: "var(--vc-glass-bg)",
+                border: "1px solid var(--vc-glass-border)",
+                color: "var(--vc-text)",
+              }}
             >
               <span className="flex-1">{suggestion}</span>
-              <ArrowRight className="size-3.5 text-violet-500 opacity-0 group-hover/item:opacity-100 transition-opacity flex-shrink-0" />
+              <ArrowRight
+                className="size-3.5 opacity-0 group-hover/item:opacity-100 transition-opacity flex-shrink-0"
+                style={{ color: "var(--vc-accent-text)" }}
+              />
             </button>
           ))}
         </div>

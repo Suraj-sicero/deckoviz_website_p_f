@@ -21,6 +21,21 @@ import memoryRoutes from "./routes/memoryRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import vizzyCanvasRoutes from "./routes/vizzyCanvasRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import storyForgeRoutes from "./routes/storyForgeRoutes.js";
+import {
+  paletteWarsRouter,
+  dreamArchitectRouter,
+  museumRouter,
+  verdictRouter,
+  oneWordRouter,
+  frameRouter,
+  inheritanceRouter,
+  debatingRouter,
+  cartographersRouter,
+  mindsRouter,
+  oracleRouter,
+} from "./routes/flagshipGamesRoutes.js";
 
 import solarWindRouter from "./routes/solarWind.js";
 import earthquakesRouter from "./routes/earthquakes.js";
@@ -140,6 +155,26 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views")); // ✅ Fixed path
 app.set("layout", "layout");
 
+// ===== HEALTH CHECK =====
+// Lightweight liveness + DB ping for uptime monitors and Render health checks
+app.get("/api/health", async (_req, res) => {
+  const startedAt = Date.now();
+  let db = "unknown";
+  try {
+    await sequelize.authenticate();
+    db = "ok";
+  } catch {
+    db = "down";
+  }
+  res.json({
+    status: "ok",
+    db,
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    latencyMs: Date.now() - startedAt,
+  });
+});
+
 // ===== ROUTES =====
 // ✅ API routes (for frontend JSON calls)
 app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/blog
@@ -147,6 +182,7 @@ app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
 app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
 app.use("/api/vizzy-canvas", vizzyCanvasRoutes);
+app.use("/api", uploadRoutes);
 app.use("/api", dreamRoutes);
 app.use("/api/memory", memoryRoutes);
 app.use("/api", worldRoutes);
@@ -154,6 +190,18 @@ app.use("/api", worldRoutes);
 app.use("/api/solar-wind", solarWindRouter);
 app.use("/api/earthquakes", earthquakesRouter);
 app.use("/api/auth", authRoutes);
+app.use("/api/flagship-games/story-forge", storyForgeRoutes);
+app.use("/api/flagship-games/palette-wars", paletteWarsRouter);
+app.use("/api/flagship-games/dream-architect", dreamArchitectRouter);
+app.use("/api/flagship-games/museum-of-us", museumRouter);
+app.use("/api/flagship-games/vizzys-verdict", verdictRouter);
+app.use("/api/flagship-games/one-word", oneWordRouter);
+app.use("/api/flagship-games/world-in-frame", frameRouter);
+app.use("/api/flagship-games/inheritance", inheritanceRouter);
+app.use("/api/flagship-games/debating-society", debatingRouter);
+app.use("/api/flagship-games/cartographers", cartographersRouter);
+app.use("/api/flagship-games/brilliant-minds", mindsRouter);
+app.use("/api/flagship-games/oracle", oracleRouter);
 
 // ✅ EJS routes (for admin panel / UI)
 app.use("/", blogRoutes); // Example: https://deckoviz-demo.onrender.com/blogs or /add
