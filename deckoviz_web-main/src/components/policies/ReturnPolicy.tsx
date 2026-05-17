@@ -3,7 +3,12 @@ import { RefreshCw, Clock, AlertCircle, Package } from 'lucide-react';
 
 const ReturnPolicy: React.FC = () => {
   return (
-    <section className="section-padding bg-white">
+    <section className="relative section-padding overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(99,102,241,0.18)" }} />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.15)" }} />
+      </div>
       <div className="container-custom">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 mt-4 text-center">
@@ -18,7 +23,7 @@ const ReturnPolicy: React.FC = () => {
             <div className="space-y-8">
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Return Overview</h2>
-                <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="p-6 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                   <div className="flex items-center mb-4">
                     <RefreshCw className="w-6 h-6 text-primary-600 mr-3" />
                     <h3 className="text-xl font-medium">Our Return Policy</h3>
@@ -95,7 +100,7 @@ const ReturnPolicy: React.FC = () => {
                 <p className="text-gray-600">
                   For any questions about returns, please contact our customer service team:
                 </p>
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                <div className="mt-4 p-4 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                   <p className="text-gray-600">
                     Email: returns@deckoviz.com<br />
                     Phone: +1 (555) 123-4567

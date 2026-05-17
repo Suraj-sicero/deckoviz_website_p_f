@@ -327,7 +327,8 @@ const Hero: React.FC = () => {
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
   return (
     
-<section className="relative w-full min-h-screen bg-white overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center">
+<section className="relative w-full min-h-screen overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center"
+        style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
       {/* Three.js Particle Background */}
       <ThreeBackground />
       
@@ -346,14 +347,14 @@ const Hero: React.FC = () => {
         100% { background-position: 300px 0px, -300px 0px; }
       }
 
-      .liquid-gradient-violet {
+      .liquid-gradient-blue {
         background: 
-          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%238B5CF6' d='M0,140 Q100,80 200,140 T400,140 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
-          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%23C084FC' opacity='0.6' d='M0,100 Q100,40 200,100 T400,100 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
-          #F3E8FF;
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%232563EB' d='M0,140 Q100,80 200,140 T400,140 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Cpath fill='%2360A5FA' opacity='0.6' d='M0,100 Q100,40 200,100 T400,100 L400,300 L0,300 Z'/%3E%3C/svg%3E") 0 0 / 300px 100% repeat-x,
+          #EFF6FF;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        -webkit-text-stroke: 1px rgba(139, 92, 246, 0.3);
+        -webkit-text-stroke: 1px rgba(37, 99, 235, 0.3);
         animation: liquid-flow-waves 3s linear infinite;
         display: inline-block;
       }
@@ -398,7 +399,7 @@ const Hero: React.FC = () => {
         <h1 className="text-center font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
           <div className="inline">
             <span className="text-black">Make Your Space Come </span>
-            <span className="italic liquid-gradient-violet">
+            <span className="italic liquid-gradient-blue">
               Alive
             </span>
             <span className="text-black">,</span>
@@ -471,74 +472,11 @@ const Hero: React.FC = () => {
           <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0">
             <div className="flex gap-5 flex-wrap justify-center">
               <div className="relative inline-block group">
-                {/* Intense Animated Outer Glow */}
-                <div
-                  className="absolute -inset-[3px] rounded-full opacity-60 transition-all duration-500 group-hover:opacity-100 group-hover:-inset-[5px] group-hover:blur-xl blur-lg"
-                  style={{
-                    background: `linear-gradient(90deg, #0B1220, #1B2A4A, #2563EB, #1B2A4A, #0B1220)`,
-                    backgroundSize: "300% 100%",
-                    zIndex: -1,
-                    animation: "heroFlowColors 3s linear infinite",
-                  }}
-                />
-                
-                {/* Secondary inner glow */}
-                <div
-                  className="absolute -inset-[1px] rounded-full opacity-100 transition-all duration-300 blur-[2px]"
-                  style={{
-                    background: `linear-gradient(90deg, #1B2A4A, #2563EB, #1B2A4A)`,
-                    backgroundSize: "200% 100%",
-                    zIndex: -1,
-                    animation: "heroFlowColors 2s linear infinite reverse",
-                  }}
-                />
-
                 <button
                   onClick={() => (window.location.href = "/place-order")}
-                  className="inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-8 py-3 text-sm tracking-widest uppercase overflow-hidden relative z-10 group text-white transform hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98]"
-                  style={{
-                    background: `linear-gradient(135deg, #0B1220 0%, #1B2A4A 50%, #2563EB 100%)`,
-                    backgroundSize: "200% 200%",
-                    boxShadow: `
-                      inset 0 2px 4px rgba(255, 255, 255, 0.4),
-                      inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-                      0 5px 15px rgba(37, 99, 235, 0.5)
-                    `,
-                    textShadow: `0 1px 2px rgba(0, 0, 0, 0.3)`,
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
-                    animation: "heroGradientShift 4s ease infinite",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.boxShadow = `
-                      inset 0 2px 4px rgba(255, 255, 255, 0.5),
-                      inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-                      0 10px 25px rgba(37, 99, 235, 0.8)
-                    `;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.boxShadow = `
-                      inset 0 2px 4px rgba(255, 255, 255, 0.4),
-                      inset 0 -2px 5px rgba(0, 0, 0, 0.2),
-                      0 5px 15px rgba(37, 99, 235, 0.5)
-                    `;
-                  }}
+                  className="inline-flex items-center justify-center font-bold transition-all duration-300 rounded-full px-8 py-3.5 text-sm tracking-widest uppercase overflow-hidden relative z-10 group text-white transform hover:scale-[1.03] hover:-translate-y-1 active:scale-[0.98] bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 shadow-[0_5px_15px_rgba(37,99,235,0.4)] hover:shadow-[0_10px_25px_rgba(37,99,235,0.6)] border border-white/20"
                 >
-                  {/* Liquid flow internal effect */}
-                  <div 
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                    style={{
-                      background: 'radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 60%)',
-                      mixBlendMode: 'overlay',
-                    }}
-                  />
-
-                  {/* Sweeping shine effect */}
-                  <div 
-                    className="absolute top-0 -left-[100%] w-[50%] h-full transform skew-x-[-25deg] transition-all duration-700 ease-out z-0 group-hover:left-[200%]"
-                    style={{
-                      background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)'
-                    }}
-                  />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-600 to-indigo-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     Shop Now
                   </span>
@@ -588,7 +526,17 @@ const Hero: React.FC = () => {
               <div className="absolute -inset-4 bg-gradient-to-r from-violet-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
               
               {/* Main card */}
-              <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl px-6 py-6 border border-white/50 w-full overflow-hidden">
+              <div 
+                className="relative rounded-3xl px-6 py-6 w-full overflow-hidden transition-all duration-300 group-hover:shadow-[0_20px_60px_rgba(37,99,235,0.25)]"
+                style={{
+                  background: "rgba(255, 255, 255, 0.25)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  border: "1px solid rgba(255, 255, 255, 0.40)",
+                  borderTop: "1px solid rgba(255, 255, 255, 0.70)",
+                  boxShadow: "0 12px 40px rgba(31, 38, 135, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.60)"
+                }}
+              >
                 
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
@@ -608,9 +556,6 @@ const Hero: React.FC = () => {
                       <div className="text-gray-600 font-medium text-xs whitespace-nowrap">Items in Library</div>
                     </div>
                   </div>
-
-                  {/* Plus sign */}
-                  <div className="text-4xl font-bold text-blue-600 mt-1">+</div>
 
                   {/* Rating stat */}
                   <div className="relative flex flex-col items-center">

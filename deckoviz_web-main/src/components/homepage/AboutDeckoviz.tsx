@@ -1,11 +1,18 @@
 export default function AboutDeckoviz() {
   return (
-    <section className="relative min-h-screen overflow-hidden bg-gradient-to-br from-sky-100 via-blue-100 to-indigo-100 px-4 py-20">
-
-      {/* 🌈 Floating Gradient Blobs */}
-      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-gradient-to-br from-pink-400 via-violet-400 to-indigo-400 rounded-full blur-3xl opacity-40" />
-      <div className="absolute top-1/4 -right-40 w-[450px] h-[450px] bg-gradient-to-br from-sky-400 via-cyan-400 to-blue-500 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-[-200px] left-1/3 w-[500px] h-[500px] bg-gradient-to-br from-indigo-400 via-blue-400 to-pink-400 rounded-full blur-3xl opacity-30" />
+    <section
+      className="relative min-h-screen overflow-hidden px-4 py-20"
+      style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}
+    >
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+        <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+        <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+        <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+        <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
+      </div>
 
       {/* Content Wrapper */}
       <div className="relative z-10 max-w-5xl mx-auto">
@@ -21,7 +28,17 @@ export default function AboutDeckoviz() {
         </div>
 
         {/* 🧊 Glass Card */}
-        <div className="relative rounded-[32px] bg-white/50 backdrop-blur-xl border border-white/40 shadow-[0_20px_80px_rgba(0,0,0,0.12)] p-6 md:p-10 space-y-6 text-gray-700 leading-relaxed">
+        <div
+          className="relative rounded-[32px] p-6 md:p-10 space-y-6 text-gray-800 leading-relaxed"
+          style={{
+            background: "rgba(255, 255, 255, 0.25)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
+            border: "1px solid rgba(255, 255, 255, 0.45)",
+            borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+            boxShadow: "0 12px 40px rgba(31, 38, 135, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.65)",
+          }}
+        >
 
           <p className="text-lg">
             If we were to answer in a nutshell — we wouldn’t.  
@@ -55,7 +72,12 @@ export default function AboutDeckoviz() {
             ].map((item, i) => (
               <div
                 key={i}
-                className="rounded-2xl bg-white/60 backdrop-blur border border-white/50 px-4 py-3 shadow-sm hover:shadow-md transition"
+                className="rounded-2xl border px-4 py-3 shadow-sm hover:shadow-md transition text-gray-800 font-medium"
+                style={{
+                  background: "rgba(255,255,255,0.30)",
+                  backdropFilter: "blur(12px) saturate(180%)",
+                  borderColor: "rgba(255,255,255,0.6)"
+                }}
               >
                 ✨ {item}
               </div>

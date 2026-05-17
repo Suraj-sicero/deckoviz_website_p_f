@@ -206,7 +206,7 @@ const InternetHeartbeat: React.FC = () => {
               <div className="w-16 h-16 rounded-full border-2 border-teal-500/20 flex items-center justify-center backdrop-blur-xl">
                  <Radio className="w-8 h-8 text-teal-400 animate-pulse" />
               </div>
-              <div className="absolute inset-0 border-t-2 border-teal-400 rounded-full animate-spin duration-[5000ms]" />
+              <div className="absolute inset-0 border-t-2 border-teal-400 rounded-full animate-spin" style={{ animationDuration: '5s' }} />
             </div>
             <div>
               <h1 className="text-3xl font-black text-white tracking-tighter uppercase italic">Internet Heartbeat</h1>

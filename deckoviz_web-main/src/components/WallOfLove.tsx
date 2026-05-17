@@ -63,45 +63,15 @@ export default function WallOfLove() {
   ];
 
   return (
-    <div className="relative min-h-screen bg-white">
+    <div className="relative min-h-screen overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
       {/* Background gradient section */}
-      <div className="absolute inset-0 z-0">
-        {/* Base white background with subtle pattern */}
-        <div className="absolute inset-0 bg-white" />
-
-        {/* Subtle dot pattern overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.12]"
-          style={{
-            backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
-            backgroundSize: "30px 30px",
-          }}
-        />
-
-        {/* Enhanced gradient with more depth and animation - extended height */}
-        <div className="absolute left-0 right-0" style={{ top: "260px", height: "460px" }}>
-          <div
-            className="mx-4 h-full overflow-hidden relative animate-pulse"
-            style={{
-              borderBottomLeftRadius: "50px",
-              borderBottomRightRadius: "50px",
-              animationDuration: "4s",
-            }}
-          >
-            {/* Multi-layered gradient for depth */}
-            <div className="w-full h-full bg-gradient-to-br from-indigo-400 via-fuchsia-300 to-orange-300" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-pink-200/30 to-yellow-200/40" />
-
-            {/* Animated gradient overlay */}
-            <div
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-pulse"
-              style={{ animationDuration: "3s" }}
-            />
-
-            {/* Top fade with enhanced transition */}
-            <div className="absolute inset-0 bg-gradient-to-b from-white via-white/30 to-transparent" />
-          </div>
-        </div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+          <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+          <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+          <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+          <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+          <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
       </div>
 
       {/* Main Content */}
@@ -207,14 +177,28 @@ export default function WallOfLove() {
       </p>
     </div>
 
-    <div className="bg-white rounded-2xl p-5 shadow-lg">
+    <div className="rounded-2xl p-5 backdrop-blur-xl border-t shadow-lg"
+      style={{
+        background: "rgba(255, 255, 255, 0.25)",
+        borderTopColor: "rgba(255, 255, 255, 0.8)",
+        borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+        borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.5)",
+      }}>
       <h4 className="font-bold text-[#6670d8] mb-2">Marco, Florence</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         "Guests always ask where I got the 'wall that dances' in my wine bar. Deckoviz has become a centerpiece of experience, not just decor."
       </p>
     </div>
 
-    <div className="bg-white rounded-2xl p-5 shadow-lg">
+    <div className="rounded-2xl p-5 backdrop-blur-xl border-t shadow-lg"
+      style={{
+        background: "rgba(255, 255, 255, 0.25)",
+        borderTopColor: "rgba(255, 255, 255, 0.8)",
+        borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+        borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+        borderBottom: "1px solid rgba(255, 255, 255, 0.5)",
+      }}>
       <h4 className="font-bold text-[#6670d8] mb-2">Tashi, LA</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         "We use Deckoviz in our yoga studio. The ambient meditation visuals are unbelievable. It sets the tone for every class calm, beauty, presence."
@@ -239,8 +223,13 @@ export default function WallOfLove() {
              
              {/* Simon Lee - Top Left */}
              <div 
-               className="absolute bg-white rounded-2xl p-6 shadow-lg testimonial-float"
+               className="absolute rounded-2xl p-6 shadow-lg testimonial-float backdrop-blur-xl border-t"
                style={{ 
+                 background: "rgba(255, 255, 255, 0.25)",
+                 borderTopColor: "rgba(255, 255, 255, 0.8)",
+                 borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderBottom: "1px solid rgba(255, 255, 255, 0.5)", 
                  top: "5%", 
                  left: "5%",
                  width: "280px",
@@ -256,8 +245,13 @@ export default function WallOfLove() {
 
              {/* Amara, Toronto - Top Center */}
              <div 
-               className="absolute bg-white rounded-2xl p-6 shadow-lg testimonial-float"
+               className="absolute rounded-2xl p-6 shadow-lg testimonial-float backdrop-blur-xl border-t"
                style={{ 
+                 background: "rgba(255, 255, 255, 0.25)",
+                 borderTopColor: "rgba(255, 255, 255, 0.8)",
+                 borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderBottom: "1px solid rgba(255, 255, 255, 0.5)", 
                  top: "8%", 
                  left: "35%",
                  width: "300px",
@@ -273,8 +267,13 @@ export default function WallOfLove() {
 
              {/* Jules, Berlin - Top Right */}
              <div 
-               className="absolute bg-white rounded-2xl p-6 shadow-lg testimonial-float"
+               className="absolute rounded-2xl p-6 shadow-lg testimonial-float backdrop-blur-xl border-t"
                style={{ 
+                 background: "rgba(255, 255, 255, 0.25)",
+                 borderTopColor: "rgba(255, 255, 255, 0.8)",
+                 borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderBottom: "1px solid rgba(255, 255, 255, 0.5)", 
                  top: "12%", 
                  right: "5%",
                  width: "280px",
@@ -290,8 +289,13 @@ export default function WallOfLove() {
 
              {/* Maya, Bangalore - Middle Left */}
              <div 
-               className="absolute bg-white rounded-2xl p-6 shadow-lg testimonial-float"
+               className="absolute rounded-2xl p-6 shadow-lg testimonial-float backdrop-blur-xl border-t"
                style={{ 
+                 background: "rgba(255, 255, 255, 0.25)",
+                 borderTopColor: "rgba(255, 255, 255, 0.8)",
+                 borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderBottom: "1px solid rgba(255, 255, 255, 0.5)", 
                  top: "35%", 
                  left: "8%",
                  width: "320px",
@@ -307,8 +311,13 @@ export default function WallOfLove() {
 
              {/* Marco, Florence - Middle Center */}
              <div 
-               className="absolute bg-white rounded-2xl p-6 shadow-lg testimonial-float"
+               className="absolute rounded-2xl p-6 shadow-lg testimonial-float backdrop-blur-xl border-t"
                style={{ 
+                 background: "rgba(255, 255, 255, 0.25)",
+                 borderTopColor: "rgba(255, 255, 255, 0.8)",
+                 borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderBottom: "1px solid rgba(255, 255, 255, 0.5)", 
                  top: "45%", 
                  left: "40%",
                  width: "290px",
@@ -324,8 +333,13 @@ export default function WallOfLove() {
 
              {/* Tashi, LA - Bottom Right */}
              <div 
-               className="absolute bg-white rounded-2xl p-6 shadow-lg testimonial-float"
+               className="absolute rounded-2xl p-6 shadow-lg testimonial-float backdrop-blur-xl border-t"
                style={{ 
+                 background: "rgba(255, 255, 255, 0.25)",
+                 borderTopColor: "rgba(255, 255, 255, 0.8)",
+                 borderLeft: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderRight: "1px solid rgba(255, 255, 255, 0.5)",
+                 borderBottom: "1px solid rgba(255, 255, 255, 0.5)", 
                  bottom: "5%", 
                  right: "8%",
                  width: "310px",

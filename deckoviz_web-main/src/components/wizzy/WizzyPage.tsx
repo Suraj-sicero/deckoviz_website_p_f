@@ -87,17 +87,30 @@ const WizzyPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 pt-24 pb-20 font-inter print:bg-white print:pt-0 print:pb-0">
-      {/* Dynamic Background Blur */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10 print:hidden">
-         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-violet-200/40 blur-[120px] rounded-full"></div>
-         <div className="absolute bottom-[10%] right-[-5%] w-[35%] h-[35%] bg-indigo-200/30 blur-[120px] rounded-full"></div>
+    <div className="relative min-h-screen pt-24 pb-20 font-inter print:bg-white print:pt-0 print:pb-0" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Enterprise Indigo Blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 print:hidden">
+          <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+          <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+          <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+          <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+          <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+          <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 print:px-0">
         {/* Progress Bar */}
         <div className="mb-20 flex justify-center print:hidden">
-           <div className="flex items-center space-x-6 bg-white/60 backdrop-blur p-4 rounded-3xl border border-white shadow-xl shadow-violet-900/5 transition-all">
+           <div className="flex items-center space-x-6 p-4 rounded-3xl transition-all"
+             style={{
+               background: "rgba(255, 255, 255, 0.25)",
+               backdropFilter: "blur(24px) saturate(180%)",
+               WebkitBackdropFilter: "blur(24px) saturate(180%)",
+               border: "1px solid rgba(255, 255, 255, 0.45)",
+               borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+               boxShadow: "0 12px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.65)"
+             }}
+           >
               {[
                 { id: "ideation", label: "Idea", icon: Bot },
                 { id: "builder", label: "Builder", icon: Sparkles },

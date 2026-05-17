@@ -33,7 +33,15 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
         <div className="flex gap-4 print:hidden">
            <button
              onClick={onBackToBuilder}
-             className="px-6 py-4 bg-white border border-gray-100 text-gray-600 rounded-2xl font-bold flex items-center space-x-2 hover:bg-gray-50 transition-all shadow-sm"
+             className="px-6 py-4 rounded-2xl font-bold flex items-center space-x-2 hover:scale-105 transition-all"
+             style={{
+               background: "rgba(255, 255, 255, 0.25)",
+               backdropFilter: "blur(20px) saturate(180%)",
+               WebkitBackdropFilter: "blur(20px) saturate(180%)",
+               border: "1px solid rgba(255, 255, 255, 0.45)",
+               borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+               color: "#374151"
+             }}
            >
              <MoveLeft size={20} />
              <span>Back to Builder</span>
@@ -92,7 +100,15 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
                <p className="text-3xl font-bold text-gray-800 leading-[1.4] print:text-base print:font-medium print:leading-normal print:bg-gray-100 print:p-4 print:rounded-b-2xl print:border-x-4 print:border-b-4 print:border-gray-900 print:-mt-4 relative z-10 print:text-justify max-w-full">
                  "{page.description}"
                </p>
-               <div className="p-8 bg-violet-50 rounded-3xl border border-violet-100/50 print:hidden">
+               <div className="p-8 rounded-3xl print:hidden"
+                 style={{
+                   background: "rgba(255, 255, 255, 0.25)",
+                   backdropFilter: "blur(20px) saturate(180%)",
+                   WebkitBackdropFilter: "blur(20px) saturate(180%)",
+                   border: "1px solid rgba(255, 255, 255, 0.45)",
+                   borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+                 }}
+               >
                   <div className="flex items-start space-x-4">
                      <Share2 className="text-violet-400 mt-1" size={24} />
                      <p className="text-gray-500 font-medium italic">

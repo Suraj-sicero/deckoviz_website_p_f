@@ -276,110 +276,35 @@ export default function Pricing() {
         href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
         rel="stylesheet"
       />
-      <section id="pricing" className="py-12 sm:py-16 lg:py-16 bg-white relative overflow-hidden">
-        {/* Background Elements */}
-
-        {/* 📺 Floating TV Bubble Button */}
-<button
-  onClick={() => navigate("/tv")}
-  className="
-    hidden lg:flex
-    absolute left-6 top-[4%] -translate-y-1/2
-    z-10
-    max-w-[510px]
-    px-10 py-1
-    rounded-[999px]
-    text-left
-    mt-4
-  bg-gradient-to-br from-[#b7f3f0] via-[#6fd6d4] to-[#1fa9b1]
-    shadow-[0_16px_40px_rgba(31,169,177,0.35)]
-    hover:shadow-[0_24px_60px_rgba(31,169,177,0.55)]
-    transition-all duration-500
-    animate-[float_6s_ease-in-out_infinite]
-  "
->
-  <div className="flex flex-col gap-0.5">
-    <span className="text-xs uppercase tracking-widest text-amber-700">
-      TV Guide
-    </span>
-
-    <span className="text-sm font-medium text-amber-900 leading-snug flex items-center gap-2">
-      <Tv className="w-4 h-4" />
-      Looking to buy a TV?
-    </span>
-
-    <span className="text-xs text-amber-800 opacity-80">
-      Here’s why Deckoviz DASP might be the smartest screen you’ll ever bring home.
-    </span>
-  </div>
-</button>
-{/* 📘 Floating DASP Guide Button (RIGHT) */}
-<button
-  onClick={() => navigate("/dasp-guide")}
-  className="
-    hidden lg:flex
-    absolute right-6 top-[4%] -translate-y-1/2
-    z-10
-    max-w-[520px]
-    px-10 py-1
-    rounded-[999px]
-    text-left
-    mt-4
-    bg-gradient-to-br from-violet-500 via-indigo-500 to-violet-600
-    shadow-[0_0_40px_rgba(99,102,241,0.5)]
-    hover:shadow-[0_0_60px_rgba(99,102,241,0.7)]
-    transition-all duration-500
-    animate-[float_6s_ease-in-out_infinite]
-  "
->
-  <div className="flex flex-col gap-0.5 ">
-    
-
-    <span className="text-sm font-medium text-white leading-snug flex items-center gap-2">
-      <Sparkles className="w-4 h-4" />
-      Our Founding Thesis
-    </span>
-
-    <span className="text-xs text-indigo-100 opacity-90">
-      Everything you need to know before choosing your perfect smart art frame.
-    </span>
-  </div>
-</button>
-
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-white" />
-
-          {/* Subtle dot pattern */}
-          <div
-            className="absolute inset-0 opacity-[0.08]"
-            style={{
-              backgroundImage: "radial-gradient(circle, #7d39ec 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-
-          {/* Gradient decorative elements */}
-          <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-br from-indigo-200/25 via-fuchsia-200/15 to-orange-200/25 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gradient-to-br from-indigo-200/20 via-fuchsia-200/25 to-pink-200/15 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-gradient-to-r from-indigo-100/25 via-fuchsia-100/15 to-orange-100/25 rounded-full blur-3xl"></div>
+      <section id="pricing" className="py-12 sm:py-16 lg:py-16 relative overflow-hidden"
+        style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}
+      >
+        {/* Enterprise Indigo Blobs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+          <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
+          <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
+          <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
+          <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
+          <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
+          <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
         </div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative z-10 ">
           {/* Header */}
           <div className="text-center mb-12 sm:mb-16 relative">
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-to-r from-violet-400 to-fuchsia-400 rounded-full opacity-20 blur-2xl "></div>
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-8 w-32 h-32 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-full opacity-20 blur-2xl "></div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-12 mb-4 sm:mb-6 relative" style={{ fontFamily: "'Playfair Display', serif" }}>
-              <span className="text-gray-900">Simple</span> <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">Pricing</span>
+              <span className="text-gray-900">Deckoviz</span> <span className="italic bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">Pricing</span>
             </h2>
 
             {/* Special Offer Banner */}
             <div className="mb-8 flex justify-center">
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-orange-400 via-fuchsia-500 to-orange-500 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <div className="relative bg-gradient-to-r from-orange-400 via-fuchsia-500 to-orange-400 text-white px-7 py-2.5 rounded-lg leading-none flex items-center">
+                <div className="absolute -inset-1 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-7 py-2.5 rounded-lg leading-none flex items-center">
                   <Gift className="w-5 h-5 mr-2" />
                   <span className="text-sm sm:text-base font-semibold">
-                    Special $50 discount for our first 5000 customers - grab it while you can!
+                    Special $100 discount for our first 2000 customers - grab it while you can!
                   </span>
                   <Zap className="w-5 h-5 ml-2" />
                 </div>
@@ -388,21 +313,28 @@ export default function Pricing() {
 
             <p className="text-lg text-gray-800 max-w-4xl mx-auto leading-relaxed px-4">
               Choose the perfect Deckoviz frame to match your space, your dreams, and your lifestyle.
-              <span className="font-semibold text-violet-600"> Enjoy early bird discounts of 20% off</span> while
+              <span className="font-semibold text-[#2563EB]"> Enjoy early bird discounts</span> while
               discounts still apply!
             </p>
+
           </div>
 
           {/* Pricing Cards - Row 1 */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mb-8 sm:mb-12">
             {pricingTiers.map((tier, index) => (
               <Card
-  className={`group relative transition-all duration-500 hover:-translate-y-2 flex flex-col backdrop-blur-sm border-2 ${
-    tier.isPopular
-      ? "border-violet-300 shadow-2xl bg-gradient-to-br from-white via-violet-50 to-fuchsia-50 shadow-violet-200/50"
-      : "border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200"
-  }`}
->
+                className={`group relative transition-all duration-500 hover:-translate-y-2 flex flex-col`}
+                style={{
+                  background: tier.isPopular ? "rgba(255, 255, 255, 0.35)" : "rgba(255, 255, 255, 0.25)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  border: tier.isPopular ? "1px solid rgba(37, 99, 235, 0.40)" : "1px solid rgba(255, 255, 255, 0.45)",
+                  borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+                  boxShadow: tier.isPopular 
+                    ? "0 20px 40px rgba(37, 99, 235, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.75)" 
+                    : "0 12px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.65)"
+                }}
+              >
   {/* ✅ IMAGE */}
   <div className="relative overflow-hidden rounded-t-2xl">
     <img
@@ -416,20 +348,20 @@ export default function Pricing() {
   {/* Popular badge */}
   {tier.isPopular && (
     <div className="absolute top-4 left-4 z-20">
-      <Badge className="bg-violet-600 text-white px-3 py-1 text-xs font-bold shadow-lg">
+      <Badge className="bg-[#2563EB] text-white px-3 py-1 text-xs font-bold shadow-lg">
         <Star size={12} className="mr-1" />
         Most Popular
       </Badge>
     </div>
   )}
   <CardHeader className="text-center pb-4">
-                  <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-violet-600 transition-colors duration-300">
+                  <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-[#2563EB] transition-colors duration-300">
                     {tier.name}
                   </CardTitle>
 
                   <div className="mb-4">
                     {tier.price === 0 ? (
-                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+                      <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
                         Custom
                       </div>
                     ) : (
@@ -444,7 +376,7 @@ export default function Pricing() {
 
                         {/* Current price with pounds */}
                         <div className="flex items-baseline justify-center flex-wrap">
-                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">${tier.price}</span>
+                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">${tier.price}</span>
                           <span className="text-2xl sm:text-3xl font-semibold text-gray-700 ml-2">
                             (£{tier.gbpPrice})
                           </span>
@@ -463,7 +395,7 @@ export default function Pricing() {
                   <div className="space-y-3 sm:space-y-4">
                     {tier.features.slice(0, 5).map((feature, featureIndex) => (
                       <div key={featureIndex} className="flex items-start">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-600 flex items-center justify-center mr-3 mt-0.5">
+                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#2563EB] flex items-center justify-center mr-3 mt-0.5">
                           <Check size={12} className="text-white" />
                         </div>
                         <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
@@ -475,7 +407,7 @@ export default function Pricing() {
                     <Button
                       variant="ghost"
                       onClick={() => openModal(tier)}
-                      className="w-full mt-4 text-violet-600 hover:text-violet-700 hover:bg-violet-50"
+                      className="w-full mt-4 text-[#2563EB] hover:text-[#182A4A] hover:bg-[#2563EB]/10"
                     >
                       See all {tier.features.length} features
                     </Button>
@@ -486,8 +418,8 @@ export default function Pricing() {
                   <Button
                     className={`w-full py-3 sm:py-4 font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] border-0 ${
                       tier.isPopular
-                        ? "bg-gradient-to-r from-violet-600 via-fuchsia-600 to-orange-500 hover:from-violet-700 hover:via-fuchsia-700 hover:to-orange-600 text-white shadow-2xl hover:shadow-violet-500/50"
-                        : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-violet-600 hover:to-fuchsia-600 text-white shadow-xl hover:shadow-2xl"
+                        ? "bg-gradient-to-r from-[#182A4A] to-[#2563EB] hover:from-[#13223B] hover:to-[#1D4ED8] text-white shadow-2xl hover:shadow-[#2563EB]/50"
+                        : "bg-gradient-to-r from-gray-800 to-gray-900 hover:from-[#182A4A] hover:to-[#2563EB] text-white shadow-xl hover:shadow-2xl"
                     }`}
                     onClick={() => handleBuyNow(tier)}
                   >
@@ -501,16 +433,22 @@ export default function Pricing() {
           
 
           {/* Horizontally Scrollable Pricing Cards - Row 2 */}
-          <div className="flex overflow-x-auto space-x-6 lg:space-x-8 pb-8 -mx-4 px-4 scrollbar-thin scrollbar-thumb-violet-200 scrollbar-track-gray-100">
+          <div className="flex overflow-x-auto space-x-6 lg:space-x-8 pb-8 -mx-4 px-4 scrollbar-thin scrollbar-thumb-[#2563EB]/30 scrollbar-track-gray-100">
             {largeFormatTiers.map((tier, index) => (
               <div key={index} className="flex-shrink-0 w-full max-w-sm sm:w-80">
              <Card
-  className={`group relative transition-all duration-500 hover:-translate-y-2 flex flex-col backdrop-blur-sm border-2 ${
-    tier.isPopular
-      ? "border-violet-300 shadow-2xl bg-gradient-to-br from-white via-violet-50 to-fuchsia-50 shadow-violet-200/50"
-      : "border-gray-200 hover:shadow-2xl bg-white/80 hover:bg-gradient-to-br hover:from-white hover:via-fuchsia-50 hover:to-orange-50 hover:border-fuchsia-200"
-  }`}
->
+                className={`group relative transition-all duration-500 hover:-translate-y-2 flex flex-col`}
+                style={{
+                  background: tier.isPopular ? "rgba(255, 255, 255, 0.35)" : "rgba(255, 255, 255, 0.25)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  border: tier.isPopular ? "1px solid rgba(37, 99, 235, 0.40)" : "1px solid rgba(255, 255, 255, 0.45)",
+                  borderTop: "1px solid rgba(255, 255, 255, 0.75)",
+                  boxShadow: tier.isPopular 
+                    ? "0 20px 40px rgba(37, 99, 235, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.75)" 
+                    : "0 12px 40px rgba(31, 38, 135, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.65)"
+                }}
+              >
   {/* ✅ IMAGE */}
   <div className="relative overflow-hidden rounded-t-2xl">
     <img
@@ -524,7 +462,7 @@ export default function Pricing() {
   {/* Popular badge */}
   {tier.isPopular && (
     <div className="absolute top-4 left-4 z-20">
-      <Badge className="bg-violet-600 text-white px-3 py-1 text-xs font-bold shadow-lg">
+      <Badge className="bg-[#2563EB] text-white px-3 py-1 text-xs font-bold shadow-lg">
         <Star size={12} className="mr-1" />
         Most Popular
       </Badge>
@@ -532,7 +470,7 @@ export default function Pricing() {
   )}
 
                   <CardHeader className="text-center pb-4">
-                    <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-violet-600 transition-colors duration-300">
+                    <CardTitle className="text-2xl sm:text-3xl font-bold mb-3 group-hover:text-[#2563EB] transition-colors duration-300">
                       {tier.name}
                     </CardTitle>
 
@@ -548,7 +486,7 @@ export default function Pricing() {
 
                         {/* Current price with pounds */}
                         <div className="flex items-baseline justify-center flex-wrap">
-                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">${tier.price}</span>
+                          <span className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">${tier.price}</span>
                           <span className="text-2xl sm:text-3xl font-semibold text-gray-700 ml-2">
                             (£{tier.gbpPrice})
                           </span>
@@ -566,7 +504,7 @@ export default function Pricing() {
                     <div className="space-y-3 sm:space-y-4">
                       {tier.features.slice(0, 5).map((feature, featureIndex) => (
                         <div key={featureIndex} className="flex items-start">
-                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-600 flex items-center justify-center mr-3 mt-0.5">
+                          <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#2563EB] flex items-center justify-center mr-3 mt-0.5">
                             <Check size={12} className="text-white" />
                           </div>
                           <span className="text-gray-700 text-sm leading-relaxed">{feature}</span>
@@ -578,7 +516,7 @@ export default function Pricing() {
                       <Button
                         variant="ghost"
                         onClick={() => openModal(tier)}
-                        className="w-full mt-4 text-violet-600 hover:text-violet-700 hover:bg-violet-50"
+                        className="w-full mt-4 text-[#2563EB] hover:text-[#182A4A] hover:bg-[#2563EB]/10"
                       >
                         See all {tier.features.length} features
                       </Button>
@@ -587,7 +525,7 @@ export default function Pricing() {
 
                   <CardFooter>
                     <Button
-                      className={`w-full py-3 sm:py-4 font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] border-0 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-violet-600 hover:to-fuchsia-600 text-white shadow-xl hover:shadow-2xl`}
+                      className={`w-full py-3 sm:py-4 font-semibold text-base sm:text-lg transition-all duration-300 hover:scale-[1.02] border-0 bg-gradient-to-r from-gray-800 to-gray-900 hover:from-[#182A4A] hover:to-[#2563EB] text-white shadow-xl hover:shadow-2xl`}
                       onClick={() => handleBuyNow(tier)}
                     >
                       {tier.buttonText}
@@ -599,11 +537,73 @@ export default function Pricing() {
           </div>
 
           {/* Feature Comparison Link */}
-          <div className="text-center mt-8">
+          <div className="text-center mt-8 mb-12">
             <Button variant="ghost" className="text-violet-600 hover:text-violet-700 text-base sm:text-lg group">
               View complete feature comparison
               <span className="ml-2 transition-all duration-300 group-hover:translate-x-1">→</span>
             </Button>
+          </div>
+
+          {/* Floating Buttons Moved Below Header */}
+          <div className="flex flex-col lg:flex-row justify-center items-center gap-6 mt-10 px-4">
+            {/* 📺 TV Bubble Button */}
+            <button
+              onClick={() => navigate("/tv")}
+              className="
+                flex w-full lg:w-auto
+                max-w-[510px]
+                px-8 py-3
+                rounded-[999px]
+                text-left
+                bg-gradient-to-br from-[#b7f3f0] via-[#6fd6d4] to-[#1fa9b1]
+                shadow-[0_16px_40px_rgba(31,169,177,0.35)]
+                hover:shadow-[0_24px_60px_rgba(31,169,177,0.55)]
+                transition-all duration-500
+                animate-[float_6s_ease-in-out_infinite]
+                mt-6 lg:mt-8
+              "
+            >
+              <div className="flex flex-col gap-0.5">
+                <span className="text-xs uppercase tracking-widest text-amber-700">
+                  TV Guide
+                </span>
+                <span className="text-sm font-medium text-amber-900 leading-snug flex items-center gap-2">
+                  <Tv className="w-4 h-4" />
+                  Looking to buy a TV?
+                </span>
+                <span className="text-xs text-amber-800 opacity-80">
+                  Here’s why Deckoviz DASP might be the smartest screen you’ll ever bring home.
+                </span>
+              </div>
+            </button>
+
+            {/* 📘 DASP Guide Button */}
+            <button
+              onClick={() => navigate("/dasp-guide")}
+              className="
+                flex w-full lg:w-auto
+                max-w-[520px]
+                px-8 py-3
+                rounded-[999px]
+                text-left
+                bg-gradient-to-br from-[#182A4A] to-[#2563EB]
+                shadow-[0_0_40px_rgba(24,42,74,0.5)]
+                hover:shadow-[0_0_60px_rgba(24,42,74,0.7)]
+                transition-all duration-500
+                animate-[float_6s_ease-in-out_infinite]
+                [animation-delay:1s]
+              "
+            >
+              <div className="flex flex-col gap-0.5">
+                <span className="text-sm font-medium text-white leading-snug flex items-center gap-2">
+                  <Sparkles className="w-4 h-4" />
+                  Our Founding Thesis
+                </span>
+                <span className="text-xs text-white opacity-90">
+                  Everything you need to know before choosing your perfect smart art frame.
+                </span>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -612,7 +612,7 @@ export default function Pricing() {
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 px-8 py-6 text-white">
+              <div className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] px-8 py-6 text-white">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
@@ -620,7 +620,7 @@ export default function Pricing() {
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold">{selectedTier.name} Plan</h3>
-                      <p className="text-violet-100 text-sm">Complete feature overview</p>
+                      <p className="text-white/80 text-sm">Complete feature overview</p>
                     </div>
                   </div>
                   <div className="text-right">
@@ -629,7 +629,7 @@ export default function Pricing() {
                     ) : (
                       <div>
                         <div className="text-3xl font-bold">${selectedTier.price}</div>
-                        <div className="text-violet-200 text-sm">per frame</div>
+                        <div className="text-white/70 text-sm">per frame</div>
                       </div>
                     )}
                   </div>
@@ -644,8 +644,8 @@ export default function Pricing() {
 
                 <div className="border-t border-gray-200 pt-6">
                   <div className="flex items-center mb-6">
-                    <div className="w-8 h-8 bg-violet-100 rounded-full flex items-center justify-center mr-3">
-                      <Check className="w-5 h-5 text-violet-600" />
+                    <div className="w-8 h-8 bg-[#2563EB]/10 rounded-full flex items-center justify-center mr-3">
+                      <Check className="w-5 h-5 text-[#2563EB]" />
                     </div>
                     <h4 className="text-xl font-bold text-gray-900">
                       {selectedTier.features.length} Premium Features Included
@@ -656,9 +656,9 @@ export default function Pricing() {
                     {selectedTier.features.map((feature, index) => (
                       <div
                         key={index}
-                        className="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-violet-50 transition-colors duration-200 group"
+                        className="flex items-start p-4 bg-gray-50 rounded-xl hover:bg-[#2563EB]/5 transition-colors duration-200 group"
                       >
-                        <div className="flex-shrink-0 w-6 h-6 bg-violet-600 rounded-full flex items-center justify-center mr-4 mt-0.5 group-hover:bg-violet-700 transition-colors">
+                        <div className="flex-shrink-0 w-6 h-6 bg-[#2563EB] rounded-full flex items-center justify-center mr-4 mt-0.5 group-hover:bg-[#182A4A] transition-colors">
                           <Check size={14} className="text-white" />
                         </div>
                         <span className="text-gray-700 leading-relaxed font-medium">{feature}</span>
@@ -674,7 +674,7 @@ export default function Pricing() {
                   Close Details
                 </Button>
                 <Button
-                  className="flex-1 bg-violet-600 hover:bg-violet-700 text-white"
+                  className="flex-1 bg-[#2563EB] hover:bg-[#182A4A] text-white"
                   onClick={() => {
                     closeModal()
                     handleBuyNow()

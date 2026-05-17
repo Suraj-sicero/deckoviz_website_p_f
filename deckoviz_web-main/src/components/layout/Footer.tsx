@@ -4,7 +4,11 @@ import {
   Instagram,
   Linkedin,
   Facebook,
-  Twitter
+  Twitter,
+  Wand2,
+  FlaskConical,
+  BookOpen,
+  Brush
 } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -182,17 +186,17 @@ const Footer = () => {
             >
               <a
                 href="/creative-studio"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
                 style={{
                   background: "linear-gradient(135deg, #60A5FA, #2563EB, #0ea5e9, #2563EB, #60A5FA)",
                   backgroundSize: "300% 300%",
                   animation: "footerGradientFlow 4s ease infinite",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(59,130,246,0.4)",
                 }}
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <span className="relative z-10">✨ Creative Studio</span>
+                <Wand2 className="relative z-10 w-4 h-4" />
+                <span className="relative z-10">Creative Studio</span>
               </a>
 
               <style dangerouslySetInnerHTML={{__html: `
@@ -204,17 +208,17 @@ const Footer = () => {
               `}} />
               <a
                 href="/experimental-art-modes"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
                 style={{
                   background: "linear-gradient(135deg, #7c3aed, #ec4899, #3b82f6, #ec4899, #7c3aed)",
                   backgroundSize: "300% 300%",
                   animation: "footerGradientFlow 4s ease infinite",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(124,58,237,0.4)",
                 }}
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <span className="relative z-10">🎨 Experimental Art Modes</span>
+                <FlaskConical className="relative z-10 w-4 h-4" />
+                <span className="relative z-10">Experimental Art Modes</span>
                 <svg
                   className="relative z-10 group-hover:translate-x-1 transition-transform"
                   width="16"
@@ -233,17 +237,17 @@ const Footer = () => {
 
               <a
                 href="/deckoviz-storytelling"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
                 style={{
-                  background: "linear-gradient(135deg, #f59e0b, #d97706, #b45309, #d97706, #f59e0b)",
+                  background: "linear-gradient(135deg, #7dd3fc, #0ea5e9, #0284c7, #0ea5e9, #7dd3fc)",
                   backgroundSize: "300% 300%",
                   animation: "footerGradientFlow 4s ease infinite",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(245,158,11,0.4)",
                 }}
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <span className="relative z-10">📖 Deckoviz Storytelling</span>
+                <BookOpen className="relative z-10 w-4 h-4" />
+                <span className="relative z-10">Deckoviz Storytelling</span>
                 <svg
                   className="relative z-10 group-hover:translate-x-1 transition-transform"
                   width="16"
@@ -262,17 +266,17 @@ const Footer = () => {
 
               <a
                 href="/vizzy-canvas"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
                 style={{
                   background: "linear-gradient(135deg, #10b981, #059669, #047857, #059669, #10b981)",
                   backgroundSize: "300% 300%",
                   animation: "footerGradientFlow 4s ease infinite",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(16,185,129,0.4)",
                 }}
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <span className="relative z-10">✨ Vizzy Creation Canvas</span>
+                <Brush className="relative z-10 w-4 h-4" />
+                <span className="relative z-10">Vizzy Creation Canvas</span>
                 <svg
                   className="relative z-10 group-hover:translate-x-1 transition-transform"
                   width="16"

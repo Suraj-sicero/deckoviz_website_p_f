@@ -3,7 +3,12 @@ import { Truck, Clock, MapPin, AlertCircle } from 'lucide-react';
 
 const ShippingPolicy: React.FC = () => {
   return (
-    <section className="section-padding bg-white">
+    <section className="relative section-padding overflow-hidden" style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(99,102,241,0.18)" }} />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.15)" }} />
+      </div>
       <div className="container-custom">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 mt-4 text-center">
@@ -19,7 +24,7 @@ const ShippingPolicy: React.FC = () => {
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Shipping Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-50 p-6 rounded-lg">
+                  <div className="p-6 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                     <div className="flex items-center mb-4">
                       <Truck className="w-6 h-6 text-primary-600 mr-3" />
                       <h3 className="text-xl font-medium">Shipping Methods</h3>
@@ -30,7 +35,7 @@ const ShippingPolicy: React.FC = () => {
                       <li>International Shipping (5-10 business days)</li>
                     </ul>
                   </div>
-                  <div className="bg-gray-50 p-6 rounded-lg">
+                  <div className="p-6 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                     <div className="flex items-center mb-4">
                       <Clock className="w-6 h-6 text-primary-600 mr-3" />
                       <h3 className="text-xl font-medium">Processing Time</h3>
@@ -44,7 +49,7 @@ const ShippingPolicy: React.FC = () => {
 
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Shipping Rates</h2>
-                <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="p-6 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                   <ul className="list-disc pl-6 text-gray-600">
                     <li>Standard Shipping: $9.99</li>
                     <li>Express Shipping: $19.99</li>
@@ -56,7 +61,7 @@ const ShippingPolicy: React.FC = () => {
 
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Shipping Areas</h2>
-                <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="p-6 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                   <div className="flex items-center mb-4">
                     <MapPin className="w-6 h-6 text-primary-600 mr-3" />
                     <h3 className="text-xl font-medium">We Ship To</h3>
@@ -69,7 +74,7 @@ const ShippingPolicy: React.FC = () => {
 
               <section>
                 <h2 className="text-2xl font-semibold mb-4">Important Notes</h2>
-                <div className="bg-gray-50 p-6 rounded-lg">
+                <div className="p-6 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                   <div className="flex items-center mb-4">
                     <AlertCircle className="w-6 h-6 text-primary-600 mr-3" />
                     <h3 className="text-xl font-medium">Please Note</h3>
@@ -95,7 +100,7 @@ const ShippingPolicy: React.FC = () => {
                 <p className="text-gray-600">
                   For any questions about shipping, please contact our customer service team:
                 </p>
-                <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+                <div className="mt-4 p-4 rounded-lg backdrop-blur-sm" style={{ background: "rgba(255,255,255,0.30)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
                   <p className="text-gray-600">
                     Email: shipping@deckoviz.com<br />
                     Phone: +1 (555) 123-4567
