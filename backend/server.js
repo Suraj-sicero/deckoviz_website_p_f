@@ -11,7 +11,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 dotenv.config();
-import { sequelize } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
+import { sequelize, dbUrl } from "./config/db.js"; // ✅ PostgreSQL (Sequelize)
 import blogRoutes from "./routes/blogRoutes.js";
 import creativeToolsRoutes from "./routes/creativeTools.js";
 import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
@@ -192,6 +192,50 @@ app.get("/api/logs", (req, res) => {
     res.status(404).send("No log file found");
   }
 });
+
+// ===== DEBUG DATABASE URL ENDPOINT =====
+app.get("/api/debug-db-url", async (req, res) => {
+  let maskedUrl = "N/A";
+  if (dbUrl) {
+    try {
+      const u = new URL(dbUrl);
+      if (u.password) u.password = "********";
+      maskedUrl = u.toString();
+    } catch {
+      maskedUrl = dbUrl.replace(/:([^:@]+)@/, ":********@");
+    }
+  }
+
+  let connectionStatus = "unknown";
+  let connectionError = null;
+  try {
+    await sequelize.authenticate();
+    connectionStatus = "connected successfully";
+  } catch (err) {
+    connectionStatus = "failed";
+    connectionError = {
+      message: err.message,
+      name: err.name,
+      original: err.original ? err.original.message : null,
+      parent: err.parent ? err.parent.message : null,
+    };
+  }
+
+  res.json({
+    env: {
+      DATABASE_URL_exists: !!process.env.DATABASE_URL,
+      PG_HOST_exists: !!process.env.PG_HOST,
+      PG_HOST: process.env.PG_HOST || null,
+      PG_PORT: process.env.PG_PORT || null,
+      PG_USER: process.env.PG_USER || null,
+      PG_DATABASE: process.env.PG_DATABASE || null,
+    },
+    resolvedDbUrlMasked: maskedUrl,
+    connectionStatus,
+    connectionError,
+  });
+});
+
 
 // ===== ROUTES =====
 // ✅ API routes (for frontend JSON calls)

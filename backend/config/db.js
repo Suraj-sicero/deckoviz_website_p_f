@@ -58,3 +58,6 @@ export const sequelize = dbUrl
       storage: "./database.sqlite",
       logging: false,
     });
+
+export { dbUrl };
+
