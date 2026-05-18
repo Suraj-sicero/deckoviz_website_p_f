@@ -822,7 +822,7 @@ const Navbar: React.FC = () => {
         {/* Mobile Navigation - Premium Glassmorphic Drawer */}
         <div
           className={`md:hidden fixed left-3 right-3 z-40 transition-all duration-500 ease-out ${
-            isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
+            isOpen ? 'opacity-100 visible translate-y-0 pointer-events-auto' : 'opacity-0 invisible -translate-y-4 pointer-events-none'
           }`}
           style={{ top: '4.5rem' }}
         >
