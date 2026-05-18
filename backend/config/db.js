@@ -8,26 +8,36 @@ let dbUrl = process.env.DATABASE_URL;
 
 // If DATABASE_URL is not set but individual PG_* variables are set, construct it
 if (!dbUrl && process.env.PG_HOST) {
-  let host = process.env.PG_HOST;
-  // Dynamic self-healing: Force correct Singapore region pooler host for project xedmnwhljuhbewqykggz
-  if (host.includes("pooler.supabase.com")) {
-    host = "aws-0-ap-southeast-1.pooler.supabase.com";
-  }
-  let user = process.env.PG_USER || "postgres";
-  // Dynamic self-healing: Auto-append project ref if using Supabase pooler but missing tenant ID
-  if (host.includes("pooler.supabase.com") && !user.includes("xedmnwhljuhbewqykggz")) {
-    user = `${user}.xedmnwhljuhbewqykggz`;
-  }
-  dbUrl = `postgresql://${user}:${process.env.PG_PASSWORD}@${host}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
+  const host = process.env.PG_HOST;
+  const user = process.env.PG_USER || "postgres";
+  dbUrl = `postgresql://${user}:${process.env.PG_PASSWORD || ""}@${host}:${process.env.PG_PORT || 5432}/${process.env.PG_DATABASE || "postgres"}`;
 }
 
-// Proactively patch DATABASE_URL if user provided the pooler URL directly but forgot/mispelled the tenant ID or host region
-if (dbUrl && dbUrl.includes("pooler.supabase.com")) {
-  // Force the correct Singapore region host
-  dbUrl = dbUrl.replace(/@[^:]+pooler\.supabase\.com/, "@aws-0-ap-southeast-1.pooler.supabase.com");
-  // Force correct username suffix
-  if (!dbUrl.includes("xedmnwhljuhbewqykggz")) {
-    dbUrl = dbUrl.replace("postgresql://postgres:", "postgresql://postgres.xedmnwhljuhbewqykggz:");
+// Dynamic self-healing for Supabase Connection Pooler:
+// Automatically detects and parses pooler endpoints, forcing correct Singapore region
+// and appending the project reference (xedmnwhljuhbewqykggz) to the username to resolve authentication routing failures.
+if (dbUrl) {
+  try {
+    const parsedUrl = new URL(dbUrl);
+    if (parsedUrl.hostname.includes("pooler.supabase.com")) {
+      // Force correct Singapore regional pooler
+      parsedUrl.hostname = "aws-0-ap-southeast-1.pooler.supabase.com";
+      
+      // Auto-append project ref if missing from the user credentials
+      const username = parsedUrl.username;
+      if (username && !username.includes("xedmnwhljuhbewqykggz")) {
+        parsedUrl.username = `${username}.xedmnwhljuhbewqykggz`;
+      }
+      dbUrl = parsedUrl.toString();
+    }
+  } catch (urlErr) {
+    // Fallback to regex patch in case of non-standard connection format
+    if (dbUrl.includes("pooler.supabase.com")) {
+      dbUrl = dbUrl.replace(/@[^:]+pooler\.supabase\.com/, "@aws-0-ap-southeast-1.pooler.supabase.com");
+      if (!dbUrl.includes("xedmnwhljuhbewqykggz")) {
+        dbUrl = dbUrl.replace(/:\/\/(postgres):/, "://$1.xedmnwhljuhbewqykggz:");
+      }
+    }
   }
 }
 
