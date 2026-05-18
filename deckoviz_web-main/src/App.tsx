@@ -202,6 +202,7 @@ import ExoplanetWeather from "./components/developerSpecs/ExoplanetWeather";
 import InternetHeartbeat from "./components/developerSpecs/InternetHeartbeat";
 import HapticMemory from "./components/developerSpecs/HapticMemory";
 import SilenceArchitecture from "./components/developerSpecs/SilenceArchitecture";
+import MusicResponsiveArt from "./components/developerSpecs/MusicResponsiveArt";
 import CreateWorld from "./pages/CreateWorld";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
 import FlagshipGamesPage from "./components/flagshipGames/FlagshipGamesPage";
@@ -541,6 +542,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/developer-specs/internet-heartbeat" element={<InternetHeartbeat />} />
         <Route path="/developer-specs/haptic-memory" element={<HapticMemory />} />
         <Route path="/developer-specs/silence-architecture" element={<SilenceArchitecture />} />
+        <Route path="/developer-specs/music-responsive-art" element={<MusicResponsiveArt />} />
         <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
         <Route path="/create-world" element={<ProtectedRoute><CreateWorld /></ProtectedRoute>} />
 
@@ -560,7 +562,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/flagship-games/oracle/*" element={<OracleApp />} />
       </Routes>
       </main>
-      <Footer />
+      {!isDeveloperTool && <Footer />}
       <VizzyChat />
     </>
   );
