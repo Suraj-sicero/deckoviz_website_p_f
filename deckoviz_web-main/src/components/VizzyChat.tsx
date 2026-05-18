@@ -17,15 +17,16 @@ interface Message {
 
 import { API_BASE_URL } from "../lib/constants";
 
-const VIZZY_API = `${API_BASE_URL}/api/wizzy`;
+const VIZZY_API = `${API_BASE_URL}/api/vizzy`;
 
 const INITIAL_MESSAGE: Message = {
   role: "assistant",
-  content: `Hey, I'm Wizzy, and I am so glad to have you here. I'd love to answer any questions you have about Deckoviz and how it could help you. Anything at all, let me know. I'm right here at your service!\n\nAny curiosities you have about any features, any pricing details, etc., I'm all yours. I'm here to help you understand our philosophy, our thesis, why we built it, who it is for, and any question that you have at all. I'm happy to answer it.`,
+  content: "Hi, I'm Vizzy! Quick question before we dive in - would you like to take a short quiz so I can show you exactly how Deckoviz could work in your space? It takes about two minutes and I'll put together a personalised snapshot for you at the end.",
   timestamp: new Date(),
 };
 
 const SUGGESTED_PROMPTS = [
+  "Would you like to take a short quiz that will help you understand how Deckoviz might be most useful for you in your space?",
   "What is the core idea behind Deckoviz?",
   "How does it change the vibe of a living space?",
   "Can it be used for commercial spaces like restaurants?",

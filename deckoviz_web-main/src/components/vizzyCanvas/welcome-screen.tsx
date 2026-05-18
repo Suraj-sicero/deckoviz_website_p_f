@@ -3,6 +3,7 @@ import { cn } from "./lib/utils"
 import { getAllSuggestions } from "./lib/suggestions"
 import type { CreativeMode, SuggestionCategory } from "./lib/types"
 import { QuickTemplates } from "./quick-templates"
+import { EnterpriseLibrary } from "./enterprise-library"
 import {
   Palette,
   Camera,
@@ -125,7 +126,7 @@ export function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
           }
         >
           <Home className="size-4" />
-          Personal
+          Home
         </button>
         <button
           onClick={() => { setMode("business"); setExpandedCategory(null) }}
@@ -140,7 +141,7 @@ export function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
           }
         >
           <Briefcase className="size-4" />
-          Business
+          Enterprises
         </button>
       </div>
 
@@ -160,8 +161,12 @@ export function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
         ))}
       </div>
 
-      {/* Quick Templates — 12 visible by default, click + to expand all 120 */}
-      <QuickTemplates onSelect={onSuggestionClick} />
+      {/* Templates / Library display depending on active tab */}
+      {mode === "home" ? (
+        <QuickTemplates onSelect={onSuggestionClick} />
+      ) : (
+        <EnterpriseLibrary onSelect={onSuggestionClick} />
+      )}
 
       {/* Bottom hint */}
       <p

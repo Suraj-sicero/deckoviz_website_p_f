@@ -16,6 +16,7 @@ import blogRoutes from "./routes/blogRoutes.js";
 import creativeToolsRoutes from "./routes/creativeTools.js";
 import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
 import wizzyRoutes from "./routes/wizzyRoutes.js";
+import vizzyRoutes from "./routes/vizzyRoutes.js";
 import dreamRoutes from "./routes/dreamRoutes.js";
 import memoryRoutes from "./routes/memoryRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
@@ -243,6 +244,7 @@ app.use("/api", blogRoutes); // Example: https://deckoviz-demo.onrender.com/api/
 app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
 app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
+app.use("/api/vizzy", vizzyRoutes);
 app.use("/api/vizzy-canvas", vizzyCanvasRoutes);
 app.use("/api", uploadRoutes);
 app.use("/api", dreamRoutes);
