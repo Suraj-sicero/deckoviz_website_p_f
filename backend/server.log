@@ -2665,3 +2665,80 @@
 [2026-05-18T05:57:58.473Z] LOG: ✅ Redis Connected
 [2026-05-18T05:58:00.495Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-05-18T05:58:04.414Z] LOG: Dekoviz
+[2026-05-18T06:02:24.897Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:02:24.911Z] LOG: ✅ Redis Connected
+[2026-05-18T06:02:27.242Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:02:30.976Z] LOG: Dekoviz
+[2026-05-18T06:02:33.116Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:02:33.138Z] LOG: ✅ Redis Connected
+[2026-05-18T06:02:35.396Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:02:39.229Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:02:39.236Z] LOG: ✅ Redis Connected
+[2026-05-18T06:02:41.032Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:02:44.841Z] LOG: Dekoviz
+[2026-05-18T06:11:35.875Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:11:35.881Z] LOG: ✅ Redis Connected
+[2026-05-18T06:11:37.637Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:11:41.629Z] LOG: Dekoviz
+[2026-05-18T06:11:44.292Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:11:44.312Z] LOG: ✅ Redis Connected
+[2026-05-18T06:11:46.041Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:11:50.056Z] LOG: Dekoviz
+[2026-05-18T06:22:15.365Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:22:15.373Z] LOG: ✅ Redis Connected
+[2026-05-18T06:22:17.201Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:22:20.853Z] LOG: Dekoviz
+[2026-05-18T06:22:56.198Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:22:56.206Z] LOG: ✅ Redis Connected
+[2026-05-18T06:22:57.997Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:23:01.608Z] LOG: Dekoviz
+[2026-05-18T06:23:14.579Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:23:14.587Z] LOG: ✅ Redis Connected
+[2026-05-18T06:23:16.542Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:23:20.238Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:23:20.248Z] LOG: ✅ Redis Connected
+[2026-05-18T06:23:22.074Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:23:25.209Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:23:25.219Z] LOG: ✅ Redis Connected
+[2026-05-18T06:23:27.585Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:23:31.658Z] LOG: Dekoviz
+[2026-05-18T06:27:24.152Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:27:24.157Z] LOG: ✅ Redis Connected
+[2026-05-18T06:27:26.032Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:27:29.901Z] LOG: Dekoviz
+[2026-05-18T06:27:58.328Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:27:58.338Z] LOG: ✅ Redis Connected
+[2026-05-18T06:28:00.776Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:28:04.473Z] LOG: Dekoviz
+[2026-05-18T06:28:11.399Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:28:11.408Z] LOG: ✅ Redis Connected
+[2026-05-18T06:28:13.203Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:28:16.014Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:28:16.022Z] LOG: ✅ Redis Connected
+[2026-05-18T06:28:17.788Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:28:21.520Z] LOG: Dekoviz
+[2026-05-18T06:28:26.452Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:28:26.459Z] LOG: ✅ Redis Connected
+[2026-05-18T06:28:28.233Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:28:31.929Z] LOG: Dekoviz
+[2026-05-18T06:41:38.513Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:41:40.756Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T06:41:45.510Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T06:41:47.324Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T08:05:09.054Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T08:05:11.050Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T08:05:18.962Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T08:05:20.763Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T08:05:54.394Z] ERROR: Vizzy Chat Error: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent: [404 Not Found] This model models/gemini-2.0-flash-lite is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.
+[2026-05-18T08:05:57.546Z] ERROR: Vizzy Chat Error: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent: [404 Not Found] This model models/gemini-2.0-flash-lite is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.
+[2026-05-18T08:06:00.838Z] ERROR: Vizzy Chat Error: Error: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent: [404 Not Found] This model models/gemini-2.0-flash-lite is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.
+[2026-05-18T08:21:26.900Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T08:21:28.733Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T08:21:42.513Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T08:21:44.319Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T08:21:47.104Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T08:21:49.064Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T08:21:55.170Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T08:21:56.998Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T08:22:02.229Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T08:22:04.006Z] LOG: ✅ PostgreSQL connected via Sequelize.
