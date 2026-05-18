@@ -503,6 +503,14 @@ const developerTools = [
     color: "from-blue-400/20 to-slate-900/40",
     borderColor: "group-hover:border-blue-400/50"
   },
+  {
+    title: "Music Responsive Art",
+    description: "An audio-reactive organic particle sphere visualizer responsive to MP3 imports or microphone input with customizable color themes",
+    route: "/developer-specs/music-responsive-art",
+    icon: <Music size={24} className="text-[#ec008c]" />,
+    color: "from-[#ec008c]/20 to-[#00f2fe]/20",
+    borderColor: "group-hover:border-[#ec008c]/50"
+  },
 ];
 
 const ExperimentalArtModes: React.FC = () => {

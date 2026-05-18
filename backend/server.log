@@ -2742,3 +2742,5 @@
 [2026-05-18T08:21:56.998Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-05-18T08:22:02.229Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-05-18T08:22:04.006Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-18T17:14:26.824Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-18T17:14:28.667Z] LOG: ✅ PostgreSQL connected via Sequelize.

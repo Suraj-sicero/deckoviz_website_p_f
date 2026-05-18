@@ -13,7 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Music, Volume2 } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2 } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL } from "../../lib/constants"
@@ -79,12 +79,6 @@ function isVideoGenerationIntent(input: string): boolean {
   ]
   return videoKeywords.some(kw => lower.includes(kw))
 }
-
-function isConversational(input: string): boolean {
-  const conversationKeywords = ["tell me", "explain", "what is", "why", "how", "about", "history"]
-  return conversationKeywords.some(kw => input.toLowerCase().includes(kw))
-}
-  
 
 function buildRefinedPrompt(messages: ChatMessageType[], newInput: string): string {
   const previousImages = messages
@@ -405,7 +399,8 @@ function VizzyChatInner() {
           } catch (error) {
             lastError = error
             retries--
-            console.error("[v0] Music generation attempt failed:", error.message, "Retries left:", retries)
+            const errMsg = error instanceof Error ? error.message : String(error)
+            console.error("[v0] Music generation attempt failed:", errMsg, "Retries left:", retries)
             if (retries > 0) {
               await new Promise(resolve => setTimeout(resolve, 500)) // Wait 500ms before retry
             }
@@ -624,7 +619,7 @@ function VizzyChatInner() {
                 },
               ])
             }
-          } catch (analysisError) {
+          } catch {
             // Silently fail - image generation succeeded even if analysis fails
           }
         }
@@ -690,7 +685,7 @@ function VizzyChatInner() {
     } finally {
       setIsLoading(false)
     }
-  }, [input, isLoading, messages, aspectRatio, uploadedImage])
+  }, [input, isLoading, messages, aspectRatio, uploadedImage, currentChatId, token])
 
   const handleSuggestionClick = useCallback((suggestion: string) => {
     setInput(suggestion)
