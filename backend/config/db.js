@@ -14,14 +14,14 @@ if (!dbUrl && process.env.PG_HOST) {
 }
 
 // Dynamic self-healing for Supabase Connection Pooler:
-// Automatically detects and parses pooler endpoints, forcing correct Singapore region
+// Automatically detects and parses pooler endpoints, forcing correct Singapore region cluster (aws-1)
 // and appending the project reference (xedmnwhljuhbewqykggz) to the username to resolve authentication routing failures.
 if (dbUrl) {
   try {
     const parsedUrl = new URL(dbUrl);
     if (parsedUrl.hostname.includes("pooler.supabase.com")) {
-      // Force correct Singapore regional pooler
-      parsedUrl.hostname = "aws-0-ap-southeast-1.pooler.supabase.com";
+      // Force correct Singapore regional pooler (aws-1 cluster is assigned to this project)
+      parsedUrl.hostname = "aws-1-ap-southeast-1.pooler.supabase.com";
       
       // Auto-append project ref if missing from the user credentials
       const username = parsedUrl.username;
@@ -33,7 +33,7 @@ if (dbUrl) {
   } catch (urlErr) {
     // Fallback to regex patch in case of non-standard connection format
     if (dbUrl.includes("pooler.supabase.com")) {
-      dbUrl = dbUrl.replace(/@[^:]+pooler\.supabase\.com/, "@aws-0-ap-southeast-1.pooler.supabase.com");
+      dbUrl = dbUrl.replace(/@[^:]+pooler\.supabase\.com/, "@aws-1-ap-southeast-1.pooler.supabase.com");
       if (!dbUrl.includes("xedmnwhljuhbewqykggz")) {
         dbUrl = dbUrl.replace(/:\/\/(postgres):/, "://$1.xedmnwhljuhbewqykggz:");
       }

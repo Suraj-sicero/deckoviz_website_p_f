@@ -3,7 +3,16 @@ import { createClient } from "redis";
 dotenv.config();
 
 const client = createClient({
-  url: process.env.REDIS_URL || "redis://localhost:6379"
+  url: process.env.REDIS_URL || "redis://localhost:6379",
+  socket: {
+    reconnectStrategy: (retries) => {
+      if (retries > 3) {
+        // Stop reconnecting to prevent log flooding when Redis is not available
+        return false;
+      }
+      return Math.min(retries * 200, 2000);
+    }
+  }
 });
 
 client.on("error", (err) => console.log("Redis Error:", err));
