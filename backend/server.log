@@ -2754,3 +2754,142 @@
 [2026-05-19T11:33:57.145Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-05-19T11:35:21.190Z] LOG: Postcard generation started for: test
 [2026-05-19T11:35:58.414Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:45:24.839Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T12:45:26.705Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T12:45:35.981Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T12:45:37.849Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T12:49:25.452Z] ERROR: [postcard/generate] TypeError: Cannot destructure property 'businessName' of 'req.body' as it is undefined.
+[2026-05-19T12:50:20.683Z] LOG: Postcard generation started for: The Concrete Bistro
+[2026-05-19T12:50:41.583Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:50:41.733Z] LOG: Blending composite image using Runware...
+[2026-05-19T12:50:41.748Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T12:50:43.339Z] LOG: [Runware Blend] Image uploaded. UUID: 639029a1-cbf4-4416-9f00-9dcc8b96730b
+[2026-05-19T12:50:45.685Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a08dlim3/ws/3/ii/5691348d-ab9c-41bb-8c98-f3155bc1bce6.jpg
+[2026-05-19T12:50:46.861Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T12:51:10.536Z] ERROR: MulterError: Unexpected field
+    at wrappedFileFilter (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/multer/index.js:40:19)
+    at Multipart.<anonymous> (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/multer/lib/make-middleware.js:132:7)
+    at Multipart.emit (node:events:519:28)
+    at HeaderParser.cb (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/busboy/lib/types/multipart.js:358:14)
+    at HeaderParser.push (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/busboy/lib/types/multipart.js:162:20)
+    at SBMH.ssCb [as _cb] (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/busboy/lib/types/multipart.js:394:37)
+    at feed (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/streamsearch/lib/sbmh.js:219:14)
+    at SBMH.push (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/streamsearch/lib/sbmh.js:104:16)
+    at Multipart._write (/home/shashank/Documents/work2/deckoviz-demo/backend/node_modules/busboy/lib/types/multipart.js:567:19)
+    at writeOrBuffer (node:internal/streams/writable:572:12)
+[2026-05-19T12:51:22.151Z] LOG: Postcard generation started for: The Concrete Bistro
+[2026-05-19T12:51:27.536Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:51:27.545Z] LOG: Blending composite image using Runware...
+[2026-05-19T12:51:27.547Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T12:51:28.779Z] LOG: [Runware Blend] Image uploaded. UUID: 1419561b-e5a2-4196-91f6-5456a25783c4
+[2026-05-19T12:51:30.422Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a06dlim3/ws/3/ii/10eed1f8-c2c9-418d-895e-1b4b1b591d1c.jpg
+[2026-05-19T12:51:31.031Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T12:51:37.998Z] LOG: Postcard generation started for: The Concrete Bistro
+[2026-05-19T12:51:42.475Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:51:42.486Z] LOG: Blending composite image using Runware...
+[2026-05-19T12:51:42.487Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T12:51:44.305Z] LOG: [Runware Blend] Image uploaded. UUID: 53315e6e-4b3b-46b1-a6db-dc01cec0b460
+[2026-05-19T12:51:46.218Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a06dlim3/ws/3/ii/1f932448-58c0-4820-9bdd-ea27d72a4c5c.jpg
+[2026-05-19T12:51:46.764Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T12:51:55.407Z] LOG: Postcard generation started for: The Concrete Bistro
+[2026-05-19T12:52:03.303Z] LOG: Postcard generation started for: The Concrete Bistro
+[2026-05-19T12:52:04.148Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:52:04.556Z] LOG: Blending composite image using Runware...
+[2026-05-19T12:52:04.573Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T12:52:05.623Z] LOG: [Runware Blend] Image uploaded. UUID: 48220263-27b7-474d-8309-30aee744dde4
+[2026-05-19T12:52:07.961Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a08dlim3/ws/3/ii/22c7c64c-beda-433d-8960-62bc49f0d9ab.jpg
+[2026-05-19T12:52:08.598Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T12:52:17.879Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:52:18.019Z] LOG: Blending composite image using Runware...
+[2026-05-19T12:52:18.030Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T12:52:19.043Z] LOG: [Runware Blend] Image uploaded. UUID: 7e6eecb5-e34b-4cd2-bd1b-2770ceb45b90
+[2026-05-19T12:52:21.245Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a08dlim3/ws/3/ii/447bd5c6-46a1-4f96-9f4f-9df65d1f9616.jpg
+[2026-05-19T12:52:22.050Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T12:54:06.679Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T12:54:08.616Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T12:55:48.975Z] LOG: Postcard generation started for: test
+[2026-05-19T12:56:06.815Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:56:07.498Z] LOG: Blending composite image using Runware...
+[2026-05-19T12:56:07.540Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T12:56:09.584Z] LOG: [Runware Blend] Image uploaded. UUID: 87a2c3f2-fd81-4ab3-99dd-64356f4a24a0
+[2026-05-19T12:56:11.596Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a09dlim3/ws/3/ii/925225d8-3242-4690-82f8-8463d286bc12.jpg
+[2026-05-19T12:56:12.975Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T12:57:57.808Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T12:57:59.666Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T12:58:39.360Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T12:58:41.209Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T12:58:44.401Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T12:58:46.243Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T12:58:51.589Z] LOG: Postcard generation started for: The Concrete Bistro
+[2026-05-19T12:59:13.925Z] LOG: Placement detected: [object Object]
+[2026-05-19T12:59:14.408Z] LOG: Blending composite image using Runware...
+[2026-05-19T12:59:14.440Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T12:59:16.764Z] LOG: [Runware Blend] Image uploaded. UUID: a3c5c5e0-43a5-43f2-8ed2-c80da017bd2e
+[2026-05-19T12:59:19.224Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a03d21/ws/3/ii/7d1252d8-12b5-4517-8bf7-1fc626973ce7.jpg
+[2026-05-19T12:59:20.047Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T12:59:36.903Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T12:59:38.773Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T12:59:41.481Z] LOG: Postcard generation started for: test
+[2026-05-19T12:59:59.478Z] LOG: Placement detected: [object Object]
+[2026-05-19T13:00:00.104Z] LOG: Blending composite image using Runware...
+[2026-05-19T13:00:00.141Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T13:00:02.121Z] LOG: [Runware Blend] Image uploaded. UUID: 1f4f5172-e23b-42d5-95b6-e2a855614cf3
+[2026-05-19T13:00:04.213Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a08dlim3/ws/3/ii/b9590cc1-f20f-41e0-96b9-a9f1ca116f87.jpg
+[2026-05-19T13:00:05.266Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T13:01:44.959Z] LOG: Postcard generation started for: test
+[2026-05-19T13:01:59.810Z] LOG: Placement detected: [object Object]
+[2026-05-19T13:02:00.575Z] LOG: Blending composite image using Runware...
+[2026-05-19T13:02:00.607Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T13:02:02.470Z] LOG: [Runware Blend] Image uploaded. UUID: 55b9b6a5-02ad-4a01-83ca-66b21621edae
+[2026-05-19T13:02:04.376Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a08dlim3/ws/3/ii/2167c080-9c5c-487c-9df8-737fa7af32d5.jpg
+[2026-05-19T13:02:05.798Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T13:04:25.180Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:04:27.041Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:04:30.431Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:04:32.243Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:04:38.244Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:04:40.044Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:05:11.249Z] LOG: Postcard generation started for: The Concrete Bistro
+[2026-05-19T13:05:38.132Z] LOG: Placement detected: [object Object]
+[2026-05-19T13:05:38.412Z] LOG: Warping frame into 3D perspective...
+[2026-05-19T13:05:38.587Z] LOG: Blending composite image using Runware...
+[2026-05-19T13:05:38.615Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T13:05:41.326Z] LOG: [Runware Blend] Image uploaded. UUID: 057ab958-6287-4134-8b4f-567b957bc8f2
+[2026-05-19T13:05:43.792Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a05d22/ws/3/ii/e670bfa3-b1ea-42a9-bba7-cf00af663cb2.jpg
+[2026-05-19T13:05:45.214Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T13:07:10.636Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:07:12.477Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:07:15.875Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:07:17.662Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:07:44.303Z] LOG: Postcard generation started for: test
+[2026-05-19T13:08:12.895Z] LOG: Placement detected: [object Object]
+[2026-05-19T13:08:13.208Z] LOG: Warping frame into 3D perspective...
+[2026-05-19T13:08:13.421Z] LOG: Blending composite image using Runware...
+[2026-05-19T13:08:13.482Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T13:08:15.414Z] LOG: [Runware Blend] Image uploaded. UUID: 40711614-7f0e-4e9e-8937-a3c666140af4
+[2026-05-19T13:08:17.561Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a09dlim3/ws/3/ii/395e77e3-3b1e-4ff7-9b2f-9e104662ef9d.jpg
+[2026-05-19T13:08:18.974Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T13:09:40.289Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:09:42.163Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:09:47.925Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:09:49.758Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:09:58.770Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:10:00.660Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:10:03.290Z] LOG: Postcard generation started for: Flat Room Bistro
+[2026-05-19T13:10:21.566Z] LOG: Placement detected: [object Object]
+[2026-05-19T13:10:21.850Z] LOG: Warping frame into 3D perspective...
+[2026-05-19T13:10:22.050Z] LOG: Blending composite image using Runware...
+[2026-05-19T13:10:22.081Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T13:10:23.553Z] LOG: [Runware Blend] Image uploaded. UUID: 6b9d1296-c7fb-473e-9f55-2d9164bb99b1
+[2026-05-19T13:10:27.278Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a09dlim3/ws/3/ii/1b8f7793-b2c5-44cf-a005-f0265764c613.jpg
+[2026-05-19T13:10:28.684Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T13:10:50.767Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T13:10:52.706Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T13:11:14.073Z] LOG: Postcard generation started for: test
+[2026-05-19T13:11:36.725Z] LOG: Placement detected: [object Object]
+[2026-05-19T13:11:37.036Z] LOG: Warping frame into 3D perspective...
+[2026-05-19T13:11:37.236Z] LOG: Blending composite image using Runware...
+[2026-05-19T13:11:37.268Z] LOG: [Runware Blend] Uploading composite image...
+[2026-05-19T13:11:38.451Z] LOG: [Runware Blend] Image uploaded. UUID: ec7626fb-7011-4256-93a7-cfd1183d3b38
+[2026-05-19T13:11:40.808Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a10dlim3/ws/3/ii/22f9ea96-3c2a-4c3b-ab49-784c3853461b.jpg
+[2026-05-19T13:11:41.568Z] LOG: Successfully replaced composite with Runware-blended version.

@@ -69,12 +69,15 @@ const steps = [
 const PostcardTool: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
+  const [frameImage, setFrameImage] = useState<File | null>(null);
+  const [framePreview, setFramePreview] = useState<string | null>(null);
   const [businessName, setBusinessName] = useState("");
   const [result, setResult] = useState<PostcardResult | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [loadingStep, setLoadingStep] = useState(0);
   const [error, setError] = useState("");
   const [isDragging, setIsDragging] = useState(false);
+  const [isDraggingFrame, setIsDraggingFrame] = useState(false);
 
   // Simulate loading steps
   useEffect(() => {
@@ -88,11 +91,11 @@ const PostcardTool: React.FC = () => {
     return () => clearInterval(interval);
   }, [status]);
 
-  const handleFileChange = (files: FileList | null) => {
+  const handleSpaceFileChange = (files: FileList | null) => {
     if (!files || files.length === 0) return;
     const file = files[0];
     if (!file.type.startsWith("image/")) {
-      setError("Please upload a valid image file.");
+      setError("Please upload a valid image file for the space.");
       return;
     }
     setImage(file);
@@ -107,14 +110,40 @@ const PostcardTool: React.FC = () => {
     reader.readAsDataURL(file);
   };
 
-  const onDrop = useCallback((e: React.DragEvent) => {
+  const handleFrameFileChange = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    if (!file.type.startsWith("image/")) {
+      setError("Please upload a valid image file for the frame.");
+      return;
+    }
+    setFrameImage(file);
+    setError("");
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      if (e.target?.result) {
+        setFramePreview(e.target.result as string);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const onSpaceDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
-    handleFileChange(e.dataTransfer.files);
+    handleSpaceFileChange(e.dataTransfer.files);
+  }, []);
+
+  const onFrameDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingFrame(false);
+    handleFrameFileChange(e.dataTransfer.files);
   }, []);
 
   const generate = async () => {
     if (!image) { setError("Please upload an image of your space."); return; }
+    if (!frameImage) { setError("Please upload an image of the frame/artwork."); return; }
     if (!businessName.trim()) { setError("Please enter your business name."); return; }
     
     setError(""); 
@@ -124,6 +153,7 @@ const PostcardTool: React.FC = () => {
     try {
       const formData = new FormData();
       formData.append("image", image);
+      formData.append("frameImage", frameImage);
       formData.append("businessName", businessName);
 
       const res = await fetch(`${BACKEND_URL}/api/postcard/generate`, {
@@ -148,6 +178,8 @@ const PostcardTool: React.FC = () => {
   const reset = () => {
     setImage(null);
     setPreview(null);
+    setFrameImage(null);
+    setFramePreview(null);
     setBusinessName("");
     setResult(null);
     setStatus("idle");
@@ -201,38 +233,75 @@ const PostcardTool: React.FC = () => {
             />
           </div>
 
-          {/* Drop zone */}
-          <div
-            onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
-            onDragLeave={() => setIsDragging(false)}
-            onDrop={onDrop}
-            className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 mb-5 ${
-              isDragging
-                ? "border-emerald-500 bg-emerald-50 scale-[1.01]"
-                : image
-                ? "border-emerald-300 bg-emerald-50/30"
-                : "border-gray-200 bg-gray-50 hover:border-emerald-300 hover:bg-emerald-50/30"
-            }`}
-          >
-            <input
-              type="file"
-              accept="image/*"
-              className="absolute inset-0 opacity-0 cursor-pointer"
-              onChange={(e) => handleFileChange(e.target.files)}
-            />
-            {!preview ? (
-              <div>
-                <div className="text-5xl mb-3">📸</div>
-                <p className="font-bold text-gray-600 mb-1">Drop a photo of your space here</p>
-                <p className="text-xs text-gray-400">JPG, PNG or WEBP · Best for walls & interiors</p>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center">
-                <img src={preview} alt="Preview" className="w-48 h-32 object-cover rounded-xl shadow-md mb-3" />
-                <p className="font-bold text-emerald-700">Photo uploaded successfully!</p>
-                <p className="text-xs text-emerald-500">Click or drag to replace</p>
-              </div>
-            )}
+          {/* Drop zones grid */}
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            {/* Space Drop zone */}
+            <div
+              onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
+              onDragLeave={() => setIsDragging(false)}
+              onDrop={onSpaceDrop}
+              className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 min-h-[200px] flex flex-col items-center justify-center ${
+                isDragging
+                  ? "border-emerald-500 bg-emerald-50 scale-[1.01]"
+                  : image
+                  ? "border-emerald-300 bg-emerald-50/30"
+                  : "border-gray-200 bg-gray-50 hover:border-emerald-300 hover:bg-emerald-50/30"
+              }`}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                onChange={(e) => handleSpaceFileChange(e.target.files)}
+              />
+              {!preview ? (
+                <div>
+                  <div className="text-5xl mb-3">📸</div>
+                  <p className="font-bold text-gray-600 mb-1">Upload Space / Wall Photo</p>
+                  <p className="text-xs text-gray-400">Best for walls, interiors, & rooms</p>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <img src={preview} alt="Space Preview" className="w-48 h-32 object-cover rounded-xl shadow-md mb-3" />
+                  <p className="font-bold text-emerald-700">Space uploaded!</p>
+                  <p className="text-xs text-emerald-500">Click or drag to replace</p>
+                </div>
+              )}
+            </div>
+
+            {/* Frame Artwork Drop zone */}
+            <div
+              onDragOver={(e) => { e.preventDefault(); setIsDraggingFrame(true); }}
+              onDragLeave={() => setIsDraggingFrame(false)}
+              onDrop={onFrameDrop}
+              className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 min-h-[200px] flex flex-col items-center justify-center ${
+                isDraggingFrame
+                  ? "border-emerald-500 bg-emerald-50 scale-[1.01]"
+                  : frameImage
+                  ? "border-emerald-300 bg-emerald-50/30"
+                  : "border-gray-200 bg-gray-50 hover:border-emerald-300 hover:bg-emerald-50/30"
+              }`}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                onChange={(e) => handleFrameFileChange(e.target.files)}
+              />
+              {!framePreview ? (
+                <div>
+                  <div className="text-5xl mb-3">🖼️</div>
+                  <p className="font-bold text-gray-600 mb-1">Upload Frame / Artwork Image</p>
+                  <p className="text-xs text-gray-400">The design to place in the frame</p>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <img src={framePreview} alt="Frame Preview" className="w-48 h-32 object-cover rounded-xl shadow-md mb-3" />
+                  <p className="font-bold text-emerald-700">Artwork uploaded!</p>
+                  <p className="text-xs text-emerald-500">Click or drag to replace</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {error && (
