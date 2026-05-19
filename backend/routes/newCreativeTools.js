@@ -822,112 +822,364 @@ Choose real books and movies that exist. Make everything feel curated and person
 // 11. BEFORE-AND-AFTER POSTCARD GENERATOR
 // ──────────────────────────────────────────────────────────────────────────────
 
-router.post("/postcard/generate", upload.single("image"), async (req, res) => {
+// Helper for Runware blending
+async function blendImageWithRunware(compositeBuffer, prompt = "a professional photograph of a digital art frame on a wall inside a room, realistic shadows, natural lighting") {
+  const apiKey = process.env.RUNWARE_API_KEY;
+  if (!apiKey) return null;
+
+  try {
+    const crypto = await import("crypto");
+    const uploadTaskUUID = crypto.randomUUID();
+    const inferenceTaskUUID = crypto.randomUUID();
+    
+    // We resize the composite buffer to avoid extra-large upload
+    const resizedComposite = await sharp(compositeBuffer)
+      .resize(1024, 1024, { fit: "inside", withoutEnlargement: true })
+      .jpeg({ quality: 85 })
+      .toBuffer();
+
+    const dataUri = `data:image/jpeg;base64,${resizedComposite.toString("base64")}`;
+
+    console.log("[Runware Blend] Uploading composite image...");
+    const res = await fetch("https://api.runware.ai/v1", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify([
+        {
+          "taskType": "authentication",
+          "apiKey": apiKey
+        },
+        {
+          "taskType": "imageUpload",
+          "taskUUID": uploadTaskUUID,
+          "image": dataUri
+        }
+      ])
+    });
+
+    if (!res.ok) {
+      console.warn("[Runware Blend] Upload request failed with status:", res.status);
+      return null;
+    }
+
+    const uploadRes = await res.json();
+    const imageUUID = uploadRes.data?.[0]?.imageUUID;
+    if (!imageUUID) {
+      console.warn("[Runware Blend] No imageUUID returned:", uploadRes);
+      return null;
+    }
+
+    console.log("[Runware Blend] Image uploaded. UUID:", imageUUID);
+
+    // Call imageInference with strength 0.15 (very low to keep frame content intact but blend lighting/shadows)
+    const inferRes = await fetch("https://api.runware.ai/v1", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify([
+        {
+          "taskType": "authentication",
+          "apiKey": apiKey
+        },
+        {
+          "taskType": "imageInference",
+          "taskUUID": inferenceTaskUUID,
+          "model": "runware:100@1", // Standard SD 1.5
+          "positivePrompt": prompt,
+          "negativePrompt": "blurry, low quality, deformed, extra frames, change layout, text, watermark",
+          "seedImage": imageUUID,
+          "strength": 0.15,
+          "width": 1024,
+          "height": 1024,
+          "numberResults": 1
+        }
+      ])
+    });
+
+    if (!inferRes.ok) {
+      console.warn("[Runware Blend] Inference request failed with status:", inferRes.status);
+      return null;
+    }
+
+    const inferData = await inferRes.json();
+    const finalUrl = inferData.data?.[0]?.imageURL;
+    console.log("[Runware Blend] Runware blend completed. URL:", finalUrl);
+    return finalUrl;
+  } catch (err) {
+    console.error("[Runware Blend] Error during Runware blending:", err.message);
+  }
+  return null;
+}
+
+function solveSystem(A, B) {
+  const n = 8;
+  const M = A.map((row, i) => [...row, B[i]]);
+
+  for (let i = 0; i < n; i++) {
+    let maxEl = Math.abs(M[i][i]);
+    let maxRow = i;
+    for (let k = i + 1; k < n; k++) {
+      if (Math.abs(M[k][i]) > maxEl) {
+        maxEl = Math.abs(M[k][i]);
+        maxRow = k;
+      }
+    }
+
+    if (maxRow !== i) {
+      const temp = M[maxRow];
+      M[maxRow] = M[i];
+      M[i] = temp;
+    }
+
+    if (Math.abs(M[i][i]) < 1e-9) {
+      return null; // Singular matrix
+    }
+
+    for (let k = i + 1; k < n; k++) {
+      const c = -M[k][i] / M[i][i];
+      for (let j = i; j <= n; j++) {
+        if (i === j) {
+          M[k][j] = 0;
+        } else {
+          M[k][j] += c * M[i][j];
+        }
+      }
+    }
+  }
+
+  const X = new Array(n).fill(0);
+  for (let i = n - 1; i >= 0; i--) {
+    X[i] = M[i][n] / M[i][i];
+    for (let k = i - 1; k >= 0; k--) {
+      M[k][n] -= M[k][i] * X[i];
+    }
+  }
+  return X;
+}
+
+function getInverseHomography(src, dst) {
+  const A = [];
+  const B = [];
+
+  for (let i = 0; i < 4; i++) {
+    const [x, y] = dst[i];
+    const [u, v] = src[i];
+
+    A.push([x, y, 1, 0, 0, 0, -x * u, -y * u]);
+    B.push(u);
+
+    A.push([0, 0, 0, x, y, 1, -x * v, -y * v]);
+    B.push(v);
+  }
+
+  return solveSystem(A, B);
+}
+
+function bilinearSample(buffer, width, height, channels, u, v) {
+  if (u < 0 || u >= width - 1 || v < 0 || v >= height - 1) {
+    return [0, 0, 0, 0];
+  }
+
+  const u0 = Math.floor(u);
+  const u1 = u0 + 1;
+  const v0 = Math.floor(v);
+  const v1 = v0 + 1;
+
+  const wu1 = u - u0;
+  const wu0 = 1 - wu1;
+  const wv1 = v - v0;
+  const wv0 = 1 - wv1;
+
+  const idx00 = (v0 * width + u0) * channels;
+  const idx10 = (v0 * width + u1) * channels;
+  const idx01 = (v1 * width + u0) * channels;
+  const idx11 = (v1 * width + u1) * channels;
+
+  const res = [];
+  for (let c = 0; c < channels; c++) {
+    const val =
+      wu0 * wv0 * buffer[idx00 + c] +
+      wu1 * wv0 * buffer[idx10 + c] +
+      wu0 * wv1 * buffer[idx01 + c] +
+      wu1 * wv1 * buffer[idx11 + c];
+    res.push(Math.round(val));
+  }
+  return res;
+}
+
+async function warpImage(srcBuffer, srcWidth, srcHeight, dstWidth, dstHeight, dstCorners) {
+  const src = [
+    [100, 100],
+    [900, 100],
+    [900, 550],
+    [100, 550]
+  ];
+
+  const coeffs = getInverseHomography(src, dstCorners);
+  if (!coeffs) {
+    console.warn("Warping failed: singular homography matrix.");
+    return null;
+  }
+  const [a, b, c, d, e, f, g, h] = coeffs;
+
+  let minX = Math.floor(Math.min(...dstCorners.map(p => p[0])));
+  let maxX = Math.ceil(Math.max(...dstCorners.map(p => p[0])));
+  let minY = Math.floor(Math.min(...dstCorners.map(p => p[1])));
+  let maxY = Math.ceil(Math.max(...dstCorners.map(p => p[1])));
+
+  const margin = Math.ceil(Math.max(maxX - minX, maxY - minY) * 0.3);
+  minX = Math.max(0, minX - margin);
+  maxX = Math.min(dstWidth - 1, maxX + margin);
+  minY = Math.max(0, minY - margin);
+  maxY = Math.min(dstHeight - 1, maxY + margin);
+
+  const dstBuffer = Buffer.alloc(dstWidth * dstHeight * 4);
+  const fadeMargin = 80;
+
+  for (let y = minY; y <= maxY; y++) {
+    for (let x = minX; x <= maxX; x++) {
+      const den = g * x + h * y + 1;
+      if (Math.abs(den) < 1e-6) continue;
+
+      const u = (a * x + b * y + c) / den;
+      const v = (d * x + e * y + f) / den;
+
+      if (u >= 0 && u < srcWidth - 1 && v >= 0 && v < srcHeight - 1) {
+        const color = bilinearSample(srcBuffer, srcWidth, srcHeight, 4, u, v);
+        
+        let fade = 1.0;
+        if (u < fadeMargin) fade *= (u / fadeMargin);
+        else if (srcWidth - 1 - u < fadeMargin) fade *= ((srcWidth - 1 - u) / fadeMargin);
+        
+        if (v < fadeMargin) fade *= (v / fadeMargin);
+        else if (srcHeight - 1 - v < fadeMargin) fade *= ((srcHeight - 1 - v) / fadeMargin);
+
+        const dstIdx = (y * dstWidth + x) * 4;
+        dstBuffer[dstIdx] = color[0];
+        dstBuffer[dstIdx + 1] = color[1];
+        dstBuffer[dstIdx + 2] = color[2];
+        dstBuffer[dstIdx + 3] = Math.round(color[3] * fade);
+      }
+    }
+  }
+
+  return dstBuffer;
+}
+
+router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 }, { name: "frameImage", maxCount: 1 }]), async (req, res) => {
   try {
     const { businessName } = req.body;
-    const file = req.file;
+    const file = req.files?.image?.[0];
+    const frameFile = req.files?.frameImage?.[0];
 
-    if (!file) return res.status(400).json({ error: "Missing image upload" });
+    if (!file) return res.status(400).json({ error: "Missing space/room image upload" });
     if (!businessName?.trim()) return res.status(400).json({ error: "Missing business name" });
 
     console.log("Postcard generation started for:", businessName);
 
-    // Step 1: Analyze room with Gemini Vision for optimal frame placement
+    // Step 1: Analyze room with Gemini Vision for optimal 3D frame placement
     const visionPrompt = `
       Analyze this room image for optimal placement of a Deckoviz premium 16:9 digital art frame.
       
-      CRITICAL PLACEMENT RULES:
-      1. ART REPLACEMENT: If there is existing artwork or a painting on the wall, prioritize replacing it exactly in the same position.
-      2. SCALING: The frame must be realistically scaled. It should occupy 30-50% of the visible wall section's width (unless replacing existing art, then match its width).
-      3. ELEVATION: The frame must be positioned at natural EYE LEVEL (slightly above tables/couches), matching the original painting's perspective if applicable.
-      4. CENTERING: Center HORIZONTALLY on the specific wall section.
-      5. PERSPECTIVE: Ensure perfect alignment with the wall plane to avoid any "floating" effect.
+      You must treat this room image as a 3D space, taking into account the depth and perspective angles of the walls.
       
-      Return ONLY valid JSON (normalized 0-1000):
+      CRITICAL PLACEMENT RULES:
+      1. SOLID WALL ONLY: You MUST place the frame on a solid, flat wall surface (e.g., drywall, concrete, or brick wall segments).
+      2. 3D PERSPECTIVE WARP CORNERS: Since the selected wall may be angled relative to the camera (perspective), you must specify the EXACT 4 corners where the frame's BEZEL should lie flat against that wall surface.
+         - If the wall recedes to the right (perspective), the right edge must be vertically shorter than the left edge, and the top/bottom lines must slope towards the vanishing point.
+         - If the wall recedes to the left, the left edge must be vertically shorter than the right edge.
+         - If the wall faces the camera directly (orthogonal/flat wall), the corners should form a perfect, untilted 16:9 rectangle. The top_left and top_right Y-coordinates MUST be identical (exactly equal, e.g., both y=380, no tilt). The bottom_left and bottom_right Y-coordinates MUST be identical (exactly equal). The left edge X-coordinates must be equal, and the right edge X-coordinates must be equal.
+         - DO NOT introduce slight random tilts, rotations, or offsets. Keeping the painting horizontally leveled on flat walls is critical.
+      3. STRICTLY AVOID WINDOWS & BLINDS: Never place the frame over windows, glass panels, window blinds, curtains, or doorways. The frame must not overlap them at all.
+      4. NO FURNITURE CLASH: Do not overlap tables, chairs, plants, lamps, or decorative items. The frame should hang cleanly on the wall *above* any furniture, at a natural eye level.
+      5. STRICT BOUNDARIES: Ensure the entire frame quadrilateral fits ENTIRELY within the boundaries of the chosen wall segment. Leave some padding on all sides so it does not touch the edges of the wall, window frames, or ceiling.
+      6. SCALING: Choose a realistic size. Typically the width should be between 20% to 32% of the total image width.
+
+      Return ONLY valid JSON (normalized 0-1000 scale where x=0 to 1000 and y=0 to 1000 relative to the image size):
       {
-        "center_x": [0-1000], 
-        "center_y": [0-1000],
-        "width": [200-500],
+        "top_left": [x, y],
+        "top_right": [x, y],
+        "bottom_right": [x, y],
+        "bottom_left": [x, y],
         "backlight_color": "hex_color_curated_for_room",
-        "reasoning": "Explain if you are replacing existing art and how you determined centering/eye-level."
+        "reasoning": "Explain exactly which wall segment was chosen, how the 3D perspective tilt/slope was calculated to align with the wall angle, and how we avoided overlap."
       }
     `.trim();
 
     const visionRaw = await callVisionLLM(visionPrompt, file.buffer, true);
-    const placement = extractJSON(visionRaw);
+    const placement = extractJSON(visionRaw) || {};
     console.log("Placement detected:", placement);
 
-    // Step 2: Generate stunning FLAT 2D artwork for the frame
-    const artThemes = ["luxury minimalist abstract", "geometric vector landscape", "flat oil wash texture", "modern graphic glass art"];
-    const chosenTheme = artThemes[Math.floor(Math.random() * artThemes.length)];
-    
-    // Strict rules for 2D content - removing any mention of "landscape" if it causes 3D rooms
-    const artPrompt = `A high-end FLAT 2D VECTOR ${chosenTheme} digital art, museum quality, professional graphic design, flat colors, NO perspective, NO depth, NO rooms, NO furniture, NO windows, 16:9 aspect ratio, 8k resolution, flat 2D style.`;
-    const artNegativePrompt = "room, interior, furniture, window, portal, 3D, depth, perspective, realistic scene, person, lamp, couch, bed, wall, floor, ceiling, architecture, blurry, distorted";
-    
-    const artworkUrl = await generateImage(artPrompt, artNegativePrompt);
-    if (!artworkUrl) throw new Error("Failed to generate frame artwork.");
-    
-    const artRes = await fetch(artworkUrl);
-    const artBuffer = Buffer.from(await artRes.arrayBuffer());
+    // Step 2: Obtain frame artwork (uploaded image or generated)
+    let artBuffer;
+    if (frameFile) {
+      artBuffer = frameFile.buffer;
+    } else {
+      const artThemes = ["luxury minimalist abstract", "geometric vector landscape", "flat oil wash texture", "modern graphic glass art"];
+      const chosenTheme = artThemes[Math.floor(Math.random() * artThemes.length)];
+      
+      const artPrompt = `A high-end FLAT 2D VECTOR ${chosenTheme} digital art, museum quality, professional graphic design, flat colors, NO perspective, NO depth, NO rooms, NO furniture, NO windows, 16:9 aspect ratio, 8k resolution, flat 2D style.`;
+      const artNegativePrompt = "room, interior, furniture, window, portal, 3D, depth, perspective, realistic scene, person, lamp, couch, bed, wall, floor, ceiling, architecture, blurry, distorted";
+      
+      const artworkUrl = await generateImage(artPrompt, artNegativePrompt);
+      if (!artworkUrl) throw new Error("Failed to generate frame artwork.");
+      
+      const artRes = await fetch(artworkUrl);
+      artBuffer = Buffer.from(await artRes.arrayBuffer());
+    }
 
     // Step 3: Prepare Dimensions
     const metadata = await sharp(file.buffer).metadata();
     const roomWidth = metadata.width;
     const roomHeight = metadata.height;
 
-    // Calculate frame dimensions in pixels
-    const frameWidthPx = (placement.width / 1000) * roomWidth;
-    const frameHeightPx = (frameWidthPx * 9) / 16;
-    const centerX = (placement.center_x / 1000) * roomWidth;
-    const centerY = (placement.center_y / 1000) * roomHeight;
-    const left = centerX - frameWidthPx / 2;
-    const top = centerY - frameHeightPx / 2;
+    // Fallback mapping if corners are missing
+    let top_left = placement.top_left;
+    let top_right = placement.top_right;
+    let bottom_right = placement.bottom_right;
+    let bottom_left = placement.bottom_left;
 
-    // Step 4: Create the Premium Frame, Shadows & LED Backlight
-    const borderRadius = frameWidthPx * 0.04; 
-    const borderSize = frameWidthPx * 0.03;  
-    const glowBlur = frameWidthPx * 0.08;
-    const contactShadowBlur = frameWidthPx * 0.01; // Tight shadow for "sticking" to wall
+    if (!top_left || !top_right || !bottom_right || !bottom_left) {
+      console.log("Missing corners in Vision response, using center/width fallback...");
+      const cx = placement.center_x || 500;
+      const cy = placement.center_y || 500;
+      const w = placement.width || 250;
+      const h = (w * 9) / 16;
+      top_left = [cx - w/2, cy - h/2];
+      top_right = [cx + w/2, cy - h/2];
+      bottom_right = [cx + w/2, cy + h/2];
+      bottom_left = [cx - w/2, cy + h/2];
+    }
+
+    const dstCorners = [
+      [ (top_left[0] / 1000) * roomWidth, (top_left[1] / 1000) * roomHeight ],
+      [ (top_right[0] / 1000) * roomWidth, (top_right[1] / 1000) * roomHeight ],
+      [ (bottom_right[0] / 1000) * roomWidth, (bottom_right[1] / 1000) * roomHeight ],
+      [ (bottom_left[0] / 1000) * roomWidth, (bottom_left[1] / 1000) * roomHeight ]
+    ];
+
+    // Step 4: Create the Premium Frame elements in flat space (size: 1000 x 650)
     const backlightColor = placement.backlight_color || "#ffaa44";
 
-    // Combined Shadows SVG (Contact Shadow + Ambient Occlusion + LED Glow)
-    const shadowSvg = `
-      <svg width="${roomWidth}" height="${roomHeight}">
-        <filter id="ledGlow">
-          <feGaussianBlur stdDeviation="${glowBlur}" />
+    const glowSvg = `
+      <svg width="1000" height="650">
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="55" />
         </filter>
-        <filter id="contactShadow">
-          <feGaussianBlur stdDeviation="${contactShadowBlur}" />
-        </filter>
-        
-        <!-- 1. Ambient LED Glow -->
-        <rect 
-          x="${left - glowBlur}" 
-          y="${top - glowBlur}" 
-          width="${frameWidthPx + glowBlur * 2}" 
-          height="${frameHeightPx + glowBlur * 2}" 
-          fill="${backlightColor}" 
-          filter="url(#ledGlow)" 
-          opacity="0.5"
-        />
-
-        <!-- 2. Dark Contact Shadow (To prevent floating) -->
-        <rect 
-          x="${left}" 
-          y="${top}" 
-          width="${frameWidthPx}" 
-          height="${frameHeightPx}" 
-          fill="rgba(0,0,0,0.8)" 
-          filter="url(#contactShadow)"
-          rx="${borderRadius}"
-        />
+        <rect x="100" y="100" width="800" height="450" fill="${backlightColor}" filter="url(#glow)" opacity="0.5" />
       </svg>
     `;
 
-    // Wooden Frame SVG with more detail
-    const frameBezelSvg = `
-      <svg width="${frameWidthPx}" height="${frameHeightPx}">
+    const shadowSvg = `
+      <svg width="1000" height="650">
+        <filter id="shadow">
+          <feGaussianBlur stdDeviation="12" />
+        </filter>
+        <rect x="100" y="100" width="800" height="450" rx="30" fill="rgba(0,0,0,0.75)" filter="url(#shadow)" />
+      </svg>
+    `;
+
+    const bezelSvg = `
+      <svg width="800" height="450">
         <defs>
           <linearGradient id="woodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" style="stop-color:#3d2b1f;stop-opacity:1" />
@@ -936,33 +1188,76 @@ router.post("/postcard/generate", upload.single("image"), async (req, res) => {
           </linearGradient>
           <filter id="innerDepth">
             <feOffset dx="0" dy="5" />
-            <feGaussianBlur stdDeviation="10" result="offset-blur" />
+            <feGaussianBlur stdDeviation="8" result="offset-blur" />
             <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
             <feFlood flood-color="black" flood-opacity="0.8" result="color" />
             <feComposite operator="in" in="color" in2="inverse" result="shadow" />
             <feComposite operator="over" in="shadow" in2="SourceGraphic" />
           </filter>
         </defs>
-        <!-- Outer Frame -->
-        <rect x="0" y="0" width="${frameWidthPx}" height="${frameHeightPx}" rx="${borderRadius}" fill="url(#woodGrad)" stroke="#5c4033" stroke-width="2" />
-        <!-- Inner Bezel Depth -->
-        <rect x="${borderSize}" y="${borderSize}" width="${frameWidthPx - borderSize * 2}" height="${frameHeightPx - borderSize * 2}" rx="${borderRadius * 0.7}" fill="black" filter="url(#innerDepth)" />
+        <rect x="0" y="0" width="800" height="450" rx="32" fill="url(#woodGrad)" stroke="#5c4033" stroke-width="2" />
+        <rect x="24" y="24" width="752" height="402" rx="20" fill="black" filter="url(#innerDepth)" />
       </svg>
     `;
 
-    // Step 5: Composite the "After" image
     const resizedArt = await sharp(artBuffer)
-      .resize(Math.round(frameWidthPx - borderSize * 2), Math.round(frameHeightPx - borderSize * 2), { fit: "cover" })
+      .resize(752, 402, { fit: "cover" })
       .toBuffer();
 
-    const afterImageBuffer = await sharp(file.buffer)
+    const flatFrameComposite = await sharp({
+      create: {
+        width: 1000,
+        height: 650,
+        channels: 4,
+        background: { r: 0, g: 0, b: 0, alpha: 0 }
+      }
+    })
+    .composite([
+      { input: Buffer.from(glowSvg), top: 0, left: 0 },
+      { input: Buffer.from(shadowSvg), top: 0, left: 0 },
+      { input: Buffer.from(bezelSvg), top: 100, left: 100 },
+      { input: resizedArt, top: 124, left: 124 }
+    ])
+    .raw()
+    .toBuffer();
+
+    // Step 5: Perspective Warp the flat composite into the 3D room space
+    console.log("Warping frame into 3D perspective...");
+    const warpedBuffer = await warpImage(flatFrameComposite, 1000, 650, roomWidth, roomHeight, dstCorners);
+    if (!warpedBuffer) throw new Error("Perspective warping failed.");
+
+    let afterImageBuffer = await sharp(file.buffer)
       .composite([
-        { input: Buffer.from(shadowSvg), top: 0, left: 0 },
-        { input: Buffer.from(frameBezelSvg), top: Math.round(top), left: Math.round(left) },
-        { input: resizedArt, top: Math.round(top + borderSize), left: Math.round(left + borderSize) }
+        {
+          input: warpedBuffer,
+          raw: {
+            width: roomWidth,
+            height: roomHeight,
+            channels: 4
+          },
+          top: 0,
+          left: 0
+        }
       ])
       .jpeg({ quality: 95 })
       .toBuffer();
+
+    // Step 5.5: Seamlessly blend using Runware if API key is present
+    if (process.env.RUNWARE_API_KEY) {
+      try {
+        console.log("Blending composite image using Runware...");
+        const blendedUrl = await blendImageWithRunware(afterImageBuffer);
+        if (blendedUrl) {
+          const blendedRes = await fetch(blendedUrl);
+          if (blendedRes.ok) {
+            afterImageBuffer = Buffer.from(await blendedRes.arrayBuffer());
+            console.log("Successfully replaced composite with Runware-blended version.");
+          }
+        }
+      } catch (blendErr) {
+        console.error("Runware blend failed, falling back to sharp composite:", blendErr.message);
+      }
+    }
 
     // Step 6: Create the Final Postcard (Side-by-Side)
     const canvasWidth = 1920;
