@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Zap, Activity, Wind, Shield, Trash2, Cpu } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 interface Point {
   x: number;
@@ -14,6 +15,7 @@ interface Point {
 
 
 const ParadoxMirror: React.FC = () => {
+    const navigate = useNavigate();
   const leftCanvasRef = useRef<HTMLCanvasElement>(null);
   const rightCanvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -234,12 +236,7 @@ const ParadoxMirror: React.FC = () => {
                 </div>
              </div>
              
-             <button 
-                onClick={() => window.history.back()}
-                className="p-4 px-12 rounded-full bg-white/5 border border-white/10 text-white/20 hover:text-white transition-all text-[10px] font-bold uppercase tracking-[0.6em] backdrop-blur-md"
-              >
-                Collapse Paradox
-              </button>
+             
           </div>
 
           {/* Right Stats */}
@@ -277,7 +274,24 @@ const ParadoxMirror: React.FC = () => {
       <div className="absolute bottom-400 right-12 z-40 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
         Reality Paradox // Node 0xCF
       </div>
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

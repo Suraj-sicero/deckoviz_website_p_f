@@ -3,11 +3,13 @@
 import React, { useState } from "react";
 import PixelatedBackground from "./PixelatedBackground";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 import { 
   Folder, BookOpen, PenTool, RefreshCw, ArrowRight, Play, FileText, Trash2
 } from "lucide-react";
 
 const UnsentLetterArchive: React.FC = () => {
+    const navigate = useNavigate();
   const [variant, setVariant] = useState<'glacial' | 'volcano' | 'forest' | 'nebula'>('nebula');
   const [letters, setLetters] = useState<Array<{id: number, recipient: string, excerpt: string, date: string, body: string}>>([
     { id: 1, recipient: "To the one who left", excerpt: "I never got to say goodbye...", date: "2025-12-01", body: "I never got to say goodbye properly. There was so much left unsaid, and now it floats in the silence between us." },
@@ -179,7 +181,24 @@ const UnsentLetterArchive: React.FC = () => {
           </motion.div>
         </div>
       </div>
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

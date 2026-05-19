@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 const SUBJECTS = [
   { id: "apple", name: "Apple", color: "#4ade80", decayColor: "#451a03" },
@@ -12,6 +13,7 @@ const SUBJECTS = [
 ];
 
 const DecayBloom: React.FC = () => {
+    const navigate = useNavigate();
   const [subject, setSubject] = useState(SUBJECTS[0]);
   const [progress, setProgress] = useState(0); // 0 to 100
   const [speed] = useState(1);
@@ -143,18 +145,28 @@ const DecayBloom: React.FC = () => {
         </div>
       </div>
 
-      <button 
-        onClick={() => window.history.back()}
-        className="absolute top-12 right-12 z-50 p-4 rounded-full border border-black/5 text-black/20 hover:text-black/60 transition-all group"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:scale-110 transition-transform">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
+      
 
       {/* Film Grain */}
       <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.02] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-multiply" />
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

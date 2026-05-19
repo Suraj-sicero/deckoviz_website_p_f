@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { Settings, Play, Pause, Mic, Music, Upload, Maximize2, X, Sliders, Palette, Volume2, Info } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 // ==========================================
 // 1. Audio Analyzer Class (Self-Contained)
@@ -400,6 +401,7 @@ const PRESETS = {
 // 4. Main Component
 // ==========================================
 const MusicResponsiveArt: React.FC = () => {
+  const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -872,14 +874,8 @@ const MusicResponsiveArt: React.FC = () => {
           >
             <Settings className={`w-5 h-5 transition-transform duration-500 ${showUI ? 'rotate-90 text-white' : ''}`} />
           </button>
-          <button 
-            onClick={() => window.history.back()}
-            className="p-3.5 bg-white/5 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-gray-400 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
-            title="Exit"
-          >
-            <X className="w-5 h-5" />
-          </button>
         </div>
+
 
         {/* Audio Input Control Box (Bottom Center) */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col md:flex-row items-center gap-4 pointer-events-auto bg-black/40 backdrop-blur-2xl p-4 rounded-[2rem] border border-white/10 shadow-2xl max-w-[95vw] w-full md:w-auto">
@@ -1163,6 +1159,16 @@ const MusicResponsiveArt: React.FC = () => {
             Speak into your microphone or play imported MP3 beats. The particle ball will dynamically expand and distort along with the bass and frequency bands!
           </div>
         </div>
+      </div>
+      {/* ALWAYS VISIBLE EXIT BUTTON (Moved outside UI Overlay so it never disappears) */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-50">
+        <button 
+          onClick={() => navigate('/experimental-art-modes')}
+          className="p-3.5 bg-white/5 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-gray-400 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
     </div>
   );

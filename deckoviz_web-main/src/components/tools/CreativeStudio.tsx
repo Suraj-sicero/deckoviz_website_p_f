@@ -142,7 +142,7 @@ const toolCategories = [
         route: "/tools/postcard",
         badge: "New",
         accent: "pink",
-        creditCost: "2 credits / card",
+        creditCost: "Free",
       },
     ],
   },

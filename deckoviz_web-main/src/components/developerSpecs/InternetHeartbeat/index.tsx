@@ -8,6 +8,7 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Zap, Radio, X } from "lucide-react";
 import { IXP_NODES, SUBSEA_CABLES, IXPNode } from "./infrastructure";
+import { useNavigate } from 'react-router-dom';
 
 // --- Constants ---
 const GLOBE_RADIUS = 100;
@@ -23,6 +24,7 @@ const latLngToVector3 = (lat: number, lng: number, radius: number) => {
 };
 
 const InternetHeartbeat: React.FC = () => {
+    const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [selectedNode, setSelectedNode] = useState<IXPNode | null>(null);
@@ -222,9 +224,7 @@ const InternetHeartbeat: React.FC = () => {
                 <span className="text-[10px] text-white/30 uppercase font-bold tracking-[0.3em]">Network Entropy</span>
                 <span className="text-teal-400 text-sm font-bold">SIGNAL_OPTIMAL</span>
              </div>
-             <button onClick={() => window.history.back()} className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/20 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group">
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+             
           </div>
         </div>
 
@@ -329,7 +329,24 @@ const InternetHeartbeat: React.FC = () => {
       <div className="absolute bottom-400 left-1/2 -translate-x-1/2 z-20 text-[10px] font-mono text-white/10 tracking-[1em] uppercase">
         Observed Planetary Network // Neural Data Ingest
       </div>
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

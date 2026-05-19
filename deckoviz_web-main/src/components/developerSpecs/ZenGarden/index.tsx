@@ -4,8 +4,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Settings, Download, Wind, Trash2, Maximize2, RefreshCw, X, Hand, Compass, Layout } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ZenGarden: React.FC = () => {
+    const navigate = useNavigate();
     const containerRef = useRef<HTMLDivElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [rakeWidth, setRakeWidth] = useState(0.08);
@@ -424,9 +426,7 @@ const ZenGarden: React.FC = () => {
                         <button onClick={() => window.location.reload()} className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl">
                             <RefreshCw size={20} />
                         </button>
-                        <button onClick={() => window.history.back()} className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group">
-                            <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-                        </button>
+                        
                     </div>
                 </div>
 
@@ -520,7 +520,24 @@ const ZenGarden: React.FC = () => {
                     border: 2px solid #1a1a15;
                 }
             `}} />
-        </div>
+        
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
     );
 };
 

@@ -6,6 +6,7 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 import { 
   CloudRain, CloudSnow, Wind, CloudLightning, 
   Download, Thermometer, CloudFog, Settings, 
@@ -61,6 +62,7 @@ const WEATHER_MODES = [
 ];
 
 const WeatherSimulations: React.FC = () => {
+    const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [currentMode, setCurrentMode] = useState(WEATHER_MODES[0]);
@@ -337,12 +339,7 @@ const WeatherSimulations: React.FC = () => {
             >
               <RefreshCw size={20} />
             </button>
-            <button 
-              onClick={() => window.history.back()}
-              className="p-4 rounded-2xl bg-black/60 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-3xl shadow-2xl group"
-            >
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+            
           </div>
         </div>
 
@@ -494,7 +491,24 @@ const WeatherSimulations: React.FC = () => {
           border: 2px solid black;
         }
       `}} />
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

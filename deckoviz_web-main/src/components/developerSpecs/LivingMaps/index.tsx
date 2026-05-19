@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Layers, Activity, Compass, Droplets, Mountain } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 // --- Advanced Noise Implementation ---
 class Noise {
@@ -64,6 +65,7 @@ const BIOMES = [
 ];
 
 const LivingMaps: React.FC = () => {
+    const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -335,12 +337,7 @@ const LivingMaps: React.FC = () => {
             </div>
 
             {/* Close Button */}
-            <button 
-              onClick={() => window.history.back()}
-              className="pointer-events-auto p-5 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-red-500/20 hover:border-red-500/40 transition-all backdrop-blur-xl group"
-            >
-              <X size={24} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+            
           </div>
         </div>
       </div>
@@ -351,7 +348,24 @@ const LivingMaps: React.FC = () => {
       <div className="absolute bottom-400 left-1/2 -translate-x-1/2 z-20 text-[10px] font-mono text-white/20 tracking-[0.8em] uppercase">
         Autonomous Geological Intelligence // Core v4.1.0
       </div>
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

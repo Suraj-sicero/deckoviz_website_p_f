@@ -1029,7 +1029,7 @@ router.post("/postcard/generate", upload.single("image"), async (req, res) => {
     const beforeBuffer = await sharp(file.buffer).jpeg({ quality: 95 }).toBuffer();
     fs.writeFileSync(path.join(publicDir, beforeFileName), beforeBuffer);
 
-    const baseUrl = process.env.BACKEND_URL || "http://localhost:5000";
+    const baseUrl = process.env.RENDER_EXTERNAL_URL || process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
     return res.json({
       success: true,
       imageUrl: `${baseUrl}/generated/${fileName}`,

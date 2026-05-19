@@ -2,8 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Settings, Camera, CameraOff, RefreshCw, Layers, Sparkles, Activity, Zap } from 'lucide-react';
 import { PoseTracker } from './PoseTracker';
 import { MotionRenderer, MotionMode } from './MotionRenderer';
+import { useNavigate } from 'react-router-dom';
 
 const MotionArt: React.FC = () => {
+    const navigate = useNavigate();
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const trackerRef = useRef<PoseTracker | null>(null);
@@ -202,7 +204,24 @@ const MotionArt: React.FC = () => {
                     box-shadow: 0 0 15px rgba(34, 211, 238, 0.3);
                 }
             `}} />
-        </div>
+        
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
     );
 };
 

@@ -4,6 +4,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { motion, AnimatePresence } from "framer-motion";
 import { Compass, Layers, Volume2 } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 // --- Shaders ---
 
@@ -89,6 +90,7 @@ const cmbFragmentShader = `
 // --- Component ---
 
 const CosmicBackground: React.FC = () => {
+    const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [showOverlays, setShowOverlays] = useState(false);
@@ -262,7 +264,24 @@ const CosmicBackground: React.FC = () => {
       <div className="absolute bottom-400 right-10 text-[9px] text-white/20 uppercase tracking-[0.2em] font-light">
         Drag to navigate / Long press to probe temperature
       </div>
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 
