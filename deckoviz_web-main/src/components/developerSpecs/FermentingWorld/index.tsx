@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Thermometer, Droplet, Microscope, Zap, X } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 const SUBSTANCES = [
   { id: "sourdough", name: "Sourdough Starter", bg: "#fef3c7", colors: ["#d97706", "#92400e"], ph: 4.2, temp: 24, bubbleRate: 0.08 },
@@ -27,6 +28,7 @@ interface Particle {
 }
 
 const FermentingWorld: React.FC = () => {
+    const navigate = useNavigate();
   const [substance, setSubstance] = useState(SUBSTANCES[0]);
   const [isInjecting, setIsInjecting] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -245,12 +247,7 @@ const FermentingWorld: React.FC = () => {
                 <span className="text-[10px] text-white/20 uppercase font-bold tracking-widest">Colony Count</span>
                 <span className="text-white font-mono text-lg">{particlesRef.current.filter(p => p.type !== 'bubble').length} CFU</span>
              </div>
-             <button 
-              onClick={() => window.history.back()}
-              className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-red-500/20 hover:border-red-500/40 transition-all backdrop-blur-xl group"
-            >
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+             
           </div>
         </div>
 
@@ -346,7 +343,24 @@ const FermentingWorld: React.FC = () => {
       <div className="absolute inset-0 z-20 pointer-events-none rounded-full shadow-[0_0_0_9999px_#0c0a09,inset_0_0_300px_rgba(0,0,0,0.95)] mx-auto my-auto w-[85vw] h-[85vw] border-[60px] border-white/5 mix-blend-screen opacity-50" />
       <div className="absolute inset-0 z-40 pointer-events-none bg-gradient-to-tr from-blue-500/5 to-red-500/5 mix-blend-overlay" />
       <div className="absolute inset-0 z-5 pointer-events-none opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

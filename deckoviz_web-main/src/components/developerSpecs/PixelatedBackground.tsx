@@ -1,5 +1,4 @@
 import React from 'react';
-
 interface PixelatedBackgroundProps {
   variant?: 'glacial' | 'volcano' | 'forest' | 'nebula';
 }
@@ -47,6 +46,7 @@ const PixelatedBackground: React.FC<PixelatedBackgroundProps> = ({ variant = 'gl
       />
       {/* Fallback overlay to ensure text readability */}
       <div className="absolute inset-0 bg-[#050505]/30" />
+    
     </div>
   );
 };

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from 'react-router-dom';
 
 interface Star {
   id: string;
@@ -28,6 +29,7 @@ const MYTH_TEMPLATES = [
 ];
 
 const ConstellationBuilder: React.FC = () => {
+    const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
@@ -219,18 +221,28 @@ const ConstellationBuilder: React.FC = () => {
         )}
       </AnimatePresence>
 
-      <button 
-        onClick={(e) => { e.stopPropagation(); window.history.back(); }}
-        className="absolute top-12 right-12 z-50 p-4 rounded-full bg-white/5 border border-white/10 text-white/40 hover:text-white transition-all backdrop-blur-md group"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transform group-hover:scale-110 transition-transform">
-          <path d="M18 6L6 18M6 6l12 12"/>
-        </svg>
-      </button>
+      
 
       {/* Atmospheric Effect */}
       <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-indigo-950/20 to-transparent" />
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

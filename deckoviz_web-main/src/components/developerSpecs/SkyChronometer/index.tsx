@@ -11,6 +11,7 @@ import {
   Navigation, Wind, Thermometer, Maximize2
 } from "lucide-react";
 import { getSolarElevation, kelvinToRGB } from "./solarCalc";
+import { useNavigate } from 'react-router-dom';
 
 // --- Shader ---
 
@@ -82,6 +83,7 @@ const sunFragmentShader = `
 // --- Component ---
 
 const SkyChronometer: React.FC = () => {
+    const navigate = useNavigate();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loc, setLoc] = useState({ lat: 40.7128, lng: -74.0060 }); // Default NYC
   const [elevation, setElevation] = useState(0);
@@ -355,7 +357,24 @@ const SkyChronometer: React.FC = () => {
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.8)]" />
       <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-screen" />
       <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.02] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

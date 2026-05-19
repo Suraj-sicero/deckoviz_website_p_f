@@ -605,6 +605,7 @@ const ExperimentalArtModes: React.FC = () => {
           </div>
         </motion.div>
       </div>
+    
     </div>
   );
 };

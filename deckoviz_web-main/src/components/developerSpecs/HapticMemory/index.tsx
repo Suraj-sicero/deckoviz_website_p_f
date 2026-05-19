@@ -8,8 +8,10 @@ import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPa
 import { motion, AnimatePresence } from "framer-motion";
 import { Hand, Fingerprint, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { MATERIAL_LIBRARY } from "./materialLibrary";
+import { useNavigate } from 'react-router-dom';
 
 const HapticMemory: React.FC = () => {
+    const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [currentIdx, setCurrentIdx] = useState(0);
@@ -233,9 +235,7 @@ const HapticMemory: React.FC = () => {
           </motion.div>
 
           <div className="flex gap-4 pointer-events-auto">
-            <button onClick={() => window.history.back()} className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/20 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl group">
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+            
           </div>
         </div>
 
@@ -352,7 +352,24 @@ const HapticMemory: React.FC = () => {
       <div className="absolute bottom-400 left-1/2 -translate-x-1/2 z-20 text-[10px] font-mono text-white/10 tracking-[1em] uppercase">
         Observed Haptic Surface // Static Memory Reconstruction
       </div>
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

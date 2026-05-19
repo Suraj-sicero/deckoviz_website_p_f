@@ -1,12 +1,14 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Settings, RefreshCw, Play, Pause, Camera, Layers, Zap, Maximize2 } from 'lucide-react';
 import { FractalSimulation } from './FractalSimulation';
+import { useNavigate } from 'react-router-dom';
 
 const FRACTALS = ['Mandelbrot', 'Julia', 'Burning Ship', 'Multibrot'];
 const MODES = ['Normal', 'Kaleidoscope', 'Sacred', 'Psychedelic', 'Organic'];
 const PALETTES = ['Neon', 'Cosmic', 'Pastel', 'Psychedelic'];
 
 const FractalWorlds: React.FC = () => {
+    const navigate = useNavigate();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const simulationRef = useRef<FractalSimulation | null>(null);
     
@@ -331,7 +333,24 @@ const FractalWorlds: React.FC = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
     );
 };
 

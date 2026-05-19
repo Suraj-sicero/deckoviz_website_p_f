@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { useNavigate } from 'react-router-dom';
 import { 
   BrainCircuit, MousePointer2, Zap, Activity, 
   Layers, Scan, RefreshCw, Share2, Info, 
@@ -121,6 +122,7 @@ const renderShader = `
 // --- Component ---
 
 const SlimeMould: React.FC = () => {
+    const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [efficiency, setEfficiency] = useState(85);
@@ -363,7 +365,7 @@ const SlimeMould: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-6"
+            className="flex items-center gap-6 bg-black/60 p-4 rounded-[2rem] border border-white/10 backdrop-blur-xl"
           >
             <div className="relative">
               <div className="w-16 h-16 rounded-full border-2 border-amber-500/20 flex items-center justify-center backdrop-blur-xl">
@@ -380,12 +382,12 @@ const SlimeMould: React.FC = () => {
             </div>
           </motion.div>
 
-          <div className="flex flex-col items-end gap-2">
-            <div className="flex items-center space-x-3 text-white/40">
+          <div className="flex flex-col items-end gap-2 bg-black/60 p-4 rounded-3xl border border-white/10 backdrop-blur-xl">
+            <div className="flex items-center space-x-3 text-white/70">
               <Scan size={14} />
               <span className="text-[10px] uppercase font-bold tracking-[0.3em]">Agent Population: 262,144</span>
             </div>
-            <div className="flex items-center space-x-3 text-white/40">
+            <div className="flex items-center space-x-3 text-white/70">
               <Globe size={14} />
               <span className="text-[10px] uppercase font-bold tracking-[0.3em]">Environment: CYCLIC_TOPOLOGY</span>
             </div>
@@ -401,8 +403,8 @@ const SlimeMould: React.FC = () => {
               exit={{ opacity: 0, scale: 1.1 }}
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none"
             >
-              <div className="flex flex-col items-center gap-4">
-                 <div className="w-24 h-24 rounded-full border border-amber-500/30 flex items-center justify-center">
+              <div className="flex flex-col items-center gap-4 bg-black/60 p-8 rounded-3xl border border-amber-500/20 backdrop-blur-xl">
+                 <div className="w-24 h-24 rounded-full border border-amber-500/50 flex items-center justify-center">
                     <Target className="text-amber-400 animate-ping" size={48} />
                  </div>
                  <span className="text-amber-400 text-[10px] font-black uppercase tracking-[0.5em]">Injecting Food Signal</span>
@@ -417,7 +419,7 @@ const SlimeMould: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-3xl space-y-6 w-96 shadow-2xl relative overflow-hidden"
+            className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-3xl space-y-6 w-96 shadow-2xl relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-4 opacity-10 text-amber-400">
               <Activity size={80} />
@@ -453,19 +455,19 @@ const SlimeMould: React.FC = () => {
             <div className="flex gap-4 pointer-events-auto">
               <button 
                 onClick={toggleFullscreen}
-                className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl"
+                className="p-4 rounded-2xl bg-black/60 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl"
               >
                 <Maximize2 size={16} />
               </button>
-              <button onClick={() => window.location.reload()} className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl">
+              <button onClick={() => window.location.reload()} className="p-4 rounded-2xl bg-black/60 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl">
                 <RefreshCw size={16} />
               </button>
-              <button className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl">
+              <button className="p-4 rounded-2xl bg-black/60 border border-white/10 text-white/70 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl">
                 <Share2 size={16} />
               </button>
             </div>
 
-            <div className="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-3xl flex gap-12 w-[30rem] relative overflow-hidden">
+            <div className="p-8 rounded-[2.5rem] bg-black/80 border border-white/10 backdrop-blur-3xl flex gap-12 w-[30rem] relative overflow-hidden">
                <div className="flex-1 space-y-4">
                   <div className="flex items-center gap-2 text-amber-400">
                     <Zap size={14} />
@@ -494,7 +496,24 @@ const SlimeMould: React.FC = () => {
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_200px_rgba(0,0,0,0.8)]" />
       <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-screen" />
       <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.02] bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%]" />
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
 import { motion } from "framer-motion";
 import { Brain, Activity, Zap, Search, Layers, X, Share2 } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 interface NodeData {
   id: string;
@@ -25,6 +26,7 @@ const RELATED_WORDS: Record<string, string[]> = {
 };
 
 const ThoughtWeaver: React.FC = () => {
+    const navigate = useNavigate();
   const [input, setInput] = useState("");
   const [nodes, setNodes] = useState<NodeData[]>([]);
   const [neuralLoad, setNeuralLoad] = useState(0);
@@ -182,12 +184,7 @@ const ThoughtWeaver: React.FC = () => {
                   className="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-6 py-4 text-white outline-none focus:border-cyan-500/50 focus:bg-white/10 transition-all backdrop-blur-xl"
                 />
              </div>
-             <button 
-              onClick={() => window.history.back()}
-              className="p-5 rounded-2xl bg-white/5 border border-white/10 text-white/20 hover:text-white transition-all backdrop-blur-xl group"
-            >
-              <X size={20} className="group-hover:rotate-90 transition-transform duration-500" />
-            </button>
+             
           </div>
         </div>
 
@@ -263,7 +260,24 @@ const ThoughtWeaver: React.FC = () => {
       <div className="absolute bottom-400 right-12 z-30 text-[8px] text-white/5 tracking-[2em] uppercase pointer-events-none">
         Neural Core // Fragment 0x99
       </div>
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 

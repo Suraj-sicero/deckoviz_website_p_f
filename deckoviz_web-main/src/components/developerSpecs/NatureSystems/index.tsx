@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Settings, RefreshCw, Leaf, Play, Pause, Download, Share2, Sprout } from 'lucide-react';
 import { L_SYSTEM_PRESETS, LSystem } from './LSystem';
 import { SpaceColonization, Node } from './SpaceColonization';
+import { useNavigate } from 'react-router-dom';
 
 interface Segment {
     x1: number;
@@ -13,6 +14,7 @@ interface Segment {
 
 
 const NatureSystems: React.FC = () => {
+    const navigate = useNavigate();
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [mode, setMode] = useState<'lsystem' | 'space'>('lsystem');
     const [preset, setPreset] = useState<keyof typeof L_SYSTEM_PRESETS>('Tree');
@@ -287,7 +289,24 @@ const NatureSystems: React.FC = () => {
                     box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
                 }
             `}} />
-        </div>
+        
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
     );
 };
 

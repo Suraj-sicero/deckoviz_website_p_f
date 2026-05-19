@@ -1,7 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
 import ToolLayout from "./ToolLayout";
-import { useAuth } from "../../context/AuthContext";
-
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
 
 type Status = "idle" | "uploading" | "loading" | "done" | "error";
@@ -69,7 +67,6 @@ const steps = [
 ];
 
 const PostcardTool: React.FC = () => {
-  const { deductCredits } = useAuth();
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [businessName, setBusinessName] = useState("");
@@ -117,8 +114,6 @@ const PostcardTool: React.FC = () => {
   }, []);
 
   const generate = async () => {
-    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
-    if (!hasCredits) return;
     if (!image) { setError("Please upload an image of your space."); return; }
     if (!businessName.trim()) { setError("Please enter your business name."); return; }
     

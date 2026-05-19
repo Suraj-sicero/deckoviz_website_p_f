@@ -415,7 +415,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/audiobook" element={<ProtectedRoute><Audiobook /></ProtectedRoute>} />
 
         {/* ── Creative Studio Hub ── */}
-        <Route path="/creative-studio" element={<ProtectedRoute><CreativeStudio /></ProtectedRoute>} />
+        <Route path="/creative-studio" element={<CreativeStudio />} />
         <Route path="/tools/audiobook" element={<ProtectedRoute><AudiobookTool /></ProtectedRoute>} />
         <Route path="/tools/visual-audiobook" element={<ProtectedRoute><VisualAudiobookTool /></ProtectedRoute>} />
         <Route path="/tools/storybook" element={<ProtectedRoute><StorybookTool /></ProtectedRoute>} />
@@ -431,7 +431,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/tools/storybook-studio" element={<ProtectedRoute><StorybookStudioTool /></ProtectedRoute>} />
         <Route path="/tools/daily" element={<ProtectedRoute><DailyInspirationTool /></ProtectedRoute>} />
         <Route path="/tools/music" element={<ProtectedRoute><MusicTool /></ProtectedRoute>} />
-        <Route path="/tools/postcard" element={<ProtectedRoute><PostcardTool /></ProtectedRoute>} />
+        <Route path="/tools/postcard" element={<PostcardTool />} />
         <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
         <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
         <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />
@@ -544,7 +544,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         <Route path="/developer-specs/silence-architecture" element={<SilenceArchitecture />} />
         <Route path="/developer-specs/music-responsive-art" element={<MusicResponsiveArt />} />
         <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
-        <Route path="/create-world" element={<ProtectedRoute><CreateWorld /></ProtectedRoute>} />
+        <Route path="/create-world" element={<CreateWorld />} />
 
         {/* ── Flagship Games ── */}
         <Route path="/flagship-games" element={<FlagshipGamesPage />} />

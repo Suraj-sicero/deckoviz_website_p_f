@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import * as THREE from "three";
 import { motion, AnimatePresence } from "framer-motion";
 import { Brain, Zap, Moon, Lightbulb, Activity, Maximize2, RefreshCw, X } from "lucide-react";
+import { useNavigate } from 'react-router-dom';
 
 // --- Types ---
 type BrainState = "DEFAULT" | "FOCUS" | "SLEEP" | "CREATIVE";
@@ -10,10 +11,17 @@ type BrainState = "DEFAULT" | "FOCUS" | "SLEEP" | "CREATIVE";
 const N = 2000;
 
 const NeuralFirestorm: React.FC = () => {
+    const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [brainState, setBrainState] = useState<BrainState>("DEFAULT");
   const [isLoaded, setIsLoaded] = useState(false);
+
+  const stateConfigRef = useRef({
+    restingColor: new THREE.Color("#2a1b4d"),
+    firingColor: new THREE.Color("#ffcc33"),
+    rotationSpeed: { y: 0.002, z: 0.001 }
+  });
 
   // Refs for simulation and rendering
   const workerRef = useRef<Worker | null>(null);
@@ -99,21 +107,18 @@ const NeuralFirestorm: React.FC = () => {
     // Here we'll create it via blob for maximum portability or assume URL works.
     const worker = new Worker(new URL("./NeuralSimulation.worker.ts", import.meta.url), { type: 'module' });
     workerRef.current = worker;
-
-    const restingColor = new THREE.Color("#2a1b4d");
-    const firingColor = new THREE.Color("#ffcc33");
     
     worker.onmessage = (e) => {
       const { action, fired } = e.data;
       if (action === "render") {
         for (let i = 0; i < N; i++) {
           if (fired[i]) {
-            mesh.setColorAt(i, firingColor);
+            mesh.setColorAt(i, stateConfigRef.current.firingColor);
           } else {
             // Fade back to resting color
             const currentColor = new THREE.Color();
             mesh.getColorAt(i, currentColor);
-            currentColor.lerp(restingColor, 0.1);
+            currentColor.lerp(stateConfigRef.current.restingColor, 0.1);
             mesh.setColorAt(i, currentColor);
           }
         }
@@ -163,9 +168,9 @@ const NeuralFirestorm: React.FC = () => {
     const animate = () => {
       animationId = requestAnimationFrame(animate);
       
-      // Slow rotation
-      mesh.rotation.y += 0.002;
-      mesh.rotation.z += 0.001;
+      // Dynamic rotation based on state
+      mesh.rotation.y += stateConfigRef.current.rotationSpeed.y;
+      mesh.rotation.z += stateConfigRef.current.rotationSpeed.z;
       
       renderer.render(scene, camera);
     };
@@ -199,6 +204,25 @@ const NeuralFirestorm: React.FC = () => {
   const changeState = (state: BrainState) => {
     setBrainState(state);
     workerRef.current?.postMessage({ action: "setState", data: { state } });
+    
+    // Update visuals based on state
+    if (state === "DEFAULT") {
+      stateConfigRef.current.restingColor.set("#2a1b4d"); // Deep purple
+      stateConfigRef.current.firingColor.set("#ffcc33"); // Gold
+      stateConfigRef.current.rotationSpeed = { y: 0.002, z: 0.001 };
+    } else if (state === "FOCUS") {
+      stateConfigRef.current.restingColor.set("#0f2a4a"); // Deep blue
+      stateConfigRef.current.firingColor.set("#33ccff"); // Cyan
+      stateConfigRef.current.rotationSpeed = { y: 0.005, z: 0.002 };
+    } else if (state === "SLEEP") {
+      stateConfigRef.current.restingColor.set("#1a0f2e"); // Dark purple
+      stateConfigRef.current.firingColor.set("#a366ff"); // Soft purple
+      stateConfigRef.current.rotationSpeed = { y: 0.0005, z: 0.0002 };
+    } else if (state === "CREATIVE") {
+      stateConfigRef.current.restingColor.set("#3a0f1a"); // Dark red
+      stateConfigRef.current.firingColor.set("#ff3366"); // Neon pink
+      stateConfigRef.current.rotationSpeed = { y: 0.008, z: 0.006 };
+    }
   };
 
   return (
@@ -245,12 +269,7 @@ const NeuralFirestorm: React.FC = () => {
           >
             <RefreshCw size={16} />
           </button>
-          <button 
-            onClick={() => window.history.back()}
-            className="p-4 rounded-2xl bg-white/5 border border-white/10 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-xl"
-          >
-            <X size={16} />
-          </button>
+          
       </div>
 
       <div className="absolute top-10 left-1/2 -translate-x-1/2 flex items-center space-x-2 p-2 rounded-full bg-white/5 backdrop-blur-xl border border-white/10">
@@ -298,7 +317,24 @@ const NeuralFirestorm: React.FC = () => {
 
       {/* Vignette */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)]" />
-    </div>
+    
+      {/* ALWAYS VISIBLE EXIT BUTTON */}
+      <div className="absolute top-8 right-24 pointer-events-auto z-[9999]">
+        <button 
+          onClick={() => {
+            if (typeof navigate !== 'undefined') {
+              navigate('/experimental-art-modes');
+            } else {
+              window.location.href = '/experimental-art-modes';
+            }
+          }}
+          className="p-3.5 bg-black/20 hover:bg-rose-500/20 backdrop-blur-xl rounded-2xl border border-white/10 text-white/70 hover:text-rose-400 transition-all shadow-xl flex items-center justify-center"
+          title="Exit"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+</div>
   );
 };
 
