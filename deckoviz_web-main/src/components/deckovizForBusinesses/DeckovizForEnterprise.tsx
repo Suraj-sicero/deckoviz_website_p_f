@@ -923,42 +923,42 @@ export default function DeckovizForEnterprise() {
     {
       icon: <Layers size={28} className="text-white" />,
       title: "Multi-location orchestration",
-      image: "/images/multi.png",
+      image: "/images/new_images_enterprise/0c4da816-b15f-44cc-8f94-24ef8aae6bcf.png",
       description:
         `Manage one screen or one thousand from a single intuitive dashboard. Orchestrate content, experiences, and ambience centrally while still enabling local nuance across locations.`,
     },
     {
       icon: <Building size={28} className="text-white" />,
       title: "Brand consistency at scale",
-      image: "/images/brand.png",
+      image: "/images/new_images_enterprise/037d50f9-a6c7-49f1-a38a-b91ee362a10a.png",
       description:
         "Preserve your visual identity everywhere your brand exists - visuals, color systems, tone, narrative style, and experience design remain aligned without sacrificing flexibility.",
     },
     {
       icon: <Code size={28} className="text-white" />,
       title: "Clean enterprise integrations",
-      image: "/images/api.png",
+      image: "/images/new_images_enterprise/df4b0c8e-52d0-489b-814e-8fbb584c893f.png",
       description:
         "Integrate into existing enterprise systems through APIs and structured controls. Automate updates, enable inventory-aware visuals, and coordinate campaigns without operational overhead.",
     },
     {
       icon: <BarChart2 size={28} className="text-white" />,
       title: "Analytics & measurable impact",
-      image: "/images/analystix.png",
+      image: "/images/new_images_enterprise/c2f7cc63-d604-42c0-bb2e-93dd9c46f603.png",
       description:
         "Move beyond guesswork using analytics that link visual experiences to dwell time, engagement patterns, and behavioral signals - enabling teams to optimize for real-world outcomes.",
     },
     {
       icon: <Shield size={28} className="text-white" />,
       title: "Enterprise security & reliability",
-      image: "/images/sec.png",
+      image: "/images/new_images_enterprise/b2816367-4c5c-4541-821f-b07acf58e0dd.png",
       description:
         "Deckoviz is built with enterprise-grade security, reliability, and support. From onboarding to expansion, it remains dependable, low-maintenance, and future-proof.",
     },
     {
       icon: <Headset size={28} className="text-white" />,
       title: "A living body for your brand",
-      image: "/images/5c874e33-e35b-4777-a210-349524e8805f.png",
+      image: "/images/new_images_enterprise/8453308e-d6e6-40b0-81db-a61765ba60cc.png",
       description:
         "Deckoviz does not replace your brand strategy - it gives it a living, intelligent body inside your space, continuously evolving with your business.",
     },
@@ -968,26 +968,29 @@ export default function DeckovizForEnterprise() {
     <Link
       key={post.slug}
       to={`/blog/${post.slug}`}
-      className="group relative flex gap-4 pb-6 border-b border-gray-200 hover:border-indigo-400 transition"
+      className="group relative flex gap-5 p-6 rounded-[2rem] border border-white/60 bg-white/40 backdrop-blur-xl shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_16px_48px_rgba(37,99,235,0.3)] hover:bg-white/60 hover:-translate-y-1 hover:scale-[1.02] transition-all duration-500 overflow-hidden"
     >
-      <div className="absolute -inset-2 rounded-xl opacity-0 group-hover:opacity-100 transition pointer-events-none
-        bg-gradient-to-r from-indigo-200/40 via-blue-200/30 to-indigo-200/40 blur-xl" />
+      {/* Glass Smoke Effect */}
+      <div className="absolute inset-0 bg-blue-100/20 rounded-[2rem] blur-[30px] group-hover:bg-blue-200/30 transition-colors pointer-events-none" />
+      
+      {/* Dynamic Shine */}
+      <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/50 to-transparent group-hover:animate-[shineSweep_1.5s_infinite] pointer-events-none" />
 
-      <div className="relative shrink-0 w-20 h-20 rounded-xl overflow-hidden shadow-sm">
+      <div className="relative shrink-0 w-24 h-24 rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(37,99,235,0.2)]">
         <img
           src={post.image || "/placeholder.svg"}
           alt={post.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
         />
       </div>
 
-      <div className="relative flex-grow">
-        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#2563EB] transition">
+      <div className="relative flex flex-col justify-center flex-grow z-10">
+        <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#2563EB] transition-colors leading-tight">
           {post.title}
         </h3>
 
         {post.description && (
-          <p className="text-sm text-gray-600 mt-1 leading-relaxed line-clamp-2">
+          <p className="text-sm text-gray-600 font-medium mt-1.5 leading-relaxed line-clamp-2">
             {post.description}
           </p>
         )}
@@ -1076,7 +1079,7 @@ export default function DeckovizForEnterprise() {
                   variant="secondary"
                   className="w-full sm:w-auto bg-gradient-to-r from-[#2563EB] to-[#1B2A4A] text-white px-6 py-3 rounded-full flex items-center justify-center gap-2 hover:from-[#1B2A4A] hover:to-[#0B1220] transition-all duration-300 shadow-md"
                 >
-                  Download Brochure
+                  Place Your Enterprise Order Here
                 </Button>
               </a>
 
@@ -1196,48 +1199,48 @@ export default function DeckovizForEnterprise() {
               </div>
 
               {/* Progress */}
-              <div className="mb-8 md:mb-10">
-                <div className="flex justify-between text-sm text-[#1e293b] mb-3 font-medium">
-                  <p className="text-[#182A4A] text-sm md:text-base font-semibold">
-                    Introducing the Generative Ambiance And Visual Portal for Enterprises
+                <div className="flex justify-between text-sm text-[#1e293b] mb-4 font-medium italic">
+                  <p className="text-[#182A4A] text-sm md:text-base font-semibold not-italic">
+                    Introducing the <span className="italic text-[#2563EB] font-bold">Generative Ambiance And Visual Portal</span> for Enterprises
                   </p>
                 </div>
-                <ProgressBar value={85} />
-              </div>
+                <ProgressBar value={100} hueOverride={{ start: 170, end: 210 }} />
+
 
               {/* Content */}
               <div className="space-y-6 text-[#334155] leading-relaxed text-[15px] md:text-[17px] font-medium">
                 <p>
                   Most spaces are designed once - and then left to decay into the background.
-                  Static walls. Stale visuals. Dull posters. Generic experiences. Repetitive screens.
+                  <strong> Static walls. Stale visuals. Dull posters. Generic experiences. Repetitive screens.</strong>
                 </p>
 
                 <p>
-                  Meanwhile, customer expectations are shaped by personalised, adaptive digital worlds.
-                  That gap is where businesses lose attention, memory, and loyalty.
+                  Meanwhile, customer expectations are shaped by <strong>personalised, adaptive digital worlds</strong>.
+                  That gap is where businesses lose <strong>attention, memory, and loyalty</strong>.
                 </p>
 
                 <p>
-                  Deckoviz fixes that.
-                  It transforms your space into a dynamic experience system - combining storytelling, visual design, custom art, and real-time ambience into one intelligent and proactive layer.
+                  <span className="text-[#2563EB] font-bold">Deckoviz fixes that.</span>
+                  It transforms your space into a <strong>dynamic experience system</strong> - combining <strong>storytelling, visual design, custom art, and real-time ambience</strong> into one <strong>intelligent and proactive layer</strong>.
                 </p>
 
                 <p>
-                  Your brand layer. Your mood layer. Your storytelling layer. Your AI layer. Your experience layer.
-                  All adaptive. All evolving.
+                  Your <span className="text-[#2563EB] font-bold">brand layer</span>. Your <span className="text-[#2563EB] font-bold">mood layer</span>. Your storytelling layer. Your AI layer. Your experience layer.
+                  <strong> All adaptive. All evolving.</strong>
+                </p>
+
+
+                <p>
+                  An AI-powered <strong>Dynamic Art, Storytelling, and Spatial Experience Platform</strong> designed for enterprises that understand one thing clearly: the future of customer experience is <strong>experiential, emotional, adaptive, personalized, multisensory and immersive</strong>.
                 </p>
 
                 <p>
-                  An AI-powered Dynamic Art, Storytelling, and Spatial Experience Platform designed for enterprises that understand one thing clearly: the future of customer experience is experiential, emotional, adaptive, personalized, multisensory and immersive.
+                  So your space doesn't just look good once - Deckoviz <strong>performs, engages, and creates moments</strong> that people remember, turning your walls into <strong>living, intelligent canvases</strong> that respond to context, brand, time, audience, and intent.
+                  Because in a world of commodities, <span className="text-[#2563EB] font-bold">experience is the only moat</span>.
                 </p>
 
                 <p>
-                  So your space doesn’t just look good once - Deckoviz performs, engages, and creates moments that people remember, turning your walls into living, intelligent canvases that respond to context, brand, time, audience, and intent.
-                  Because in a world of commodities, experience is the only moat.
-                </p>
-
-                <p>
-                  Turn your business into an immersive, personal experience that your guests will remember long after the meal or the sale.
+                  Turn your business into an <strong>immersive, personal experience</strong> that your guests will remember long after the meal or the sale.
                 </p>
               </div>
 
@@ -1284,6 +1287,27 @@ export default function DeckovizForEnterprise() {
               .no-scrollbar {
                 -ms-overflow-style: none;
                 scrollbar-width: none;
+              }
+              @keyframes resourceTicker {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }
+              .resource-ticker-container:hover .resource-ticker-track {
+                animation-play-state: paused;
+              }
+              @keyframes floating {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-5px); }
+              }
+              @keyframes shineSweep {
+                0% { transform: translateX(-100%) skewX(-20deg); }
+                30%, 100% { transform: translateX(200%) skewX(-20deg); }
+              }
+              .resource-card:hover .shine-element {
+                animation: shineSweep 1.5s infinite;
+              }
+              .floating-icon {
+                animation: floating 3s ease-in-out infinite;
               }
             `}
         </style>
@@ -1679,7 +1703,7 @@ export default function DeckovizForEnterprise() {
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         viewport={{ once: true }}
-        className="relative overflow-hidden py-16 md:py-24 mx-4 md:mx-10 lg:mx-[110px] rounded-3xl md:rounded-[40px] shadow-[0_20px_60px_rgba(24,42,74,0.12)]"
+        className="relative overflow-hidden py-16 md:py-24 mt-16 lg:mt-24 mx-4 md:mx-10 lg:mx-[110px] rounded-3xl md:rounded-[40px] shadow-[0_20px_60px_rgba(24,42,74,0.12)]"
         style={{
           background: "#f8fafc",
         }}
@@ -1838,7 +1862,248 @@ export default function DeckovizForEnterprise() {
         </div>
       </motion.section>
 
+      {/* ================= WHY DECKOVIZ ================= */}
+      <section className="relative py-24 md:py-32 overflow-hidden">
+
+        {/* Background blobs */}
+        <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none" style={{ background: "rgba(37,99,235,0.10)" }} />
+        <div className="absolute top-[40%] right-[-60px] w-[500px] h-[500px] rounded-full blur-[100px] pointer-events-none" style={{ background: "rgba(79,70,229,0.10)" }} />
+        <div className="absolute bottom-[-60px] left-[20%] w-[700px] h-[350px] rounded-full blur-[120px] pointer-events-none" style={{ background: "rgba(24,42,74,0.10)" }} />
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+
+          {/* Section Header */}
+          <FadeUp>
+            <div className="text-center mb-20">
+              <span className="inline-flex items-center px-5 py-2 rounded-full text-xs font-semibold tracking-widest uppercase mb-6"
+                style={{ background: "linear-gradient(135deg, rgba(24,42,74,0.08), rgba(37,99,235,0.08))", border: "1px solid rgba(37,99,235,0.18)", color: "#182A4A" }}>
+                ✦ The Case For Deckoviz
+              </span>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6"
+                style={{ fontFamily: "'Playfair Display', serif", background: "linear-gradient(135deg, #182A4A, #2563EB, #182A4A)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Why Deckoviz
+              </h2>
+              <div className="w-20 h-[2px] mx-auto mb-8 rounded-full" style={{ background: "linear-gradient(90deg, transparent, #2563EB, transparent)" }} />
+              <div className="max-w-3xl mx-auto space-y-4">
+                <p className="text-2xl md:text-3xl font-bold text-[#182A4A]" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  There is nothing quite like this.
+                  <span className="block text-[#2563EB] italic font-medium text-xl md:text-2xl mt-1">And that is the point.</span>
+                </p>
+                <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto mt-4">
+                  Deckoviz is not a screen. It is not digital signage. It is not a media player with a nice frame around it.
+                  It is the first generative ambiance and experience platform built specifically for businesses that understand
+                  what hospitality, atmosphere, and memorable moments actually mean. The category did not exist before us. We built it.
+                </p>
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* Secret Sauce Label */}
+          <FadeUp delay={0.1}>
+            <div className="text-center mb-12">
+              <p className="text-sm font-bold tracking-[0.3em] uppercase text-[#2563EB] opacity-70">The Secret Sauce</p>
+            </div>
+          </FadeUp>
+
+          {/* Numbered Cards Grid */}
+          <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            {[
+              {
+                num: "01",
+                title: "A generative engine that thinks like your brand",
+                body: "Our generative engine does not just display content. It creates it. Built on a combination of image models, poster agents, video generation models, and marketing agents, it produces custom art, menus, posters, and visual campaigns that are coherent with your brand guidelines, your ethos, and the specific moment in your space, whether that is a quiet Tuesday lunch or New Year's Eve."
+              },
+              {
+                num: "02",
+                title: "Vizzy: an AI trained on your world",
+                body: "Every business gets their own Vizzy, trained on their products, history, offerings, story, and brand personality. Vizzy becomes the intelligent layer between you and your guests in physical space, able to engage, inform, and delight in ways that generic digital displays simply cannot. Over time, Vizzy learns your preferences and grows more proactive, more creative, and more deeply yours."
+              },
+              {
+                num: "03",
+                title: "Adaptive ambiance, not static content",
+                body: "Content that does not adapt is just decoration. Deckoviz schedules and shifts your visual environment based on the time of day, the occasion, the season, and your guest profile. The atmosphere of a breakfast service and a late-night cocktail hour should feel different. With Deckoviz, they do, automatically and beautifully."
+              },
+              {
+                num: "04",
+                title: "The moments guests actually remember",
+                body: "Guests no longer want transactions. They want experiences with texture, with story, with feeling. Deckoviz gives your space a living, breathing visual identity that guests photograph, talk about, and return for. In an era where the atmosphere itself is increasingly the product, the businesses that invest in generative ambiance will be the ones people recommend."
+              },
+              {
+                num: "05",
+                title: "From ideation to screen in minutes",
+                body: "Describe a campaign to Vizzy. Watch it generate options instantly. Iterate in conversation. Push to one screen or all of them with a single action. What used to require agencies, designers, and weeks of back and forth now takes a conversation."
+              },
+              {
+                num: "06",
+                title: "A platform that compounds over time",
+                body: "This is the defensibility that most technology products cannot claim. The longer you use Deckoviz, the better it gets at understanding your business. Vizzy's creative and curatorial intelligence deepens with every interaction. You are not just buying software. You are building an asset that becomes smarter and more valuable the longer it runs in your space."
+              },
+              {
+                num: "07",
+                title: "Visual coherence across every surface",
+                body: "From the art on your walls to your in-store menus to seasonal campaign posters, every visual that Deckoviz produces is aligned with your brand identity. No inconsistency. No off-brand moments. Everything that your guests see feels considered and intentional, because it is."
+              },
+              {
+                num: "08",
+                title: "Built for the future of physical retail",
+                body: "The most successful restaurants, hotels, and retail environments of the next decade will not compete on product alone. They will compete on the entire sensory and emotional experience of being there. Adaptive custom art, AI-powered engagement, and generative ambiance are not differentiators for the future. They are the baseline."
+              },
+            ].map((item, i) => (
+              <StaggerItem key={i}>
+                <div className="group relative h-full rounded-[28px] p-7 overflow-hidden hover:-translate-y-1.5 transition-all duration-500 cursor-default"
+                  style={{
+                    background: "linear-gradient(145deg, rgba(255,255,255,0.64) 0%, rgba(255,255,255,0.22) 48%, rgba(255,255,255,0.40) 100%)",
+                    backdropFilter: "blur(28px) saturate(165%)",
+                    WebkitBackdropFilter: "blur(28px) saturate(165%)",
+                    border: "1px solid rgba(255,255,255,0.70)",
+                    borderTop: "1px solid rgba(255,255,255,0.90)",
+                    boxShadow: "0 24px 80px rgba(15,23,42,0.08), inset 0 1px 0 rgba(255,255,255,0.90)"
+                  }}>
+
+                  {/* Hover glow */}
+                  <div className="absolute -inset-8 rounded-[42px] opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500 pointer-events-none"
+                    style={{ background: "radial-gradient(circle at 50% 50%, rgba(37,99,235,0.26), rgba(24,42,74,0.14) 50%, transparent 70%)" }} />
+
+                  {/* Bottom hover accent line */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[2px] w-0 group-hover:w-full transition-all duration-500 rounded-b-[28px]"
+                    style={{ background: "linear-gradient(90deg, transparent, #2563EB, transparent)" }} />
+
+                  {/* Number badge */}
+                  <div className="relative mb-5 inline-flex items-center justify-center w-12 h-12 rounded-2xl font-bold text-sm"
+                    style={{
+                      background: "linear-gradient(135deg, #182A4A, #2563EB)",
+                      color: "white",
+                      boxShadow: "0 8px 24px rgba(37,99,235,0.28)"
+                    }}>
+                    {item.num}
+                  </div>
+
+                  <h3 className="relative text-xl font-bold text-[#182A4A] mb-3 leading-tight group-hover:text-[#2563EB] transition-colors duration-300">
+                    {item.title}
+                  </h3>
+                  <p className="relative text-[15px] text-gray-600 leading-relaxed font-medium">
+                    {item.body}
+                  </p>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerGrid>
+
+          {/* Why Nothing Else Like This */}
+          <FadeUp delay={0.1}>
+            <div className="rounded-[32px] p-10 md:p-14 mb-10 relative overflow-hidden"
+              style={{
+                background: "linear-gradient(145deg, rgba(255,255,255,0.60) 0%, rgba(255,255,255,0.20) 100%)",
+                backdropFilter: "blur(32px) saturate(180%)",
+                WebkitBackdropFilter: "blur(32px) saturate(180%)",
+                border: "1px solid rgba(255,255,255,0.75)",
+                borderTop: "1px solid rgba(255,255,255,0.95)",
+                boxShadow: "0 30px 90px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.95)"
+              }}>
+
+              <div className="absolute inset-x-6 top-0 h-px bg-white/90" />
+
+              <h3 className="text-3xl md:text-4xl font-bold mb-6"
+                style={{ fontFamily: "'Playfair Display', serif", background: "linear-gradient(135deg, #182A4A, #2563EB)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                Why there is nothing else like this
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-lg mb-10 max-w-3xl">
+                Conventional digital signage loops pre-made media. Smart TVs display static playlists. Generic AI art tools generate
+                one-off images with no memory of your brand and no relationship with your business. None of them create. None of them
+                learn. None of them adapt in real time to the specific character and needs of your space. Deckoviz is the first platform
+                to combine generative creation, brand intelligence, contextual scheduling, and a trained AI personality into a single,
+                seamless experience layer for physical spaces.
+              </p>
+
+              {/* Comparison Grid */}
+              <div className="grid md:grid-cols-2 gap-6">
+
+                {/* Everything Else */}
+                <div className="rounded-2xl p-7"
+                  style={{
+                    background: "rgba(241,245,249,0.80)",
+                    backdropFilter: "blur(16px)",
+                    border: "1px solid rgba(148,163,184,0.25)"
+                  }}>
+                  <p className="text-sm font-bold text-gray-400 tracking-widest uppercase mb-5">Everything Else</p>
+                  <ul className="space-y-3">
+                    {[
+                      "Static or pre-scheduled content only",
+                      "No brand intelligence or memory",
+                      "No generative creation capability",
+                      "No AI layer for guest engagement",
+                      "Requires agencies or designers",
+                      "Does not improve over time",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-gray-500 text-sm">
+                        <span className="mt-0.5 w-4 h-4 rounded-full bg-gray-200 flex-shrink-0 flex items-center justify-center text-gray-400 text-xs">✕</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Deckoviz */}
+                <div className="rounded-2xl p-7 relative overflow-hidden"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(24,42,74,0.08), rgba(37,99,235,0.08))",
+                    backdropFilter: "blur(16px)",
+                    border: "1px solid rgba(37,99,235,0.22)",
+                    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.80)"
+                  }}>
+                  <div className="absolute top-0 inset-x-0 h-[2px] rounded-t-2xl" style={{ background: "linear-gradient(90deg, #182A4A, #2563EB)" }} />
+                  <p className="text-sm font-bold text-[#2563EB] tracking-widest uppercase mb-5">Deckoviz</p>
+                  <ul className="space-y-3">
+                    {[
+                      "Generative, adaptive, real-time ambiance",
+                      "Trained on your brand, guidelines, story",
+                      "Creates custom art, posters, and campaigns",
+                      "Vizzy as your in-space AI personality",
+                      "Ideate to screen in a single conversation",
+                      "Gets smarter and more valuable over time",
+                    ].map((item, i) => (
+                      <li key={i} className="flex items-start gap-3 text-[#182A4A] text-sm font-medium">
+                        <span className="mt-0.5 w-4 h-4 rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs"
+                          style={{ background: "linear-gradient(135deg, #182A4A, #2563EB)" }}>✓</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </FadeUp>
+
+          {/* Closing quote + CTA */}
+          <FadeUp delay={0.2}>
+            <div className="text-center rounded-[32px] p-12 md:p-16 relative overflow-hidden"
+              style={{
+                background: "linear-gradient(135deg, #0f1b30, #182A4A, #1e3a8a)",
+                boxShadow: "0 40px 100px rgba(15,23,42,0.40)"
+              }}>
+              <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full blur-[100px] opacity-30" style={{ background: "#2563EB" }} />
+              <div className="absolute -bottom-24 -right-24 w-64 h-64 rounded-full blur-[100px] opacity-25" style={{ background: "#4f46e5" }} />
+
+              <p className="text-2xl md:text-3xl font-light text-white/70 italic mb-4 relative z-10"
+                style={{ fontFamily: "'Playfair Display', serif" }}>
+                "The atmosphere itself is increasingly the product."
+              </p>
+              <div className="w-16 h-px mx-auto my-8 opacity-30" style={{ background: "linear-gradient(90deg, transparent, white, transparent)" }} />
+              <a
+                href="/contact"
+                className="relative z-10 inline-flex items-center gap-3 px-10 py-4 rounded-full font-bold text-white text-base transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+                style={{ background: "linear-gradient(135deg, #2563EB, #182A4A)", boxShadow: "0 12px 40px rgba(37,99,235,0.40)" }}
+              >
+                Talk to us about your space ↗
+              </a>
+            </div>
+          </FadeUp>
+
+        </div>
+      </section>
+
       {/* YT and Instagram */}
+
       <div className="bg-transparent py-12 md:py-12 mt-10">
         <div className="max-w-7xl mx-auto px-4">
           {/* Enhanced Heading Section */}
@@ -1967,12 +2232,12 @@ export default function DeckovizForEnterprise() {
 
           <div
             className="absolute top-[-5%] left-[-5%] w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
-            style={{ background: "radial-gradient(circle, #9333ea, #db2777)" }}
+            style={{ background: "radial-gradient(circle, #2563EB, #1e40af)" }}
           />
 
           <div
             className="absolute bottom-[-5%] right-[-5%] w-[600px] h-[600px] rounded-full opacity-15 blur-[100px]"
-            style={{ background: "radial-gradient(circle, #3b82f6, #9333ea)" }}
+            style={{ background: "radial-gradient(circle, #3b82f6, #1e3a8a)" }}
           />
 
         </div>
@@ -2043,7 +2308,7 @@ export default function DeckovizForEnterprise() {
 
                   <div
                     key={feature.title}
-                    className={`flex flex-col md:flex-row items-center w-full py-10 md:py-24 relative ${isEven ? "md:flex-row" : "md:flex-row-reverse"
+                    className={`flex flex-col md:flex-row items-center w-full py-10 md:py-24 relative md:gap-12 ${isEven ? "md:flex-row" : "md:flex-row-reverse"
                       }`}
                   >
 
@@ -2108,7 +2373,7 @@ export default function DeckovizForEnterprise() {
 
                     {/* Image (Desktop Only) */}
                     <div
-                      className={`hidden md:flex md:w-[56%] items-center ${isEven ? "justify-start pl-40" : "justify-end pr-40"
+                      className={`hidden md:flex md:w-[56%] items-center ${isEven ? "justify-start pl-16" : "justify-end pr-16"
                         }`}
                     >
 
@@ -2119,7 +2384,7 @@ export default function DeckovizForEnterprise() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: false, amount: 0.3 }}
                         transition={{ duration: 0.7 }}
-                        className="max-w-[420px] rounded-3xl shadow-xl"
+                        className="w-full max-w-[580px] rounded-3xl shadow-xl"
                       />
 
                     </div>
@@ -2199,146 +2464,185 @@ export default function DeckovizForEnterprise() {
           paddingRight: '20px'
         }}>
 
-        <section className="relative py-28 bg-transparent border-t border-gray-100 flex flex-col items-center gap-6"
-          style={{
-            padding: '20px'
-          }}>
+        <section 
+          className="relative mx-4 md:mx-12 my-20 pt-20 pb-28 rounded-[4rem] border border-white/60 overflow-hidden shadow-[0_40px_80px_rgba(0,0,0,0.08)] backdrop-blur-3xl"
+          style={{ background: "rgba(255, 255, 255, 0.5)" }}
+        >
+          {/* Subtle light glows for the white glassy box */}
+          <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-100/40 blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-indigo-50/40 blur-[120px] rounded-full pointer-events-none" />
+          
+          <div className="max-w-7xl mx-auto px-6 mb-16 text-center relative z-10">
+            <h3 className="text-3xl md:text-5xl font-bold text-[#182A4A] mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Enterprise Resource Library
+            </h3>
+            <p className="text-gray-500 text-lg max-w-xl mx-auto">High-fidelity deep dives into the future of the Deckoviz AI ecosystem</p>
+          </div>
 
-          {/* 📘 Business DASP Guide Button */}
-          <ScalePop delay={0.2}>
-            <button
-              onClick={() => navigate("/dasp-business-guide")}
-              className="group relative flex flex-col items-center justify-center text-center
-              w-full max-w-[500px] mx-auto
-              px-6 md:px-8 py-4
-              rounded-full
-              transition-all duration-500
-              hover:scale-[1.03] hover:-translate-y-1"
+          <div className="w-full overflow-hidden resource-ticker-container">
+            <div 
+              className="flex gap-10 px-8 py-20 w-max resource-ticker-track"
               style={{
-                background: "linear-gradient(135deg, rgba(191,219,254,0.6) 0%, rgba(147,197,253,0.6) 100%)",
-                boxShadow: "0 12px 32px rgba(37,99,235,0.1), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 20px rgba(255,255,255,0.5)",
-                border: "1px solid rgba(255,255,255,0.6)",
-                backdropFilter: "blur(20px)"
+                animation: "resourceTicker 40s linear infinite"
               }}
             >
-              {/* Explosive Blue Glow Aura */}
-              <div className="absolute -inset-8 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 -z-10 group-hover:scale-110 pointer-events-none" />
-              <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 blur-xl bg-white/60 -z-10 group-hover:scale-105 pointer-events-none mix-blend-overlay" />
+              {[1, 2].map((iteration) => (
+                <React.Fragment key={iteration}>
+                  {/* 📘 Business DASP Guide Button */}
+                  <div className="min-w-[340px] md:min-w-[480px]">
+                    <ScalePop delay={0.2}>
+                      <button
+                        onClick={() => navigate("/dasp-business-guide")}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        {/* Dynamic Decorative Glow */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl -z-10 group-hover:bg-blue-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/10 blur-3xl -z-10 group-hover:bg-indigo-500/20 transition-colors duration-700" />
+                        
+                        {/* Shine Sweep */}
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
 
-              {/* Shine sweep (contained) */}
-              <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
-              </div>
+                        <div className="relative flex items-center gap-6 w-full">
+                          {/* Floating Icon Badge */}
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-blue-50/80 shadow-[0_8px_16px_rgba(37,99,235,0.1)] border border-blue-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
+                              <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                              <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-blue-800/60 font-bold">Strategic Insight</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-blue-700 transition-colors duration-300">DASP Business Guide</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">Strategy, intelligence & enterprise scale.</span>
+                          </div>
+                          
+                          {/* Animated Arrow */}
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-blue-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
 
-              <div className="relative flex items-center gap-4 w-full">
-                {/* Icon badge */}
-                <div className="shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg bg-white/90 shadow-sm border border-blue-200">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-600">
-                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-                  </svg>
-                </div>
-                <div className="flex flex-col items-start text-left gap-0.5">
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-blue-900/70 font-bold">Business Guide</span>
-                  <span className="text-[14px] font-bold text-[#182A4A] leading-snug">The Ultimate Guide for Deckoviz DASP For Business</span>
-                  <span className="text-[11px] text-[#1e3a8a] leading-relaxed font-medium">Strategy, platform intelligence, enterprise use-cases & scale.</span>
-                </div>
-                {/* Arrow */}
-                <div className="shrink-0 self-center ml-auto opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-blue-700 text-base">→</div>
-              </div>
-            </button>
-          </ScalePop>
+                        {/* Bottom Highlight Line */}
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-blue-400 to-indigo-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
 
-          {/* THE DECKOVIZ THESIS BUTTON (CENTERED) */}
-          <ScalePop delay={0.4}>
-            <button
-              onClick={() => setIsThesisModalOpen(true)}
-              className="group relative flex flex-col items-center justify-center text-center
-              w-full max-w-[500px] mx-auto
-              px-6 md:px-8 py-4
-              rounded-full
-              transition-all duration-500
-              hover:scale-[1.03] hover:-translate-y-1"
-              style={{
-                background: "linear-gradient(135deg, rgba(204,251,241,0.6) 0%, rgba(153,246,228,0.6) 100%)",
-                boxShadow: "0 12px 32px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 20px rgba(255,255,255,0.5)",
-                border: "1px solid rgba(255,255,255,0.8)",
-                backdropFilter: "blur(20px)"
-              }}
-            >
-              {/* Explosive Blue Glow Aura */}
-              <div className="absolute -inset-8 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 -z-10 group-hover:scale-110 pointer-events-none" />
-              <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 blur-xl bg-white/60 -z-10 group-hover:scale-105 pointer-events-none mix-blend-overlay" />
+                  {/* THE DECKOVIZ THESIS BUTTON */}
+                  <div className="min-w-[340px] md:min-w-[480px]">
+                    <ScalePop delay={0.4}>
+                      <button
+                        onClick={() => setIsThesisModalOpen(true)}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 blur-3xl -z-10 group-hover:bg-teal-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-500/10 blur-3xl -z-10 group-hover:bg-emerald-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
 
-              {/* Shine sweep (contained) */}
-              <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
-              </div>
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-teal-50/80 shadow-[0_8px_16px_rgba(20,184,166,0.1)] border border-teal-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-teal-600">
+                              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                              <polyline points="14 2 14 8 20 8"/>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-teal-800/60 font-bold">Philosophy</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-teal-700 transition-colors duration-300">The Deckoviz Thesis</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">Core philosophy & fundamental insights.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-teal-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
 
-              <div className="relative flex items-center gap-4 w-full">
-                {/* Icon badge */}
-                <div className="shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg bg-white/90 shadow-sm border border-teal-200">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-teal-700">
-                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                    <polyline points="14 2 14 8 20 8"/>
-                  </svg>
-                </div>
-                <div className="flex flex-col items-start text-left gap-0.5">
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-teal-900/70 font-bold">Research</span>
-                  <span className="text-[14px] font-bold text-[#182A4A] leading-snug">The Deckoviz Thesis</span>
-                </div>
-                {/* Arrow */}
-                <div className="shrink-0 self-center ml-auto opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-teal-700 text-base">→</div>
-              </div>
-            </button>
-          </ScalePop>
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-teal-400 to-emerald-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
 
-          {/* 📙 Pragmatic Enterprise Buyer Guide Button */}
-          <ScalePop delay={0.6}>
-            <button
-              onClick={() => navigate("/pragmatic-buyer-guide")}
-              className="group relative flex flex-col items-center justify-center text-center
-              w-full max-w-[500px] mx-auto
-              px-6 md:px-8 py-4
-              rounded-full
-              transition-all duration-500
-              hover:scale-[1.03] hover:-translate-y-1"
-              style={{
-                background: "linear-gradient(135deg, rgba(233,213,255,0.6) 0%, rgba(216,180,254,0.6) 100%)",
-                boxShadow: "0 12px 32px rgba(124,58,237,0.1), inset 0 1px 0 rgba(255,255,255,1), inset 0 0 20px rgba(255,255,255,0.5)",
-                border: "1px solid rgba(255,255,255,0.6)",
-                backdropFilter: "blur(20px)"
-              }}
-            >
-              {/* Explosive Blue Glow Aura */}
-              <div className="absolute -inset-8 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 blur-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 -z-10 group-hover:scale-110 pointer-events-none" />
-              <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 blur-xl bg-white/60 -z-10 group-hover:scale-105 pointer-events-none mix-blend-overlay" />
+                  {/* 📙 Pragmatic Enterprise Buyer Guide Button */}
+                  <div className="min-w-[340px] md:min-w-[480px]">
+                    <ScalePop delay={0.6}>
+                      <button
+                        onClick={() => navigate("/pragmatic-buyer-guide")}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 blur-3xl -z-10 group-hover:bg-purple-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-indigo-500/10 blur-3xl -z-10 group-hover:bg-indigo-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
 
-              {/* Shine sweep (contained) */}
-              <div className="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/80 to-transparent" />
-              </div>
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-purple-50/80 shadow-[0_8px_16px_rgba(124,58,237,0.1)] border border-purple-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-purple-600">
+                              <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
+                              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-purple-800/60 font-bold">Analysis</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-purple-700 transition-colors duration-300">Enterprise Buyer Guide</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">ROI & specific business outcomes.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-purple-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
 
-              <div className="relative flex items-center gap-4 w-full">
-                {/* Icon badge */}
-                <div className="shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg bg-white/90 shadow-sm border border-purple-200">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-700">
-                    <rect width="20" height="14" x="2" y="7" rx="2" ry="2"/>
-                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
-                  </svg>
-                </div>
-                <div className="flex flex-col items-start text-left gap-0.5">
-                  <span className="text-[9px] uppercase tracking-[0.2em] text-purple-900/70 font-bold">Enterprise Buyer Guide</span>
-                  <span className="text-[14px] font-bold text-[#2e1065] leading-snug">The Deckoviz Guide for the Pragmatic Enterprise Buyer</span>
-                  <span className="text-[11px] text-[#4c1d95] leading-relaxed font-medium">ROI, cost replacement, revenue behaviors & business outcomes.</span>
-                </div>
-                {/* Arrow */}
-                <div className="shrink-0 self-center ml-auto opacity-60 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 text-purple-700 text-base">→</div>
-              </div>
-            </button>
-          </ScalePop>
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-purple-400 to-indigo-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
 
         </section>
+
       </section>
 
 
@@ -2376,26 +2680,32 @@ export default function DeckovizForEnterprise() {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`w-full md:w-auto text-center px-7 py-3 rounded-full text-sm font-medium 
-      transition-all duration-300 border backdrop-blur-xl
+                  className={`relative overflow-hidden w-full md:w-auto text-center px-7 py-3 rounded-full text-sm font-semibold 
+      transition-all duration-500 border backdrop-blur-2xl shadow-[0_8px_20px_rgba(37,99,235,0.12)]
       ${activeCategory === cat
-                      ? "text-white border-transparent shadow-xl scale-[1.02] bg-gradient-to-r from-[#182A4A] to-[#2563EB]"
-                      : "bg-white/60 border-gray-200 text-gray-700 hover:border-indigo-300 hover:shadow-md hover:bg-white"
+                      ? "text-white border-white/50 bg-gradient-to-r from-[#182A4A]/90 to-[#2563EB]/90 shadow-[0_12px_28px_rgba(37,99,235,0.4)] scale-[1.02]"
+                      : "bg-white/40 border-white/50 text-gray-700 hover:text-[#182A4A] hover:border-blue-400 hover:shadow-[0_12px_28px_rgba(37,99,235,0.25)] hover:bg-white/60 hover:-translate-y-0.5"
                     }`}
                 >
-                  {cat}
+                  {/* Subtle glass smoke inside button */}
+                  <div className="absolute inset-0 bg-blue-100/10 blur-xl pointer-events-none" />
+                  <span className="relative z-10">{cat}</span>
                 </button>
               ))}
 
             </div>
             {/* ===== Glass Article Container ===== */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-white/40 backdrop-blur-2xl rounded-3xl border border-white/50 shadow-[0_20px_80px_rgba(0,0,0,0.06)]" />
+            <div className="relative mt-8">
+              <div className="absolute inset-0 bg-white/30 backdrop-blur-3xl rounded-[3rem] border border-white/60 shadow-[0_20px_100px_rgba(37,99,235,0.15)] overflow-hidden">
+                 {/* Large Smoke Effect behind the grid */}
+                 <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-200/20 blur-[100px] rounded-full pointer-events-none" />
+                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-200/20 blur-[100px] rounded-full pointer-events-none" />
+              </div>
 
-              <div className="relative p-6 md:p-10">
+              <div className="relative p-6 md:p-12">
 
                 {/* ===== Article Grid ===== */}
-                <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <StaggerGrid className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 
                   {activeCategory === "All" && (
                     <>

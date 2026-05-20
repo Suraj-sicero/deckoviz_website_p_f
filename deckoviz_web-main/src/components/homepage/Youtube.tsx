@@ -20,7 +20,7 @@ const Youtube: React.FC = () => {
           x: Math.random() * 100,
           y: Math.random() * 100,
           size: Math.random() * 6 + 4,
-          color: ["#a855f7", "#ec4899", "#38bdf8", "#ffffff"][
+          color: ["#182A4A", "#2563EB", "#38bdf8", "#6366f1"][
             Math.floor(Math.random() * 4)
           ],
         },
@@ -32,12 +32,12 @@ const Youtube: React.FC = () => {
 
   return (
     <section className="relative py-20 md:py-28 text-center overflow-hidden
-      bg-gradient-to-br from-indigo-50 via-violet-50 to-pink-50">
+      bg-gradient-to-br from-indigo-50 via-blue-50 to-sky-50">
 
       {/* Glow blobs */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-violet-400/30 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-indigo-400/30 rounded-full blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-indigo-400/25 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-blue-400/25 rounded-full blur-[120px]" />
       </div>
 
       {/* Floating sparks */}
@@ -66,11 +66,11 @@ const Youtube: React.FC = () => {
         {/* Heading */}
         <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
           <span className="text-gray-900">See</span>{" "}
-          <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
             Deckoviz
           </span>{" "}
           <span className="text-gray-900">in</span>{" "}
-          <span className="italic bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
             Action
           </span>
         </h2>
@@ -85,7 +85,7 @@ const Youtube: React.FC = () => {
 
           {/* Pulse glow ring */}
           <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r
-            from-violet-500/40 via-pink-500/40 to-indigo-500/40 blur-xl
+            from-indigo-500/40 via-blue-500/40 to-cyan-500/40 blur-xl
             opacity-60 group-hover:opacity-100 transition" />
 
           <div
@@ -94,7 +94,7 @@ const Youtube: React.FC = () => {
             style={{ paddingBottom: "56.25%" }}
           >
               {/* className="absolute top-0 left-0 w-full h-full" */}
-            <iframe className="absolute top-0 left-0 w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/1mPhddoCgwI?si=oXcDQCmFPIvS0_NP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <iframe className="absolute top-0 left-0 w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/1mPhddoCgwI?si=oXcDQCmFPIvS0_NP" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen></iframe>
           </div>
         </div>
       </div>

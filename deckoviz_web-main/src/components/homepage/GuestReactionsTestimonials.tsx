@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import { motion } from 'framer-motion';
 import { useNavigate } from "react-router-dom"
 
@@ -73,10 +74,10 @@ const testimonialsData: Testimonial[] = [
 const GuestReactionsTestimonials: React.FC = () => {
   const navigate = useNavigate();
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: 'start',
-  });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'start' },
+    [Autoplay({ delay: 5000, stopOnInteraction: true })]
+  );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -159,13 +160,13 @@ const GuestReactionsTestimonials: React.FC = () => {
   </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
           <span className="text-gray-900">Testimonials from our</span>{" "}
-          <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+          <span className="italic bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
             Users
           </span>{" "}
           😊
         </h2>
         <p className="text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-          Real words from the curious souls who let Deckoviz into their homes before it was cool.
+          Some words from the curious souls who let Deckoviz into their homes before it was cool.
         </p>
       </div>
       
@@ -215,23 +216,25 @@ const GuestReactionsTestimonials: React.FC = () => {
   transition={{ type: "spring", stiffness: 200, damping: 30 }}
 >
               <div
-  className={`h-full rounded-2xl p-[1px] ${
+  className={`h-full rounded-2xl border backdrop-blur-xl p-8 flex flex-col transition-all duration-300 hover:shadow-xl ${
     index % 3 === 0
-      ? "bg-gradient-to-br from-pink-500 via-violet-500 to-indigo-500"
+      ? "bg-purple-50/80 border-purple-300 shadow-[0_8px_30px_rgb(168,85,247,0.06)] hover:border-purple-400"
       : index % 3 === 1
-      ? "bg-gradient-to-br from-sky-500 via-blue-500 to-indigo-600"
-      : "bg-gradient-to-br from-emerald-500 via-teal-500 to-green-600"
+      ? "bg-sky-50/80 border-sky-300 shadow-[0_8px_30px_rgb(14,165,233,0.06)] hover:border-sky-400"
+      : "bg-emerald-50/80 border-emerald-300 shadow-[0_8px_30px_rgb(16,185,129,0.06)] hover:border-emerald-400"
   }`}
 >
-  <div className="h-full bg-white/90 backdrop-blur p-8 rounded-2xl shadow-md flex flex-col">
-    <p className="text-lg text-gray-700 leading-relaxed mb-6">
+    <p className="text-lg text-gray-700 leading-relaxed mb-6 flex-grow">
       “{t.quote}”
     </p>
-    <p className="font-semibold text-gray-800">{t.author}</p>
-    <p className="text-sm text-gray-500 mt-4 pt-4 border-t">
+    <p className="font-semibold text-gray-900">{t.author}</p>
+    <p className={`text-sm mt-4 pt-4 border-t ${
+      index % 3 === 0 ? "border-purple-200 text-purple-700" :
+      index % 3 === 1 ? "border-sky-200 text-sky-700" :
+      "border-emerald-200 text-emerald-700"
+    }`}>
       {t.tagline}
     </p>
-  </div>
 </div>
 
             </motion.div>
@@ -245,8 +248,8 @@ const GuestReactionsTestimonials: React.FC = () => {
           <button
             key={index}
             onClick={() => emblaApi?.scrollTo(index)}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              index === selectedIndex ? 'bg-primary-600 scale-125' : 'bg-gray-300'
+            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+              index === selectedIndex ? 'bg-indigo-600 scale-125' : 'bg-indigo-200'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />

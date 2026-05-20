@@ -339,7 +339,7 @@ const Benefits = () => {
               whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.35, duration: 0.7, type: "spring", bounce: 0.4 }}
-              className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-indigo-600 bg-clip-text text-transparent inline-block"
+              className="italic bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent inline-block"
             >
               Deckoviz
             </motion.span>{" "}

@@ -100,13 +100,19 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
         if (deltaTime >= frameTime) {
           if (!isHovering && !isDragging && container && cardsRef.current.length > features.length) {
             // Calculate the width of one complete set of features (including gaps)
-            const firstSetWidth = cardsRef.current[features.length]?.offsetLeft - cardsRef.current[0]?.offsetLeft;
-            
-            // Smooth scroll with consistent speed and seamless snap back
-            if (firstSetWidth && container.scrollLeft >= firstSetWidth) {
-              container.scrollLeft -= firstSetWidth; 
+            const firstCard = cardsRef.current[0];
+            const nextSetCard = cardsRef.current[features.length];
+
+            if (firstCard && nextSetCard) {
+              const firstSetWidth = nextSetCard.offsetLeft - firstCard.offsetLeft;
+              // Smooth scroll with consistent speed and seamless snap back
+              if (container.scrollLeft >= firstSetWidth) {
+                container.scrollLeft -= firstSetWidth; 
+              } else {
+                container.scrollLeft += 2.5; // Optimized speed
+              }
             } else {
-              container.scrollLeft += 2.5; // Optimized speed
+              container.scrollLeft += 2.5;
             }
           }
           lastTime = currentTime - (deltaTime % frameTime);
@@ -229,14 +235,14 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
         </div>
 
         {/* Horizontal Scrolling Container */}
-        <div className="relative overflow-visible group">
+        <div className="relative overflow-visible group mt-6 md:mt-12">
           {/* Subtle fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-white to-transparent pointer-events-none z-20" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-white to-transparent pointer-events-none z-20" />
+          <div className="absolute left-0 top-0 bottom-0 w-16 md:w-48 bg-gradient-to-r from-white to-transparent pointer-events-none z-20" />
+          <div className="absolute right-0 top-0 bottom-0 w-16 md:w-48 bg-gradient-to-l from-white to-transparent pointer-events-none z-20" />
           
           <div 
             ref={scrollContainerRef}
-            className="overflow-x-auto overflow-y-visible scrollbar-hide py-6 px-12 md:px-32 select-none"
+            className="overflow-x-auto overflow-y-visible scrollbar-hide py-6 px-6 md:px-32 select-none"
             style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
             onMouseDown={startDragging}
             onMouseLeave={() => {
@@ -431,7 +437,7 @@ const EnterpriseHorizontalScrollingFeatures: React.FC = () => {
               >
                 {/* Clean, minimal tooltip */}
                 <motion.div 
-                  className="relative overflow-hidden bg-white rounded-2xl p-8 
+                  className="relative overflow-hidden bg-white rounded-2xl p-5 md:p-8 
                              shadow-[0_8px_32px_rgba(0,0,0,0.12),0_2px_8px_rgba(0,0,0,0.08)]
                              border border-gray-100"
                   initial={{ opacity: 0, y: 10 }}
