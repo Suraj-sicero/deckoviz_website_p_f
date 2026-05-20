@@ -16,7 +16,10 @@ const ComparisonSlider: React.FC<{ before: string; after: string }> = ({ before,
   const [position, setPosition] = useState(50);
   
   return (
-    <div className="relative w-full aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl group select-none">
+    <div className="relative w-full rounded-3xl overflow-hidden shadow-2xl group select-none bg-black/5 flex items-center justify-center">
+      {/* Dynamic Sizing Image to naturally fit different aspect ratios without cropping */}
+      <img src={after} alt="After Sizer" className="w-full h-auto block opacity-0 pointer-events-none" />
+
       {/* After Image (Top Layer) */}
       <div 
         className="absolute inset-0 z-10"
@@ -66,12 +69,21 @@ const steps = [
   "Finalizing photorealistic composition..."
 ];
 
+const frameOptions = [
+  { id: "frame1", name: "Classic Walnut", description: "Rich dark walnut with ambient blue glow", color: "bg-[#5c4033]", glowColor: "#3b6390", borderClass: "border-[#5c4033]" },
+  { id: "frame2", name: "Sleek Charcoal", description: "Modern charcoal with sunset orange glow", color: "bg-[#2b2b2b]", glowColor: "#ec8567", borderClass: "border-[#2b2b2b]" },
+  { id: "frame3", name: "Natural Oak", description: "Elegant natural oak with soft golden glow", color: "bg-[#c2a679]", glowColor: "#ceaf8e", borderClass: "border-[#c2a679]" },
+  { id: "frame4", name: "Modern Maple", description: "Warm maple wood with bronze accent glow", color: "bg-[#a0785a]", glowColor: "#8c7765", borderClass: "border-[#a0785a]" },
+];
+
 const PostcardTool: React.FC = () => {
+  const [mode, setMode] = useState<"mode1" | "mode2">("mode1");
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [frameImage, setFrameImage] = useState<File | null>(null);
   const [framePreview, setFramePreview] = useState<string | null>(null);
   const [businessName, setBusinessName] = useState("");
+  const [frameStyle, setFrameStyle] = useState<string>("frame1");
   const [result, setResult] = useState<PostcardResult | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [loadingStep, setLoadingStep] = useState(0);
@@ -143,7 +155,7 @@ const PostcardTool: React.FC = () => {
 
   const generate = async () => {
     if (!image) { setError("Please upload an image of your space."); return; }
-    if (!frameImage) { setError("Please upload an image of the frame/artwork."); return; }
+    if (mode === "mode1" && !frameImage) { setError("Please upload an image of the frame/artwork."); return; }
     if (!businessName.trim()) { setError("Please enter your business name."); return; }
     
     setError(""); 
@@ -153,8 +165,11 @@ const PostcardTool: React.FC = () => {
     try {
       const formData = new FormData();
       formData.append("image", image);
-      formData.append("frameImage", frameImage);
       formData.append("businessName", businessName);
+      formData.append("frameStyle", frameStyle);
+      if (mode === "mode1") {
+        if (frameImage) formData.append("frameImage", frameImage);
+      }
 
       const res = await fetch(`${BACKEND_URL}/api/postcard/generate`, {
         method: "POST",
@@ -181,12 +196,14 @@ const PostcardTool: React.FC = () => {
     setFrameImage(null);
     setFramePreview(null);
     setBusinessName("");
+    setFrameStyle("frame1");
+    setMode("mode1");
     setResult(null);
     setStatus("idle");
     setError("");
   };
 
-  const handleDownload = async () => {
+  const handleDownloadPostcard = async () => {
     if (!result?.imageUrl) return;
     try {
       const response = await fetch(result.imageUrl);
@@ -201,10 +218,31 @@ const PostcardTool: React.FC = () => {
       window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("Download failed:", err);
-      // Fallback
       const a = document.createElement("a");
       a.href = result.imageUrl;
       a.download = "postcard.jpg";
+      a.click();
+    }
+  };
+
+  const handleDownloadRoom = async () => {
+    if (!result?.afterUrl) return;
+    try {
+      const response = await fetch(result.afterUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `deckoviz_room_${businessName.replace(/\s+/g, "_") || 'result'}.jpg`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed:", err);
+      const a = document.createElement("a");
+      a.href = result.afterUrl;
+      a.download = "transformed_room.jpg";
       a.click();
     }
   };
@@ -221,6 +259,36 @@ const PostcardTool: React.FC = () => {
         <div className="bg-white/80 backdrop-blur-sm border border-white/60 rounded-3xl p-8 shadow-xl">
           <h2 className="text-xl font-bold text-gray-900 mb-6 transition-all">1. Design Your Postcard</h2>
 
+          {/* Mode Selector */}
+          <div className="flex p-1 bg-gray-100/80 backdrop-blur-md rounded-2xl mb-8 border border-gray-200">
+            <button
+              onClick={() => {
+                setMode("mode1");
+                setError("");
+              }}
+              className={`flex-1 py-3 text-sm font-bold rounded-xl transition-all duration-300 ${
+                mode === "mode1"
+                  ? "bg-white text-gray-900 shadow-md scale-[1.01]"
+                  : "text-gray-500 hover:text-gray-900 hover:bg-white/40"
+              }`}
+            >
+              🖼️ Mode 1: Custom Artwork
+            </button>
+            <button
+              onClick={() => {
+                setMode("mode2");
+                setError("");
+              }}
+              className={`flex-1 py-3 text-sm font-bold rounded-xl transition-all duration-300 ${
+                mode === "mode2"
+                  ? "bg-white text-gray-900 shadow-md scale-[1.01]"
+                  : "text-gray-500 hover:text-gray-900 hover:bg-white/40"
+              }`}
+            >
+              ✨ Mode 2: Auto Showcase
+            </button>
+          </div>
+
           {/* Business Name */}
           <div className="mb-6">
             <label className="block text-sm font-semibold text-gray-700 mb-2">Business Name *</label>
@@ -233,8 +301,53 @@ const PostcardTool: React.FC = () => {
             />
           </div>
 
+          {/* Frame Style Selector */}
+          <div className="mb-8">
+            <label className="block text-sm font-semibold text-gray-700 mb-3">Premium Frame Style</label>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              {frameOptions.map((opt) => {
+                const isSelected = frameStyle === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    onClick={() => setFrameStyle(opt.id)}
+                    type="button"
+                    className={`relative p-4 rounded-2xl text-left border-2 transition-all duration-300 ${
+                      isSelected 
+                        ? "bg-white border-transparent shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] scale-[1.02]" 
+                        : "bg-white/40 border-gray-100 hover:border-gray-200 hover:bg-white/60"
+                    }`}
+                    style={{
+                      borderColor: isSelected ? opt.glowColor : undefined,
+                      boxShadow: isSelected ? `0 10px 25px -5px ${opt.glowColor}40, 0 8px 10px -6px ${opt.glowColor}30` : undefined
+                    }}
+                  >
+                    {/* Simulated Frame Preview Box */}
+                    <div className="relative aspect-[4/3] rounded-lg mb-3 flex items-center justify-center overflow-hidden bg-gray-50 border border-gray-100">
+                      {/* Ambient Backlight Glow */}
+                      <div 
+                        className="absolute w-2/3 h-2/3 rounded-full blur-xl opacity-60 transition-opacity"
+                        style={{ backgroundColor: opt.glowColor }}
+                      />
+                      {/* Outer Frame Bezel */}
+                      <div className={`relative w-4/5 h-3/5 rounded border-[6px] bg-gray-100 flex items-center justify-center transition-all ${opt.borderClass}`}>
+                        {/* Inner Artwork screen placeholder */}
+                        <div className="w-full h-full bg-white flex items-center justify-center">
+                          <span className="text-[10px] font-bold text-gray-400">ART</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="font-bold text-xs text-gray-900">{opt.name}</div>
+                    <div className="text-[10px] text-gray-500 mt-0.5 leading-snug">{opt.description}</div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* Drop zones grid */}
-          <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <div className={`grid gap-6 mb-6 ${mode === "mode1" ? "md:grid-cols-2" : "grid-cols-1"}`}>
             {/* Space Drop zone */}
             <div
               onDragOver={(e) => { e.preventDefault(); setIsDragging(true); }}
@@ -269,40 +382,53 @@ const PostcardTool: React.FC = () => {
               )}
             </div>
 
-            {/* Frame Artwork Drop zone */}
-            <div
-              onDragOver={(e) => { e.preventDefault(); setIsDraggingFrame(true); }}
-              onDragLeave={() => setIsDraggingFrame(false)}
-              onDrop={onFrameDrop}
-              className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 min-h-[200px] flex flex-col items-center justify-center ${
-                isDraggingFrame
-                  ? "border-emerald-500 bg-emerald-50 scale-[1.01]"
-                  : frameImage
-                  ? "border-emerald-300 bg-emerald-50/30"
-                  : "border-gray-200 bg-gray-50 hover:border-emerald-300 hover:bg-emerald-50/30"
-              }`}
-            >
-              <input
-                type="file"
-                accept="image/*"
-                className="absolute inset-0 opacity-0 cursor-pointer z-10"
-                onChange={(e) => handleFrameFileChange(e.target.files)}
-              />
-              {!framePreview ? (
-                <div>
-                  <div className="text-5xl mb-3">🖼️</div>
-                  <p className="font-bold text-gray-600 mb-1">Upload Frame / Artwork Image</p>
-                  <p className="text-xs text-gray-400">The design to place in the frame</p>
-                </div>
-              ) : (
-                <div className="flex flex-col items-center">
-                  <img src={framePreview} alt="Frame Preview" className="w-48 h-32 object-cover rounded-xl shadow-md mb-3" />
-                  <p className="font-bold text-emerald-700">Artwork uploaded!</p>
-                  <p className="text-xs text-emerald-500">Click or drag to replace</p>
-                </div>
-              )}
-            </div>
+            {/* Frame Artwork Drop zone (Mode 1 only) */}
+            {mode === "mode1" && (
+              <div
+                onDragOver={(e) => { e.preventDefault(); setIsDraggingFrame(true); }}
+                onDragLeave={() => setIsDraggingFrame(false)}
+                onDrop={onFrameDrop}
+                className={`relative border-2 border-dashed rounded-3xl p-8 text-center transition-all duration-300 min-h-[200px] flex flex-col items-center justify-center ${
+                  isDraggingFrame
+                    ? "border-emerald-500 bg-emerald-50 scale-[1.01]"
+                    : frameImage
+                    ? "border-emerald-300 bg-emerald-50/30"
+                    : "border-gray-200 bg-gray-50 hover:border-emerald-300 hover:bg-emerald-50/30"
+                }`}
+              >
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                  onChange={(e) => handleFrameFileChange(e.target.files)}
+                />
+                {!framePreview ? (
+                  <div>
+                    <div className="text-5xl mb-3">🖼️</div>
+                    <p className="font-bold text-gray-600 mb-1">Upload Frame / Artwork Image</p>
+                    <p className="text-xs text-gray-400">The design to place in the frame</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center">
+                    <img src={framePreview} alt="Frame Preview" className="w-48 h-32 object-cover rounded-xl shadow-md mb-3" />
+                    <p className="font-bold text-emerald-700">Artwork uploaded!</p>
+                    <p className="text-xs text-emerald-500">Click or drag to replace</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
+
+          {/* Mode 2 Explanatory Tip */}
+          {mode === "mode2" && (
+            <div className="mb-6 px-5 py-4 bg-emerald-50/50 border border-emerald-100 rounded-2xl text-emerald-800 text-xs flex items-start gap-3">
+              <span className="text-lg">💡</span>
+              <div>
+                <p className="font-bold mb-0.5">Vizzy Smart Placement</p>
+                <p className="text-emerald-700/90 leading-relaxed">Vizzy will automatically scan your room, detect the optimal wall layout, and seamlessly synthesize a premium Decoviz digital art frame with a matching wooden bezel, ambient backlight glow, and realistic drop shadows using Google's Gemini 2.5 vision rendering engine.</p>
+              </div>
+            </div>
+          )}
 
           {error && (
             <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm animate-bounce">⚠️ {error}</div>
@@ -398,19 +524,28 @@ const PostcardTool: React.FC = () => {
                 <ComparisonSlider before={result.beforeUrl} after={result.afterUrl} />
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-3 gap-4">
               <button
-                onClick={handleDownload}
-                className="group relative py-5 rounded-2xl bg-gray-900 overflow-hidden transition-all hover:scale-[1.02] active:scale-95"
+                onClick={handleDownloadPostcard}
+                className="group relative py-5 rounded-2xl bg-gray-900 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 text-center"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <span className="relative z-10 text-white font-bold flex items-center justify-center gap-2">
-                  📥 Download High-Res Postcard
+                  📥 Download Postcard
+                </span>
+              </button>
+              <button
+                onClick={handleDownloadRoom}
+                className="group relative py-5 rounded-2xl bg-emerald-700 overflow-hidden transition-all hover:scale-[1.02] active:scale-95 text-center"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <span className="relative z-10 text-white font-bold flex items-center justify-center gap-2">
+                  🖼️ Download Room Photo
                 </span>
               </button>
               <button
                 onClick={reset}
-                className="py-5 rounded-2xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-all hover:scale-[1.02] active:scale-95"
+                className="py-5 rounded-2xl border-2 border-gray-200 text-gray-600 font-bold hover:bg-gray-50 transition-all hover:scale-[1.02] active:scale-95 text-center"
               >
                 🔄 Create Another Space
               </button>

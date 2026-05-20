@@ -2893,3 +2893,568 @@
 [2026-05-19T13:11:38.451Z] LOG: [Runware Blend] Image uploaded. UUID: ec7626fb-7011-4256-93a7-cfd1183d3b38
 [2026-05-19T13:11:40.808Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a10dlim3/ws/3/ii/22f9ea96-3c2a-4c3b-ab49-784c3853461b.jpg
 [2026-05-19T13:11:41.568Z] LOG: Successfully replaced composite with Runware-blended version.
+[2026-05-19T17:47:25.470Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:47:27.727Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:48:34.377Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:48:36.737Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:48:41.097Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:48:43.157Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:48:53.963Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:48:56.140Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:49:11.649Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:49:16.139Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:50:41.821Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:50:44.393Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:51:58.153Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:52:00.649Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:52:10.429Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:52:12.733Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:52:17.229Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:52:19.769Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:52:33.468Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:52:36.167Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:52:46.387Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:52:48.707Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:53:04.123Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:53:06.914Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:53:59.449Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:54:03.703Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:54:04.138Z] LOG: Postcard generation started for: Gourmet Cafe (Mode: Mode 1 (Custom), Frame Style: frame1)
+[2026-05-19T17:54:33.598Z] LOG: Placement detected: [object Object]
+[2026-05-19T17:54:33.601Z] LOG: Mode 1: Warping custom artwork inside frame inner screen...
+[2026-05-19T17:54:34.116Z] LOG: Warping frame and shadows into room 3D perspective...
+[2026-05-19T17:54:34.194Z] ERROR: [postcard/generate] Error: Expected number between 3 and 4 for create.channels but received 1 of type number
+[2026-05-19T17:54:34.226Z] LOG: Postcard generation started for: Luxe Lounge (Mode: Mode 2 (Showcase), Frame Style: frame1)
+[2026-05-19T17:54:49.831Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:54:52.827Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:54:54.578Z] LOG: Postcard generation started for: Gourmet Cafe (Mode: Mode 1 (Custom), Frame Style: frame1)
+[2026-05-19T17:55:47.445Z] LOG: Placement detected: [object Object]
+[2026-05-19T17:55:47.448Z] LOG: Mode 1: Warping custom artwork inside frame inner screen...
+[2026-05-19T17:55:48.020Z] LOG: Warping frame and shadows into room 3D perspective...
+[2026-05-19T17:55:48.132Z] LOG: Blending composite image using Runware FLUX.1 Kontext Dev...
+[2026-05-19T17:55:48.240Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T17:55:51.462Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T17:55:53.270Z] LOG: Postcard generation started for: Luxe Lounge (Mode: Mode 2 (Showcase), Frame Style: frame1)
+[2026-05-19T17:56:26.348Z] LOG: Placement detected: [object Object]
+[2026-05-19T17:56:26.349Z] LOG: Mode 2: Using predefined showcase frame artwork...
+[2026-05-19T17:56:26.350Z] ERROR: [postcard/generate] Error: VipsImage: memory area too small -- should be 4194304 bytes, you passed 1485507
+[2026-05-19T17:56:35.468Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:56:38.846Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T17:56:38.958Z] LOG: Postcard generation started for: Gourmet Cafe (Mode: Mode 1 (Custom), Frame Style: frame1)
+[2026-05-19T17:57:04.768Z] LOG: Placement detected: [object Object]
+[2026-05-19T17:57:04.773Z] LOG: Mode 1: Warping custom artwork inside frame inner screen...
+[2026-05-19T17:57:05.296Z] LOG: Warping frame and shadows into room 3D perspective...
+[2026-05-19T17:57:05.408Z] LOG: Blending composite image using Runware FLUX.1 Kontext Dev...
+[2026-05-19T17:57:05.533Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T17:57:08.686Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T17:57:10.359Z] LOG: Postcard generation started for: Luxe Lounge (Mode: Mode 2 (Showcase), Frame Style: frame4)
+[2026-05-19T17:57:43.964Z] LOG: Placement detected: [object Object]
+[2026-05-19T17:57:43.966Z] LOG: Mode 2: Using predefined showcase frame artwork...
+[2026-05-19T17:57:44.584Z] LOG: Warping frame and shadows into room 3D perspective...
+[2026-05-19T17:57:44.715Z] LOG: Blending composite image using Runware FLUX.1 Kontext Dev...
+[2026-05-19T17:57:44.830Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T17:57:47.855Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T17:58:42.081Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T17:58:44.390Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:00:43.911Z] LOG: Postcard generation started for: test (Mode: Mode 2 (Showcase), Frame Style: frame4)
+[2026-05-19T18:01:13.270Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:01:13.272Z] LOG: Mode 2: Using predefined showcase frame artwork...
+[2026-05-19T18:01:13.900Z] LOG: Warping frame and shadows into room 3D perspective...
+[2026-05-19T18:01:14.348Z] LOG: Blending composite image using Runware FLUX.1 Kontext Dev...
+[2026-05-19T18:01:14.464Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:01:18.180Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:09:36.329Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:09:36.379Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:09:38.825Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:09:38.956Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:10:00.034Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:10:00.127Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:10:04.310Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:10:04.433Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:10:33.764Z] LOG: Postcard generation started for: Gourmet Cafe (Mode: Mode 1 (Custom Artwork))
+[2026-05-19T18:11:50.029Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:11:50.037Z] LOG: Mode 1: Warping custom artwork to wall coordinates...
+[2026-05-19T18:11:50.223Z] LOG: Generating frame using Runware inpainting (strength: 0.22)...
+[2026-05-19T18:11:50.337Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:11:53.693Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:11:55.193Z] LOG: Postcard generation started for: Luxe Lounge (Mode: Mode 2 (AI Auto Showcase))
+[2026-05-19T18:12:49.300Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:12:49.302Z] LOG: Mode 2: AI Auto Showcase (generating frame and art from scratch)...
+[2026-05-19T18:12:49.425Z] LOG: Generating frame using Runware inpainting (strength: 0.85)...
+[2026-05-19T18:12:49.552Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:12:52.673Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:14:09.162Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase))
+[2026-05-19T18:14:53.101Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:14:53.103Z] LOG: Mode 2: AI Auto Showcase (generating frame and art from scratch)...
+[2026-05-19T18:14:53.525Z] LOG: Generating frame using Runware inpainting (strength: 0.85)...
+[2026-05-19T18:14:53.692Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:14:57.378Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:16:15.580Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase))
+[2026-05-19T18:16:37.763Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:16:37.773Z] LOG: Mode 2: AI Auto Showcase (generating frame and art from scratch)...
+[2026-05-19T18:16:38.602Z] LOG: Generating frame using Runware inpainting (strength: 0.85)...
+[2026-05-19T18:16:39.759Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:16:43.902Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:18:44.941Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase))
+[2026-05-19T18:19:01.216Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:19:01.219Z] LOG: Mode 2: AI Auto Showcase (generating frame and art from scratch)...
+[2026-05-19T18:19:01.288Z] LOG: Generating frame using Runware inpainting (strength: 0.85)...
+[2026-05-19T18:19:01.495Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:19:04.940Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:21:08.252Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:21:08.253Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:21:16.952Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:21:17.060Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:21:27.367Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:21:27.382Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:21:32.688Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:21:32.692Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:23:39.365Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:23:39.390Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:23:49.869Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:23:49.885Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:27:56.477Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:27:56.527Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:28:15.306Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:28:17.195Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:31:16.403Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:31:16.431Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:31:20.882Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:31:21.696Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:31:23.178Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:31:23.225Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:31:26.602Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:31:26.602Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:31:39.557Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:31:39.557Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:31:41.937Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:31:42.063Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:31:56.047Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:31:59.147Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:33:10.329Z] LOG: Postcard generation started for: Gourmet Cafe (Mode: Mode 1 (Custom Artwork))
+[2026-05-19T18:33:32.592Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-19T18:33:35.416Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-19T18:33:41.774Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:33:41.781Z] LOG: Creating premium display frame composite in flat space...
+[2026-05-19T18:33:43.034Z] LOG: Warping flat display assembly with shadows and glow to room perspective...
+[2026-05-19T18:33:43.235Z] LOG: Generating frame using Runware inpainting (strength: 0.15)...
+[2026-05-19T18:33:43.415Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:33:46.778Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:33:55.067Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a04d20/ws/3/ii/2ebb7c2d-6fac-4ae8-9a0a-6b8b68c55529.jpg
+[2026-05-19T18:33:56.391Z] LOG: Successfully retrieved AI-generated frame from Runware.
+[2026-05-19T18:33:57.451Z] LOG: Postcard generation started for: Luxe Lounge (Mode: Mode 2 (AI Auto Showcase))
+[2026-05-19T18:34:29.168Z] LOG: Placement detected: [object Object]
+[2026-05-19T18:34:29.171Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-19T18:34:35.918Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-19T18:34:35.919Z] LOG: Creating premium display frame composite in flat space...
+[2026-05-19T18:34:37.244Z] LOG: Warping flat display assembly with shadows and glow to room perspective...
+[2026-05-19T18:34:37.391Z] LOG: Generating frame using Runware inpainting (strength: 0.15)...
+[2026-05-19T18:34:37.515Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-19T18:34:55.356Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-19T18:35:46.179Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a02d21/ws/3/ii/35f53100-02b3-4317-8059-54d9589ee22a.jpg
+[2026-05-19T18:35:47.354Z] LOG: Successfully retrieved AI-generated frame from Runware.
+[2026-05-20T03:49:50.448Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T03:49:53.646Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T03:51:49.935Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase))
+[2026-05-20T03:52:04.699Z] LOG: Placement detected: [object Object]
+[2026-05-20T03:52:04.712Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T03:52:11.541Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T03:52:11.541Z] LOG: Creating premium display frame composite in flat space...
+[2026-05-20T03:52:12.975Z] LOG: Warping flat display assembly with shadows and glow to room perspective...
+[2026-05-20T03:52:13.328Z] LOG: Generating frame using Runware inpainting (strength: 0.15)...
+[2026-05-20T03:52:13.463Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T03:52:16.596Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T03:52:24.796Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a07dlim3/ws/3/ii/4109494a-4548-466b-adc6-5a7918bbb40c.jpg
+[2026-05-20T03:52:30.702Z] LOG: Successfully retrieved AI-generated frame from Runware.
+[2026-05-20T03:57:16.679Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T03:57:33.022Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:09:12.173Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:09:12.181Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:09:16.013Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:09:16.139Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:10:10.539Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:10:10.558Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:10:14.708Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:10:14.906Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:12:34.111Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:12:41.340Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:21:57.218Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T04:22:22.986Z] LOG: Placement detected: [object Object]
+[2026-05-20T04:22:22.990Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T04:22:28.051Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T04:22:28.051Z] LOG: Creating premium display frame composite using frame1 in flat space...
+[2026-05-20T04:22:28.114Z] ERROR: [postcard/generate] ReferenceError: warpImage is not defined
+[2026-05-20T04:23:00.274Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame2)
+[2026-05-20T04:23:28.104Z] LOG: Placement detected: [object Object]
+[2026-05-20T04:23:28.108Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T04:23:35.736Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T04:23:35.737Z] LOG: Creating premium display frame composite using frame2 in flat space...
+[2026-05-20T04:23:35.790Z] ERROR: [postcard/generate] ReferenceError: warpImage is not defined
+[2026-05-20T04:26:05.073Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:26:05.104Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:26:05.139Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T04:26:17.140Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:26:17.145Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T04:26:17.155Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T05:54:04.485Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T05:54:33.439Z] LOG: Placement detected: [object Object]
+[2026-05-20T05:54:33.447Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T05:54:39.054Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T05:54:39.054Z] LOG: Creating premium display frame composite using frame1 in flat space...
+[2026-05-20T05:54:39.720Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T05:54:40.052Z] LOG: Generating frame using Runware inpainting (strength: 0.15)...
+[2026-05-20T05:54:40.155Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T05:54:43.203Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T05:54:51.352Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a10dlim3/ws/3/ii/190ff722-d58e-4bee-a197-829e0a99f855.jpg
+[2026-05-20T05:54:52.599Z] LOG: Successfully retrieved AI-generated frame from Runware.
+[2026-05-20T06:12:21.011Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:12:21.047Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:12:21.158Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:12:27.767Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:12:27.780Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:12:27.916Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:17:11.350Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T06:17:25.879Z] LOG: Placement detected: [object Object]
+[2026-05-20T06:17:25.905Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T06:17:31.143Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T06:17:31.143Z] LOG: Creating premium display frame composite using frame1 in flat space...
+[2026-05-20T06:17:31.793Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T06:17:31.909Z] LOG: Generating frame using Runware inpainting (strength: 0.15)...
+[2026-05-20T06:17:32.042Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T06:17:45.105Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T06:30:23.459Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:30:23.467Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:30:23.542Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:30:30.011Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:30:30.379Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:30:31.143Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:33:15.011Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:33:15.012Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:33:15.045Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T06:33:29.152Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:33:29.164Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T06:33:29.186Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:01:41.514Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame4)
+[2026-05-20T07:01:55.919Z] LOG: Placement detected: [object Object]
+[2026-05-20T07:01:55.926Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T07:02:10.014Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T07:02:10.014Z] LOG: Drawing programmatic frame (Modern Maple) — canvas 1920×1080, bezel 73px, screen 1750×910...
+[2026-05-20T07:02:11.440Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T07:02:11.543Z] LOG: Generating frame using Runware inpainting (strength: 0.15)...
+[2026-05-20T07:02:11.667Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T07:02:20.179Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T07:25:57.213Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:25:57.214Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:25:57.311Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:26:22.927Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:26:23.105Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:26:23.116Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:28:41.625Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame4)
+[2026-05-20T07:29:04.575Z] LOG: Placement detected: [object Object]
+[2026-05-20T07:29:04.578Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T07:29:09.086Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T07:29:09.086Z] LOG: Drawing programmatic frame (Modern Maple) — canvas 1920×1080, bezel 73px, screen 1750×910...
+[2026-05-20T07:29:10.144Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T07:29:10.215Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T07:29:10.302Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T07:29:19.209Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T07:54:12.592Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:54:12.655Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:54:12.665Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:54:16.771Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:54:16.860Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:54:17.203Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:54:32.036Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:54:32.036Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:54:32.046Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T07:54:35.330Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:54:35.403Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T07:54:35.483Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:01:03.735Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1 — Classic Walnut)
+[2026-05-20T08:01:14.237Z] ERROR: Vision Error: fetch failed
+[2026-05-20T08:01:14.241Z] LOG: Missing corners in Vision response, using center/width fallback...
+[2026-05-20T08:01:14.241Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:01:26.187Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:01:26.188Z] LOG: Drawing programmatic frame (Classic Walnut) — canvas 1920×1080, bezel 106px, screen 1670×830...
+[2026-05-20T08:01:27.282Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:01:27.342Z] LOG: Generating frame using Runware inpainting (strength: 0.32)...
+[2026-05-20T08:01:27.423Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:01:37.916Z] ERROR: [Runware Blend] Error during Runware blending: fetch failed
+[2026-05-20T08:08:30.557Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:08:30.568Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:08:30.586Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:08:59.075Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:08:59.078Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:08:59.078Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:11:26.783Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1 — Classic Walnut)
+[2026-05-20T08:11:44.462Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:11:44.464Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:11:52.671Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:11:52.671Z] LOG: Drawing programmatic frame (Classic Walnut) — canvas 1920×1080, bezel 106px, screen 1670×830...
+[2026-05-20T08:11:53.659Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:11:53.726Z] LOG: Generating frame using Runware inpainting (strength: 0.28)...
+[2026-05-20T08:11:53.816Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:11:57.542Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:12:06.043Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a09dlim3/ws/3/ii/75d205ab-63ce-4f5b-8868-3471a70e12f9.jpg
+[2026-05-20T08:12:06.975Z] LOG: Successfully retrieved AI-generated frame from Runware.
+[2026-05-20T08:13:53.150Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:13:53.167Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:13:53.178Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:14:11.535Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:14:11.584Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:14:11.805Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:20:29.297Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1 — Classic Walnut)
+[2026-05-20T08:20:47.713Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:20:47.716Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:20:55.504Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:20:55.505Z] LOG: Drawing programmatic frame (Classic Walnut) — canvas 1920×1080, bezel 106px, screen 1670×830...
+[2026-05-20T08:20:56.510Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:20:56.574Z] LOG: Generating frame using Runware inpainting (strength: 0.22)...
+[2026-05-20T08:20:56.658Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:21:10.419Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:21:18.740Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a09dlim3/ws/3/ii/418bbcbc-eae4-4737-8649-d1c578c32e56.jpg
+[2026-05-20T08:21:19.850Z] LOG: Successfully retrieved AI-generated frame from Runware.
+[2026-05-20T08:21:49.088Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1 — Classic Walnut)
+[2026-05-20T08:22:15.711Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:22:15.714Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:22:25.106Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:22:25.106Z] LOG: Drawing programmatic frame (Classic Walnut) — canvas 1920×1080, bezel 106px, screen 1670×830...
+[2026-05-20T08:22:26.093Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:22:26.150Z] LOG: Generating frame using Runware inpainting (strength: 0.22)...
+[2026-05-20T08:22:26.232Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:22:35.248Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:22:43.728Z] LOG: [Runware Blend] Runware blend completed. URL: https://im.runware.ai/image/os/a09dlim3/ws/3/ii/2096b294-8b3a-494b-8cc7-88da4fc60f5d.jpg
+[2026-05-20T08:22:44.467Z] LOG: Successfully retrieved AI-generated frame from Runware.
+[2026-05-20T08:24:05.910Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:24:05.919Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:24:05.955Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:24:18.721Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:24:18.738Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:24:19.008Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:24:27.865Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T08:24:41.756Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:24:41.759Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:24:46.948Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:24:46.948Z] LOG: Drawing programmatic frame (Classic Walnut) — canvas 1920×1080, bezel 86px, screen 1718×878...
+[2026-05-20T08:24:47.956Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:24:48.018Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T08:24:48.102Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:24:51.662Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:30:06.296Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:30:06.352Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:30:06.394Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:31:04.392Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:31:04.420Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:31:04.436Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:31:07.431Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:31:07.458Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:31:07.467Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:31:16.594Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:31:16.648Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:31:16.658Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:31:19.483Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:31:19.576Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:31:19.617Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:40:15.791Z] LOG: Postcard generation started for: Gemini Frame Studio (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame2)
+[2026-05-20T08:41:56.730Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:41:56.734Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:42:09.364Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:42:09.364Z] LOG: Drawing programmatic square frame (Sleek Charcoal) — canvas 1200×1200, bezel 34px, screen 1120×1120...
+[2026-05-20T08:42:10.388Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:42:10.611Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T08:42:10.674Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:42:45.045Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:43:47.692Z] LOG: Postcard generation started for: Test Space (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame2)
+[2026-05-20T08:44:09.972Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:44:09.979Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:44:16.332Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:44:16.332Z] LOG: Drawing programmatic square frame (Sleek Charcoal) — canvas 1200×1200, bezel 34px, screen 1120×1120...
+[2026-05-20T08:44:17.185Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:44:17.328Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T08:44:17.425Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:44:21.760Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:45:22.441Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:45:22.440Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:45:22.460Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:45:49.326Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:45:49.331Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:45:57.577Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:46:31.232Z] LOG: Postcard generation started for: Test Space (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame2)
+[2026-05-20T08:47:34.010Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:47:34.013Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:47:43.456Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:47:43.456Z] LOG: Drawing programmatic square frame (Sleek Charcoal) — canvas 1200×1200, bezel 34px, screen 1120×1120...
+[2026-05-20T08:47:44.353Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:47:44.535Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T08:47:44.582Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:47:51.175Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:50:24.987Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T08:51:04.707Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:51:04.710Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:51:17.145Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:51:17.145Z] LOG: Drawing programmatic square frame (Classic Walnut) — canvas 1200×1200, bezel 54px, screen 1072×1072...
+[2026-05-20T08:51:18.120Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:51:18.182Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T08:51:18.266Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:51:28.656Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T08:57:52.399Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:57:52.419Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:57:52.459Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:57:56.323Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:57:56.325Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:57:56.342Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:58:20.023Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:58:20.044Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:58:20.054Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T08:58:22.394Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:58:22.849Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:58:23.068Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T08:58:41.623Z] LOG: Postcard generation started for: Test Widescreen Space (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame2)
+[2026-05-20T08:59:04.563Z] LOG: Placement detected: [object Object]
+[2026-05-20T08:59:04.565Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T08:59:19.775Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T08:59:19.775Z] LOG: Drawing programmatic square frame (Sleek Charcoal) — canvas 1920×1080, bezel 54px, screen 1792×952...
+[2026-05-20T08:59:21.925Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T08:59:22.100Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T08:59:22.145Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T08:59:26.682Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T09:07:28.161Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T09:07:58.788Z] LOG: Placement detected: [object Object]
+[2026-05-20T09:07:58.790Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T09:08:03.630Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T09:08:03.630Z] LOG: Drawing programmatic square frame (Classic Walnut) — canvas 1920×1080, bezel 86px, screen 1718×878...
+[2026-05-20T09:08:05.793Z] LOG: Warping flat frame composite with shadows and glow to room perspective...
+[2026-05-20T09:08:05.854Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T09:08:05.933Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T09:08:08.808Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T09:12:23.641Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:12:23.669Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:12:23.710Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:12:31.514Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:12:31.708Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:12:31.808Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:12:38.716Z] LOG: Postcard generation started for: Test Dynamic Glow (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame2)
+[2026-05-20T09:13:03.070Z] LOG: Placement detected: [object Object]
+[2026-05-20T09:13:03.073Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T09:13:09.261Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T09:13:09.261Z] LOG: Detected primary light source direction: center
+[2026-05-20T09:13:09.261Z] LOG: Drawing premium widescreen frame (Sleek Charcoal) — canvas 1920×1080, bezel 54px, screen 1792×952...
+[2026-05-20T09:13:11.519Z] LOG: Warping separate backlight layer to room perspective...
+[2026-05-20T09:13:11.590Z] LOG: Warping flat physical display frame composite to room perspective...
+[2026-05-20T09:13:11.765Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T09:13:11.811Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T09:13:15.264Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T09:16:16.049Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:16:16.100Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:16:16.167Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:16:23.733Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:16:23.736Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:16:24.008Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:16:25.078Z] LOG: Postcard generation started for: Widescreen Flush Mount Test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame2)
+[2026-05-20T09:16:41.946Z] LOG: Placement detected: [object Object]
+[2026-05-20T09:16:41.950Z] LOG: Mode 2: AI Auto Showcase (generating premium artwork)...
+[2026-05-20T09:16:47.355Z] LOG: Successfully generated showcase artwork via Replicate.
+[2026-05-20T09:16:47.355Z] LOG: Detected primary light source direction: center
+[2026-05-20T09:16:47.355Z] LOG: Drawing premium widescreen frame (Sleek Charcoal) — canvas 1920×1080, bezel 54px, screen 1792×952...
+[2026-05-20T09:16:49.513Z] LOG: Warping separate backlight layer to room perspective...
+[2026-05-20T09:16:49.584Z] LOG: Warping flat physical display frame composite to room perspective...
+[2026-05-20T09:16:49.762Z] LOG: Generating frame using Runware inpainting (strength: 0.35)...
+[2026-05-20T09:16:49.806Z] LOG: [Runware Blend] Uploading composite and mask images...
+[2026-05-20T09:16:58.101Z] LOG: [Runware Blend] Images uploaded. UUIDs: [object Object]
+[2026-05-20T09:18:38.987Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:18:39.030Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:18:39.075Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:18:41.217Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:18:41.351Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:18:41.442Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:47:22.847Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:47:31.952Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:48:05.747Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T09:48:05.747Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T09:48:22.451Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T09:57:32.322Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:57:42.057Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:58:06.024Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:58:16.255Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:58:32.029Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:58:41.036Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T09:58:45.611Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T09:58:53.733Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:00:11.029Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T10:00:11.043Z] LOG: [postcard/generate] Loaded 4 Decoviz style reference frames.
+[2026-05-20T10:00:11.043Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T10:00:37.141Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T10:00:43.138Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T10:00:43.143Z] LOG: [postcard/generate] Loaded 4 Decoviz style reference frames.
+[2026-05-20T10:00:43.143Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T10:01:02.268Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T10:10:10.532Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:10:29.005Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:10:44.135Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:10:56.572Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:11:17.067Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:11:24.931Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:11:32.430Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:11:43.179Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:14:33.488Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:14:37.156Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:14:58.375Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T10:14:58.391Z] LOG: [postcard/generate] Loaded 4 Decoviz style reference frames.
+[2026-05-20T10:14:58.391Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T10:15:13.424Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T10:28:08.010Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:28:14.208Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:28:39.137Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:28:42.988Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:29:02.319Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T10:29:19.914Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T10:42:22.810Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T10:42:22.811Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T10:42:22.812Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T10:42:36.512Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T10:43:57.524Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T10:43:57.526Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T10:43:57.526Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T10:44:10.547Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T10:45:50.473Z] LOG: Postcard generation started for: test (Mode: Mode 1 (Custom Artwork), Frame Style: frame1)
+[2026-05-20T10:45:50.473Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T10:45:50.474Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T10:46:07.259Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T12:25:30.240Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T12:25:35.722Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T12:26:02.091Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T12:26:19.171Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T13:12:14.922Z] LOG: Postcard generation started for: test (Mode: Mode 1 (Custom Artwork), Frame Style: frame1)
+[2026-05-20T13:12:14.924Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T13:12:14.924Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T13:12:31.679Z] ERROR: [postcard/generate] Gemini image edit failed: Gemini gemini-2.5-flash-image-preview 404: {
+  "error": {
+    "code": 404,
+    "message": "models/gemini-2.5-flash-image-preview is not found for API version v1beta, or is not supported for generateContent. Call ModelService.ListModels to see the list of available models and their supported methods.",
+    "status": "NOT_FOUND"
+  }
+}
+
+[2026-05-20T13:13:47.146Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T13:13:47.148Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T13:13:47.148Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T13:14:03.699Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T13:20:09.619Z] LOG: Postcard generation started for: test (Mode: Mode 1 (Custom Artwork), Frame Style: frame1)
+[2026-05-20T13:20:09.620Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T13:20:09.621Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T13:20:41.593Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T14:29:13.755Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T14:29:31.156Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-20T14:29:56.707Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-20T15:35:05.579Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T15:35:05.584Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T15:35:05.584Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T15:35:23.531Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T15:38:01.604Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T15:38:01.607Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T15:38:01.607Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T15:38:15.041Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-20T15:39:01.893Z] LOG: Postcard generation started for: test (Mode: Mode 2 (AI Auto Showcase), Frame Style: frame1)
+[2026-05-20T15:39:01.895Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
+[2026-05-20T15:39:01.895Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
+[2026-05-20T15:39:14.435Z] LOG: [postcard/generate] Gemini image edit succeeded.
