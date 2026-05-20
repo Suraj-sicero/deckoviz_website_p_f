@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const ProgressBar = ({ value = 95, delay = 600 }) => {
+const ProgressBar = ({ value = 95, delay = 600, hueOverride = null }: { value?: number, delay?: number, hueOverride?: { start: number, end: number } | null }) => {
   const ref = useRef(null);
   const [start, setStart] = useState(false);
   const [mouseRatio, setMouseRatio] = useState(0.5);
@@ -32,22 +32,22 @@ const ProgressBar = ({ value = 95, delay = 600 }) => {
   }, [delay]);
 
   // Calculate dynamic hues based on mouse horizontal position
-  // 0 -> Blue/Cyan, 0.5 -> Purple/Indigo, 1.0 -> Pink/Orange
-  const hue1 = 200 + (mouseRatio * 140);
-  const hue2 = hue1 + 40;
+  const hue1 = hueOverride ? hueOverride.start : 200 + (mouseRatio * 140);
+  const hue2 = hueOverride ? hueOverride.end : hue1 + 40;
 
   return (
-    <div ref={ref} className="w-full h-2 rounded-full overflow-hidden">
+    <div ref={ref} className="w-full h-3 rounded-full overflow-hidden bg-gray-200/20">
       <div
         className="h-full rounded-full"
         style={{
           width: start ? `${value}%` : "0%",
-          background: `linear-gradient(90deg, hsl(${hue1}, 90%, 60%), hsl(${hue2}, 90%, 55%))`,
-          transition: "width 1s ease-out, background 0.3s ease"
+          background: `linear-gradient(90deg, hsl(${hue1}, 80%, 60%), hsl(${hue2}, 80%, 55%))`,
+          transition: "width 1.2s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease"
         }}
       />
     </div>
   );
 };
+
 
 export default ProgressBar;

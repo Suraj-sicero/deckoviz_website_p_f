@@ -151,22 +151,22 @@ const FAQ: React.FC = () => {
     {
       name: "General",
       icon: Home,
-      color: "from-violet-500 via-violet-500 to-fuchsia-500",
-      bgColor: "from-violet-50 to-indigo-50",
+      color: "from-[#182A4A] to-[#2563EB]",
+      bgColor: "from-blue-50 to-indigo-50",
       description: "Get Started",
     },
     {
       name: "Product",
       icon: Package,
-      color: "from-blue-500 via-indigo-500 to-cyan-500",
+      color: "from-[#182A4A] to-[#2563EB]",
       bgColor: "from-blue-50 to-indigo-50",
       description: "Features & Specs",
     },
     {
       name: "Advanced",
       icon: Rocket,
-      color: "from-pink-500 via-rose-500 to-orange-500",
-      bgColor: "from-pink-50 to-rose-50",
+      color: "from-[#182A4A] to-[#2563EB]",
+      bgColor: "from-blue-50 to-indigo-50",
       description: "AI & Technology",
     },
   ]
@@ -227,14 +227,14 @@ const FAQ: React.FC = () => {
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6 mt-6 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">Questions?</span>{" "}
-            <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
               We've got answers.
             </span>
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Everything you need to know about <span className="text-violet-600 font-semibold">Deckoviz</span> and how it
+            Everything you need to know about <span className="text-[#182A4A] font-semibold">Deckoviz</span> and how it
             can <span className="text-indigo-600 font-semibold">revolutionize your space</span> with{" "}
-            <span className="text-fuchsia-500 font-semibold">AI-powered art</span>.
+            <span className="text-[#2563EB] font-semibold">AI-powered art</span>.
           </p>
         </div>
 
@@ -245,7 +245,7 @@ const FAQ: React.FC = () => {
               {/* Navigation Title */}
               <div className="mb-6">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">Browse Topics</h3>
-                <div className="w-12 h-1 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full"></div>
+                <div className="w-12 h-1 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-full"></div>
               </div>
 
               {/* Interactive Category Navigation */}
@@ -402,7 +402,7 @@ const FAQ: React.FC = () => {
                       onClick={() => setActiveIndex(isOpen ? null : index)}
                     >
                       <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-base font-bold text-gray-900 leading-tight group-hover:text-violet-700 transition-colors duration-300 flex-1">
+                        <h3 className="text-base font-bold text-gray-900 leading-tight group-hover:text-blue-700 transition-colors duration-300 flex-1">
                           {item.question}
                         </h3>
                         <div className={`flex-shrink-0 transition-all duration-500 ${isOpen ? "rotate-180" : ""}`}>
@@ -410,7 +410,7 @@ const FAQ: React.FC = () => {
                             className={`p-2 rounded-xl transition-all duration-300 ${
                               isOpen
                                 ? `bg-gradient-to-r ${activeCategoryData?.color} text-white shadow-lg`
-                                : "bg-gray-100 text-gray-500 group-hover:bg-violet-100 group-hover:text-violet-600"
+                                : "bg-gray-100 text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-700"
                             }`}
                           >
                             <ChevronDown size={18} />
@@ -453,19 +453,19 @@ const FAQ: React.FC = () => {
               className="relative -mt-32 pt-20 pb-16 px-12 rounded-3xl"
               style={{
                           background: `radial-gradient(circle at 50% 60%, 
-        rgba(168, 85, 247, 0.4) 0%, /* violet-500 */
-        rgba(180, 83, 220, 0.3) 10%, /* violet-pink blend */
-        rgba(195, 80, 190, 0.2) 18%, /* violet-pink blend */
-        rgba(215, 75, 165, 0.15) 27%, /* violet-pink blend */
-        rgba(226, 73, 155, 0.08) 39%, /* violet-pink blend */
-        rgba(236, 72, 153, 0.03) 45%, /* pink-500 */
+        rgba(24, 42, 74, 0.4) 0%, /* #182A4A */
+        rgba(24, 52, 114, 0.3) 10%, /* blend */
+        rgba(24, 62, 154, 0.2) 18%, /* blend */
+        rgba(28, 79, 194, 0.15) 27%, /* blend */
+        rgba(32, 89, 214, 0.08) 39%, /* blend */
+        rgba(37, 99, 235, 0.03) 45%, /* #2563EB */
         transparent 50%)`,
-                backgroundImage: "radial-gradient(circle, rgba(147,51,234,0.06) 1px, transparent 1px)",
+                backgroundImage: "radial-gradient(circle, rgba(37,99,235,0.06) 1px, transparent 1px)",
                 backgroundSize: "20px 20px",
                 border: '1px solid transparent',
 boxShadow: `
-  0 0 10px rgba(168,85,247,0.4),
-  0 0 20px rgba(236,72,153,0.3),
+  0 0 10px rgba(24,42,74,0.4),
+  0 0 20px rgba(37,99,235,0.3),
   0 0 30px rgba(99,102,241,0.2)
 `
               }}
@@ -506,7 +506,7 @@ boxShadow: `
                 <div className="max-w-sm sm:max-w-md mx-auto">
                   <div className="relative group">
                     {/* Glow effect */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-blue-600 to-indigo-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                    <div className="absolute -inset-1 bg-gradient-to-r from-[#182A4A] via-blue-600 to-[#2563EB] rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
 
                     {/* Form container */}
                     <div className="relative rounded-2xl p-2 shadow-[0_8px_32px_rgba(37,99,235,0.15)] border border-white/50" style={{ background: "rgba(255,255,255,0.30)", backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)" }}>
@@ -516,7 +516,7 @@ boxShadow: `
                           <input
                             type="email"
                             placeholder="Email address..."
-                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-violet-500/20 transition-all duration-300"
+                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
                           />
                           {/* Subtle icon */}
                           <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
@@ -557,7 +557,7 @@ boxShadow: `
   <div className="relative rounded-2xl p-6 sm:p-8 shadow-[0_8px_32px_rgba(31,38,135,0.12),inset_0_1px_0_rgba(255,255,255,0.65)]" style={{ background: "rgba(255,255,255,0.25)", backdropFilter: "blur(24px) saturate(180%)", WebkitBackdropFilter: "blur(24px) saturate(180%)", border: "1px solid rgba(255,255,255,0.50)", borderTop: "1px solid rgba(255,255,255,0.75)" }}>
 
     {/* Glow */}
-    <div className="absolute -inset-10 bg-violet-500/5 blur-[80px] pointer-events-none"></div>
+    <div className="absolute -inset-10 bg-blue-500/5 blur-[80px] pointer-events-none"></div>
 
     {/* Header */}
     <div className="text-center mb-6">
@@ -574,7 +574,7 @@ boxShadow: `
 <form onSubmit={handleSubmit} className="max-w-md mx-auto w-full">
 
   <div className="flex items-center gap-2 rounded-full border bg-white px-3 py-2 w-full
-  focus-within:border-violet-400 focus-within:shadow-[0_0_12px_rgba(168,85,247,0.5)]">
+  focus-within:border-blue-400 focus-within:shadow-[0_0_12px_rgba(37,99,235,0.5)]">
 
     <input
       type="email"
@@ -588,9 +588,9 @@ boxShadow: `
       type="submit"
       disabled={isSubmitting}
       className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full 
-      bg-gradient-to-r from-violet-600 via-violet-500 to-violet-600 
-      text-white shadow-[0_4px_14px_rgba(124,58,237,0.45)]
-      transition-all duration-300 md:hover:scale-110 md:hover:shadow-[0_6px_22px_rgba(124,58,237,0.65)]
+      bg-gradient-to-r from-[#182A4A] via-blue-600 to-[#2563EB] 
+      text-white shadow-[0_4px_14px_rgba(37,99,235,0.45)]
+      transition-all duration-300 md:hover:scale-110 md:hover:shadow-[0_6px_22px_rgba(37,99,235,0.65)]
       disabled:opacity-50"
     >
       {isSubmitting ? (

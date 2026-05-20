@@ -193,22 +193,28 @@ const HorizontalScrollingFeatures: React.FC = () => {
   };
 
   return (
-    <div className="bg-white py-8 md:py-10 overflow-visible relative flex items-center -mt-8 md:-mt-12">
-      {/* Subtle, refined background */}
+    <div className="relative -mt-8 flex items-center overflow-hidden rounded-[2.5rem] bg-[#f7fbff] py-8 pb-20 md:-mt-12 md:rounded-[4rem] md:py-10 md:pb-28">
+      {/* Frosted blue/teal background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className="absolute top-0 left-0 w-full h-full opacity-[0.03]"
+        <div
+          className="absolute inset-0"
           style={{
-            backgroundImage: "radial-gradient(circle at 20% 50%, rgba(147,51,234,0.4) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(236,72,153,0.4) 0%, transparent 50%)"
+            backgroundImage: `
+              radial-gradient(circle at 16% 24%, rgba(37,99,235,0.14) 0%, transparent 32%),
+              radial-gradient(circle at 86% 62%, rgba(20,184,166,0.16) 0%, transparent 36%),
+              linear-gradient(135deg, rgba(255,255,255,0.92), rgba(224,242,254,0.70) 48%, rgba(240,253,250,0.76)),
+              repeating-linear-gradient(90deg, rgba(37,99,235,0.035) 0 1px, transparent 1px 92px)
+            `
           }}
         />
+        <div className="absolute left-1/2 top-1/2 h-56 w-[70vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-300/18 blur-3xl" />
       </div>
 
       <div className="max-w-[1400px] mx-auto w-full px-4 z-10 relative">
         {/* Beautiful section title */}
-        <div className="text-center mb-10">
+        <div className="relative mx-auto mb-3 max-w-6xl px-5 py-3 text-center md:mb-4 md:px-10 md:py-4">
           <h2 
-            className="text-5xl md:text-6xl lg:text-7xl font-bold mb-3 leading-tight"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight"
             style={{
               fontFamily: "'Playfair Display', 'Georgia', serif"
             }}
@@ -216,30 +222,31 @@ const HorizontalScrollingFeatures: React.FC = () => {
             <span className="text-gray-900">Discover </span>
             <span
               style={{
-                background: "linear-gradient(135deg, #6b21a8 0%, #a855f7 25%, #ec4899 50%, #f97316 75%, #eab308 100%)",
+                background: "linear-gradient(135deg, #2563eb 0%, #0ea5e9 46%, #14b8a6 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                filter: "drop-shadow(0 2px 8px rgba(168,85,247,0.15))"
+                filter: "drop-shadow(0 2px 8px rgba(14,165,233,0.16))"
               }}
             >
               Deckoviz
             </span>
+            <span className="text-gray-900"> in its various avatars!</span>
           </h2>
           <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
-            Your creative companion in every moment
+            Vizzy, your generative companion for every moment!
           </p>
         </div>
 
         {/* Horizontal Scrolling Container */}
         <div className="relative overflow-visible group">
           {/* Subtle fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-white to-transparent pointer-events-none z-20" />
-          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-white to-transparent pointer-events-none z-20" />
+          <div className="absolute left-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-r from-[#f7fbff] to-transparent pointer-events-none z-20" />
+          <div className="absolute right-0 top-0 bottom-0 w-32 md:w-48 bg-gradient-to-l from-[#f7fbff] to-transparent pointer-events-none z-20" />
           
           <div 
             ref={scrollContainerRef}
-            className="overflow-x-auto overflow-y-visible scrollbar-hide py-6 px-12 md:px-32 select-none"
+            className="overflow-x-auto overflow-y-visible scrollbar-hide px-12 py-4 md:px-32 md:py-5 select-none"
             style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
             onMouseDown={startDragging}
             onMouseLeave={() => {
@@ -261,55 +268,55 @@ const HorizontalScrollingFeatures: React.FC = () => {
           >
             <div className="flex gap-6 md:gap-8 min-w-max items-center will-change-transform">
               {features.map((feature, index) => {
-                // Different color schemes for each card
+                // Blue/teal glass card accents
                 const colorSchemes = [
                   {
-                    bg: "from-violet-50/50 via-violet-50/40 to-indigo-50/30",
-                    border: "border-violet-200/50 hover:border-violet-300/70",
-                    shadow: "shadow-[0_4px_16px_rgba(139,92,246,0.1)] hover:shadow-[0_12px_32px_rgba(139,92,246,0.2)]",
-                    textColor: "#5b21b6", // darker violet for visibility
-                    orb: "rgba(139,92,246,0.3)",
-                    dots: "bg-violet-300/60"
+                    bg: "from-white/68 via-sky-50/42 to-cyan-50/34",
+                    border: "border-white/75 hover:border-cyan-300/80",
+                    shadow: "shadow-[0_14px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_24px_56px_rgba(14,165,233,0.18)]",
+                    textColor: "#0f4a73",
+                    orb: "rgba(14,165,233,0.30)",
+                    dots: "bg-cyan-300/70"
                   },
                   {
-                    bg: "from-pink-50/50 via-rose-50/40 to-red-50/30",
-                    border: "border-pink-200/50 hover:border-pink-300/70",
-                    shadow: "shadow-[0_4px_16px_rgba(236,72,153,0.1)] hover:shadow-[0_12px_32px_rgba(236,72,153,0.2)]",
-                    textColor: "#be185d", // darker pink for visibility
-                    orb: "rgba(236,72,153,0.3)",
-                    dots: "bg-pink-300/60"
+                    bg: "from-white/70 via-blue-50/44 to-sky-50/34",
+                    border: "border-white/75 hover:border-blue-300/75",
+                    shadow: "shadow-[0_14px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_24px_56px_rgba(37,99,235,0.18)]",
+                    textColor: "#1d4ed8",
+                    orb: "rgba(37,99,235,0.28)",
+                    dots: "bg-blue-300/70"
                   },
                   {
-                    bg: "from-orange-50/50 via-amber-50/40 to-yellow-50/30",
-                    border: "border-orange-200/50 hover:border-orange-300/70",
-                    shadow: "shadow-[0_4px_16px_rgba(251,146,60,0.1)] hover:shadow-[0_12px_32px_rgba(251,146,60,0.2)]",
-                    textColor: "#c2410c", // darker orange for visibility
-                    orb: "rgba(251,146,60,0.3)",
-                    dots: "bg-orange-300/60"
+                    bg: "from-white/68 via-teal-50/42 to-cyan-50/34",
+                    border: "border-white/75 hover:border-teal-300/80",
+                    shadow: "shadow-[0_14px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_24px_56px_rgba(20,184,166,0.17)]",
+                    textColor: "#0f766e",
+                    orb: "rgba(20,184,166,0.28)",
+                    dots: "bg-teal-300/70"
                   },
                   {
-                    bg: "from-cyan-50/50 via-sky-50/40 to-blue-50/30",
-                    border: "border-cyan-200/50 hover:border-cyan-300/70",
-                    shadow: "shadow-[0_4px_16px_rgba(6,182,212,0.1)] hover:shadow-[0_12px_32px_rgba(6,182,212,0.2)]",
-                    textColor: "#0e7490", // darker cyan for visibility
-                    orb: "rgba(6,182,212,0.3)",
-                    dots: "bg-cyan-300/60"
+                    bg: "from-white/66 via-cyan-50/42 to-blue-50/34",
+                    border: "border-white/75 hover:border-sky-300/80",
+                    shadow: "shadow-[0_14px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_24px_56px_rgba(6,182,212,0.18)]",
+                    textColor: "#0369a1",
+                    orb: "rgba(6,182,212,0.28)",
+                    dots: "bg-sky-300/70"
                   },
                   {
-                    bg: "from-emerald-50/50 via-green-50/40 to-lime-50/30",
-                    border: "border-emerald-200/50 hover:border-emerald-300/70",
-                    shadow: "shadow-[0_4px_16px_rgba(16,185,129,0.1)] hover:shadow-[0_12px_32px_rgba(16,185,129,0.2)]",
-                    textColor: "#047857", // darker green for visibility
-                    orb: "rgba(16,185,129,0.3)",
-                    dots: "bg-emerald-300/60"
+                    bg: "from-white/70 via-slate-50/46 to-sky-50/32",
+                    border: "border-white/75 hover:border-blue-200/80",
+                    shadow: "shadow-[0_14px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_24px_56px_rgba(37,99,235,0.16)]",
+                    textColor: "#164e63",
+                    orb: "rgba(56,189,248,0.26)",
+                    dots: "bg-cyan-200/80"
                   },
                   {
-                    bg: "from-fuchsia-50/50 via-violet-50/40 to-violet-50/30",
-                    border: "border-fuchsia-200/50 hover:border-fuchsia-300/70",
-                    shadow: "shadow-[0_4px_16px_rgba(217,70,239,0.1)] hover:shadow-[0_12px_32px_rgba(217,70,239,0.2)]",
-                    textColor: "#a21caf", // darker fuchsia for visibility
-                    orb: "rgba(217,70,239,0.3)",
-                    dots: "bg-fuchsia-300/60"
+                    bg: "from-white/68 via-blue-50/38 to-teal-50/34",
+                    border: "border-white/75 hover:border-teal-200/80",
+                    shadow: "shadow-[0_14px_36px_rgba(15,23,42,0.07)] hover:shadow-[0_24px_56px_rgba(14,165,233,0.17)]",
+                    textColor: "#0e7490",
+                    orb: "rgba(14,165,233,0.28)",
+                    dots: "bg-teal-300/70"
                   }
                 ];
                 
@@ -323,7 +330,7 @@ const HorizontalScrollingFeatures: React.FC = () => {
                     onMouseEnter={() => handleMouseEnter(index)}
                     onMouseLeave={handleMouseLeave}
                   >
-                    {/* Playful, colorful card */}
+                    {/* Frosted glass card */}
                     <motion.div
                       whileHover={{ y: -8, rotate: -1 }}
                       transition={{ type: "spring", stiffness: 400, damping: 15 }}
@@ -332,9 +339,13 @@ const HorizontalScrollingFeatures: React.FC = () => {
                                  bg-gradient-to-br ${colors.bg}
                                  border-2 ${colors.border}
                                  ${colors.shadow}
+                                 backdrop-blur-xl backdrop-saturate-150
                                  transition-all duration-400`}
                     >
-                      {/* Playful gradient orb */}
+                      <div className="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(255,255,255,0.12)_45%,rgba(255,255,255,0.42))]" />
+                      <div className="pointer-events-none absolute inset-x-5 top-0 h-px bg-white/90" />
+
+                      {/* Blue/teal glow */}
                       <div 
                         className="absolute -top-8 -right-8 w-24 h-24 rounded-full blur-2xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-500"
                         style={{
@@ -351,7 +362,7 @@ const HorizontalScrollingFeatures: React.FC = () => {
                         }}
                       />
                       
-                      {/* Colorful text with playful styling */}
+                      {/* Glass card title */}
                       <h3 
                         className="relative text-[17px] font-bold text-center leading-[1.3] tracking-tight
                                    transition-all duration-300 z-10 px-2"
@@ -363,24 +374,24 @@ const HorizontalScrollingFeatures: React.FC = () => {
                         {feature.title}
                       </h3>
                       
-                      {/* Playful sparkle accents */}
+                      {/* Glass glint accents */}
                       <div
-                        className="absolute top-3 right-3 text-[14px] opacity-0 group-hover/card:opacity-70
-                                   transition-all duration-500"
+                        className="absolute top-3 right-3 h-2 w-2 rounded-full text-[0px] opacity-0 blur-[1px]
+                                   transition-all duration-500 group-hover/card:opacity-70"
                         style={{
                           animation: "sparkle1 3s linear infinite",
-                          color: colors.textColor
+                          background: colors.textColor
                         }}
                       >
                         ✨
                       </div>
                       
                       <div
-                        className="absolute bottom-3 left-3 text-[12px] opacity-0 group-hover/card:opacity-60
-                                   transition-all duration-500"
+                        className="absolute bottom-3 left-3 h-1.5 w-1.5 rounded-full text-[0px] opacity-0 blur-[1px]
+                                   transition-all duration-500 group-hover/card:opacity-60"
                         style={{
                           animation: "sparkle2 4s linear infinite",
-                          color: colors.textColor
+                          background: colors.textColor
                         }}
                       >
                         ✨
@@ -446,7 +457,7 @@ const HorizontalScrollingFeatures: React.FC = () => {
                   <div 
                     className="absolute inset-0 opacity-[0.03]"
                     style={{
-                      background: "linear-gradient(135deg, rgba(147,51,234,1) 0%, rgba(236,72,153,1) 100%)"
+                      background: "linear-gradient(135deg, rgba(37,99,235,1) 0%, rgba(20,184,166,1) 100%)"
                     }}
                   />
                   

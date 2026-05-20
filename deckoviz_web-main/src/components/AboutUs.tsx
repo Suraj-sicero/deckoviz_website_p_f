@@ -1,21 +1,147 @@
 import InteractiveParticleGraphic from "./other/InteractiveParticleGraphic";
+import { useState, useEffect, useRef } from "react";
 
 export default function AboutUs() {
+  const [cursor, setCursor] = useState({ x: -200, y: -200 });
+  const [cursorVisible, setCursorVisible] = useState(false);
+  const smoothPos = useRef({ x: -200, y: -200 });
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    let target = { x: -200, y: -200 };
+
+    const onMove = (e: MouseEvent) => {
+      target = { x: e.clientX, y: e.clientY };
+      setCursorVisible(true);
+    };
+    const onLeave = () => setCursorVisible(false);
+    window.addEventListener('mousemove', onMove);
+    document.documentElement.addEventListener('mouseleave', onLeave);
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+    const animate = () => {
+      smoothPos.current.x = lerp(smoothPos.current.x, target.x, 0.07);
+      smoothPos.current.y = lerp(smoothPos.current.y, target.y, 0.07);
+      setCursor({ x: smoothPos.current.x, y: smoothPos.current.y });
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      document.documentElement.removeEventListener('mouseleave', onLeave);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
   return (
-    <div id="about" className="relative min-h-screen bg-white">
-      {/* Rich animated background */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <div className="absolute inset-0 bg-white" />
-        {/* Subtle dot pattern */}
-        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle, #2563EB 1px, transparent 1px)', backgroundSize: '32px 32px' }} />
-        {/* Animated floating blobs */}
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-[#2563EB]/10 rounded-full blur-[100px] animate-[float_14s_ease-in-out_infinite]" />
-        <div className="absolute top-60 right-0 w-[500px] h-[500px] bg-teal-300/15 rounded-full blur-[90px] animate-[float_11s_ease-in-out_infinite_reverse]" />
-        <div className="absolute top-[800px] left-1/4 w-[400px] h-[400px] bg-[#182A4A]/8 rounded-full blur-[80px] animate-[float_16s_ease-in-out_infinite]" />
-        <div className="absolute top-[1400px] right-1/4 w-[350px] h-[350px] bg-sky-200/20 rounded-full blur-[70px] animate-[float_9s_ease-in-out_infinite_reverse]" />
-        {/* Diagonal shimmer lines */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2563EB]/20 to-transparent" />
+    <div id="about" className="relative min-h-screen bg-white overflow-x-hidden">
+
+      {/* ── High-Fidelity Codex-style Fluid Gradient Background ── */}
+      <style>{`
+        @keyframes fluid-drift-1 {
+          0% { transform: scale(1) translate(0, 0) rotate(0deg); }
+          33% { transform: scale(1.1) translate(6vw, 8vh) rotate(8deg); }
+          66% { transform: scale(0.9) translate(-6vw, 10vh) rotate(-5deg); }
+          100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+        }
+        @keyframes fluid-drift-2 {
+          0% { transform: scale(1) translate(0, 0) rotate(0deg); }
+          33% { transform: scale(0.9) translate(-8vw, -6vh) rotate(-8deg); }
+          66% { transform: scale(1.1) translate(8vw, -10vh) rotate(6deg); }
+          100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+        }
+        @keyframes fluid-drift-3 {
+          0% { transform: scale(1) translate(0, 0) rotate(0deg); }
+          33% { transform: scale(1.1) translate(8vw, -8vh) rotate(6deg); }
+          66% { transform: scale(0.9) translate(-6vw, 10vh) rotate(-8deg); }
+          100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+        }
+        @keyframes fluid-drift-4 {
+          0% { transform: scale(1) translate(0, 0) rotate(0deg); }
+          33% { transform: scale(0.95) translate(-8vw, 8vh) rotate(-4deg); }
+          66% { transform: scale(1.05) translate(10vw, -6vh) rotate(4deg); }
+          100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+        }
+        
+        .mesh-blob {
+          position: absolute;
+          border-radius: 50%;
+          filter: blur(140px); /* Massive blur for true liquid fusion */
+          opacity: 0.35;       /* Delicate opacity to not overpower text */
+          will-change: transform;
+        }
+
+        #about h1, #about h2 {
+          font-family: 'Playfair Display', serif !important;
+        }
+
+        /* Deep Navy Blue */
+        .mesh-blob-1 {
+          width: 80vw;
+          height: 80vw;
+          background: #1B2A4A;
+          left: -20vw;
+          top: -20vh;
+          animation: fluid-drift-1 25s ease-in-out infinite;
+        }
+        /* Royal Blue */
+        .mesh-blob-2 {
+          width: 70vw;
+          height: 70vw;
+          background: #2563EB;
+          right: -10vw;
+          top: 10vh;
+          animation: fluid-drift-2 30s ease-in-out infinite;
+        }
+        /* Cyan */
+        .mesh-blob-3 {
+          width: 90vw;
+          height: 90vw;
+          background: #06b6d4;
+          left: 10vw;
+          bottom: -30vh;
+          animation: fluid-drift-3 28s ease-in-out infinite;
+        }
+        /* Sky Blue */
+        .mesh-blob-4 {
+          width: 60vw;
+          height: 60vw;
+          background: #38bdf8;
+          right: 20vw;
+          bottom: -15vh;
+          animation: fluid-drift-4 35s ease-in-out infinite;
+        }
+      `}</style>
+      
+      {/* Base Light Background */}
+      <div className="fixed inset-0 z-0 bg-[#f8fafc] pointer-events-none" />
+
+      {/* Fluid animated background mesh */}
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none flex items-center justify-center">
+        <div className="relative w-[120vw] h-[120vh] max-w-[2000px]">
+          <div className="mesh-blob mesh-blob-1" />
+          <div className="mesh-blob mesh-blob-2" />
+          <div className="mesh-blob mesh-blob-3" />
+          <div className="mesh-blob mesh-blob-4" />
+        </div>
+        {/* Very subtle noise overlay for texture */}
+        <div className="absolute inset-0 opacity-[0.25] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")' }} />
       </div>
+
+      {/* Interactive Cursor Sphere */}
+      <div
+        className="pointer-events-none fixed z-[9999] rounded-full transition-[opacity,transform] duration-[400ms,100ms] will-change-transform ease-out"
+        style={{
+          width: 400,
+          height: 400,
+          left: cursor.x - 200,
+          top: cursor.y - 200,
+          background: 'radial-gradient(circle at center, rgba(37,99,235,0.7) 0%, rgba(6,182,212,0.3) 40%, transparent 70%)',
+          opacity: cursorVisible ? 1 : 0,
+          filter: 'blur(60px)',
+          /* mixBlendMode removed for cleaner visual blending */
+        }}
+      />
 
       {/* Decorative 3D Elements with hover effects */}
       <div className="absolute top-48 left-4 sm:left-12 md:left-60 w-16 h-16 sm:w-20 sm:h-20 z-30 cursor-pointer transform transition-all duration-300 hover:scale-125 hover:rotate-12 hover:drop-shadow-2xl">
@@ -999,16 +1125,7 @@ export default function AboutUs() {
 
         {/* Our Future Section */}
         <div className="relative mt-32 mb-32">
-          {/* Radial gradient background glowing from center */}
-          <div
-            className="absolute inset-0 transform"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(255,182,193,0.4) 0%, rgba(221,160,221,0.3) 30%, rgba(230,230,250,0.2) 60%, transparent 100%)",
-              filter: "blur(50px)",
-              zIndex: 1,
-            }}
-          />
+          {/* Intentionally removed the pink static gradient here to let the global interactive fluid mesh show through clearly */}
 
           <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
             {/* Top Badge */}
