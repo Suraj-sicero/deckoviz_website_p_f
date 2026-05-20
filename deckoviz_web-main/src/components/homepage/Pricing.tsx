@@ -3,7 +3,8 @@
 import { useState, ReactNode } from "react"
 import { Check, Sparkles, Gift, Star, Zap } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { Tv } from "lucide-react"
+import { Tv, BookOpen } from "lucide-react"
+import { UseCasesModal } from "./UseCasesModal"
 
 // Custom Button component
 interface ButtonProps {
@@ -249,7 +250,8 @@ const largeFormatTiers: PricingPlan[] = [
 export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<PricingPlan | null>(null)
   const [showModal, setShowModal] = useState(false)
- const navigate = useNavigate()
+  const [showUseCasesModal, setShowUseCasesModal] = useState(false)
+  const navigate = useNavigate()
 
   const handleBuyNow = (tier?: PricingPlan): void => {
     if (tier?.name === "Enterprise") {
@@ -538,7 +540,7 @@ export default function Pricing() {
 
           {/* Feature Comparison Link */}
           <div className="text-center mt-8 mb-12">
-            <Button variant="ghost" className="text-violet-600 hover:text-violet-700 text-base sm:text-lg group">
+            <Button variant="ghost" className="text-indigo-700 hover:text-indigo-900 text-base sm:text-lg group">
               View complete feature comparison
               <span className="ml-2 transition-all duration-300 group-hover:translate-x-1">→</span>
             </Button>
@@ -602,6 +604,53 @@ export default function Pricing() {
                 <span className="text-xs text-white opacity-90">
                   Everything you need to know before choosing your perfect smart art frame.
                 </span>
+              </div>
+            </button>
+
+            {/* 🌟 Use Cases Guide Button */}
+            <button
+              onClick={() => setShowUseCasesModal(true)}
+              className="
+                group relative
+                flex w-full lg:w-auto
+                max-w-[440px]
+                p-[2px]
+                rounded-[999px]
+                text-left
+                shadow-[0_10px_30px_rgba(37,99,235,0.15)]
+                hover:shadow-[0_20px_40px_rgba(37,99,235,0.3)]
+                hover:-translate-y-1
+                transition-all duration-500
+                animate-[float_6s_ease-in-out_infinite]
+                [animation-delay:2s]
+                overflow-hidden
+                bg-gradient-to-r from-blue-200/50 via-indigo-300/50 to-cyan-200/50
+              "
+            >
+              {/* Animated Gradient Border Layer */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] via-indigo-500 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[2px]"></div>
+              
+              <div className="relative w-full h-full bg-white/90 backdrop-blur-2xl rounded-[999px] p-2 pl-3 pr-6 flex items-center gap-4 overflow-hidden">
+                {/* Micro Auroras Inside White Button */}
+                <div className="absolute top-[-20px] right-[-20px] w-24 h-24 bg-blue-300/30 blur-[20px] rounded-full group-hover:bg-blue-400/50 group-hover:scale-150 transition-all duration-700"></div>
+                <div className="absolute bottom-[-20px] left-[20%] w-24 h-24 bg-cyan-300/30 blur-[20px] rounded-full group-hover:bg-cyan-400/50 group-hover:scale-150 transition-all duration-700"></div>
+
+                <div className="w-12 h-12 shrink-0 rounded-full bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center shadow-[0_5px_15px_rgba(37,99,235,0.3)] group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500 relative z-10">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                
+                <div className="relative z-10 flex flex-col gap-0.5 justify-center py-1">
+                  <span className="text-[10px] uppercase tracking-widest text-[#2563EB] font-bold flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-[pulse_2s_ease-in-out_infinite]"></span>
+                    Inspiration Archive
+                  </span>
+                  <span className="text-[15px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-[#182A4A] leading-tight flex items-center gap-2 group-hover:to-cyan-600 transition-all duration-500">
+                    A Guide To Deckoviz Use Cases
+                  </span>
+                  <span className="text-[12px] text-slate-500 mt-0.5 font-medium leading-tight line-clamp-1">
+                    A living anthology of possibility for your space.
+                  </span>
+                </div>
               </div>
             </button>
           </div>
@@ -686,6 +735,12 @@ export default function Pricing() {
             </div>
           </div>
         )}
+
+        <UseCasesModal 
+          isOpen={showUseCasesModal} 
+          onClose={() => setShowUseCasesModal(false)} 
+        />
+
         <style>{`
   @keyframes float {
     0% { transform: translateY(-50%) translateX(0); }

@@ -287,26 +287,26 @@ const DeckovizSectors: React.FC = () => {
             </div>
 
             {/* Bottom Message */}
-            <div className="mt-24 text-center relative max-w-3xl mx-auto group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-violet-500 via-pink-500 to-orange-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-              <div className="relative rounded-3xl p-12 border border-white/50 shadow-2xl"
+            <div className="mt-16 md:mt-24 text-center relative max-w-3xl mx-auto group mx-4 md:mx-auto">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#1B2A4A] via-[#2563EB] to-cyan-500 rounded-[2.5rem] blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+              <div className="relative rounded-3xl px-6 py-8 md:p-12 border border-white/50 shadow-2xl"
                 style={{
-                  background: "rgba(255,255,255,0.30)",
+                  background: "linear-gradient(135deg, rgba(199, 210, 254, 0.8) 0%, rgba(191, 219, 254, 0.8) 50%, rgba(165, 243, 252, 0.8) 100%)",
                   backdropFilter: "blur(24px) saturate(180%)",
                   WebkitBackdropFilter: "blur(24px) saturate(180%)",
                   borderTop: "1px solid rgba(255,255,255,0.80)"
                 }}
               >
                 <div className="flex justify-center mb-4">
-                  <span className="w-2 h-2 rounded-full bg-violet-400 mx-1"></span>
-                  <span className="w-2 h-2 rounded-full bg-pink-400 mx-1"></span>
-                  <span className="w-2 h-2 rounded-full bg-orange-400 mx-1"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#1B2A4A] mx-1"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#2563EB] mx-1"></span>
+                  <span className="w-2 h-2 rounded-full bg-cyan-500 mx-1"></span>
                 </div>
                 <h3 className="text-3xl md:text-4xl font-['Playfair_Display'] text-gray-900 mb-6 font-semibold">
                   Don't see your space?
                 </h3>
                 <p className="text-gray-600 text-lg leading-relaxed font-light">
-                  Deckoviz solves problems of attention, emotion, memory, differentiation, and scale for modern environments.
+                  Deckoviz solves problems of attention, emotion, memory, differentiation, and scale for modern environments. Get in touch to discuss how Deckoviz may help make your space more intelligent and adaptive.
                 </p>
               </div>
             </div>

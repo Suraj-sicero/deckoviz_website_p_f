@@ -13,77 +13,77 @@ type Spark = {
   dy: number;
 };
 
-const content = [
-  "Your life is not a folder.",
+const content: React.ReactNode[] = [
+  <>Your life is not a <span className="font-bold text-emerald-700">folder</span>.</>,
   "It is not a timeline.",
   "It is not a grid of tiny squares you scroll past in a hurry.",
-
-  "It is a living thing.",
+  "",
+  <span className="font-bold text-teal-700 text-lg">It is a living thing.</span>,
   "Seasons. Faces. Rooms. Light.",
   "Moments that keep changing shape as you carry them forward.",
-
-  "Deckoviz was built to live with your memories, not to trap them.",
-
+  "",
+  <>Deckoviz was built to <span className="font-semibold text-emerald-600">live with your memories</span>, not to trap them.</>,
+  "",
   "Photos become evolving art.",
   "A summer afternoon softens into brushstrokes.",
   "A birthday smile glows like a painting.",
   "A quiet evening turns into something that feels more like a feeling than an image.",
-
-  "Your memories breathe.",
-  "They move.",
-  "They grow with you.",
-
+  "",
+  <span className="font-bold text-slate-900">Your memories breathe.</span>,
+  <span className="font-bold text-slate-900">They move.</span>,
+  <span className="font-bold text-slate-900">They grow with you.</span>,
+  "",
   "Not everything needs to be archived.",
   "Some things deserve to be lived with.",
-
-  "Vizzy, your companion, learns what matters.",
+  "",
+  <><span className="font-bold text-emerald-700">Vizzy</span>, your companion, learns what matters.</>,
   "It remembers without being told.",
   "Anniversaries. Birthdays. Holidays. Firsts.",
-
+  "",
   "And on those days, without a reminder, your wall changes.",
-
+  "",
   "A wedding photo returns on its own, not as a pop-up, but as a warm presence.",
   "A childhood picture surfaces when the house feels like family.",
   "A travel memory appears when the rain hits the window just right.",
-
+  "",
   "No digging.",
   "No searching.",
   "No “remember this?” notifications.",
-
-  "Just the right memory, at the right moment.",
-
+  "",
+  <span className="font-semibold text-teal-700">Just the right memory, at the right moment.</span>,
+  "",
   "You can keep your photos just as they are.",
   "Honest. Raw. Real.",
-
+  "",
   "Or you can let them transform.",
   "Into watercolours.",
   "Into cinematic scenes.",
   "Into dreamlike interpretations in your favourite styles.",
-
-  "Your life, retold through art, without losing its truth.",
-
+  "",
+  <span className="font-bold text-emerald-800">Your life, retold through art, without losing its truth.</span>,
+  "",
   "Deckoviz does not flood you with the past.",
   "It does not drown you in nostalgia.",
-
+  "",
   "It lets memories arrive like guests.",
   "Gently.",
   "One at a time.",
   "When they have something to say.",
-
+  "",
   "A season of your life might play out over weeks.",
   "A few moments in the morning.",
   "A different one in the evening.",
   "Then it fades, making room for what’s next.",
-
+  "",
   "Because memories are not meant to be hoarded.",
   "They are meant to keep you company.",
-
+  "",
   "This is not about saving everything.",
   "It is about honoring what shaped you.",
-
+  "",
   "About letting your walls whisper,",
-  "“You were here. You lived this. And it mattered.”",
-
+  <span className="font-bold text-slate-900 italic">“You were here. You lived this. And it mattered.”</span>,
+  "",
   "Your life,",
   "played back gently.",
 ];
@@ -209,17 +209,22 @@ const YourLifePlayedBackGently: React.FC = () => {
         </div>
 
         {/* CONTENT CENTER + DARKER TEXT */}
-        <div className="mt-12 space-y-4 text-center text-slate-800 text-[15px] md:text-[16px] leading-relaxed">
+        <div className="mt-12 flex flex-col items-center justify-center text-center text-slate-800 text-[15px] md:text-[16px] leading-relaxed">
           {content.map((line, i) => (
-            <motion.p
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.02, duration: 0.45 }}
-            >
-              {line}
-            </motion.p>
+            line === "" ? (
+              <div key={i} className="h-6 w-full" />
+            ) : (
+              <motion.p
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.02, duration: 0.45 }}
+                className="mb-1"
+              >
+                {line}
+              </motion.p>
+            )
           ))}
         </div>
       </motion.div>

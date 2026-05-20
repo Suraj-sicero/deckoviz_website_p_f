@@ -192,7 +192,7 @@ const Navbar: React.FC = () => {
 
   const handleBuyNow = (): void => {
     window.location.href = "/place-order";
-    console.log("Buy Now clicked");
+    console.log("Order Now clicked");
   };
 
   const handleBusinessNavigation = (route: string): void => {
@@ -299,8 +299,8 @@ const Navbar: React.FC = () => {
         <div 
           className={`pointer-events-auto flex items-center justify-between w-full max-w-7xl h-14 rounded-full px-2 md:px-4 transition-all duration-700 ${
             isScrolled 
-              ? "bg-white/20 backdrop-blur-xl shadow-[0_8px_32px_rgba(31,38,135,0.15)] border border-white/30" 
-              : "bg-white/10 backdrop-blur-md shadow-[0_8px_32px_rgba(31,38,135,0.07)] border border-white/20"
+              ? "bg-white/40 backdrop-blur-2xl backdrop-saturate-200 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]" 
+              : "bg-white/20 hover:bg-white/30 backdrop-blur-xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]"
           }`}
         >
           {/* Left Navigation */}
@@ -525,148 +525,119 @@ const Navbar: React.FC = () => {
                     : "opacity-0 invisible -translate-y-4"
                     }`}
                 >
-                  <div className="w-[640px] bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-gray-100/50 overflow-hidden flex flex-col">
-                    {/* Header */}
-                    <div className="bg-gradient-to-r from-[#8345EE]/10 via-[#7239D3]/5 to-[#6B2FD6]/10 px-6 py-4 border-b border-gray-100">
-                      <h3 className="text-lg font-semibold text-gray-800">
-                        Choose Your Industry
-                      </h3>
-                      <p className="text-sm text-gray-600 mt-1">
-                        Discover how Deckoviz transforms your space{" "}
-                      </p>
+                  <div className="w-[660px] backdrop-blur-2xl rounded-3xl shadow-[0_32px_80px_rgba(24,42,74,0.22)] border border-white/60 overflow-hidden flex flex-col"
+                    style={{ background: "rgba(255,255,255,0.97)" }}
+                  >
+                    {/* Premium Header */}
+                    <div className="relative px-6 py-5 overflow-hidden"
+                      style={{ background: "linear-gradient(135deg, #182A4A 0%, #1e3a6e 40%, #2563EB 100%)" }}
+                    >
+                      {/* Shimmer overlay */}
+                      <div className="absolute inset-0 opacity-20" style={{ background: "radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.4) 0%, transparent 60%)" }} />
+                      <div className="absolute top-0 right-0 w-48 h-48 opacity-10" style={{ background: "radial-gradient(circle, #60a5fa 0%, transparent 70%)" }} />
+                      <div className="relative z-10">
+                        <div className="flex items-center gap-2 mb-1">
+                          <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-blue-300">Deckoviz For Business</p>
+                        </div>
+                        <h3 className="text-xl font-bold text-white leading-tight">Choose Your Industry</h3>
+                        <p className="text-sm text-blue-200/80 mt-1">Discover how Deckoviz transforms your space</p>
+                      </div>
                     </div>
 
                     {/* Scrollable content area */}
-                    <div className="overflow-y-auto max-h-[60vh]">
-                      <div className="p-6">
-                        {/* Grid of other categories */}
-                        <div className="grid grid-cols-2 gap-3">
+                    <div className="overflow-y-auto max-h-[62vh]">
+                      <div className="p-5">
+                        {/* Featured Enterprise Card */}
+                        {enterpriseCategory && (
+                          <button
+                            key="enterprises"
+                            onClick={() => handleBusinessNavigation(enterpriseCategory.route)}
+                            className="group relative w-full mb-4 p-4 rounded-2xl text-left overflow-hidden transition-all duration-400 hover:scale-[1.015] hover:-translate-y-0.5"
+                            style={{
+                              background: "linear-gradient(135deg, rgba(24,42,74,0.06) 0%, rgba(37,99,235,0.08) 100%)",
+                              border: "1.5px solid rgba(37,99,235,0.18)",
+                              boxShadow: "0 4px 20px rgba(37,99,235,0.08), inset 0 1px 0 rgba(255,255,255,0.8)"
+                            }}
+                          >
+                            {/* Hover glow */}
+                            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+                              style={{ background: "linear-gradient(135deg, rgba(24,42,74,0.10) 0%, rgba(37,99,235,0.13) 100%)" }} />
+                            {/* Left accent bar */}
+                            <div className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full bg-gradient-to-b from-indigo-600 to-blue-500" />
+                            <div className="relative z-10 flex items-center gap-4 pl-3">
+                              <div className="w-12 h-12 flex-shrink-0 rounded-xl overflow-hidden shadow-md transform group-hover:scale-105 transition-transform duration-300"
+                                style={{ background: "linear-gradient(135deg, #182A4A, #2563EB)" }}
+                              >
+                                <OptimizedImage
+                                  src={enterpriseCategory.image}
+                                  alt={enterpriseCategory.title}
+                                  className="w-12 h-12"
+                                  fallbackColor={enterpriseCategory.fallbackColor}
+                                />
+                              </div>
+                              <div className="flex-1">
+                                <div className="flex items-center gap-2">
+                                  <h4 className="font-bold text-[#182A4A] text-base group-hover:text-blue-700 transition-colors duration-300">{enterpriseCategory.title}</h4>
+                                  <span className="text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-2 py-0.5 rounded-full">Featured</span>
+                                </div>
+                                <p className="text-xs text-gray-500 mt-0.5 group-hover:text-gray-700 transition-colors">{enterpriseCategory.description}</p>
+                              </div>
+                              <ArrowRight size={16} className="text-indigo-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
+                            </div>
+                          </button>
+                        )}
+
+                        {/* Grid of industry cards */}
+                        <div className="grid grid-cols-2 gap-2.5">
                           {otherCategories.map((category, index) => (
                             <button
                               key={index}
-                              onClick={() =>
-                                handleBusinessNavigation(category.route)
-                              }
-                              className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden"
+                              onClick={() => handleBusinessNavigation(category.route)}
+                              className="group relative p-3.5 rounded-xl text-left overflow-hidden transition-all duration-300 hover:scale-[1.02] hover:-translate-y-0.5"
                               style={{
-                                background:
-                                  "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)",
+                                background: "linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,255,0.95) 100%)",
+                                border: "1px solid rgba(226,232,240,0.8)",
+                                boxShadow: "0 2px 8px rgba(31,38,135,0.05), inset 0 1px 0 rgba(255,255,255,1)"
                               }}
                             >
-                              <div
-                                className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}
-                              ></div>
-                              <div className="relative z-10 flex items-start space-x-3">
-                                <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
+                              {/* Hover gradient wash */}
+                              <div className={`absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-br ${category.gradient}`} style={{ opacity: 0 }}
+                                onMouseEnter={e => (e.currentTarget.style.opacity = '0.07')}
+                                onMouseLeave={e => (e.currentTarget.style.opacity = '0')}
+                              />
+                              {/* Color accent left bar */}
+                              <div className={`absolute left-0 top-2.5 bottom-2.5 w-0.5 rounded-r-full bg-gradient-to-b ${category.gradient} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
+                              <div className="relative z-10 flex items-center gap-3 pl-2">
+                                <div className="w-9 h-9 flex-shrink-0 rounded-lg overflow-hidden transform group-hover:scale-110 transition-transform duration-300"
+                                  style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.1)" }}
+                                >
                                   <OptimizedImage
                                     src={category.image}
                                     alt={category.title}
-                                    className="w-8 h-8"
+                                    className="w-9 h-9"
                                     fallbackColor={category.fallbackColor}
                                   />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300 leading-tight">
-                                    {category.title}
-                                  </h4>
-                                  <p className="text-xs text-gray-500 mt-1 group-hover:text-gray-600 transition-colors duration-300">
-                                    {category.description}
-                                  </p>
+                                  <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300 leading-tight truncate">{category.title}</h4>
+                                  <p className="text-xs text-gray-400 mt-0.5 group-hover:text-gray-600 transition-colors duration-300 truncate">{category.description}</p>
                                 </div>
-                              </div>
-                              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                                <svg
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 17L17 7M17 7H7M17 7V17"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  />
-                                </svg>
+                                <ArrowRight size={13} className="text-gray-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all duration-300 flex-shrink-0" />
                               </div>
                             </button>
                           ))}
                         </div>
-
-                        {/* MODIFICATION: Centered Enterprise button at the bottom */}
-                        {enterpriseCategory && (
-                          <div className="flex justify-center mt-3">
-                            <button
-                              key="enterprises"
-                              onClick={() =>
-                                handleBusinessNavigation(
-                                  enterpriseCategory.route,
-                                )
-                              }
-                              className="group relative p-4 rounded-2xl border border-gray-100 hover:border-transparent transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 text-left overflow-hidden w-full max-w-xs"
-                              style={{
-                                background:
-                                  "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)",
-                              }}
-                            >
-                              <div
-                                className={`absolute inset-0 bg-gradient-to-br ${enterpriseCategory.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`}
-                              ></div>
-                              <div className="relative z-10 flex items-start space-x-3">
-                                <div className="w-8 h-8 flex-shrink-0 transform group-hover:scale-110 transition-transform duration-300">
-                                  <OptimizedImage
-                                    src={enterpriseCategory.image}
-                                    alt={enterpriseCategory.title}
-                                    className="w-8 h-8"
-                                    fallbackColor={
-                                      enterpriseCategory.fallbackColor
-                                    }
-                                  />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <h4 className="font-semibold text-gray-800 text-sm group-hover:text-gray-900 transition-colors duration-300 leading-tight">
-                                    {enterpriseCategory.title}
-                                  </h4>
-                                  <p className="text-xs text-gray-500 mt-1 group-hover:text-gray-600 transition-colors duration-300">
-                                    {enterpriseCategory.description}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
-                                <svg
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M7 17L17 7M17 7H7M17 7V17"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  />
-                                </svg>
-                              </div>
-                            </button>
-                          </div>
-                        )}
                       </div>
                     </div>
 
                     {/* Footer */}
-                    <div className="bg-gray-50/50 px-6 py-4 border-t border-gray-100">
-                      <p className="text-xs text-gray-500 text-center">
+                    <div className="px-6 py-3.5 border-t border-gray-100/80"
+                      style={{ background: "linear-gradient(to right, rgba(238,242,255,0.8), rgba(255,255,255,0.9))" }}
+                    >
+                      <p className="text-xs text-gray-400 text-center">
                         Can't find your industry?{" "}
-                        <a
-                          href="/contact"
-                          className="text-[#8345EE] hover:underline cursor-pointer font-medium"
-                        >
-                          Contact Us
-                        </a>{" "}
+                        <a href="/contact" className="font-semibold bg-gradient-to-r from-indigo-600 to-blue-500 bg-clip-text text-transparent hover:from-indigo-800 hover:to-blue-700 transition-all duration-300">Contact Us</a>{" "}
                         for custom solutions.
                       </p>
                     </div>
@@ -754,7 +725,7 @@ const Navbar: React.FC = () => {
               </div>
 
               <Button variant="primary" onClick={handleBuyNow}>
-                Buy Now
+                Order Now
               </Button>
 
               <div className="flex items-center gap-1 z-50 pl-3 ml-2 border-l border-gray-200/30">
@@ -937,7 +908,7 @@ const Navbar: React.FC = () => {
                   className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 text-white font-bold text-sm tracking-wide shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <ShoppingBag size={16} strokeWidth={2.5} />
-                  Buy Now
+                  Order Now
                 </button>
               </div>
             </div>

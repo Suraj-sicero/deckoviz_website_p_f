@@ -67,7 +67,7 @@ const DeckovizSetup: React.FC = () => {
         "Take your Deckoviz out of the box, plug it in, and connect to Wi-Fi   just like setting up a smart TV. Instantly comes to life with a calming welcome screen.",
       icon: <CustomIcons.Package />,
       features: ["Simple plug-and-play setup", "Wi-Fi connection in seconds", "Calming welcome experience"],
-      color: "from-orange-400 via-pink-400 to-indigo-500",
+      color: "from-blue-400 via-indigo-400 to-indigo-600",
     },
     {
       number: "02",
@@ -76,7 +76,7 @@ const DeckovizSetup: React.FC = () => {
         "Download the Deckoviz app on your phone (iOS & Android). Sign in to personalize your experience, sync your mood, and control what's on display.",
       icon: <CustomIcons.Smartphone />,
       features: ["Available on iOS & Android", "Seamless device pairing", "Personalized experience sync"],
-      color: "from-pink-400 via-violet-400 to-indigo-500",
+      color: "from-indigo-400 via-blue-500 to-cyan-500",
     },
     {
       number: "03",
@@ -85,7 +85,7 @@ const DeckovizSetup: React.FC = () => {
         "Pick from curated modes like Calm, Romantic, Serendipity, Gratitude, and more. Or let Deckoviz auto-curate art, stories, visuals, and music.",
       icon: <CustomIcons.Palette />,
       features: ["Curated mood modes", "AI-powered curation", "Personal interior artist experience"],
-      color: "from-orange-500 via-red-400 to-pink-500",
+      color: "from-cyan-400 via-blue-500 to-indigo-600",
     },
     {
       number: "04",
@@ -112,7 +112,7 @@ const DeckovizSetup: React.FC = () => {
         "From sunrise to nightfall, Deckoviz adapts and transforms your space. Perfect for living rooms, bedrooms, offices, and more.",
       icon: <CustomIcons.Sunrise />,
       features: ["Adaptive daily transformations", "Perfect for any space", "Feel more present, feel more you"],
-      color: "from-violet-400 via-pink-400 to-orange-400",
+      color: "from-indigo-500 via-blue-400 to-teal-400",
     },
   ]
 
@@ -136,13 +136,13 @@ const DeckovizSetup: React.FC = () => {
 
           <h1 className="text-4xl md:text-5xl lg:text-5xl font-bold mb-6 text-slate-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">How to Set Up</span>{" "}
-            <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
               Deckoviz?
             </span>
           </h1>
 
           <p className="text-lg font-medium text-slate-600 leading-relaxed max-w-3xl mx-auto">
-            Transform your space <span className="bg-gradient-to-r from-pink-500 via-fuchsia-600 to-orange-600 bg-clip-text text-transparent">in minutes</span> with our simple setup process.
+            Transform your space <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 bg-clip-text text-transparent">in minutes</span> with our simple setup process.
           </p>
         </div>
 

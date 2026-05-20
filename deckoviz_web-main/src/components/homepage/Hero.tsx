@@ -327,7 +327,7 @@ const Hero: React.FC = () => {
     rightImageIndex % 2 === 0 ? normalMask : reversedMask
   return (
     
-<section className="relative w-full min-h-screen overflow-x-hidden py-12 md:py-20 flex flex-col items-center justify-center"
+<section className="relative w-full min-h-screen overflow-x-hidden pt-20 pb-6 md:pt-24 md:pb-8 flex flex-col items-center justify-center"
         style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}>
       {/* Three.js Particle Background */}
       <ThreeBackground />
@@ -396,7 +396,7 @@ const Hero: React.FC = () => {
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col items-center">
 
         {/* Heading */}
-        <h1 className="text-center font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-6 max-w-5xl pt-8 leading-tight">
+        <h1 className="text-center font-['Playfair_Display'] text-3xl sm:text-4xl md:text-5xl lg:text-5xl mb-2 max-w-5xl pt-2 leading-tight">
           <div className="inline">
             <span className="text-black">Make Your Space Come </span>
             <span className="italic liquid-gradient-blue">
@@ -414,25 +414,28 @@ const Hero: React.FC = () => {
         </h1>
 
         {/* Subheading */}
-        <p className="text-center text-gray-600 text-base sm:text-xl mb-8 sm:mb-10 max-w-3xl leading-relaxed px-2">
+        <p className="text-center text-gray-600 text-base sm:text-lg mb-4 sm:mb-5 max-w-3xl leading-relaxed px-2">
           Deckoviz DAS Portal is an{" "}
-          <span className="text-violet-600 font-semibold">AI-powered art frame</span>{" "}
+          <span className="text-blue-600 font-semibold">AI-powered art frame</span>{" "}
           that learns your taste and evolves with you, to paint your{" "}
           <span className="text-indigo-600 font-semibold">
             inner world, memories, and imagination
           </span>{" "}
           on your walls as your evolving{" "}
-          <span className="inline-block font-semibold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+          <span className="inline-block font-semibold bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
             {rotatingTexts[rotatingIndex]}
           </span>.
         </p>
 
-        {/* Layout */}
-  <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6 xl:gap-8 px-4">
+        {/* Layout Container */}
+        <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-6 xl:gap-8 px-4 lg:px-8">
 
           {/* LEFT IMAGE */}
-        <div className="relative flex justify-center lg:justify-end w-full lg:w-auto flex-shrink-0 max-w-[400px] lg:max-w-[480px] xl:max-w-[520px]">
-          <div className="relative w-[280px] h-[240px] sm:w-[340px] sm:h-[290px] md:w-[400px] md:h-[340px] lg:w-[440px] lg:h-[380px] xl:w-[480px] xl:h-[420px] overflow-visible">
+          <div className="relative flex justify-center lg:justify-end w-full lg:flex-1 lg:max-w-[620px]">
+            <div 
+              className="relative w-[95%] sm:w-[85%] lg:w-full max-w-[600px] overflow-visible transition-all duration-300"
+              style={{ aspectRatio: '600/514' }}
+            >
 
           {/* Room image */}
           <img
@@ -469,12 +472,12 @@ const Hero: React.FC = () => {
         </div>
 
           {/* CENTER */}
-          <div className="flex flex-col items-center gap-4 w-full lg:w-auto lg:max-w-[280px] xl:max-w-[320px] flex-shrink-0">
-            <div className="flex gap-5 flex-wrap justify-center">
+          <div className="flex flex-col items-center gap-3 w-full lg:w-[220px] xl:w-[240px] flex-shrink-0 mx-auto z-10">
+            <div className="flex gap-3 flex-wrap justify-center">
               <div className="relative inline-block group">
                 <button
                   onClick={() => (window.location.href = "/place-order")}
-                  className="inline-flex items-center justify-center font-bold transition-all duration-300 rounded-full px-8 py-3.5 text-sm tracking-widest uppercase overflow-hidden relative z-10 group text-white transform hover:scale-[1.03] hover:-translate-y-1 active:scale-[0.98] bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 shadow-[0_5px_15px_rgba(37,99,235,0.4)] hover:shadow-[0_10px_25px_rgba(37,99,235,0.6)] border border-white/20"
+                  className="inline-flex items-center justify-center font-bold transition-all duration-300 rounded-full px-6 py-2.5 text-xs tracking-widest uppercase overflow-hidden relative z-10 group text-white transform hover:scale-[1.03] hover:-translate-y-1 active:scale-[0.98] bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 shadow-[0_5px_15px_rgba(37,99,235,0.4)] hover:shadow-[0_10px_25px_rgba(37,99,235,0.6)] border border-white/20"
                 >
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-600 to-indigo-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <span className="relative z-10 flex items-center justify-center gap-2">
@@ -485,7 +488,7 @@ const Hero: React.FC = () => {
 
               <button
                 onClick={() => (window.location.href = "/about")}
-                className="inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-8 py-3 text-sm tracking-widest uppercase overflow-hidden relative z-10 group bg-white/90 backdrop-blur-sm border-2 border-blue-200 text-blue-700 hover:border-blue-400 hover:bg-white hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98] shadow-sm hover:shadow-lg hover:shadow-blue-500/20"
+                className="inline-flex items-center justify-center font-bold transition-all duration-500 rounded-full px-6 py-2 text-xs tracking-widest uppercase overflow-hidden relative z-10 group bg-white/90 backdrop-blur-sm border-2 border-blue-200 text-blue-700 hover:border-blue-400 hover:bg-white hover:scale-[1.05] hover:-translate-y-1 active:scale-[0.98] shadow-sm hover:shadow-lg hover:shadow-blue-500/20"
               >
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full z-0" />
@@ -519,15 +522,15 @@ const Hero: React.FC = () => {
             <div className="relative group w-full max-w-2xl">
               {/* Floating decorative elements */}
               <div className="absolute -left-8 top-1/4 w-12 h-12 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 opacity-60 blur-sm animate-float-slow" />
-              <div className="absolute -right-6 bottom-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-indigo-500 opacity-50 blur-sm animate-float-slower" />
+              <div className="absolute -right-6 bottom-1/4 w-16 h-16 rounded-full bg-gradient-to-br from-indigo-400 to-blue-500 opacity-50 blur-sm animate-float-slower" />
               <div className="absolute -bottom-4 left-1/3 w-10 h-10 rounded-full bg-gradient-to-br from-violet-400 to-indigo-500 opacity-60 blur-sm animate-float-medium" />
               
               {/* Glow effect */}
-              <div className="absolute -inset-4 bg-gradient-to-r from-violet-200 via-pink-200 to-indigo-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-200 via-indigo-200 to-cyan-200 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
               
               {/* Main card */}
               <div 
-                className="relative rounded-3xl px-6 py-6 w-full overflow-hidden transition-all duration-300 group-hover:shadow-[0_20px_60px_rgba(37,99,235,0.25)]"
+                className="relative rounded-2xl px-4 py-4 w-full overflow-hidden transition-all duration-300 group-hover:shadow-[0_20px_60px_rgba(37,99,235,0.25)]"
                 style={{
                   background: "rgba(255, 255, 255, 0.25)",
                   backdropFilter: "blur(24px) saturate(180%)",
@@ -544,13 +547,13 @@ const Hero: React.FC = () => {
                 </div>
                 
                 {/* Top stats - Horizontal layout */}
-                <div className="flex items-start justify-center gap-4 mb-6">
+                <div className="flex items-start justify-center gap-3 mb-3">
                   
                   {/* Items stat */}
                   <div className="relative flex flex-col items-center">
                     <div className="absolute -inset-2 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-2xl blur-lg" />
                     <div className="relative flex flex-col items-center">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent mb-1 animate-pulse-slow leading-none">
+                      <div className="text-2xl font-bold bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent mb-0.5 animate-pulse-slow leading-none">
                         <CountUp from={0} to={3} duration={2} suffix="M+" />
                       </div>
                       <div className="text-gray-600 font-medium text-xs whitespace-nowrap">Items in Library</div>
@@ -559,11 +562,11 @@ const Hero: React.FC = () => {
 
                   {/* Rating stat */}
                   <div className="relative flex flex-col items-center">
-                    <div className="absolute -inset-2 bg-gradient-to-br from-orange-400/20 to-pink-500/20 rounded-2xl blur-lg" />
+                    <div className="absolute -inset-2 bg-gradient-to-br from-blue-400/20 to-indigo-500/20 rounded-2xl blur-lg" />
                     <div className="relative flex flex-col items-center">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-orange-500 to-pink-600 bg-clip-text text-transparent mb-1 flex items-center gap-1 animate-pulse-slow leading-none">
+                      <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-0.5 flex items-center gap-1 animate-pulse-slow leading-none">
                         <CountUp from={0} to={4.9} duration={2} decimals={1} />
-                        <span className="text-2xl">✨</span>
+                        <span className="text-lg">✨</span>
                       </div>
                       <div className="text-gray-600 font-medium text-xs whitespace-nowrap">Star Rating</div>
                     </div>
@@ -571,7 +574,7 @@ const Hero: React.FC = () => {
                 </div>
 
                 {/* Divider with gradient */}
-                <div className="relative h-px bg-gradient-to-r from-transparent via-violet-300 to-transparent mb-6" />
+                <div className="relative h-px bg-gradient-to-r from-transparent via-violet-300 to-transparent mb-3" />
 
                 {/* Infinity stat */}
                 <div className="text-center relative">
@@ -579,21 +582,21 @@ const Hero: React.FC = () => {
                   <div className="relative flex flex-col items-center">
                     {/* Animated infinity symbol */}
                     <div className="inline-block relative mb-2">
-                      <div className="text-5xl font-bold bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
+                      <div className="text-3xl font-bold bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent animate-gradient-flow bg-[length:200%_100%]">
                         ∞
                       </div>
                       {/* Orbiting dots */}
                       <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-violet-500 rounded-full animate-orbit" />
                       <div className="absolute top-1/2 left-1/2 w-1.5 h-1.5 bg-indigo-500 rounded-full animate-orbit-reverse" />
                     </div>
-                    <div className="text-gray-600 font-medium text-sm">Ways of Exploring</div>
+                    <div className="text-gray-600 font-medium text-xs">Ways of Exploring</div>
                   </div>
                 </div>
 
                 {/* Decorative dots */}
                 <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
                   <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-                  <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
+                  <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" style={{ animationDelay: '0.2s' }} />
                   <div className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" style={{ animationDelay: '0.4s' }} />
                 </div>
               </div>
@@ -659,12 +662,13 @@ const Hero: React.FC = () => {
           </div>
 
           {/* RIGHT IMAGE */}
-<div className="relative flex justify-center lg:justify-start w-full lg:w-auto flex-shrink-0 max-w-[350px] lg:max-w-[420px] xl:max-w-[460px]">
+          <div className="relative flex justify-center lg:justify-start w-full lg:flex-1 lg:max-w-[580px]">
 
-          <div
-            className="relative w-[260px] h-[260px] sm:w-[300px] sm:h-[300px] md:w-[360px] md:h-[260px] lg:w-[380px] lg:h-[280px] xl:w-[420px] xl:h-[300px] overflow-hidden bg-gray-50"
-            style={{
-              WebkitMaskImage: currentMask,
+            <div
+              className="relative w-[90%] sm:w-[80%] lg:w-full max-w-[540px] overflow-hidden bg-gray-50 transition-all duration-300"
+              style={{
+                aspectRatio: '540/390',
+                WebkitMaskImage: currentMask,
               maskImage: currentMask,
               maskSize: "100% 100%",
               WebkitMaskSize: "100% 100%",

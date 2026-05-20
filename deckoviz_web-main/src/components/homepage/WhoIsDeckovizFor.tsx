@@ -16,14 +16,12 @@ const trainContainer = {
 const trainCard = {
   hidden: {
     opacity: 0,
-    x: 300,       // off-screen right
-    rotate: 2,
+    y: 100,       // off-screen bottom
     scale: 0.95,
   },
   visible: {
     opacity: 1,
-    x: 0,
-    rotate: 0,
+    y: 0,
     scale: 1,
     transition: {
       duration: 0.8,
@@ -140,11 +138,11 @@ const WhoIsDeckovizFor: React.FC = () => {
       z-20
       px-6 py-3
       rounded-full
-      bg-gradient-to-r from-rose-400 via-red-400 to-pink-500
+      bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600
       text-white
       text-sm font-medium
-      shadow-[0_18px_50px_rgba(244,63,94,0.45)]
-      hover:shadow-[0_28px_70px_rgba(244,63,94,0.6)]
+      shadow-[0_18px_50px_rgba(37,99,235,0.45)]
+      hover:shadow-[0_28px_70px_rgba(37,99,235,0.6)]
       transition-all duration-500
       animate-[float_7s_ease-in-out_infinite]
       backdrop-blur
@@ -156,7 +154,7 @@ const WhoIsDeckovizFor: React.FC = () => {
   {/* Title */}
   <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
     Who is{" "}
-    <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+    <span className="italic bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
       Deckoviz
     </span>{" "}
     For?

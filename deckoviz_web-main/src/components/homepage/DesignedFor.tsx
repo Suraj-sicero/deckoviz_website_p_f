@@ -84,18 +84,18 @@ const FloatingDASPGuideButton: React.FC = () => {
     <div className="z-30 flex flex-col items-center select-none mt-5">
       {/* ── Thumbtack pin ── */}
       <div className="relative z-10 flex flex-col items-center">
-        {/* Pin head: shiny gold disc */}
+        {/* Pin head: shiny silver disc */}
         <div
           className="w-[18px] h-[18px] rounded-full border border-white/30"
           style={{
-            background: "radial-gradient(circle at 35% 30%, #fde68a, #f59e0b 55%, #92400e)",
+            background: "radial-gradient(circle at 35% 30%, #f3f4f6, #9ca3af 55%, #4b5563)",
             boxShadow: "0 2px 8px rgba(0,0,0,0.35), inset 0 1px 2px rgba(255,255,255,0.5)",
           }}
         />
         {/* Pin shaft */}
         <div
           className="w-[2px] h-[10px] rounded-b-full"
-          style={{ background: "linear-gradient(to bottom, #d97706, #78350f)" }}
+          style={{ background: "linear-gradient(to bottom, #9ca3af, #4b5563)" }}
         />
       </div>
 
@@ -109,9 +109,9 @@ const FloatingDASPGuideButton: React.FC = () => {
           /* Card swings from top-center pin point */
           transformOrigin: "top center",
           animation: "cardSwing 5s ease-in-out infinite",
-          background: "linear-gradient(150deg, #6d28d9 0%, #9333ea 45%, #db2777 100%)",
+          background: "linear-gradient(150deg, #182A4A 0%, #1e3a8a 45%, #0f766e 100%)",
           boxShadow:
-            "0 10px 32px rgba(109,40,217,0.5), 0 2px 6px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
+            "0 10px 32px rgba(30,58,138,0.5), 0 2px 6px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.2)",
           border: "1px solid rgba(255,255,255,0.22)",
           padding: "14px 14px 15px",
         }}
@@ -165,13 +165,13 @@ const FloatingDASPGuideButton: React.FC = () => {
           <p className="text-[8.5px] font-semibold uppercase tracking-[0.17em] text-white/75 leading-none">
             A Quick But Comprehensive
           </p>
-          <p className="text-[12.5px] font-extrabold text-white leading-snug group-hover:text-yellow-200 transition-colors duration-300">
+          <p className="text-[12.5px] font-extrabold text-white leading-snug group-hover:text-teal-200 transition-colors duration-300">
             Guide To Your DAS Portal
           </p>
 
           {/* CTA pill */}
           <div
-            className="mt-1.5 px-3 py-[3px] rounded-full text-[10px] font-bold text-violet-900 group-hover:scale-105 transition-transform duration-300"
+            className="mt-1.5 px-3 py-[3px] rounded-full text-[10px] font-bold text-[#182A4A] group-hover:scale-105 transition-transform duration-300"
             style={{ background: "rgba(255,255,255,0.9)" }}
           >
             Read →
@@ -509,7 +509,7 @@ const frameImages = [
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
       </div>
       <div className="p-6 flex flex-col items-center justify-center text-center gap-3">
-        <p className="text-lg leading-relaxed bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent font-medium">
+        <p className="text-lg leading-relaxed bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] bg-clip-text text-transparent font-medium">
           {title}
         </p>
 
@@ -544,7 +544,7 @@ const frameImages = [
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
             Who have we designed{" "}
-            <span className="italic bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text text-transparent">
+            <span className="italic bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] bg-clip-text text-transparent">
               Deckoviz
             </span>{" "}
             for
@@ -651,7 +651,7 @@ const frameImages = [
             </div>
           </div>
         </div>
-<div className="relative mt-24 flex items-start">
+<div className="relative mt-24">
   <div className="absolute left-6 -top-[20px] z-30 flex flex-col items-center animate-float">
     <FloatingNervousSystemButton />
     <FloatingDASPGuideButton />
@@ -659,15 +659,15 @@ const frameImages = [
   <div className="w-full">
     <ScrollingImageGallery />
   </div>
+</div>
 
 {/* Dynamic Frame Showcase */}
 <div className="flex justify-center mt-20">
   <div className="relative w-[520px] rounded-2xl overflow-hidden">
 
     {/* glow */}
-     <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-violet-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
-     
-     
+    <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-violet-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
+
     {/* FULL furniture image */}
     <img
       src="/images/furniture-left.png"
@@ -676,7 +676,7 @@ const frameImages = [
     />
 
     {/* Artwork inside frame */}
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[57%] h-[57%] overflow-hidden">
+    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[57%] h-[57%] overflow-hidden">
       {frameImages.map((img, index) => (
         <img
           key={index}
@@ -690,7 +690,6 @@ const frameImages = [
     </div>
 
   </div>
-</div>
 </div>
       </div>
     </section>
