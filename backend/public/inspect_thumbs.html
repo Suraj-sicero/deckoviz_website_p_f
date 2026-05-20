@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Inspect Thumbnails</title>
+  <style>
+    body { font-family: sans-serif; background: #222; color: #fff; padding: 20px; text-align: center; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
+    .card { background: #333; padding: 15px; border-radius: 8px; border: 1px solid #444; }
+    img { max-width: 100%; border-radius: 4px; border: 1px solid #555; }
+  </style>
+</head>
+<body>
+  <h1>Frame Thumbnails</h1>
+  <div class="grid">
+    <div class="card">
+      <h3>Frame 1 (75 inch frame.png)</h3>
+      <img src="/generated/thumb_frame1.jpg" alt="Frame 1" />
+    </div>
+    <div class="card">
+      <h3>Frame 2 (frame2.png)</h3>
+      <img src="/generated/thumb_frame2.jpg" alt="Frame 2" />
+    </div>
+    <div class="card">
+      <h3>Frame 3 (frame 3.png)</h3>
+      <img src="/generated/thumb_frame3.jpg" alt="Frame 3" />
+    </div>
+    <div class="card">
+      <h3>Frame 4 (frame 4.png)</h3>
+      <img src="/generated/thumb_frame4.jpg" alt="Frame 4" />
+    </div>
+  </div>
+</body>
+</html>

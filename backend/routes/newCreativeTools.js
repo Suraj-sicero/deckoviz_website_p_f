@@ -28,6 +28,116 @@ import Replicate from "replicate";
 dotenv.config();
 const router = express.Router();
 
+// Frame style definitions — rendered programmatically via SVG/Sharp (no PNG assets)
+const FRAME_STYLES = {
+  frame1: {
+    name: "Classic Walnut",
+    // 16:9 cinematic widescreen canvas at 1920×1080
+    canvasW: 1920,
+    canvasH: 1080,
+    // Bezel thickness as fraction of canvas width/height (outer → inner)
+    bezelFraction: 0.045,        // ~86px at 1920px wide — thick luxury walnut bezel
+    cornerRadius: 12,
+    // Wood grain colours (dark walnut)
+    bezelGradient: {
+      stops: [
+        { offset: 0,   color: '#3d2b1f' },
+        { offset: 0.35, color: '#5c3d28' },
+        { offset: 0.65, color: '#4a3020' },
+        { offset: 1,    color: '#2e1e12' }
+      ]
+    },
+    // Inner matte border between bezel and screen (thin dark reveal)
+    matteColor: '#1a1008',
+    matteFraction: 0.008,
+    backlight_color: '#4a7fb5',  // ambient LED hue cast on wall
+    glowOpacity: 0.55,
+    glowBlur: 38,
+    shadowBlur: 22,
+    shadowOpacity: 0.7
+  },
+  frame2: {
+    name: "Sleek Charcoal",
+    canvasW: 1920,
+    canvasH: 1080,
+    bezelFraction: 0.028,        // ~54px — slim modern metal bezel
+    cornerRadius: 6,
+    bezelGradient: {
+      stops: [
+        { offset: 0,    color: '#1c1c1e' },
+        { offset: 0.4,  color: '#2e2e30' },
+        { offset: 0.6,  color: '#242426' },
+        { offset: 1,    color: '#111113' }
+      ]
+    },
+    matteColor: '#0a0a0b',
+    matteFraction: 0.005,
+    backlight_color: '#e8753a',
+    glowOpacity: 0.5,
+    glowBlur: 42,
+    shadowBlur: 20,
+    shadowOpacity: 0.72
+  },
+  frame3: {
+    name: "Natural Oak",
+    canvasW: 1920,
+    canvasH: 1080,
+    bezelFraction: 0.042,
+    cornerRadius: 10,
+    bezelGradient: {
+      stops: [
+        { offset: 0,    color: '#c8a96e' },
+        { offset: 0.3,  color: '#b8996a' },
+        { offset: 0.7,  color: '#c4a56b' },
+        { offset: 1,    color: '#a8915a' }
+      ]
+    },
+    matteColor: '#6b4c2a',
+    matteFraction: 0.007,
+    backlight_color: '#d4a843',
+    glowOpacity: 0.48,
+    glowBlur: 35,
+    shadowBlur: 18,
+    shadowOpacity: 0.65
+  },
+  frame4: {
+    name: "Modern Maple",
+    canvasW: 1920,
+    canvasH: 1080,
+    bezelFraction: 0.038,
+    cornerRadius: 8,
+    bezelGradient: {
+      stops: [
+        { offset: 0,    color: '#8b6340' },
+        { offset: 0.4,  color: '#a07548' },
+        { offset: 0.6,  color: '#956d3f' },
+        { offset: 1,    color: '#7a5635' }
+      ]
+    },
+    matteColor: '#3d2410',
+    matteFraction: 0.006,
+    backlight_color: '#b87d4a',
+    glowOpacity: 0.52,
+    glowBlur: 36,
+    shadowBlur: 19,
+    shadowOpacity: 0.68
+  }
+};
+
+// Map old frontend frameStyle keys to new definitions
+const FRAME_CONFIGS = {
+  frame1: FRAME_STYLES.frame1,
+  frame2: FRAME_STYLES.frame2,
+  frame3: FRAME_STYLES.frame3,
+  frame4: FRAME_STYLES.frame4,
+  // frontend sends slugs like "Classic Walnut" too — handle both
+  'frame_walnut':   FRAME_STYLES.frame1,
+  'frame_charcoal': FRAME_STYLES.frame2,
+  'frame_oak':      FRAME_STYLES.frame3,
+  'frame_maple':    FRAME_STYLES.frame4,
+};
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -823,24 +933,124 @@ Choose real books and movies that exist. Make everything feel curated and person
 // ──────────────────────────────────────────────────────────────────────────────
 
 // Helper for Runware blending
-async function blendImageWithRunware(compositeBuffer, prompt = "a professional photograph of a digital art frame on a wall inside a room, realistic shadows, natural lighting") {
+/**
+ * Edit/synthesize a room photo with Gemini 2.5 Flash Image (Nano Banana).
+ * - primaryBuffer: the room photo (required)
+ * - referenceBuffers: array of additional reference image buffers (artwork, style frames, etc.)
+ * - prompt: instruction text
+ * Returns a Buffer of the edited JPEG/PNG.
+ */
+async function editImageWithGemini(prompt, primaryBuffer, referenceBuffers = []) {
+  const KEY = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+  if (!KEY) throw new Error("GOOGLE_API_KEY is required for Gemini image edit.");
+
+  // Normalise primary to JPEG (Gemini handles large images, but normalise to avoid weird formats)
+  const primaryJpeg = await sharp(primaryBuffer)
+    .resize(1536, 1536, { fit: "inside", withoutEnlargement: true })
+    .jpeg({ quality: 92 })
+    .toBuffer();
+
+  const parts = [
+    { text: prompt },
+    {
+      inline_data: {
+        mime_type: "image/jpeg",
+        data: primaryJpeg.toString("base64"),
+      },
+    },
+  ];
+
+  // Accept either a single Buffer (legacy) or an array of Buffers
+  const refs = Array.isArray(referenceBuffers)
+    ? referenceBuffers.filter(Boolean)
+    : referenceBuffers
+    ? [referenceBuffers]
+    : [];
+
+  for (const buf of refs) {
+    const refJpeg = await sharp(buf)
+      .resize(1024, 1024, { fit: "inside", withoutEnlargement: true })
+      .jpeg({ quality: 92 })
+      .toBuffer();
+    parts.push({
+      inline_data: {
+        mime_type: "image/jpeg",
+        data: refJpeg.toString("base64"),
+      },
+    });
+  }
+
+  // Try the current Nano Banana model, with a preview fallback.
+  const models = ["gemini-2.5-flash-image", "gemini-2.5-flash-image-preview"];
+  let lastErr = null;
+
+  for (const model of models) {
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${KEY}`;
+    const body = {
+      contents: [{ parts }],
+      generationConfig: {
+        responseModalities: ["IMAGE"],
+        temperature: 0.05,
+      },
+    };
+
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) {
+        lastErr = new Error(`Gemini ${model} ${res.status}: ${await res.text()}`);
+        console.warn("[Gemini Image Edit]", lastErr.message);
+        continue;
+      }
+
+      const data = await res.json();
+      const candidateParts = data.candidates?.[0]?.content?.parts || [];
+      const imagePart = candidateParts.find((p) => p.inlineData || p.inline_data);
+      const inline = imagePart?.inlineData || imagePart?.inline_data;
+      if (!inline?.data) {
+        lastErr = new Error(`Gemini ${model} returned no image. Raw: ${JSON.stringify(data).slice(0, 400)}`);
+        console.warn("[Gemini Image Edit]", lastErr.message);
+        continue;
+      }
+      return Buffer.from(inline.data, "base64");
+    } catch (err) {
+      lastErr = err;
+      console.warn(`[Gemini Image Edit] ${model} threw:`, err.message);
+    }
+  }
+
+  throw lastErr || new Error("Gemini image edit failed with no specific error.");
+}
+
+async function blendImageWithRunware(compositeBuffer, maskBuffer, prompt, strength = 0.18) {
   const apiKey = process.env.RUNWARE_API_KEY;
   if (!apiKey) return null;
 
   try {
     const crypto = await import("crypto");
     const uploadTaskUUID = crypto.randomUUID();
+    const uploadMaskTaskUUID = crypto.randomUUID();
     const inferenceTaskUUID = crypto.randomUUID();
     
-    // We resize the composite buffer to avoid extra-large upload
+    // We resize the composite buffer to 1248x832 to match the desired model resolution
     const resizedComposite = await sharp(compositeBuffer)
-      .resize(1024, 1024, { fit: "inside", withoutEnlargement: true })
-      .jpeg({ quality: 85 })
+      .resize(1248, 832, { fit: "cover" })
+      .jpeg({ quality: 90 })
+      .toBuffer();
+
+    const resizedMask = await sharp(maskBuffer)
+      .resize(1248, 832, { fit: "cover" })
+      .png()
       .toBuffer();
 
     const dataUri = `data:image/jpeg;base64,${resizedComposite.toString("base64")}`;
+    const maskDataUri = `data:image/png;base64,${resizedMask.toString("base64")}`;
 
-    console.log("[Runware Blend] Uploading composite image...");
+    console.log("[Runware Blend] Uploading composite and mask images...");
     const res = await fetch("https://api.runware.ai/v1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -853,6 +1063,11 @@ async function blendImageWithRunware(compositeBuffer, prompt = "a professional p
           "taskType": "imageUpload",
           "taskUUID": uploadTaskUUID,
           "image": dataUri
+        },
+        {
+          "taskType": "imageUpload",
+          "taskUUID": uploadMaskTaskUUID,
+          "image": maskDataUri
         }
       ])
     });
@@ -863,15 +1078,21 @@ async function blendImageWithRunware(compositeBuffer, prompt = "a professional p
     }
 
     const uploadRes = await res.json();
-    const imageUUID = uploadRes.data?.[0]?.imageUUID;
-    if (!imageUUID) {
-      console.warn("[Runware Blend] No imageUUID returned:", uploadRes);
+    const uploadData = uploadRes.data || [];
+    const compositeItem = uploadData.find(d => d.taskUUID === uploadTaskUUID);
+    const maskItem = uploadData.find(d => d.taskUUID === uploadMaskTaskUUID);
+
+    const imageUUID = compositeItem?.imageUUID;
+    const maskUUID = maskItem?.imageUUID;
+
+    if (!imageUUID || !maskUUID) {
+      console.warn("[Runware Blend] No imageUUID or maskUUID returned:", uploadRes);
       return null;
     }
 
-    console.log("[Runware Blend] Image uploaded. UUID:", imageUUID);
+    console.log("[Runware Blend] Images uploaded. UUIDs:", { imageUUID, maskUUID });
 
-    // Call imageInference with strength 0.15 (very low to keep frame content intact but blend lighting/shadows)
+    // Call imageInference using FLUX Kontext Dev
     const inferRes = await fetch("https://api.runware.ai/v1", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -883,13 +1104,15 @@ async function blendImageWithRunware(compositeBuffer, prompt = "a professional p
         {
           "taskType": "imageInference",
           "taskUUID": inferenceTaskUUID,
-          "model": "runware:100@1", // Standard SD 1.5
+          "model": "runware:106@1", // FLUX.1 Kontext Dev
           "positivePrompt": prompt,
-          "negativePrompt": "blurry, low quality, deformed, extra frames, change layout, text, watermark",
+          "negativePrompt": "blurry, low quality, deformed, extra frames, changed furniture, changed room layout, changed walls, changed ceiling, text, watermark",
           "seedImage": imageUUID,
-          "strength": 0.15,
-          "width": 1024,
-          "height": 1024,
+          "maskImage": maskUUID,
+          "strength": strength,
+          "cfgScale": 4.5,
+          "width": 1248,
+          "height": 832,
           "numberResults": 1
         }
       ])
@@ -1006,19 +1229,9 @@ function bilinearSample(buffer, width, height, channels, u, v) {
   return res;
 }
 
-async function warpImage(srcBuffer, srcWidth, srcHeight, dstWidth, dstHeight, dstCorners) {
-  const src = [
-    [100, 100],
-    [900, 100],
-    [900, 550],
-    [100, 550]
-  ];
-
-  const coeffs = getInverseHomography(src, dstCorners);
-  if (!coeffs) {
-    console.warn("Warping failed: singular homography matrix.");
-    return null;
-  }
+async function warpImage(srcBuffer, srcWidth, srcHeight, dstWidth, dstHeight, dstCorners, srcCorners) {
+  const coeffs = getInverseHomography(srcCorners, dstCorners);
+  if (!coeffs) return null;
   const [a, b, c, d, e, f, g, h] = coeffs;
 
   let minX = Math.floor(Math.min(...dstCorners.map(p => p[0])));
@@ -1026,30 +1239,27 @@ async function warpImage(srcBuffer, srcWidth, srcHeight, dstWidth, dstHeight, ds
   let minY = Math.floor(Math.min(...dstCorners.map(p => p[1])));
   let maxY = Math.ceil(Math.max(...dstCorners.map(p => p[1])));
 
-  const margin = Math.ceil(Math.max(maxX - minX, maxY - minY) * 0.3);
+  const margin = Math.ceil(Math.max(maxX - minX, maxY - minY) * 0.35);
   minX = Math.max(0, minX - margin);
   maxX = Math.min(dstWidth - 1, maxX + margin);
   minY = Math.max(0, minY - margin);
   maxY = Math.min(dstHeight - 1, maxY + margin);
 
   const dstBuffer = Buffer.alloc(dstWidth * dstHeight * 4);
-  const fadeMargin = 80;
+  const fadeMargin = 40;
 
   for (let y = minY; y <= maxY; y++) {
     for (let x = minX; x <= maxX; x++) {
       const den = g * x + h * y + 1;
       if (Math.abs(den) < 1e-6) continue;
-
       const u = (a * x + b * y + c) / den;
       const v = (d * x + e * y + f) / den;
 
       if (u >= 0 && u < srcWidth - 1 && v >= 0 && v < srcHeight - 1) {
         const color = bilinearSample(srcBuffer, srcWidth, srcHeight, 4, u, v);
-        
         let fade = 1.0;
         if (u < fadeMargin) fade *= (u / fadeMargin);
         else if (srcWidth - 1 - u < fadeMargin) fade *= ((srcWidth - 1 - u) / fadeMargin);
-        
         if (v < fadeMargin) fade *= (v / fadeMargin);
         else if (srcHeight - 1 - v < fadeMargin) fade *= ((srcHeight - 1 - v) / fadeMargin);
 
@@ -1061,24 +1271,132 @@ async function warpImage(srcBuffer, srcWidth, srcHeight, dstWidth, dstHeight, ds
       }
     }
   }
-
   return dstBuffer;
 }
 
 router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 }, { name: "frameImage", maxCount: 1 }]), async (req, res) => {
   try {
-    const { businessName } = req.body;
+    const { businessName, frameStyle = "frame1" } = req.body;
     const file = req.files?.image?.[0];
     const frameFile = req.files?.frameImage?.[0];
 
     if (!file) return res.status(400).json({ error: "Missing space/room image upload" });
     if (!businessName?.trim()) return res.status(400).json({ error: "Missing business name" });
 
-    console.log("Postcard generation started for:", businessName);
+    // Mode determination
+    const isMode1 = !!frameFile;
+    console.log(`Postcard generation started for: ${businessName} (Mode: ${isMode1 ? 'Mode 1 (Custom Artwork)' : 'Mode 2 (AI Auto Showcase)'}, Frame Style: ${frameStyle})`);
 
-    // Step 1: Analyze room with Gemini Vision for optimal 3D frame placement
-    const visionPrompt = `
-      Analyze this room image for optimal placement of a Deckoviz premium 16:9 digital art frame.
+    // Frame style → on-screen content guidance (only the screen content is style-driven; hardware stays premium)
+    const STYLE_GUIDE = {
+      frame1: { bezel: "rich dark walnut wood with subtle grain", glow: "cool ambient blue glow" },
+      frame2: { bezel: "matte charcoal aluminum with brushed finish", glow: "warm sunset orange glow" },
+      frame3: { bezel: "light natural oak wood with soft grain", glow: "soft golden ambient glow" },
+      frame4: { bezel: "warm maple wood with subtle reddish tone", glow: "bronze ambient accent glow" },
+    };
+    const styleCfg = STYLE_GUIDE[frameStyle] || STYLE_GUIDE.frame1;
+
+    // ─── Load ONE Decoviz example frame as a style reference ───────────────
+    // Sending many reference images pushes Nano Banana into compositing mode
+    // (it regenerates the whole scene). One small style reference is enough
+    // to convey bezel + halo + shadow without overriding the room photo.
+    const FRAME_STYLE_TO_FILE = {
+      frame1: "frame1.png",
+      frame2: "frame2.png",
+      frame3: "frame3.png",
+      frame4: "frame4.png",
+    };
+    const styleFileName = FRAME_STYLE_TO_FILE[frameStyle] || "frame1.png";
+    const frameRefBuffers = [];
+    try {
+      const refPath = path.join(__dirname, "../../deckoviz_web-main/public/frames", styleFileName);
+      if (fs.existsSync(refPath)) {
+        frameRefBuffers.push(await fs.promises.readFile(refPath));
+      }
+    } catch (_e) { /* ignore */ }
+    console.log(`[postcard/generate] Loaded ${frameRefBuffers.length} Decoviz style reference frame(s).`);
+
+    // ─── Build a focused edit prompt for Gemini 2.5 Flash Image ─────────────
+    // Image order:
+    //   #1 = room photo (ground truth)
+    //   #2 = (Mode 1 only) user artwork to show on screen
+    //   LAST = Decoviz hardware style reference (bezel + halo + edges ONLY)
+    const styleImageIndex = isMode1 ? 3 : 2;
+    const onScreenLine = isMode1
+      ? `The screen of the display must show the SECOND image (the user's artwork) as its on-screen content — fit cleanly into the 16:9 screen area.`
+      : `The screen of the display shows a tasteful cinematic landscape or abstract artwork (no text, no logos).`;
+
+    const styleRefLine = `IMAGE #${styleImageIndex} is a STYLE REFERENCE ONLY for the Decoviz hardware look — copy ONLY its bezel material/shape, its outer rounded-corner profile, and its warm wide halo backlight. DO NOT copy its room, its wall, its scene, or its on-screen content. The room and scene in the output MUST come entirely from IMAGE #1.`;
+
+    const editPrompt = `Take the first photo (the room in IMAGE #1) and return THE SAME PHOTO unchanged, with one single addition: a wall-mounted Decoviz smart frame mounted on the empty wall. This is a localized inpaint — only the wall region behind the new frame may change.
+
+Keep everything else pixel-identical to IMAGE #1: same camera angle, same crop, same aspect ratio, same dimensions, same furniture in the exact same positions and colors, same windows, same doors, same floor, same ceiling, same wall paint, same lighting and time-of-day, same decor. Do NOT redesign, restyle, modernize, or "improve" the room. Do NOT move, replace, recolor, add or remove any furniture, window, door, plant, or decor item.
+
+${styleRefLine}
+
+The Decoviz frame to add:
+- Landscape 16:9 orientation (width ≈ 1.78 × height). Never portrait, never square.
+- Premium ${styleCfg.bezel} bezel with clearly visible wood grain (if wooden), about 4-6 cm thick — chunky enough to read as a real picture frame, not a thin TV bezel.
+- OUTER corners of the bezel are softly ROUNDED (visible curved corners on all 4 outside corners), matching the reference style.
+- A wide, soft, warm ${styleCfg.glow} HALO backlight glowing behind the frame and bleeding 20-40 cm out onto the surrounding wall on ALL FOUR sides. The halo is diffuse and ambient — denser right behind the bezel and fading outward smoothly. Subtly tint the surrounding wall with the glow color. Not neon, not an outline, not a bloom.
+- A short soft contact shadow under the bezel consistent with the room's existing light direction.
+- Mounted FLUSH and level on the wall — not floating, not tilted.
+
+Frame size and placement:
+- Size: width roughly 45-60% of the visible wall width — the frame is a clear focal point on the wall, NOT a tiny TV. Maintain its 16:9 proportions.
+- Place it at natural eye level on the most prominent clear wall segment, horizontally centered on that segment when possible.
+- Never overlap windows, doors, blinds, mirrors, light fixtures, existing art, or furniture.
+- Follow the wall's perspective so it looks physically mounted.
+
+${onScreenLine}
+
+CRITICAL OUTPUT FORMAT: Output ONE photorealistic image with the EXACT SAME aspect ratio, EXACT SAME width:height proportions, and EXACT SAME crop/framing as IMAGE #1. Do NOT change the aspect ratio. Do NOT output a square image if the input is wide. Do NOT output a wide image if the input is tall. Do NOT add padding or letterboxing. Do NOT zoom in or out. Match IMAGE #1's aspect ratio precisely. Do not add a second frame. If no suitable empty wall exists in IMAGE #1, return IMAGE #1 unchanged.`;
+
+    console.log("[postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...");
+    let afterImageBuffer = null;
+    let reasoningText = "";
+    try {
+      // Image order sent to Gemini:
+      //   Mode 1: [room, user-artwork, decoviz-style-reference]
+      //   Mode 2: [room, decoviz-style-reference]
+      // The style reference is ONE small frame image, explicitly described in
+      // the prompt as STYLE-ONLY so Nano Banana doesn't composite it as a scene.
+      const refBuffers = isMode1
+        ? [frameFile.buffer, ...frameRefBuffers]
+        : [...frameRefBuffers];
+      afterImageBuffer = await editImageWithGemini(
+        editPrompt,
+        file.buffer,
+        refBuffers
+      );
+      reasoningText = `Decoviz display rendered onto the most suitable wall with matching perspective and ${styleCfg.glow}, while preserving the original room photo.`;
+      console.log("[postcard/generate] Gemini image edit succeeded.");
+    } catch (geminiErr) {
+      console.error("[postcard/generate] Gemini image edit failed:", geminiErr.message);
+      return res.status(502).json({ error: `AI render failed: ${geminiErr.message}` });
+    }
+
+    // Gemini sometimes returns the edited image at a different aspect ratio
+    // (e.g. 1:1) than the input — that makes the before/after slider crop the
+    // original. Force the AFTER image to match the BEFORE image's exact
+    // dimensions so both sides of the comparison line up perfectly.
+    const beforeMeta = await sharp(file.buffer).metadata();
+    const roomWidth = beforeMeta.width;
+    const roomHeight = beforeMeta.height;
+
+    afterImageBuffer = await sharp(afterImageBuffer)
+      .resize(roomWidth, roomHeight, { fit: "cover", position: "centre" })
+      .jpeg({ quality: 95 })
+      .toBuffer();
+    const afterMeta = await sharp(afterImageBuffer).metadata();
+
+    // Some legacy variables below were referenced by removed code; keep a stub
+    // for compatibility with the postcard-composition step further down.
+    const placement = { reasoning: reasoningText };
+
+    /* LEGACY_BLOCK_START
+      Analyze this room image for optimal placement of a Deckoviz premium 16:9 cinematic widescreen digital art frame.
+      Analyze this room image for optimal placement of a Deckoviz premium 16:9 cinematic widescreen digital art frame.
       
       You must treat this room image as a 3D space, taking into account the depth and perspective angles of the walls.
       
@@ -1087,12 +1405,12 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
       2. 3D PERSPECTIVE WARP CORNERS: Since the selected wall may be angled relative to the camera (perspective), you must specify the EXACT 4 corners where the frame's BEZEL should lie flat against that wall surface.
          - If the wall recedes to the right (perspective), the right edge must be vertically shorter than the left edge, and the top/bottom lines must slope towards the vanishing point.
          - If the wall recedes to the left, the left edge must be vertically shorter than the right edge.
-         - If the wall faces the camera directly (orthogonal/flat wall), the corners should form a perfect, untilted 16:9 rectangle. The top_left and top_right Y-coordinates MUST be identical (exactly equal, e.g., both y=380, no tilt). The bottom_left and bottom_right Y-coordinates MUST be identical (exactly equal). The left edge X-coordinates must be equal, and the right edge X-coordinates must be equal.
+         - If the wall faces the camera directly (orthogonal/flat wall), the corners should form a perfect, untilted 16:9 widescreen rectangle. The top_left and top_right Y-coordinates MUST be identical (exactly equal, e.g., both y=380, no tilt). The bottom_left and bottom_right Y-coordinates MUST be identical (exactly equal). The left edge X-coordinates must be equal, and the right edge X-coordinates must be equal. The width of the rectangle must be exactly 1.77 times its height (i.e. top_right_x - top_left_x equals 1.77 * (bottom_left_y - top_left_y)).
          - DO NOT introduce slight random tilts, rotations, or offsets. Keeping the painting horizontally leveled on flat walls is critical.
       3. STRICTLY AVOID WINDOWS & BLINDS: Never place the frame over windows, glass panels, window blinds, curtains, or doorways. The frame must not overlap them at all.
       4. NO FURNITURE CLASH: Do not overlap tables, chairs, plants, lamps, or decorative items. The frame should hang cleanly on the wall *above* any furniture, at a natural eye level.
       5. STRICT BOUNDARIES: Ensure the entire frame quadrilateral fits ENTIRELY within the boundaries of the chosen wall segment. Leave some padding on all sides so it does not touch the edges of the wall, window frames, or ceiling.
-      6. SCALING: Choose a realistic size. Typically the width should be between 20% to 32% of the total image width.
+      6. SCALING: Choose a realistic size. Typically the width should be between 25% to 38% of the total image width (with height scaled to 16:9 ratio).
 
       Return ONLY valid JSON (normalized 0-1000 scale where x=0 to 1000 and y=0 to 1000 relative to the image size):
       {
@@ -1100,34 +1418,20 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
         "top_right": [x, y],
         "bottom_right": [x, y],
         "bottom_left": [x, y],
-        "backlight_color": "hex_color_curated_for_room",
         "reasoning": "Explain exactly which wall segment was chosen, how the 3D perspective tilt/slope was calculated to align with the wall angle, and how we avoided overlap."
       }
     `.trim();
 
-    const visionRaw = await callVisionLLM(visionPrompt, file.buffer, true);
-    const placement = extractJSON(visionRaw) || {};
-    console.log("Placement detected:", placement);
-
-    // Step 2: Obtain frame artwork (uploaded image or generated)
-    let artBuffer;
-    if (frameFile) {
-      artBuffer = frameFile.buffer;
-    } else {
-      const artThemes = ["luxury minimalist abstract", "geometric vector landscape", "flat oil wash texture", "modern graphic glass art"];
-      const chosenTheme = artThemes[Math.floor(Math.random() * artThemes.length)];
-      
-      const artPrompt = `A high-end FLAT 2D VECTOR ${chosenTheme} digital art, museum quality, professional graphic design, flat colors, NO perspective, NO depth, NO rooms, NO furniture, NO windows, 16:9 aspect ratio, 8k resolution, flat 2D style.`;
-      const artNegativePrompt = "room, interior, furniture, window, portal, 3D, depth, perspective, realistic scene, person, lamp, couch, bed, wall, floor, ceiling, architecture, blurry, distorted";
-      
-      const artworkUrl = await generateImage(artPrompt, artNegativePrompt);
-      if (!artworkUrl) throw new Error("Failed to generate frame artwork.");
-      
-      const artRes = await fetch(artworkUrl);
-      artBuffer = Buffer.from(await artRes.arrayBuffer());
+    let placement = {};
+    try {
+      const visionRaw = await callVisionLLM(visionPrompt, file.buffer, true);
+      placement = extractJSON(visionRaw) || {};
+      console.log("Placement detected:", placement);
+    } catch (visionErr) {
+      console.warn("Vision LLM failed, using fallback coordinates:", visionErr.message);
     }
 
-    // Step 3: Prepare Dimensions
+    // Step 2: Prepare Dimensions
     const metadata = await sharp(file.buffer).metadata();
     const roomWidth = metadata.width;
     const roomHeight = metadata.height;
@@ -1140,9 +1444,9 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
 
     if (!top_left || !top_right || !bottom_right || !bottom_left) {
       console.log("Missing corners in Vision response, using center/width fallback...");
-      const cx = placement.center_x || 500;
-      const cy = placement.center_y || 500;
-      const w = placement.width || 250;
+      const cx = 500;
+      const cy = 400;
+      const w = 280;
       const h = (w * 9) / 16;
       top_left = [cx - w/2, cy - h/2];
       top_right = [cx + w/2, cy - h/2];
@@ -1150,91 +1454,263 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
       bottom_left = [cx - w/2, cy + h/2];
     }
 
-    const dstCorners = [
-      [ (top_left[0] / 1000) * roomWidth, (top_left[1] / 1000) * roomHeight ],
-      [ (top_right[0] / 1000) * roomWidth, (top_right[1] / 1000) * roomHeight ],
-      [ (bottom_right[0] / 1000) * roomWidth, (bottom_right[1] / 1000) * roomHeight ],
-      [ (bottom_left[0] / 1000) * roomWidth, (bottom_left[1] / 1000) * roomHeight ]
-    ];
+    // Scale the detected normalized coordinates to pixel coordinates
+    const pTL = [ (top_left[0] / 1000) * roomWidth, (top_left[1] / 1000) * roomHeight ];
+    const pTR = [ (top_right[0] / 1000) * roomWidth, (top_right[1] / 1000) * roomHeight ];
+    const pBR = [ (bottom_right[0] / 1000) * roomWidth, (bottom_right[1] / 1000) * roomHeight ];
+    const pBL = [ (bottom_left[0] / 1000) * roomWidth, (bottom_left[1] / 1000) * roomHeight ];
 
-    // Step 4: Create the Premium Frame elements in flat space (size: 1000 x 650)
-    const backlightColor = placement.backlight_color || "#ffaa44";
+    // Calculate center of the quadrilateral
+    const cx = (pTL[0] + pTR[0] + pBR[0] + pBL[0]) / 4;
+    const cy = (pTL[1] + pTR[1] + pBR[1] + pBL[1]) / 4;
 
-    const glowSvg = `
-      <svg width="1000" height="650">
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="55" />
-        </filter>
-        <rect x="100" y="100" width="800" height="450" fill="${backlightColor}" filter="url(#glow)" opacity="0.5" />
-      </svg>
-    `;
+    // Calculate current width and height in pixels
+    const wTop = Math.hypot(pTR[0] - pTL[0], pTR[1] - pTL[1]);
+    const wBottom = Math.hypot(pBR[0] - pBL[0], pBR[1] - pBL[1]);
+    const avgW = (wTop + wBottom) / 2;
 
-    const shadowSvg = `
-      <svg width="1000" height="650">
-        <filter id="shadow">
-          <feGaussianBlur stdDeviation="12" />
-        </filter>
-        <rect x="100" y="100" width="800" height="450" rx="30" fill="rgba(0,0,0,0.75)" filter="url(#shadow)" />
-      </svg>
-    `;
+    const hLeft = Math.hypot(pBL[0] - pTL[0], pBL[1] - pTL[1]);
+    const hRight = Math.hypot(pBR[0] - pTR[0], pBR[1] - pTR[1]);
+    const avgH = (hLeft + hRight) / 2;
 
-    const bezelSvg = `
-      <svg width="800" height="450">
-        <defs>
-          <linearGradient id="woodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#3d2b1f;stop-opacity:1" />
-            <stop offset="50%" style="stop-color:#1e140d;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#3d2b1f;stop-opacity:1" />
-          </linearGradient>
-          <filter id="innerDepth">
-            <feOffset dx="0" dy="5" />
-            <feGaussianBlur stdDeviation="8" result="offset-blur" />
-            <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
-            <feFlood flood-color="black" flood-opacity="0.8" result="color" />
-            <feComposite operator="in" in="color" in2="inverse" result="shadow" />
-            <feComposite operator="over" in="shadow" in2="SourceGraphic" />
-          </filter>
-        </defs>
-        <rect x="0" y="0" width="800" height="450" rx="32" fill="url(#woodGrad)" stroke="#5c4033" stroke-width="2" />
-        <rect x="24" y="24" width="752" height="402" rx="20" fill="black" filter="url(#innerDepth)" />
-      </svg>
-    `;
+    // Correct height to maintain 16:9 widescreen aspect ratio on the wall (avgW / avgH = 16 / 9)
+    const targetH = (avgW * 9) / 16;
+    const scaleY = targetH / avgH;
+    pTL[1] = cy + (pTL[1] - cy) * scaleY;
+    pTR[1] = cy + (pTR[1] - cy) * scaleY;
+    pBR[1] = cy + (pBR[1] - cy) * scaleY;
+    pBL[1] = cy + (pBL[1] - cy) * scaleY;
 
-    const resizedArt = await sharp(artBuffer)
-      .resize(752, 402, { fit: "cover" })
+    // Boundary check: if any corner falls outside the image, scale the quadrilateral down from its center
+    let minY = Math.min(pTL[1], pTR[1], pBR[1], pBL[1]);
+    let maxY = Math.max(pTL[1], pTR[1], pBR[1], pBL[1]);
+    let minX = Math.min(pTL[0], pTR[0], pBR[0], pBL[0]);
+    let maxX = Math.max(pTL[0], pTR[0], pBR[0], pBL[0]);
+
+    let fitScale = 1.0;
+    if (minY < 10) fitScale = Math.min(fitScale, (cy - 10) / (cy - minY));
+    if (maxY > roomHeight - 10) fitScale = Math.min(fitScale, (roomHeight - 10 - cy) / (maxY - cy));
+    if (minX < 10) fitScale = Math.min(fitScale, (cx - 10) / (cx - minX));
+    if (maxX > roomWidth - 10) fitScale = Math.min(fitScale, (roomWidth - 10 - cx) / (maxX - cx));
+
+    if (fitScale < 1.0) {
+      console.log(`Scaling frame down by factor of ${fitScale.toFixed(3)} to safely fit inside room boundaries...`);
+      pTL[0] = cx + (pTL[0] - cx) * fitScale;
+      pTL[1] = cy + (pTL[1] - cy) * fitScale;
+      pTR[0] = cx + (pTR[0] - cx) * fitScale;
+      pTR[1] = cy + (pTR[1] - cy) * fitScale;
+      pBR[0] = cx + (pBR[0] - cx) * fitScale;
+      pBR[1] = cy + (pBR[1] - cy) * fitScale;
+      pBL[0] = cx + (pBL[0] - cx) * fitScale;
+      pBL[1] = cy + (pBL[1] - cy) * fitScale;
+    }
+
+    const dstCorners = [pTL, pTR, pBR, pBL];
+
+    let artworkBuffer;
+    if (isMode1) {
+      artworkBuffer = frameFile.buffer;
+    } else {
+      console.log("Mode 2: AI Auto Showcase (generating premium artwork)...");
+      try {
+        const artPrompt = "A luxury gallery-quality abstract painting, contemporary fine art style, vibrant Pantone color palette, 16:9 aspect ratio";
+        const artUrl = await generateImage(artPrompt);
+        if (artUrl) {
+          const artRes = await fetch(artUrl);
+          if (artRes.ok) {
+            artworkBuffer = Buffer.from(await artRes.arrayBuffer());
+            console.log("Successfully generated showcase artwork via Replicate.");
+          }
+        }
+      } catch (artErr) {
+        console.warn("Failed to generate artwork via Replicate, using default showcase:", artErr.message);
+      }
+
+      if (!artworkBuffer) {
+        const fallbackPath = path.join(__dirname, "../../deckoviz_web-main/public/images/about3.png");
+        if (fs.existsSync(fallbackPath)) {
+          artworkBuffer = await fs.promises.readFile(fallbackPath);
+          console.log("Using default local showcase artwork about3.png");
+        } else {
+          artworkBuffer = await sharp({
+            create: {
+              width: 1500,
+              height: 800,
+              channels: 3,
+              background: { r: 212, g: 175, b: 55 }
+            }
+          }).png().toBuffer();
+        }
+      }
+    }
+
+    // ─── Build frame programmatically (no PNG assets) ──────────────────────────
+    const cfg = FRAME_CONFIGS[frameStyle] || FRAME_CONFIGS.frame1;
+    const W = cfg.canvasW;  // 1200
+    const H = cfg.canvasH;  // 1200
+    const pad = 120;        // 120px padding on all sides for glow and shadow bleed (no clipping!)
+    const svgW = W + 2 * pad;
+    const svgH = H + 2 * pad;
+
+    const bz = Math.round(cfg.bezelFraction * W);          // outer bezel thickness in px
+    const mt = Math.round(cfg.matteFraction * W);          // matte reveal thickness in px
+    const cr = cfg.cornerRadius;                           // corner radius for bezel rect
+
+    // Artwork area (inner screen) — centred in canvas with bezel + matte insets + padding
+    const screenX  = pad + bz + mt;
+    const screenY  = pad + bz + mt;
+    const screenW  = W - 2 * (bz + mt);
+    const screenH  = H - 2 * (bz + mt);
+
+    console.log(`Drawing programmatic square frame (${cfg.name}) — canvas ${W}×${H}, bezel ${bz}px, screen ${screenW}×${screenH}...`);
+
+    // 1. Scale + crop artwork to fill the screen region exactly
+    const artResized = await sharp(artworkBuffer)
+      .resize(screenW, screenH, { fit: 'cover', position: 'centre' })
+      .jpeg({ quality: 93 })
       .toBuffer();
 
-    const flatFrameComposite = await sharp({
-      create: {
-        width: 1000,
-        height: 650,
-        channels: 4,
-        background: { r: 0, g: 0, b: 0, alpha: 0 }
-      }
-    })
-    .composite([
-      { input: Buffer.from(glowSvg), top: 0, left: 0 },
-      { input: Buffer.from(shadowSvg), top: 0, left: 0 },
-      { input: Buffer.from(bezelSvg), top: 100, left: 100 },
-      { input: resizedArt, top: 124, left: 124 }
-    ])
-    .raw()
-    .toBuffer();
+    // 2. Build linear gradient stops SVG string for the bezel
+    const gStops = cfg.bezelGradient.stops
+      .map(s => `<stop offset="${s.offset}" stop-color="${s.color}"/>`)
+      .join('');
 
-    // Step 5: Perspective Warp the flat composite into the 3D room space
-    console.log("Warping frame into 3D perspective...");
-    const warpedBuffer = await warpImage(flatFrameComposite, 1000, 650, roomWidth, roomHeight, dstCorners);
-    if (!warpedBuffer) throw new Error("Perspective warping failed.");
+    // 3. Assemble the full frame SVG layers
+    //    Layer order (bottom to top):
+    //      a) transparent background
+    //      b) drop shadow behind bezel
+    //      c) outer bezel rect (wood/metal gradient)
+    //      d) inner highlight strip (top edge specular)
+    //      e) matte reveal rect (dark inner border)
+    //      f) artwork  ← composited separately as a PNG because SVG can't embed Buffer
+    //      g) thin inset gloss border
+    //      h) backlight LED glow halo (outside bezel, blurred)
 
-    let afterImageBuffer = await sharp(file.buffer)
+    const shadowBleed = Math.round(bz * 0.6);
+    const frameSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}">
+  <defs>
+    <!-- Bezel wood/metal gradient (left → right) -->
+    <linearGradient id="bz" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      ${gStops}
+    </linearGradient>
+    <!-- Specular sheen on top edge -->
+    <linearGradient id="spec" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="rgba(255,255,255,0.18)"/>
+      <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <!-- Inner screen matte gradient (dark vignette at edges) -->
+    <radialGradient id="vign" cx="50%" cy="50%" r="50%">
+      <stop offset="75%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.35)"/>
+    </radialGradient>
+    <!-- Drop shadow filter behind bezel -->
+    <filter id="dsf" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="${Math.round(bz * 0.4)}" stdDeviation="${cfg.shadowBlur}" flood-color="rgba(0,0,0,${cfg.shadowOpacity})"/>
+    </filter>
+    <!-- Backlight ambient glow filter -->
+    <filter id="gwf" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="${cfg.glowBlur}"/>
+    </filter>
+  </defs>
+
+  <!-- Backlight LED halo — sits BEHIND the bezel, bleeds outward into the padding region -->
+  <rect
+    x="${pad - shadowBleed}" y="${pad - shadowBleed}"
+    width="${W + shadowBleed * 2}" height="${H + shadowBleed * 2}"
+    rx="${cr + bz}" ry="${cr + bz}"
+    fill="${cfg.backlight_color}" opacity="${cfg.glowOpacity}"
+    filter="url(#gwf)"
+  />
+
+  <!-- Outer bezel + drop shadow -->
+  <rect
+    x="${pad + bz * 0.5}" y="${pad + bz * 0.5}"
+    width="${W - bz}" height="${H - bz}"
+    rx="${cr}" ry="${cr}"
+    fill="url(#bz)"
+    filter="url(#dsf)"
+  />
+
+  <!-- Specular top-edge highlight on bezel -->
+  <rect
+    x="${pad + bz * 0.5}" y="${pad + bz * 0.5}"
+    width="${W - bz}" height="${bz * 1.2}"
+    rx="${cr}" ry="${cr}"
+    fill="url(#spec)"
+  />
+
+  <!-- Matte reveal inner border (thin dark frame around screen) -->
+  <rect
+    x="${pad + bz}" y="${pad + bz}"
+    width="${W - 2 * bz}" height="${H - 2 * bz}"
+    rx="${Math.max(1, cr - 2)}" ry="${Math.max(1, cr - 2)}"
+    fill="${cfg.matteColor}"
+  />
+</svg>`;
+
+    // 4. Render the base frame (without artwork yet)
+    const baseFramePng = await sharp(Buffer.from(frameSvg))
+      .png()
+      .toBuffer();
+
+    // 5. Vignette overlay on screen
+    const vignSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${screenW}" height="${screenH}">
+  <defs>
+    <radialGradient id="v" cx="50%" cy="50%" r="70%">
+      <stop offset="70%" stop-color="rgba(0,0,0,0)"/>
+      <stop offset="100%" stop-color="rgba(0,0,0,0.28)"/>
+    </radialGradient>
+  </defs>
+  <rect width="${screenW}" height="${screenH}" fill="url(#v)"/>
+</svg>`;
+
+    // 6. Composite: base frame → artwork → vignette → thin gloss border
+    const glossBorderSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}">
+  <rect x="${screenX - 1}" y="${screenY - 1}"
+    width="${screenW + 2}" height="${screenH + 2}"
+    fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"
+    rx="2" ry="2"/>
+</svg>`;
+
+    const flatFrameComposite = await sharp(baseFramePng)
+      .composite([
+        // Artwork fills the screen area exactly
+        { input: artResized,                          top: screenY, left: screenX },
+        // Vignette darkens screen edges slightly
+        { input: Buffer.from(vignSvg),                top: screenY, left: screenX },
+        // Subtle gloss border around screen
+        { input: Buffer.from(glossBorderSvg),         top: 0,       left: 0 }
+      ])
+      .png()
+      .toBuffer();
+
+    // ─── Perspective-warp the flat composite onto the room wall ─────────────────
+    // src corners = the outer bezel corners in the padded SVG coordinates
+    console.log("Warping flat frame composite with shadows and glow to room perspective...");
+    const srcCorners = [
+      [pad, pad],
+      [pad + W, pad],
+      [pad + W, pad + H],
+      [pad, pad + H]
+    ];
+
+    const flatFrameCompositeRaw = await sharp(flatFrameComposite).ensureAlpha().raw().toBuffer();
+    const warpedDisplayRaw = await warpImage(
+      flatFrameCompositeRaw,
+      svgW,
+      svgH,
+      roomWidth,
+      roomHeight,
+      dstCorners,
+      srcCorners
+    );
+
+    // Paste onto the room image
+    const compositeBuffer = await sharp(file.buffer)
       .composite([
         {
-          input: warpedBuffer,
-          raw: {
-            width: roomWidth,
-            height: roomHeight,
-            channels: 4
-          },
+          input: warpedDisplayRaw,
+          raw: { width: roomWidth, height: roomHeight, channels: 4 },
           top: 0,
           left: 0
         }
@@ -1242,42 +1718,280 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
       .jpeg({ quality: 95 })
       .toBuffer();
 
-    // Step 5.5: Seamlessly blend using Runware if API key is present
+    // Inpainting Prompt & Strength for the Runware blend
+    const inpaintingPrompt = `You are an advanced interior visualization AI for Decoviz Space Labs.
+
+Your task is to intelligently generate and place a premium Decoviz smart frame/device naturally onto the wall of the uploaded room image.
+
+IMPORTANT:
+The uploaded room image is the PRIMARY source of truth and must remain almost completely unchanged.
+
+====================================================
+CRITICAL FRAME GENERATION RULE
+====================================================
+
+DO NOT directly copy, paste, recreate, or distort the provided reference frame images.
+
+The provided frame examples are ONLY style references.
+
+You must:
+- understand the design language
+- understand the premium frame style
+- understand the hardware aesthetics
+- understand the glowing ambient border style
+
+Then generate a NEW realistic Decoviz frame/device naturally matching that design language.
+
+DO NOT:
+- stretch the reference image
+- squash the frame
+- distort aspect ratio
+- directly paste the reference example
+- create warped displays
+- create miniature frames
+- recreate the entire showcase image
+
+The final generated frame should look:
+- clean
+- premium
+- realistic
+- proportional
+- physically believable
+
+====================================================
+MAIN GOAL
+====================================================
+
+Generate a luxury wall-mounted Decoviz smart display that feels naturally integrated into the uploaded room.
+
+The final output should resemble:
+- premium Samsung Frame TV marketing
+- luxury smart display visualization
+- high-end architectural photography
+
+NOT:
+- AI collage
+- pasted overlay
+- distorted mockup
+- stretched image
+
+====================================================
+STRICT ROOM PRESERVATION RULES
+====================================================
+
+Preserve:
+- room architecture
+- walls
+- floor
+- lighting
+- furniture
+- textures
+- shadows
+- room geometry
+- camera perspective
+- decor
+- ceiling
+- windows
+
+The room itself must remain almost identical.
+
+DO NOT redesign the room.
+
+====================================================
+ONLY ALLOWED MODIFICATION
+====================================================
+
+The ONLY allowed modification:
+- adding a premium Decoviz frame naturally onto the wall
+
+Nothing else should change.
+
+====================================================
+FRAME DESIGN REQUIREMENTS
+====================================================
+
+The generated Decoviz frame should:
+
+- look premium and modern
+- have realistic hardware thickness
+- have elegant rounded corners
+- have a clean luxury border
+- include subtle warm ambient backlighting
+- appear like a real mounted smart display
+- maintain proper proportions
+- maintain realistic aspect ratio
+- look physically manufactured
+- look high-end and cinematic
+
+The frame should resemble:
+- luxury smart TV
+- premium digital artwork display
+- modern architectural display system
+
+====================================================
+FRAME POSITIONING RULES
+====================================================
+
+The frame must:
+- be centered naturally on the wall
+- appear at realistic viewing height
+- avoid ceilings
+- avoid corners
+- avoid awkward placements
+- follow wall perspective
+- follow room depth
+- follow room lighting
+
+====================================================
+IMPORTANT PERSPECTIVE RULES
+====================================================
+
+The frame must:
+- align naturally with wall angle
+- match perspective correctly
+- cast realistic contact shadows
+- appear physically attached to the wall
+- integrate naturally into the environment
+
+DO NOT:
+- create floating appearance
+- create distorted perspective
+- create stretched geometry
+
+====================================================
+REFERENCE IMAGE RULES
+====================================================
+
+The provided Decoviz example images are ONLY inspiration references.
+
+Extract ONLY:
+- style
+- hardware aesthetics
+- glow style
+- premium look
+- border design
+
+DO NOT:
+- reuse the full reference image
+- paste the showcase scene
+- recreate the sample room
+- distort the example frame
+
+Generate a NEW clean premium frame inspired by the references.
+
+====================================================
+VISUAL QUALITY TARGET
+====================================================
+
+The output should be:
+- photorealistic
+- cinematic
+- physically believable
+- architecturally accurate
+- luxury-grade
+
+The result should look indistinguishable from a professionally photographed real interior.
+
+====================================================
+NEGATIVE INSTRUCTIONS
+====================================================
+
+Avoid:
+- stretched frames
+- distorted displays
+- pasted overlays
+- floating frames
+- tiny displays
+- oversized displays
+- warped geometry
+- fake lighting
+- room redesign
+- CGI look
+- cartoon look
+- blurry output
+- low-quality rendering
+- duplicated reference images
+- distorted aspect ratio
+- malformed hardware
+
+====================================================
+FINAL BEHAVIOR
+====================================================
+
+The AI should behave like:
+- a luxury architectural visualization system
+- an intelligent smart-display placement engine
+
+NOT:
+- a generic image generator
+- a collage creator
+- a room redesign AI
+
+The generated Decoviz frame should feel naturally built into the uploaded room while preserving the original environment almost perfectly.`.trim();
+    // Higher strength so FLUX has enough creative latitude to generate a clean
+    // premium frame rather than just edge-blending the warped composite
+    const strength = 0.35;
+
+    // Step 3: Create dilated mask for Runware Inpainting
+    const roomPolyPoints = `${dstCorners[0][0]},${dstCorners[0][1]} ${dstCorners[1][0]},${dstCorners[1][1]} ${dstCorners[2][0]},${dstCorners[2][1]} ${dstCorners[3][0]},${dstCorners[3][1]}`;
+    const roomMaskSvg = `
+      <svg width="${roomWidth}" height="${roomHeight}">
+        <polygon points="${roomPolyPoints}" fill="white" stroke="white" stroke-width="80" stroke-linejoin="round" />
+      </svg>
+    `;
+    const roomMaskBuffer = await sharp({
+      create: {
+        width: roomWidth,
+        height: roomHeight,
+        channels: 3,
+        background: { r: 0, g: 0, b: 0 }
+      }
+    })
+    .composite([{ input: Buffer.from(roomMaskSvg), top: 0, left: 0 }])
+    .png()
+    .toBuffer();
+
+    let afterImageBuffer = compositeBuffer;
+
+    // Step 4: Seamlessly blend/generate using Runware
     if (process.env.RUNWARE_API_KEY) {
       try {
-        console.log("Blending composite image using Runware...");
-        const blendedUrl = await blendImageWithRunware(afterImageBuffer);
+        console.log(`Generating frame using Runware inpainting (strength: ${strength})...`);
+        const blendedUrl = await blendImageWithRunware(compositeBuffer, roomMaskBuffer, inpaintingPrompt, strength);
         if (blendedUrl) {
           const blendedRes = await fetch(blendedUrl);
           if (blendedRes.ok) {
             afterImageBuffer = Buffer.from(await blendedRes.arrayBuffer());
-            console.log("Successfully replaced composite with Runware-blended version.");
+            console.log("Successfully retrieved AI-generated frame from Runware.");
           }
         }
       } catch (blendErr) {
-        console.error("Runware blend failed, falling back to sharp composite:", blendErr.message);
+        console.error("Runware frame generation failed, falling back to sharp composite:", blendErr.message);
       }
+    } else {
+      console.warn("RUNWARE_API_KEY not found. Frame could not be generated.");
     }
+    LEGACY_BLOCK_END */
 
-    // Step 6: Create the Final Postcard (Side-by-Side)
-    const canvasWidth = 1920;
-    const canvasHeight = 1080;
-    const halfWidth = canvasWidth / 2;
+    // Step 5: Create the Final Postcard (Side-by-Side, uncropped)
+    const postcardHeight = 1080;
+    const postcardHalfWidth = Math.round(postcardHeight * (roomWidth / roomHeight));
+    const postcardWidth = postcardHalfWidth * 2;
 
     const beforePart = await sharp(file.buffer)
-      .resize(halfWidth, canvasHeight, { fit: "cover" })
+      .resize(postcardHalfWidth, postcardHeight)
       .toBuffer();
     
     const afterPart = await sharp(afterImageBuffer)
-      .resize(halfWidth, canvasHeight, { fit: "cover" })
+      .resize(postcardHalfWidth, postcardHeight)
       .toBuffer();
 
     const escapedName = businessName.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[m]));
 
     const labelsSvg = `
-      <svg width="${canvasWidth}" height="${canvasHeight}">
+      <svg width="${postcardWidth}" height="${postcardHeight}">
         <style>
-          @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&amp;family=Dancing+Script:wght@700&amp;display=swap');
+          @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght=700&amp;family=Dancing+Script:wght@700&amp;display=swap');
           .title { fill: white; font-family: 'Comfortaa', sans-serif; font-size: 64px; font-weight: 700; text-anchor: middle; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)); }
           .tagline { fill: white; font-family: 'Dancing Script', cursive; font-size: 32px; text-anchor: middle; filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.5)); }
           .label { fill: white; font-family: sans-serif; font-size: 24px; font-weight: bold; text-anchor: middle; }
@@ -1285,26 +1999,26 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
           .brand-bg { fill: rgba(0,0,0,0.3); filter: blur(15px); }
         </style>
         
-        <rect x="${canvasWidth/2 - 450}" y="15" width="900" height="150" class="brand-bg" rx="20" />
-        <text x="${canvasWidth/2}" y="85" class="title">Deckoviz</text>
-        <text x="${canvasWidth/2}" y="130" class="tagline">${escapedName}, experience your space transformed with Deckoviz DASP</text>
+        <rect x="${postcardWidth/2 - 450}" y="15" width="900" height="150" class="brand-bg" rx="20" />
+        <text x="${postcardWidth/2}" y="85" class="title">Deckoviz</text>
+        <text x="${postcardWidth/2}" y="130" class="tagline">${escapedName}, experience your space transformed with Deckoviz DASP</text>
 
-        <rect x="40" y="${canvasHeight - 80}" width="140" height="50" class="label-bg" />
-        <text x="110" y="${canvasHeight - 45}" class="label">BEFORE</text>
+        <rect x="40" y="${postcardHeight - 80}" width="140" height="50" class="label-bg" />
+        <text x="110" y="${postcardHeight - 45}" class="label">BEFORE</text>
 
-        <rect x="${canvasWidth - 180}" y="${canvasHeight - 80}" width="140" height="50" class="label-bg" />
-        <text x="${canvasWidth - 110}" y="${canvasHeight - 45}" class="label">AFTER</text>
+        <rect x="${postcardWidth - 180}" y="${postcardHeight - 80}" width="140" height="50" class="label-bg" />
+        <text x="${postcardWidth - 110}" y="${postcardHeight - 45}" class="label">AFTER</text>
 
-        <rect x="0" y="0" width="${canvasWidth}" height="${canvasHeight}" fill="none" stroke="white" stroke-width="15" opacity="0.2" />
+        <rect x="0" y="0" width="${postcardWidth}" height="${postcardHeight}" fill="none" stroke="white" stroke-width="15" opacity="0.2" />
       </svg>
     `;
 
     const finalBuffer = await sharp({
-      create: { width: canvasWidth, height: canvasHeight, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 1 } }
+      create: { width: postcardWidth, height: postcardHeight, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 1 } }
     })
     .composite([
       { input: beforePart, top: 0, left: 0 },
-      { input: afterPart, top: 0, left: halfWidth },
+      { input: afterPart, top: 0, left: postcardHalfWidth },
       { input: Buffer.from(labelsSvg), top: 0, left: 0 }
     ])
     .jpeg({ quality: 95 })
@@ -1320,7 +2034,6 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
 
     fs.writeFileSync(path.join(publicDir, fileName), finalBuffer);
     fs.writeFileSync(path.join(publicDir, afterFileName), afterImageBuffer);
-    // Resize before buffer for consistency in slider
     const beforeBuffer = await sharp(file.buffer).jpeg({ quality: 95 }).toBuffer();
     fs.writeFileSync(path.join(publicDir, beforeFileName), beforeBuffer);
 
@@ -1330,7 +2043,7 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
       imageUrl: `${baseUrl}/generated/${fileName}`,
       afterUrl: `${baseUrl}/generated/${afterFileName}`,
       beforeUrl: `${baseUrl}/generated/${beforeFileName}`,
-      reasoning: placement.reasoning
+      reasoning: placement.reasoning || "Using fallback placement coordinates."
     });
   } catch (err) {
     console.error("[postcard/generate]", err);
@@ -1339,4 +2052,3 @@ router.post("/postcard/generate", upload.fields([{ name: "image", maxCount: 1 },
 });
 
 export default router;
-
