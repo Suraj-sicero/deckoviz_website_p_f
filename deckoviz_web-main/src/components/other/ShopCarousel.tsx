@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function ShopCarousel({ images = [], interval = 4000, className = "" }) {
+interface ShopCarouselProps {
+  images?: string[];
+  interval?: number;
+  className?: string;
+}
+
+export default function ShopCarousel({ images = [], interval = 4000, className = "" }: ShopCarouselProps) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {

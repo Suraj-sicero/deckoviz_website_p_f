@@ -58,9 +58,9 @@ export default function TransformWalls() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-cyan-100 to-teal-100 border border-cyan-200"
+              className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-100 to-cyan-100 border border-blue-200"
             >
-              <span className="text-teal-700 text-sm font-semibold italic">Introducing The DAS Portal</span>
+              <span className="text-blue-700 text-sm font-semibold italic">Introducing the DASPort!</span>
             </motion.div>
 
             {/* Animated Heading */}
@@ -68,74 +68,74 @@ export default function TransformWalls() {
               <motion.h2 initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.2, duration: 0.7 }} className="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                 <span className="text-gray-900">Transform Your</span>{" "}
                 <span className="relative inline-block">
-                  <span className="italic text-transparent bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text bg-[length:200%_auto] animate-gradient">Walls</span>
-                  <motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.8, duration: 0.6 }} className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 origin-left"></motion.span>
+                  <span className="italic text-transparent bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 bg-clip-text">Walls</span>
+                  <motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.8, duration: 0.6 }} className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-blue-300 to-cyan-300 origin-left"></motion.span>
                 </span>
               </motion.h2>
               <motion.h3 initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.7 }} className="text-5xl sm:text-6xl md:text-7xl font-bold leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
                 <span className="text-gray-900">Transform Your</span>{" "}
-                <span className="italic text-transparent bg-gradient-to-r from-violet-600 via-pink-500 to-orange-500 bg-clip-text bg-[length:200%_auto] animate-gradient">World.</span>
+                <span className="italic text-transparent bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 bg-clip-text">World.</span>
               </motion.h3>
             </motion.div>
 
             {/* Main Description with Animations */}
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }} className="space-y-5 text-base md:text-lg leading-relaxed">
               <p className="text-gray-700">
-                <span className="font-bold text-2xl md:text-3xl text-transparent bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600 bg-clip-text bg-[length:200%_auto] animate-gradient">
+                <span className="font-bold text-2xl md:text-3xl text-transparent bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 bg-clip-text">
                   Deckoviz Dynamic Art and Storytelling Portal
                 </span>{" "}
                 <motion.span initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="inline-block">
                   is the world's first{" "}
                   <span className="relative inline-block group">
-                    <span className="font-semibold italic text-teal-600">emotionally intelligent</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-teal-400 to-cyan-400 group-hover:w-full transition-all duration-700"></span>
+                    <span className="font-semibold italic text-blue-600">emotionally intelligent</span>
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 group-hover:w-full transition-all duration-700"></span>
                   </span>{" "}
                   dynamic art frame - a new category of{" "}
                   <span className="relative inline-block px-2 py-0.5">
-                    <span className="relative z-10 font-semibold italic text-orange-600">living canvas</span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-orange-100 to-amber-100 rounded opacity-30"></span>
+                    <span className="relative z-10 font-semibold italic text-blue-700">living canvas</span>
+                    <span className="absolute inset-0 bg-gradient-to-r from-blue-100 to-cyan-100 rounded opacity-50"></span>
                   </span>{" "}
                   that learns from you, understands you, creates with you, and{" "}
                   <span className="font-bold text-gray-900 relative inline-block">
                     evolves alongside you
-                    <motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.5, duration: 0.6 }} className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-teal-300 to-transparent origin-left"></motion.span>
+                    <motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 0.5, duration: 0.6 }} className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-300 to-transparent origin-left"></motion.span>
                   </span>, transforming your space into an ever-changing experience.
                 </motion.span>
               </p>
 
               <motion.p initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.4, duration: 0.7 }} className="text-gray-700">
                 The{" "}
-                <span className="font-bold text-xl text-transparent bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text">DAS Portal</span>{" "}
+                <span className="font-bold text-xl text-transparent bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 bg-clip-text">DAS Portal</span>{" "}
                 brings together your{" "}
-                <span className="italic text-rose-600 font-medium hover:text-rose-700 transition-colors">dynamic art canvas</span>,{" "}
-                <span className="italic text-amber-600 font-medium hover:text-amber-700 transition-colors">storytelling portal</span>,{" "}
-                <span className="italic text-sky-600 font-medium hover:text-sky-700 transition-colors">smart photo frame</span>,{" "}
-                <span className="italic text-emerald-600 font-medium hover:text-emerald-700 transition-colors">mood setter</span>, and{" "}
-                <span className="italic text-slate-700 font-medium hover:text-slate-800 transition-colors">Google TV</span> - all in one magical experience. It combines generative AI, deep personalization, immersive creative tools, and soulful design. All powered by{" "}
+                <span className="italic text-blue-700 font-medium hover:text-blue-800 transition-colors">dynamic art canvas</span>,{" "}
+                <span className="italic text-blue-700 font-medium hover:text-blue-800 transition-colors">storytelling portal</span>,{" "}
+                <span className="italic text-blue-700 font-medium hover:text-blue-800 transition-colors">smart photo frame</span>,{" "}
+                <span className="italic text-blue-700 font-medium hover:text-blue-800 transition-colors">mood setter</span>, and{" "}
+                <span className="italic text-blue-700 font-medium hover:text-blue-800 transition-colors">Google TV</span> - all in one magical experience. It combines generative AI, deep personalization, immersive creative tools, and soulful design. All powered by{" "}
                 <span className="relative inline-block group/vizzy">
-                  <span className="font-bold text-xl text-transparent bg-gradient-to-r from-orange-500 via-rose-500 to-pink-500 bg-clip-text bg-[length:200%_auto] animate-gradient">Vizzy</span>
-                  <span className="absolute -inset-1 bg-gradient-to-r from-orange-400/20 to-pink-400/20 rounded-lg opacity-0 group-hover/vizzy:opacity-100 transition-opacity duration-300 -z-10"></span>
+                  <span className="font-bold text-xl text-transparent bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 bg-clip-text">Vizzy</span>
+                  <span className="absolute -inset-1 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 rounded-lg opacity-0 group-hover/vizzy:opacity-100 transition-opacity duration-300 -z-10"></span>
                 </span>{" "}
                 your{" "}
-                <span className="italic text-teal-700 font-medium">emotionally intelligent AI companion</span>, creative partner, personal painter, and curator.
+                <span className="italic text-blue-700 font-medium">emotionally intelligent AI companion</span>, creative partner, personal painter, and curator.
               </motion.p>
 
               <motion.p initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.6, duration: 0.7 }} className="text-gray-700">
                 From{" "}
                 <span className="relative inline-block group/art">
-                  <span className="italic text-amber-700 font-medium">timeless masterpieces</span>
-                  <span className="absolute inset-0 bg-gradient-to-r from-amber-100/0 via-amber-100/60 to-amber-100/0 rounded opacity-0 group-hover/art:opacity-100 transition-opacity duration-500 -z-10"></span>
+                  <span className="italic text-blue-700 font-medium">timeless masterpieces</span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/60 to-blue-100/0 rounded opacity-0 group-hover/art:opacity-100 transition-opacity duration-500 -z-10"></span>
                 </span>{" "}
                 to your{" "}
-                <span className="italic text-pink-600 font-medium">personal memories</span>, from{" "}
+                <span className="italic text-blue-700 font-medium">personal memories</span>, from{" "}
                 <span className="relative inline-block group/art">
-                  <span className="italic text-blue-600 font-medium">cinematic dreamscapes</span>
+                  <span className="italic text-blue-700 font-medium">cinematic dreamscapes</span>
                   <span className="absolute inset-0 bg-gradient-to-r from-blue-100/0 via-blue-100/60 to-blue-100/0 rounded opacity-0 group-hover/art:opacity-100 transition-opacity duration-500 -z-10"></span>
                 </span>{" "}
                 to{" "}
-                <span className="italic text-cyan-600 font-medium">original creations</span>{" "}
+                <span className="italic text-blue-700 font-medium">original creations</span>{" "}
                 painted in iconic art styles, Deckoviz turns your walls into an{" "}
-                <span className="font-bold text-xl text-transparent bg-gradient-to-r from-rose-600 via-orange-600 to-amber-600 bg-clip-text bg-[length:200%_auto] animate-gradient">ever-evolving gallery</span>{" "}
+                <span className="font-bold text-xl text-transparent bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 bg-clip-text">ever-evolving gallery</span>{" "}
                 of art, stories, and living posters.
               </motion.p>
             </motion.div>
@@ -183,9 +183,9 @@ export default function TransformWalls() {
 
             {/* Animated CTA Button */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 1.3, duration: 0.6 }} className="pt-4">
-              <motion.button onClick={() => window.location.href = '/place-order'} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all duration-300 text-base overflow-hidden group">
+              <motion.button onClick={() => window.location.href = '/place-order'} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative bg-gradient-to-r from-[#182a4a] via-indigo-900 to-indigo-800 text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all duration-300 text-base overflow-hidden group border border-white/10">
                 <span className="relative z-10">Order Now</span>
-                <motion.div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-teal-600 to-emerald-600" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.3 }}></motion.div>
+                <motion.div className="absolute inset-0 bg-gradient-to-r from-indigo-950 via-[#182a4a] to-indigo-900" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.3 }}></motion.div>
               </motion.button>
             </motion.div>
           </div>
@@ -693,7 +693,7 @@ export default function TransformWalls() {
           className="mt-4 sm:mt-6 -mb-4 flex justify-end w-full relative z-50 px-4 sm:px-0"
         >
           <motion.button 
-            onClick={() => window.location.href = '/founding-thesis'}
+            onClick={() => window.location.href = '/dasp-guide'}
             whileHover={{ scale: 1.03 }} 
             whileTap={{ scale: 0.97 }} 
             className="relative bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-full shadow-[0_8px_30px_rgba(37,99,235,0.35)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.5)] transition-all duration-300 flex items-center gap-4 overflow-hidden group border border-white/20"

@@ -13,10 +13,8 @@ const Features: React.FC = () => {
   const mainFeatures = [
     {
       title: "Generative Art Engine",
-      description: "Create deeply personal evolving art.",
-      longDescription: `Create deeply personal art, endlessly.
-
-Deckoviz acts as your personal painter, dream visualizer, and creative engine, generating abstract, symbolic, emotional, and dynamic artworks and more.
+      description: "Create deeply personal evolving art, endlessly.",
+      longDescription: `Deckoviz acts as your personal painter, dream visualizer, and creative engine, generating abstract, symbolic, emotional, and dynamic artworks and more.
 
 Turn photos, sketches, music, memories, books, journals, poems, or even inner states into living visuals that evolve over time.`,
     },
@@ -235,81 +233,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
   const shouldShowContent = isExpanded || isHovered;
 
-  const hoverBackgrounds = [
-    "from-blue-400/20 to-cyan-400/20",
-    "from-sky-400/20 to-blue-400/20",
-    "from-cyan-400/20 to-teal-400/20",
-    "from-amber-400/20 to-orange-400/20",
-    "from-emerald-400/20 to-teal-400/20",
-    "from-blue-400/20 to-indigo-400/20",
-    "from-teal-400/20 to-emerald-400/20",
-    "from-lime-400/20 to-green-400/20",
-    "from-indigo-400/20 to-blue-400/20",
-    "from-sky-400/20 to-cyan-400/20",
-    "from-orange-400/20 to-amber-400/20",
-    "from-blue-400/20 to-sky-400/20",
-  ];
-
-  const iconGlows = [
-    "from-blue-400 to-cyan-400",
-    "from-sky-400 to-blue-400",
-    "from-cyan-400 to-teal-400",
-    "from-amber-400 to-orange-400",
-    "from-emerald-400 to-teal-400",
-    "from-blue-400 to-indigo-400",
-    "from-teal-400 to-emerald-400",
-    "from-lime-400 to-green-400",
-    "from-indigo-400 to-blue-400",
-    "from-sky-400 to-cyan-400",
-    "from-orange-400 to-amber-400",
-    "from-blue-400 to-sky-400",
-  ];
-
-  const titleGradients = [
-    "from-blue-600 to-cyan-600",
-    "from-sky-600 to-blue-600",
-    "from-cyan-600 to-teal-600",
-    "from-amber-600 to-orange-600",
-    "from-emerald-600 to-teal-600",
-    "from-blue-600 to-indigo-600",
-    "from-teal-600 to-emerald-600",
-    "from-lime-600 to-green-600",
-    "from-indigo-600 to-blue-600",
-    "from-sky-600 to-cyan-600",
-    "from-orange-600 to-amber-600",
-    "from-blue-600 to-sky-600",
-  ];
-
-  const buttonGradients = [
-    "from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600",
-    "from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600",
-    "from-cyan-500 to-teal-500 hover:from-cyan-600 hover:to-teal-600",
-    "from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600",
-    "from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600",
-    "from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600",
-    "from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600",
-    "from-lime-500 to-green-500 hover:from-lime-600 hover:to-green-600",
-    "from-indigo-500 to-blue-500 hover:from-indigo-600 hover:to-blue-600",
-    "from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600",
-    "from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600",
-    "from-blue-500 to-sky-500 hover:from-blue-600 hover:to-sky-600",
-  ];
-
-  const dividerGradients = [
-    "from-transparent via-blue-300 to-transparent",
-    "from-transparent via-sky-300 to-transparent",
-    "from-transparent via-cyan-300 to-transparent",
-    "from-transparent via-amber-300 to-transparent",
-    "from-transparent via-emerald-300 to-transparent",
-    "from-transparent via-indigo-300 to-transparent",
-    "from-transparent via-teal-300 to-transparent",
-    "from-transparent via-lime-300 to-transparent",
-    "from-transparent via-blue-300 to-transparent",
-    "from-transparent via-sky-300 to-transparent",
-    "from-transparent via-orange-300 to-transparent",
-    "from-transparent via-blue-300 to-transparent",
-  ];
-
   return (
     <motion.div
       custom={index % 2 === 0 ? "left" : "right"}
@@ -319,20 +242,39 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       viewport={{ once: true, amount: 0.2 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className={`group relative rounded-3xl p-5 sm:p-8 pt-14 sm:pt-20 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/20 
-      bg-white/10 hover:bg-white/20 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 backdrop-blur-md ring-4 ring-transparent
-      ${shouldShowContent ? 'ring-blue-300/30' : ''}`}
-      style={{ willChange: 'transform, box-shadow' }}
+      className={`group relative rounded-[28px] p-5 sm:p-8 pt-14 sm:pt-20
+      border border-white/70 bg-white/25 shadow-[0_24px_80px_rgba(15,23,42,0.10)]
+      backdrop-blur-2xl backdrop-saturate-150 transition-all duration-300
+      hover:-translate-y-1 hover:border-blue-200/90 hover:bg-white/35 hover:shadow-[0_28px_90px_rgba(15,23,42,0.12),0_0_72px_rgba(37,99,235,0.34)]
+      ring-1 ring-slate-900/5
+      ${shouldShowContent ? 'ring-blue-200/70' : ''}`}
+      style={{
+        willChange: 'transform, box-shadow',
+        background:
+          "linear-gradient(145deg, rgba(255,255,255,0.54) 0%, rgba(255,255,255,0.22) 48%, rgba(255,255,255,0.36) 100%)",
+        backdropFilter: "blur(28px) saturate(165%)",
+        WebkitBackdropFilter: "blur(28px) saturate(165%)",
+      }}
     >
-      {/* Animated glass shine overlay on hover with unique color per card */}
+      <div className="pointer-events-none absolute -inset-8 rounded-[42px] bg-[radial-gradient(circle_at_50%_50%,rgba(37,99,235,0.52),rgba(14,165,233,0.32)_34%,transparent_70%)] opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100" />
+      <div className="pointer-events-none absolute inset-0 rounded-[28px] bg-[linear-gradient(135deg,rgba(255,255,255,0.88),rgba(255,255,255,0.08)_44%,rgba(255,255,255,0.34))]" />
+      <div
+        className="pointer-events-none absolute inset-0 rounded-[28px] opacity-[0.18] mix-blend-overlay"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(0deg, rgba(255,255,255,0.60) 0 1px, transparent 1px 5px)",
+        }}
+      />
+      <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-white/90" />
+
+      {/* Soft glass wash on hover */}
       <motion.div 
-        className={`absolute inset-0 bg-gradient-to-br ${hoverBackgrounds[index]} opacity-0 rounded-3xl pointer-events-none`}
+        className="absolute inset-0 rounded-[28px] bg-gradient-to-br from-white/55 via-sky-100/25 to-slate-100/20 opacity-0 pointer-events-none"
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.3 }}
       />
 
-      {/* Floating glow effect - using box shadow instead of blurred div for performance */}
-      <div className={`absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none bg-gradient-to-r ${iconGlows[index]}`} />
+      <div className="pointer-events-none absolute inset-0 rounded-[28px] shadow-[inset_0_1px_0_rgba(255,255,255,0.88),inset_0_-1px_0_rgba(15,23,42,0.05)]" />
 
       {/* Icon with enhanced animation */}
       <motion.div 
@@ -343,8 +285,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
         <div className="relative">
           {/* Icon glow - using radial gradient instead of blur */}
           <div 
-            className={`absolute inset-0 opacity-40 group-hover:opacity-70 transition-opacity pointer-events-none scale-150`} 
-            style={{ background: `radial-gradient(circle, rgba(56,189,248,0.4) 0%, transparent 70%)` }}
+            className="absolute inset-0 opacity-25 group-hover:opacity-45 transition-opacity pointer-events-none scale-150"
+            style={{ background: `radial-gradient(circle, rgba(14,165,233,0.22) 0%, transparent 70%)` }}
           />
           <img
             src={`/images/${getIconForFeature(title)}`}
@@ -360,8 +302,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
         whileHover={{ scale: 1.15, rotate: 90 }}
         whileTap={{ scale: 0.95 }}
         className={`absolute top-5 right-5 z-20 p-3 rounded-full 
-        bg-gradient-to-r ${buttonGradients[index]}
-        text-white shadow-lg hover:shadow-2xl
+        border border-white/70 bg-slate-900/80 text-white shadow-[0_12px_30px_rgba(15,23,42,0.18)]
+        backdrop-blur-md hover:bg-blue-600/85 hover:shadow-[0_18px_36px_rgba(37,99,235,0.18)]
         transition-all duration-300`}
         aria-label={isExpanded ? "Collapse" : "Expand"}
       >
@@ -375,7 +317,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
 
       <div className="relative z-10 text-center space-y-4">
         <motion.h3 
-          className={`text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r ${titleGradients[index]} bg-clip-text text-transparent`}
+          className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900"
           whileHover={{ scale: 1.05 }}
           transition={{ type: "spring", stiffness: 400 }}
         >
@@ -383,7 +325,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
         </motion.h3>
 
         <motion.p 
-          className="text-gray-700 font-semibold text-lg"
+          className="text-slate-700 font-semibold text-lg"
           whileHover={{ scale: 1.02 }}
         >
           {description}
@@ -399,14 +341,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
               className="overflow-hidden"
             >
               <motion.div 
-                className={`h-1 bg-gradient-to-r ${dividerGradients[index]} my-6 rounded-full`}
+                className="h-px bg-gradient-to-r from-transparent via-slate-300/80 to-transparent my-6"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               />
               
               <motion.p 
-                className="whitespace-pre-line text-gray-700 leading-relaxed text-base"
+                className="whitespace-pre-line text-slate-700 leading-relaxed text-base"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4, delay: 0.2 }}
@@ -419,10 +361,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       </div>
 
       {/* Corner decoration - using radial gradient for performance */}
-      <div className="absolute top-0 right-0 w-20 h-20 opacity-20 pointer-events-none overflow-hidden rounded-tr-3xl">
+      <div className="absolute top-0 right-0 w-20 h-20 opacity-25 pointer-events-none overflow-hidden rounded-tr-[28px]">
         <div 
           className="absolute -top-4 -right-4 w-24 h-24" 
-          style={{ background: `radial-gradient(circle, rgba(99,102,241,0.5) 0%, transparent 70%)` }}
+          style={{ background: `radial-gradient(circle, rgba(14,165,233,0.24) 0%, transparent 70%)` }}
         />
       </div>
     </motion.div>
@@ -433,10 +375,13 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       id="features"
       className="min-h-screen relative overflow-visible"
       style={{ 
-        background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)",
+        backgroundColor: "#f8fbff",
         backgroundImage: `
-          radial-gradient(circle at 10% 20%, rgba(99,102,241,0.08) 0%, transparent 40%),
-          radial-gradient(circle at 90% 80%, rgba(37,99,235,0.06) 0%, transparent 40%)
+          radial-gradient(circle at 18% 12%, rgba(37,99,235,0.16) 0%, transparent 32%),
+          radial-gradient(circle at 86% 82%, rgba(14,165,233,0.14) 0%, transparent 36%),
+          linear-gradient(160deg, rgba(255,255,255,0.96) 0%, rgba(236,246,255,0.92) 48%, rgba(248,251,255,0.98) 100%),
+          repeating-linear-gradient(0deg, rgba(37,99,235,0.045) 0 1px, transparent 1px 78px),
+          repeating-linear-gradient(90deg, rgba(14,165,233,0.04) 0 1px, transparent 1px 92px)
         `
       }}
     >
@@ -444,7 +389,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
        
         {/* Horizontal Scrolling Features Section */}
-        <HorizontalScrollingFeatures />
+        <div className="mb-16 md:mb-24"><HorizontalScrollingFeatures /></div>
 
         {/* Intro Card */}
         <div className="mb-20 relative z-10">
@@ -465,7 +410,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
               <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
                 {/* Gradient Heading */}
                 <h2
-                  className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 text-gray-900"
+                  className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-gray-900"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
                   What Can{" "}
@@ -474,13 +419,6 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                   </span>{" "}
                   Do
                 </h2>
-
-                {/* Soft underline glow */}
-                <div
-                  className="mx-auto w-32 h-1 rounded-full
-                  bg-gradient-to-r from-blue-400 to-cyan-400
-                  opacity-60 mb-6"
-                ></div>
 
                 {/* Main intro paragraph with colorful background */}
                 <motion.div
@@ -500,7 +438,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                   </p>
                 </motion.div>
 
-                {/* Stats paragraph with colorful highlights */}
+                {/* Stats paragraph with restrained highlights */}
                 <motion.div
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -513,29 +451,32 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                     Today, Deckoviz includes{" "}
                     <motion.span 
                       whileHover={{ scale: 1.1 }}
-                      className="inline-block font-bold text-xl bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent"
+                      className="inline-block font-bold text-xl text-blue-700"
                     >
                       hundreds of individual features
                     </motion.span>
                     , spanning{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-orange-600">art</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-sky-600">creation</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-indigo-600">storytelling</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-teal-600">music</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-blue-600">learning</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-rose-600">rituals</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-amber-600">family moments</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-cyan-600">play</motion.span>, and{" "}
-                    <motion.span whileHover={{ scale: 1.15, y: -2 }} className="inline-block font-semibold text-emerald-600">ambient intelligence</motion.span>  
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">art</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">creation</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">storytelling</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">music</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">learning</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">rituals</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">family moments</motion.span>,{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">play</motion.span>, and{" "}
+                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">ambient intelligence</motion.span>{" "}
                     organized into{" "}
                     <motion.span 
                       whileHover={{ scale: 1.1 }}
-                      className="inline-block font-bold text-xl bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent"
+                      className="inline-block font-bold text-xl text-blue-700"
                     >
                       12 core themes
                     </motion.span>
                     .
                   </p>
+                  <div
+                    className="mx-auto mt-5 h-1 w-32 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 opacity-70"
+                  ></div>
                 </motion.div>
 
                 {/* Feature suite explanation with colorful background */}

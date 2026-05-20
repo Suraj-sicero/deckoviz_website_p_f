@@ -396,20 +396,20 @@ const Footer = () => {
                 </ul>
               </motion.div>
 
-              {/* Copyright - moved to 4th column */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                className="flex flex-col justify-center"
-              >
-                <p className="text-[11px] text-white/60 leading-relaxed">
-                  © {year} Deckoviz.<br/>
-                  All rights reserved.<br/>
-                  Made with <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Infinity }} className="inline-block text-pink-400">♥</motion.span> by Deckoviz Team
-                </p>
-              </motion.div>
+            </motion.div>
+
+            {/* Copyright - Moved to bottom center to avoid fixed chat button on right */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex justify-center border-t border-white/10 mt-8 pt-6 pb-6 md:pb-8"
+            >
+              <p className="text-[12px] text-white/50 leading-relaxed text-center">
+                © {year} Deckoviz. All rights reserved.<br className="md:hidden" />
+                <span className="hidden md:inline"> • </span>
+                Made with <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Infinity }} className="inline-block text-pink-400">♥</motion.span> by Deckoviz Team
+              </p>
             </motion.div>
 
           </div>

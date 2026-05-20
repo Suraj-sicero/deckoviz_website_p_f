@@ -9,6 +9,19 @@ import { RetailUseCasesJourney } from './DeckovizForRetailStores';
 
 const retailImages = Array.from({ length: 15 }, (_, i) => `/images/h${(i % 5) + 1}.png`); // Placeholder images
 
+const retailGalleryPaths = [
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_58_36 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_58_45 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_58_49 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_58_53 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_58_57 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_59_01 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_59_05 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_59_12 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_59_17 AM.png",
+  "/images/retail-images/ChatGPT Image May 18, 2026, 12_59_20 AM.png"
+];
+
 const DeckovizForRetail = () => {
   const navigate = useNavigate();
   const [currentImg, setCurrentImg] = useState(0);
@@ -96,6 +109,51 @@ const DeckovizForRetail = () => {
               Your walls are the most underutilized assets in your business. Deckoviz transforms those surfaces into a Generative Ambiance and Visual Platform (GAVP), creating a living, breathing infrastructure that reacts to your brand, your customers, and your goals in real time.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* Visual Gallery Section */}
+      <section className="py-20 relative z-10 overflow-hidden border-y border-white/10 bg-[#07080d]">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(45,212,191,0.18),transparent_32%),radial-gradient(circle_at_82%_70%,rgba(37,99,235,0.20),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.055),transparent_32%,rgba(255,255,255,0.035))]" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/35 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          <div className="absolute left-1/2 top-1/2 h-56 w-[85vw] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
+        </div>
+        <div className="absolute inset-y-0 left-0 w-28 md:w-56 bg-gradient-to-r from-[#07080d] via-[#07080d]/82 to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-28 md:w-56 bg-gradient-to-l from-[#07080d] via-[#07080d]/82 to-transparent z-20 pointer-events-none" />
+
+        <div className="relative z-10">
+          <motion.div
+            className="flex w-max items-center gap-5 md:gap-7"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 72, repeat: Infinity, ease: "linear" }}
+          >
+            {[...retailGalleryPaths, ...retailGalleryPaths].map((img, idx) => {
+              const isFeature = idx % 5 === 1 || idx % 5 === 3;
+              return (
+                <div key={idx} className="shrink-0 py-8">
+                  <div
+                    className={`group relative overflow-hidden rounded-[2rem] border border-white/12 bg-white/[0.06] p-2 shadow-[0_24px_70px_rgba(0,0,0,0.45)] backdrop-blur-xl transition-all duration-700 hover:-translate-y-2 hover:border-cyan-200/35 hover:shadow-[0_34px_90px_rgba(8,145,178,0.24)] ${
+                      isFeature ? "w-[76vw] max-w-[700px] md:w-[640px]" : "w-[68vw] max-w-[560px] md:w-[500px]"
+                    }`}
+                  >
+                    <div className="pointer-events-none absolute -inset-10 rounded-[2.5rem] bg-[radial-gradient(circle_at_50%_50%,rgba(45,212,191,0.20),rgba(37,99,235,0.14)_38%,transparent_70%)] opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100" />
+                    <div className="relative aspect-[16/9] overflow-hidden rounded-[1.55rem]">
+                      <img
+                        src={img}
+                        alt="Retail Visual"
+                        className="h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-white/5 transition-opacity duration-700 group-hover:opacity-60" />
+                      <div className="absolute inset-0 rounded-[1.55rem] ring-1 ring-inset ring-white/20" />
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
