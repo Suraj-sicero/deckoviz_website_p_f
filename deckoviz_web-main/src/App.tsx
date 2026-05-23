@@ -70,6 +70,7 @@ import MouseSparkles from "./components/MouseSparkles";
 
 import Benefits from "./components/homepage/Benefits";
 import AllBenefits from "./components/homepage/AllBenefits";
+import WhyDeckoviz from "./components/homepage/WhyDeckoviz";
 import Support from "./components/Support";
 import MoreInfo from "./components/MoreInfo";
 import DASPGuide from "./components/homepage/DASPGuide";
@@ -304,6 +305,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
               <TransformWalls />
               <Features />
               <Benefits />
+              <WhyDeckoviz />
               <WhoIsDeckovizFor />
               <DesignedFor />
               <HowItWorks />
