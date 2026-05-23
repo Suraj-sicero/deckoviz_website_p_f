@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, ReactNode, useRef, useEffect, useCallback } from "react"
-import { Check, Sparkles, Gift, Star, Zap, Home, Smartphone, Tv, BookOpen, BrainCircuit, BookMarked } from "lucide-react"
+import { Check, Sparkles, Gift, Star, Zap, Home, Smartphone, Tv, BookOpen, BrainCircuit, BookMarked, Leaf } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { UseCasesModal } from "./UseCasesModal"
 import HomesMicrosite from "./HomesMicrosite"
@@ -384,11 +384,32 @@ export default function Pricing() {
               </div>
             </div>
 
-            <p className="text-lg text-gray-800 max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-lg text-gray-800 max-w-4xl mx-auto leading-relaxed px-4 mb-8">
               Choose the perfect Deckoviz frame to match your space, your dreams, and your lifestyle.
               <span className="font-semibold text-[#2563EB]"> Enjoy early bird discounts</span> while
               discounts still apply!
             </p>
+
+            {/* Sustainability Commitment */}
+            <div className="max-w-4xl mx-auto px-6 py-8 mt-8 bg-gradient-to-br from-teal-500/5 to-blue-500/5 backdrop-blur-[12px] rounded-3xl border border-teal-500/20 shadow-lg relative overflow-hidden group hover:shadow-xl transition-shadow duration-300">
+              <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-teal-400 to-[#2563EB]"></div>
+              
+              <div className="flex justify-center mb-4">
+                <div className="w-12 h-12 rounded-full bg-teal-50/80 flex items-center justify-center border border-teal-100 shadow-sm">
+                  <Leaf className="w-6 h-6 text-teal-600" />
+                </div>
+              </div>
+
+              <p className="sm:text-lg text-gray-800 text-center font-medium leading-relaxed mb-4">
+                Deckoviz Space Labs cares deeply about natural rejuvenation of our planet and its many ecosystems, regenerative agriculture, and enriching our water worlds.
+              </p>
+              <p className="text-gray-700 text-center leading-relaxed">
+                And we have committed to contribute <span className="font-bold text-teal-600">35% of our profits</span> towards incubating forests, supporting natural rejuvenation through tens of highest impact projects, cleaning up and nourishing our water systems, and seeding regenerative agriculture around the world.
+              </p>
+              <p className="mt-5 text-center italic font-semibold text-[17px] bg-gradient-to-r from-teal-700 to-[#2563EB] bg-clip-text text-transparent">
+                For we seek beauty not just in homes and spaces, but also beyond...
+              </p>
+            </div>
 
           </div>
 
