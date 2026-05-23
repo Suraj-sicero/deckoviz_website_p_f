@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import HotelAutoScroll from './HotelAutoScroll';
 
 const SectionHeader = ({ number, title, subtitle }: { number: string, title: string, subtitle?: string }) => (
   <div className="mb-16 md:mb-24">
@@ -95,7 +96,7 @@ export const HotelExperienceJourney: React.FC = () => {
           >
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[1.1]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
               The Future of Hospitality: <br />
-              <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
                 Beyond the Stay
               </span>
             </h1>
@@ -136,6 +137,11 @@ export const HotelExperienceJourney: React.FC = () => {
             ></iframe>
           </div>
         </div>
+      </section>
+
+      {/* Auto Scrolling Images */}
+      <section className="border-t border-white/5 relative z-10">
+        <HotelAutoScroll theme="dark" />
       </section>
 
       {/* 01. The AI Layer */}
@@ -434,7 +440,7 @@ export const HotelExperienceJourney: React.FC = () => {
           
           <div className="mt-32 pt-16 border-t border-white/10">
             <div className="text-center mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-400 mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 The Full Deckoviz Hospitality Experience
               </h3>
               <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
@@ -487,11 +493,11 @@ export const HotelExperienceJourney: React.FC = () => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="text-center mt-20 relative px-4"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-violet-500/10 to-pink-500/10 blur-[100px] rounded-full pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-cyan-500/10 to-teal-500/10 blur-[100px] rounded-full pointer-events-none" />
               <div className="relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 p-10 md:p-16 rounded-3xl max-w-4xl mx-auto shadow-2xl">
                 <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                   That is no longer just hospitality. <br className="hidden md:block" />
-                  <span className="bg-gradient-to-r from-indigo-400 via-violet-400 to-pink-400 bg-clip-text text-transparent inline-block mt-2">That becomes an experience.</span>
+                  <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent inline-block mt-2">That becomes an experience.</span>
                 </h4>
                 <p className="text-xl md:text-3xl text-gray-400 font-light mt-8">
                   And experiences are what guests return for.

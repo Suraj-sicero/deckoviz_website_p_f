@@ -123,41 +123,6 @@ const GuestReactionsTestimonials: React.FC = () => {
 <div className="relative bg-primary-50/50 py-16 md:py-24 text-center overflow-x-clip">
 
       <div className="max-w-7xl mx-auto px-6">
-         {/* 🫧 BUBBLY CTA */}
-<div className="relative flex justify-start">
-
-    <button
-      onClick={() => navigate("/designed-for-humans")}
-      className="
-        relative
-        px-8 py-2.5
-        rounded-full
-        text-sm font-medium
-        text-teal-900
-- bg-gradient-to-r from-teal-200 via-cyan-200 to-sky-200
-+ bg-gradient-to-r from-teal-300 via-cyan-300 to-sky-300
-
-        shadow-[0_12px_30px_rgba(34,211,238,0.45)]
-        hover:shadow-[0_20px_50px_rgba(34,211,238,0.65)]
-        transition-all duration-500
-        hover:-translate-y-1
-        animate-bubble-float
-      "
-    >
-      <span className="relative z-10">
-        Designed for Humans, Not Attention 👱
-      </span>
-
-      {/* soft glow bubble */}
-      <span
-        className="
-          absolute inset-0 rounded-full
-          bg-gradient-to-r from-teal-300 via-cyan-300 to-sky-300
-          blur-xl opacity-40
-        "
-      />
-    </button>
-  </div>
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
           <span className="text-gray-900">Testimonials from our</span>{" "}
           <span className="italic bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
@@ -195,11 +160,11 @@ const GuestReactionsTestimonials: React.FC = () => {
       {/* --- Embla Carousel Viewport --- */}
        <div
         ref={emblaRef}
-        className={`overflow-hidden ${
+        className={`overflow-hidden -my-8 ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
       >
-        <div className="flex -ml-4">
+        <div className="flex -ml-4 py-8">
           {testimonialsData.map((t, index) => (
             <motion.div
   key={index}
@@ -216,26 +181,38 @@ const GuestReactionsTestimonials: React.FC = () => {
   transition={{ type: "spring", stiffness: 200, damping: 30 }}
 >
               <div
-  className={`h-full rounded-2xl border backdrop-blur-xl p-8 flex flex-col transition-all duration-300 hover:shadow-xl ${
-    index % 3 === 0
-      ? "bg-purple-50/80 border-purple-300 shadow-[0_8px_30px_rgb(168,85,247,0.06)] hover:border-purple-400"
-      : index % 3 === 1
-      ? "bg-sky-50/80 border-sky-300 shadow-[0_8px_30px_rgb(14,165,233,0.06)] hover:border-sky-400"
-      : "bg-emerald-50/80 border-emerald-300 shadow-[0_8px_30px_rgb(16,185,129,0.06)] hover:border-emerald-400"
-  }`}
->
-    <p className="text-lg text-gray-700 leading-relaxed mb-6 flex-grow">
-      “{t.quote}”
-    </p>
-    <p className="font-semibold text-gray-900">{t.author}</p>
-    <p className={`text-sm mt-4 pt-4 border-t ${
-      index % 3 === 0 ? "border-purple-200 text-purple-700" :
-      index % 3 === 1 ? "border-sky-200 text-sky-700" :
-      "border-emerald-200 text-emerald-700"
-    }`}>
-      {t.tagline}
-    </p>
-</div>
+                className={`relative h-full rounded-3xl border backdrop-blur-2xl p-10 flex flex-col transition-all duration-500 cursor-pointer 
+                  bg-gradient-to-br from-cyan-400/10 via-blue-500/5 to-teal-400/10
+                  border-blue-300/40
+                  shadow-[0_15px_30px_rgba(30,58,138,0.08),_inset_0_1px_0_rgba(255,255,255,0.8)]
+                  hover:shadow-[0_0_60px_rgba(37,99,235,0.45),_0_0_40px_rgba(20,184,166,0.35),_inset_0_1px_0_rgba(255,255,255,1)]
+                  hover:border-cyan-300/80
+                  hover:-translate-y-3
+                  overflow-hidden group/card
+                `}
+              >
+                {/* Stunning light glare effect on hover */}
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none mix-blend-overlay"
+                  style={{
+                    background: "linear-gradient(135deg, rgba(34, 211, 238, 0.6) 0%, transparent 45%, rgba(59, 130, 246, 0.5) 100%)"
+                  }}
+                />
+                
+                {/* Vivid Teal & Blue Orbs inside card */}
+                <div className="absolute -top-16 -right-16 w-56 h-56 bg-teal-400/40 rounded-full blur-3xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                <div className="absolute -bottom-16 -left-16 w-56 h-56 bg-blue-500/40 rounded-full blur-3xl opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none" />
+                
+                <div className="relative z-10 flex flex-col h-full">
+                  <p className="text-lg text-gray-800 leading-relaxed mb-6 flex-grow font-medium group-hover/card:text-gray-900 transition-colors duration-300">
+                    “{t.quote}”
+                  </p>
+                  <p className="font-bold text-gray-900">{t.author}</p>
+                  <p className={`text-[13px] mt-5 pt-5 border-t border-cyan-400/40 text-[#182A4A] font-extrabold tracking-wide uppercase`}>
+                    {t.tagline}
+                  </p>
+                </div>
+              </div>
 
             </motion.div>
           ))}
@@ -243,17 +220,50 @@ const GuestReactionsTestimonials: React.FC = () => {
       </div>
 
       {/* --- Navigation Dots --- */}
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-center gap-3 mt-12 mb-12">
         {testimonialsData.map((_, index) => (
           <button
             key={index}
             onClick={() => emblaApi?.scrollTo(index)}
-            className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-              index === selectedIndex ? 'bg-indigo-600 scale-125' : 'bg-indigo-200'
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === selectedIndex ? 'bg-[#182A4A] scale-125 shadow-[0_0_8px_rgba(24,42,74,0.6)]' : 'bg-[#182A4A]/20 hover:bg-[#182A4A]/40'
             }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
+      </div>
+
+      {/* 🫧 BUBBLY CTA MOVED TO BOTTOM */}
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={() => navigate("/designed-for-humans")}
+          className="
+            relative
+            px-8 py-3
+            rounded-full
+            text-sm font-semibold tracking-wide
+            text-[#182A4A]
+            bg-gradient-to-r from-teal-200 via-cyan-200 to-sky-200
+            shadow-[0_12px_30px_rgba(34,211,238,0.35)]
+            hover:shadow-[0_20px_50px_rgba(34,211,238,0.55)]
+            transition-all duration-500
+            hover:-translate-y-1
+            animate-bubble-float
+          "
+        >
+          <span className="relative z-10 flex items-center gap-2">
+            Designed for Humans, Not Attention 👱
+          </span>
+
+          {/* soft glow bubble */}
+          <span
+            className="
+              absolute inset-0 rounded-full
+              bg-gradient-to-r from-teal-200 via-cyan-200 to-sky-200
+              blur-lg opacity-60
+            "
+          />
+        </button>
       </div>
     </div>
   );
