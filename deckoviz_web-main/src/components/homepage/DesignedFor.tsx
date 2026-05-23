@@ -5,18 +5,18 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-/* ================= FLOATING NERVOUS SYSTEM BUTTON (LEFT near gallery) ================= */
 
+// REFINED: Component for the scrolling image gallery
 const FloatingNervousSystemButton: React.FC = () => {
   const navigate = useNavigate();
-
   return (
-    <div className="z-30">
+    <div className="mb-0 z-40 relative">
       <button
         onClick={() => navigate("/nervous-system")}
         className="
           relative group
-          px-6 py-2
+          flex items-center gap-4
+          px-6 py-3
           rounded-full
           bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-500
           text-white
@@ -81,7 +81,7 @@ const FloatingDASPGuideButton: React.FC = () => {
 
   return (
     /* Outer wrapper — positions the whole assembly (pin + card) */
-    <div className="z-30 flex flex-col items-center select-none mt-5">
+    <div className="z-30 flex flex-col items-center select-none -mt-3 ml-4 relative">
       {/* ── Thumbtack pin ── */}
       <div className="relative z-10 flex flex-col items-center">
         {/* Pin head: shiny silver disc */}
@@ -193,35 +193,6 @@ const FloatingDASPGuideButton: React.FC = () => {
   );
 };
 
-const FloatingMinimalistButton: React.FC = () => {
-  const navigate = useNavigate();
-  return (
-    <div className=" absolute right-6 top-8 z-20 animate-float ">
-      {" "}
-      <button
-        onClick={() => navigate("/minimalist")}
-        className=" px-10 py-3 rounded-[36px] bg-gradient-to-br from-pink-400 via-violet-500 to-indigo-500 text-white text-sm font-semibold shadow-[0_0_20px_rgba(168,85,247,0.7)] hover:shadow-[0_0_35px_rgba(236,72,153,0.9)] transition-all duration-500 backdrop-blur-md "
-      >
-        {" "}
-        <div className="flex items-center gap-2 text-left leading-tight">
-          {" "}
-          <span className="text-xl">📱</span>{" "}
-          <div>
-            {" "}
-            <p className="text-xs opacity-90">
-              {" "}
-              If This Is the Only Screen You Keep{" "}
-            </p>{" "}
-            <p className="text-[11px] font-light opacity-80">
-              {" "}
-              For the Minimalists{" "}
-            </p>{" "}
-          </div>{" "}
-        </div>{" "}
-      </button>{" "}
-    </div>
-  );
-};
 // REFINED: Component for the scrolling image gallery
 const ScrollingImageGallery: React.FC = () => {
   const navigate = useNavigate();
@@ -304,6 +275,54 @@ const sideCard = {
     },
   },
 };
+
+const DesignedCard: React.FC<{
+  title: string;
+  caption: string;
+  gradient: string;
+  image: string;
+  index: number;
+}> = ({ title, caption, image, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6, delay: index * 0.08 }}
+    className={`group relative rounded-3xl transition-all duration-300 hover:-translate-y-2 overflow-hidden cursor-pointer`}
+    style={{
+      height: "430px",
+      background: "rgba(255, 255, 255, 0.45)",
+      backdropFilter: "blur(20px) saturate(180%)",
+      WebkitBackdropFilter: "blur(20px) saturate(180%)",
+      border: "1px solid rgba(255, 255, 255, 0.8)",
+      borderTop: "1px solid rgba(255, 255, 255, 1)",
+      boxShadow: "0 10px 30px rgba(37, 99, 235, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
+    }}
+    onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 22px 50px rgba(37, 99, 235, 0.5), 0 0 25px rgba(37, 99, 235, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1)"}
+    onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 10px 30px rgba(37, 99, 235, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8)"}
+  >
+    {/* Image Section */}
+    <div className="relative h-52 overflow-hidden rounded-t-2xl">
+      <img
+        src={image}
+        alt="Inspiration"
+        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+      />
+      {/* Subtle overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
+    </div>
+    <div className="p-6 flex flex-col items-center justify-center text-center gap-3">
+      <p className="text-lg leading-relaxed bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] bg-clip-text text-transparent font-medium">
+        {title}
+      </p>
+
+      <p className="text-sm text-slate-800 leading-relaxed opacity-90">
+        {caption}
+      </p>
+    </div>
+
+    <div className="absolute inset-0 rounded-2xl border-2 border-violet-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+  </motion.div>
+);
 
 const DesignedFor: React.FC = () => {
   const [showMore, setShowMore] = useState(false);
@@ -474,72 +493,33 @@ const frameImages = [
     },
   ];
 
-  const DesignedCard: React.FC<{
-    title: string;
-    caption: string;
-    gradient: string;
-    image: string;
-    index: number;
-  }> = ({ title, caption, image, index }) => (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.08 }}
-      className={`group relative rounded-2xl transition-all duration-300 hover:scale-105 overflow-hidden cursor-pointer`}
-      style={{
-        height: "430px",
-        background: "rgba(255,255,255,0.25)",
-        backdropFilter: "blur(20px) saturate(180%)",
-        WebkitBackdropFilter: "blur(20px) saturate(180%)",
-        border: "1px solid rgba(255,255,255,0.50)",
-        borderTop: "1px solid rgba(255,255,255,0.75)",
-        boxShadow: "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)",
-      }}
-      onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 15px 40px rgba(37,99,235,0.18), inset 0 1px 0 rgba(255,255,255,0.80)"}
-      onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)"}
-    >
-      {/* Image Section */}
-      <div className="relative h-52 overflow-hidden rounded-t-2xl">
-        <img
-          src={image}
-          alt="Inspiration"
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-        {/* Subtle overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-      </div>
-      <div className="p-6 flex flex-col items-center justify-center text-center gap-3">
-        <p className="text-lg leading-relaxed bg-gradient-to-r from-[#1B2A4A] to-[#2563EB] bg-clip-text text-transparent font-medium">
-          {title}
-        </p>
-
-        <p className="text-sm text-slate-800 leading-relaxed opacity-90">
-          {caption}
-        </p>
-      </div>
-
-      <div className="absolute inset-0 rounded-2xl border-2 border-violet-200/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-    </motion.div>
-  );
-
   return (
     <section
       className="relative py-16 overflow-hidden"
       style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}
     >
-      <FloatingMinimalistButton />
+
 
       {/* Enterprise Indigo Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99, 102, 241, 0.22)" }} />
-        <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37, 99, 235, 0.20)" }} />
-        <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79, 70, 229, 0.16)" }} />
-        <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59, 130, 246, 0.18)" }} />
-        <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.14)" }} />
-        <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[90px]" style={{ background: "rgba(99, 102, 241, 0.45)" }} />
+        <div className="absolute -top-20 right-[-80px] w-[500px] h-[500px] rounded-full blur-[80px]" style={{ background: "rgba(37, 99, 235, 0.40)" }} />
+        <div className="absolute top-[40%] -left-20 w-[500px] h-[500px] rounded-full blur-[90px]" style={{ background: "rgba(79, 70, 229, 0.35)" }} />
+        <div className="absolute top-[40%] right-0 w-[450px] h-[450px] rounded-full blur-[80px]" style={{ background: "rgba(59, 130, 246, 0.40)" }} />
+        <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[100px]" style={{ background: "rgba(99, 102, 241, 0.35)" }} />
+        <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "radial-gradient(circle, #2563eb 1px, transparent 1px)", backgroundSize: "50px 50px" }} />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div 
+        className="relative z-10 max-w-[85rem] mx-auto px-6 md:px-12 py-12 md:py-16 rounded-[3rem]"
+        style={{
+          background: "linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05))",
+          backdropFilter: "blur(32px) saturate(200%)",
+          WebkitBackdropFilter: "blur(32px) saturate(200%)",
+          border: "1px solid rgba(255, 255, 255, 0.5)",
+          boxShadow: "0 25px 60px rgba(37, 99, 235, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8)",
+        }}
+      >
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-gray-900 leading-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -651,15 +631,17 @@ const frameImages = [
             </div>
           </div>
         </div>
-<div className="relative mt-24">
-  <div className="absolute left-6 -top-[20px] z-30 flex flex-col items-center animate-float">
-    <FloatingNervousSystemButton />
-    <FloatingDASPGuideButton />
-  </div>
-  <div className="w-full">
-    <ScrollingImageGallery />
-  </div>
-</div>
+        
+        <div className="relative mt-8">
+          <div className="absolute left-4 md:left-12 top-0 z-30 flex flex-col items-center md:items-start animate-float">
+            <FloatingNervousSystemButton />
+            <FloatingDASPGuideButton />
+          </div>
+
+          <div className="w-full relative z-20">
+            <ScrollingImageGallery />
+          </div>
+        </div>
 
 {/* Dynamic Frame Showcase */}
 <div className="flex justify-center mt-20">
