@@ -1,7 +1,8 @@
 import React from 'react';
 import { InstagramEmbed } from 'react-social-media-embed';
-import { DynamicImageGrid } from "../other/DynamicImageGrid"; // ADDED
 import HotelExperienceJourney from "./HotelExperienceJourney";
+import { DynamicImageGrid } from "../other/DynamicImageGrid";
+
 // ADDED: A specific image array for this page
 const hotelImages = [
   { src: '/images/hotel1.png', tag: 'Lobby Ambiance' },
@@ -11,6 +12,7 @@ const hotelImages = [
   { src: '/images/hotel5.png', tag: 'Personalized Welcome' },
   { src: '/images/hotel6.png', tag: 'Event Spaces' },
 ];
+
 
 
 const DeckovizLanding: React.FC = () => {

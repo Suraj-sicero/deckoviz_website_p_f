@@ -62,7 +62,7 @@ const DeckovizSectors: React.FC = () => {
       icon: <Wine className="w-8 h-8 text-white" />,
       title: "Restaurants & Fine Dining",
       category: "FOOD & BEVERAGE",
-      gradient: "from-red-400 to-pink-400",
+      gradient: "from-teal-400 to-teal-500",
       highlighted: false
     },
     {
@@ -70,7 +70,7 @@ const DeckovizSectors: React.FC = () => {
       icon: <Building2 className="w-8 h-8 text-white" />,
       title: "Hotels & Luxury Resorts",
       category: "HOSPITALITY",
-      gradient: "from-blue-400 to-cyan-400",
+      gradient: "from-blue-400 to-blue-500",
       highlighted: false
     },
     {
@@ -78,15 +78,15 @@ const DeckovizSectors: React.FC = () => {
       icon: <ShoppingBag className="w-8 h-8 text-white" />,
       title: "Retail & Flagship Stores",
       category: "RETAIL",
-      gradient: "from-orange-400 to-yellow-400",
-      highlighted: true
+      gradient: "from-teal-400 to-teal-500",
+      highlighted: false
     },
     {
       id: "wellness",
       icon: <Leaf className="w-8 h-8 text-white" />,
       title: "Spas & Wellness Centers",
       category: "WELLNESS",
-      gradient: "from-[#4f46e5] to-[#2563EB]",
+      gradient: "from-blue-400 to-blue-500",
       highlighted: false
     },
     {
@@ -94,7 +94,7 @@ const DeckovizSectors: React.FC = () => {
       icon: <Building className="w-8 h-8 text-white" />,
       title: "Corporate Offices & HQs",
       category: "ENTERPRISE",
-      gradient: "from-indigo-400 to-blue-400",
+      gradient: "from-teal-400 to-teal-500",
       highlighted: false
     },
     {
@@ -102,7 +102,7 @@ const DeckovizSectors: React.FC = () => {
       icon: <Ticket className="w-8 h-8 text-white" />,
       title: "Events, Galas & Venues",
       category: "EVENTS",
-      gradient: "from-pink-400 to-red-400",
+      gradient: "from-blue-400 to-blue-500",
       highlighted: false
     },
     {
@@ -110,7 +110,7 @@ const DeckovizSectors: React.FC = () => {
       icon: <ImageIcon className="w-8 h-8 text-white" />,
       title: "Art Galleries & Museums",
       category: "ARTS",
-      gradient: "from-cyan-400 to-blue-400",
+      gradient: "from-teal-400 to-teal-500",
       highlighted: false
     },
     {
@@ -118,7 +118,7 @@ const DeckovizSectors: React.FC = () => {
       icon: <GraduationCap className="w-8 h-8 text-white" />,
       title: "Schools & Universities",
       category: "EDUCATION",
-      gradient: "from-green-400 to-teal-400",
+      gradient: "from-blue-400 to-blue-500",
       highlighted: false
     }
   ];
@@ -201,7 +201,7 @@ const DeckovizSectors: React.FC = () => {
 
           {/* Subtitle */}
           <p className="text-center text-gray-600 text-lg md:text-xl max-w-4xl mx-auto mb-20 leading-relaxed font-light relative z-10">
-            Deckoviz is a dynamic visual engine designed to bring many kinds of spaces to life. Powered by generative AI, deep customization, and intelligent content orchestration, it allows businesses to create, adapt, and display visual experiences that evolve with their environment, audience, and purpose. From ambient art to marketing visuals, from storytelling to product showcases, Deckoviz turns any wall into a living surface, adapting to enterprises from restaurants to hotels.
+            Deckoviz is a dynamic visual engine designed to bring many kinds of spaces to life. Powered by generative AI, deep customization, intelligent agent orchestration, and adaptive content, it allows businesses to create, adapt, and display visual experiences that evolve with their environment, audience, and purpose. From ambient art to marketing visuals, from storytelling to product showcases, Deckoviz turns any wall into a living surface, adapting to enterprises from restaurants to hotels.
           </p>
 
           {/* Subheading */}
@@ -246,15 +246,12 @@ const DeckovizSectors: React.FC = () => {
                   key={index}
                   onClick={() => setSelectedSector(sector.id)}
                   className={`
-                    group relative bg-white/80 backdrop-blur-md rounded-3xl p-6 border transition-all duration-500 cursor-pointer overflow-hidden
-                    ${sector.highlighted 
-                      ? 'border-orange-300 shadow-[0_8px_30px_rgba(251,146,60,0.18),0_2px_8px_rgba(251,146,60,0.10)] hover:shadow-[0_20px_50px_rgba(251,146,60,0.32),0_4px_16px_rgba(251,146,60,0.16)] hover:-translate-y-1' 
-                      : 'border-indigo-200/60 shadow-[0_8px_32px_rgba(109,40,217,0.10),0_2px_8px_rgba(79,70,229,0.07)] hover:border-violet-300/80 hover:shadow-[0_20px_56px_rgba(99,40,217,0.22),0_4px_16px_rgba(109,40,217,0.12)] hover:-translate-y-1'
-                    }
+                    group relative bg-white/40 backdrop-blur-xl rounded-3xl p-6 border border-white/80 transition-all duration-500 cursor-pointer overflow-hidden
+                    shadow-[0_8px_32px_rgba(59,130,246,0.08)] hover:bg-white/60 hover:border-white hover:shadow-[0_20px_56px_rgba(59,130,246,0.15)] hover:-translate-y-1
                   `}
                 >
                   {/* Hover glow */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-violet-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                   
                   <div className="relative z-10 flex items-center justify-between">
                     <div className="flex items-center gap-5">
@@ -262,7 +259,7 @@ const DeckovizSectors: React.FC = () => {
                         {sector.icon}
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors duration-300 leading-tight">
+                        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-300 leading-tight">
                           {sector.title}
                         </h3>
                         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mt-1">
@@ -272,10 +269,7 @@ const DeckovizSectors: React.FC = () => {
                     </div>
                     <div className={`
                       flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:scale-110
-                      ${sector.highlighted 
-                        ? 'bg-gradient-to-br from-orange-400 to-amber-500 text-white shadow-lg shadow-orange-500/30' 
-                        : 'bg-gray-50 text-gray-400 group-hover:bg-gradient-to-br group-hover:from-violet-500 group-hover:to-indigo-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-violet-500/30'
-                      }
+                      bg-gray-50 text-gray-400 group-hover:bg-gradient-to-br group-hover:from-blue-500 group-hover:to-cyan-500 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-500/30
                     `}>
                       <svg className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
