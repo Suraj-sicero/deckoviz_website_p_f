@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useRef } from "react";
 
 import {
   BrowserRouter as Router,
@@ -28,7 +27,6 @@ import Blog from "./components/Blog";
 import Contact from "./components/Contact";
 import Pricing from "./components/homepage/Pricing";
 import Youtube from "./components/homepage/Youtube";
-import DeckovizLanding from "./components/deckovizForBusinesses/DeckovizForHotels";
 import HotelExperienceJourney from "./components/deckovizForBusinesses/HotelExperienceJourney";
 import DeckovizRestaurantLanding from "./components/deckovizForBusinesses/DeckovizForRestaurantsAndCafes";
 import DeckovizArchitectsLanding from "./components/deckovizForBusinesses/DeckovizForArchitects";
@@ -42,7 +40,6 @@ import FAQ from "./components/homepage/FAQ";
 import WallOfLove from "./components/WallOfLove";
 import HowItWorks from "./components/homepage/HowItWorks";
 
-import AboutDeckoviz from "./components/homepage/AboutDeckoviz";
 import AllFeatures from "./components/homepage/AllFeatures";
 import Leaderboard from "./components/Leaderboard";
 import TransformWalls from "./components/homepage/Transform";
@@ -82,6 +79,7 @@ import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 
 import Audiobook from "./components/Audiobook";
 import CreativeStudio from "./components/tools/CreativeStudio";
+import CreativeJournalTool from "./components/tools/CreativeJournalTool";
 import AudiobookTool from "./components/tools/AudiobookTool";
 import StorybookTool from "./components/tools/StorybookTool";
 import MusicTool from "./components/tools/MusicTool";
@@ -99,7 +97,6 @@ import DailyInspirationTool from "./components/tools/DailyInspirationTool";
 import VisualAudiobookTool from "./components/tools/VisualAudiobookTool";
 import PostcardTool from "./components/tools/PostcardTool";
 import WizzyPage from "./components/wizzy/WizzyPage";
-import ToolGenerator from "./components/developerSpecs/ToolGenerator";
 import InfiniteWormhole from "./components/developerSpecs/InfiniteWormhole";
 import FluidDreams from "./components/developerSpecs/FluidDreams";
 import ParticleGalaxy from "./components/developerSpecs/ParticleGalaxy";
@@ -204,6 +201,7 @@ import InternetHeartbeat from "./components/developerSpecs/InternetHeartbeat";
 import HapticMemory from "./components/developerSpecs/HapticMemory";
 import SilenceArchitecture from "./components/developerSpecs/SilenceArchitecture";
 import MusicResponsiveArt from "./components/developerSpecs/MusicResponsiveArt";
+import AgenticShapeVortex from "./components/developerSpecs/AgenticShapeVortex";
 import CreateWorld from "./pages/CreateWorld";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
 import FlagshipGamesPage from "./components/flagshipGames/FlagshipGamesPage";
@@ -296,273 +294,275 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
 
       <Navbar />
       <main className={isDeveloperTool ? "relative z-10 h-screen pt-20 bg-black overflow-hidden" : ""}>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Hero />
-              <TransformWalls />
-              <Features />
-              <Benefits />
-              <WhyDeckoviz />
-              <WhoIsDeckovizFor />
-              <DesignedFor />
-              <HowItWorks />
-              <GuestReactionsTestimonials />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Hero />
+                <TransformWalls />
+                <Features />
+                <Benefits />
+                <WhyDeckoviz />
+                <WhoIsDeckovizFor />
+                <DesignedFor />
+                <HowItWorks />
+                <GuestReactionsTestimonials />
 
-              <ToggleGallerySection />
-              <Youtube />
-              <GoogleTVSection />
-              <Referral />
-              <StartHere />
-              <Pricing />
-              <FAQ />
-            </>
-          }
-        />
+                <ToggleGallerySection />
+                <Youtube />
+                <GoogleTVSection />
+                <Referral />
+                <StartHere />
+                <Pricing />
+                <FAQ />
+              </>
+            }
+          />
 
-        <Route path="/blog" element={<Blog />} />
-        {/* ## 2. ADD THE NEW DYNAMIC ROUTE FOR SINGLE POSTS ## */}
-        <Route path="/blog/:slug" element={<BlogDetail />} />
+          <Route path="/blog" element={<Blog />} />
+          {/* ## 2. ADD THE NEW DYNAMIC ROUTE FOR SINGLE POSTS ## */}
+          <Route path="/blog/:slug" element={<BlogDetail />} />
 
-        <Route path="/designed-for" element={<DesignedFor />} />
-        <Route path="/FAQ" element={<FAQ />} />
-        <Route
-          path="/homes-that-mean-something"
-          element={<ForHomesThatMeanSomething />}
-        />
-        <Route path="/more-info" element={<MoreInfo />} />
-        <Route path="/generalinfo" element={<GeneralInfo />} />
+          <Route path="/designed-for" element={<DesignedFor />} />
+          <Route path="/FAQ" element={<FAQ />} />
+          <Route
+            path="/homes-that-mean-something"
+            element={<ForHomesThatMeanSomething />}
+          />
+          <Route path="/more-info" element={<MoreInfo />} />
+          <Route path="/generalinfo" element={<GeneralInfo />} />
 
-        <Route path="/nervous-system" element={<NervousSystem />} />
+          <Route path="/nervous-system" element={<NervousSystem />} />
 
-        <Route path="/infinite-portal" element={<InfinitePortal />} />
-        <Route path="/tv" element={<TVPage />} />
-        <Route path="/minimalist" element={<HomeMeansSomething />} />
-        <Route path="/designed-for-humans" element={<DesignedForHumans />} />
-        <Route
-          path="/your-life-played-back-gently"
-          element={<YourLifePlayedBackGently />}
-        />
-        <Route path="/dasp-guide" element={<DASPGuide />} />
-        <Route path="/dasp-homes-guide" element={<DASPHomesGuide />} />
-        <Route path="/dasp-business-guide" element={<DASPBusinessGuide />} />
-        <Route path="/pragmatic-buyer-guide" element={<PragmaticBuyerGuide />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/about" element={<AboutUs />} />
-        <Route path="/place-order" element={<PlaceOrder />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-conditions" element={<TermsOfService />} />
-        <Route path="/shipping-policy" element={<ShippingPolicy />} />
-        <Route path="/return-policy" element={<ReturnPolicy />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/dasp-guide" element={<DASPGuide />} />
-        <Route path="/features" element={<Features />} />
-        <Route path="/pricing" element={<Pricing />} />
-        <Route path="/benefits" element={<AllBenefits />} />
-        <Route path="/sitemap" element={<Sitemap />} />
-        <Route
-          path="/a-message-for-our-visitors"
-          element={<MessageForVisitors />}
-        />
-        <Route path="/core-reading" element={<CoreReading />} />
+          <Route path="/infinite-portal" element={<InfinitePortal />} />
+          <Route path="/tv" element={<TVPage />} />
+          <Route path="/minimalist" element={<HomeMeansSomething />} />
+          <Route path="/designed-for-humans" element={<DesignedForHumans />} />
+          <Route
+            path="/your-life-played-back-gently"
+            element={<YourLifePlayedBackGently />}
+          />
+          <Route path="/dasp-guide" element={<DASPGuide />} />
+          <Route path="/dasp-homes-guide" element={<DASPHomesGuide />} />
+          <Route path="/dasp-business-guide" element={<DASPBusinessGuide />} />
+          <Route path="/pragmatic-buyer-guide" element={<PragmaticBuyerGuide />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/place-order" element={<PlaceOrder />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-conditions" element={<TermsOfService />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/dasp-guide" element={<DASPGuide />} />
+          <Route path="/features" element={<Features />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/benefits" element={<AllBenefits />} />
+          <Route path="/sitemap" element={<Sitemap />} />
+          <Route
+            path="/a-message-for-our-visitors"
+            element={<MessageForVisitors />}
+          />
+          <Route path="/core-reading" element={<CoreReading />} />
 
-        <Route path="/minimalist" element={<MinimalistScreen />} />
+          <Route path="/minimalist" element={<MinimalistScreen />} />
 
-        <Route path="/all-features" element={<AllFeatures />} />
-        <Route path="/deckoviz-for-hotels" element={<HotelExperienceJourney />} />
-        <Route
-          path="/deckoviz-for-restaurants"
-          element={<DeckovizRestaurantLanding />}
-        />
-        <Route
-          path="/deckoviz-for-architects"
-          element={<DeckovizArchitectsLanding />}
-        />
-        <Route
-          path="/deckoviz-for-offices"
-          element={<DeckovizOfficesLanding />}
-        />
-        <Route
-          path="/deckoviz-for-realestate"
-          element={<DeckovizForRealEstate />}
-        />
-        <Route
-          path="/deckoviz-for-therapists"
-          element={<DeckovizTherapistsLanding />}
-        />
-        <Route
-          path="/deckoviz-for-schools"
-          element={<DeckovizSchoolsLanding />}
-        />
-        <Route
-          path="/deckoviz-for-retailstores"
-          element={<DeckovizForRetail />}
-        />
-        <Route
-          path="/deckoviz-for-enterprises"
-          element={<DeckovizForEnterprise />}
-        />
-        <Route path="/partnership" element={<Partnership />} />
-        <Route path="/support" element={<Support />} />
+          <Route path="/all-features" element={<AllFeatures />} />
+          <Route path="/deckoviz-for-hotels" element={<HotelExperienceJourney />} />
+          <Route
+            path="/deckoviz-for-restaurants"
+            element={<DeckovizRestaurantLanding />}
+          />
+          <Route
+            path="/deckoviz-for-architects"
+            element={<DeckovizArchitectsLanding />}
+          />
+          <Route
+            path="/deckoviz-for-offices"
+            element={<DeckovizOfficesLanding />}
+          />
+          <Route
+            path="/deckoviz-for-realestate"
+            element={<DeckovizForRealEstate />}
+          />
+          <Route
+            path="/deckoviz-for-therapists"
+            element={<DeckovizTherapistsLanding />}
+          />
+          <Route
+            path="/deckoviz-for-schools"
+            element={<DeckovizSchoolsLanding />}
+          />
+          <Route
+            path="/deckoviz-for-retailstores"
+            element={<DeckovizForRetail />}
+          />
+          <Route
+            path="/deckoviz-for-enterprises"
+            element={<DeckovizForEnterprise />}
+          />
+          <Route path="/partnership" element={<Partnership />} />
+          <Route path="/support" element={<Support />} />
 
-        <Route path="/Wall-Of-Love" element={<WallOfLove />} />
-        <Route path="/Leaderboard" element={<Leaderboard />} />
-        <Route path="/Transform-Walls" element={<TransformWalls />} />
-        <Route path="/how-it-works" element={<HowItWorks />} />
-        <Route path="/order-confirmed" element={<OrderConfirmed />} />
-        <Route path="bulk-orders" element={<BulkOrder />} />
-        <Route path="/bulk-confirm" element={<BulkConfirm />} />
-        <Route path="/audiobook" element={<ProtectedRoute><Audiobook /></ProtectedRoute>} />
+          <Route path="/Wall-Of-Love" element={<WallOfLove />} />
+          <Route path="/Leaderboard" element={<Leaderboard />} />
+          <Route path="/Transform-Walls" element={<TransformWalls />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/order-confirmed" element={<OrderConfirmed />} />
+          <Route path="bulk-orders" element={<BulkOrder />} />
+          <Route path="/bulk-confirm" element={<BulkConfirm />} />
+          <Route path="/audiobook" element={<ProtectedRoute><Audiobook /></ProtectedRoute>} />
 
-        {/* ── Creative Studio Hub ── */}
-        <Route path="/creative-studio" element={<CreativeStudio />} />
-        <Route path="/tools/audiobook" element={<ProtectedRoute><AudiobookTool /></ProtectedRoute>} />
-        <Route path="/tools/visual-audiobook" element={<ProtectedRoute><VisualAudiobookTool /></ProtectedRoute>} />
-        <Route path="/tools/storybook" element={<ProtectedRoute><StorybookTool /></ProtectedRoute>} />
-        <Route path="/tools/short-story" element={<ProtectedRoute><ShortStoryTool /></ProtectedRoute>} />
-        <Route path="/tools/comic" element={<ProtectedRoute><ComicTool /></ProtectedRoute>} />
-        <Route path="/tools/life-book" element={<ProtectedRoute><LifeBookTool /></ProtectedRoute>} />
-        <Route path="/tools/visual-journal" element={<ProtectedRoute><VisualJournalTool /></ProtectedRoute>} />
-        <Route path="/tools/greeting-card" element={<ProtectedRoute><GreetingCardTool /></ProtectedRoute>} />
-        <Route path="/tools/song" element={<ProtectedRoute><SongTool /></ProtectedRoute>} />
-        <Route path="/tools/learning-book" element={<ProtectedRoute><LearningBookTool /></ProtectedRoute>} />
-        <Route path="/tools/learning-portal" element={<ProtectedRoute><LearningPortalTool /></ProtectedRoute>} />
-        <Route path="/tools/visual-book" element={<ProtectedRoute><VisualBookTool /></ProtectedRoute>} />
-        <Route path="/tools/storybook-studio" element={<ProtectedRoute><StorybookStudioTool /></ProtectedRoute>} />
-        <Route path="/tools/daily" element={<ProtectedRoute><DailyInspirationTool /></ProtectedRoute>} />
-        <Route path="/tools/music" element={<ProtectedRoute><MusicTool /></ProtectedRoute>} />
-        <Route path="/tools/postcard" element={<PostcardTool />} />
-        <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
-        <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
-        <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute><VizzyProfilePage /></ProtectedRoute>} />
-        <Route path="/subscription" element={<ProtectedRoute><VizzySubscriptionPage /></ProtectedRoute>} />
-        <Route path="/experimental-art-modes" element={<ExperimentalArtModes />} />
-        <Route path="/deckoviz-storytelling" element={<DeckovizStorytelling />} />
-        <Route path="/deckoviz-storytelling/nightly-ritual" element={<NightlyRitual />} />
-        <Route path="/deckoviz-storytelling/morning-architecture" element={<MorningArchitecture />} />
-        <Route path="/deckoviz-storytelling/story-seed" element={<StorySeed />} />
-        <Route path="/deckoviz-storytelling/deep-focus-field" element={<DeepFocusField />} />
-        <Route path="/deckoviz-storytelling/correspondence-room" element={<CorrespondenceRoom />} />
-        <Route path="/deckoviz-storytelling/mythology-engine" element={<MythologyEngine />} />
-        <Route path="/deckoviz-storytelling/memory-palace-builder" element={<MemoryPalaceBuilder />} />
-        <Route path="/deckoviz-storytelling/parallel-lives" element={<ParallelLives />} />
-        <Route path="/deckoviz-storytelling/unsent-letter-archive" element={<UnsentLetterArchive />} />
-        <Route path="/deckoviz-storytelling/world-builders-table" element={<WorldBuildersTable />} />
-        <Route path="/deckoviz-storytelling/emotional-weather-report" element={<EmotionalWeatherReport />} />
-        <Route path="/deckoviz-storytelling/ancestor-table" element={<AncestorTable />} />
-        <Route path="/deckoviz-storytelling/scenario-room" element={<ScenarioRoom />} />
-        <Route path="/deckoviz-storytelling/last-words" element={<LastWords />} />
-        <Route path="/deckoviz-storytelling/the-threshold" element={<TheThreshold />} />
-        <Route path="/deckoviz-storytelling/thousand-year-question" element={<ThousandYearQuestion />} />
-        <Route path="/deckoviz-storytelling/character-witness" element={<CharacterWitness />} />
-        <Route path="/deckoviz-storytelling/the-rehearsal" element={<TheRehearsal />} />
-        <Route path="/deckoviz-storytelling/permission-slip" element={<PermissionSlip />} />
-        <Route path="/deckoviz-storytelling/living-manifesto" element={<LivingManifesto />} />
-        <Route path="/deckoviz-storytelling/deathbed-editor" element={<DeathbedEditor />} />
-        <Route path="/deckoviz-storytelling/cartography-of-longing" element={<CartographyOfLonging />} />
-        <Route path="/deckoviz-storytelling/the-inheritance" element={<TheInheritance />} />
-        <Route path="/deckoviz-storytelling/slow-news" element={<SlowNews />} />
-        <Route path="/deckoviz-storytelling/courage-inventory" element={<CourageInventory />} />
-        <Route path="/deckoviz-storytelling/unfinished-business-bureau" element={<UnfinishedBusinessBureau />} />
-        <Route path="/deckoviz-storytelling/the-sacred-ordinary" element={<TheSacredOrdinary />} />
-        <Route path="/deckoviz-storytelling/gratitude-archaeologist" element={<GratitudeArchaeologist />} />
-        <Route path="/deckoviz-storytelling/honest-eulogy" element={<HonestEulogy />} />
-        <Route path="/deckoviz-storytelling/avoided-conversation" element={<AvoidedConversation />} />
-        <Route path="/deckoviz-storytelling/time-capsule-studio" element={<TimeCapsuleStudio />} />
-        <Route path="/deckoviz-storytelling/the-second-draft" element={<TheSecondDraft />} />
-        <Route path="/deckoviz-storytelling/loving-adversary" element={<TheLovingAdversary />} />
-        <Route path="/deckoviz-storytelling/inner-council" element={<InnerCouncil />} />
-        <Route path="/deckoviz-storytelling/last-good-day" element={<TheLastGoodDay />} />
-        <Route path="/deckoviz-storytelling/forgiveness-lab" element={<TheForgivenessLab />} />
-        <Route path="/deckoviz-storytelling/fear-cartographer" element={<FearCartographer />} />
-        <Route path="/deckoviz-storytelling/letters-to-unknown-self" element={<LettersToUnknownSelf />} />
-        <Route path="/deckoviz-storytelling/relationship-seasons" element={<RelationshipSeasons />} />
-        <Route path="/deckoviz-storytelling/final-frame" element={<TheFinalFrame />} />
-        
-        {/* ── Developer Specs ── */}
-        <Route path="/developer-specs/infinite-wormhole" element={<InfiniteWormhole />} />
-        <Route path="/developer-specs/fluid-dreams" element={<FluidDreams />} />
-        <Route path="/developer-specs/particle-galaxy" element={<ParticleGalaxy />} />
-        <Route path="/developer-specs/audio-waves" element={<AudioWaves />} />
-        <Route path="/developer-specs/living-paintings" element={<LivingPaintings />} />
-        <Route path="/developer-specs/fractal-worlds" element={<FractalWorlds />} />
-        <Route path="/developer-specs/physics-sandbox" element={<PhysicsSandbox />} />
-        <Route path="/developer-specs/nature-systems" element={<NatureSystems />} />
-        <Route path="/developer-specs/ai-dream-worlds" element={<AIDreamWorlds />} />
-        <Route path="/developer-specs/typography-art" element={<TypographyArt />} />
-        <Route path="/developer-specs/weather-simulations" element={<WeatherSimulations />} />
-        <Route path="/developer-specs/zen-garden" element={<ZenGarden />} />
-        <Route path="/developer-specs/motion-art" element={<MotionArt />} />
-        <Route path="/developer-specs/data-as-art" element={<DataAsArt />} />
-        <Route path="/developer-specs/memory-landscapes" element={<MemoryLandscapes />} />
-        <Route path="/developer-specs/celestial-cosmos" element={<CelestialCosmos />} />
-        <Route path="/developer-specs/material-simulations" element={<MaterialSimulations />} />
-        <Route path="/developer-specs/dream-architecture" element={<DreamArchitecture />} />
-        <Route path="/developer-specs/organism-sim" element={<OrganismSim />} />
-        <Route path="/developer-specs/ambient-ritual" element={<AmbientRitual />} />
-        <Route path="/developer-specs/symmetry-machine" element={<SymmetryMachine />} />
-        <Route path="/developer-specs/shadow-puppetry" element={<ShadowPuppetry />} />
-        <Route path="/developer-specs/field-painter" element={<FieldPainter />} />
-        <Route path="/developer-specs/living-maps" element={<LivingMaps />} />
-        <Route path="/developer-specs/emotion-alchemy" element={<EmotionAlchemy />} />
-        <Route path="/developer-specs/tidal-rooms" element={<TidalRooms />} />
-        <Route path="/developer-specs/microscope-world" element={<MicroscopeWorld />} />
-        <Route path="/developer-specs/constellation-builder" element={<ConstellationBuilder />} />
-        <Route path="/developer-specs/decay-bloom" element={<DecayBloom />} />
-        <Route path="/developer-specs/city-pulse" element={<CityPulse />} />
-        <Route path="/developer-specs/signal-interception" element={<SignalInterception />} />
-        <Route path="/developer-specs/mirror-painter" element={<MirrorPainter />} />
-        <Route path="/developer-specs/sound-archaeology" element={<SoundArchaeology />} />
-        <Route path="/developer-specs/thought-weaver" element={<ThoughtWeaver />} />
-        <Route path="/developer-specs/extinct-color" element={<ExtinctColor />} />
-        <Route path="/developer-specs/protein-fold" element={<ProteinFold />} />
-        <Route path="/developer-specs/dream-logic" element={<DreamLogic />} />
-        <Route path="/developer-specs/bioluminescent-abyss" element={<BioluminescentAbyss />} />
-        <Route path="/developer-specs/language-memorial" element={<LanguageMemorial />} />
-        <Route path="/developer-specs/fermenting-world" element={<FermentingWorld />} />
-        <Route path="/developer-specs/last-light" element={<LastLight />} />
-        <Route path="/developer-specs/solar-wind-painter" element={<SolarWindPainter />} />
-        <Route path="/developer-specs/neural-firestorm" element={<NeuralFirestorm />} />
-        <Route path="/developer-specs/grief-cartographer" element={<GriefCartographer />} />
-        <Route path="/developer-specs/symmetry-crystals" element={<SymmetryCrystals />} />
-        <Route path="/developer-specs/trade-atlas" element={<AncientTradeRoutes />} />
-        <Route path="/developer-specs/synesthesia-engine" element={<SynesthesiaEngine />} />
-        <Route path="/developer-specs/murmuration-engine" element={<MurmurationEngine />} />
-        <Route path="/developer-specs/seismic-memory" element={<SeismicMemory />} />
-        <Route path="/developer-specs/dream-taxonomy" element={<DreamTaxonomy />} />
-        <Route path="/developer-specs/cosmic-background" element={<CosmicBackground />} />
-        <Route path="/developer-specs/human-connectivity" element={<HumanConnectivity />} />
-        <Route path="/developer-specs/quantum-foam" element={<QuantumFoam />} />
-        <Route path="/developer-specs/oral-history-fire" element={<OralHistoryFire />} />
-        <Route path="/developer-specs/slime-mould" element={<SlimeMould />} />
-        <Route path="/developer-specs/sky-chronometer" element={<SkyChronometer />} />
-        <Route path="/developer-specs/argument-sculptor" element={<ArgumentSculptor />} />
-        <Route path="/developer-specs/exoplanet-weather" element={<ExoplanetWeather />} />
-        <Route path="/developer-specs/internet-heartbeat" element={<InternetHeartbeat />} />
-        <Route path="/developer-specs/haptic-memory" element={<HapticMemory />} />
-        <Route path="/developer-specs/silence-architecture" element={<SilenceArchitecture />} />
-        <Route path="/developer-specs/music-responsive-art" element={<MusicResponsiveArt />} />
-        <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
-        <Route path="/create-world" element={<CreateWorld />} />
+          {/* ── Creative Studio Hub ── */}
+          <Route path="/creative-studio" element={<CreativeStudio />} />
+          <Route path="/creative-journal" element={<ProtectedRoute><CreativeJournalTool /></ProtectedRoute>} />
+          <Route path="/tools/audiobook" element={<ProtectedRoute><AudiobookTool /></ProtectedRoute>} />
+          <Route path="/tools/visual-audiobook" element={<ProtectedRoute><VisualAudiobookTool /></ProtectedRoute>} />
+          <Route path="/tools/storybook" element={<ProtectedRoute><StorybookTool /></ProtectedRoute>} />
+          <Route path="/tools/short-story" element={<ProtectedRoute><ShortStoryTool /></ProtectedRoute>} />
+          <Route path="/tools/comic" element={<ProtectedRoute><ComicTool /></ProtectedRoute>} />
+          <Route path="/tools/life-book" element={<ProtectedRoute><LifeBookTool /></ProtectedRoute>} />
+          <Route path="/tools/visual-journal" element={<ProtectedRoute><VisualJournalTool /></ProtectedRoute>} />
+          <Route path="/tools/greeting-card" element={<ProtectedRoute><GreetingCardTool /></ProtectedRoute>} />
+          <Route path="/tools/song" element={<ProtectedRoute><SongTool /></ProtectedRoute>} />
+          <Route path="/tools/learning-book" element={<ProtectedRoute><LearningBookTool /></ProtectedRoute>} />
+          <Route path="/tools/learning-portal" element={<ProtectedRoute><LearningPortalTool /></ProtectedRoute>} />
+          <Route path="/tools/visual-book" element={<ProtectedRoute><VisualBookTool /></ProtectedRoute>} />
+          <Route path="/tools/storybook-studio" element={<ProtectedRoute><StorybookStudioTool /></ProtectedRoute>} />
+          <Route path="/tools/daily" element={<ProtectedRoute><DailyInspirationTool /></ProtectedRoute>} />
+          <Route path="/tools/music" element={<ProtectedRoute><MusicTool /></ProtectedRoute>} />
+          <Route path="/tools/postcard" element={<PostcardTool />} />
+          <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
+          <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
+          <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />
+          <Route path="/profile" element={<ProtectedRoute><VizzyProfilePage /></ProtectedRoute>} />
+          <Route path="/subscription" element={<ProtectedRoute><VizzySubscriptionPage /></ProtectedRoute>} />
+          <Route path="/experimental-art-modes" element={<ExperimentalArtModes />} />
+          <Route path="/deckoviz-storytelling" element={<DeckovizStorytelling />} />
+          <Route path="/deckoviz-storytelling/nightly-ritual" element={<NightlyRitual />} />
+          <Route path="/deckoviz-storytelling/morning-architecture" element={<MorningArchitecture />} />
+          <Route path="/deckoviz-storytelling/story-seed" element={<StorySeed />} />
+          <Route path="/deckoviz-storytelling/deep-focus-field" element={<DeepFocusField />} />
+          <Route path="/deckoviz-storytelling/correspondence-room" element={<CorrespondenceRoom />} />
+          <Route path="/deckoviz-storytelling/mythology-engine" element={<MythologyEngine />} />
+          <Route path="/deckoviz-storytelling/memory-palace-builder" element={<MemoryPalaceBuilder />} />
+          <Route path="/deckoviz-storytelling/parallel-lives" element={<ParallelLives />} />
+          <Route path="/deckoviz-storytelling/unsent-letter-archive" element={<UnsentLetterArchive />} />
+          <Route path="/deckoviz-storytelling/world-builders-table" element={<WorldBuildersTable />} />
+          <Route path="/deckoviz-storytelling/emotional-weather-report" element={<EmotionalWeatherReport />} />
+          <Route path="/deckoviz-storytelling/ancestor-table" element={<AncestorTable />} />
+          <Route path="/deckoviz-storytelling/scenario-room" element={<ScenarioRoom />} />
+          <Route path="/deckoviz-storytelling/last-words" element={<LastWords />} />
+          <Route path="/deckoviz-storytelling/the-threshold" element={<TheThreshold />} />
+          <Route path="/deckoviz-storytelling/thousand-year-question" element={<ThousandYearQuestion />} />
+          <Route path="/deckoviz-storytelling/character-witness" element={<CharacterWitness />} />
+          <Route path="/deckoviz-storytelling/the-rehearsal" element={<TheRehearsal />} />
+          <Route path="/deckoviz-storytelling/permission-slip" element={<PermissionSlip />} />
+          <Route path="/deckoviz-storytelling/living-manifesto" element={<LivingManifesto />} />
+          <Route path="/deckoviz-storytelling/deathbed-editor" element={<DeathbedEditor />} />
+          <Route path="/deckoviz-storytelling/cartography-of-longing" element={<CartographyOfLonging />} />
+          <Route path="/deckoviz-storytelling/the-inheritance" element={<TheInheritance />} />
+          <Route path="/deckoviz-storytelling/slow-news" element={<SlowNews />} />
+          <Route path="/deckoviz-storytelling/courage-inventory" element={<CourageInventory />} />
+          <Route path="/deckoviz-storytelling/unfinished-business-bureau" element={<UnfinishedBusinessBureau />} />
+          <Route path="/deckoviz-storytelling/the-sacred-ordinary" element={<TheSacredOrdinary />} />
+          <Route path="/deckoviz-storytelling/gratitude-archaeologist" element={<GratitudeArchaeologist />} />
+          <Route path="/deckoviz-storytelling/honest-eulogy" element={<HonestEulogy />} />
+          <Route path="/deckoviz-storytelling/avoided-conversation" element={<AvoidedConversation />} />
+          <Route path="/deckoviz-storytelling/time-capsule-studio" element={<TimeCapsuleStudio />} />
+          <Route path="/deckoviz-storytelling/the-second-draft" element={<TheSecondDraft />} />
+          <Route path="/deckoviz-storytelling/loving-adversary" element={<TheLovingAdversary />} />
+          <Route path="/deckoviz-storytelling/inner-council" element={<InnerCouncil />} />
+          <Route path="/deckoviz-storytelling/last-good-day" element={<TheLastGoodDay />} />
+          <Route path="/deckoviz-storytelling/forgiveness-lab" element={<TheForgivenessLab />} />
+          <Route path="/deckoviz-storytelling/fear-cartographer" element={<FearCartographer />} />
+          <Route path="/deckoviz-storytelling/letters-to-unknown-self" element={<LettersToUnknownSelf />} />
+          <Route path="/deckoviz-storytelling/relationship-seasons" element={<RelationshipSeasons />} />
+          <Route path="/deckoviz-storytelling/final-frame" element={<TheFinalFrame />} />
 
-        {/* ── Flagship Games ── */}
-        <Route path="/flagship-games" element={<FlagshipGamesPage />} />
-        <Route path="/flagship-games/story-forge/*" element={<StoryForgeApp />} />
-        <Route path="/flagship-games/palette-wars/*" element={<PaletteWarsApp />} />
-        <Route path="/flagship-games/dream-architect/*" element={<DreamArchitectApp />} />
-        <Route path="/flagship-games/museum-of-us/*" element={<MuseumOfUsApp />} />
-        <Route path="/flagship-games/vizzys-verdict/*" element={<VerdictApp />} />
-        <Route path="/flagship-games/one-word/*" element={<OneWordApp />} />
-        <Route path="/flagship-games/world-in-frame/*" element={<FrameApp />} />
-        <Route path="/flagship-games/inheritance/*" element={<InheritanceApp />} />
-        <Route path="/flagship-games/debating-society/*" element={<DebatingSocietyApp />} />
-        <Route path="/flagship-games/cartographers/*" element={<CartographersApp />} />
-        <Route path="/flagship-games/brilliant-minds/*" element={<BrilliantMindsApp />} />
-        <Route path="/flagship-games/oracle/*" element={<OracleApp />} />
-      </Routes>
+          {/* ── Developer Specs ── */}
+          <Route path="/developer-specs/infinite-wormhole" element={<InfiniteWormhole />} />
+          <Route path="/developer-specs/fluid-dreams" element={<FluidDreams />} />
+          <Route path="/developer-specs/particle-galaxy" element={<ParticleGalaxy />} />
+          <Route path="/developer-specs/audio-waves" element={<AudioWaves />} />
+          <Route path="/developer-specs/living-paintings" element={<LivingPaintings />} />
+          <Route path="/developer-specs/fractal-worlds" element={<FractalWorlds />} />
+          <Route path="/developer-specs/physics-sandbox" element={<PhysicsSandbox />} />
+          <Route path="/developer-specs/nature-systems" element={<NatureSystems />} />
+          <Route path="/developer-specs/ai-dream-worlds" element={<AIDreamWorlds />} />
+          <Route path="/developer-specs/typography-art" element={<TypographyArt />} />
+          <Route path="/developer-specs/weather-simulations" element={<WeatherSimulations />} />
+          <Route path="/developer-specs/zen-garden" element={<ZenGarden />} />
+          <Route path="/developer-specs/motion-art" element={<MotionArt />} />
+          <Route path="/developer-specs/data-as-art" element={<DataAsArt />} />
+          <Route path="/developer-specs/memory-landscapes" element={<MemoryLandscapes />} />
+          <Route path="/developer-specs/celestial-cosmos" element={<CelestialCosmos />} />
+          <Route path="/developer-specs/material-simulations" element={<MaterialSimulations />} />
+          <Route path="/developer-specs/dream-architecture" element={<DreamArchitecture />} />
+          <Route path="/developer-specs/organism-sim" element={<OrganismSim />} />
+          <Route path="/developer-specs/ambient-ritual" element={<AmbientRitual />} />
+          <Route path="/developer-specs/symmetry-machine" element={<SymmetryMachine />} />
+          <Route path="/developer-specs/shadow-puppetry" element={<ShadowPuppetry />} />
+          <Route path="/developer-specs/field-painter" element={<FieldPainter />} />
+          <Route path="/developer-specs/living-maps" element={<LivingMaps />} />
+          <Route path="/developer-specs/emotion-alchemy" element={<EmotionAlchemy />} />
+          <Route path="/developer-specs/tidal-rooms" element={<TidalRooms />} />
+          <Route path="/developer-specs/microscope-world" element={<MicroscopeWorld />} />
+          <Route path="/developer-specs/constellation-builder" element={<ConstellationBuilder />} />
+          <Route path="/developer-specs/decay-bloom" element={<DecayBloom />} />
+          <Route path="/developer-specs/city-pulse" element={<CityPulse />} />
+          <Route path="/developer-specs/signal-interception" element={<SignalInterception />} />
+          <Route path="/developer-specs/mirror-painter" element={<MirrorPainter />} />
+          <Route path="/developer-specs/sound-archaeology" element={<SoundArchaeology />} />
+          <Route path="/developer-specs/thought-weaver" element={<ThoughtWeaver />} />
+          <Route path="/developer-specs/extinct-color" element={<ExtinctColor />} />
+          <Route path="/developer-specs/protein-fold" element={<ProteinFold />} />
+          <Route path="/developer-specs/dream-logic" element={<DreamLogic />} />
+          <Route path="/developer-specs/bioluminescent-abyss" element={<BioluminescentAbyss />} />
+          <Route path="/developer-specs/language-memorial" element={<LanguageMemorial />} />
+          <Route path="/developer-specs/fermenting-world" element={<FermentingWorld />} />
+          <Route path="/developer-specs/last-light" element={<LastLight />} />
+          <Route path="/developer-specs/solar-wind-painter" element={<SolarWindPainter />} />
+          <Route path="/developer-specs/neural-firestorm" element={<NeuralFirestorm />} />
+          <Route path="/developer-specs/grief-cartographer" element={<GriefCartographer />} />
+          <Route path="/developer-specs/symmetry-crystals" element={<SymmetryCrystals />} />
+          <Route path="/developer-specs/trade-atlas" element={<AncientTradeRoutes />} />
+          <Route path="/developer-specs/synesthesia-engine" element={<SynesthesiaEngine />} />
+          <Route path="/developer-specs/murmuration-engine" element={<MurmurationEngine />} />
+          <Route path="/developer-specs/seismic-memory" element={<SeismicMemory />} />
+          <Route path="/developer-specs/dream-taxonomy" element={<DreamTaxonomy />} />
+          <Route path="/developer-specs/cosmic-background" element={<CosmicBackground />} />
+          <Route path="/developer-specs/human-connectivity" element={<HumanConnectivity />} />
+          <Route path="/developer-specs/quantum-foam" element={<QuantumFoam />} />
+          <Route path="/developer-specs/oral-history-fire" element={<OralHistoryFire />} />
+          <Route path="/developer-specs/slime-mould" element={<SlimeMould />} />
+          <Route path="/developer-specs/sky-chronometer" element={<SkyChronometer />} />
+          <Route path="/developer-specs/argument-sculptor" element={<ArgumentSculptor />} />
+          <Route path="/developer-specs/exoplanet-weather" element={<ExoplanetWeather />} />
+          <Route path="/developer-specs/internet-heartbeat" element={<InternetHeartbeat />} />
+          <Route path="/developer-specs/haptic-memory" element={<HapticMemory />} />
+          <Route path="/developer-specs/silence-architecture" element={<SilenceArchitecture />} />
+          <Route path="/developer-specs/music-responsive-art" element={<MusicResponsiveArt />} />
+          <Route path="/developer-specs/agentic-shape-vortex" element={<AgenticShapeVortex />} />
+          <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
+          <Route path="/create-world" element={<CreateWorld />} />
+
+          {/* ── Flagship Games ── */}
+          <Route path="/flagship-games" element={<FlagshipGamesPage />} />
+          <Route path="/flagship-games/story-forge/*" element={<StoryForgeApp />} />
+          <Route path="/flagship-games/palette-wars/*" element={<PaletteWarsApp />} />
+          <Route path="/flagship-games/dream-architect/*" element={<DreamArchitectApp />} />
+          <Route path="/flagship-games/museum-of-us/*" element={<MuseumOfUsApp />} />
+          <Route path="/flagship-games/vizzys-verdict/*" element={<VerdictApp />} />
+          <Route path="/flagship-games/one-word/*" element={<OneWordApp />} />
+          <Route path="/flagship-games/world-in-frame/*" element={<FrameApp />} />
+          <Route path="/flagship-games/inheritance/*" element={<InheritanceApp />} />
+          <Route path="/flagship-games/debating-society/*" element={<DebatingSocietyApp />} />
+          <Route path="/flagship-games/cartographers/*" element={<CartographersApp />} />
+          <Route path="/flagship-games/brilliant-minds/*" element={<BrilliantMindsApp />} />
+          <Route path="/flagship-games/oracle/*" element={<OracleApp />} />
+        </Routes>
       </main>
       {!isDeveloperTool && <Footer />}
       <VizzyChat />

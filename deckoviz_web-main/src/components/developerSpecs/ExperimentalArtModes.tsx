@@ -11,7 +11,7 @@ import {
   Microscope, Flame, ArrowRight, Code, Sun, Droplets,
   MessageSquare, Dna, Brain, MapPin, Leaf, Snowflake,
   Compass, Volume2, Bird, Moon, Maximize2, Users,
-  Atom, BrainCircuit, Scale, Hand
+  Atom, BrainCircuit, Scale, Hand, Sparkles
 } from "lucide-react";
 
 const developerTools = [
@@ -510,6 +510,14 @@ const developerTools = [
     icon: <Music size={24} className="text-[#ec008c]" />,
     color: "from-[#ec008c]/20 to-[#00f2fe]/20",
     borderColor: "group-hover:border-[#ec008c]/50"
+  },
+  {
+    title: "Agentic Shape Vortex",
+    description: "Ordered dithered vector shapes, logarithmic spirals, and retro halftones with custom database presets",
+    route: "/developer-specs/agentic-shape-vortex",
+    icon: <Sparkles size={24} className="text-emerald-400" />,
+    color: "from-emerald-400/20 to-teal-900/40",
+    borderColor: "group-hover:border-emerald-400/50"
   },
 ];
 
