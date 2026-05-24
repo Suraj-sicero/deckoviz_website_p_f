@@ -3458,3 +3458,9 @@
 [2026-05-20T15:39:01.895Z] LOG: [postcard/generate] Loaded 1 Decoviz style reference frame(s).
 [2026-05-20T15:39:01.895Z] LOG: [postcard/generate] Calling Gemini 2.5 Flash Image to render Decoviz display in-place...
 [2026-05-20T15:39:14.435Z] LOG: [postcard/generate] Gemini image edit succeeded.
+[2026-05-24T07:59:20.486Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-24T07:59:22.663Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-24T08:05:52.967Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-24T08:05:54.849Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-24T16:53:32.530Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-24T16:53:34.825Z] LOG: ✅ PostgreSQL connected via Sequelize.

@@ -8,7 +8,8 @@ import {
   Wand2,
   FlaskConical,
   BookOpen,
-  Brush
+  Brush,
+  Notebook
 } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -184,6 +185,21 @@ const Footer = () => {
               viewport={{ once: true }}
               className="flex justify-center items-center gap-4 flex-wrap mb-8"
             >
+              <a
+                href="/creative-journal"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(167,139,250,0.5)] hover:shadow-[0_0_50px_rgba(167,139,250,0.8)] border border-violet-400/30"
+                style={{
+                  background: "linear-gradient(135deg, #a855f7, #6366f1, #ec4899, #6366f1, #a855f7)",
+                  backgroundSize: "300% 300%",
+                  animation: "footerGradientFlow 4s ease infinite",
+                  color: "white",
+                }}
+              >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                <Notebook className="relative z-10 w-4 h-4" />
+                <span className="relative z-10">Creative Journal</span>
+              </a>
+
               <a
                 href="/creative-studio"
                 className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
