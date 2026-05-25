@@ -413,104 +413,41 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
                   className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-gray-900"
                   style={{ fontFamily: "'Playfair Display', serif" }}
                 >
-                  What Can{" "}
+                  What can the{" "}
                   <span className="italic bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent">
-                    Deckoviz
+                    DASPort
                   </span>{" "}
-                  Do
+                  do?
                 </h2>
 
-                {/* Main intro paragraph with colorful background */}
+                {/* Intro paragraph 1 */}
                 <motion.div
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, type: "spring", bounce: 0.3 }}
                   whileHover={{ scale: 1.02, y: -4 }}
-                  className="bg-white/20 rounded-2xl p-6 border border-white/30 shadow-sm hover:shadow-lg transition-shadow cursor-default"
+                  className="relative overflow-hidden backdrop-blur-xl backdrop-saturate-[180%] bg-white/40 rounded-[28px] p-6 md:p-8 border border-white/60 shadow-[0_12px_48px_rgba(79,70,229,0.08),0_2px_8px_rgba(79,70,229,0.04),inset_0_1.5px_0_rgba(255,255,255,1)] hover:shadow-[0_0_80px_rgba(37,99,235,0.45),0_12px_48px_rgba(79,70,229,0.2),inset_0_1.5px_0_rgba(255,255,255,1)] transition-all duration-300 cursor-default"
                 >
-                  <p className="text-lg md:text-xl text-gray-800 leading-relaxed font-medium">
-                    A whole lot. We set out to build the ultimate art and
-                    storytelling platform for living spaces   one that naturally
-                    creates abundance of features and experiences. If a feature
-                    can deepen emotion, spark imagination, personalize a moment,
-                    or turn a wall into a living experience, it belongs here.
+                  <div className="absolute inset-0 pointer-events-none rounded-[28px] mix-blend-overlay opacity-20" style={{ backgroundImage: "repeating-linear-gradient(0deg, rgba(255,255,255,0.60) 0 1px, transparent 1px 5px)" }}></div>
+                  <p className="relative z-10 text-lg md:text-xl text-gray-800 leading-relaxed font-medium">
+                    A whole lot. We set out to build the ultimate art & story platform for living spaces, and today, the DASPort includes many individual modes and features, spanning art, creation, storytelling, mood-setting, sound ambiance, rituals, family moments, play, creativity, learning, and ambient intelligence, organized into 12 core themes.
                   </p>
                 </motion.div>
 
-                {/* Stats paragraph with restrained highlights */}
+                {/* Intro paragraph 2 */}
                 <motion.div
                   initial={{ opacity: 0, y: 20, scale: 0.95 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1, type: "spring", bounce: 0.3 }}
                   whileHover={{ scale: 1.02, y: -4 }}
-                  className="bg-white/20 rounded-2xl p-6 border border-white/30 shadow-sm hover:shadow-lg transition-shadow cursor-default"
+                  className="relative overflow-hidden backdrop-blur-xl backdrop-saturate-[180%] bg-white/40 rounded-[28px] p-6 md:p-8 border border-white/60 shadow-[0_12px_48px_rgba(79,70,229,0.08),0_2px_8px_rgba(79,70,229,0.04),inset_0_1.5px_0_rgba(255,255,255,1)] hover:shadow-[0_0_80px_rgba(37,99,235,0.45),0_12px_48px_rgba(79,70,229,0.2),inset_0_1.5px_0_rgba(255,255,255,1)] transition-all duration-300 cursor-default"
                 >
-                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                    Today, Deckoviz includes{" "}
-                    <motion.span 
-                      whileHover={{ scale: 1.1 }}
-                      className="inline-block font-bold text-xl text-blue-700"
-                    >
-                      hundreds of individual features
-                    </motion.span>
-                    , spanning{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">art</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">creation</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">storytelling</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">music</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">learning</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">rituals</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">family moments</motion.span>,{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">play</motion.span>, and{" "}
-                    <motion.span whileHover={{ scale: 1.08, y: -1 }} className="inline-block font-semibold text-blue-700">ambient intelligence</motion.span>{" "}
-                    organized into{" "}
-                    <motion.span 
-                      whileHover={{ scale: 1.1 }}
-                      className="inline-block font-bold text-xl text-blue-700"
-                    >
-                      12 core themes
-                    </motion.span>
-                    .
+                  <div className="absolute inset-0 pointer-events-none rounded-[28px] mix-blend-overlay opacity-20" style={{ backgroundImage: "repeating-linear-gradient(0deg, rgba(255,255,255,0.60) 0 1px, transparent 1px 5px)" }}></div>
+                  <p className="relative z-10 text-base md:text-lg text-gray-800 leading-relaxed">
+                    Each theme represents a feature suite, bringing together related capabilities and experiences so you can quickly understand how the DASPort can add to your life. It is designed as a living platform, evolving with you and your life every single week, as we keep adding new experiences, modes, possibilities, artworks and content.
                   </p>
-                  <div
-                    className="mx-auto mt-5 h-1 w-32 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 opacity-70"
-                  ></div>
-                </motion.div>
-
-                {/* Feature suite explanation with colorful background */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.2, type: "spring", bounce: 0.3 }}
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  className="bg-white/20 rounded-2xl p-6 border border-white/30 shadow-sm hover:shadow-lg transition-shadow cursor-default"
-                >
-                  <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-                    Each theme represents a feature suite, bringing together
-                    related capabilities and experiences so you can quickly
-                    understand how Deckoviz fits into your life.
-                  </p>
-                </motion.div>
-
-                {/* Bottom quote with special styling */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: 0.3, type: "spring", bounce: 0.3 }}
-                  whileHover={{ scale: 1.02, y: -4 }}
-                  className="pt-6"
-                >
-                  <div className="bg-white/20 rounded-2xl p-6 border border-white/30 shadow-sm hover:shadow-lg transition-shadow cursor-default">
-                    <p className="text-base md:text-lg text-gray-800 italic font-medium leading-relaxed">
-                      Deckoviz is becoming a living platform   emotionally
-                      intelligent, deeply personalized, and evolving every single
-                      week.
-                    </p>
-                  </div>
                 </motion.div>
               </div>
             </div>

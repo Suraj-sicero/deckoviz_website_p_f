@@ -172,11 +172,11 @@ const Glass: React.FC<{
   <div
     className={`relative rounded-3xl overflow-hidden ${className}`}
     style={{
-      background: "rgba(255, 255, 255, 0.62)",
-      backdropFilter: "blur(32px) saturate(180%)",
-      WebkitBackdropFilter: "blur(32px) saturate(180%)",
-      border: "1.5px solid rgba(255, 255, 255, 0.85)",
-      boxShadow: "0 8px 32px rgba(79,70,229,0.1), 0 2px 8px rgba(79,70,229,0.06), inset 0 1.5px 0 rgba(255,255,255,1), inset 0 -1px 0 rgba(99,102,241,0.06)",
+      background: "rgba(255, 255, 255, 0.35)",
+      backdropFilter: "blur(24px) saturate(180%)",
+      WebkitBackdropFilter: "blur(24px) saturate(180%)",
+      border: "1.5px solid rgba(255, 255, 255, 0.55)",
+      boxShadow: "0 8px 32px rgba(79,70,229,0.15), 0 2px 8px rgba(79,70,229,0.1), inset 0 1.5px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(99,102,241,0.06)",
       ...style,
     }}
   >
@@ -196,11 +196,11 @@ const Badge: React.FC<{ icon: React.ReactNode; label: string }> = ({ icon, label
   <div
     className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
     style={{
-      background: "rgba(255,255,255,0.72)",
-      backdropFilter: "blur(20px)",
-      WebkitBackdropFilter: "blur(20px)",
-      border: "1.5px solid rgba(255,255,255,0.9)",
-      boxShadow: "0 2px 12px rgba(79,70,229,0.12), inset 0 1px 0 rgba(255,255,255,1)",
+      background: "rgba(255,255,255,0.45)",
+      backdropFilter: "blur(16px)",
+      WebkitBackdropFilter: "blur(16px)",
+      border: "1.5px solid rgba(255,255,255,0.6)",
+      boxShadow: "0 2px 12px rgba(79,70,229,0.12), inset 0 1px 0 rgba(255,255,255,0.8)",
     }}
   >
     <span className="text-indigo-500 flex-shrink-0" style={{ lineHeight: 0 }}>{icon}</span>
@@ -216,10 +216,10 @@ const SectionLabel: React.FC<{ label: string }> = ({ label }) => (
       className="text-[11px] font-bold uppercase tracking-[0.26em] px-3 py-1.5 rounded-full"
       style={{
         color: "#4f46e5",
-        background: "rgba(255,255,255,0.72)",
-        border: "1.5px solid rgba(255,255,255,0.9)",
-        backdropFilter: "blur(16px)",
-        boxShadow: "0 2px 8px rgba(79,70,229,0.1)",
+        background: "rgba(255,255,255,0.35)",
+        border: "1.5px solid rgba(255,255,255,0.55)",
+        backdropFilter: "blur(12px)",
+        boxShadow: "0 2px 8px rgba(79,70,229,0.1), inset 0 1px 0 rgba(255,255,255,0.7)",
       }}
     >
       {label}
@@ -377,7 +377,7 @@ const EnterpriseWhyDeckoviz: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* Everything Else */}
             <Glass className="p-8 md:p-10"
-              style={{ background: "rgba(255,255,255,0.5)", boxShadow: "0 4px 20px rgba(0,0,0,0.06), inset 0 1.5px 0 rgba(255,255,255,1)" }}
+              style={{ background: "rgba(255,255,255,0.25)", boxShadow: "0 4px 20px rgba(0,0,0,0.06), inset 0 1.5px 0 rgba(255,255,255,0.6)" }}
             >
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-7">
@@ -406,9 +406,9 @@ const EnterpriseWhyDeckoviz: React.FC = () => {
             {/* Deckoviz */}
             <Glass className="p-8 md:p-10"
               style={{
-                background: "rgba(238,242,255,0.72)",
-                border: "1.5px solid rgba(199,210,254,0.7)",
-                boxShadow: "0 12px 40px rgba(79,70,229,0.18), 0 2px 8px rgba(79,70,229,0.1), inset 0 1.5px 0 rgba(255,255,255,1)",
+                background: "rgba(238,242,255,0.35)",
+                border: "1.5px solid rgba(199,210,254,0.45)",
+                boxShadow: "0 12px 40px rgba(79,70,229,0.18), 0 2px 8px rgba(79,70,229,0.1), inset 0 1.5px 0 rgba(255,255,255,0.8)",
               }}
             >
               <div
@@ -448,9 +448,9 @@ const EnterpriseWhyDeckoviz: React.FC = () => {
           <Glass
             className="p-10 md:p-16 text-center"
             style={{
-              background: "rgba(245,247,255,0.72)",
-              border: "1.5px solid rgba(199,210,254,0.65)",
-              boxShadow: "0 20px 60px rgba(79,70,229,0.18), 0 4px 16px rgba(79,70,229,0.08), inset 0 1.5px 0 rgba(255,255,255,1)",
+              background: "rgba(245,247,255,0.35)",
+              border: "1.5px solid rgba(199,210,254,0.45)",
+              boxShadow: "0 20px 60px rgba(79,70,229,0.18), 0 4px 16px rgba(79,70,229,0.08), inset 0 1.5px 0 rgba(255,255,255,0.8)",
             }}
           >
             <div

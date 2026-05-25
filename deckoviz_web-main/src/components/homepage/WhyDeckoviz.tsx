@@ -106,7 +106,7 @@ const FOUR_LAYERS = [
   },
   {
     number: "02", title: "Ambient Intelligence", subtitle: "Art & photos that arrives before you ask",
-    body: "Vizzy does not wait to be told what to show. It creates and curates proactively — pulling artworks, posters and photos that match your current vibe, your state of mind, a birthday, an anniversary, a quiet Tuesday. The frame becomes a responsive environment, always one step ahead of what you were about to feel.",
+    body: "Vizzy does not wait to be told what to show. It creates and curates proactively - pulling artworks, posters and photos that match your current vibe, your state of mind, a birthday, an anniversary, a quiet Tuesday. The frame becomes a responsive environment, always one step ahead of what you were about to feel.",
     iconBg: "linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)",
     accentColor: "#2563eb", glowColor: "rgba(59,130,246,0.18)", Icon: IconSparkles,
   },
@@ -118,7 +118,7 @@ const FOUR_LAYERS = [
   },
   {
     number: "04", title: "Experience Layer", subtitle: "Beyond the visual, into the sensory",
-    body: "The screen is only the beginning. Deckoviz adds narration to art, music to visuals, spoken stories to still images. We are building toward a fully multisensory ambiance — sound, light, and soon more, all orchestrated by Vizzy for the specific moment you are in. A frame that speaks. A frame that plays. A frame that breathes.",
+    body: "The screen is only the beginning. Deckoviz adds narration to art, music to visuals, spoken stories to still images. We are building toward a fully multisensory ambiance - sound, light, and soon more, all orchestrated by Vizzy for the specific moment you are in. A frame that speaks. A frame that plays. A frame that breathes.",
     iconBg: "linear-gradient(135deg, #4f46e5 0%, #2563eb 100%)",
     accentColor: "#4338ca", glowColor: "rgba(79,70,229,0.18)", Icon: IconWaves,
   },
@@ -137,9 +137,53 @@ const MOODS = [
     iconBg: "linear-gradient(135deg, rgba(236,72,153,0.2) 0%, rgba(244,114,182,0.1) 100%)",
     iconBorder: "rgba(236,72,153,0.3)",
     title: "Twenty Modes",
-    body: "Focus. Creativity. Romantic. Gratitude. Meditation. And fifteen more. Each mode transforms the entire ambiance of your space — the art, the palette, the feeling. Not just a display setting. A shift in the atmosphere of your home, summoned in seconds.",
+    body: "Focus. Creativity. Romantic. Gratitude. Meditation. And fifteen more. Each mode transforms the entire ambiance of your space - the art, the palette, the feeling. Not just a display setting. A shift in the atmosphere of your home, summoned in seconds.",
   },
 ];
+
+const HARDWARE_DESIGN = [
+  {
+    number: "01", title: "Firmware engineered for intelligence",
+    body: "Most smart displays run generic TV firmware patched together with a few apps. We went deeper. Our custom firmware optimisation on Google TV is built specifically to run Deckoviz's AI agents and avatars natively and seamlessly: the proactive art agent, the poster creation agent, the ambient curation engine, and more. \nThe result is an experience that feels fluid, responsive, and alive in a way that off-the-shelf hardware simply cannot deliver.",
+    iconBg: "linear-gradient(135deg, #10b981 0%, #3b82f6 100%)",
+    accentColor: "#059669", glowColor: "rgba(16,185,129,0.18)", Icon: IconBrain,
+  },
+  {
+    number: "02", title: "Halo backlights that breathe with your art",
+    body: "Deckoviz's signature halo backlights are an extension of the artwork itself. You can sync the halo lights dynamically to whatever is on screen; they pull the colours, mood, and energy of each piece out beyond the frame and into the room around it. \nWhen the art shifts, the light shifts with it. Your entire space becomes part of the canvas.",
+    iconBg: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
+    accentColor: "#d97706", glowColor: "rgba(245,158,11,0.18)", Icon: IconSun,
+  },
+  {
+    number: "03", title: "A frame as individual as you are",
+    body: "The frame you hang on your wall should feel like yours. With Deckoviz, it is. Choose your materials, your finish, your colour. Select design motifs that reflect your aesthetic. \nAnd if you want, go further: have your favourite quote, a family motto, or a line that means something to you engraved intricately into the frame itself. No two Deckoviz frames are identical. That is entirely the point.",
+    iconBg: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+    accentColor: "#4f46e5", glowColor: "rgba(99,102,241,0.18)", Icon: IconFrame,
+  },
+];
+
+const PHILOSOPHY_LAYERS = [
+  {
+    number: "01", title: "Designed to be a lifelong companion",
+    body: "Most products are designed to be used for a few years and then replaced. We designed Deckoviz for the opposite. One of the foundational principles behind everything we build is that Deckoviz should be a true lifelong companion: something that travels with you through different seasons, different homes, different chapters of your life. This isn't a gadget you will grow out of, but a portal that will grow with you. \n\nVizzy will evolve with you over the years and decades, learning who you are becoming, not just who you were when you first switched it on. Think of it as your creative OS, your artistic canvas, your home's emotionally intelligent presence, and a companion for the long arc of your life.",
+    iconBg: "linear-gradient(135deg, #6366f1 0%, #3b82f6 100%)",
+    accentColor: "#4f46e5", glowColor: "rgba(99,102,241,0.18)", Icon: IconHeart,
+  },
+  {
+    number: "02", title: "A personal portal built for your world, not the average user",
+    body: "We do not build for a hypothetical average user. We build for you. If there is a feature, a mode, an experience, or a type of content you want and we can reasonably make it happen, we will, even if you are the only person who has ever asked for it.\n\nJust send us a message. That is not a marketing line. It is how we work. We see every DASPort as a personal portal, and a portal should open onto the world its owner actually wants to inhabit, not a world designed by committee.",
+    iconBg: "linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%)",
+    accentColor: "#2563eb", glowColor: "rgba(59,130,246,0.18)", Icon: IconLayers,
+  },
+  {
+    number: "03", title: "Built for flourishing, not for clicks",
+    body: "Most modern technology is optimised for engagement, for attention, for dopamine. We have made a deliberate choice to go in a different direction. Our north star in every design decision is eudaimonia: long-term human flourishing. \n\nEvery feature we ship, every experience we build, every interaction we design is evaluated against a single question: does this contribute to the user's genuine wellbeing and growth over time, or does it merely pull them back to the screen? It is a harder standard to build to. We think it is the only one worth holding. For Vizzy is designed to serve you and your creative spirit and your soul not for mere months, but for decades.",
+    iconBg: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)",
+    accentColor: "#7c3aed", glowColor: "rgba(139,92,246,0.18)", Icon: IconSparkles,
+  },
+];
+
+
 
 const CANVAS_TAGS = [
   "Mood boards","Vision boards","Affirmations","Quote posters","Poem posters",
@@ -175,15 +219,15 @@ const Glass: React.FC<{
   <div
     className={`relative rounded-3xl overflow-hidden ${className}`}
     style={{
-      background: "rgba(255, 255, 255, 0.62)",
-      backdropFilter: "blur(32px) saturate(180%)",
-      WebkitBackdropFilter: "blur(32px) saturate(180%)",
-      border: "1.5px solid rgba(255, 255, 255, 0.85)",
-      boxShadow: "0 8px 32px rgba(79,70,229,0.1), 0 2px 8px rgba(79,70,229,0.06), inset 0 1.5px 0 rgba(255,255,255,1), inset 0 -1px 0 rgba(99,102,241,0.06)",
+      background: "rgba(255, 255, 255, 0.35)",
+      backdropFilter: "blur(24px) saturate(180%)",
+      WebkitBackdropFilter: "blur(24px) saturate(180%)",
+      border: "1.5px solid rgba(255, 255, 255, 0.55)",
+      boxShadow: "0 8px 32px rgba(79,70,229,0.15), 0 2px 8px rgba(79,70,229,0.1), inset 0 1.5px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(99,102,241,0.06)",
       ...style,
     }}
   >
-    {/* Strong top-left white sheen — the glass highlight */}
+    {/* Strong top-left white sheen - the glass highlight */}
     <div
       className="absolute inset-0 pointer-events-none"
       style={{
@@ -199,11 +243,11 @@ const Badge: React.FC<{ icon: React.ReactNode; label: string }> = ({ icon, label
   <div
     className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
     style={{
-      background: "rgba(255,255,255,0.72)",
-      backdropFilter: "blur(20px)",
-      WebkitBackdropFilter: "blur(20px)",
-      border: "1.5px solid rgba(255,255,255,0.9)",
-      boxShadow: "0 2px 12px rgba(79,70,229,0.12), inset 0 1px 0 rgba(255,255,255,1)",
+      background: "rgba(255,255,255,0.45)",
+      backdropFilter: "blur(16px)",
+      WebkitBackdropFilter: "blur(16px)",
+      border: "1.5px solid rgba(255,255,255,0.6)",
+      boxShadow: "0 2px 12px rgba(79,70,229,0.12), inset 0 1px 0 rgba(255,255,255,0.8)",
     }}
   >
     <span className="text-indigo-500 flex-shrink-0" style={{ lineHeight: 0 }}>{icon}</span>
@@ -219,10 +263,10 @@ const SectionLabel: React.FC<{ label: string }> = ({ label }) => (
       className="text-[11px] font-bold uppercase tracking-[0.26em] px-3 py-1.5 rounded-full"
       style={{
         color: "#4f46e5",
-        background: "rgba(255,255,255,0.72)",
-        border: "1.5px solid rgba(255,255,255,0.9)",
-        backdropFilter: "blur(16px)",
-        boxShadow: "0 2px 8px rgba(79,70,229,0.1)",
+        background: "rgba(255,255,255,0.35)",
+        border: "1.5px solid rgba(255,255,255,0.55)",
+        backdropFilter: "blur(12px)",
+        boxShadow: "0 2px 8px rgba(79,70,229,0.1), inset 0 1px 0 rgba(255,255,255,0.7)",
       }}
     >
       {label}
@@ -243,7 +287,7 @@ const WhyDeckoviz: React.FC = () => {
       /* White → indigo gradient base */
       style={{ background: "linear-gradient(145deg, #ffffff 0%, #f0f3ff 20%, #e0e7ff 40%, #c7d2fe 65%, #818cf8 85%, #6366f1 100%)" }}
     >
-      {/* ── Bold indigo/violet color blobs — clearly visible behind glass ── */}
+      {/* ── Bold indigo/violet color blobs - clearly visible behind glass ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Large violet top-left */}
         <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full"
@@ -305,7 +349,7 @@ const WhyDeckoviz: React.FC = () => {
           <p className="text-gray-700 text-base md:text-lg max-w-3xl mx-auto leading-relaxed">
             Deckoviz moves beyond the traditional paradigms of art frames, smart displays, and smart decor. It is a{" "}
             <strong className="text-indigo-700 font-semibold">living, learning, generative presence</strong>{" "}
-            in your home — one that grows more attuned to you with every passing day, and fills your space with art, stories, and feeling that is entirely, irreducibly yours.
+            in your home - one that grows more attuned to you with every passing day, and fills your space with art, stories, and feeling that is entirely, irreducibly yours.
           </p>
         </motion.div>
 
@@ -350,9 +394,9 @@ const WhyDeckoviz: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* ════ MOODS & RITUALS ════ */}
+        {/* ════ MODES & RITUALS ════ */}
         <motion.div variants={stagger} initial="hidden" animate={inView ? "visible" : "hidden"} className="mb-24">
-          <SectionLabel label="Moods and Rituals" />
+          <SectionLabel label="Modes and Rituals" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {MOODS.map((mood) => (
               <motion.div key={mood.title} variants={fadeUp}>
@@ -382,8 +426,8 @@ const WhyDeckoviz: React.FC = () => {
           <Glass
             className="p-10 md:p-14"
             style={{
-              background: "rgba(255,255,255,0.68)",
-              boxShadow: "0 12px 48px rgba(79,70,229,0.14), 0 2px 8px rgba(79,70,229,0.07), inset 0 1.5px 0 rgba(255,255,255,1)",
+              background: "rgba(255,255,255,0.35)",
+              boxShadow: "0 12px 48px rgba(79,70,229,0.14), 0 2px 8px rgba(79,70,229,0.07), inset 0 1.5px 0 rgba(255,255,255,0.8)",
             }}
           >
             <div
@@ -400,10 +444,10 @@ const WhyDeckoviz: React.FC = () => {
                   <Badge icon={<IconLayers size={14} />} label="The Vizzy Creation Canvas" />
                 </div>
                 <h3 className="text-gray-900 text-2xl sm:text-3xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', serif" }}>
-                  One Space to Create Everything
+                  One Space To Create and Display Everything
                 </h3>
                 <p className="text-gray-600 text-[13.5px] max-w-2xl mx-auto leading-relaxed">
-                  Mood boards, vision boards, affirmation boards, to-do lists beautiful enough to live on your wall, quote posters, poem posters, movie posters, and deeply personal art in any style — abstract, figurative, portrait, or something entirely new. Everything you make goes straight from Vizzy's canvas to your frame.
+                  Mood boards, vision boards, affirmation boards, to-do lists beautiful enough to live on your wall, quote posters, poem posters, movie posters, and deeply personal art in any style - abstract, figurative, portrait, or something entirely new. Everything you make goes straight from Vizzy's canvas to your frame.
                 </p>
               </div>
               <div className="flex flex-wrap justify-center gap-2.5">
@@ -429,30 +473,126 @@ const WhyDeckoviz: React.FC = () => {
           </Glass>
         </motion.div>
 
+        {/* ════ HARDWARE DESIGN ════ */}
+        <motion.div variants={stagger} initial="hidden" animate={inView ? "visible" : "hidden"} className="mb-24">
+          <SectionLabel label="Hardware Design" />
+          <div className="text-center mb-10">
+            <h3 className="text-gray-900 text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 max-w-4xl mx-auto leading-snug" style={{ fontFamily: "'Playfair Display', serif" }}>
+              3 more things on the hardware-design side that puts the DASPort in a class of its own
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+            {HARDWARE_DESIGN.map((layer) => (
+              <motion.div key={layer.number} variants={fadeUp}>
+                <Glass
+                  className="p-7 group cursor-default transition-all duration-500 hover:-translate-y-2"
+                  style={{ boxShadow: `0 8px 32px ${layer.glowColor}, 0 2px 8px rgba(0,0,0,0.04), inset 0 1.5px 0 rgba(255,255,255,0.8)` }}
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-3xl"
+                    style={{ background: `radial-gradient(ellipse at 25% 0%, ${layer.glowColor} 0%, transparent 65%)` }}
+                  />
+                  <div className="relative z-10 flex flex-col items-start gap-4">
+                    <div
+                      className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300"
+                      style={{ background: layer.iconBg, boxShadow: `0 4px 16px ${layer.glowColor}` }}
+                    >
+                      <layer.Icon size={20} />
+                    </div>
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[11px] font-black tracking-[0.2em] uppercase" style={{ color: layer.accentColor }}>
+                          {layer.number}
+                        </span>
+                        <span className="w-5 h-px bg-indigo-200" />
+                      </div>
+                      <h4 className="text-gray-900 text-lg font-bold mb-2 leading-snug">{layer.title}</h4>
+                      <div className="relative overflow-hidden transition-all duration-700 ease-in-out md:max-h-[4.5rem] md:group-hover:max-h-[800px] md:[mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)] md:group-hover:[mask-image:none]">
+                        <p className="text-gray-600 text-[13.5px] leading-relaxed whitespace-pre-line pb-2">
+                          {layer.body.split('\n').filter(Boolean).join('\n\n')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Glass>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ════ OUR DESIGN PHILOSOPHY ════ */}
+        <motion.div variants={stagger} initial="hidden" animate={inView ? "visible" : "hidden"} className="mb-24">
+          <SectionLabel label="Our Design Philosophy" />
+          <div className="text-center mb-10">
+            <h3 className="text-gray-900 text-2xl sm:text-3xl font-bold mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Or: What we believe about the things we build
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+            {PHILOSOPHY_LAYERS.map((layer) => (
+              <motion.div key={layer.number} variants={fadeUp}>
+                <Glass
+                  className="p-7 group cursor-default transition-all duration-500 hover:-translate-y-2"
+                  style={{ boxShadow: `0 8px 32px ${layer.glowColor}, 0 2px 8px rgba(0,0,0,0.04), inset 0 1.5px 0 rgba(255,255,255,0.8)` }}
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-3xl"
+                    style={{ background: `radial-gradient(ellipse at 25% 0%, ${layer.glowColor} 0%, transparent 65%)` }}
+                  />
+                  <div className="relative z-10 flex flex-col items-start gap-4">
+                    <div
+                      className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300"
+                      style={{ background: layer.iconBg, boxShadow: `0 4px 16px ${layer.glowColor}` }}
+                    >
+                      <layer.Icon size={20} />
+                    </div>
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[11px] font-black tracking-[0.2em] uppercase" style={{ color: layer.accentColor }}>
+                          {layer.number}
+                        </span>
+                        <span className="w-5 h-px bg-indigo-200" />
+                      </div>
+                      <h4 className="text-gray-900 text-lg font-bold mb-2 leading-snug">{layer.title}</h4>
+                      <div className="relative overflow-hidden transition-all duration-700 ease-in-out md:max-h-[4.5rem] md:group-hover:max-h-[800px] md:[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)] md:group-hover:[mask-image:none]">
+                        <p className="text-gray-600 text-[13.5px] leading-relaxed whitespace-pre-line pb-2">
+                          {layer.body.split('\n').filter(Boolean).join('\n\n')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Glass>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
         {/* ════ COMPARISON ════ */}
         <motion.div variants={fadeUp} initial="hidden" animate={inView ? "visible" : "hidden"} className="mb-24">
           <div className="text-center mb-12">
             <SectionLabel label="How We Compare" />
             <h3
-              className="text-gray-900 text-2xl sm:text-3xl md:text-4xl font-bold mb-4 -mt-4"
+              className="font-bold mb-4 -mt-4 leading-snug"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              The Samsung Frame TV is the closest thing.
+              <span className="text-gray-900 text-xl sm:text-2xl md:text-3xl">
+                The Samsung Frame TV is the closest thing.
+              </span>
               <br />
-              <span className="bg-clip-text text-transparent"
+              <span className="bg-clip-text text-transparent text-3xl sm:text-4xl md:text-5xl inline-block mt-1"
                 style={{ backgroundImage: "linear-gradient(135deg, #4f46e5 0%, #2563eb 50%, #0ea5e9 100%)" }}>
                 It is still worlds away.
               </span>
             </h3>
             <p className="text-gray-600 text-[13.5px] max-w-2xl mx-auto leading-relaxed">
-              Samsung's Frame TV is a beautiful product. When you are not watching television, it shows art. That is where it ends and where Deckoviz begins. We are a complete generative ambiance platform, a creative studio, a personalised daily life companion, and an intelligent ambient presence — all in one.
+              Samsung's Frame TV is a beautiful product. When you are not watching television, it shows art. That is where it ends and where Deckoviz begins. We are a complete generative ambiance platform, a creative studio, a personalised daily life companion, and an intelligent ambient presence - all in one.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* Samsung */}
             <Glass className="p-8"
-              style={{ background: "rgba(255,255,255,0.5)", boxShadow: "0 4px 20px rgba(0,0,0,0.06), inset 0 1.5px 0 rgba(255,255,255,1)" }}
+              style={{ background: "rgba(255,255,255,0.25)", boxShadow: "0 4px 20px rgba(0,0,0,0.06), inset 0 1.5px 0 rgba(255,255,255,0.6)" }}
             >
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-7">
@@ -482,9 +622,9 @@ const WhyDeckoviz: React.FC = () => {
             {/* Deckoviz */}
             <Glass className="p-8"
               style={{
-                background: "rgba(238,242,255,0.72)",
-                border: "1.5px solid rgba(199,210,254,0.7)",
-                boxShadow: "0 12px 40px rgba(79,70,229,0.18), 0 2px 8px rgba(79,70,229,0.1), inset 0 1.5px 0 rgba(255,255,255,1)",
+                background: "rgba(238,242,255,0.35)",
+                border: "1.5px solid rgba(199,210,254,0.45)",
+                boxShadow: "0 12px 40px rgba(79,70,229,0.18), 0 2px 8px rgba(79,70,229,0.1), inset 0 1.5px 0 rgba(255,255,255,0.8)",
               }}
             >
               <div
@@ -525,9 +665,9 @@ const WhyDeckoviz: React.FC = () => {
           <Glass
             className="p-10 md:p-16 text-center"
             style={{
-              background: "rgba(245,247,255,0.72)",
-              border: "1.5px solid rgba(199,210,254,0.65)",
-              boxShadow: "0 20px 60px rgba(79,70,229,0.18), 0 4px 16px rgba(79,70,229,0.08), inset 0 1.5px 0 rgba(255,255,255,1)",
+              background: "rgba(245,247,255,0.35)",
+              border: "1.5px solid rgba(199,210,254,0.45)",
+              boxShadow: "0 20px 60px rgba(79,70,229,0.18), 0 4px 16px rgba(79,70,229,0.08), inset 0 1.5px 0 rgba(255,255,255,0.8)",
             }}
           >
             <div

@@ -223,7 +223,7 @@ const Navbar: React.FC = () => {
     {
       title: "Architects & Designers",
       description: "Design living spaces",
-      image: "/images/architectnavbar.png",
+      image: "/images/architectnavbar.png", // Added icon
       gradient: "from-blue-500 to-indigo-500",
       route: "/deckoviz-for-architects",
       fallbackColor: "bg-gradient-to-br from-blue-100 to-indigo-100",
@@ -294,15 +294,27 @@ const Navbar: React.FC = () => {
       <ImagePreloader />
 
       <nav
-        className={`fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-700 pointer-events-none ${!isNavbarVisible ? "-translate-y-[150%] opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
+        className={`fixed top-4 left-0 right-0 z-[100] flex justify-center px-4 transition-all duration-700 pointer-events-none ${!isNavbarVisible ? "-translate-y-[150%] opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
       >
         <div 
-          className={`pointer-events-auto flex items-center justify-between w-full max-w-7xl h-14 rounded-full px-2 md:px-4 transition-all duration-700 ${
-            isScrolled 
-              ? "bg-white/40 backdrop-blur-2xl backdrop-saturate-200 shadow-[0_8px_32px_rgba(0,0,0,0.08)] border border-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]" 
-              : "bg-white/20 hover:bg-white/30 backdrop-blur-xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(0,0,0,0.04)] border border-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]"
-          }`}
+          className={`pointer-events-auto flex items-center justify-between w-full max-w-7xl h-14 rounded-full px-2 md:px-4 transition-all duration-700 relative`}
+          style={{
+            background: isScrolled 
+              ? "linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0.65) 100%)" 
+              : "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.5) 100%)",
+            backdropFilter: isScrolled ? "blur(40px) saturate(250%)" : "blur(32px) saturate(200%)",
+            WebkitBackdropFilter: isScrolled ? "blur(40px) saturate(250%)" : "blur(32px) saturate(200%)",
+            border: "1px solid rgba(255, 255, 255, 0.7)",
+            boxShadow: isScrolled 
+              ? "0 12px 40px rgba(0,0,0,0.1), inset 0 2px 2px rgba(255,255,255,1), inset 0 -1px 2px rgba(255,255,255,0.4)" 
+              : "0 8px 32px rgba(0,0,0,0.06), inset 0 1px 1px rgba(255,255,255,0.9)",
+          }}
         >
+          {/* Glass specular highlight shine overlay */}
+          <div className="absolute inset-0 pointer-events-none rounded-full" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, transparent 40%)" }} />
+          {/* Mobile left placeholder for precise logo centering */}
+          <div className="md:hidden flex-1" />
+
           {/* Left Navigation */}
           <div className="hidden md:flex items-center space-x-1 lg:space-x-6 flex-1">
             {/* Wall/Leader Hamburger Menu */}
@@ -763,7 +775,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* Mobile controls row: audio + hamburger */}
-            <div className="md:hidden flex items-center gap-1">
+            <div className="md:hidden flex items-center gap-1 flex-1 justify-end pr-1">
               {/* Mini audio controls */}
               <div className="flex items-center gap-0.5">
                 <button onClick={prev} className="p-1.5 rounded-full text-[#2563EB]/70 hover:text-[#2563EB] hover:bg-white/60 transition-all duration-300 flex items-center justify-center" title="Previous">

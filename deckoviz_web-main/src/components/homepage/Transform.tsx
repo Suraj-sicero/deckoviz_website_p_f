@@ -183,9 +183,9 @@ export default function TransformWalls() {
 
             {/* Animated CTA Button */}
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 1.3, duration: 0.6 }} className="pt-4">
-              <motion.button onClick={() => window.location.href = '/place-order'} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative bg-gradient-to-r from-[#182a4a] via-indigo-900 to-indigo-800 text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all duration-300 text-base overflow-hidden group border border-white/10">
+              <motion.button onClick={() => window.location.href = '/place-order'} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-8 py-3.5 rounded-full font-bold shadow-xl hover:shadow-2xl transition-all duration-300 text-base overflow-hidden group border border-white/10">
                 <span className="relative z-10">Order Now</span>
-                <motion.div className="absolute inset-0 bg-gradient-to-r from-indigo-950 via-[#182a4a] to-indigo-900" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.3 }}></motion.div>
+                <motion.div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-[#182A4A]" initial={{ x: "-100%" }} whileHover={{ x: "0%" }} transition={{ duration: 0.3 }}></motion.div>
               </motion.button>
             </motion.div>
           </div>
@@ -696,14 +696,14 @@ export default function TransformWalls() {
             onClick={() => window.location.href = '/dasp-guide'}
             whileHover={{ scale: 1.03 }} 
             whileTap={{ scale: 0.97 }} 
-            className="relative bg-gradient-to-r from-indigo-900 via-indigo-700 to-blue-600 text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-full shadow-[0_8px_30px_rgba(37,99,235,0.35)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.5)] transition-all duration-300 flex items-center gap-4 overflow-hidden group border border-white/20"
+            className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-full shadow-[0_8px_30px_rgba(37,99,235,0.35)] hover:shadow-[0_12px_40px_rgba(37,99,235,0.5)] transition-all duration-300 flex items-center gap-4 overflow-hidden group border border-white/20"
           >
             <div className="relative z-10 flex-shrink-0 text-xl sm:text-2xl group-hover:rotate-12 transition-transform duration-300">✨</div>
             <div className="relative z-10 text-left">
               <div className="font-bold text-[15px] sm:text-[16px] leading-tight mb-1 tracking-wide text-blue-50">Our Founding Thesis</div>
               <div className="text-[12px] sm:text-[13px] text-blue-200/90 leading-tight font-medium">Everything you need to know before choosing your perfect smart art frame.</div>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-700 via-indigo-600 to-indigo-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-[#182A4A] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
           </motion.button>
         </motion.div>
       </div>
