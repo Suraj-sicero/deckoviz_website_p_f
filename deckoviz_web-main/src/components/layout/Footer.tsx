@@ -9,7 +9,8 @@ import {
   FlaskConical,
   BookOpen,
   Brush,
-  Gamepad2
+  Gamepad2,
+  Notebook
 } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -40,7 +41,7 @@ const legalLinks = [
   { name: "Privacy Policy", path: "/privacy-policy" },
   { name: "Terms & Conditions", path: "/terms-conditions" },
   { name: "Shipping Policy", path: "/shipping-policy" },
-  { name: "Return Policy", path:"/return-policy" }
+  { name: "Return Policy", path: "/return-policy" }
 ]
 
 const socialLinks = [
@@ -58,365 +59,381 @@ const Footer = () => {
   return (
     <footer className="relative bg-transparent overflow-hidden print:hidden">
 
-        {/* Main Footer Content with Floating Particles */}
-        <div 
-          className="relative py-6 overflow-hidden"
-          style={{
-            backgroundImage: 'url(/images/wallhaven-962wqx.jpg)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-          }}
-        >
-          {/* Dark overlay for better text readability */}
-          <div className="absolute inset-0 bg-[#0a1628]/50"></div>
-          
-          {/* Animated floating particles */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 bg-white rounded-full"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                }}
-                animate={{
-                  y: [0, -30, 0],
-                  opacity: [0.2, 0.5, 0.2],
-                  scale: [1, 1.5, 1],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 4,
-                  repeat: Infinity,
-                  delay: Math.random() * 2,
-                }}
-              />
-            ))}
-          </div>
+      {/* Main Footer Content with Floating Particles */}
+      <div
+        className="relative py-6 overflow-hidden"
+        style={{
+          backgroundImage: 'url(/images/wallhaven-962wqx.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-[#0a1628]/50"></div>
 
-          {/* Glowing orbs in background */}
-          <div className="absolute inset-0 pointer-events-none">
+        {/* Animated floating particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {[...Array(20)].map((_, i) => (
             <motion.div
-              className="absolute top-20 left-10 w-64 h-64 bg-violet-500/20 rounded-full blur-3xl"
+              key={i}
+              className="absolute w-2 h-2 bg-white rounded-full"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
               animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.3, 0.5, 0.3],
+                y: [0, -30, 0],
+                opacity: [0.2, 0.5, 0.2],
+                scale: [1, 1.5, 1],
               }}
               transition={{
-                duration: 8,
+                duration: 3 + Math.random() * 4,
                 repeat: Infinity,
-                ease: "easeInOut",
+                delay: Math.random() * 2,
               }}
             />
-            <motion.div
-              className="absolute bottom-20 right-10 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl"
-              animate={{
-                scale: [1, 1.3, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            />
-          </div>
+          ))}
+        </div>
 
-          <div className="relative max-w-7xl mx-auto px-6">
-            
-            {/* Top Section: Logo + Description + Social Links in one compact row */}
+        {/* Glowing orbs in background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            className="absolute top-20 left-10 w-64 h-64 bg-violet-500/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-20 right-10 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 1,
+            }}
+          />
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-6">
+
+          {/* Top Section: Logo + Description + Social Links in one compact row */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="flex flex-col md:flex-row items-center justify-between gap-4 mb-5 pb-3 border-b border-white/10"
+          >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="flex flex-col md:flex-row items-center justify-between gap-4 mb-5 pb-3 border-b border-white/10"
+              className="flex items-center gap-4"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300 }}
             >
-              <motion.div
-                className="flex items-center gap-4"
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300 }}
+              <div
+                className="rounded-xl md:rounded-2xl p-2 md:p-2.5 shadow-[0_0_20px_rgba(167,139,250,0.3)] flex items-center space-x-1 md:space-x-2 border border-white/50"
+                style={{
+                  background: "linear-gradient(135deg, #e0e7ff, #fbcfe8, #bfdbfe, #e0e7ff)",
+                  backgroundSize: "300% 300%",
+                  animation: "footerGradientFlow 6s ease infinite",
+                }}
               >
-                <div 
-                  className="rounded-xl md:rounded-2xl p-2 md:p-2.5 shadow-[0_0_20px_rgba(167,139,250,0.3)] flex items-center space-x-1 md:space-x-2 border border-white/50"
-                  style={{
-                    background: "linear-gradient(135deg, #e0e7ff, #fbcfe8, #bfdbfe, #e0e7ff)",
-                    backgroundSize: "300% 300%",
-                    animation: "footerGradientFlow 6s ease infinite",
-                  }}
-                >
-                  <img src="/images/deckovizlogo.png" className="h-8 sm:h-10 md:h-12 object-contain" alt="Deckoviz Symbol" />
-                  <img src="/images/new_logoo.jpeg" className="h-8 sm:h-10 md:h-12 object-contain mix-blend-multiply" alt="Deckoviz" />
-                </div>
-                <div className="hidden md:flex flex-col gap-3">
-                  <p className="text-white text-sm leading-tight max-w-xs">
-                    Bring your space to life with AI-powered ambiance, dynamic art and visually stunning stories
-                  </p>
-                </div>
-              </motion.div>
-              
-              {/* Social Links inline */}
-              <div className="flex items-center gap-3">
-                <span className="text-white/70 text-xs font-medium hidden sm:block">Follow Us:</span>
-                <div className="flex gap-2">
-                  {socialLinks.map((social) => (
-                    <motion.a
-                      key={social.name}
-                      href={social.href}
-                      whileHover={{ scale: 1.15, rotate: 5 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white/80 hover:text-white transition-all duration-300 backdrop-blur-sm"
-                      aria-label={social.name}
-                    >
-                      <social.icon size={16} />
-                    </motion.a>
-                  ))}
-                </div>
+                <img src="/images/deckovizlogo.png" className="h-8 sm:h-10 md:h-12 object-contain" alt="Deckoviz Symbol" />
+                <img src="/images/new_logoo.jpeg" className="h-8 sm:h-10 md:h-12 object-contain mix-blend-multiply" alt="Deckoviz" />
+              </div>
+              <div className="hidden md:flex flex-col gap-3">
+                <p className="text-white text-sm leading-tight max-w-xs">
+                  Bring your space to life with AI-powered ambiance, dynamic art and visually stunning stories
+                </p>
               </div>
             </motion.div>
 
-            {/* Action CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="flex justify-center items-center gap-4 flex-wrap mb-8"
-            >
-              <a
-                href="/creative-studio"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-                style={{
-                  background: "linear-gradient(135deg, #60A5FA, #2563EB, #0ea5e9, #2563EB, #60A5FA)",
-                  backgroundSize: "300% 300%",
-                  animation: "footerGradientFlow 4s ease infinite",
-                  color: "white",
-                }}
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <Wand2 className="relative z-10 w-4 h-4" />
-                <span className="relative z-10">Creative Studio</span>
-              </a>
+            {/* Social Links inline */}
+            <div className="flex items-center gap-3">
+              <span className="text-white/70 text-xs font-medium hidden sm:block">Follow Us:</span>
+              <div className="flex gap-2">
+                {socialLinks.map((social) => (
+                  <motion.a
+                    key={social.name}
+                    href={social.href}
+                    whileHover={{ scale: 1.15, rotate: 5 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 text-white/80 hover:text-white transition-all duration-300 backdrop-blur-sm"
+                    aria-label={social.name}
+                  >
+                    <social.icon size={16} />
+                  </motion.a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
 
-              <style dangerouslySetInnerHTML={{__html: `
+          {/* Action CTA Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="flex justify-center items-center gap-4 flex-wrap mb-8"
+          >
+            <a
+              href="/creative-journal"
+              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(167,139,250,0.5)] hover:shadow-[0_0_50px_rgba(167,139,250,0.8)] border border-violet-400/30"
+              style={{
+                background: "linear-gradient(135deg, #a855f7, #6366f1, #ec4899, #6366f1, #a855f7)",
+                backgroundSize: "300% 300%",
+                animation: "footerGradientFlow 4s ease infinite",
+                color: "white",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <Notebook className="relative z-10 w-4 h-4" />
+              <span className="relative z-10">Creative Journal</span>
+            </a>
+
+            <a
+              href="/creative-studio"
+              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
+              style={{
+                background: "linear-gradient(135deg, #60A5FA, #2563EB, #0ea5e9, #2563EB, #60A5FA)",
+                backgroundSize: "300% 300%",
+                animation: "footerGradientFlow 4s ease infinite",
+                color: "white",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <Wand2 className="relative z-10 w-4 h-4" />
+              <span className="relative z-10">Creative Studio</span>
+            </a>
+
+            <style dangerouslySetInnerHTML={{
+              __html: `
                 @keyframes footerGradientFlow {
                   0% { background-position: 0% 50%; }
                   50% { background-position: 100% 50%; }
                   100% { background-position: 0% 50%; }
                 }
               `}} />
-              <a
-                href="/experimental-art-modes"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-                style={{
-                  background: "linear-gradient(135deg, #7c3aed, #ec4899, #3b82f6, #ec4899, #7c3aed)",
-                  backgroundSize: "300% 300%",
-                  animation: "footerGradientFlow 4s ease infinite",
-                  color: "white",
-                }}
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <FlaskConical className="relative z-10 w-4 h-4" />
-                <span className="relative z-10">Experimental Art Modes</span>
-                <svg
-                  className="relative z-10 group-hover:translate-x-1 transition-transform"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </a>
-
-              <a
-                href="/deckoviz-storytelling"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-                style={{
-                  background: "linear-gradient(135deg, #7dd3fc, #0ea5e9, #0284c7, #0ea5e9, #7dd3fc)",
-                  backgroundSize: "300% 300%",
-                  animation: "footerGradientFlow 4s ease infinite",
-                  color: "white",
-                }}
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <BookOpen className="relative z-10 w-4 h-4" />
-                <span className="relative z-10">Deckoviz Storytelling</span>
-                <svg
-                  className="relative z-10 group-hover:translate-x-1 transition-transform"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </a>
-
-              <a
-                href="/vizzy-canvas"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-                style={{
-                  background: "linear-gradient(135deg, #10b981, #059669, #047857, #059669, #10b981)",
-                  backgroundSize: "300% 300%",
-                  animation: "footerGradientFlow 4s ease infinite",
-                  color: "white",
-                }}
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <Brush className="relative z-10 w-4 h-4" />
-                <span className="relative z-10">Vizzy Creation Canvas</span>
-                <svg
-                  className="relative z-10 group-hover:translate-x-1 transition-transform"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </a>
-
-              <a
-                href="/flagship-games"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-                style={{
-                  background: "linear-gradient(135deg, #f43f5e, #be123c, #9333ea, #be123c, #f43f5e)",
-                  backgroundSize: "300% 300%",
-                  animation: "footerGradientFlow 4s ease infinite",
-                  color: "white",
-                }}
-              >
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <Gamepad2 className="relative z-10 w-4 h-4" />
-                <span className="relative z-10">Flagship Games</span>
-                <svg
-                  className="relative z-10 group-hover:translate-x-1 transition-transform"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="5" y1="12" x2="19" y2="12"></line>
-                  <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-              </a>
-            </motion.div>
-
-            {/* Links Grid - Ultra compact 4 columns on desktop */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={{
-                hidden: {},
-                visible: {
-                  transition: {
-                    staggerChildren: 0.05,
-                  },
-                },
+            <a
+              href="/experimental-art-modes"
+              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
+              style={{
+                background: "linear-gradient(135deg, #7c3aed, #ec4899, #3b82f6, #ec4899, #7c3aed)",
+                backgroundSize: "300% 300%",
+                animation: "footerGradientFlow 4s ease infinite",
+                color: "white",
               }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 mb-3"
             >
-              
-              {/* Product */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <FlaskConical className="relative z-10 w-4 h-4" />
+              <span className="relative z-10">Experimental Art Modes</span>
+              <svg
+                className="relative z-10 group-hover:translate-x-1 transition-transform"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <h3 className="text-white font-semibold text-xs mb-1.5">Product</h3>
-                <ul className="space-y-0.5">
-                  {productLinks.map((link) => (
-                    <motion.li key={link.name} whileHover={{ x: 3 }}>
-                      <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
-                        {link.name}
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
 
-              {/* Company */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
+            <a
+              href="/deckoviz-storytelling"
+              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
+              style={{
+                background: "linear-gradient(135deg, #7dd3fc, #0ea5e9, #0284c7, #0ea5e9, #7dd3fc)",
+                backgroundSize: "300% 300%",
+                animation: "footerGradientFlow 4s ease infinite",
+                color: "white",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <BookOpen className="relative z-10 w-4 h-4" />
+              <span className="relative z-10">Deckoviz Storytelling</span>
+              <svg
+                className="relative z-10 group-hover:translate-x-1 transition-transform"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <h3 className="text-white font-semibold text-xs mb-1.5">Company</h3>
-                <ul className="space-y-0.5">
-                  {companyLinks.map((link) => (
-                    <motion.li key={link.name} whileHover={{ x: 3 }}>
-                      <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
-                        {link.name}
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
 
-              {/* Legal */}
-              <motion.div
-                variants={{
-                  hidden: { opacity: 0, y: 10 },
-                  visible: { opacity: 1, y: 0 },
-                }}
+            <a
+              href="/vizzy-canvas"
+              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
+              style={{
+                background: "linear-gradient(135deg, #10b981, #059669, #047857, #059669, #10b981)",
+                backgroundSize: "300% 300%",
+                animation: "footerGradientFlow 4s ease infinite",
+                color: "white",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <Brush className="relative z-10 w-4 h-4" />
+              <span className="relative z-10">Vizzy Creation Canvas</span>
+              <svg
+                className="relative z-10 group-hover:translate-x-1 transition-transform"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
-                <h3 className="text-white font-semibold text-xs mb-1.5">Legal</h3>
-                <ul className="space-y-0.5">
-                  {legalLinks.map((link) => (
-                    <motion.li key={link.name} whileHover={{ x: 3 }}>
-                      <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
-                        {link.name}
-                      </a>
-                    </motion.li>
-                  ))}
-                </ul>
-              </motion.div>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
 
-            </motion.div>
+            <a
+              href="/flagship-games"
+              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
+              style={{
+                background: "linear-gradient(135deg, #f43f5e, #be123c, #9333ea, #be123c, #f43f5e)",
+                backgroundSize: "300% 300%",
+                animation: "footerGradientFlow 4s ease infinite",
+                color: "white",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <Gamepad2 className="relative z-10 w-4 h-4" />
+              <span className="relative z-10">Flagship Games</span>
+              <svg
+                className="relative z-10 group-hover:translate-x-1 transition-transform"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </motion.div>
 
-            {/* Copyright - Moved to bottom center to avoid fixed chat button on right */}
+          {/* Links Grid - Ultra compact 4 columns on desktop */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: 0.05,
+                },
+              },
+            }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 mb-3"
+          >
+
+            {/* Product */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex justify-center border-t border-white/10 mt-8 pt-6 pb-6 md:pb-8"
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
             >
-              <p className="text-[12px] text-white/50 leading-relaxed text-center">
-                © {year} Deckoviz. All rights reserved.<br className="md:hidden" />
-                <span className="hidden md:inline"> • </span>
-                Made with <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Infinity }} className="inline-block text-pink-400">♥</motion.span> by Deckoviz Team
-              </p>
+              <h3 className="text-white font-semibold text-xs mb-1.5">Product</h3>
+              <ul className="space-y-0.5">
+                {productLinks.map((link) => (
+                  <motion.li key={link.name} whileHover={{ x: 3 }}>
+                    <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
+                      {link.name}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
             </motion.div>
 
-          </div>
+            {/* Company */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
+            >
+              <h3 className="text-white font-semibold text-xs mb-1.5">Company</h3>
+              <ul className="space-y-0.5">
+                {companyLinks.map((link) => (
+                  <motion.li key={link.name} whileHover={{ x: 3 }}>
+                    <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
+                      {link.name}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Legal */}
+            <motion.div
+              variants={{
+                hidden: { opacity: 0, y: 10 },
+                visible: { opacity: 1, y: 0 },
+              }}
+            >
+              <h3 className="text-white font-semibold text-xs mb-1.5">Legal</h3>
+              <ul className="space-y-0.5">
+                {legalLinks.map((link) => (
+                  <motion.li key={link.name} whileHover={{ x: 3 }}>
+                    <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
+                      {link.name}
+                    </a>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+          </motion.div>
+
+          {/* Copyright - Moved to bottom center to avoid fixed chat button on right */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex justify-center border-t border-white/10 mt-8 pt-6 pb-6 md:pb-8"
+          >
+            <p className="text-[12px] text-white/50 leading-relaxed text-center">
+              © {year} Deckoviz. All rights reserved.<br className="md:hidden" />
+              <span className="hidden md:inline"> • </span>
+              Made with <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Infinity }} className="inline-block text-pink-400">♥</motion.span> by Deckoviz Team
+            </p>
+          </motion.div>
+
         </div>
-        
-      </footer>
+      </div>
+
+    </footer>
   )
 }
 
