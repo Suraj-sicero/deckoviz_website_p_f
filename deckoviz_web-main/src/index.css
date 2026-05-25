@@ -580,3 +580,12 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+@keyframes wave {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 14px;
+  }
+}
