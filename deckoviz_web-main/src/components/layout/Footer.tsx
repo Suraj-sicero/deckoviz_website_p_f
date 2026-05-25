@@ -8,7 +8,8 @@ import {
   Wand2,
   FlaskConical,
   BookOpen,
-  Brush
+  Brush,
+  Gamepad2
 } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -295,17 +296,17 @@ const Footer = () => {
 
               <a
                 href="/flagship-games"
-                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
                 style={{
                   background: "linear-gradient(135deg, #f43f5e, #be123c, #9333ea, #be123c, #f43f5e)",
                   backgroundSize: "300% 300%",
                   animation: "footerGradientFlow 4s ease infinite",
                   color: "white",
-                  boxShadow: "0 4px 20px rgba(244,63,94,0.4)",
                 }}
               >
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-                <span className="relative z-10">🎮 Flagship Games</span>
+                <Gamepad2 className="relative z-10 w-4 h-4" />
+                <span className="relative z-10">Flagship Games</span>
                 <svg
                   className="relative z-10 group-hover:translate-x-1 transition-transform"
                   width="16"
