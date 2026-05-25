@@ -3,6 +3,7 @@
 import type React from "react";
 import { useState, useEffect } from "react";
 import { Menu, X, ChevronDown, ArrowRight, User, LogOut, Volume2, VolumeX, SkipBack, SkipForward, ShoppingBag } from "lucide-react";
+import { useLocation } from "react-router-dom";
 
 import { useAudio } from "../AudioProvider";
 import { useAuth } from "../../context/AuthContext";
@@ -133,9 +134,11 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
 };
 
 const Navbar: React.FC = () => {
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const isCreativeJournalPage = currentPath === "/creative-journal";
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [currentPath, setCurrentPath] = useState("");
   const [isBusinessDropdownOpen, setIsBusinessDropdownOpen] =
     useState<boolean>(false);
 
@@ -145,10 +148,6 @@ const Navbar: React.FC = () => {
   const { isPlaying, toggle, next, prev } = useAudio();
   const { user, logout, openAuthModal } = useAuth();
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-
-  useEffect(() => {
-    setCurrentPath(window.location.pathname);
-  }, []);
 
   useEffect(() => {
     const handleScroll = (): void => {
@@ -297,19 +296,21 @@ const Navbar: React.FC = () => {
         className={`fixed top-4 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-700 pointer-events-none ${!isNavbarVisible ? "-translate-y-[150%] opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
       >
         {/* Left Artistic Corner Ornament */}
-        <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-2 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full transition-all hover:scale-[1.03] select-none">
-          <div className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+        {isCreativeJournalPage && (
+          <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-2 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full transition-all hover:scale-[1.03] select-none">
+            <div className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+            </div>
+            <span className="text-[10px] font-bold tracking-[0.25em] text-white uppercase">
+              DECKOVIZ
+            </span>
+            <div className="h-3.5 w-[1.5px] bg-white/20" />
+            <span className="text-[9px] text-blue-200/80 font-bold tracking-widest uppercase">
+              SPACE LABS
+            </span>
           </div>
-          <span className="text-[10px] font-bold tracking-[0.25em] text-white uppercase">
-            DECKOVIZ
-          </span>
-          <div className="h-3.5 w-[1.5px] bg-white/20" />
-          <span className="text-[9px] text-blue-200/80 font-bold tracking-widest uppercase">
-            SPACE LABS
-          </span>
-        </div>
+        )}
 
         <div 
           className={`pointer-events-auto flex items-center justify-between w-full max-w-7xl h-14 rounded-full px-2 md:px-4 transition-all duration-700 ${
@@ -806,24 +807,26 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Right Ambient Audio Badge */}
-        <div 
-          onClick={toggle}
-          className="absolute right-6 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-3 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full cursor-pointer transition-all hover:scale-[1.03] select-none"
-          title="Toggle Ambient Audio"
-        >
-          <span className="text-[9px] text-white font-bold tracking-widest uppercase">
-            AMBIENT MUSIC
-          </span>
-          <div className="h-3.5 w-[1.5px] bg-white/20" />
-          
-          {/* Animated sound bars */}
-          <div className="flex items-end gap-[3px] h-3 w-5">
-            <div className={`w-[2.5px] bg-blue-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-1'}`} style={{ animationDelay: '0.1s' }} />
-            <div className={`w-[2.5px] bg-indigo-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-2.5'}`} style={{ animationDelay: '0.3s' }} />
-            <div className={`w-[2.5px] bg-violet-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-1.5'}`} style={{ animationDelay: '0.5s' }} />
-            <div className={`w-[2.5px] bg-fuchsia-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-2'}`} style={{ animationDelay: '0.7s' }} />
+        {isCreativeJournalPage && (
+          <div 
+            onClick={toggle}
+            className="absolute right-6 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-3 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full cursor-pointer transition-all hover:scale-[1.03] select-none"
+            title="Toggle Ambient Audio"
+          >
+            <span className="text-[9px] text-white font-bold tracking-widest uppercase">
+              AMBIENT MUSIC
+            </span>
+            <div className="h-3.5 w-[1.5px] bg-white/20" />
+            
+            {/* Animated sound bars */}
+            <div className="flex items-end gap-[3px] h-3 w-5">
+              <div className={`w-[2.5px] bg-blue-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-1'}`} style={{ animationDelay: '0.1s' }} />
+              <div className={`w-[2.5px] bg-indigo-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-2.5'}`} style={{ animationDelay: '0.3s' }} />
+              <div className={`w-[2.5px] bg-violet-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-1.5'}`} style={{ animationDelay: '0.5s' }} />
+              <div className={`w-[2.5px] bg-fuchsia-400 rounded-full transition-all duration-300 ${isPlaying ? 'animate-[wave_1.2s_infinite_ease-in-out]' : 'h-2'}`} style={{ animationDelay: '0.7s' }} />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Mobile Navigation - Premium Glassmorphic Drawer */}
         <div
