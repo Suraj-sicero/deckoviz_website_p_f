@@ -297,7 +297,7 @@ const Navbar: React.FC = () => {
         className={`fixed top-4 left-0 right-0 z-[100] flex justify-center px-4 transition-all duration-700 pointer-events-none ${!isNavbarVisible ? "-translate-y-[150%] opacity-0" : "translate-y-0 opacity-100"} print:hidden`}
       >
         {/* Left Artistic Corner Ornament */}
-        <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-2 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full transition-all hover:scale-[1.03] select-none">
+        <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden 2xl:flex items-center gap-2 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full transition-all hover:scale-[1.03] select-none">
           <div className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
@@ -820,7 +820,7 @@ const Navbar: React.FC = () => {
         {/* Right Ambient Audio Badge */}
         <div 
           onClick={toggle}
-          className="absolute right-6 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-3 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full cursor-pointer transition-all hover:scale-[1.03] select-none"
+          className="absolute right-6 top-1/2 -translate-y-1/2 hidden 2xl:flex items-center gap-3 pointer-events-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.2)] px-4 py-2 rounded-full cursor-pointer transition-all hover:scale-[1.03] select-none"
           title="Toggle Ambient Audio"
         >
           <span className="text-[9px] text-white font-bold tracking-widest uppercase">
