@@ -3466,3 +3466,54 @@
 [2026-05-24T16:53:34.825Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-05-25T14:11:37.625Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-05-25T14:11:39.520Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T08:11:50.690Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T08:11:52.678Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T08:16:23.694Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T08:16:25.591Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T12:16:22.436Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T12:16:24.528Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:26:48.679Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:26:51.245Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:27:08.835Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:27:10.677Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:27:33.787Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:27:35.554Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:27:43.646Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:27:45.497Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:27:53.246Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:27:55.022Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:28:01.163Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:28:02.955Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:28:06.070Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:28:07.970Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:28:17.221Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:28:19.008Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:28:25.183Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:28:27.061Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:28:32.071Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:28:33.855Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:28:39.126Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:28:40.881Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:28:49.013Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:28:50.763Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:29:09.975Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:29:11.812Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:29:23.365Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:29:25.218Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:38:10.819Z] ERROR: [ElevenLabs Generation Error] TypeError: pdfParse is not a function
+[2026-05-26T13:38:21.558Z] ERROR: [ElevenLabs Generation Error] TypeError: pdfParse is not a function
+[2026-05-26T13:39:17.662Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:39:19.454Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:39:41.257Z] ERROR: [ElevenLabs Generation Error] Error: ElevenLabs API error: {"detail":{"type":"not_found","code":"voice_not_found","message":"A voice with voice_id 'JBF2zhwipOFgJZnmhJgt' was not found.","status":"voice_not_found","request_id":"44c194feb380a39bb0ccffd00a555e69"}}
+[2026-05-26T13:40:35.431Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:40:37.184Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:40:50.183Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:40:51.987Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:40:56.057Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:40:57.843Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:41:34.415Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:41:36.198Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-26T13:41:47.389Z] ERROR: [ElevenLabs Generation Error] Error: ElevenLabs API error: {"detail":{"type":"authorization_error","code":"subscription_required","message":"Model is not available on the free tier. The eleven_monolingual_v1 and eleven_multilingual_v1 models are deprecated and have been removed from the free tier. Please migrate to newer models for continued service.","status":"model_deprecated_free_tier","request_id":"c4de96999ad66398748642bee33273dd"}}
+[2026-05-26T13:42:19.865Z] ERROR: [ElevenLabs Generation Error] Error: ElevenLabs API error: {"detail":{"type":"authorization_error","code":"subscription_required","message":"Model is not available on the free tier. The eleven_monolingual_v1 and eleven_multilingual_v1 models are deprecated and have been removed from the free tier. Please migrate to newer models for continued service.","status":"model_deprecated_free_tier","request_id":"e725c44095a72921ff9b3c2a45c4db36"}}
+[2026-05-26T13:52:24.420Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-26T13:52:26.525Z] LOG: ✅ PostgreSQL connected via Sequelize.

@@ -83,6 +83,7 @@ import CreativeJournalTool from "./components/tools/CreativeJournalTool";
 import AudiobookTool from "./components/tools/AudiobookTool";
 import StorybookTool from "./components/tools/StorybookTool";
 import MusicTool from "./components/tools/MusicTool";
+import SoundscapesTool from "./components/tools/SoundscapesTool";
 import VisualJournalTool from "./components/tools/VisualJournalTool";
 import ShortStoryTool from "./components/tools/ShortStoryTool";
 import GreetingCardTool from "./components/tools/GreetingCardTool";
@@ -432,6 +433,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/tools/storybook-studio" element={<ProtectedRoute><StorybookStudioTool /></ProtectedRoute>} />
           <Route path="/tools/daily" element={<ProtectedRoute><DailyInspirationTool /></ProtectedRoute>} />
           <Route path="/tools/music" element={<ProtectedRoute><MusicTool /></ProtectedRoute>} />
+          <Route path="/tools/soundscapes" element={<SoundscapesTool />} />
+          <Route path="/soundscapes" element={<SoundscapesTool />} />
           <Route path="/tools/postcard" element={<PostcardTool />} />
           <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
           <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />

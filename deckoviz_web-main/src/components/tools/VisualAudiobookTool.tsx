@@ -61,7 +61,7 @@ const VisualAudiobookTool: React.FC = () => {
           if (json.status === "processing") return;
           clearInterval(intervalRef.current!);
 
-          if (json.status === "done") {
+          if (json.status === "done" || json.status === "completed") {
             setDownloadId(jobId);
             setStatus("done");
             setStatusMsg("Your visual audiobook is ready!");

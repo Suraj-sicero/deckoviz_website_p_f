@@ -165,6 +165,16 @@ const toolCategories = [
         creditCost: "5 credits / 5 mins",
       },
       {
+        id: "soundscapes",
+        title: "Deckoviz Soundscapes",
+        description: "Intelligent mood engine combining ambient noise layers, classical tracks, and custom binaural beats.",
+        icon: "🔮",
+        route: "/tools/soundscapes",
+        badge: "New",
+        accent: "cyan",
+        creditCost: "Free",
+      },
+      {
         id: "song",
         title: "Personalized Song Creator",
         description: "Generate custom lyrics and an original song dedicated to someone special.",

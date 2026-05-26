@@ -41,6 +41,7 @@ import {
 import solarWindRouter from "./routes/solarWind.js";
 import earthquakesRouter from "./routes/earthquakes.js";
 import agenticPresetsRouter from "./routes/agenticPresets.js";
+import soundscapeRoutes from "./routes/soundscapeRoutes.js";
 import creativeJournalRoutes from "./routes/creativeJournalRoutes.js";
 import { User } from "./models/User.js";
 import Stripe from "stripe";
@@ -256,6 +257,7 @@ app.use("/api", worldRoutes);
 app.use("/api/solar-wind", solarWindRouter);
 app.use("/api/earthquakes", earthquakesRouter);
 app.use("/api/agentic-presets", agenticPresetsRouter);
+app.use("/api/soundscapes", soundscapeRoutes);
 app.use("/api/creative-journal", creativeJournalRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/flagship-games/story-forge", storyForgeRoutes);

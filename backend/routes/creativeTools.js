@@ -16,6 +16,11 @@ import multer from "multer";
 import dotenv from "dotenv";
 import { Readable } from "node:stream";
 
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+const pdfParse = require("pdf-parse");
+const AdmZip = require("adm-zip");
+
 // Node 18+ includes global fetch; if you are on Node 16, run: npm i node-fetch
 // and add: import fetch from "node-fetch";
 
@@ -142,7 +147,7 @@ router.post("/audiobook/generate", upload.single("pdf"), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: "Missing PDF file" });
 
-    const { frames = "5", style = "british-male" } = req.body;
+    const { frames = "1", style = "british-male" } = req.body;
 
     // Build FormData to forward to HF Space
     const { Blob } = await import("node:buffer");
@@ -171,10 +176,10 @@ router.post("/audiobook/generate", upload.single("pdf"), async (req, res) => {
 });
 
 /**
- * GET /api/audiobook/status/:jobId
+ * GET /api/audiobook/status/:jobId and GET /api/audiobook/result/:jobId
  * Polls the HF Space for job completion
  */
-router.get("/audiobook/status/:jobId", async (req, res) => {
+router.get(["/audiobook/status/:jobId", "/audiobook/result/:jobId"], async (req, res) => {
   try {
     const { jobId } = req.params;
     const hfRes = await fetch(`${HF_AUDIOBOOK_URL}/result/${jobId}`);
@@ -198,7 +203,7 @@ router.get("/audiobook/download/:jobId", async (req, res) => {
     if (!hfRes.ok) return res.status(502).json({ error: "Download failed" });
 
     res.setHeader("Content-Type", "application/zip");
-    res.setHeader("Content-Disposition", `attachment; filename="visual_audiobook.zip"`);
+    res.setHeader("Content-Disposition", `attachment; filename="audiobook_${jobId}.zip"`);
     
     // Node.js 18+ fetch returns a Web ReadableStream. Express res needs a Node stream.
     if (hfRes.body) {
