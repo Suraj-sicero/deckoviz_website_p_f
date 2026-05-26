@@ -57,12 +57,15 @@ const Audiobook: React.FC = () => {
 
           clearInterval(interval);
 
-          setStatus("Preparing download...");
-
-          await downloadZip(jobId);
-
-          setStatus("Download started");
-          setLoading(false);
+          if (json.status === "done" || json.status === "completed") {
+            setStatus("Preparing download...");
+            await downloadZip(jobId);
+            setStatus("Download started");
+            setLoading(false);
+          } else {
+            setStatus("Error generating audiobook");
+            setLoading(false);
+          }
 
         } catch (err) {
           console.error("Polling error:", err);

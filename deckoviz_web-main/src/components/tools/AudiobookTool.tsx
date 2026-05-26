@@ -1,9 +1,21 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { PDFDocument } from "pdf-lib";
 import ToolLayout from "./ToolLayout";
 import { useAuth } from "../../context/AuthContext";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
-const HF_AUDIOBOOK_URL = "https://sudharsan051006-visual-audiobook-api.hf.space";
+const HF_AUDIOBOOK_URL = `${BACKEND_URL}/api/audiobook`;
+
+interface PDFChunk {
+  name: string;
+  blob: Blob;
+  start: number;
+  end: number;
+  status: "idle" | "uploading" | "processing" | "done" | "error";
+  statusMsg: string;
+  downloadId: string | null;
+  error: string;
+}
 
 type Status = "idle" | "uploading" | "processing" | "done" | "error";
 
@@ -11,11 +23,14 @@ const AudiobookTool: React.FC = () => {
   const { deductCredits } = useAuth();
   const [file, setFile] = useState<File | null>(null);
   const [voice, setVoice] = useState("british-male");
-  const [frames, setFrames] = useState(5);
+  const [frames, setFrames] = useState(1);
   const [status, setStatus] = useState<Status>("idle");
   const [statusMsg, setStatusMsg] = useState("");
   const [downloadId, setDownloadId] = useState<string | null>(null);
   const [error, setError] = useState("");
+  const [chunks, setChunks] = useState<PDFChunk[]>([]);
+  const [isSplitting, setIsSplitting] = useState(false);
+  const [isGeneratingAll, setIsGeneratingAll] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const voiceOptions = [
@@ -28,8 +43,7 @@ const AudiobookTool: React.FC = () => {
   ];
 
   const generate = async () => {
-    const hasCredits = await deductCredits(5); // Default to 5, can be adjusted
-    if (!hasCredits) return;
+    // Bypassed credit deduction for testing
     if (!file) { setError("Please upload a PDF first."); return; }
     setError(""); setStatus("uploading"); setStatusMsg("Uploading PDF...");
 
@@ -65,7 +79,7 @@ const AudiobookTool: React.FC = () => {
           if (json.status === "processing") return;
           clearInterval(intervalRef.current!);
 
-          if (json.status === "done") {
+          if (json.status === "done" || json.status === "completed") {
             setDownloadId(jobId);
             setStatus("done");
             setStatusMsg("Your audiobook is ready!");
@@ -84,6 +98,227 @@ const AudiobookTool: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (!file) {
+      setChunks([]);
+      return;
+    }
+
+    const analyzeAndSplitPDF = async () => {
+      setIsSplitting(true);
+      setError("");
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdfDoc = await PDFDocument.load(arrayBuffer);
+        const totalPages = pdfDoc.getPageCount();
+
+        if (totalPages > 100) {
+          const chunkList: PDFChunk[] = [];
+          const chunkSize = 100;
+          for (let i = 0; i < totalPages; i += chunkSize) {
+            const start = i;
+            const end = Math.min(i + chunkSize, totalPages);
+
+            const chunkDoc = await PDFDocument.create();
+            const pageIndices = Array.from({ length: end - start }, (_, index) => start + index);
+            const copiedPages = await chunkDoc.copyPages(pdfDoc, pageIndices);
+            copiedPages.forEach((page) => chunkDoc.addPage(page));
+
+            const chunkBytes = await chunkDoc.save();
+            const chunkBlob = new Blob([chunkBytes as any], { type: "application/pdf" });
+
+            const extensionIndex = file.name.lastIndexOf('.');
+            const baseName = extensionIndex !== -1 ? file.name.substring(0, extensionIndex) : file.name;
+            const chunkName = `${baseName}_part${Math.floor(i / chunkSize) + 1}.pdf`;
+
+            chunkList.push({
+              name: chunkName,
+              blob: chunkBlob,
+              start: start + 1,
+              end: end,
+              status: "idle",
+              statusMsg: "",
+              downloadId: null,
+              error: ""
+            });
+          }
+          setChunks(chunkList);
+        } else {
+          setChunks([]);
+        }
+      } catch (err: any) {
+        console.error("PDF parse error:", err);
+        setError("Failed to load or parse PDF. It might be corrupted or secured.");
+      } finally {
+        setIsSplitting(false);
+      }
+    };
+
+    analyzeAndSplitPDF();
+  }, [file]);
+
+  const updateChunk = (index: number, fields: Partial<PDFChunk>) => {
+    setChunks((prev) => {
+      const copy = [...prev];
+      copy[index] = { ...copy[index], ...fields };
+      return copy;
+    });
+  };
+
+  const generateChunk = async (index: number) => {
+    const chunk = chunks[index];
+    if (!chunk) return;
+
+    // Bypassed credit deduction for testing
+
+    updateChunk(index, { status: "uploading", statusMsg: "Uploading part...", error: "" });
+
+    const formData = new FormData();
+    formData.append("pdf", chunk.blob, chunk.name);
+    formData.append("frames", frames.toString());
+    formData.append("style", voice);
+
+    try {
+      const res = await fetch(`${HF_AUDIOBOOK_URL}/generate`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || "Upload failed");
+      }
+
+      const data = await res.json();
+      const jobId = data.job_id as string;
+
+      updateChunk(index, { status: "processing", statusMsg: "Generating part...", downloadId: null });
+
+      let pollCount = 0;
+      const interval = setInterval(async () => {
+        try {
+          const poll = await fetch(`${HF_AUDIOBOOK_URL}/result/${jobId}`);
+          if (!poll.ok) return;
+          const json = await poll.json();
+
+          if (json.status === "processing") {
+            pollCount++;
+            if (pollCount > 120) {
+              throw new Error("Job timed out. Please try again.");
+            }
+            return;
+          }
+
+          clearInterval(interval);
+          if (json.status === "done" || json.status === "completed") {
+            updateChunk(index, {
+              status: "done",
+              statusMsg: "Ready!",
+              downloadId: jobId
+            });
+          } else {
+            throw new Error(json.message || "Generation failed");
+          }
+        } catch (e: any) {
+          clearInterval(interval);
+          updateChunk(index, {
+            status: "error",
+            error: e.message || "Something went wrong while polling."
+          });
+        }
+      }, 5000);
+
+    } catch (e: any) {
+      updateChunk(index, {
+        status: "error",
+        error: e.message || "Failed to start generation."
+      });
+    }
+  };
+
+  const generateAllChunks = async () => {
+    setIsGeneratingAll(true);
+    for (let i = 0; i < chunks.length; i++) {
+      if (chunks[i].status === "done") continue;
+
+      try {
+        await new Promise<void>(async (resolve, reject) => {
+          // Bypassed credit deduction for testing
+
+          updateChunk(i, { status: "uploading", statusMsg: "Uploading part...", error: "" });
+
+          const formData = new FormData();
+          formData.append("pdf", chunks[i].blob, chunks[i].name);
+          formData.append("frames", frames.toString());
+          formData.append("style", voice);
+
+          try {
+            const res = await fetch(`${HF_AUDIOBOOK_URL}/generate`, {
+              method: "POST",
+              body: formData,
+            });
+
+            if (!res.ok) {
+              const msg = await res.text();
+              throw new Error(msg || "Upload failed");
+            }
+
+            const data = await res.json();
+            const jobId = data.job_id as string;
+
+            updateChunk(i, { status: "processing", statusMsg: "Generating part...", downloadId: null });
+
+            const interval = setInterval(async () => {
+              try {
+                const poll = await fetch(`${HF_AUDIOBOOK_URL}/result/${jobId}`);
+                if (!poll.ok) return;
+                const json = await poll.json();
+
+                if (json.status === "processing") return;
+
+                clearInterval(interval);
+                if (json.status === "done" || json.status === "completed") {
+                  updateChunk(i, {
+                    status: "done",
+                    statusMsg: "Ready!",
+                    downloadId: jobId
+                  });
+                  resolve();
+                } else {
+                  throw new Error(json.message || "Generation failed");
+                }
+              } catch (e: any) {
+                clearInterval(interval);
+                updateChunk(i, {
+                  status: "error",
+                  error: e.message || "Something went wrong while polling."
+                });
+                reject(e);
+              }
+            }, 5000);
+          } catch (e: any) {
+            updateChunk(i, {
+              status: "error",
+              error: e.message || "Failed to start generation."
+            });
+            reject(e);
+          }
+        });
+      } catch (err) {
+        console.error(`Sequential run failed for chunk ${i}:`, err);
+        break;
+      }
+    }
+    setIsGeneratingAll(false);
+  };
+
+  const handleDownloadChunk = (downloadId: string) => {
+    const url = `${HF_AUDIOBOOK_URL}/download/${downloadId}`;
+    const a = document.createElement("a");
+    a.href = url; a.download = "visual_audiobook.zip";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  };
+
   const handleDownload = () => {
     if (!downloadId) return;
     const url = `${HF_AUDIOBOOK_URL}/download/${downloadId}`;
@@ -94,7 +329,9 @@ const AudiobookTool: React.FC = () => {
 
   const reset = () => {
     setFile(null); setStatus("idle"); setStatusMsg("");
-    setDownloadId(null); setError(""); setFrames(5); setVoice("british-male");
+    setDownloadId(null); setError(""); setFrames(1); setVoice("british-male");
+    setChunks([]);
+    setIsGeneratingAll(false);
     if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
@@ -174,50 +411,135 @@ const AudiobookTool: React.FC = () => {
             </div>
           </div>
 
-          {/* Frames slider */}
-          <div className="mb-8">
-            <label className="block text-sm font-semibold text-gray-700 mb-2">
-              Number of Visual Frames: <span className="text-violet-600">{frames}</span>
-            </label>
-            <input
-              type="range"
-              min={1} max={20} step={1}
-              value={frames}
-              onChange={(e) => setFrames(Number(e.target.value))}
-              className="w-full accent-violet-600"
-            />
-            <p className="text-xs text-gray-400 mt-1">
-              Higher = more visual snapshots through your PDF (slower processing)
-            </p>
-          </div>
-
-          {/* Error */}
-          {error && (
-            <div className="mb-4 px-4 py-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
-              ⚠️ {error}
-            </div>
+          {/* Generate Button (only for small PDFs) */}
+          {chunks.length === 0 && (
+            <button
+              onClick={generate}
+              disabled={isRunning || isSplitting}
+              className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 ${
+                isRunning || isSplitting
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-gradient-to-r from-violet-600 via-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] shadow-lg"
+              }`}
+            >
+              {isSplitting ? (
+                <span className="flex items-center justify-center gap-3">
+                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  Analyzing PDF...
+                </span>
+              ) : isRunning ? (
+                <span className="flex items-center justify-center gap-3">
+                  <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                  </svg>
+                  {statusMsg}
+                </span>
+              ) : "🎙️ Generate Audiobook"}
+            </button>
           )}
 
-          {/* Generate Button */}
-          <button
-            onClick={generate}
-            disabled={isRunning}
-            className={`w-full py-4 rounded-2xl font-bold text-white text-base transition-all duration-300 ${
-              isRunning
-                ? "bg-gray-300 cursor-not-allowed"
-                : "bg-gradient-to-r from-violet-600 via-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] shadow-lg"
-            }`}
-          >
-            {isRunning ? (
-              <span className="flex items-center justify-center gap-3">
-                <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-                </svg>
-                {statusMsg}
-              </span>
-            ) : "🎙️ Generate Audiobook"}
-          </button>
+          {/* Chunks List (for heavy PDFs) */}
+          {chunks.length > 0 && (
+            <div className="mt-8 border-t border-gray-100 pt-8">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900">📚 Heavy Book Detected ({chunks.length} parts)</h3>
+                  <p className="text-xs text-gray-500 mt-0.5">We split books larger than 100 pages into chunks for faster processing.</p>
+                </div>
+                <button
+                  onClick={generateAllChunks}
+                  disabled={isGeneratingAll || chunks.every(c => c.status === "done")}
+                  className={`px-5 py-2.5 rounded-xl font-bold text-sm text-white transition-all duration-300 ${
+                    isGeneratingAll || chunks.every(c => c.status === "done")
+                      ? "bg-gray-300 cursor-not-allowed"
+                      : "bg-violet-600 hover:bg-violet-500 shadow-md hover:scale-[1.02]"
+                  }`}
+                >
+                  {isGeneratingAll ? "🎙️ Generating all..." : "⚡ Generate All Parts"}
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {chunks.map((chunk, idx) => {
+                  const isChunkRunning = chunk.status === "uploading" || chunk.status === "processing";
+                  return (
+                    <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-gray-50 border border-gray-100 rounded-2xl gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-violet-100 flex items-center justify-center font-bold text-violet-700 text-sm">
+                          {idx + 1}
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-semibold text-gray-800 text-sm truncate max-w-[200px] sm:max-w-[300px]">
+                            {chunk.name}
+                          </p>
+                          <p className="text-xs text-gray-400">
+                            Pages {chunk.start} – {chunk.end}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-3 justify-end flex-shrink-0">
+                        {chunk.statusMsg && (
+                          <span className="text-xs text-violet-600 animate-pulse font-medium">
+                            {chunk.statusMsg}
+                          </span>
+                        )}
+                        {chunk.error && (
+                          <span className="text-xs text-red-500 font-medium">
+                            ⚠️ {chunk.error}
+                          </span>
+                        )}
+
+                        {chunk.status === "idle" && (
+                          <button
+                            onClick={() => generateChunk(idx)}
+                            disabled={isGeneratingAll}
+                            className={`px-4 py-2 bg-white border border-violet-200 text-violet-700 text-xs font-bold rounded-xl transition-all duration-200 shadow-sm ${
+                              isGeneratingAll ? "opacity-50 cursor-not-allowed" : "hover:border-violet-300 hover:shadow"
+                            }`}
+                          >
+                            🎙️ Generate
+                          </button>
+                        )}
+                        {chunk.status === "error" && (
+                          <button
+                            onClick={() => generateChunk(idx)}
+                            disabled={isGeneratingAll}
+                            className={`px-4 py-2 bg-red-50 border border-red-200 text-red-700 text-xs font-bold rounded-xl transition-all duration-200 ${
+                              isGeneratingAll ? "opacity-50 cursor-not-allowed" : "hover:bg-red-100"
+                            }`}
+                          >
+                            🔄 Retry
+                          </button>
+                        )}
+                        {isChunkRunning && (
+                          <div className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-violet-600 bg-violet-50/50 rounded-xl">
+                            <svg className="w-3.5 h-3.5 animate-spin text-violet-600" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                            </svg>
+                            Processing...
+                          </div>
+                        )}
+                        {chunk.status === "done" && chunk.downloadId && (
+                          <button
+                            onClick={() => handleDownloadChunk(chunk.downloadId!)}
+                            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition-all duration-200 shadow-md shadow-emerald-600/20"
+                          >
+                            📥 Download ZIP
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* ── Processing State ────────────────────────────────────────── */}
