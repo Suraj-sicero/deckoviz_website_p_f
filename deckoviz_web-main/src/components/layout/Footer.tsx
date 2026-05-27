@@ -23,7 +23,6 @@ const productLinks = [
   { name: "FAQ", path: "/faq" },
   { name: "Subscriptions & more Info", path: "/generalinfo" },
   { name: "Stories in Sound", path: "/audiobook" },
-  { name: "Deckoviz soundscrape", path: "/soundscapes" },
 ]
 
 const companyLinks = [
@@ -325,34 +324,6 @@ const Footer = () => {
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <Gamepad2 className="relative z-10 w-4 h-4" />
               <span className="relative z-10">Flagship Games</span>
-              <svg
-                className="relative z-10 group-hover:translate-x-1 transition-transform"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-
-            <a
-              href="/soundscapes"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-              style={{
-                background: "linear-gradient(135deg, #4338ca, #3b82f6, #06b6d4, #3b82f6, #4338ca)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <span className="relative z-10">🔮 Deckoviz soundscrape</span>
               <svg
                 className="relative z-10 group-hover:translate-x-1 transition-transform"
                 width="16"
