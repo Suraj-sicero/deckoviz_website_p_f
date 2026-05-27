@@ -44,7 +44,7 @@ const ToolLayout: React.FC<ToolLayoutProps> = ({
           <div className="flex items-center gap-4 mb-4">
             <span className="text-5xl">{icon}</span>
             <div>
-              <h1 className="text-3xl md:text-4xl font-black text-white leading-tight">{title}</h1>
+              <h1 className="text-3xl md:text-4xl font-serif font-black text-white leading-tight">{title}</h1>
               <p className="text-white/75 text-base md:text-lg mt-1">{subtitle}</p>
             </div>
           </div>

@@ -462,6 +462,22 @@ const SoundscapesTool: React.FC = () => {
   // Classical Music Player State & Ref
   const classicalAudioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlayingClassical, setIsPlayingClassical] = useState(false);
+  const synthIntervalRef = useRef<any>(null);
+  const isPlayingClassicalRef = useRef(isPlayingClassical);
+
+  const stopSynthPianoFallback = () => {
+    if (synthIntervalRef.current) {
+      clearInterval(synthIntervalRef.current);
+      synthIntervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    isPlayingClassicalRef.current = isPlayingClassical;
+    if (!isPlayingClassical) {
+      stopSynthPianoFallback();
+    }
+  }, [isPlayingClassical]);
   const [currentTrack, setCurrentTrack] = useState<ClassicalTrack | null>(null);
   const [classicalVolume, setClassicalVolume] = useState(0.5);
   const [classicalLoop, setClassicalLoop] = useState(true);
@@ -474,7 +490,7 @@ const SoundscapesTool: React.FC = () => {
 
   // Ambient sound procedural generation state
   // Stores active nodes for ambient sources
-  const ambientNodesRef = useRef<Record<string, { source: AudioNode; gain: GainNode; extraNodes?: AudioNode[] }>>({});
+  const ambientNodesRef = useRef<Record<string, { source: AudioNode; gain: GainNode; extraNodes?: AudioNode[]; timerId?: any }>>({});
   const [ambientVolumes, setAmbientVolumes] = useState<Record<string, number>>({});
   const [ambientCategoryFilter, setAmbientCategoryFilter] = useState<string>("All");
 
@@ -500,6 +516,18 @@ const SoundscapesTool: React.FC = () => {
   // Visualizer Canvas Ref & Mode
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [activeVisualizer, setActiveVisualizer] = useState<string>("waveform");
+
+  // Refs to prevent stale closures in requestAnimationFrame loop
+  const activeVisualizerRef = useRef(activeVisualizer);
+  const currentMoodRef = useRef(currentMood);
+
+  useEffect(() => {
+    activeVisualizerRef.current = activeVisualizer;
+  }, [activeVisualizer]);
+
+  useEffect(() => {
+    currentMoodRef.current = currentMood;
+  }, [currentMood]);
 
   // Deckoviz Mock integration
   const [attachedFrame, setAttachedFrame] = useState<string | null>(null);
@@ -613,6 +641,7 @@ const SoundscapesTool: React.FC = () => {
   useEffect(() => {
     return () => {
       // Stop classical
+      stopSynthPianoFallback();
       if (classicalAudioRef.current) {
         classicalAudioRef.current.pause();
       }
@@ -629,6 +658,10 @@ const SoundscapesTool: React.FC = () => {
   // --- BINAURAL SYNTHESIZER ---
   const startBinaural = () => {
     if (!audioContextRef.current || !binauralGainRef.current) return;
+    
+    if (audioContextRef.current.state === "suspended") {
+      audioContextRef.current.resume();
+    }
     
     stopBinaural(); // stop old nodes
 
@@ -697,6 +730,11 @@ const SoundscapesTool: React.FC = () => {
   // --- PROCEDURAL AMBIENT SYNTHESIS ENGINES ---
   const startAmbientSynth = (name: string, vol: number) => {
     if (!audioContextRef.current || !ambientGainRef.current) return;
+    
+    if (audioContextRef.current.state === "suspended") {
+      audioContextRef.current.resume();
+    }
+
     if (ambientNodesRef.current[name]) {
       // update volume only
       ambientNodesRef.current[name].gain.gain.setTargetAtTime(vol, audioContextRef.current.currentTime, 0.1);
@@ -774,29 +812,111 @@ const SoundscapesTool: React.FC = () => {
       sourceNode = noise;
       extraNodes = [filter];
     }
-    else if (name === "Wind" || name === "Forest") {
-      // Filtered noise modulated by an LFO to simulate gusts
+    else if (name === "Wind") {
+      // Wind gusts: bandpass pink noise swept by an LFO
       const noise = createNoiseBuffer("pink");
       const filter = ctx.createBiquadFilter();
       filter.type = "bandpass";
-      filter.frequency.value = 400;
-      filter.Q.value = 2.0;
+      filter.frequency.value = 350;
+      filter.Q.value = 1.5;
 
       const lfo = ctx.createOscillator();
-      lfo.frequency.value = 0.08; // 12-second gusts
+      lfo.frequency.value = 0.06; // 16s gusts
       const lfoGain = ctx.createGain();
-      lfoGain.gain.value = 250;
+      lfoGain.gain.value = 180;
 
       lfo.connect(lfoGain);
       lfoGain.connect(filter.frequency);
       lfo.start(0);
 
+      const windGain = ctx.createGain();
+      windGain.gain.value = 0.35;
+
       noise.connect(filter);
-      filter.connect(subGain);
+      filter.connect(windGain);
+      windGain.connect(subGain);
       noise.start(0);
 
       sourceNode = noise;
-      extraNodes = [filter, lfo, lfoGain];
+      extraNodes = [filter, lfo, lfoGain, windGain];
+    }
+    else if (name === "Forest") {
+      // Canopy breeze: low-pass pink noise swept by a slow LFO
+      const breeze = createNoiseBuffer("pink");
+      const breezeFilter = ctx.createBiquadFilter();
+      breezeFilter.type = "lowpass";
+      breezeFilter.frequency.value = 600;
+
+      const breezeLfo = ctx.createOscillator();
+      breezeLfo.frequency.value = 0.06; // 16s gusts
+      const breezeLfoGain = ctx.createGain();
+      breezeLfoGain.gain.value = 200; // sweep +/- 200Hz
+
+      breezeLfo.connect(breezeLfoGain);
+      breezeLfoGain.connect(breezeFilter.frequency);
+      breezeLfo.start(0);
+
+      const breezeGain = ctx.createGain();
+      breezeGain.gain.value = 0.25;
+
+      breeze.connect(breezeFilter);
+      breezeFilter.connect(breezeGain);
+      breezeGain.connect(subGain);
+      breeze.start(0);
+
+      // Leaves rustling: crackling high-pass white noise
+      const rustle = createNoiseBuffer("white");
+      const rustleFilter = ctx.createBiquadFilter();
+      rustleFilter.type = "bandpass";
+      rustleFilter.frequency.value = 3200;
+      rustleFilter.Q.value = 0.6;
+
+      const rustleGain = ctx.createGain();
+      rustleGain.gain.value = 0.02; // very quiet crackling
+
+      rustle.connect(rustleFilter);
+      rustleFilter.connect(rustleGain);
+      rustleGain.connect(subGain);
+      rustle.start(0);
+
+      // Distant bird chirps loop in buffer
+      const sampleRate = ctx.sampleRate;
+      const chirpBufDuration = 10.0;
+      const chirpBufSize = sampleRate * chirpBufDuration;
+      const chirpBuffer = ctx.createBuffer(1, chirpBufSize, sampleRate);
+      const chirpData = chirpBuffer.getChannelData(0);
+
+      const renderForestBird = (startTime: number, freq: number) => {
+        const startSample = Math.floor(startTime * sampleRate);
+        const duration = 0.12;
+        const endSample = Math.floor((startTime + duration) * sampleRate);
+        let phase = 0;
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= chirpBufSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          const amp = Math.sin(progress * Math.PI) * Math.exp(-progress * 2.0);
+          phase += (2 * Math.PI * freq * (1.0 + progress * 0.2)) / sampleRate;
+          chirpData[i] += Math.sin(phase) * amp * 0.03;
+        }
+      };
+
+      // Gentle intermittent forest chirps
+      renderForestBird(2.0, 3200);
+      renderForestBird(2.2, 3500);
+      renderForestBird(5.5, 2900);
+      renderForestBird(8.0, 3100);
+
+      const birdsSource = ctx.createBufferSource();
+      birdsSource.buffer = chirpBuffer;
+      birdsSource.loop = true;
+      birdsSource.connect(subGain);
+      birdsSource.start(0);
+
+      sourceNode = breeze;
+      extraNodes = [
+        breezeFilter, breezeLfo, breezeLfoGain, breezeGain,
+        rustle, rustleFilter, rustleGain, birdsSource
+      ];
     }
     else if (name === "Fireplace") {
       // Crackle generator: Pink noise low pass + random clicks
@@ -834,33 +954,798 @@ const SoundscapesTool: React.FC = () => {
       sourceNode = noise;
       extraNodes = [filter, clicks, clickFilter];
     }
-    else if (name === "Sci-fi hum" || name === "Alien atmosphere" || name === "Space ambience") {
-      // Layer detuned low sine oscillators
+    else if (name === "Thunderstorm") {
+      // Rain base: Layer 1 (White noise bandpass) + Layer 2 (Pink noise lowpass) for thick lush rain
+      const rainNoise = createNoiseBuffer("white");
+      const rainFilter = ctx.createBiquadFilter();
+      rainFilter.type = "bandpass";
+      rainFilter.frequency.value = 1200;
+      rainFilter.Q.value = 0.8;
+
+      rainNoise.connect(rainFilter);
+      rainFilter.connect(subGain);
+      rainNoise.start(0);
+
+      const rainNoise2 = createNoiseBuffer("pink");
+      const rainFilter2 = ctx.createBiquadFilter();
+      rainFilter2.type = "lowpass";
+      rainFilter2.frequency.value = 1500;
+
+      rainNoise2.connect(rainFilter2);
+      rainFilter2.connect(subGain);
+      rainNoise2.start(0);
+
+      // Lightning crack: high/mid bandpass white noise burst
+      const lightningNoise = createNoiseBuffer("white");
+      const lightningFilter = ctx.createBiquadFilter();
+      lightningFilter.type = "bandpass";
+      lightningFilter.frequency.value = 1800;
+      lightningFilter.Q.value = 3.0;
+
+      const lightningGain = ctx.createGain();
+      lightningGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+
+      lightningNoise.connect(lightningFilter);
+      lightningFilter.connect(lightningGain);
+      lightningGain.connect(subGain);
+      lightningNoise.start(0);
+
+      // Deep rolling thunder rumble: lowpass brown noise
+      const thunderNoise = createNoiseBuffer("brown");
+      const thunderFilter = ctx.createBiquadFilter();
+      thunderFilter.type = "lowpass";
+      thunderFilter.frequency.value = 85; // extremely low rumble
+
+      const thunderGain = ctx.createGain();
+      thunderGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+
+      thunderNoise.connect(thunderFilter);
+      thunderFilter.connect(thunderGain);
+      thunderGain.connect(subGain);
+      thunderNoise.start(0);
+
+      // Trigger first thunder strike after 1.5 seconds so the user hears it immediately
+      const initialStrike = ctx.currentTime + 1.5;
+      lightningGain.gain.setValueAtTime(0.0001, initialStrike);
+      lightningGain.gain.exponentialRampToValueAtTime(0.35, initialStrike + 0.04); // loud crack
+      lightningGain.gain.exponentialRampToValueAtTime(0.0001, initialStrike + 0.5);
+
+      const initialRumble = initialStrike + 0.25; // delay of sound speed
+      thunderGain.gain.setValueAtTime(0.0001, initialRumble);
+      thunderGain.gain.exponentialRampToValueAtTime(0.7, initialRumble + 0.15); // strike boom
+      thunderGain.gain.setValueAtTime(0.7, initialRumble + 0.7);
+      thunderGain.gain.linearRampToValueAtTime(0.35, initialRumble + 1.8);
+      thunderGain.gain.exponentialRampToValueAtTime(0.0001, initialRumble + 5.0);
+
+      // Schedule subsequent randomized thunder strikes
+      let timerId: any = null;
+      const scheduleNextThunder = () => {
+        const nextDelay = 7000 + Math.random() * 9000; // random delay between 7 and 16 seconds
+        timerId = setTimeout(() => {
+          if (!audioContextRef.current || !ambientNodesRef.current["Thunderstorm"]) return;
+          const currentCtx = audioContextRef.current;
+          const strikeTime = currentCtx.currentTime;
+
+          // Lightning crack
+          lightningGain.gain.cancelScheduledValues(strikeTime);
+          lightningGain.gain.setValueAtTime(0.0001, strikeTime);
+          lightningGain.gain.exponentialRampToValueAtTime(0.35, strikeTime + 0.04);
+          lightningGain.gain.exponentialRampToValueAtTime(0.0001, strikeTime + 0.6);
+
+          // Deep roll (delayed)
+          const rumbleStart = strikeTime + 0.15 + Math.random() * 0.35;
+          thunderGain.gain.cancelScheduledValues(rumbleStart);
+          thunderGain.gain.setValueAtTime(0.0001, rumbleStart);
+          thunderGain.gain.exponentialRampToValueAtTime(0.75, rumbleStart + 0.15);
+          thunderGain.gain.setValueAtTime(0.75, rumbleStart + 0.7);
+          thunderGain.gain.linearRampToValueAtTime(0.4, rumbleStart + 1.8);
+          thunderGain.gain.exponentialRampToValueAtTime(0.12, rumbleStart + 3.2);
+          thunderGain.gain.exponentialRampToValueAtTime(0.0001, rumbleStart + 5.5);
+
+          scheduleNextThunder();
+        }, nextDelay);
+
+        // Store the timer on the node object so stopAmbientSynth can clear it
+        if (ambientNodesRef.current["Thunderstorm"]) {
+          ambientNodesRef.current["Thunderstorm"].timerId = timerId;
+        }
+      };
+
+      // Defer starting the scheduler slightly to let startAmbientSynth finish node registration
+      setTimeout(() => {
+        scheduleNextThunder();
+      }, 200);
+
+      sourceNode = rainNoise;
+      extraNodes = [
+        rainFilter,
+        rainNoise2,
+        rainFilter2,
+        lightningNoise,
+        lightningFilter,
+        lightningGain,
+        thunderNoise,
+        thunderFilter,
+        thunderGain
+      ];
+    }
+    else if (name === "Ocean Waves") {
+      // Pink noise modulated by a very slow LFO (breath of the sea)
+      const noise = createNoiseBuffer("pink");
+      
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 350; // starts low
+
+      // LFO modulates both filter frequency and gain to simulate waves washing in and out
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = 0.12; // ~8.3 seconds per wave cycle
+      
+      const lfoFilterGain = ctx.createGain();
+      lfoFilterGain.gain.value = 250; // modulate filter frequency between 100Hz and 600Hz
+
+      const lfoVolumeGain = ctx.createGain();
+      lfoVolumeGain.gain.value = 0.4; // modulate volume
+
+      // Modulate filter frequency
+      lfo.connect(lfoFilterGain);
+      lfoFilterGain.connect(filter.frequency);
+
+      // Modulate subGain or a local gain node
+      const waveGain = ctx.createGain();
+      waveGain.gain.value = 0.5;
+      lfo.connect(lfoVolumeGain);
+      lfoVolumeGain.connect(waveGain.gain);
+
+      noise.connect(filter);
+      filter.connect(waveGain);
+      waveGain.connect(subGain);
+      
+      lfo.start(0);
+      noise.start(0);
+
+      sourceNode = noise;
+      extraNodes = [filter, lfo, lfoFilterGain, lfoVolumeGain, waveGain];
+    }
+    else if (name === "Waterfall") {
+      // Continuous rushing white/pink noise blend with a steady wash
+      const whiteNoise = createNoiseBuffer("white");
+      const pinkNoise = createNoiseBuffer("pink");
+
+      const filterWhite = ctx.createBiquadFilter();
+      filterWhite.type = "bandpass";
+      filterWhite.frequency.value = 1500;
+      filterWhite.Q.value = 0.7;
+
+      const filterPink = ctx.createBiquadFilter();
+      filterPink.type = "lowpass";
+      filterPink.frequency.value = 600;
+
+      const whiteGain = ctx.createGain();
+      whiteGain.gain.value = 0.3;
+      const pinkGain = ctx.createGain();
+      pinkGain.gain.value = 0.7;
+
+      whiteNoise.connect(filterWhite);
+      filterWhite.connect(whiteGain);
+      whiteGain.connect(subGain);
+
+      pinkNoise.connect(filterPink);
+      filterPink.connect(pinkGain);
+      pinkGain.connect(subGain);
+
+      whiteNoise.start(0);
+      pinkNoise.start(0);
+
+      sourceNode = pinkNoise;
+      extraNodes = [whiteNoise, filterWhite, filterPink, whiteGain, pinkGain];
+    }
+    else if (name === "Bird Songs") {
+      // Procedurally generate a 6-second bird chirp loop in a buffer
+      const sampleRate = ctx.sampleRate;
+      const bufferDuration = 6.0;
+      const bufferSize = sampleRate * bufferDuration;
+      const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      // Function to render a single chirp sweep into the buffer
+      const renderChirp = (startTime: number, duration: number, startFreq: number, endFreq: number) => {
+        const startSample = Math.floor(startTime * sampleRate);
+        const endSample = Math.floor((startTime + duration) * sampleRate);
+        
+        let phase = 0;
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= bufferSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          
+          // Frequency sweep (linear or exponential)
+          const freq = startFreq + (endFreq - startFreq) * progress;
+          
+          // Amplitude envelope: fade in quickly, fade out smoothly
+          let amp = 0;
+          if (progress < 0.2) {
+            amp = progress / 0.2;
+          } else {
+            amp = (1.0 - progress) / 0.8;
+          }
+          
+          // Add some vibrato
+          const vibrato = Math.sin(progress * Math.PI * 30) * 0.15;
+          
+          phase += (2 * Math.PI * freq) / sampleRate;
+          data[i] = Math.sin(phase + vibrato) * amp * 0.25;
+        }
+      };
+
+      // Render a few natural chirping patterns
+      renderChirp(0.5, 0.12, 3000, 4500);
+      renderChirp(0.7, 0.10, 3200, 4800);
+      renderChirp(0.9, 0.15, 3000, 4200);
+
+      renderChirp(2.2, 0.08, 4000, 2500);
+      renderChirp(2.35, 0.08, 4000, 2500);
+      
+      renderChirp(4.0, 0.14, 2800, 5000);
+      renderChirp(4.2, 0.14, 2800, 5000);
+      renderChirp(4.5, 0.25, 3500, 3200); // longer whistle
+
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.loop = true;
+      source.connect(subGain);
+      source.start(0);
+
+      sourceNode = source;
+    }
+    else if (name === "River Flow") {
+      // Continuous rushing pink noise + gurgling/bubbling modulated bandpass filter
+      const rushNoise = createNoiseBuffer("pink");
+      const rushFilter = ctx.createBiquadFilter();
+      rushFilter.type = "bandpass";
+      rushFilter.frequency.value = 450;
+      rushFilter.Q.value = 1.2;
+
+      rushNoise.connect(rushFilter);
+      rushFilter.connect(subGain);
+      rushNoise.start(0);
+
+      // Bubbling element: bandpass filtered white noise with fast random frequency sweeps
+      const bubbleNoise = createNoiseBuffer("white");
+      const bubbleFilter = ctx.createBiquadFilter();
+      bubbleFilter.type = "bandpass";
+      bubbleFilter.frequency.value = 800;
+      bubbleFilter.Q.value = 4.0; // resonant to sound like bubbles
+
+      // LFO to modulate bubble frequency rapidly
+      const lfo = ctx.createOscillator();
+      lfo.frequency.value = 4.5; // rapid bubbling speed
+      const lfoGain = ctx.createGain();
+      lfoGain.gain.value = 300; // swing frequency by 300Hz
+
+      lfo.connect(lfoGain);
+      lfoGain.connect(bubbleFilter.frequency);
+      lfo.start(0);
+
+      const bubbleGain = ctx.createGain();
+      bubbleGain.gain.value = 0.15; // subtle bubbles
+
+      bubbleNoise.connect(bubbleFilter);
+      bubbleFilter.connect(bubbleGain);
+      bubbleGain.connect(subGain);
+      bubbleNoise.start(0);
+
+      sourceNode = rushNoise;
+      extraNodes = [rushFilter, bubbleNoise, bubbleFilter, bubbleGain, lfo, lfoGain];
+    }
+    else if (name === "Café ambience") {
+      // Chatter murmur: low-passed pink noise for a soft background crowd
+      const murmur = createNoiseBuffer("pink");
+      const murmurFilter = ctx.createBiquadFilter();
+      murmurFilter.type = "lowpass";
+      murmurFilter.frequency.value = 220; // low frequency cut to avoid static noise
+      
+      const murmurGain = ctx.createGain();
+      murmurGain.gain.value = 0.25; // soft level for non-intrusive background chatter
+
+      murmur.connect(murmurFilter);
+      murmurFilter.connect(murmurGain);
+      murmurGain.connect(subGain);
+      murmur.start(0);
+
+      // Cup clinks buffer
+      const sampleRate = ctx.sampleRate;
+      const bufferDuration = 10.0;
+      const bufferSize = sampleRate * bufferDuration;
+      const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      const renderClink = (startTime: number, freq: number, duration: number) => {
+        const startSample = Math.floor(startTime * sampleRate);
+        const endSample = Math.floor((startTime + duration) * sampleRate);
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= bufferSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          const amp = Math.exp(-progress * 15.0); // fast decay
+          data[i] += Math.sin(2 * Math.PI * freq * progress) * amp * 0.03; // softer clink
+        }
+      };
+
+      // Render a few sporadic clinks
+      renderClink(1.2, 2200, 0.15);
+      renderClink(3.5, 2800, 0.10);
+      renderClink(5.8, 1900, 0.20);
+      renderClink(7.1, 2400, 0.12);
+      renderClink(8.9, 3100, 0.08);
+
+      const clinksSource = ctx.createBufferSource();
+      clinksSource.buffer = buffer;
+      clinksSource.loop = true;
+      clinksSource.connect(subGain);
+      clinksSource.start(0);
+
+      sourceNode = murmur;
+      extraNodes = [murmurFilter, murmurGain, clinksSource];
+    }
+    else if (name === "Library ambience") {
+      // Room tone: low pass brown noise (very low deep rumble)
+      const room = createNoiseBuffer("brown");
+      const roomFilter = ctx.createBiquadFilter();
+      roomFilter.type = "lowpass";
+      roomFilter.frequency.value = 90;
+      
+      const roomGain = ctx.createGain();
+      roomGain.gain.value = 0.25;
+
+      room.connect(roomFilter);
+      roomFilter.connect(roomGain);
+      roomGain.connect(subGain);
+      room.start(0);
+
+      // Page rustles buffer
+      const sampleRate = ctx.sampleRate;
+      const bufferDuration = 12.0;
+      const bufferSize = sampleRate * bufferDuration;
+      const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      const renderPageTurn = (startTime: number) => {
+        const startSample = Math.floor(startTime * sampleRate);
+        const duration = 0.6; // 0.6 seconds page turn
+        const endSample = Math.floor((startTime + duration) * sampleRate);
+        
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= bufferSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          // page turn sound: noise with envelope + modulation
+          const envelope = Math.sin(progress * Math.PI) * (Math.random() * 0.02);
+          data[i] += envelope;
+        }
+      };
+
+      // Render a couple page turns
+      renderPageTurn(3.0);
+      renderPageTurn(8.5);
+
+      const pageSource = ctx.createBufferSource();
+      pageSource.buffer = buffer;
+      pageSource.loop = true;
+
+      // Filter the page rustles to sound papery
+      const pageFilter = ctx.createBiquadFilter();
+      pageFilter.type = "bandpass";
+      pageFilter.frequency.value = 1400;
+      pageFilter.Q.value = 1.0;
+
+      pageSource.connect(pageFilter);
+      pageFilter.connect(subGain);
+      pageSource.start(0);
+
+      sourceNode = room;
+      extraNodes = [roomFilter, roomGain, pageSource, pageFilter];
+    }
+    else if (name === "Keyboard typing") {
+      const sampleRate = ctx.sampleRate;
+      const bufferDuration = 4.0;
+      const bufferSize = sampleRate * bufferDuration;
+      const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      const renderClick = (time: number) => {
+        const startSample = Math.floor(time * sampleRate);
+        const duration = 0.015; // 15ms click
+        const endSample = Math.floor((time + duration) * sampleRate);
+        
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= bufferSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          const amp = Math.exp(-progress * 22.0);
+          data[i] += (Math.random() * 2 - 1) * amp * 0.04; // softer mechanical typing
+        }
+      };
+
+      // Render a sequence of typing keys with natural spacing
+      const keystrokes = [
+        0.1, 0.25, 0.38, 0.55, 0.72, 0.88, 1.1, 1.25, 1.38, 1.5, 1.7, 1.85,
+        2.2, 2.35, 2.48, 2.65, 2.8, 3.0, 3.15, 3.3, 3.45, 3.7
+      ];
+      keystrokes.forEach(renderClick);
+
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.loop = true;
+
+      // Filter typing clicks to sound like actual mechanical keys (woody and soft)
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.value = 800;
+      filter.Q.value = 1.5;
+
+      const lowpass = ctx.createBiquadFilter();
+      lowpass.type = "lowpass";
+      lowpass.frequency.value = 1200;
+
+      source.connect(filter);
+      filter.connect(lowpass);
+      lowpass.connect(subGain);
+      source.start(0);
+
+      sourceNode = source;
+      extraNodes = [filter, lowpass];
+    }
+    else if (name === "Tokyo night") {
+      // Traffic rumble: low-pass pink noise for distant hum
+      const traffic = createNoiseBuffer("pink");
+      const trafficFilter = ctx.createBiquadFilter();
+      trafficFilter.type = "lowpass";
+      trafficFilter.frequency.value = 150;
+
+      const trafficGain = ctx.createGain();
+      trafficGain.gain.value = 0.2; // soft night hum
+
+      traffic.connect(trafficFilter);
+      trafficFilter.connect(trafficGain);
+      trafficGain.connect(subGain);
+      traffic.start(0);
+
+      // Iconic Japanese crossing chime: "pi-po" chime in an 8-second loop
+      const sampleRate = ctx.sampleRate;
+      const bufferDuration = 8.0;
+      const bufferSize = sampleRate * bufferDuration;
+      const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      const renderChimeNote = (startTime: number, freq: number) => {
+        const startSample = Math.floor(startTime * sampleRate);
+        const duration = 0.25;
+        const endSample = Math.floor((startTime + duration) * sampleRate);
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= bufferSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          const amp = Math.sin(progress * Math.PI) * Math.exp(-progress * 2.0);
+          data[i] += Math.sin(2 * Math.PI * freq * progress) * amp * 0.04; // softer chime
+        }
+      };
+
+      // "Pi-po ... Pi-po" crossing signal chime
+      renderChimeNote(1.0, 880); // Pi
+      renderChimeNote(1.4, 698); // Po
+      renderChimeNote(2.2, 880); // Pi
+      renderChimeNote(2.6, 698); // Po
+
+      const chimeSource = ctx.createBufferSource();
+      chimeSource.buffer = buffer;
+      chimeSource.loop = true;
+      chimeSource.connect(subGain);
+      chimeSource.start(0);
+
+      sourceNode = traffic;
+      extraNodes = [trafficFilter, trafficGain, chimeSource];
+    }
+    else if (name === "Train ambience") {
+      // Train cabin rumble: low pass pink noise
+      const rumble = createNoiseBuffer("pink");
+      const rumbleFilter = ctx.createBiquadFilter();
+      rumbleFilter.type = "lowpass";
+      rumbleFilter.frequency.value = 90;
+
+      const rumbleGain = ctx.createGain();
+      rumbleGain.gain.value = 0.3; // subtle cabin pressure hum
+
+      rumble.connect(rumbleFilter);
+      rumbleFilter.connect(rumbleGain);
+      rumbleGain.connect(subGain);
+      rumble.start(0);
+
+      // Rhythmic track joint clicks ("clack-clack")
+      const sampleRate = ctx.sampleRate;
+      const bufferDuration = 2.0;
+      const bufferSize = sampleRate * bufferDuration;
+      const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      const renderClack = (time: number, volume: number) => {
+        const startSample = Math.floor(time * sampleRate);
+        const duration = 0.05;
+        const endSample = Math.floor((time + duration) * sampleRate);
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= bufferSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          const amp = Math.exp(-progress * 25.0);
+          data[i] += (Math.random() * 2 - 1) * amp * volume * 0.04; // softer train tracks
+        }
+      };
+
+      // Double beat clack-clack every 2 seconds
+      renderClack(0.2, 1.0);
+      renderClack(0.35, 0.7);
+      
+      renderClack(1.0, 1.0);
+      renderClack(1.15, 0.7);
+
+      const tracksSource = ctx.createBufferSource();
+      tracksSource.buffer = buffer;
+      tracksSource.loop = true;
+
+      const tracksFilter = ctx.createBiquadFilter();
+      tracksFilter.type = "bandpass";
+      tracksFilter.frequency.value = 300;
+      tracksFilter.Q.value = 1.2;
+
+      tracksSource.connect(tracksFilter);
+      tracksFilter.connect(subGain);
+      tracksSource.start(0);
+
+      sourceNode = rumble;
+      extraNodes = [rumbleFilter, rumbleGain, tracksSource, tracksFilter];
+    }
+    else if (name === "Airport ambience") {
+      // Deep terminal room tone: low-pass pink noise (removes harsh high frequencies)
+      const hum = createNoiseBuffer("pink");
+      const humFilter = ctx.createBiquadFilter();
+      humFilter.type = "lowpass";
+      humFilter.frequency.value = 180;
+
+      const humGain = ctx.createGain();
+      humGain.gain.value = 0.15; // much softer terminal hum
+
+      hum.connect(humFilter);
+      humFilter.connect(humGain);
+      humGain.connect(subGain);
+      hum.start(0);
+
+      // Distant crowd murmur: bandpass pink noise at 400Hz with volume modulation
+      const chatter = createNoiseBuffer("pink");
+      const chatterFilter = ctx.createBiquadFilter();
+      chatterFilter.type = "bandpass";
+      chatterFilter.frequency.value = 400;
+      chatterFilter.Q.value = 1.5;
+
+      const chatterGain = ctx.createGain();
+      chatterGain.gain.value = 0.06;
+
+      const chatterLfo = ctx.createOscillator();
+      chatterLfo.frequency.value = 0.05; // very slow wave
+      const chatterLfoGain = ctx.createGain();
+      chatterLfoGain.gain.value = 0.03;
+
+      chatterLfo.connect(chatterLfoGain);
+      chatterLfoGain.connect(chatterGain.gain);
+      chatterLfo.start(0);
+
+      chatter.connect(chatterFilter);
+      chatterFilter.connect(chatterGain);
+      chatterGain.connect(subGain);
+      chatter.start(0);
+
+      // Sweet airport chime announcement in a 16-second loop
+      const sampleRate = ctx.sampleRate;
+      const bufferDuration = 16.0;
+      const bufferSize = sampleRate * bufferDuration;
+      const buffer = ctx.createBuffer(1, bufferSize, sampleRate);
+      const data = buffer.getChannelData(0);
+
+      const renderTone = (startTime: number, freq: number) => {
+        const startSample = Math.floor(startTime * sampleRate);
+        const duration = 0.8;
+        const endSample = Math.floor((startTime + duration) * sampleRate);
+        for (let i = startSample; i < endSample; i++) {
+          if (i >= bufferSize) break;
+          const progress = (i - startSample) / (endSample - startSample);
+          // Soft sine wave chime note
+          const amp = Math.sin(progress * Math.PI) * Math.exp(-progress * 2.5);
+          data[i] += Math.sin(2 * Math.PI * freq * progress) * amp * 0.03; // softer chime
+        }
+      };
+
+      // F-A-C-F chime arpeggio
+      renderTone(2.0, 349.23); // F4
+      renderTone(2.4, 440.00); // A4
+      renderTone(2.8, 523.25); // C5
+      renderTone(3.2, 698.46); // F5
+
+      const chimeSource = ctx.createBufferSource();
+      chimeSource.buffer = buffer;
+      chimeSource.loop = true;
+      chimeSource.connect(subGain);
+      chimeSource.start(0);
+
+      sourceNode = hum;
+      extraNodes = [humFilter, humGain, chatter, chatterFilter, chatterGain, chatterLfo, chatterLfoGain, chimeSource];
+    }
+    else if (name === "Dreamscape") {
+      // Ethereal sweeping pad layer
       const osc1 = ctx.createOscillator();
-      osc1.frequency.value = name === "Sci-fi hum" ? 60 : 50;
+      osc1.frequency.value = 110;
       osc1.type = "sine";
 
       const osc2 = ctx.createOscillator();
-      osc2.frequency.value = name === "Sci-fi hum" ? 120.4 : 75.8;
-      osc2.type = "triangle";
+      osc2.frequency.value = 165.2; // perfect fifth
+      osc2.type = "sine";
 
-      const lowGain = ctx.createGain();
-      lowGain.gain.value = 0.6;
+      const osc3 = ctx.createOscillator();
+      osc3.frequency.value = 220.4; // octave
+      osc3.type = "sine";
 
+      // LFOs to sweep frequencies gently
+      const lfo1 = ctx.createOscillator();
+      lfo1.frequency.value = 0.05; // 20s sweep
+      const lfoGain1 = ctx.createGain();
+      lfoGain1.gain.value = 2; // sweep by 2Hz
+
+      const lfo2 = ctx.createOscillator();
+      lfo2.frequency.value = 0.03; // 33s sweep
+      const lfoGain2 = ctx.createGain();
+      lfoGain2.gain.value = 3;
+
+      lfo1.connect(lfoGain1);
+      lfoGain1.connect(osc1.frequency);
+      lfo2.connect(lfoGain2);
+      lfoGain2.connect(osc2.frequency);
+
+      // Route through a resonant filter to give it a sweeping lush space feel
       const filter = ctx.createBiquadFilter();
       filter.type = "lowpass";
-      filter.frequency.value = 150;
+      filter.frequency.value = 250;
+      filter.Q.value = 3.0; // high resonance
 
-      osc1.connect(lowGain);
-      osc2.connect(lowGain);
-      lowGain.connect(filter);
+      const lfoFilter = ctx.createOscillator();
+      lfoFilter.frequency.value = 0.08;
+      const lfoFilterGain = ctx.createGain();
+      lfoFilterGain.gain.value = 150; // sweep filter between 100Hz and 400Hz
+
+      lfoFilter.connect(lfoFilterGain);
+      lfoFilterGain.connect(filter.frequency);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      osc3.connect(filter);
       filter.connect(subGain);
 
+      lfo1.start(0);
+      lfo2.start(0);
+      lfoFilter.start(0);
+      osc1.start(0);
+      osc2.start(0);
+      osc3.start(0);
+
+      sourceNode = osc1;
+      extraNodes = [osc2, osc3, lfo1, lfoGain1, lfo2, lfoGain2, filter, lfoFilter, lfoFilterGain];
+    }
+    else if (name === "Space ambience") {
+      // Deep engine hum
+      const osc1 = ctx.createOscillator();
+      osc1.frequency.value = 55; // A1
+      osc1.type = "sine";
+
+      const osc2 = ctx.createOscillator();
+      osc2.frequency.value = 110.2; // A2 + detune
+      osc2.type = "sine";
+
+      const humGain = ctx.createGain();
+      humGain.gain.value = 0.35;
+
+      osc1.connect(humGain);
+      osc2.connect(humGain);
+      humGain.connect(subGain);
+      osc1.start(0);
+      osc2.start(0);
+
+      // Cosmic sweeping wind: pink noise swept by LFO
+      const wind = createNoiseBuffer("pink");
+      const windFilter = ctx.createBiquadFilter();
+      windFilter.type = "bandpass";
+      windFilter.frequency.value = 400;
+      windFilter.Q.value = 1.0;
+
+      const windGain = ctx.createGain();
+      windGain.gain.value = 0.15;
+
+      const windLfo = ctx.createOscillator();
+      windLfo.frequency.value = 0.04; // 25s period
+      const windLfoGain = ctx.createGain();
+      windLfoGain.gain.value = 250; // sweep +/- 250Hz
+
+      windLfo.connect(windLfoGain);
+      windLfoGain.connect(windFilter.frequency);
+      windLfo.start(0);
+
+      wind.connect(windFilter);
+      windFilter.connect(windGain);
+      windGain.connect(subGain);
+      wind.start(0);
+
+      sourceNode = osc1;
+      extraNodes = [osc2, humGain, wind, windFilter, windGain, windLfo, windLfoGain];
+    }
+    else if (name === "Sci-fi hum") {
+      // Pulsing power hum
+      const osc1 = ctx.createOscillator();
+      osc1.frequency.value = 60; // 60Hz power grid hum
+      osc1.type = "sine";
+
+      const osc2 = ctx.createOscillator();
+      osc2.frequency.value = 120.3; // Harmonic
+      osc2.type = "sine";
+
+      const humGain = ctx.createGain();
+      humGain.gain.value = 0.4;
+
+      // Pulse modulation: slow LFO modulates volume of the hum
+      const pulseLfo = ctx.createOscillator();
+      pulseLfo.frequency.value = 0.25; // 4s pulses
+      const pulseLfoGain = ctx.createGain();
+      pulseLfoGain.gain.value = 0.12; // vary volume by +/- 12%
+
+      pulseLfo.connect(pulseLfoGain);
+      pulseLfoGain.connect(humGain.gain);
+      pulseLfo.start(0);
+
+      osc1.connect(humGain);
+      osc2.connect(humGain);
+      humGain.connect(subGain);
       osc1.start(0);
       osc2.start(0);
 
       sourceNode = osc1;
-      extraNodes = [osc2, lowGain, filter];
+      extraNodes = [osc2, humGain, pulseLfo, pulseLfoGain];
+    }
+    else if (name === "Alien atmosphere") {
+      // Eerie, vibrato triangle pad
+      const osc1 = ctx.createOscillator();
+      osc1.frequency.value = 80;
+      osc1.type = "sine";
+
+      const osc2 = ctx.createOscillator();
+      osc2.frequency.value = 120.7; // detuned fifth
+      osc2.type = "triangle";
+
+      const oscGain = ctx.createGain();
+      oscGain.gain.value = 0.12;
+
+      // Filter to make triangle soft and mysterious
+      const filter = ctx.createBiquadFilter();
+      filter.type = "lowpass";
+      filter.frequency.value = 220;
+
+      // Slow vibrato
+      const vibratoLfo = ctx.createOscillator();
+      vibratoLfo.frequency.value = 0.1; // slow pitch drift
+      const vibratoGain = ctx.createGain();
+      vibratoGain.gain.value = 4; // drift by 4Hz
+
+      vibratoLfo.connect(vibratoGain);
+      vibratoGain.connect(osc2.frequency);
+      vibratoLfo.start(0);
+
+      osc1.connect(filter);
+      osc2.connect(filter);
+      filter.connect(oscGain);
+      oscGain.connect(subGain);
+      osc1.start(0);
+      osc2.start(0);
+
+      sourceNode = osc1;
+      extraNodes = [osc2, oscGain, filter, vibratoLfo, vibratoGain];
     }
     else {
       // Fallback synthesizer: a gentle evolving sine wave layer
@@ -892,6 +1777,10 @@ const SoundscapesTool: React.FC = () => {
   const stopAmbientSynth = (name: string) => {
     const nodeObj = ambientNodesRef.current[name];
     if (!nodeObj) return;
+
+    if (nodeObj.timerId) {
+      clearTimeout(nodeObj.timerId);
+    }
 
     const ctx = audioContextRef.current;
     if (ctx) {
@@ -949,6 +1838,15 @@ const SoundscapesTool: React.FC = () => {
   const playClassicalTrack = (track: ClassicalTrack) => {
     if (!engineInitialized) initializeEngine();
     
+    if (audioContextRef.current && audioContextRef.current.state === "suspended") {
+      audioContextRef.current.resume();
+    }
+
+    stopSynthPianoFallback();
+    if (classicalAudioRef.current) {
+      classicalAudioRef.current.pause();
+    }
+
     // Check state initialization
     setTimeout(() => {
       if (!classicalAudioRef.current) return;
@@ -960,43 +1858,163 @@ const SoundscapesTool: React.FC = () => {
         .catch(err => {
           console.warn("Autoplay / load issue with track, playing synthesizer melody fallback.", err);
           // Synthesize fallback!
-          playSynthPianoFallback();
+          playSynthPianoFallback(track);
         });
     }, 100);
   };
 
   // Plays beautiful synthetic arpeggiated piano chords using Web Audio Oscillators
   // in case Wikimedia's CORS or loading fails
-  const playSynthPianoFallback = () => {
+  const playSynthPianoFallback = (track?: ClassicalTrack | null) => {
+    stopSynthPianoFallback();
     if (!audioContextRef.current || !classicalGainRef.current) return;
     const ctx = audioContextRef.current;
+
+    const targetTrack = track || currentTrack;
+
+    interface SynthPattern {
+      notes: number[];
+      tempo: number;
+      type: OscillatorType;
+    }
+
+    const SYNTH_PATTERNS: Record<string, SynthPattern> = {
+      "chopin-nocturne-op9-no2": {
+        notes: [311.13, 392.00, 466.16, 622.25, 466.16, 392.00], // Eb major
+        tempo: 600,
+        type: "sine"
+      },
+      "chopin-waltz-a-minor": {
+        notes: [220.00, 440.00, 523.25, 659.25, 523.25, 440.00], // A minor
+        tempo: 450,
+        type: "sine"
+      },
+      "chopin-prelude-e-minor": {
+        notes: [164.81, 329.63, 392.00, 493.88, 392.00, 329.63], // E minor
+        tempo: 700,
+        type: "sine"
+      },
+      "chopin-fantaisie-impromptu": {
+        notes: [277.18, 329.63, 415.30, 554.37, 659.25, 554.37], // C# minor
+        tempo: 220,
+        type: "sine"
+      },
+      "debussy-clair-de-lune": {
+        notes: [349.23, 440.00, 523.25, 587.33, 698.46, 587.33], // F major pentatonic
+        tempo: 800,
+        type: "sine"
+      },
+      "debussy-reverie": {
+        notes: [293.66, 349.23, 440.00, 587.33, 698.46],
+        tempo: 650,
+        type: "sine"
+      },
+      "beethoven-moonlight-sonata-1": {
+        notes: [220.00, 261.63, 329.63, 440.00, 329.63, 261.63], // Melancholic triplets
+        tempo: 550,
+        type: "sine"
+      },
+      "beethoven-symphony-5": {
+        notes: [392.00, 392.00, 392.00, 311.13, 0, 349.23, 349.23, 349.23, 293.66], // Da-da-da-dum!
+        tempo: 250,
+        type: "triangle"
+      },
+      "beethoven-symphony-9": {
+        notes: [329.63, 329.63, 349.23, 392.00, 392.00, 349.23, 329.63, 293.66], // Ode to Joy
+        tempo: 400,
+        type: "sine"
+      },
+      "beethoven-fur-elise": {
+        notes: [659.25, 622.25, 659.25, 622.25, 659.25, 493.88, 587.33, 523.25, 440.00], // Elise theme
+        tempo: 300,
+        type: "sine"
+      },
+      "mozart-symphony-40": {
+        notes: [587.33, 523.25, 523.25, 587.33, 523.25, 523.25, 659.25],
+        tempo: 300,
+        type: "sine"
+      },
+      "mozart-figaro-overture": {
+        notes: [293.66, 329.63, 392.00, 440.00, 587.33, 440.00],
+        tempo: 220,
+        type: "sine"
+      },
+      "mozart-rondo-alla-turca": {
+        notes: [440.00, 493.88, 523.25, 587.33, 659.25],
+        tempo: 200,
+        type: "sine"
+      },
+      "mozart-sonata-k545-1": {
+        notes: [523.25, 659.25, 783.99, 987.77, 1046.50],
+        tempo: 280,
+        type: "sine"
+      },
+      "bach-air-on-g": {
+        notes: [196.00, 196.00, 174.61, 164.81, 146.83],
+        tempo: 900,
+        type: "sine"
+      },
+      "bach-goldberg-aria": {
+        notes: [392.00, 392.00, 440.00, 392.00, 349.23, 329.63],
+        tempo: 500,
+        type: "sine"
+      },
+      "bach-cello-suite-1": {
+        notes: [146.83, 220.00, 293.66, 329.63, 349.23, 293.66, 349.23, 220.00],
+        tempo: 300,
+        type: "triangle"
+      },
+      "tchaikovsky-sugar-plum": {
+        notes: [987.77, 880.00, 783.99, 698.46, 587.33],
+        tempo: 350,
+        type: "sine"
+      },
+      "tchaikovsky-swan-lake": {
+        notes: [293.66, 349.23, 440.00, 523.25, 440.00],
+        tempo: 600,
+        type: "triangle"
+      },
+      "vivaldi-spring-1": {
+        notes: [659.25, 783.99, 659.25, 783.99, 880.00, 987.77],
+        tempo: 180,
+        type: "sine"
+      }
+    };
+
+    const pattern = (targetTrack && SYNTH_PATTERNS[targetTrack.id]) || {
+      notes: [261.63, 329.63, 392.00, 523.25, 392.00, 329.63], // Default C Major
+      tempo: 400,
+      type: "sine" as OscillatorType
+    };
     
-    // Play a sequence of minor/major arpeggios
-    const notes = [261.63, 329.63, 392.00, 523.25, 392.00, 329.63]; // C Major
+    const notes = pattern.notes;
     let index = 0;
     
-    const interval = setInterval(() => {
-      if (!isPlayingClassical) {
-        clearInterval(interval);
+    synthIntervalRef.current = setInterval(() => {
+      if (!isPlayingClassicalRef.current) {
+        stopSynthPianoFallback();
         return;
       }
       
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.setValueAtTime(notes[index], ctx.currentTime);
-      
-      gain.gain.setValueAtTime(0.08, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.2);
-      
-      osc.connect(gain);
-      gain.connect(classicalGainRef.current!);
-      
-      osc.start(0);
-      osc.stop(ctx.currentTime + 1.3);
+      const currentNote = notes[index];
+      if (currentNote > 0) {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = pattern.type;
+        osc.frequency.setValueAtTime(currentNote, ctx.currentTime);
+        
+        gain.gain.setValueAtTime(0.08, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (pattern.tempo * 3) / 1000);
+        
+        osc.connect(gain);
+        gain.connect(classicalGainRef.current!);
+        
+        osc.start(0);
+        osc.stop(ctx.currentTime + (pattern.tempo * 3.2) / 1000);
+      }
       
       index = (index + 1) % notes.length;
-    }, 400);
+    }, pattern.tempo);
     
     setIsPlayingClassical(true);
   };
@@ -1014,7 +2032,7 @@ const SoundscapesTool: React.FC = () => {
       if (currentTrack) {
         classicalAudioRef.current.play()
           .then(() => setIsPlayingClassical(true))
-          .catch(() => playSynthPianoFallback());
+          .catch(() => playSynthPianoFallback(currentTrack));
       } else if (CLASSICAL_TRACKS.length > 0) {
         playClassicalTrack(CLASSICAL_TRACKS[0]);
       }
@@ -1105,11 +2123,11 @@ const SoundscapesTool: React.FC = () => {
     ctx.clearRect(0, 0, w, h);
 
     // Dynamic color setup based on selected moodscape
-    const activeMood = MOODSCAPES[currentMood];
+    const activeMood = MOODSCAPES[currentMoodRef.current];
     const fillGlow = activeMood ? activeMood.glowColor : "rgba(139, 92, 246, 0.25)";
     const strokeColor = activeMood ? activeMood.particlesColor.replace(/[\d.]+\)$/, "0.8)") : "rgba(139, 92, 246, 0.8)";
 
-    if (activeVisualizer === "waveform") {
+    if (activeVisualizerRef.current === "waveform") {
       // Render beautiful oscilloscope curve
       const timeData = new Uint8Array(bufferLength);
       analyser.getByteTimeDomainData(timeData);
@@ -1137,7 +2155,7 @@ const SoundscapesTool: React.FC = () => {
       ctx.stroke();
       ctx.shadowBlur = 0; // reset
     } 
-    else if (activeVisualizer === "circular") {
+    else if (activeVisualizerRef.current === "circular") {
       // Circular expanding heartbeat pulse react to amplitude
       const center = { x: w / 2, y: h / 2 };
       let sum = 0;
@@ -1163,7 +2181,7 @@ const SoundscapesTool: React.FC = () => {
       ctx.fill();
       ctx.shadowBlur = 0;
     } 
-    else if (activeVisualizer === "spectrum") {
+    else if (activeVisualizerRef.current === "spectrum") {
       // Neon spectrum bar peaks
       const barWidth = (w / bufferLength) * 2.5;
       let barHeight;
@@ -1182,8 +2200,8 @@ const SoundscapesTool: React.FC = () => {
         x += barWidth;
       }
     }
-    else if (activeVisualizer === "glow") {
-      // Atmospheric ambient reactive background pulse
+    else if (activeVisualizerRef.current === "glow") {
+      // Atmospheric reactive background pulse
       let sum = 0;
       for (let i = 0; i < bufferLength; i++) sum += dataArray[i];
       const amplitude = sum / bufferLength;
@@ -1397,7 +2415,7 @@ const SoundscapesTool: React.FC = () => {
             <span className="text-[10px] uppercase tracking-widest font-black text-indigo-400 bg-indigo-900/40 border border-indigo-500/20 px-2.5 py-1 rounded-md">
               Ambiance Engine v1.4
             </span>
-            <h2 className="text-2xl font-black text-white mt-2 flex items-center gap-2">
+            <h2 className="text-2xl font-serif font-bold text-white mt-2 flex items-center gap-2">
               {MOODSCAPES[currentMood]?.name || "Custom Ambiance"}
               <Sparkles className="w-5 h-5 text-indigo-400 animate-pulse" />
             </h2>
@@ -1425,7 +2443,7 @@ const SoundscapesTool: React.FC = () => {
 
         {/* --- MOOD SELECTOR SECTION --- */}
         <div className="mb-8">
-          <h3 className="text-xs font-black tracking-wider text-white/50 uppercase mb-3 flex items-center gap-1.5">
+          <h3 className="text-xs font-serif font-bold tracking-wider text-white/50 uppercase mb-3 flex items-center gap-1.5">
             <Compass className="w-3.5 h-3.5" /> 1. Select a Moodscape
           </h3>
           <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-thin">
@@ -1455,7 +2473,7 @@ const SoundscapesTool: React.FC = () => {
             {/* 1. Ambient Sounds Mixer */}
             <div className="rounded-2xl bg-black/30 border border-white/5 p-5 backdrop-blur-xl">
               <div className="flex justify-between items-center mb-4">
-                <h4 className="text-sm font-black text-white flex items-center gap-2">
+                <h4 className="text-sm font-serif font-bold text-white flex items-center gap-2">
                   <Layers className="w-4 h-4 text-indigo-400" />
                   Ambient Mixing Layers
                 </h4>
@@ -1529,20 +2547,10 @@ const SoundscapesTool: React.FC = () => {
 
             {/* 2. Binaural Beats Generator */}
             <div className="rounded-2xl bg-black/30 border border-white/5 p-5 backdrop-blur-xl relative overflow-hidden">
-              {/* Headphone Prompt Info */}
-              {headphonePrompt && (
-                <div className="absolute top-2 right-2 bg-indigo-500/20 border border-indigo-500/40 rounded-xl p-2 max-w-[180px] z-10 text-[10px] text-indigo-300 flex items-start gap-1">
-                  <Headphones className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <span className="font-bold">Headphones Recommended</span>
-                    <p className="opacity-75 mt-0.5">Binaural beats require stereo separation to work.</p>
-                  </div>
-                  <button onClick={() => setHeadphonePrompt(false)} className="hover:text-white ml-auto">×</button>
-                </div>
-              )}
+
 
               <div className="flex justify-between items-center mb-4">
-                <h4 className="text-sm font-black text-white flex items-center gap-2">
+                <h4 className="text-sm font-serif font-bold text-white flex items-center gap-2">
                   <Radio className="w-4 h-4 text-purple-400" />
                   Binaural Brainwave Generator
                 </h4>
@@ -1662,6 +2670,15 @@ const SoundscapesTool: React.FC = () => {
                 </div>
 
               </div>
+
+              {/* Headphones Recommendation Prompt */}
+              <div className="mt-4 pt-3 border-t border-white/5 flex items-center gap-2.5 text-[10px] text-indigo-300 bg-indigo-950/20 px-3.5 py-2.5 rounded-xl border border-indigo-500/20">
+                <Headphones className="w-4 h-4 flex-shrink-0 text-indigo-400" />
+                <div>
+                  <span className="font-bold">Headphones Recommended:</span>
+                  <span className="opacity-80 ml-1">Binaural beats require stereo separation to work properly.</span>
+                </div>
+              </div>
             </div>
 
           </div>
@@ -1674,10 +2691,24 @@ const SoundscapesTool: React.FC = () => {
               
               {/* Library Header */}
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4">
-                <h4 className="text-sm font-black text-white flex items-center gap-2">
-                  <Music className="w-4 h-4 text-emerald-400" />
-                  Classical Masterworks
-                </h4>
+                <div className="flex items-center gap-3">
+                  <h4 className="text-sm font-serif font-bold text-white flex items-center gap-2">
+                    <Music className="w-4 h-4 text-emerald-400" />
+                    Classical Masterworks
+                  </h4>
+                  {currentTrack && (
+                    <button
+                      onClick={toggleClassicalPlay}
+                      className={`px-2 py-0.5 rounded text-[9px] font-bold transition-all ${
+                        isPlayingClassical
+                          ? "bg-red-500/20 text-red-300 border border-red-500/30 hover:bg-red-500/30"
+                          : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30"
+                      }`}
+                    >
+                      {isPlayingClassical ? "Turn Off" : "Turn On"}
+                    </button>
+                  )}
+                </div>
                 
                 {/* Search query */}
                 <input
@@ -1787,7 +2818,7 @@ const SoundscapesTool: React.FC = () => {
             {/* 4. Canvas Real-time Visualizer */}
             <div className="rounded-2xl bg-black/30 border border-white/5 p-5 backdrop-blur-xl">
               <div className="flex justify-between items-center mb-3">
-                <h4 className="text-sm font-black text-white flex items-center gap-2">
+                <h4 className="text-sm font-serif font-bold text-white flex items-center gap-2">
                   <Sliders className="w-4 h-4 text-indigo-400" />
                   Aesthetic Visualizer
                 </h4>
@@ -1840,7 +2871,7 @@ const SoundscapesTool: React.FC = () => {
         {/* --- DECKOVIZ FRAMES & STORYTELLING INTEGRATION --- */}
         <div className="rounded-2xl bg-black/30 border border-white/5 p-5 backdrop-blur-xl mb-8">
           <div className="flex justify-between items-center mb-4">
-            <h4 className="text-sm font-black text-white flex items-center gap-2">
+            <h4 className="text-sm font-serif font-bold text-white flex items-center gap-2">
               <Tv className="w-4 h-4 text-cyan-400" />
               Deckoviz Frame Integration
             </h4>
@@ -1987,17 +3018,17 @@ const SoundscapesTool: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         <div className="bg-slate-950/90 border border-indigo-950/30 rounded-2xl p-5 text-center shadow-xl backdrop-blur-md">
           <div className="text-2xl mb-2">🎧</div>
-          <h4 className="font-bold text-slate-100 text-sm mb-1">Low Latency Engine</h4>
+          <h4 className="font-serif font-bold text-slate-100 text-sm mb-1">Low Latency Engine</h4>
           <p className="text-xs text-slate-400">Procedural audio generators render local waveforms directly on-device using Web Audio nodes for zero network delay.</p>
         </div>
         <div className="bg-slate-950/90 border border-indigo-950/30 rounded-2xl p-5 text-center shadow-xl backdrop-blur-md">
           <div className="text-2xl mb-2">🧠</div>
-          <h4 className="font-bold text-slate-100 text-sm mb-1">Binaural Theory</h4>
+          <h4 className="font-serif font-bold text-slate-100 text-sm mb-1">Binaural Theory</h4>
           <p className="text-xs text-slate-400">Slightly shifted sine frequencies played separately in left/right channels trigger cognitive frequencies in the brain.</p>
         </div>
         <div className="bg-slate-950/90 border border-indigo-950/30 rounded-2xl p-5 text-center shadow-xl backdrop-blur-md">
           <div className="text-2xl mb-2">🌿</div>
-          <h4 className="font-bold text-slate-100 text-sm mb-1">Volume Normalization</h4>
+          <h4 className="font-serif font-bold text-slate-100 text-sm mb-1">Volume Normalization</h4>
           <p className="text-xs text-slate-400">Master gains automatically normalize layered channels to preserve auditory comfort and target healthy decibel bands.</p>
         </div>
       </div>
