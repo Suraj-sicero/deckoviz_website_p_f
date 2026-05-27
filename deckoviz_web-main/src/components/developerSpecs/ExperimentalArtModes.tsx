@@ -11,10 +11,18 @@ import {
   Microscope, Flame, ArrowRight, Code, Sun, Droplets,
   MessageSquare, Dna, Brain, MapPin, Leaf, Snowflake,
   Compass, Volume2, Bird, Moon, Maximize2, Users,
-  Atom, BrainCircuit, Scale, Hand, Sparkles
+  Atom, BrainCircuit, Scale, Hand, Sparkles, Clock
 } from "lucide-react";
 
 const developerTools = [
+  {
+    title: "Ambient TimeScapes",
+    description: "Personalized ambient generative clock system transforming displays into living artwork synchronized with real-world time.",
+    route: "/developer-specs/ambient-clock",
+    icon: <Clock size={24} className="text-violet-400" />,
+    color: "from-violet-500/20 to-fuchsia-500/20",
+    borderColor: "group-hover:border-violet-500/50"
+  },
   {
     title: "Infinite Wormhole",
     description: "Immersive neon vortex and cinematic cosmic hyperspace tunnel",
@@ -519,6 +527,14 @@ const developerTools = [
     color: "from-emerald-400/20 to-teal-900/40",
     borderColor: "group-hover:border-emerald-400/50"
   },
+  {
+    title: "Deckoviz Soundscapes",
+    description: "Immersive audio generation that creates beautiful ambient sound environments for focus, sleep, or relaxation",
+    route: "/soundscapes",
+    icon: <Volume2 size={24} className="text-sky-400" />,
+    color: "from-indigo-500/20 to-cyan-500/20",
+    borderColor: "group-hover:border-sky-500/50"
+  }
 ];
 
 const ExperimentalArtModes: React.FC = () => {
