@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 
-const VizzyImage = sequelize.define("VizzyImage", {
+const UserFavoritePrompt = sequelize.define("UserFavoritePrompt", {
   id: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
@@ -11,21 +11,11 @@ const VizzyImage = sequelize.define("VizzyImage", {
     type: DataTypes.UUID,
     allowNull: false,
   },
-  imageUrl: {
+  templateId: {
     type: DataTypes.STRING,
     allowNull: false,
+    comment: "The string identifier of the quick template (e.g. video_vibe_1)",
   },
-  prompt: {
-    type: DataTypes.TEXT,
-    allowNull: true,
-  },
-  isFavorited: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
-}, {
-  paranoid: true, // Enables soft-delete
 });
 
-export default VizzyImage;
-
+export default UserFavoritePrompt;

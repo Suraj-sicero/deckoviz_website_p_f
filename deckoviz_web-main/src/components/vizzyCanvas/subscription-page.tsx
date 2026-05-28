@@ -123,10 +123,10 @@ function SubscriptionPageInner() {
         }}
       />
 
-      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-white/[0.02] backdrop-blur-2xl">
+      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-[var(--vc-divider)] bg-[var(--vc-glass-bg)] backdrop-blur-2xl">
         <Link
           to="/vizzy-canvas"
-          className="flex items-center gap-2 text-sm text-slate-400 hover:text-cyan-300 transition-colors"
+          className="flex items-center gap-2 text-sm text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] transition-colors"
         >
           <ArrowLeft className="size-4" />
           Back to Canvas
@@ -147,27 +147,27 @@ function SubscriptionPageInner() {
 
       <main className="relative z-10 max-w-5xl mx-auto px-6 py-12">
         {/* Current credits */}
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl p-6 mb-10 flex items-center gap-4">
+        <div className="rounded-2xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-2xl p-6 mb-10 flex items-center gap-4">
           <div
-            className="size-12 rounded-xl border border-white/10 flex items-center justify-center"
+            className="size-12 rounded-xl border border-[var(--vc-glass-border)] flex items-center justify-center"
             style={{
               background:
-                "linear-gradient(135deg, rgba(34,211,238,0.18) 0%, rgba(37,99,235,0.18) 100%)",
+                "linear-gradient(135deg, var(--vc-glow-1) 0%, var(--vc-glow-3) 100%)",
             }}
           >
-            <Zap className="size-6 text-cyan-300" />
+            <Zap className="size-6 text-[var(--vc-accent-text)]" />
           </div>
           <div className="flex-1">
-            <p className="text-xs text-slate-400 uppercase tracking-wide">
+            <p className="text-xs text-[var(--vc-text-faint)] uppercase tracking-wide">
               Current Balance
             </p>
-            <p className="text-2xl font-serif font-semibold text-slate-100">
+            <p className="text-2xl font-serif font-semibold text-[var(--vc-text)]">
               {user?.credits ?? 0} credits
             </p>
           </div>
         </div>
 
-        <h2 className="text-2xl font-serif italic font-semibold mb-6 text-slate-100">
+        <h2 className="text-2xl font-serif italic font-semibold mb-6 text-[var(--vc-text)]">
           Choose your plan
         </h2>
 
@@ -177,8 +177,8 @@ function SubscriptionPageInner() {
               key={tier.id}
               className={`relative rounded-2xl border backdrop-blur-2xl p-6 transition-all duration-300 ${
                 tier.highlight
-                  ? "border-cyan-400/40 bg-white/[0.06] shadow-[0_0_40px_rgba(34,211,238,0.18)]"
-                  : "border-white/10 bg-white/[0.03] hover:border-white/20"
+                  ? "border-[var(--vc-accent-border)] bg-[var(--vc-glass-hover)] shadow-[0_0_40px_var(--vc-glow-1)]"
+                  : "border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] hover:border-[var(--vc-glass-border-strong)]"
               }`}
             >
               {tier.highlight && (
@@ -192,17 +192,17 @@ function SubscriptionPageInner() {
                   Most Popular
                 </div>
               )}
-              <h3 className="text-lg font-serif font-semibold mb-1">
+              <h3 className="text-lg font-serif font-semibold mb-1 text-[var(--vc-text)]">
                 {tier.name}
               </h3>
-              <p className="text-2xl font-semibold mb-4">{tier.price}</p>
+              <p className="text-2xl font-semibold mb-4 text-[var(--vc-text)]">{tier.price}</p>
               <ul className="space-y-2 mb-6 min-h-[140px]">
                 {tier.features.map((f) => (
                   <li
                     key={f}
-                    className="flex items-start gap-2 text-sm text-slate-300"
+                    className="flex items-start gap-2 text-sm text-[var(--vc-text-muted)]"
                   >
-                    <Check className="size-4 text-cyan-300 flex-shrink-0 mt-0.5" />
+                    <Check className="size-4 text-[var(--vc-accent-text)] flex-shrink-0 mt-0.5" />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -213,7 +213,7 @@ function SubscriptionPageInner() {
                 className={`w-full text-white border border-white/10 ${
                   tier.highlight
                     ? "shadow-[0_4px_20px_rgba(37,99,235,0.4)]"
-                    : "bg-white/[0.05]"
+                    : "bg-[var(--vc-glass-hover)] text-[var(--vc-text-muted)] hover:text-[var(--vc-text)]"
                 } disabled:opacity-50 disabled:cursor-not-allowed`}
                 style={
                   tier.highlight
@@ -242,7 +242,7 @@ function SubscriptionPageInner() {
             {error}
           </p>
         )}
-        <p className="text-xs text-slate-500 text-center mt-8">
+        <p className="text-xs text-[var(--vc-text-faint)] text-center mt-8">
           Secure checkout via Stripe. Credits are added to your account after payment.
         </p>
       </main>

@@ -30,10 +30,10 @@ function ProfilePageInner() {
         }}
       />
 
-      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-white/[0.02] backdrop-blur-2xl">
+      <header className="relative z-10 flex items-center justify-between px-6 py-4 border-b border-[var(--vc-divider)] bg-[var(--vc-glass-bg)] backdrop-blur-2xl">
         <Link
           to="/vizzy-canvas"
-          className="flex items-center gap-2 text-sm text-slate-400 hover:text-cyan-300 transition-colors"
+          className="flex items-center gap-2 text-sm text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] transition-colors"
         >
           <ArrowLeft className="size-4" />
           Back to Canvas
@@ -53,23 +53,23 @@ function ProfilePageInner() {
       </header>
 
       <main className="relative z-10 max-w-2xl mx-auto px-6 py-12">
-        <div className="rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-2xl p-8 shadow-[0_8px_32px_rgba(11,18,32,0.45)]">
+        <div className="rounded-2xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-2xl p-8 shadow-[0_8px_32px_rgba(11,18,32,0.45)]">
           <div className="flex items-center gap-4 mb-8">
             <div
-              className="size-16 rounded-2xl border border-white/10 flex items-center justify-center backdrop-blur-xl"
+              className="size-16 rounded-2xl border border-[var(--vc-glass-border)] flex items-center justify-center backdrop-blur-xl"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(34,211,238,0.18) 0%, rgba(37,99,235,0.18) 100%)",
-                boxShadow: "0 0 24px rgba(34,211,238,0.18)",
+                  "linear-gradient(135deg, var(--vc-glow-1) 0%, var(--vc-glow-3) 100%)",
+                boxShadow: "0 0 24px var(--vc-glow-1)",
               }}
             >
-              <User className="size-7 text-cyan-300" />
+              <User className="size-7 text-[var(--vc-accent-text)]" />
             </div>
             <div>
-              <h2 className="text-xl font-serif font-semibold">
+              <h2 className="text-xl font-serif font-semibold text-[var(--vc-text)]">
                 {user?.email?.split("@")[0] || "Creator"}
               </h2>
-              <p className="text-sm text-slate-400">Vizzy Member</p>
+              <p className="text-sm text-[var(--vc-text-muted)]">Vizzy Member</p>
             </div>
           </div>
 
@@ -82,7 +82,7 @@ function ProfilePageInner() {
           <Button
             onClick={logout}
             variant="outline"
-            className="w-full bg-white/[0.04] border-white/10 text-rose-300 hover:bg-rose-500/10 hover:border-rose-400/30"
+            className="w-full bg-[var(--vc-glass-hover)] border-[var(--vc-glass-border)] text-rose-500 hover:bg-rose-500/10 hover:border-rose-500/30"
           >
             <LogOut className="size-4 mr-2" />
             Sign Out
@@ -103,12 +103,12 @@ function Field({
   value: string
 }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02]">
-      <span className="text-cyan-300/70">{icon}</span>
-      <span className="text-xs text-slate-400 uppercase tracking-wide w-20">
+    <div className="flex items-center gap-3 px-4 py-3 rounded-xl border border-[var(--vc-divider)] bg-[var(--vc-glass-bg)]">
+      <span className="text-[var(--vc-accent-text)]/75">{icon}</span>
+      <span className="text-xs text-[var(--vc-text-faint)] uppercase tracking-wide w-20">
         {label}
       </span>
-      <span className="text-sm text-slate-100 flex-1 truncate">{value}</span>
+      <span className="text-sm text-[var(--vc-text)] flex-1 truncate">{value}</span>
     </div>
   )
 }

@@ -19,6 +19,10 @@ import {
   Check,
   Volume2,
   Loader2,
+  MessageSquareQuote,
+  FileText,
+  Video,
+  Paperclip
 } from "lucide-react"
 import MusicPlayer from "./music-player"
 import VideoPlayer from "./video-player"
@@ -29,9 +33,10 @@ interface ChatMessageProps {
   onImageClick: (imageUrl: string, prompt: string) => void
   onRetry?: () => void
   selectedVoice?: { id: string; name: string; provider: string }
+  onQuoteMessage?: (text: string, sender: string) => void
 }
 
-export function ChatMessage({ message, onImageClick, onRetry, selectedVoice }: ChatMessageProps) {
+export function ChatMessage({ message, onImageClick, onRetry, selectedVoice, onQuoteMessage }: ChatMessageProps) {
   const isUser = message.role === "user"
   const [isNarrating, setIsNarrating] = useState(false)
 
@@ -62,6 +67,14 @@ export function ChatMessage({ message, onImageClick, onRetry, selectedVoice }: C
     } finally {
       setIsNarrating(false)
     }
+  }
+
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyText = async (text: string) => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
   }
 
   console.log('[CHAT MESSAGE] Rendering message:', { 
@@ -97,7 +110,7 @@ export function ChatMessage({ message, onImageClick, onRetry, selectedVoice }: C
         {message.content && (
           <div
             className={cn(
-              "rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap break-words relative group backdrop-blur-xl",
+              "rounded-2xl pl-4 pr-12 pt-3 pb-7 text-sm leading-relaxed whitespace-pre-wrap break-words relative group backdrop-blur-xl",
               isUser
                 ? "text-white rounded-br-lg shadow-[0_4px_24px_rgba(37,99,235,0.25)]"
                 : "rounded-bl-lg"
@@ -116,21 +129,47 @@ export function ChatMessage({ message, onImageClick, onRetry, selectedVoice }: C
             }
           >
             {message.content}
-            {!isUser && (
+            <div className="absolute bottom-1 right-1.5 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
               <Button
                 variant="ghost"
                 size="icon-sm"
-                className="absolute bottom-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity h-6 w-6"
-                onClick={() => handleNarrate(message.content)}
-                disabled={isNarrating}
+                className="h-6 w-6 text-slate-400 hover:text-white"
+                onClick={() => handleCopyText(message.content)}
+                aria-label="Copy message text"
               >
-                {isNarrating ? (
-                  <Loader2 className="size-3.5 animate-spin" />
+                {copied ? (
+                  <Check className="size-3 text-green-400" />
                 ) : (
-                  <Volume2 className="size-3.5" />
+                  <Copy className="size-3" />
                 )}
               </Button>
-            )}
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                className="h-6 w-6 text-slate-400 hover:text-white"
+                onClick={() => onQuoteMessage?.(message.content, isUser ? "User" : "Assistant")}
+                aria-label="Quote message"
+                title="Quote message"
+              >
+                <MessageSquareQuote className="size-3" />
+              </Button>
+              {!isUser && (
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="h-6 w-6 text-slate-400 hover:text-white"
+                  onClick={() => handleNarrate(message.content)}
+                  disabled={isNarrating}
+                  aria-label="Narrate text"
+                >
+                  {isNarrating ? (
+                    <Loader2 className="size-3 animate-spin" />
+                  ) : (
+                    <Volume2 className="size-3" />
+                  )}
+                </Button>
+              )}
+            </div>
           </div>
         )}
 
@@ -167,34 +206,105 @@ export function ChatMessage({ message, onImageClick, onRetry, selectedVoice }: C
         {/* Image grid */}
         {message.images && message.images.length > 0 && (
           <div className="flex flex-col gap-4 w-full">
-            {/* Show uploaded image section if present */}
+            {/* Show uploaded image/media section if present */}
             {message.uploadedImages && message.uploadedImages.length > 0 && (
               <div className="w-full">
-                <p className="text-xs font-medium text-[var(--vc-text-muted)] mb-2 px-1">Your image:</p>
+                <p className="text-xs font-medium text-[var(--vc-text-muted)] mb-2 px-1">Your uploaded attachment:</p>
                 <div className="grid grid-cols-1 gap-3 max-w-md">
-                  {message.uploadedImages.map((img, index) => (
-                    <div
-                      key={index}
-                      className="relative overflow-hidden rounded-2xl backdrop-blur-xl"
-                      style={{
-                        background: "var(--vc-glass-bg)",
-                        border: "1px solid var(--vc-glass-border)",
-                        boxShadow: "var(--vc-glass-shadow)",
-                      }}
-                    >
-                      <div className="relative aspect-square overflow-hidden">
-                        <img
-                          src={img.url}
-                          alt={img.fileName}
-                          className="w-full h-full object-cover"
-                          loading="lazy"
-                        />
-                        <div className="absolute top-2 right-2 bg-cyan-500/90 text-white text-xs px-2 py-1 rounded-full font-medium backdrop-blur-md">
-                          Uploaded
-                        </div>
+                  {message.uploadedImages.map((img, index) => {
+                    const ext = img.fileName?.split(".").pop()?.toLowerCase() || ""
+                    const isImage = ["png", "jpg", "jpeg", "webp", "gif"].includes(ext)
+                    const isAudio = ["mp3", "wav", "m4a", "ogg", "aac"].includes(ext)
+                    const isVideo = ["mp4", "mov", "avi", "webm"].includes(ext)
+                    const isPdf = ext === "pdf"
+
+                    return (
+                      <div
+                        key={index}
+                        className="relative overflow-hidden rounded-2xl backdrop-blur-xl p-3"
+                        style={{
+                          background: "var(--vc-glass-bg)",
+                          border: "1px solid var(--vc-glass-border)",
+                          boxShadow: "var(--vc-glass-shadow)",
+                        }}
+                      >
+                        {isImage && (
+                          <div className="relative aspect-square overflow-hidden rounded-lg">
+                            <img
+                              src={img.url}
+                              alt={img.fileName}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                            <div className="absolute top-2 right-2 bg-cyan-500/90 text-white text-[10px] px-2 py-0.5 rounded-full font-medium backdrop-blur-md">
+                              Image
+                            </div>
+                          </div>
+                        )}
+
+                        {isAudio && (
+                          <div className="flex flex-col gap-2 p-1">
+                            <div className="flex items-center gap-2">
+                              <Volume2 className="size-5 text-amber-400" />
+                              <span className="text-xs text-[var(--vc-text)] font-medium truncate flex-1">{img.fileName}</span>
+                            </div>
+                            <audio src={img.url} controls className="w-full h-8 mt-1 accent-amber-500" />
+                          </div>
+                        )}
+
+                        {isVideo && (
+                          <div className="flex flex-col gap-2 p-1">
+                            <div className="flex items-center gap-2">
+                              <Video className="size-5 text-cyan-400" />
+                              <span className="text-xs text-[var(--vc-text)] font-medium truncate flex-1">{img.fileName}</span>
+                            </div>
+                            <video src={img.url} controls className="w-full max-h-48 mt-1 rounded-lg overflow-hidden" />
+                          </div>
+                        )}
+
+                        {isPdf && (
+                          <div className="flex items-center justify-between gap-3 p-1">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <FileText className="size-6 text-red-400 flex-shrink-0" />
+                              <div className="min-w-0">
+                                <p className="text-xs text-[var(--vc-text)] font-medium truncate">{img.fileName}</p>
+                                <p className="text-[10px] text-[var(--vc-text-muted)]">PDF Document</p>
+                              </div>
+                            </div>
+                            <a
+                              href={img.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 rounded-lg bg-[var(--vc-glass-hover)] text-[var(--vc-text-muted)] hover:text-[var(--vc-text)] hover:bg-[var(--vc-glass-border)] transition-all flex-shrink-0"
+                              title="Download PDF"
+                            >
+                              <Download className="size-4" />
+                            </a>
+                          </div>
+                        )}
+
+                        {!isImage && !isAudio && !isVideo && !isPdf && (
+                          <div className="flex items-center justify-between gap-3 p-1">
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <Paperclip className="size-6 text-[var(--vc-text-muted)] flex-shrink-0" />
+                              <div className="min-w-0">
+                                <p className="text-xs text-[var(--vc-text)] font-medium truncate">{img.fileName || "File Attachment"}</p>
+                                <p className="text-[10px] text-[var(--vc-text-muted)]">Uploaded File</p>
+                              </div>
+                            </div>
+                            <a
+                              href={img.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 rounded-lg bg-[var(--vc-glass-hover)] text-[var(--vc-text-muted)] hover:text-[var(--vc-text)] hover:bg-[var(--vc-glass-border)] transition-all flex-shrink-0"
+                            >
+                              <Download className="size-4" />
+                            </a>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             )}

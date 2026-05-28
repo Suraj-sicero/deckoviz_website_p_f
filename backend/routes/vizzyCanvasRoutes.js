@@ -7,8 +7,19 @@ import VizzyChat from "../models/VizzyChat.js";
 import VizzyImage from "../models/VizzyImage.js";
 import { User } from "../models/User.js";
 import { getActionCost } from "../config/tiers.js";
+import { Op } from "sequelize";
+import DeckovizCuration from "../models/DeckovizCuration.js";
+import UserFavoritePrompt from "../models/UserFavoritePrompt.js";
+import { MusicTrack, VideoClip } from "../models/MediaTracks.js";
+
+
+// ── Vizzy 2.0 — Agentic Architecture Imports ──────────────────────────────
+import { processAgentRequest } from "../agents/vizzyMasterAgent.js";
+import { getCoreMemoryObject, distillMonthlyMemory } from "../services/memoryService.js";
+import { seedSystemCards } from "../seeds/systemCardSeed.js";
 
 const router = express.Router();
+
 const GROQ_KEY = process.env.GROQ_API_KEY;
 const RUNWARE_API_KEY = process.env.RUNWARE_API_KEY;
 const REPLICATE_API_TOKEN = process.env.REPLICATE_API_TOKEN;
@@ -709,4 +720,386 @@ router.get("/video/status", async (req, res) => {
   }
 });
 
+// ══════════════════════════════════════════════════════════════════════════
+// ══ VIZZY 2.0 — AGENTIC ENDPOINTS (additive, existing routes untouched) ══
+// ══════════════════════════════════════════════════════════════════════════
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /agent
+// The unified entry point for the DASPort 1.2 / Vizzy 2.0 architecture.
+//
+// This single endpoint replaces the client-side intent classifier chain.
+// The Vizzy Master Agent handles:
+//   • LLM-based intent classification
+//   • Sub-agent selection (transparent to the user)
+//   • Memory retrieval (core + extended)
+//   • System card injection (modular, per-agent)
+//   • Media pipeline delegation (image/video/music — to existing endpoints)
+//
+// The frontend calls this endpoint for ALL conversational requests.
+// The backend routes intelligently. The user experiences one intelligence.
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/agent", async (req, res) => {
+  try {
+    const { messages = [], chatId, mode = "home", userContext } = req.body;
+    const tokenUser = getUserFromToken(req);
+    const userId = tokenUser?.id || null;
+
+    // Extract the latest user message
+    const userMessages = messages.filter((m) => m.role === "user");
+    const userInput = userMessages[userMessages.length - 1]?.content || "";
+
+    if (!userInput.trim()) {
+      return res.status(400).json({ error: "No user message provided" });
+    }
+
+    // ── Run the Vizzy Master Agent ───────────────────────────────────────
+    const result = await processAgentRequest({
+      userId,
+      messages,
+      chatId,
+      mode,
+      userInput,
+    });
+
+    // ── Media pipeline delegation ─────────────────────────────────────────
+    // The master agent signals when a request needs the media pipelines.
+    // We return the intent so the frontend knows which pipeline to call.
+    if (result.delegateToMedia) {
+      return res.json({
+        delegateToMedia: true,
+        intent: result.intent,
+        // Frontend uses intent to pick the right existing endpoint:
+        //   image_generation  → POST /generate
+        //   image_editing     → POST /inpaint
+        //   music_generation  → POST /music/generate
+        //   video_generation  → POST /video/generate
+        agentUsed: "vizzy_pipeline",
+      });
+    }
+
+    // ── Persist chat session (same as existing /chat endpoint) ────────────
+    let savedChatId = chatId || null;
+    if (userId) {
+      try {
+        const title = userInput.substring(0, 60) || "New Chat";
+        if (chatId) {
+          const chat = await VizzyChat.findOne({
+            where: { id: chatId, userId },
+          });
+          if (chat) {
+            chat.messages = JSON.stringify(messages);
+            chat.activeAgent = result.agentUsed;
+            if (!chat.title || chat.title === "New Chat") chat.title = title;
+            await chat.save();
+          }
+        } else {
+          const created = await VizzyChat.create({
+            userId,
+            title,
+            messages: JSON.stringify(messages),
+            activeAgent: result.agentUsed,
+            mode,
+          });
+          savedChatId = created.id;
+        }
+      } catch (dbErr) {
+        console.error("[/agent] Failed to persist chat:", dbErr.message);
+      }
+    }
+
+    return res.json({
+      content: result.content,
+      intent: result.intent,
+      agentUsed: result.agentUsed,
+      chatId: savedChatId,
+    });
+  } catch (err) {
+    console.error("[/agent] Error:", err.message);
+    res.status(500).json({ error: err.message || "Agent request failed" });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /memory/core
+// Returns the user's core memory object for frontend personalization.
+// Used by the welcome screen to greet the user with context-aware suggestions.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/memory/core", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const memory = await getCoreMemoryObject(tokenUser.id);
+    res.json({ memory });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /admin/seed-system-cards
+// Seeds all 15 system card sections into the DB.
+// Safe to run multiple times (upsert). Dev + production admin use.
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/admin/seed-system-cards", async (req, res) => {
+  try {
+    await seedSystemCards();
+    res.json({ success: true, message: "System cards seeded successfully." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /admin/distill-memory
+// Manually triggers monthly memory distillation for the authenticated user.
+// In production, this would be triggered by a monthly cron job.
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/admin/distill-memory", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    await distillMonthlyMemory(tokenUser.id);
+    res.json({ success: true, message: "Memory distillation complete." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// PATCH /chats/:id/favorite
+// Toggles the isFavorited boolean flag on a chat session.
+// ─────────────────────────────────────────────────────────────────────────────
+router.patch("/chats/:id/favorite", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const chat = await VizzyChat.findOne({
+      where: { id: req.params.id, userId: tokenUser.id },
+    });
+    if (!chat) return res.status(404).json({ error: "Chat not found" });
+
+    chat.isFavorited = !chat.isFavorited;
+    await chat.save();
+
+    res.json({ success: true, isFavorited: chat.isFavorited });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /chats/deleted
+// Retrieves all soft-deleted chat sessions for the authenticated user.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/chats/deleted", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const chats = await VizzyChat.findAll({
+      where: {
+        userId: tokenUser.id,
+        deletedAt: { [Op.ne]: null },
+      },
+      paranoid: false, // Forces returning soft-deleted rows
+      order: [["deletedAt", "DESC"]],
+    });
+
+    const parsed = chats.map((chat) => {
+      const json = chat.toJSON();
+      return { ...json, messages: JSON.parse(json.messages || "[]") };
+    });
+
+    res.json({ chats: parsed });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /chats/:id/restore
+// Restores a soft-deleted chat session.
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/chats/:id/restore", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const chat = await VizzyChat.findOne({
+      where: { id: req.params.id, userId: tokenUser.id },
+      paranoid: false,
+    });
+    if (!chat) return res.status(404).json({ error: "Chat not found" });
+
+    await chat.restore();
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /images/deleted
+// Retrieves all soft-deleted images for the authenticated user.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/images/deleted", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const images = await VizzyImage.findAll({
+      where: {
+        userId: tokenUser.id,
+        deletedAt: { [Op.ne]: null },
+      },
+      paranoid: false,
+      order: [["deletedAt", "DESC"]],
+    });
+
+    res.json({ images });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /images/:id/restore
+// Restores a soft-deleted image.
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/images/:id/restore", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const img = await VizzyImage.findOne({
+      where: { id: req.params.id, userId: tokenUser.id },
+      paranoid: false,
+    });
+    if (!img) return res.status(404).json({ error: "Image not found" });
+
+    await img.restore();
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /prompts/favorite
+// Retrieves the list of favorite prompt template IDs for the user.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/prompts/favorite", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const favorites = await UserFavoritePrompt.findAll({
+      where: { userId: tokenUser.id },
+    });
+
+    res.json({ favoritePromptIds: favorites.map((f) => f.templateId) });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /prompts/favorite
+// Toggles the favorite status of a prompt template ID.
+// ─────────────────────────────────────────────────────────────────────────────
+router.post("/prompts/favorite", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const { templateId } = req.body;
+    if (!templateId) return res.status(400).json({ error: "Missing templateId" });
+
+    const existing = await UserFavoritePrompt.findOne({
+      where: { userId: tokenUser.id, templateId },
+    });
+
+    if (existing) {
+      await existing.destroy();
+      res.json({ success: true, isFavorited: false });
+    } else {
+      await UserFavoritePrompt.create({ userId: tokenUser.id, templateId });
+      res.json({ success: true, isFavorited: true });
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /curations (Task 1)
+// Lists curated artworks.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/curations", async (req, res) => {
+  try {
+    const curations = await DeckovizCuration.findAll({
+      order: [["displayOrder", "ASC"], ["createdAt", "DESC"]],
+    });
+    res.json({ curations });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /curations/:id (Task 1)
+// Retrieves details of a single curated artwork.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/curations/:id", async (req, res) => {
+  try {
+    const curation = await DeckovizCuration.findByPk(req.params.id);
+    if (!curation) return res.status(404).json({ error: "Curation not found" });
+    res.json({ curation });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /music
+// Retrieves all system-wide and user-specific music tracks.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/music", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    const userIdClause = tokenUser ? { [Op.or]: [{ userId: null }, { userId: tokenUser.id }] } : { userId: null };
+
+    const tracks = await MusicTrack.findAll({
+      where: userIdClause,
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.json({ tracks });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /music/system
+// Retrieves only public, system-seeded classical and ambient audio tracks.
+// ─────────────────────────────────────────────────────────────────────────────
+router.get("/music/system", async (req, res) => {
+  try {
+    const tracks = await MusicTrack.findAll({
+      where: { userId: null },
+      order: [["category", "ASC"], ["title", "ASC"]],
+    });
+
+    res.json({ tracks });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default router;
+
