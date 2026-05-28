@@ -49,10 +49,19 @@ const upload = multer({
           cb(null, `${Date.now()}-${id}${safeExt}`);
         },
       }),
-  limits: { fileSize: 10 * 1024 * 1024 },
+  limits: { fileSize: 25 * 1024 * 1024 }, // increased to 25MB for video/audio/pdf files
   fileFilter: (_req, file, cb) => {
-    if (file.mimetype.startsWith("image/")) cb(null, true);
-    else cb(new Error("Only image files are allowed"));
+    const allowedTypes = [
+      "image/",
+      "audio/",
+      "video/",
+      "application/pdf"
+    ];
+    if (allowedTypes.some(type => file.mimetype.startsWith(type))) {
+      cb(null, true);
+    } else {
+      cb(new Error("Only image, audio, video, and PDF files are allowed"));
+    }
   },
 });
 
@@ -66,7 +75,7 @@ router.post("/upload", upload.single("file"), async (req, res) => {
       // Upload buffer via upload_stream
       const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
-          { folder: "vizzy/uploads", resource_type: "image" },
+          { folder: "vizzy/uploads", resource_type: "auto" },
           (err, uploadResult) => (err ? reject(err) : resolve(uploadResult))
         );
         stream.end(req.file.buffer);

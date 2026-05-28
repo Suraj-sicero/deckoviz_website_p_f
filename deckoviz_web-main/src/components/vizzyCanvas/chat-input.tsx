@@ -15,27 +15,15 @@ import {
   Loader2,
   ImagePlus,
   X,
-  Music,
+  Mic,
+  MicOff,
+  FileText,
+  Video,
+  Volume2,
+  Paperclip
 } from "lucide-react"
 import { API_BASE_URL } from "../../lib/constants"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-} from "./ui/dropdown-menu"
 import { cn } from "./lib/utils"
-
-const ASPECT_RATIOS = [
-  { label: "Square", value: "1:1", desc: "1024 x 1024", icon: Square },
-  { label: "Landscape", value: "16:9", desc: "1536 x 864", icon: RectangleHorizontal },
-  { label: "Portrait", value: "9:16", desc: "864 x 1536", icon: RectangleVertical },
-  { label: "Photo Wide", value: "3:2", desc: "1536 x 1024", icon: RectangleHorizontal },
-  { label: "Photo Tall", value: "2:3", desc: "1024 x 1536", icon: RectangleVertical },
-  { label: "Classic", value: "4:3", desc: "1365 x 1024", icon: RectangleHorizontal },
-]
 
 interface ChatInputProps {
   value: string
@@ -44,12 +32,10 @@ interface ChatInputProps {
   isLoading: boolean
   aspectRatio: string
   onAspectRatioChange: (ratio: string) => void
-  // Increments each time a template is inserted. Causes the textarea to
-  // focus and (if present) select the first [bracket] for inline editing.
   templateInsertToken?: number
-  uploadedImage?: { url: string; fileName: string } | null
-  onImageUpload?: (imageUrl: string) => void
-  onImageRemove?: () => void
+  uploadedFile?: { url: string; fileName: string } | null
+  onFileUpload?: (fileUrl: string, fileName: string) => void
+  onFileRemove?: () => void
 }
 
 export function ChatInput({
@@ -60,29 +46,96 @@ export function ChatInput({
   aspectRatio,
   onAspectRatioChange,
   templateInsertToken,
-  uploadedImage,
-  onImageUpload,
-  onImageRemove,
+  uploadedFile,
+  onFileUpload,
+  onFileRemove,
 }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState<string | null>(null)
 
+  // Voice Chat (Speech-to-Text) States
+  const [isListening, setIsListening] = useState(false)
+  const recognitionRef = useRef<any>(null)
+
   // Auto-focus textarea on mount
   useEffect(() => {
     textareaRef.current?.focus()
   }, [])
 
-  const handleImageSelect = useCallback(
+  // Initialize Speech Recognition
+  useEffect(() => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition
+    if (SpeechRecognition) {
+      const rec = new SpeechRecognition()
+      rec.continuous = true
+      rec.interimResults = true
+      rec.lang = "en-US"
+
+      rec.onresult = (e: any) => {
+        let transcript = ""
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) {
+            transcript += e.results[i][0].transcript
+          }
+        }
+        if (transcript) {
+          onChange((prev) => (prev ? prev + " " + transcript : transcript))
+        }
+      }
+
+      rec.onerror = (err: any) => {
+        console.error("Speech recognition error:", err)
+        setIsListening(false)
+      }
+
+      rec.onend = () => {
+        setIsListening(false)
+      }
+
+      recognitionRef.current = rec
+    }
+  }, [onChange])
+
+  const toggleVoiceInput = useCallback(() => {
+    if (!recognitionRef.current) {
+      setUploadError("Speech recognition is not supported in this browser.")
+      return
+    }
+
+    if (isListening) {
+      recognitionRef.current.stop()
+      setIsListening(false)
+    } else {
+      try {
+        recognitionRef.current.start()
+        setIsListening(true)
+        setUploadError(null)
+      } catch (err) {
+        console.error("Error starting speech recognition:", err)
+      }
+    }
+  }, [isListening])
+
+  const handleFileSelect = useCallback(
     async (file: File) => {
-      if (!file.type.startsWith('image/')) {
-        setUploadError('Please select an image file')
+      const allowedTypes = [
+        "image/",
+        "audio/",
+        "video/",
+        "application/pdf"
+      ]
+
+      const isAllowed = allowedTypes.some(type => file.type.startsWith(type))
+      if (!isAllowed) {
+        setUploadError("Please select an image, audio, video, or PDF file")
         return
       }
 
-      if (file.size > 10 * 1024 * 1024) {
-        setUploadError('File size must be less than 10MB')
+      if (file.size > 25 * 1024 * 1024) {
+        setUploadError("File size must be less than 25MB")
         return
       }
 
@@ -91,42 +144,41 @@ export function ChatInput({
 
       try {
         const formData = new FormData()
-        formData.append('file', file)
+        formData.append("file", file)
 
         const response = await fetch(`${API_BASE_URL}/api/upload`, {
-          method: 'POST',
+          method: "POST",
           body: formData,
         })
 
         const data = await response.json()
 
         if (!response.ok) {
-          throw new Error(data.error || 'Upload failed')
+          throw new Error(data.error || "Upload failed")
         }
 
-        onImageUpload?.(data.image.url)
+        onFileUpload?.(data.image.url, file.name)
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Upload failed'
+        const errorMessage = error instanceof Error ? error.message : "Upload failed"
         setUploadError(errorMessage)
       } finally {
         setIsUploading(false)
       }
     },
-    [onImageUpload]
+    [onFileUpload]
   )
 
   const handleFileInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0]
       if (file) {
-        handleImageSelect(file)
+        handleFileSelect(file)
       }
-      // Reset input so same file can be selected again
       if (fileInputRef.current) {
-        fileInputRef.current.value = ''
+        fileInputRef.current.value = ""
       }
     },
-    [handleImageSelect]
+    [handleFileSelect]
   )
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -140,10 +192,10 @@ export function ChatInput({
       e.stopPropagation()
       const file = e.dataTransfer.files?.[0]
       if (file) {
-        handleImageSelect(file)
+        handleFileSelect(file)
       }
     },
-    [handleImageSelect]
+    [handleFileSelect]
   )
 
   const handleKeyDown = useCallback(
@@ -168,16 +220,12 @@ export function ChatInput({
     [onChange]
   )
 
-  // Reset textarea height when value is cleared (after submit)
   useEffect(() => {
     if (!value && textareaRef.current) {
       textareaRef.current.style.height = "auto"
     }
   }, [value])
 
-  // When a template is inserted, focus the textarea, resize to fit, and
-  // (if the inserted text contains [bracket] placeholders) select the first
-  // one so the user can start typing over it immediately.
   useEffect(() => {
     if (templateInsertToken === undefined || templateInsertToken === 0) return
     const ta = textareaRef.current
@@ -191,7 +239,6 @@ export function ChatInput({
     if (match && match.index !== undefined) {
       const start = match.index
       const end = start + match[0].length
-      // Defer to next tick so focus settles + scrollIntoView works
       requestAnimationFrame(() => {
         try {
           ta.setSelectionRange(start, end)
@@ -200,17 +247,26 @@ export function ChatInput({
         }
       })
     } else {
-      // No bracket → place cursor at end
       const end = ta.value.length
       ta.setSelectionRange(end, end)
     }
   }, [templateInsertToken])
 
-  const currentRatio = ASPECT_RATIOS.find((r) => r.value === aspectRatio) || ASPECT_RATIOS[0]
+  const renderFileIcon = (fileName: string) => {
+    const ext = fileName.split(".").pop()?.toLowerCase()
+    if (["pdf"].includes(ext || "")) return <FileText className="size-6 text-red-400" />
+    if (["mp3", "wav", "m4a", "ogg", "aac"].includes(ext || "")) return <Volume2 className="size-6 text-amber-400" />
+    if (["mp4", "mov", "avi", "webm"].includes(ext || "")) return <Video className="size-6 text-cyan-400" />
+    return <Paperclip className="size-6 text-slate-400" />
+  }
+
+  const isImageFile = (fileName: string) => {
+    const ext = fileName.split(".").pop()?.toLowerCase()
+    return ["png", "jpg", "jpeg", "webp", "gif"].includes(ext || "")
+  }
 
   return (
     <div className="w-full max-w-3xl mx-auto px-4">
-      {/* Upload error message */}
       {uploadError && (
         <div className="mb-2 text-xs text-red-500 bg-red-50 dark:bg-red-950 p-2 rounded-lg">
           {uploadError}
@@ -230,64 +286,62 @@ export function ChatInput({
         onDragOver={handleDragOver}
         onDrop={handleDrop}
       >
-        {/* Hidden file input */}
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,audio/*,video/*,application/pdf"
           onChange={handleFileInputChange}
           className="hidden"
-          aria-label="Upload image"
+          aria-label="Upload media"
         />
 
-        {/* Image upload button */}
         <Button
           onClick={() => fileInputRef.current?.click()}
           variant="ghost"
           size="icon-sm"
           disabled={isUploading}
           className="flex-shrink-0 text-slate-400 hover:text-cyan-300 hover:bg-white/[0.06] rounded-xl"
-          aria-label="Upload image"
-          title={isUploading ? 'Uploading...' : 'Upload image'}
+          aria-label="Upload media"
+          title={isUploading ? "Uploading..." : "Upload media"}
         >
           {isUploading ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
-            <ImagePlus className="size-4" />
+            <Paperclip className="size-4" />
           )}
         </Button>
 
-
-
-        {/* Uploaded image preview */}
-        {uploadedImage && (
+        {uploadedFile && (
           <div className="absolute left-2.5 bottom-full mb-2 flex items-center gap-2 bg-white/[0.06] border border-white/10 backdrop-blur-2xl rounded-lg p-1.5 shadow-[0_8px_24px_rgba(11,18,32,0.4)]">
-            <div className="relative w-12 h-12 rounded-md overflow-hidden bg-white/[0.05]">
-              <img
-                src={uploadedImage.url}
-                alt={uploadedImage.fileName}
-                className="w-full h-full object-cover"
-              />
+            <div className="relative w-12 h-12 rounded-md overflow-hidden bg-white/[0.05] flex items-center justify-center">
+              {isImageFile(uploadedFile.fileName) ? (
+                <img
+                  src={uploadedFile.url}
+                  alt={uploadedFile.fileName}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                renderFileIcon(uploadedFile.fileName)
+              )}
             </div>
             <div className="flex-1 min-w-0 px-1">
-              <p className="text-xs font-medium truncate text-slate-100">
-                {uploadedImage.fileName}
+              <p className="text-xs font-medium truncate text-slate-100 max-w-[120px]">
+                {uploadedFile.fileName}
               </p>
               <p className="text-[10px] text-slate-400">Ready to enhance</p>
             </div>
             <Button
-              onClick={() => onImageRemove?.()}
+              onClick={() => onFileRemove?.()}
               variant="ghost"
               size="icon-sm"
               className="flex-shrink-0 h-6 w-6 text-slate-400 hover:text-rose-300 hover:bg-rose-500/10"
-              aria-label="Remove image"
+              aria-label="Remove file"
             >
               <X className="size-3" />
             </Button>
           </div>
         )}
 
-        {/* Textarea */}
         <textarea
           ref={textareaRef}
           value={value}
@@ -301,7 +355,28 @@ export function ChatInput({
           aria-label="Message input"
         />
 
-        {/* Send / loading button */}
+        {/* Microphone voice toggle button */}
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              onClick={toggleVoiceInput}
+              disabled={isLoading}
+              variant="ghost"
+              size="icon-sm"
+              className={cn(
+                "flex-shrink-0 text-slate-400 hover:bg-white/[0.06] rounded-xl transition-all duration-300",
+                isListening && "text-rose-500 bg-rose-500/10 hover:bg-rose-500/20 animate-pulse"
+              )}
+              aria-label="Voice Input"
+            >
+              {isListening ? <MicOff className="size-4 text-rose-500" /> : <Mic className="size-4" />}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="top">
+            {isListening ? "Stop listening" : "Voice chat"}
+          </TooltipContent>
+        </Tooltip>
+
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -334,19 +409,19 @@ export function ChatInput({
         </Tooltip>
       </div>
 
-      {/* Footer hints */}
       <div className="flex items-center justify-between px-2 pt-2">
         <div className="flex items-center gap-2">
           {aspectRatio !== "1:1" && (
             <span className="text-xs text-cyan-300/90 bg-cyan-400/10 border border-cyan-400/20 px-2 py-0.5 rounded-md font-medium backdrop-blur-sm">
-              {currentRatio.label} {aspectRatio}
+              Square
             </span>
           )}
         </div>
         <span className="text-[11px] text-slate-500/70">
-          Shift + Enter for new line
+          Shift + Enter for new line | Speak or drag files to upload
         </span>
       </div>
     </div>
   )
 }
+

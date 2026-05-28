@@ -23,6 +23,9 @@ const VizzyImage = sequelize.define("VizzyImage", {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+}, {
+  paranoid: true, // Enables soft-delete
 });
 
 export default VizzyImage;
+

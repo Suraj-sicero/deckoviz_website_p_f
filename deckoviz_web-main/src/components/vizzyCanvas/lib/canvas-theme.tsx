@@ -29,6 +29,11 @@ export function CanvasThemeProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(STORAGE_KEY, theme)
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark")
+      } else {
+        document.documentElement.classList.remove("dark")
+      }
     }
   }, [theme])
 

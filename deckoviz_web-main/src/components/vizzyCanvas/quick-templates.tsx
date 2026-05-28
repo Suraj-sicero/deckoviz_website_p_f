@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect } from "react"
 import { 
   Plus, 
   Minus, 
@@ -9,7 +9,8 @@ import {
   BookOpen, 
   Heart, 
   CalendarDays, 
-  ArrowRight 
+  ArrowRight,
+  Star
 } from "lucide-react"
 import { cn } from "./lib/utils"
 import {
@@ -17,6 +18,8 @@ import {
   TEMPLATE_CATEGORIES,
   type TemplateCategory,
 } from "./lib/prompt-templates"
+import { useAuth } from "../../context/AuthContext"
+import { API_BASE_URL } from "../../lib/constants"
 
 const DEFAULT_VISIBLE = 12
 
@@ -87,14 +90,75 @@ interface QuickTemplatesProps {
 }
 
 export function QuickTemplates({ onSelect }: QuickTemplatesProps) {
+  const { token } = useAuth()
   const [expanded, setExpanded] = useState(false)
   const [activeCategory, setActiveCategory] =
-    useState<TemplateCategory | "All">("All")
+    useState<TemplateCategory | "All" | "Starred">("All")
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([])
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (!token) return
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/vizzy-canvas/prompts/favorite`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        const data = await res.json()
+        setFavoriteIds(data.favoritePromptIds || [])
+      } catch (err) {
+        console.error("Failed to fetch favorite prompts:", err)
+      }
+    }
+    fetchFavorites()
+  }, [token])
+
+  const handleToggleFavorite = async (e: React.MouseEvent, templateId: string) => {
+    e.stopPropagation() // Prevent selecting the prompt template
+    if (!token) return
+
+    // Optimistic UI update
+    setFavoriteIds((prev) =>
+      prev.includes(templateId)
+        ? prev.filter((id) => id !== templateId)
+        : [...prev, templateId]
+    )
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/api/vizzy-canvas/prompts/favorite`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ templateId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        // Sync with actual server state
+        if (data.isFavorited) {
+          setFavoriteIds((prev) => Array.from(new Set([...prev, templateId])))
+        } else {
+          setFavoriteIds((prev) => prev.filter((id) => id !== templateId))
+        }
+      }
+    } catch (err) {
+      // Revert on error
+      setFavoriteIds((prev) =>
+        prev.includes(templateId)
+          ? prev.filter((id) => id !== templateId)
+          : [...prev, templateId]
+      )
+      console.error("Failed to toggle favorite prompt:", err)
+    }
+  }
 
   const filtered = useMemo(() => {
     if (activeCategory === "All") return PROMPT_TEMPLATES
+    if (activeCategory === "Starred") {
+      return PROMPT_TEMPLATES.filter((t) => favoriteIds.includes(t.id))
+    }
     return PROMPT_TEMPLATES.filter((t) => t.category === activeCategory)
-  }, [activeCategory])
+  }, [activeCategory, favoriteIds])
 
   const visible = expanded ? filtered : filtered.slice(0, DEFAULT_VISIBLE)
   const remaining = filtered.length - visible.length
@@ -119,6 +183,13 @@ export function QuickTemplates({ onSelect }: QuickTemplatesProps) {
             active={activeCategory === "All"}
             onClick={() => setActiveCategory("All")}
           />
+          {favoriteIds.length > 0 && (
+            <CategoryChip
+              label="Starred ★"
+              active={activeCategory === "Starred"}
+              onClick={() => setActiveCategory("Starred")}
+            />
+          )}
           {TEMPLATE_CATEGORIES.map((cat) => (
             <CategoryChip
               key={cat}
@@ -146,7 +217,7 @@ export function QuickTemplates({ onSelect }: QuickTemplatesProps) {
               key={tpl.id}
               onClick={() => onSelect(tpl.text)}
               className={cn(
-                "group/card flex flex-col gap-2 text-left p-4 rounded-xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] hover:bg-[var(--vc-glass-hover)] transition-all duration-200 hover:border-blue-500/30",
+                "group/card flex flex-col gap-2 text-left p-4 rounded-xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] hover:bg-[var(--vc-glass-hover)] transition-all duration-200 hover:border-blue-500/30 relative",
                 style.themeGlow
               )}
             >
@@ -159,9 +230,28 @@ export function QuickTemplates({ onSelect }: QuickTemplatesProps) {
                     {tpl.title}
                   </span>
                 </div>
-                <span className={cn("text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded", style.tag)}>
-                  {tpl.category}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  {token && (
+                    <button
+                      onClick={(e) => handleToggleFavorite(e, tpl.id)}
+                      className={cn(
+                        "size-6 rounded-md flex items-center justify-center hover:bg-white/10 transition-colors text-slate-400 hover:text-amber-400",
+                        favoriteIds.includes(tpl.id) && "text-amber-400"
+                      )}
+                      aria-label="Star template"
+                    >
+                      <Star
+                        className={cn(
+                          "size-3.5",
+                          favoriteIds.includes(tpl.id) && "fill-amber-400"
+                        )}
+                      />
+                    </button>
+                  )}
+                  <span className={cn("text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded", style.tag)}>
+                    {tpl.category}
+                  </span>
+                </div>
               </div>
               <p className="text-xs leading-relaxed text-[var(--vc-text-muted)] font-normal line-clamp-3 group-hover/card:text-[var(--vc-text)] transition-colors">
                 {renderTemplate(tpl.text)}

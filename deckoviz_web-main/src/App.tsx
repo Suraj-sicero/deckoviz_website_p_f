@@ -282,6 +282,13 @@ const App: React.FC = () => {
 const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
   const location = useLocation();
   const isDeveloperTool = location.pathname.startsWith("/developer-specs");
+  const isCanvasPage = [
+    "/vizzy-canvas",
+    "/gallery",
+    "/profile",
+    "/subscription",
+    "/wizzy",
+  ].includes(location.pathname);
 
   return (
     <>
@@ -294,7 +301,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
       <ScrollToSectionOnHome />
       {!isDeveloperTool && <MouseSparkles />}
 
-      <Navbar />
+      {!isCanvasPage && <Navbar />}
       <main className={isDeveloperTool ? "relative z-10 h-screen pt-20 bg-black overflow-hidden" : ""}>
         <Routes>
           <Route

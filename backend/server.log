@@ -3568,3 +3568,24 @@
 [2026-05-27T06:36:18.913Z] LOG: Generating image with prompt: A breathtaking cosmic forge, bathed in deep blues and purples, where swirling nebulae blend with intricate, glowing gold and crimson metallic structures. High-tech, futuristic architectural elements, clean lines, and subtle energy conduits are embedded within asteroid-like formations. Distant stars sparkle, and streams of cosmic dust drift gently across the scene, creating a sense of immense depth and advanced creation. Soft, ethereal lighting emanates from within the nebulae and the metallic details, casting long, dynamic shadows. The atmosphere is one of profound innovation and cosmic wonder. No clocks, no hands, no text, no faces.
 [2026-05-27T14:49:08.844Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-05-27T14:49:10.801Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-28T05:29:45.445Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-28T05:29:47.486Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-28T05:30:02.449Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-28T05:34:40.127Z] LOG: [VizzyMaster] Intent classified: chat (368ms)
+[2026-05-28T05:34:40.127Z] LOG: [VizzyMaster] Sub-agent selected: vizzy (direct)
+[2026-05-28T05:34:41.589Z] LOG: [VizzyMaster] Response generated (1830ms total)
+[2026-05-28T05:35:34.514Z] LOG: [VizzyMaster] Intent classified: creative_ideation (243ms)
+[2026-05-28T05:35:34.514Z] LOG: [VizzyMaster] Sub-agent selected: vizzy_muse
+[2026-05-28T05:35:37.927Z] LOG: [VizzyMaster] Response generated (3656ms total)
+[2026-05-28T05:36:08.050Z] ERROR: Vizzy Chat Error: Error: [GoogleGenerativeAI Error]: First content should be with role 'user', got model
+[2026-05-28T05:36:58.402Z] LOG: [VizzyMaster] Intent classified: creative_ideation (512ms)
+[2026-05-28T05:36:58.402Z] LOG: [VizzyMaster] Sub-agent selected: vizzy_muse
+[2026-05-28T05:37:01.267Z] LOG: [VizzyMaster] Response generated (3377ms total)
+[2026-05-28T07:22:56.814Z] ERROR: Profile fetch error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-05-28T07:22:56.819Z] ERROR: Profile fetch error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-05-28T17:41:23.855Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-28T17:41:25.895Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-28T17:41:46.833Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-28T18:02:39.181Z] LOG: [VizzyMaster] Intent classified: ambiance_curation (382ms)
+[2026-05-28T18:02:39.181Z] LOG: [VizzyMaster] Sub-agent selected: curator
+[2026-05-28T18:02:43.461Z] LOG: [VizzyMaster] Response generated (4662ms total)

@@ -48,6 +48,19 @@ import { User } from "./models/User.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
 
+// ── Vizzy 2.0 — New Agentic Models (auto-synced by sequelize.sync below) ───
+import "./models/VizzyMemory.js";
+import "./models/VizzyAgentSession.js";
+import "./models/VizzySystemCard.js";
+import "./models/UserPersona.js";
+import "./models/UserOnboarding.js";
+import "./models/HomeMember.js";
+import "./models/MediaTracks.js";
+import "./models/UploadedMedia.js";
+import "./models/Collection.js";
+import "./models/DeckovizCuration.js";
+import "./models/UserFavoritePrompt.js";
+import { seedSystemCards } from "./seeds/systemCardSeed.js";
 
 
 // ===== Startup Logic (Background) =====
@@ -57,6 +70,8 @@ import client from "./redisClient.js";
     await sequelize.authenticate();
     console.log("✅ PostgreSQL connected via Sequelize.");
     await sequelize.sync({ alter: true });
+    // Seed system cards after DB is ready (safe to re-run — uses upsert)
+    await seedSystemCards();
   } catch (error) {
     console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
   }
