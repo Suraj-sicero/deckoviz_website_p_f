@@ -4,7 +4,6 @@ import type React from "react"
 import { useState } from "react"
 import { ChevronDown, Home, Package, Rocket, Sparkles } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import {  Send } from "lucide-react"
 import { useMediaQuery } from 'react-responsive';
 
 interface FAQItem {
@@ -502,55 +501,6 @@ boxShadow: `
                   </p>
                 </div>
 
-                {/* Enhanced Email Signup Form */}
-                <div className="max-w-sm sm:max-w-md mx-auto">
-                  <div className="relative group">
-                    {/* Glow effect */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-[#182A4A] via-blue-600 to-[#2563EB] rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
-
-                    {/* Form container */}
-                    <div className="relative rounded-2xl p-2 shadow-[0_8px_32px_rgba(37,99,235,0.15)] border border-white/50" style={{ background: "rgba(255,255,255,0.30)", backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)" }}>
-                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
-                        {/* Email input */}
-                        <div className="flex-1 relative">
-                          <input
-                            type="email"
-                            placeholder="Email address..."
-                            className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
-                          />
-                          {/* Subtle icon */}
-                          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                            <svg
-                              className="w-5 h-5 text-gray-400"
-                              fill="none"
-                              stroke="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                              />
-                            </svg>
-                          </div>
-                        </div>
-
-                        {/* Submit button */}
-                        <button className="bg-gradient-to-r from-[#6670d8] to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center space-x-2">
-                          <span>Submit</span>
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M13 7l5 5m0 0l-5 5m5-5H6"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
 {/* Stay Connected */}
 <div className="mt-16 md:mt-20 max-w-2xl mx-auto">
 
@@ -570,39 +520,68 @@ boxShadow: `
       </p>
     </div>
 
-    {/* Form */}
-<form onSubmit={handleSubmit} className="max-w-md mx-auto w-full">
+    {/* Form — using the top input design */}
+    <form onSubmit={handleSubmit} className="max-w-sm sm:max-w-md mx-auto">
+      <div className="relative group">
+        {/* Glow effect */}
+        <div className="absolute -inset-1 bg-gradient-to-r from-[#182A4A] via-blue-600 to-[#2563EB] rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
 
-  <div className="flex items-center gap-2 rounded-full border bg-white px-3 py-2 w-full
-  focus-within:border-blue-400 focus-within:shadow-[0_0_12px_rgba(37,99,235,0.5)]">
+        {/* Form container */}
+        <div className="relative rounded-2xl p-2 shadow-[0_8px_32px_rgba(37,99,235,0.15)] border border-white/50" style={{ background: "rgba(255,255,255,0.30)", backdropFilter: "blur(20px) saturate(180%)", WebkitBackdropFilter: "blur(20px) saturate(180%)" }}>
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+            {/* Email input */}
+            <div className="flex-1 relative">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email address..."
+                className="w-full px-4 py-3 bg-gray-50 border-0 rounded-xl text-gray-700 placeholder-gray-500 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"
+              />
+              {/* Subtle icon */}
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <svg
+                  className="w-5 h-5 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
+                </svg>
+              </div>
+            </div>
 
-    <input
-      type="email"
-      value={email}
-      onChange={(e) => setEmail(e.target.value)}
-      placeholder="Enter your email"
-      className="flex-1 min-w-0 bg-transparent text-sm text-gray-900 placeholder-gray-400 focus:outline-none"
-    />
-
-    <button
-      type="submit"
-      disabled={isSubmitting}
-      className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full 
-      bg-gradient-to-r from-[#182A4A] via-blue-600 to-[#2563EB] 
-      text-white shadow-[0_4px_14px_rgba(37,99,235,0.45)]
-      transition-all duration-300 md:hover:scale-110 md:hover:shadow-[0_6px_22px_rgba(37,99,235,0.65)]
-      disabled:opacity-50"
-    >
-      {isSubmitting ? (
-        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-      ) : (
-        <Send size={16} />
-      )}
-    </button>
-
-  </div>
-
-</form>
+            {/* Submit button */}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="bg-gradient-to-r from-[#6670d8] to-indigo-600 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl hover:scale-105 transform transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
+            >
+              {isSubmitting ? (
+                <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              ) : (
+                <>
+                  <span>Submit</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 7l5 5m0 0l-5 5m5-5H6"
+                    />
+                  </svg>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
 
     {/* Message */}
     {subscribeMessage && (
@@ -618,31 +597,31 @@ boxShadow: `
     )}
 
   </div>
+
+  {/* Trust indicators */}
+  <div className="flex items-center justify-center space-x-4 mt-4 text-sm text-gray-500">
+    <div className="flex items-center space-x-1">
+      <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fillRule="evenodd"
+          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+          clipRule="evenodd"
+        />
+      </svg>
+      <span>No spam</span>
+    </div>
+    <div className="flex items-center space-x-1">
+      <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+        <path
+          fillRule="evenodd"
+          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+          clipRule="evenodd"
+        />
+      </svg>
+      <span>Privacy protected</span>
+    </div>
+  </div>
 </div>
-                  {/* Trust indicators */}
-                  <div className="flex items-center justify-center space-x-4 mt-4 text-sm text-gray-500">
-                    <div className="flex items-center space-x-1">
-                      <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>No spam</span>
-                    </div>
-                    <div className="flex items-center space-x-1">
-                      <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
-                        <path
-                          fillRule="evenodd"
-                          d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      <span>Privacy protected</span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
