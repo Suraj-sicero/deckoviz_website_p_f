@@ -303,6 +303,37 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         joyous, and beautiful.
                       </p>
 
+                      <div className="relative p-6 bg-white/40 backdrop-blur-xl rounded-2xl border border-white/60 shadow-[inset_0_0_20px_rgba(255,255,255,0.5),0_8px_32px_rgba(79,70,229,0.08)] overflow-hidden transition-all duration-300 hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.8),0_12px_40px_rgba(79,70,229,0.12)]">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl -mx-10 -my-10 pointer-events-none"></div>
+                        <p className="space-y-3">
+                          <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
+                            <span>💌</span> 
+                            <span className="bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">A personal note before you order</span>
+                          </strong>
+                          <span className="block">If you need us to answer any questions you may have, we'd love to talk before you decide.</span>
+                          <span className="block">The DASPort is designed to be less a product, and more a personal companion for life, and we want it to feel that way from the very first moment.</span>
+                          <span className="block">If you would like to speak with someone from the team, or directly with our founder, before making your final decision, we are happy to make that happen. Whether it is a short demo, a walkthrough of how the DASPort could best fit your home and your life, or simply a conversation to help you decide, we are here for it.</span>
+                          <span className="block">We want you to feel genuinely informed and genuinely excited before your space enters its new era.</span>
+                        </p>
+                      </div>
+
+                      <div className="relative p-6 bg-gradient-to-br from-indigo-50/50 to-white/30 backdrop-blur-xl rounded-2xl border border-indigo-100/50 shadow-[inset_0_0_20px_rgba(255,255,255,0.4),0_8px_32px_rgba(31,38,135,0.05)] overflow-hidden transition-all duration-300 hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.6),0_12px_40px_rgba(31,38,135,0.08)]">
+                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-indigo-400/10 rounded-full blur-3xl -mx-10 -my-10 pointer-events-none"></div>
+                        <p className="space-y-3">
+                          <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
+                            <span>✨</span> 
+                            <span className="bg-gradient-to-r from-indigo-700 to-violet-700 bg-clip-text text-transparent">About the anti-glare matte finish filter: Why it is an add-on, not a default</span>
+                          </strong>
+                          <span className="block">We made a deliberate choice to offer the Matte Finish Anti-Glare Filter as an optional add-on rather than building it into every frame. The reason being we want to bring the beauty and magic of the DASPort into as many homes as possible, and keeping the base unit more accessible is how we do that.</span>
+                          <span className="block">We spoke with a lot of people during the process. Many were perfectly happy with the default display and had no particular need for matte finish or anti-glare. Others loved the idea of it and were glad to have it as an option they could add.</span>
+                          <span className="block">If you are happy with the standard unit, you can go right ahead and place your order as is. You can still choose your other custom options via email.</span>
+                          <span className="block bg-white/40 p-3 rounded-xl border border-white/50 text-indigo-950/80 my-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+                            <strong>If you do want the Anti-Glare Matte Finish Filter, here is how it works:</strong> once your order is placed, you will receive a follow-up email from us asking about any add-ons and custom preferences. Simply let us know there that you would like the matte finish anti-glare filter, alongside anything else you would like to customise.
+                          </span>
+                          <span className="block">You do not need to sort out every detail at checkout. We will walk through your preferences together after your order is confirmed.</span>
+                        </p>
+                      </div>
+
                       <div className="border-t border-violet-200 pt-4 space-y-3">
                         <p className="font-medium text-gray-900">
                           A note for our early believers 💜
@@ -614,6 +645,37 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       Deckoviz mission to make the world more wondrous,
                       joyous, and beautiful.
                     </p>
+
+                    <div className="relative p-6 bg-white/40 backdrop-blur-xl rounded-2xl border border-white/60 shadow-[inset_0_0_20px_rgba(255,255,255,0.5),0_8px_32px_rgba(79,70,229,0.08)] overflow-hidden transition-all duration-300 hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.8),0_12px_40px_rgba(79,70,229,0.12)]">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full blur-3xl -mx-10 -my-10 pointer-events-none"></div>
+                      <p className="space-y-3">
+                        <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
+                          <span>💌</span> 
+                          <span className="bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">A personal note before you order</span>
+                        </strong>
+                        <span className="block">If you need us to answer any questions you may have, we'd love to talk before you decide.</span>
+                        <span className="block">The DASPort is designed to be less a product, and more a personal companion for life, and we want it to feel that way from the very first moment.</span>
+                        <span className="block">If you would like to speak with someone from the team, or directly with our founder, before making your final decision, we are happy to make that happen. Whether it is a short demo, a walkthrough of how the DASPort could best fit your home and your life, or simply a conversation to help you decide, we are here for it.</span>
+                        <span className="block">We want you to feel genuinely informed and genuinely excited before your space enters its new era.</span>
+                      </p>
+                    </div>
+
+                    <div className="relative p-6 bg-gradient-to-br from-indigo-50/50 to-white/30 backdrop-blur-xl rounded-2xl border border-indigo-100/50 shadow-[inset_0_0_20px_rgba(255,255,255,0.4),0_8px_32px_rgba(31,38,135,0.05)] overflow-hidden transition-all duration-300 hover:shadow-[inset_0_0_20px_rgba(255,255,255,0.6),0_12px_40px_rgba(31,38,135,0.08)]">
+                      <div className="absolute bottom-0 left-0 w-40 h-40 bg-indigo-400/10 rounded-full blur-3xl -mx-10 -my-10 pointer-events-none"></div>
+                      <p className="space-y-3">
+                        <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
+                          <span>✨</span> 
+                          <span className="bg-gradient-to-r from-indigo-700 to-violet-700 bg-clip-text text-transparent">About the anti-glare matte finish filter: Why it is an add-on, not a default</span>
+                        </strong>
+                        <span className="block">We made a deliberate choice to offer the Matte Finish Anti-Glare Filter as an optional add-on rather than building it into every frame. The reason being we want to bring the beauty and magic of the DASPort into as many homes as possible, and keeping the base unit more accessible is how we do that.</span>
+                        <span className="block">We spoke with a lot of people during the process. Many were perfectly happy with the default display and had no particular need for matte finish or anti-glare. Others loved the idea of it and were glad to have it as an option they could add.</span>
+                        <span className="block">If you are happy with the standard unit, you can go right ahead and place your order as is. You can still choose your other custom options via email.</span>
+                        <span className="block bg-white/40 p-3 rounded-xl border border-white/50 text-indigo-950/80 my-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.6)]">
+                          <strong>If you do want the Anti-Glare Matte Finish Filter, here is how it works:</strong> once your order is placed, you will receive a follow-up email from us asking about any add-ons and custom preferences. Simply let us know there that you would like the matte finish anti-glare filter, alongside anything else you would like to customise.
+                        </span>
+                        <span className="block">You do not need to sort out every detail at checkout. We will walk through your preferences together after your order is confirmed.</span>
+                      </p>
+                    </div>
 
                     <div className="border-t border-violet-200 pt-4 space-y-3">
                       <p className="font-medium text-gray-900">
