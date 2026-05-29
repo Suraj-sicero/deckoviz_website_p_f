@@ -3589,3 +3589,6 @@
 [2026-05-28T18:02:39.181Z] LOG: [VizzyMaster] Intent classified: ambiance_curation (382ms)
 [2026-05-28T18:02:39.181Z] LOG: [VizzyMaster] Sub-agent selected: curator
 [2026-05-28T18:02:43.461Z] LOG: [VizzyMaster] Response generated (4662ms total)
+[2026-05-29T07:42:03.250Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T07:42:05.147Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T07:42:29.502Z] LOG: ✅ System cards seeded — 15 sections loaded.

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import { API_BASE_URL } from "../../lib/constants"
@@ -14,6 +14,9 @@ import {
   ArrowLeft,
   Palette,
   RotateCcw,
+  Music,
+  Play,
+  Pause,
 } from "lucide-react"
 import { CanvasThemeProvider, useCanvasTheme } from "./lib/canvas-theme"
 
@@ -45,6 +48,16 @@ interface CurationRecord {
   isFeatured?: boolean
 }
 
+interface MusicTrackRecord {
+  id: string
+  title: string
+  prompt: string
+  audioUrl: string
+  category: string
+  duration: number
+  isFavorited: boolean
+}
+
 export default function VizzyLibrary() {
   return (
     <CanvasThemeProvider>
@@ -62,7 +75,9 @@ function VizzyLibraryInner() {
   const [deletedImages, setDeletedImages] = useState<VizzyImageRecord[]>([])
   const [deletedChats, setDeletedChats] = useState<VizzyChatRecord[]>([])
   const [curations, setCurations] = useState<CurationRecord[]>([])
-  const [activeTab, setActiveTab] = useState<"images" | "chats" | "deleted" | "curations">("images")
+  const [musicTracks, setMusicTracks] = useState<MusicTrackRecord[]>([])
+  const [activeTab, setActiveTab] = useState<"images" | "chats" | "deleted" | "curations" | "music">("images")
+  const [playingTrackId, setPlayingTrackId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [pendingId, setPendingId] = useState<string | null>(null)
 
@@ -74,7 +89,7 @@ function VizzyLibraryInner() {
       }
       setIsLoading(true)
       try {
-        const [imagesRes, chatsRes, delImagesRes, delChatsRes, curationsRes] = await Promise.all([
+        const [imagesRes, chatsRes, delImagesRes, delChatsRes, curationsRes, musicRes] = await Promise.all([
           fetch(`${API_BASE_URL}/api/vizzy-canvas/images`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
@@ -90,18 +105,23 @@ function VizzyLibraryInner() {
           fetch(`${API_BASE_URL}/api/vizzy-canvas/curations`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
+          fetch(`${API_BASE_URL}/api/vizzy-canvas/music/system`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
         ])
         const imagesData = await imagesRes.json()
         const chatsData = await chatsRes.json()
         const delImagesData = await delImagesRes.json()
         const delChatsData = await delChatsRes.json()
         const curationsData = await curationsRes.json()
+        const musicData = await musicRes.json()
         
         setImages(imagesData.images || [])
         setChats(chatsData.chats || [])
         setDeletedImages(delImagesData.images || [])
         setDeletedChats(delChatsData.chats || [])
         setCurations(curationsData.curations || [])
+        setMusicTracks(musicData.tracks || [])
       } catch (error) {
         console.error("Failed to fetch library data:", error)
       } finally {
@@ -352,6 +372,19 @@ function VizzyLibraryInner() {
           >
             <Palette className="size-4 mr-2" />
             Curations
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setActiveTab("music")}
+            className={`rounded-lg ${
+              activeTab === "music"
+                ? "bg-[var(--vc-glass-hover)] text-[var(--vc-accent-text)] font-semibold"
+                : "text-[var(--vc-text-muted)] hover:text-[var(--vc-text)]"
+            }`}
+          >
+            <Music className="size-4 mr-2" />
+            Music Curation
           </Button>
         </div>
       </header>
@@ -648,9 +681,168 @@ function VizzyLibraryInner() {
                 </div>
               </div>
             )}
+
+            {activeTab === "music" && (
+              <div className="flex flex-col gap-6 animate-in fade-in duration-300">
+                <div className="flex flex-col gap-1 px-1">
+                  <h2 className="text-lg font-semibold text-[var(--vc-text)]">
+                    Music Curation
+                  </h2>
+                  <p className="text-sm text-[var(--vc-text-muted)]">
+                    Hand-selected classical masterworks and calming ambient soundscapes to elevate your environment.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {musicTracks.map((track) => (
+                    <LibraryMusicCard
+                      key={track.id}
+                      track={track}
+                      isPlaying={playingTrackId === track.id}
+                      onPlayToggle={() => setPlayingTrackId(playingTrackId === track.id ? null : track.id)}
+                    />
+                  ))}
+                  {musicTracks.length === 0 && (
+                    <div className="col-span-full text-center text-[var(--vc-text-faint)] py-16">
+                      <Music className="size-8 mx-auto mb-2 text-[var(--vc-text-muted)] animate-pulse" />
+                      <p className="text-sm font-medium">No music tracks seeded yet.</p>
+                      <p className="text-xs text-[var(--vc-text-faint)] mt-1">
+                        Run the seed script in your terminal to populate music curations.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </>
         )}
       </main>
+    </div>
+  )
+}
+
+function LibraryMusicCard({
+  track,
+  isPlaying,
+  onPlayToggle,
+}: {
+  track: MusicTrackRecord
+  isPlaying: boolean
+  onPlayToggle: () => void
+}) {
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [currentTime, setCurrentTime] = useState(0)
+  const [duration, setDuration] = useState(track.duration || 0)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!audioRef.current) return
+    if (isPlaying) {
+      audioRef.current.play().catch((err) => console.log("Audio play prevented:", err))
+    } else {
+      audioRef.current.pause()
+    }
+  }, [isPlaying])
+
+  const formatTime = (secs: number) => {
+    if (isNaN(secs) || !isFinite(secs)) return "0:00"
+    const m = Math.floor(secs / 60)
+    const s = Math.floor(secs % 60)
+    return `${m}:${s < 10 ? "0" : ""}${s}`
+  }
+
+  return (
+    <div
+      className="group relative rounded-2xl p-5 border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-xl shadow-lg hover:border-[var(--vc-accent-border)] transition-all flex flex-col justify-between gap-4"
+    >
+      <audio
+        ref={audioRef}
+        src={track.audioUrl}
+        onTimeUpdate={(e) => setCurrentTime(e.currentTarget.currentTime)}
+        onLoadedMetadata={(e) => setDuration(e.currentTarget.duration)}
+        onEnded={() => onPlayToggle()}
+      />
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex items-start gap-4 flex-1 min-w-0">
+          <button
+            onClick={onPlayToggle}
+            className="flex-shrink-0 size-12 rounded-xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-hover)] flex items-center justify-center text-[var(--vc-accent-text)] hover:scale-105 transition-transform animate-in fade-in zoom-in duration-200"
+          >
+            {isPlaying ? (
+              <Pause className="size-5 text-[var(--vc-accent-text)]" />
+            ) : (
+              <Play className="size-5 fill-current ml-0.5 text-[var(--vc-accent-text)]" />
+            )}
+          </button>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-[var(--vc-text)] truncate text-sm">
+              {track.title}
+            </h3>
+            <p className="text-xs text-[var(--vc-text-muted)] mt-1 capitalize">
+              {track.category} · {formatTime(duration)}
+            </p>
+          </div>
+        </div>
+        <div className="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-[var(--vc-glass-hover)] text-[var(--vc-accent-text)] border border-[var(--vc-glass-border)] capitalize">
+          {track.category}
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        {track.prompt && (
+          <p className="text-xs text-[var(--vc-text-faint)] line-clamp-2 leading-relaxed">
+            {track.prompt}
+          </p>
+        )}
+
+        {isPlaying && (
+          <div className="flex items-center gap-3 mt-1 animate-in slide-in-from-top-1 duration-200">
+            <input
+              type="range"
+              min={0}
+              max={duration || 100}
+              value={currentTime}
+              onChange={(e) => {
+                const val = Number(e.target.value)
+                setCurrentTime(val)
+                if (audioRef.current) {
+                  audioRef.current.currentTime = val
+                }
+              }}
+              className="flex-1 h-1 rounded-lg appearance-none cursor-pointer bg-[var(--vc-divider)] accent-[var(--vc-accent-text)]"
+            />
+            <span className="text-[10px] font-medium text-[var(--vc-text-faint)] w-8 text-right">
+              {formatTime(currentTime)}
+            </span>
+          </div>
+        )}
+
+        <div className="flex gap-2 mt-1">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              navigator.clipboard.writeText(track.prompt || track.title)
+              alert("Music prompt seed copied!")
+              navigate("/vizzy-canvas")
+            }}
+            className="flex-1 bg-[var(--vc-glass-hover)] hover:bg-[var(--vc-accent-text)]/10 text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] border border-[var(--vc-glass-border)] rounded-xl text-xs py-1.5 flex items-center justify-center gap-1.5"
+          >
+            <Sparkles className="size-3.5" />
+            Use Prompt Seed
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              window.open(track.audioUrl, "_blank")
+            }}
+            className="flex-1 bg-[var(--vc-glass-hover)] hover:bg-[var(--vc-accent-text)]/10 text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] border border-[var(--vc-glass-border)] rounded-xl text-xs py-1.5"
+          >
+            Download
+          </Button>
+        </div>
+      </div>
     </div>
   )
 }
