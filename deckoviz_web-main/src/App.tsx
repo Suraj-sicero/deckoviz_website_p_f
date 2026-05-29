@@ -227,6 +227,11 @@ import VizzyLibrary from "./components/vizzyCanvas/vizzy-library";
 import VizzyProfilePage from "./components/vizzyCanvas/profile-page";
 import VizzySubscriptionPage from "./components/vizzyCanvas/subscription-page";
 import { CanvasErrorBoundary } from "./components/vizzyCanvas/error-boundary";
+import ElinityLanding from "./components/elinity/ElinityLanding";
+import ElinityAboutUs from "./components/elinity/ElinityAboutUs";
+import ElinityEllaris from "./components/elinity/ElinityEllaris";
+import ElinityContact from "./components/elinity/ElinityContact";
+import ElinityJoinUs from "./components/elinity/ElinityJoinUs";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -288,18 +293,23 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/profile",
     "/subscription",
     "/wizzy",
+    "/elinity",
+    "/elinity/about",
+    "/elinity/ellaris",
+    "/elinity/contact",
+    "/elinity/join-us"
   ].includes(location.pathname);
 
   return (
     <>
       <AnimatePresence mode="wait">
-        {isLoading && <LoadingAnimation key="loading" />}
+        {isLoading && !isCanvasPage && <LoadingAnimation key="loading" />}
       </AnimatePresence>
 
       <ScrollToTop />
       <AuthModal />
       <ScrollToSectionOnHome />
-      {!isDeveloperTool && <MouseSparkles />}
+      {!isDeveloperTool && !isCanvasPage && <MouseSparkles />}
 
       {!isCanvasPage && <Navbar />}
       <main className={isDeveloperTool ? "relative z-10 h-screen pt-20 bg-black overflow-hidden" : ""}>
@@ -559,6 +569,11 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/developer-specs/agentic-shape-vortex" element={<AgenticShapeVortex />} />
           <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
           <Route path="/create-world" element={<CreateWorld />} />
+          <Route path="/elinity" element={<ElinityLanding />} />
+          <Route path="/elinity/about" element={<ElinityAboutUs />} />
+          <Route path="/elinity/ellaris" element={<ElinityEllaris />} />
+          <Route path="/elinity/contact" element={<ElinityContact />} />
+          <Route path="/elinity/join-us" element={<ElinityJoinUs />} />
 
           {/* ── Flagship Games ── */}
           <Route path="/flagship-games" element={<FlagshipGamesPage />} />
@@ -576,8 +591,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/flagship-games/oracle/*" element={<OracleApp />} />
         </Routes>
       </main>
-      {!isDeveloperTool && <Footer />}
-      <VizzyChat />
+      {!isDeveloperTool && !isCanvasPage && <Footer />}
+      {!isCanvasPage && <VizzyChat />}
     </>
   );
 };
