@@ -12,6 +12,8 @@ import DeckovizCuration from "../models/DeckovizCuration.js";
 import UserFavoritePrompt from "../models/UserFavoritePrompt.js";
 import { MusicTrack, VideoClip } from "../models/MediaTracks.js";
 import { MusicAttachment, MUSIC_TARGET_TYPES } from "../models/MusicAttachment.js";
+import UserPersona from "../models/UserPersona.js";
+import UserOnboarding from "../models/UserOnboarding.js";
 
 
 // ── Vizzy 2.0 — Agentic Architecture Imports ──────────────────────────────
@@ -45,6 +47,100 @@ const getUserFromToken = (req) => {
     return null;
   }
 };
+
+// ── Onboarding & Deep Persona Endpoints ─────────────────────────────────────
+router.get("/onboarding/status", async (req, res) => {
+  try {
+    const user = getUserFromToken(req);
+    if (!user) return res.status(401).json({ error: "Unauthorized" });
+
+    const [onboarding] = await UserOnboarding.findOrCreate({
+      where: { userId: user.id },
+      defaults: { completed: false, answers: "{}" }
+    });
+
+    const persona = await UserPersona.findOne({
+      where: { userId: user.id }
+    });
+
+    res.json({
+      completed: onboarding.completed,
+      hasPersona: !!persona,
+      persona: persona ? {
+        id: persona.id,
+        personaSummary: persona.personaSummary,
+        preferencesCard: JSON.parse(persona.preferencesCard || "{}")
+      } : null
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/onboarding/start", async (req, res) => {
+  try {
+    const user = getUserFromToken(req);
+    if (!user) return res.status(401).json({ error: "Unauthorized" });
+
+    const chat = await VizzyChat.create({
+      userId: user.id,
+      title: "Vizzy Onboarding",
+      messages: JSON.stringify([
+        {
+          id: `onb-${Date.now()}`,
+          role: "assistant",
+          content: "Hello! I'm Vizzy, your AI companion. I'd love to chat for a few minutes to get to know you, your home, and what moves you, so we can curate your personalized Deckoviz art frame and ambient sounds. To begin... what is your name, and what should I call you?",
+          timestamp: Date.now()
+        }
+      ]),
+      activeAgent: "onboarding",
+      mode: "onboarding"
+    });
+
+    res.json({ chat });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/onboarding/complete", async (req, res) => {
+  try {
+    const user = getUserFromToken(req);
+    if (!user) return res.status(401).json({ error: "Unauthorized" });
+
+    const { persona } = req.body;
+    if (!persona) return res.status(400).json({ error: "Persona JSON required" });
+
+    // Save/Upsert UserPersona
+    const personaSummary = persona.meta?.session_notes || 
+      (persona.aesthetics?.sensibility_notes ? `Aesthetic: ${persona.aesthetics.sensibility_notes}` : "User onboarding persona profile");
+    
+    const [userPersona] = await UserPersona.findOrCreate({
+      where: { userId: user.id },
+      defaults: {
+        personaSummary,
+        preferencesCard: JSON.stringify(persona)
+      }
+    });
+    userPersona.personaSummary = personaSummary;
+    userPersona.preferencesCard = JSON.stringify(persona);
+    await userPersona.save();
+
+    // Mark onboarding as completed
+    const [onbRecord] = await UserOnboarding.findOrCreate({
+      where: { userId: user.id },
+      defaults: { completed: true }
+    });
+    onbRecord.completed = true;
+    onbRecord.answers = JSON.stringify(persona);
+    await onbRecord.save();
+
+    res.json({ success: true, persona: userPersona });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // Atomically check + deduct credits for a paid action.
 // Returns { ok: true, remaining } on success, or { ok: false, status, error }
@@ -809,11 +905,66 @@ router.post("/agent", async (req, res) => {
       }
     }
 
+    // ── Check if onboarding JSON is produced ──────────────────────────────
+    let onboardingCompleted = false;
+    let personaData = null;
+    if (mode === "onboarding" && result.content && userId) {
+      let jsonString = null;
+      const jsonMatch = result.content.match(/```json\s*([\s\S]*?)\s*```/) || result.content.match(/```\s*([\s\S]*?)\s*```/);
+      if (jsonMatch) {
+        jsonString = jsonMatch[1].trim();
+      } else {
+        const lastBrace = result.content.lastIndexOf("{");
+        const endBrace = result.content.lastIndexOf("}");
+        if (lastBrace !== -1 && endBrace !== -1 && endBrace > lastBrace) {
+          jsonString = result.content.substring(lastBrace, endBrace + 1).trim();
+        }
+      }
+
+      if (jsonString) {
+        try {
+          const parsed = JSON.parse(jsonString);
+          if (parsed && (parsed.meta || parsed.identity || parsed.aesthetics)) {
+            // Save/Upsert UserPersona
+            const personaSummary = parsed.meta?.session_notes || 
+              (parsed.aesthetics?.sensibility_notes ? `Aesthetic: ${parsed.aesthetics.sensibility_notes}` : "User onboarding persona profile");
+            
+            const [userPersona] = await UserPersona.findOrCreate({
+              where: { userId },
+              defaults: {
+                personaSummary,
+                preferencesCard: JSON.stringify(parsed)
+              }
+            });
+            userPersona.personaSummary = personaSummary;
+            userPersona.preferencesCard = JSON.stringify(parsed);
+            await userPersona.save();
+
+            // Mark onboarding as completed
+            const [onbRecord] = await UserOnboarding.findOrCreate({
+              where: { userId },
+              defaults: { completed: true }
+            });
+            onbRecord.completed = true;
+            onbRecord.answers = JSON.stringify(parsed);
+            await onbRecord.save();
+
+            onboardingCompleted = true;
+            personaData = parsed;
+          }
+        } catch (jsonErr) {
+          console.error("Failed to parse onboarding JSON:", jsonErr.message);
+        }
+      }
+    }
+
     return res.json({
       content: result.content,
       intent: result.intent,
       agentUsed: result.agentUsed,
       chatId: savedChatId,
+      onboardingCompleted,
+      persona: personaData,
     });
   } catch (err) {
     console.error("[/agent] Error:", err.message);
