@@ -11,6 +11,7 @@ import { Op } from "sequelize";
 import DeckovizCuration from "../models/DeckovizCuration.js";
 import UserFavoritePrompt from "../models/UserFavoritePrompt.js";
 import { MusicTrack, VideoClip } from "../models/MediaTracks.js";
+import { MusicAttachment, MUSIC_TARGET_TYPES } from "../models/MusicAttachment.js";
 
 
 // ── Vizzy 2.0 — Agentic Architecture Imports ──────────────────────────────
@@ -1098,6 +1099,155 @@ router.get("/music/system", async (req, res) => {
     res.json({ tracks });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// ============================================================
+// 🎵 MUSIC ATTACHMENT ROUTES (attach a track to a collection / artwork / curation)
+// ============================================================
+
+// POST /api/vizzy-canvas/music/attach — attach (or replace) the music on an item
+// body: { targetType, targetId, musicTrackId }
+router.post("/music/attach", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const { targetType, targetId, musicTrackId } = req.body;
+
+    if (!targetType || !targetId || !musicTrackId) {
+      return res
+        .status(400)
+        .json({ error: "targetType, targetId and musicTrackId are required" });
+    }
+    if (!MUSIC_TARGET_TYPES.includes(targetType)) {
+      return res.status(400).json({
+        error: `Invalid targetType. Must be one of: ${MUSIC_TARGET_TYPES.join(", ")}`,
+      });
+    }
+
+    // Make sure the track exists and is usable by this user (system or own).
+    const track = await MusicTrack.findByPk(musicTrackId);
+    if (!track) {
+      return res.status(404).json({ error: "Music track not found" });
+    }
+    if (track.userId && track.userId !== tokenUser.id) {
+      return res.status(403).json({ error: "You cannot use this music track" });
+    }
+
+    // One track per item: update the existing attachment or create a new one.
+    const existing = await MusicAttachment.findOne({
+      where: { userId: tokenUser.id, targetType, targetId },
+    });
+
+    let attachment;
+    if (existing) {
+      existing.musicTrackId = musicTrackId;
+      await existing.save();
+      attachment = existing;
+    } else {
+      attachment = await MusicAttachment.create({
+        userId: tokenUser.id,
+        targetType,
+        targetId,
+        musicTrackId,
+      });
+    }
+
+    res.json({ success: true, attachment, track });
+  } catch (err) {
+    console.error("❌ Error attaching music:", err);
+    res.status(500).json({ error: "Failed to attach music" });
+  }
+});
+
+// DELETE /api/vizzy-canvas/music/attach — remove the music from an item
+// query or body: { targetType, targetId }
+router.delete("/music/attach", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const targetType = req.body.targetType || req.query.targetType;
+    const targetId = req.body.targetId || req.query.targetId;
+
+    if (!targetType || !targetId) {
+      return res
+        .status(400)
+        .json({ error: "targetType and targetId are required" });
+    }
+
+    const deleted = await MusicAttachment.destroy({
+      where: { userId: tokenUser.id, targetType, targetId },
+    });
+
+    res.json({ success: true, removed: deleted });
+  } catch (err) {
+    console.error("❌ Error detaching music:", err);
+    res.status(500).json({ error: "Failed to detach music" });
+  }
+});
+
+// GET /api/vizzy-canvas/music/attach?targetType=&targetId= — get the track on one item
+router.get("/music/attach", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const { targetType, targetId } = req.query;
+    if (!targetType || !targetId) {
+      return res
+        .status(400)
+        .json({ error: "targetType and targetId are required" });
+    }
+
+    const attachment = await MusicAttachment.findOne({
+      where: { userId: tokenUser.id, targetType, targetId },
+    });
+
+    if (!attachment) {
+      return res.json({ success: true, attachment: null, track: null });
+    }
+
+    const track = await MusicTrack.findByPk(attachment.musicTrackId);
+    res.json({ success: true, attachment, track });
+  } catch (err) {
+    console.error("❌ Error fetching music attachment:", err);
+    res.status(500).json({ error: "Failed to fetch music attachment" });
+  }
+});
+
+// GET /api/vizzy-canvas/music/attachments — all of the user's attachments (track hydrated)
+// optional query: ?targetType=collection  to filter
+router.get("/music/attachments", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const where = { userId: tokenUser.id };
+    if (req.query.targetType) where.targetType = req.query.targetType;
+
+    const attachments = await MusicAttachment.findAll({
+      where,
+      order: [["updatedAt", "DESC"]],
+    });
+
+    // Hydrate the tracks in a single query and map them onto each attachment.
+    const trackIds = [...new Set(attachments.map((a) => a.musicTrackId))];
+    const tracks = trackIds.length
+      ? await MusicTrack.findAll({ where: { id: trackIds } })
+      : [];
+    const trackById = Object.fromEntries(tracks.map((t) => [t.id, t]));
+
+    const result = attachments.map((a) => ({
+      ...a.toJSON(),
+      track: trackById[a.musicTrackId] || null,
+    }));
+
+    res.json({ success: true, attachments: result });
+  } catch (err) {
+    console.error("❌ Error fetching music attachments:", err);
+    res.status(500).json({ error: "Failed to fetch music attachments" });
   }
 });
 

@@ -3592,3 +3592,30 @@
 [2026-05-29T07:42:03.250Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-05-29T07:42:05.147Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-05-29T07:42:29.502Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:06:33.510Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:06:35.414Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:06:59.730Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:11:13.166Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:11:15.035Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:13:08.722Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:13:10.721Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:36:27.524Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:36:29.465Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:36:53.835Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:47:35.682Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:47:37.516Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:48:02.947Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:48:06.302Z] ERROR: ❌ Error detaching music: TypeError: Cannot read properties of undefined (reading 'targetType')
+[2026-05-29T18:04:05.019Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T18:04:06.902Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T18:04:20.828Z] ERROR: Profile fetch error: JsonWebTokenError: jwt malformed
+[2026-05-29T18:04:32.619Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T18:06:11.300Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T18:06:13.110Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T18:06:38.868Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T18:11:40.575Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T18:11:42.353Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T18:12:08.940Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-30T05:23:08.773Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-30T05:23:10.688Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-30T05:23:37.738Z] LOG: ✅ System cards seeded — 15 sections loaded.

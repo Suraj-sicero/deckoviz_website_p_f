@@ -232,6 +232,8 @@ import ElinityAboutUs from "./components/elinity/ElinityAboutUs";
 import ElinityEllaris from "./components/elinity/ElinityEllaris";
 import ElinityContact from "./components/elinity/ElinityContact";
 import ElinityJoinUs from "./components/elinity/ElinityJoinUs";
+import DailyCuratorPage from "./components/dailyCurator/DailyCuratorPage";
+import AdminDailyCuratorPage from "./components/dailyCurator/AdminDailyCuratorPage";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -589,6 +591,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/flagship-games/cartographers/*" element={<CartographersApp />} />
           <Route path="/flagship-games/brilliant-minds/*" element={<BrilliantMindsApp />} />
           <Route path="/flagship-games/oracle/*" element={<OracleApp />} />
+
+          {/* Daily Curator + Music Curation */}
+          <Route path="/daily-curator" element={<ProtectedRoute><DailyCuratorPage /></ProtectedRoute>} />
+          <Route path="/admin/daily-curator" element={<ProtectedRoute><AdminDailyCuratorPage /></ProtectedRoute>} />
         </Routes>
       </main>
       {!isDeveloperTool && !isCanvasPage && <Footer />}
