@@ -22,6 +22,7 @@ import memoryRoutes from "./routes/memoryRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import vizzyCanvasRoutes from "./routes/vizzyCanvasRoutes.js";
+import dailyCuratorRoutes from "./routes/dailyCuratorRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import storyForgeRoutes from "./routes/storyForgeRoutes.js";
 import {
@@ -152,7 +153,7 @@ app.use(
         callback(null, true); 
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true
   })
 );
@@ -265,6 +266,7 @@ app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
 app.use("/api/vizzy", vizzyRoutes);
 app.use("/api/vizzy-canvas", vizzyCanvasRoutes);
+app.use("/api/daily-curator", dailyCuratorRoutes);
 app.use("/api", uploadRoutes);
 app.use("/api", dreamRoutes);
 app.use("/api/memory", memoryRoutes);

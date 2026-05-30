@@ -596,6 +596,20 @@ const Navbar: React.FC = () => {
                         <p className="text-xs text-[#2563EB] font-bold mt-1">🪙 {user.credits} Credits</p>
                       </div>
                       <div className="p-2">
+                        <a
+                          href="/daily-curator"
+                          className="w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 font-semibold hover:bg-gray-50 rounded-xl transition-colors"
+                        >
+                          🎨 Daily Curator
+                        </a>
+                        {user.isAdmin && (
+                          <a
+                            href="/admin/daily-curator"
+                            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#2563EB] font-semibold hover:bg-blue-50 rounded-xl transition-colors"
+                          >
+                            🛠️ Curator Admin
+                          </a>
+                        )}
                         <button
                           onClick={logout}
                           className="w-full flex items-center gap-2 px-3 py-2 text-sm text-red-600 font-semibold hover:bg-red-50 rounded-xl transition-colors"
@@ -797,6 +811,22 @@ const Navbar: React.FC = () => {
                         <p className="text-xs text-[#2563EB] font-bold">🪙 {user.credits} Credits</p>
                       </div>
                     </div>
+                    <a
+                      href="/daily-curator"
+                      onClick={() => setIsOpen(false)}
+                      className="w-full flex items-center justify-center gap-2 py-2.5 mb-2 text-sm text-gray-700 font-bold bg-white/80 border border-gray-100 rounded-xl hover:bg-gray-50 transition-colors"
+                    >
+                      🎨 Daily Curator
+                    </a>
+                    {user.isAdmin && (
+                      <a
+                        href="/admin/daily-curator"
+                        onClick={() => setIsOpen(false)}
+                        className="w-full flex items-center justify-center gap-2 py-2.5 mb-2 text-sm text-[#2563EB] font-bold bg-white/80 border border-blue-100 rounded-xl hover:bg-blue-50 transition-colors"
+                      >
+                        🛠️ Curator Admin
+                      </a>
+                    )}
                     <button
                       onClick={() => { logout(); setIsOpen(false); }}
                       className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-red-600 font-bold bg-white/80 border border-red-100 rounded-xl hover:bg-red-50 transition-colors"
