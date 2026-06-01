@@ -3629,3 +3629,6 @@
 [2026-06-01T16:20:14.349Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-06-01T16:20:42.543Z] LOG: ✅ System cards seeded — 15 sections loaded.
 [2026-06-01T16:25:54.699Z] LOG: [VCS Studio] Dispatching chat query to LLM...
+[2026-06-01T17:42:35.277Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-01T17:42:40.252Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-01T17:43:48.751Z] LOG: ✅ System cards seeded — 15 sections loaded.

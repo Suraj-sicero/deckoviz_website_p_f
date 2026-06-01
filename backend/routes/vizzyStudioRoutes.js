@@ -18,7 +18,7 @@ const replicate = process.env.REPLICATE_API_TOKEN
   ? new Replicate({ auth: process.env.REPLICATE_API_TOKEN })
   : null;
 
-const VCS_SYSTEM_PROMPT = `
+const VCS_SYSTEM_PROMPT_TEMPLATE = `
 DECKOVIZ VIZZY CONVERSATIONAL STUDIO (VCS)
 MASTER SYSTEM PROMPT V1
 
@@ -54,14 +54,7 @@ Ask: "Are you feeling creative, reflective, curious, productive, or playful?"
 Use their answer to route them.
 
 FEATURE CATEGORIES & LIST:
-- CREATIVE: Co-Written Story, Writing Room, Novella Workshop, Short Story Sprint, Poem In Conversation, Visual Book, Persona Workshop
-- REFLECTIVE: Daily Page, Prompted Journal, Life Inventory, Time Capsule, Memory Gallery, Slow Letter, Unsent Message, Fear Drawer, Parallel Lives, Cultural Excavation, Identity Map
-- VISUAL CREATION: Mood Canvas, Dream Artwork, Conversation Artwork, Duo Artwork, Sound To Image, Comic Strip Journal, Visual Journal
-- IDEATION: Idea Lab, Horizon Session, Project War Room, Manifesto Builder, Thought Experiment Engine
-- CURATION: Curation Conversation, Aesthetic Interrogation, Morning Brief
-- SOLO GAMES: Oracle, Heist, Mythmaker, Time Traveller's Notebook, Sensory Description Challenge
-- GROUP EXPERIENCES: Exquisite Corpse, Verdict, World They Left Behind, Portrait Session, Memory Clash
-- RITUALS: Ritual Maker, Gratitude Architecture, Inspiration Drop, Lullaby Forge
+[60 features placeholder]
 
 FEATURE EXECUTION FRAMEWORK
 Every feature follows:
@@ -133,6 +126,19 @@ You MUST output your response in valid JSON matching this schema:
   "imageDescription": "Short text narrating intent for the image (e.g., 'I'm imagining faded dusk light and unfinished movement. Let me show you.') or null"
 }
 `;
+
+const VCS_60_FEATURES_REGISTRY = `
+- CREATIVE: Co-Written Story, Writing Room, Novella Workshop, Short Story Sprint, Poem In Conversation, Visual Book, Persona Workshop
+- REFLECTIVE: Daily Page, Prompted Journal, Life Inventory, Time Capsule, Memory Gallery, Slow Letter, Unsent Message, Fear Drawer, Parallel Lives, Cultural Excavation, Identity Map
+- VISUAL CREATION: Mood Canvas, Dream Artwork, Conversation Artwork, Duo Artwork, Sound To Image, Comic Strip Journal, Visual Journal
+- IDEATION: Idea Lab, Horizon Session, Project War Room, Manifesto Builder, Thought Experiment Engine
+- CURATION: Curation Conversation, Aesthetic Interrogation, Morning Brief
+- SOLO GAMES: Oracle, Heist, Mythmaker, Time Traveller's Notebook, Sensory Description Challenge
+- GROUP EXPERIENCES: Exquisite Corpse, Verdict, World They Left Behind, Portrait Session, Memory Clash
+- RITUALS: Ritual Maker, Gratitude Architecture, Inspiration Drop, Lullaby Forge
+`;
+
+const VCS_SYSTEM_PROMPT = VCS_SYSTEM_PROMPT_TEMPLATE.replace("[60 features placeholder]", VCS_60_FEATURES_REGISTRY);
 
 // Helper: LLM runner
 async function callLLM(messages) {
