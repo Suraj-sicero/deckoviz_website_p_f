@@ -79,6 +79,7 @@ import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 
 import Audiobook from "./components/Audiobook";
 import CreativeStudio from "./components/tools/CreativeStudio";
+import ConversationalStudio from "./components/tools/ConversationalStudio";
 import CreativeJournalTool from "./components/tools/CreativeJournalTool";
 import AudiobookTool from "./components/tools/AudiobookTool";
 import StorybookTool from "./components/tools/StorybookTool";
@@ -437,6 +438,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
 
           {/* ── Creative Studio Hub ── */}
           <Route path="/creative-studio" element={<CreativeStudio />} />
+          <Route path="/conversational-studio" element={<ProtectedRoute><ConversationalStudio /></ProtectedRoute>} />
           <Route path="/creative-journal" element={<ProtectedRoute><CreativeJournalTool /></ProtectedRoute>} />
           <Route path="/tools/audiobook" element={<ProtectedRoute><AudiobookTool /></ProtectedRoute>} />
           <Route path="/tools/visual-audiobook" element={<ProtectedRoute><VisualAudiobookTool /></ProtectedRoute>} />
