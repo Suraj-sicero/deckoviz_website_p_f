@@ -60,11 +60,11 @@ export function WelcomeScreen({
   const categories = getAllSuggestions(mode)
 
   return (
-    <div className="relative flex flex-col items-center h-full px-4 py-8 md:py-12 overflow-y-auto">
+    <div className="relative flex flex-col items-center w-full min-h-full px-4 py-8 md:py-12">
       {/* Onboarding Banner */}
       {isOnboardingCompleted === false && (
         <div
-          className="relative w-full max-w-3xl mb-8 p-6 rounded-2xl border border-[var(--vc-glass-border-strong)] bg-[var(--vc-glass-strong)] backdrop-blur-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500 z-10"
+          className="relative w-full max-w-3xl mb-8 p-6 rounded-2xl border border-[var(--vc-glass-border-strong)] bg-[var(--vc-glass-strong)] backdrop-blur-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500 z-10 shrink-0"
         >
           {/* Ambient glow inside the card */}
           <div
