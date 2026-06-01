@@ -17,6 +17,7 @@ import creativeToolsRoutes from "./routes/creativeTools.js";
 import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
 import wizzyRoutes from "./routes/wizzyRoutes.js";
 import vizzyRoutes from "./routes/vizzyRoutes.js";
+import vizzyStudioRoutes from "./routes/vizzyStudioRoutes.js";
 import dreamRoutes from "./routes/dreamRoutes.js";
 import memoryRoutes from "./routes/memoryRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
@@ -52,6 +53,7 @@ import client from "./redisClient.js";
 // ── Vizzy 2.0 — New Agentic Models (auto-synced by sequelize.sync below) ───
 import "./models/VizzyMemory.js";
 import "./models/VizzyAgentSession.js";
+import "./models/VizzyStudioSession.js";
 import "./models/VizzySystemCard.js";
 import "./models/UserPersona.js";
 import "./models/UserOnboarding.js";
@@ -265,6 +267,7 @@ app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
 app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
 app.use("/api/vizzy", vizzyRoutes);
+app.use("/api/vizzy-studio", vizzyStudioRoutes);
 app.use("/api/vizzy-canvas", vizzyCanvasRoutes);
 app.use("/api/daily-curator", dailyCuratorRoutes);
 app.use("/api", uploadRoutes);
