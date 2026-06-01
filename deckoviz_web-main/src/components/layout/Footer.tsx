@@ -324,7 +324,7 @@ const Footer = () => {
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <Sparkles className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">VIZZY CONVERSATIONAL STUDIO</span>
+              <span className="relative z-10">Vizzy Conversational Studio (VCS)</span>
               <svg
                 className="relative z-10 group-hover:translate-x-1 transition-transform"
                 width="16"
