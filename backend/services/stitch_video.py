@@ -6,6 +6,7 @@ import urllib.request
 import subprocess
 import shutil
 import tempfile
+import ssl
 from urllib.parse import urlparse
 
 def download_or_copy(url_or_path, temp_dir, base_name, public_dir):
@@ -36,10 +37,33 @@ def download_or_copy(url_or_path, temp_dir, base_name, public_dir):
         shutil.copy2(url_or_path, dest_path)
         return dest_path
 
-    # Download external
+    # Download external with browser User-Agent and bypass SSL verify
     print(f"[Python Stitcher] Downloading {url_or_path}...", file=sys.stderr)
-    urllib.request.urlretrieve(url_or_path, dest_path)
-    return dest_path
+    try:
+        req = urllib.request.Request(
+            url_or_path,
+            headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'
+            }
+        )
+        context = ssl._create_unverified_context()
+        with urllib.request.urlopen(req, context=context) as response, open(dest_path, 'wb') as out_file:
+            shutil.copyfileobj(response, out_file)
+        return dest_path
+    except Exception as e:
+        print(f"[Python Stitcher] Failed to download {url_or_path}: {e}", file=sys.stderr)
+        raise Exception(f"Download failed for {url_or_path}: {str(e)}")
+
+def run_ffmpeg(cmd):
+    # Execute ffmpeg, capture output for debugging on failure
+    try:
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        if res.returncode != 0:
+            raise Exception(f"FFmpeg error: {res.stderr}")
+    except FileNotFoundError:
+        raise Exception("FFmpeg executable not found on the system. Please ensure FFmpeg is installed and in the system PATH.")
+    except Exception as e:
+        raise e
 
 def main():
     try:
@@ -84,7 +108,7 @@ def main():
                 "-vf", f"scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:black,fade=t=in:st=0:d={fade_duration},fade=t=out:st={fade_out_start}:d={fade_duration}",
                 "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", "25", clip_path
             ]
-            subprocess.run(cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            run_ffmpeg(cmd)
             clips.append(clip_path)
 
         # 3. Concatenate
@@ -95,7 +119,7 @@ def main():
 
         merged_path = os.path.join(temp_dir, "merged.mp4")
         concat_cmd = ["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", list_path, "-c", "copy", merged_path]
-        subprocess.run(concat_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        run_ffmpeg(concat_cmd)
 
         # 4. Audio mixing
         local_narration = download_or_copy(narration, temp_dir, "narration", public_dir)
@@ -133,7 +157,7 @@ def main():
                 "-c:v", "copy", "-c:a", "aac", "-t", str(total_duration), final_video_path
             ])
 
-        subprocess.run(mix_cmd, check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        run_ffmpeg(mix_cmd)
 
         # Cleanup
         shutil.rmtree(temp_dir, ignore_errors=True)
