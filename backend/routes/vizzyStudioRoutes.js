@@ -3,6 +3,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import Replicate from "replicate";
 import dotenv from "dotenv";
 import VizzyStudioSession from "../models/VizzyStudioSession.js";
+import FilmProject from "../models/FilmProject.js";
+import { renderVideo } from "../services/VideoRenderService.js";
 import { authenticateUser } from "../middleware/auth.js";
 
 dotenv.config();
@@ -423,6 +425,315 @@ Ensure the returned JSON structure is valid. Do not wrap in anything other than 
   } catch (error) {
     console.error("Error in VCS Chat route:", error);
     res.status(500).json({ error: "Failed to get response from Vizzy Conversational Studio" });
+  }
+});
+
+// ── GET FILM PROJECTS ──
+router.get("/films", authenticateUser, async (req, res) => {
+  try {
+    const projects = await FilmProject.findAll({
+      where: { userId: req.user.id },
+      order: [["updatedAt", "DESC"]],
+    });
+
+    const parsedProjects = projects.map(p => ({
+      id: p.id,
+      title: p.title,
+      styleReferenceImage: p.styleReferenceImage,
+      scenes: JSON.parse(p.scenes || "[]"),
+      transitionDuration: p.transitionDuration,
+      narrationFile: p.narrationFile,
+      musicFile: p.musicFile,
+      narrationVolume: p.narrationVolume,
+      musicVolume: p.musicVolume,
+      status: p.status,
+      outputVideo: p.outputVideo,
+      updatedAt: p.updatedAt,
+    }));
+
+    res.json({ projects: parsedProjects });
+  } catch (error) {
+    console.error("Error fetching Film Projects:", error);
+    res.status(500).json({ error: "Failed to load film projects" });
+  }
+});
+
+// ── GET SINGLE FILM PROJECT ──
+router.get("/films/:id", authenticateUser, async (req, res) => {
+  try {
+    const project = await FilmProject.findOne({
+      where: { id: req.params.id, userId: req.user.id }
+    });
+
+    if (!project) {
+      return res.status(404).json({ error: "Film Project not found" });
+    }
+
+    res.json({
+      id: project.id,
+      title: project.title,
+      styleReferenceImage: project.styleReferenceImage,
+      scenes: JSON.parse(project.scenes || "[]"),
+      transitionDuration: project.transitionDuration,
+      narrationFile: project.narrationFile,
+      musicFile: project.musicFile,
+      narrationVolume: project.narrationVolume,
+      musicVolume: project.musicVolume,
+      status: project.status,
+      outputVideo: project.outputVideo,
+      updatedAt: project.updatedAt,
+    });
+  } catch (error) {
+    console.error("Error fetching project:", error);
+    res.status(500).json({ error: "Failed to load project" });
+  }
+});
+
+// ── START NEW FILM PROJECT ──
+router.post("/films/start", authenticateUser, async (req, res) => {
+  try {
+    const { title, styleReferenceImage, styleTemplate } = req.body;
+
+    const project = await FilmProject.create({
+      userId: req.user.id,
+      title: title || "Untitled Film",
+      styleReferenceImage: styleReferenceImage || null,
+      scenes: "[]",
+      transitionDuration: 5,
+      narrationVolume: 100,
+      musicVolume: 100,
+      status: "draft",
+    });
+
+    res.status(201).json({
+      id: project.id,
+      title: project.title,
+      styleReferenceImage: project.styleReferenceImage,
+      scenes: [],
+      transitionDuration: project.transitionDuration,
+      status: project.status,
+    });
+  } catch (error) {
+    console.error("Error starting Film Project:", error);
+    res.status(500).json({ error: "Failed to start project" });
+  }
+});
+
+// ── UPDATE FILM PROJECT ──
+router.put("/films/:id", authenticateUser, async (req, res) => {
+  try {
+    const {
+      title,
+      styleReferenceImage,
+      scenes,
+      transitionDuration,
+      narrationFile,
+      musicFile,
+      narrationVolume,
+      musicVolume,
+      status,
+      outputVideo
+    } = req.body;
+
+    const project = await FilmProject.findOne({
+      where: { id: req.params.id, userId: req.user.id }
+    });
+
+    if (!project) {
+      return res.status(404).json({ error: "Film Project not found" });
+    }
+
+    if (title !== undefined) project.title = title;
+    if (styleReferenceImage !== undefined) project.styleReferenceImage = styleReferenceImage;
+    if (scenes !== undefined) project.scenes = JSON.stringify(scenes);
+    if (transitionDuration !== undefined) project.transitionDuration = transitionDuration;
+    if (narrationFile !== undefined) project.narrationFile = narrationFile;
+    if (musicFile !== undefined) project.musicFile = musicFile;
+    if (narrationVolume !== undefined) project.narrationVolume = narrationVolume;
+    if (musicVolume !== undefined) project.musicVolume = musicVolume;
+    if (status !== undefined) project.status = status;
+    if (outputVideo !== undefined) project.outputVideo = outputVideo;
+
+    await project.save();
+
+    res.json({
+      id: project.id,
+      title: project.title,
+      styleReferenceImage: project.styleReferenceImage,
+      scenes: JSON.parse(project.scenes || "[]"),
+      transitionDuration: project.transitionDuration,
+      narrationFile: project.narrationFile,
+      musicFile: project.musicFile,
+      narrationVolume: project.narrationVolume,
+      musicVolume: project.musicVolume,
+      status: project.status,
+      outputVideo: project.outputVideo,
+    });
+  } catch (error) {
+    console.error("Error updating project:", error);
+    res.status(500).json({ error: "Failed to update project" });
+  }
+});
+
+// ── GENERATE FILM SCENE OPTIONS ──
+router.post("/films/generate-scene", authenticateUser, async (req, res) => {
+  try {
+    const { prompt, styleReferenceImage, styleTemplate, previousSelectedImage } = req.body;
+
+    if (!prompt) {
+      return res.status(400).json({ error: "Prompt is required" });
+    }
+
+    // Style presets helper
+    const stylePresets = {
+      anime: ", in anime illustration style, high quality anime artwork, colorful, detailed lineart, visual novel key visual",
+      realistic: ", photorealistic portrait, photograph, highly realistic, 8k resolution, highly detailed, professional lighting",
+      watercolor: ", watercolor painting style, soft colors, ink splashes, textured paper, artistic",
+      "oil painting": ", classical oil painting style, visible brush strokes, rich colors, textured canvas",
+      "comic book": ", comic book illustration, bold lines, retro shading, hand-drawn, graphic novel style",
+      cinematic: ", cinematic film still, dramatic lighting, high contrast, depth of field, 35mm photograph, movie scene",
+      fantasy: ", high fantasy artwork, magical atmosphere, detailed digital painting, vibrant colors",
+      "sci-fi": ", futuristic science fiction artwork, cyberpunk details, glowing neon, high-tech environment, concept art"
+    };
+
+    let finalPrompt = prompt;
+    if (styleTemplate && stylePresets[styleTemplate.toLowerCase()]) {
+      finalPrompt += stylePresets[styleTemplate.toLowerCase()];
+    }
+
+    console.log(`[VCS Film] Generating 2 scene variations in parallel for prompt: "${finalPrompt}"`);
+
+    const generateFn = async (seedOffset) => {
+      if (styleReferenceImage && replicate) {
+        // SDXL with style reference
+        const output = await replicate.run(
+          "stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc",
+          {
+            input: {
+              image: styleReferenceImage,
+              prompt: finalPrompt,
+              prompt_strength: 0.7,
+              negative_prompt: "deformed, blurry, ugly, low quality, disfigured, text, watermark, bad hands",
+              seed: Math.floor(Math.random() * 1000000) + seedOffset
+            }
+          }
+        );
+        return Array.isArray(output) ? String(output[output.length - 1]) : String(output);
+      } else if (replicate) {
+        // SDXL Lightning
+        const output = await replicate.run(
+          "bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
+          {
+            input: {
+              prompt: finalPrompt,
+              negative_prompt: "deformed, blurry, ugly, low quality, disfigured, text, watermark, bad hands",
+              seed: Math.floor(Math.random() * 1000000) + seedOffset
+            }
+          }
+        );
+        return Array.isArray(output) ? String(output[output.length - 1]) : String(output);
+      } else {
+        // Fallback mockup image if Replicate token is not set, to ensure demo readiness
+        return `https://picsum.photos/seed/${Math.floor(Math.random() * 100000) + seedOffset}/1280/720`;
+      }
+    };
+
+    // Execute both generations in parallel
+    const [imageOption1, imageOption2] = await Promise.all([
+      generateFn(1),
+      generateFn(2)
+    ]);
+
+    res.json({
+      options: [imageOption1, imageOption2]
+    });
+  } catch (error) {
+    console.error("Error generating scene options:", error);
+    res.status(500).json({ error: "Failed to generate image variations" });
+  }
+});
+
+// ── RENDER FILM PROJECT ──
+router.post("/films/:id/render", authenticateUser, async (req, res) => {
+  try {
+    const project = await FilmProject.findOne({
+      where: { id: req.params.id, userId: req.user.id }
+    });
+
+    if (!project) {
+      return res.status(404).json({ error: "Film Project not found" });
+    }
+
+    const scenes = JSON.parse(project.scenes || "[]");
+    if (!scenes.length) {
+      return res.status(400).json({ error: "Cannot render project: scene queue is empty" });
+    }
+
+    // Extract selected images from scenes
+    const images = scenes.map(s => s.selectedImage).filter(Boolean);
+    if (!images.length) {
+      return res.status(400).json({ error: "Cannot render project: no selected images found in scenes" });
+    }
+
+    project.status = "rendering";
+    await project.save();
+
+    // Trigger async rendering so we don't timeout the HTTP response
+    renderVideo({
+      images,
+      transitionDuration: project.transitionDuration,
+      narration: project.narrationFile,
+      music: project.musicFile,
+      narrationVolume: project.narrationVolume,
+      musicVolume: project.musicVolume
+    }).then(async (videoUrl) => {
+      project.outputVideo = videoUrl;
+      project.status = "completed";
+      await project.save();
+      console.log(`[VideoRenderService] Project ${project.id} rendered successfully: ${videoUrl}`);
+    }).catch(async (renderErr) => {
+      project.status = "failed";
+      await project.save();
+      console.error(`[VideoRenderService] Project ${project.id} render failed:`, renderErr);
+    });
+
+    res.json({
+      id: project.id,
+      status: "rendering"
+    });
+  } catch (error) {
+    console.error("Error starting film render:", error);
+    res.status(500).json({ error: "Failed to start video rendering" });
+  }
+});
+
+// ── DIRECT MONTAGE RENDER ──
+router.post("/render-montage", authenticateUser, async (req, res) => {
+  try {
+    const { images, transitionDuration, narration, music, narrationVolume, musicVolume } = req.body;
+
+    if (!images || !images.length) {
+      return res.status(400).json({ error: "Images are required for rendering" });
+    }
+
+    console.log(`[VideoRenderService] Rendering direct montage with ${images.length} images`);
+
+    const videoUrl = await renderVideo({
+      images,
+      transitionDuration,
+      narration,
+      music,
+      narrationVolume,
+      musicVolume
+    });
+
+    res.json({
+      success: true,
+      videoUrl
+    });
+  } catch (error) {
+    console.error("Montage rendering failed:", error);
+    res.status(500).json({ error: "Failed to render montage video" });
   }
 });
 

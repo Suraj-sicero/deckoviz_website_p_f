@@ -19,6 +19,8 @@ import {
   HelpCircle
 } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
+import { StaticFilmCreator } from "./StaticFilmCreator";
+import { ImageMontageCreator } from "./ImageMontageCreator";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com");
 
@@ -124,12 +126,30 @@ const ConversationalStudio: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState<"lobby" | "studio">("lobby");
   
+  // Special Features Integration
+  const [activeSpecialFeature, setActiveSpecialFeature] = useState<"film_creator" | "montage_creator" | null>(null);
+  const [showCoreFeaturesDropdown, setShowCoreFeaturesDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   // Navigation filters
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [frameSuccessMessage, setFrameSuccessMessage] = useState<string | null>(null);
 
   const bottomRef = useRef<HTMLDivElement>(null);
+
+  // Handle clicking outside the core features dropdown
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowCoreFeaturesDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   // Fetch past sessions
   const fetchSessions = async () => {
@@ -287,29 +307,144 @@ const ConversationalStudio: React.FC = () => {
           </div>
         </div>
 
-        {activeTab === "studio" && activeSession && (
-          <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              {activeSession.featureName || "Lobby"}
-            </span>
+        <div className="flex items-center gap-4">
+          {/* Core Features Dropdown */}
+          <div className="relative" ref={dropdownRef}>
             <button
-              onClick={() => {
-                setActiveTab("lobby");
-                setActiveSession(null);
-                setMessages([]);
-              }}
-              className="text-xs font-bold text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+              onClick={() => setShowCoreFeaturesDropdown(!showCoreFeaturesDropdown)}
+              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-slate-200 text-xs font-bold flex items-center gap-2 transition-all"
             >
-              Exit Studio
+              <span>Some Core Features</span>
+              <ChevronRight className={`w-3.5 h-3.5 transition-transform duration-200 ${showCoreFeaturesDropdown ? "rotate-90" : ""}`} />
             </button>
+
+            {showCoreFeaturesDropdown && (
+              <div className="absolute right-0 mt-2 w-64 bg-slate-900 border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden divide-y divide-white/5">
+                <div className="p-2 space-y-1">
+                  <p className="px-3 py-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Generative Video</p>
+                  <button
+                    onClick={() => {
+                      setActiveSpecialFeature("film_creator");
+                      setShowCoreFeaturesDropdown(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5 text-xs text-slate-300 hover:text-fuchsia-400 font-bold transition-all"
+                  >
+                    🎬 Static Image Film Creator
+                  </button>
+                  <button
+                    onClick={() => {
+                      setActiveSpecialFeature("montage_creator");
+                      setShowCoreFeaturesDropdown(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5 text-xs text-slate-300 hover:text-indigo-400 font-bold transition-all"
+                  >
+                    🎞️ Image Montage Video Creator
+                  </button>
+                </div>
+
+                <div className="p-2 space-y-1">
+                  <p className="px-3 py-1.5 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Commonly Used Tools</p>
+                  <button
+                    onClick={() => {
+                      startSession("Co-Written Story");
+                      setShowCoreFeaturesDropdown(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5 text-xs text-slate-300 hover:text-slate-100 transition-all"
+                  >
+                    ✍️ Co-Written Story
+                  </button>
+                  <button
+                    onClick={() => {
+                      startSession("Daily Page");
+                      setShowCoreFeaturesDropdown(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5 text-xs text-slate-300 hover:text-slate-100 transition-all"
+                  >
+                    ☀️ Daily Page
+                  </button>
+                  <button
+                    onClick={() => {
+                      startSession("Mood Canvas");
+                      setShowCoreFeaturesDropdown(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5 text-xs text-slate-300 hover:text-slate-100 transition-all"
+                  >
+                    🎨 Mood Canvas
+                  </button>
+                  <button
+                    onClick={() => {
+                      startSession("Oracle");
+                      setShowCoreFeaturesDropdown(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5 text-xs text-slate-300 hover:text-slate-100 transition-all"
+                  >
+                    🔮 Oracle
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-        )}
+
+          {activeTab === "studio" && activeSession && (
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                {activeSession.featureName || "Lobby"}
+              </span>
+              <button
+                onClick={() => {
+                  setActiveTab("lobby");
+                  setActiveSession(null);
+                  setMessages([]);
+                }}
+                className="text-xs font-bold text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+              >
+                Exit Studio
+              </button>
+            </div>
+          )}
+
+          {activeSpecialFeature && (
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+                {activeSpecialFeature === "film_creator" ? "Static Film Creator" : "Image Montage Creator"}
+              </span>
+              <button
+                onClick={() => {
+                  setActiveSpecialFeature(null);
+                  setActiveTab("lobby");
+                }}
+                className="text-xs font-bold text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-lg hover:bg-white/5 transition-all"
+              >
+                Exit Feature
+              </button>
+            </div>
+          )}
+        </div>
       </header>
 
       {/* Main Workspace */}
       <main className="flex-1 flex overflow-hidden">
-        {activeTab === "lobby" ? (
+        {activeSpecialFeature === "film_creator" ? (
+          <StaticFilmCreator
+            onClose={() => {
+              setActiveSpecialFeature(null);
+              setActiveTab("lobby");
+            }}
+            backendUrl={BACKEND_URL}
+            token={token || ""}
+          />
+        ) : activeSpecialFeature === "montage_creator" ? (
+          <ImageMontageCreator
+            onClose={() => {
+              setActiveSpecialFeature(null);
+              setActiveTab("lobby");
+            }}
+            backendUrl={BACKEND_URL}
+            token={token || ""}
+          />
+        ) : activeTab === "lobby" ? (
           <div className="flex-1 max-w-7xl mx-auto px-6 py-10 grid lg:grid-cols-4 gap-8">
             {/* Sidebar with Sessions */}
             <div className="lg:col-span-1 space-y-6">

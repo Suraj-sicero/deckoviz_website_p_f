@@ -3632,3 +3632,39 @@
 [2026-06-01T17:42:35.277Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-06-01T17:42:40.252Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-06-01T17:43:48.751Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-02T15:03:34.732Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-02T15:03:36.632Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-02T15:04:06.944Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-02T15:31:22.124Z] ERROR: Profile fetch error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:22.130Z] ERROR: Profile fetch error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:27.377Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:30.657Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:31.529Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:31.919Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:40:21.101Z] LOG: [VCS Film] Generating 2 scene variations in parallel for prompt: "A astronaut walking in a temple , in anime illustration style, high quality anime artwork, colorful, detailed lineart, visual novel key visual"
+[2026-06-02T15:40:51.603Z] LOG: [VCS Film] Generating 2 scene variations in parallel for prompt: "A temple start to fly, in anime illustration style, high quality anime artwork, colorful, detailed lineart, visual novel key visual"
+[2026-06-02T15:48:42.371Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:48:42.371Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T15:48:47.496Z] ERROR: [VideoRenderService] Failed to parse python stdout: [Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415313/vizzy/uploads/z2g6pcbs5dgxf9gezhtr.svg...
+[Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415319/vizzy/uploads/wbfoulije8cikh5gpcwv.png...
+{"success": true, "outputVideo": "/uploads/video-1780415322371-4hisaoh.mp4"}
+
+[2026-06-02T15:48:47.496Z] ERROR: Montage rendering failed: SyntaxError: Unexpected token 'P', "[Python Sti"... is not valid JSON
+[2026-06-02T15:48:52.885Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:48:52.885Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T15:48:56.656Z] ERROR: [VideoRenderService] Failed to parse python stdout: [Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415313/vizzy/uploads/z2g6pcbs5dgxf9gezhtr.svg...
+[Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415319/vizzy/uploads/wbfoulije8cikh5gpcwv.png...
+{"success": true, "outputVideo": "/uploads/video-1780415332885-4dkdt7.mp4"}
+
+[2026-06-02T15:48:56.656Z] ERROR: Montage rendering failed: SyntaxError: Unexpected token 'P', "[Python Sti"... is not valid JSON
+[2026-06-02T15:49:06.658Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:49:06.658Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T15:49:10.401Z] ERROR: [VideoRenderService] Failed to parse python stdout: [Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415313/vizzy/uploads/z2g6pcbs5dgxf9gezhtr.svg...
+[Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415319/vizzy/uploads/wbfoulije8cikh5gpcwv.png...
+{"success": true, "outputVideo": "/uploads/video-1780415346658-1x8fj.mp4"}
+
+[2026-06-02T15:49:10.401Z] ERROR: Montage rendering failed: SyntaxError: Unexpected token 'P', "[Python Sti"... is not valid JSON
+[2026-06-02T15:54:00.362Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:54:00.362Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T16:25:49.724Z] LOG: [VideoRenderService] Rendering direct montage with 13 images
+[2026-06-02T16:25:49.725Z] LOG: [VideoRenderService] Spawning Python script to render video...
