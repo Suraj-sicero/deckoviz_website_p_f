@@ -3671,3 +3671,6 @@
 [2026-06-02T16:49:33.341Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-06-02T16:49:35.257Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-06-02T16:50:04.273Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-02T17:05:46.112Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-02T17:05:50.197Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-02T17:06:18.599Z] LOG: ✅ System cards seeded — 15 sections loaded.
