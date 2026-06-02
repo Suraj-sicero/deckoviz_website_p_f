@@ -3668,3 +3668,6 @@
 [2026-06-02T15:54:00.362Z] LOG: [VideoRenderService] Spawning Python script to render video...
 [2026-06-02T16:25:49.724Z] LOG: [VideoRenderService] Rendering direct montage with 13 images
 [2026-06-02T16:25:49.725Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T16:49:33.341Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-02T16:49:35.257Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-02T16:50:04.273Z] LOG: ✅ System cards seeded — 15 sections loaded.

@@ -703,7 +703,7 @@ router.post("/films/:id/render", authenticateUser, async (req, res) => {
     });
   } catch (error) {
     console.error("Error starting film render:", error);
-    res.status(500).json({ error: "Failed to start video rendering" });
+    res.status(500).json({ error: `Failed to start video rendering: ${error.message}` });
   }
 });
 
@@ -733,7 +733,7 @@ router.post("/render-montage", authenticateUser, async (req, res) => {
     });
   } catch (error) {
     console.error("Montage rendering failed:", error);
-    res.status(500).json({ error: "Failed to render montage video" });
+    res.status(500).json({ error: `Failed to render montage video: ${error.message}` });
   }
 });
 
