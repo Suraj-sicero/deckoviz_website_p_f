@@ -47,7 +47,7 @@ def download_or_copy(url_or_path, temp_dir, base_name, public_dir):
             }
         )
         context = ssl._create_unverified_context()
-        with urllib.request.urlopen(req, context=context) as response, open(dest_path, 'wb') as out_file:
+        with urllib.request.urlopen(req, context=context, timeout=20) as response, open(dest_path, 'wb') as out_file:
             shutil.copyfileobj(response, out_file)
         return dest_path
     except Exception as e:
@@ -102,11 +102,11 @@ def main():
             fade_duration = 0.5
             fade_out_start = duration - fade_duration
 
-            # Spawn FFmpeg for individual clip with fade in/out
+            # Spawn FFmpeg for individual clip with fade in/out (Optimized for low-RAM hosts)
             cmd = [
-                "ffmpeg", "-y", "-loop", "1", "-t", str(duration), "-i", img_path,
-                "-vf", f"scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:black,fade=t=in:st=0:d={fade_duration},fade=t=out:st={fade_out_start}:d={fade_duration}",
-                "-c:v", "libx264", "-pix_fmt", "yuv420p", "-r", "25", clip_path
+                "ffmpeg", "-y", "-threads", "1", "-loop", "1", "-t", str(duration), "-i", img_path,
+                "-vf", f"scale=854:480:force_original_aspect_ratio=decrease,pad=854:480:(ow-iw)/2:(oh-ih)/2:black,fade=t=in:st=0:d={fade_duration},fade=t=out:st={fade_out_start}:d={fade_duration}",
+                "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", "10", clip_path
             ]
             run_ffmpeg(cmd)
             clips.append(clip_path)
