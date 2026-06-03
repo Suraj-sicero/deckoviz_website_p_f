@@ -28,6 +28,7 @@ const GratitudeCardTool: React.FC = () => {
   const [recipientName, setRecipientName] = useState("");
   const [message, setMessage] = useState("");
   const [selectedStyle, setSelectedStyle] = useState("painting");
+  const [customContext, setCustomContext] = useState("");
   
   // UI states
   const [status, setStatus] = useState<Status>("idle");
@@ -103,6 +104,7 @@ const GratitudeCardTool: React.FC = () => {
       formData.append("message", message);
       formData.append("senderName", senderName);
       formData.append("recipientName", recipientName);
+      formData.append("customContext", customContext);
 
       const res = await fetch(`${BACKEND_URL}/api/gratitude-card/generate`, {
         method: "POST",
@@ -132,6 +134,7 @@ const GratitudeCardTool: React.FC = () => {
     setRecipientName("");
     setMessage("");
     setSelectedStyle("painting");
+    setCustomContext("");
     setResult(null);
     setStatus("idle");
     setError("");
@@ -250,6 +253,18 @@ const GratitudeCardTool: React.FC = () => {
                   className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all text-sm"
                 />
               </div>
+            </div>
+ 
+            {/* Step: Custom Scene Setting / Context */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Custom Scene Setting / Context (Optional)</label>
+              <input
+                type="text"
+                value={customContext}
+                onChange={(e) => setCustomContext(e.target.value)}
+                placeholder="e.g. standing on a grassy hilltop at sunset, inside a cozy coffee shop, on a sandy beach at golden hour"
+                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-pink-400 transition-all text-sm"
+              />
             </div>
 
             {/* Step 3: Choose Art Style */}
