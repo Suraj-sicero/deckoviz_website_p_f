@@ -13,7 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2 } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL } from "../../lib/constants"
@@ -126,6 +126,29 @@ const VOICE_OPTIONS = [
   { id: "en-US-julie", name: "Julie (EN-US)", provider: "murf" },
 ]
 
+const ART_STYLES = [
+  "Van Gogh (Impressionism)",
+  "Picasso (Cubism)",
+  "Claude Monet (Impressionism)",
+  "Salvador Dali (Surrealism)",
+  "Andy Warhol (Pop Art)",
+  "Katsushika Hokusai (Ukiyo-e)",
+  "Edvard Munch (Expressionism)",
+  "Jackson Pollock (Abstract Expressionism)",
+  "Gustav Klimt (Art Nouveau)",
+  "Henri Matisse (Fauvism)",
+  "Michelangelo (Renaissance)",
+  "Jean-Michel Basquiat (Neo-Expressionism)",
+  "Piet Mondrian (De Stijl)",
+  "Roy Lichtenstein (Comic Book)",
+  "William Morris (Arts & Crafts)",
+  "Yayoi Kusama (Polka Dots)",
+  "Keith Haring (Street Art)",
+  "Georgia O'Keeffe (Modernist Flower)",
+  "Wassily Kandinsky (Abstract)",
+  "M.C. Escher (Surreal Mathematical)"
+]
+
 export function VizzyChat() {
   return (
     <CanvasThemeProvider>
@@ -155,6 +178,7 @@ function VizzyChatInner() {
   const [chatMode, setChatMode] = useState<"home" | "onboarding">("home")
   const [persona, setPersona] = useState<any>(null)
   const [showPersonaModal, setShowPersonaModal] = useState(false)
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
 
   // Fetch Onboarding Status on mount
   useEffect(() => {
@@ -218,12 +242,21 @@ function VizzyChatInner() {
 
   const handleSubmit = useCallback(async () => {
     const trimmedInput = input.trim()
-    if (!trimmedInput || isLoading) return
+    const isStyleTransferMode = selectedStyle !== null
+
+    if ((!trimmedInput && !isStyleTransferMode) || isLoading) return
+
+    if (isStyleTransferMode && !uploadedImage) {
+      alert("Please upload an image first to perform style transfer.")
+      return
+    }
 
     const userMessage: ChatMessageType = {
       id: generateId(),
       role: "user",
-      content: trimmedInput,
+      content: isStyleTransferMode
+        ? `Style Transfer: Apply ${selectedStyle} style to uploaded image.`
+        : trimmedInput,
       timestamp: Date.now(),
     }
 
@@ -241,6 +274,48 @@ function VizzyChatInner() {
     setIsLoading(true)
 
     try {
+      if (isStyleTransferMode && uploadedImage) {
+        const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/style-transfer`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` }),
+          },
+          body: JSON.stringify({
+            imageUrl: uploadedImage.url,
+            style: selectedStyle,
+          }),
+        })
+
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || "Failed to perform style transfer")
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMessage.id
+              ? {
+                  ...m,
+                  content: `I've neurally transferred the **${selectedStyle}** style onto your image.`,
+                  images: [{ url: data.transferredImage.url, prompt: `Style Transfer: ${selectedStyle}` }],
+                  uploadedImages: [{
+                    id: generateId(),
+                    url: uploadedImage.url,
+                    fileName: uploadedImage.fileName,
+                    fileSize: 0,
+                    uploadedAt: Date.now(),
+                  }],
+                  isLoading: false,
+                  agentUsed: "vizzy_pipeline",
+                  intent: "style_transfer",
+                }
+              : m
+          )
+        )
+        setUploadedImage(null)
+        setSelectedStyle(null)
+        return
+      }
+
       // ─────────────────────────────────────────────────────────────────────
       // VIZZY 2.0 — Step 1: Handle uploaded image (always client-detectable)
       // Image editing is detected by file presence, not LLM classification.
@@ -601,6 +676,22 @@ function VizzyChatInner() {
         </div>
 
         <div className="flex items-center gap-1">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link to="/">
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
+                  aria-label="Go to homepage"
+                >
+                  <Home className="size-4" />
+                </Button>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Home</TooltipContent>
+          </Tooltip>
+
           {hasMessages && (
             <>
               <Tooltip>
@@ -652,17 +743,59 @@ function VizzyChatInner() {
                 </Tooltip>
               </span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuContent align="end" className="w-48 bg-[var(--vc-glass-strong)] border-[var(--vc-glass-border-strong)] text-[var(--vc-text)] backdrop-blur-2xl" data-vc-theme={theme}>
               {VOICE_OPTIONS.map((voice) => (
                 <DropdownMenuItem
                   key={voice.id}
                   onClick={() => setSelectedVoice(voice)}
-                  className={selectedVoice.id === voice.id ? "bg-cyan-400/20" : ""}
+                  className={selectedVoice.id === voice.id ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
                 >
                   <div className="flex flex-col gap-0.5">
                     <span className="text-sm font-medium">{voice.name}</span>
-                    <span className="text-[10px] text-slate-400/70 uppercase tracking-wider">{voice.provider}</span>
+                    <span className="text-[10px] text-[var(--vc-text-muted)] uppercase tracking-wider">{voice.provider}</span>
                   </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <span>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant={selectedStyle ? "default" : "ghost"}
+                      size="icon-sm"
+                      className={selectedStyle ? "rounded-xl transition-all duration-300 bg-cyan-500 hover:bg-cyan-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)]" : "rounded-xl transition-all duration-300 text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)]"}
+                      aria-label="Select Art Style"
+                    >
+                      <Palette className="size-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    {selectedStyle ? `Style: ${selectedStyle}` : "Style Transfer"}
+                  </TooltipContent>
+                </Tooltip>
+              </span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 max-h-80 overflow-y-auto bg-[var(--vc-glass-strong)] border-[var(--vc-glass-border-strong)] text-[var(--vc-text)] backdrop-blur-2xl" data-vc-theme={theme}>
+              <div className="px-2 py-1.5 text-xs font-semibold text-[var(--vc-text-muted)] border-b border-[var(--vc-glass-border)] uppercase tracking-wider">
+                Select Art Style
+              </div>
+              <DropdownMenuItem
+                onClick={() => setSelectedStyle(null)}
+                className={selectedStyle === null ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
+              >
+                <span className="text-sm">None (Normal Chat)</span>
+              </DropdownMenuItem>
+              {ART_STYLES.map((style) => (
+                <DropdownMenuItem
+                  key={style}
+                  onClick={() => setSelectedStyle(style)}
+                  className={selectedStyle === style ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
+                >
+                  <span className="text-sm">{style}</span>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -791,6 +924,35 @@ function VizzyChatInner() {
             "linear-gradient(to top, var(--vc-bg-input-fade), color-mix(in srgb, var(--vc-bg-input-fade) 95%, transparent), transparent)",
         }}
       >
+        {selectedStyle && (
+          <div className="w-full max-w-3xl mx-auto px-4 mb-2 flex items-center justify-between bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-2.5 backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="flex items-center gap-2">
+              <Palette className="size-4 text-cyan-300 animate-pulse" />
+              <div className="text-xs">
+                <span className="font-semibold text-cyan-300">Style Transfer:</span>{" "}
+                <span className="text-slate-200">{selectedStyle}</span>
+              </div>
+            </div>
+            {!uploadedImage ? (
+              <span className="text-[10px] text-cyan-300/80 animate-pulse font-medium">
+                Please upload an image to apply this style
+              </span>
+            ) : (
+              <span className="text-[10px] text-emerald-400 font-medium">
+                Image ready! Click Send to generate
+              </span>
+            )}
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => setSelectedStyle(null)}
+              className="h-6 w-6 text-slate-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-md"
+              aria-label="Disable style transfer"
+            >
+              <X className="size-3" />
+            </Button>
+          </div>
+        )}
         <ChatInput
           value={input}
           onChange={setInput}

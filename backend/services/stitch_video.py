@@ -72,6 +72,7 @@ def main():
 
         images = input_data.get("images", [])
         duration = int(input_data.get("transitionDuration", 5))
+        transition_effect = input_data.get("transitionEffect", "fade-black")
         narration = input_data.get("narration")
         music = input_data.get("music")
         narration_vol = int(input_data.get("narrationVolume", 100)) / 100.0
@@ -102,10 +103,26 @@ def main():
             fade_duration = 0.5
             fade_out_start = duration - fade_duration
 
-            # Spawn FFmpeg for individual clip with fade in/out (Optimized for low-RAM hosts)
+            # Spawn FFmpeg for individual clip (Optimized for low-RAM hosts)
+            vf_filters = "scale=854:480:force_original_aspect_ratio=decrease,pad=854:480:(ow-iw)/2:(oh-ih)/2:black"
+            if transition_effect == "fade-black":
+                vf_filters += f",fade=t=in:st=0:d={fade_duration},fade=t=out:st={fade_out_start}:d={fade_duration}"
+            elif transition_effect == "fade-white":
+                vf_filters += f",fade=t=in:st=0:d={fade_duration}:color=white,fade=t=out:st={fade_out_start}:d={fade_duration}:color=white"
+            elif transition_effect == "fade-red":
+                vf_filters += f",fade=t=in:st=0:d={fade_duration}:color=red,fade=t=out:st={fade_out_start}:d={fade_duration}:color=red"
+            elif transition_effect == "fade-blue":
+                vf_filters += f",fade=t=in:st=0:d={fade_duration}:color=blue,fade=t=out:st={fade_out_start}:d={fade_duration}:color=blue"
+            elif transition_effect == "fade-green":
+                vf_filters += f",fade=t=in:st=0:d={fade_duration}:color=green,fade=t=out:st={fade_out_start}:d={fade_duration}:color=green"
+            elif transition_effect == "fade-purple":
+                vf_filters += f",fade=t=in:st=0:d={fade_duration}:color=purple,fade=t=out:st={fade_out_start}:d={fade_duration}:color=purple"
+            elif transition_effect == "fade-yellow":
+                vf_filters += f",fade=t=in:st=0:d={fade_duration}:color=yellow,fade=t=out:st={fade_out_start}:d={fade_duration}:color=yellow"
+
             cmd = [
                 "ffmpeg", "-y", "-threads", "1", "-loop", "1", "-t", str(duration), "-i", img_path,
-                "-vf", f"scale=854:480:force_original_aspect_ratio=decrease,pad=854:480:(ow-iw)/2:(oh-ih)/2:black,fade=t=in:st=0:d={fade_duration},fade=t=out:st={fade_out_start}:d={fade_duration}",
+                "-vf", vf_filters,
                 "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", "10", clip_path
             ]
             run_ffmpeg(cmd)

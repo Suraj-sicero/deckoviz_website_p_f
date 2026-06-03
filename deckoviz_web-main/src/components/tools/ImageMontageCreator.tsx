@@ -33,6 +33,7 @@ export const ImageMontageCreator: React.FC<ImageMontageCreatorProps> = ({ onClos
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   
   const [transitionDuration, setTransitionDuration] = useState(5);
+  const [transitionEffect, setTransitionEffect] = useState("fade-black");
   
   // Audio Config
   const [narrationFile, setNarrationFile] = useState<string | null>(null);
@@ -49,7 +50,6 @@ export const ImageMontageCreator: React.FC<ImageMontageCreatorProps> = ({ onClos
   // Rendering State
   const [isRendering, setIsRendering] = useState(false);
   const [outputVideo, setOutputVideo] = useState<string | null>(null);
-
   // Upload image handler
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -143,7 +143,6 @@ export const ImageMontageCreator: React.FC<ImageMontageCreatorProps> = ({ onClos
     updated[targetIdx] = temp;
     setImages(updated);
   };
-
   // Trigger montage render
   const handleRenderMontage = async () => {
     if (images.length === 0 || !token) return;
@@ -160,6 +159,7 @@ export const ImageMontageCreator: React.FC<ImageMontageCreatorProps> = ({ onClos
         body: JSON.stringify({
           images: images.map(img => img.url),
           transitionDuration,
+          transitionEffect,
           narration: narrationFile,
           music: musicFile,
           narrationVolume,
@@ -308,6 +308,25 @@ export const ImageMontageCreator: React.FC<ImageMontageCreatorProps> = ({ onClos
               <option value={10} className="bg-slate-950">10 Seconds per card</option>
               <option value={15} className="bg-slate-950">15 Seconds per card</option>
               <option value={30} className="bg-slate-950">30 Seconds per card</option>
+            </select>
+          </div>
+
+          {/* Transition Effect */}
+          <div className="space-y-1.5">
+            <label className="text-[10px] font-bold text-slate-400 uppercase">Transition Effect</label>
+            <select
+              value={transitionEffect}
+              onChange={(e) => setTransitionEffect(e.target.value)}
+              className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 focus:outline-none"
+            >
+              <option value="fade-black" className="bg-slate-950">Fade to Black</option>
+              <option value="fade-white" className="bg-slate-950">Fade to White</option>
+              <option value="fade-red" className="bg-slate-950">Fade to Red (Dramatic)</option>
+              <option value="fade-blue" className="bg-slate-950">Fade to Blue (Corporate)</option>
+              <option value="fade-green" className="bg-slate-950">Fade to Green (Fresh)</option>
+              <option value="fade-purple" className="bg-slate-950">Fade to Purple (Creative)</option>
+              <option value="fade-yellow" className="bg-slate-950">Fade to Yellow (Warm)</option>
+              <option value="none" className="bg-slate-950">None (Direct Cut)</option>
             </select>
           </div>
 
