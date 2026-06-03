@@ -13,7 +13,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2 } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL } from "../../lib/constants"
@@ -126,6 +126,29 @@ const VOICE_OPTIONS = [
   { id: "en-US-julie", name: "Julie (EN-US)", provider: "murf" },
 ]
 
+const ART_STYLES = [
+  "Van Gogh (Impressionism)",
+  "Picasso (Cubism)",
+  "Claude Monet (Impressionism)",
+  "Salvador Dali (Surrealism)",
+  "Andy Warhol (Pop Art)",
+  "Katsushika Hokusai (Ukiyo-e)",
+  "Edvard Munch (Expressionism)",
+  "Jackson Pollock (Abstract Expressionism)",
+  "Gustav Klimt (Art Nouveau)",
+  "Henri Matisse (Fauvism)",
+  "Michelangelo (Renaissance)",
+  "Jean-Michel Basquiat (Neo-Expressionism)",
+  "Piet Mondrian (De Stijl)",
+  "Roy Lichtenstein (Comic Book)",
+  "William Morris (Arts & Crafts)",
+  "Yayoi Kusama (Polka Dots)",
+  "Keith Haring (Street Art)",
+  "Georgia O'Keeffe (Modernist Flower)",
+  "Wassily Kandinsky (Abstract)",
+  "M.C. Escher (Surreal Mathematical)"
+]
+
 export function VizzyChat() {
   return (
     <CanvasThemeProvider>
@@ -151,6 +174,54 @@ function VizzyChatInner() {
   // Incremented each time a template/suggestion is clicked. ChatInput uses
   // this as a signal to focus the textarea and select the first [bracket].
   const [templateInsertToken, setTemplateInsertToken] = useState(0)
+  const [isOnboardingCompleted, setIsOnboardingCompleted] = useState<boolean | null>(null)
+  const [chatMode, setChatMode] = useState<"home" | "onboarding">("home")
+  const [persona, setPersona] = useState<any>(null)
+  const [showPersonaModal, setShowPersonaModal] = useState(false)
+  const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
+
+  // Fetch Onboarding Status on mount
+  useEffect(() => {
+    if (!token) return
+    fetch(`${API_BASE_URL}/api/vizzy-canvas/onboarding/status`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data) {
+          setIsOnboardingCompleted(data.completed)
+          if (data.persona) {
+            setPersona(data.persona.preferencesCard)
+          }
+        }
+      })
+      .catch((err) => console.error("Error fetching onboarding status:", err))
+  }, [token])
+
+  const handleStartOnboarding = useCallback(async () => {
+    setIsLoading(false)
+    setIsLoading(true)
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/onboarding/start`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token && { "Authorization": `Bearer ${token}` }),
+        },
+      })
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.error || "Failed to start onboarding")
+
+      setChatMode("onboarding")
+      setCurrentChatId(data.chat.id)
+      const initialMessages = JSON.parse(data.chat.messages || "[]")
+      setMessages(initialMessages)
+    } catch (err) {
+      alert(err instanceof Error ? err.message : "Failed to start onboarding")
+    } finally {
+      setIsLoading(false)
+    }
+  }, [token])
 
   const handleLogout = async () => {
     try {
@@ -171,12 +242,21 @@ function VizzyChatInner() {
 
   const handleSubmit = useCallback(async () => {
     const trimmedInput = input.trim()
-    if (!trimmedInput || isLoading) return
+    const isStyleTransferMode = selectedStyle !== null
+
+    if ((!trimmedInput && !isStyleTransferMode) || isLoading) return
+
+    if (isStyleTransferMode && !uploadedImage) {
+      alert("Please upload an image first to perform style transfer.")
+      return
+    }
 
     const userMessage: ChatMessageType = {
       id: generateId(),
       role: "user",
-      content: trimmedInput,
+      content: isStyleTransferMode
+        ? `Style Transfer: Apply ${selectedStyle} style to uploaded image.`
+        : trimmedInput,
       timestamp: Date.now(),
     }
 
@@ -194,6 +274,48 @@ function VizzyChatInner() {
     setIsLoading(true)
 
     try {
+      if (isStyleTransferMode && uploadedImage) {
+        const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/style-transfer`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            ...(token && { "Authorization": `Bearer ${token}` }),
+          },
+          body: JSON.stringify({
+            imageUrl: uploadedImage.url,
+            style: selectedStyle,
+          }),
+        })
+
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || "Failed to perform style transfer")
+
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === assistantMessage.id
+              ? {
+                  ...m,
+                  content: `I've neurally transferred the **${selectedStyle}** style onto your image.`,
+                  images: [{ url: data.transferredImage.url, prompt: `Style Transfer: ${selectedStyle}` }],
+                  uploadedImages: [{
+                    id: generateId(),
+                    url: uploadedImage.url,
+                    fileName: uploadedImage.fileName,
+                    fileSize: 0,
+                    uploadedAt: Date.now(),
+                  }],
+                  isLoading: false,
+                  agentUsed: "vizzy_pipeline",
+                  intent: "style_transfer",
+                }
+              : m
+          )
+        )
+        setUploadedImage(null)
+        setSelectedStyle(null)
+        return
+      }
+
       // ─────────────────────────────────────────────────────────────────────
       // VIZZY 2.0 — Step 1: Handle uploaded image (always client-detectable)
       // Image editing is detected by file presence, not LLM classification.
@@ -267,7 +389,7 @@ function VizzyChatInner() {
         body: JSON.stringify({
           messages: updatedMessages.map((m) => ({ role: m.role, content: m.content })),
           chatId: currentChatId,
-          mode: "home",
+          mode: chatMode,
         }),
       })
 
@@ -432,6 +554,14 @@ function VizzyChatInner() {
       // VIZZY 2.0 — Step 4: Conversational response from Master Agent
       // The agent returned a full content response — render it directly.
       // ─────────────────────────────────────────────────────────────────────
+      // Track onboarding completion
+      if (agentData.onboardingCompleted && agentData.persona) {
+        setIsOnboardingCompleted(true)
+        setPersona(agentData.persona)
+        setShowPersonaModal(true)
+        setChatMode("home")
+      }
+
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantMessage.id
@@ -458,7 +588,7 @@ function VizzyChatInner() {
     } finally {
       setIsLoading(false)
     }
-  }, [input, isLoading, messages, aspectRatio, uploadedImage, currentChatId, token])
+  }, [input, isLoading, messages, aspectRatio, uploadedImage, currentChatId, token, chatMode])
 
   const handleSuggestionClick = useCallback((suggestion: string) => {
     setInput(suggestion)
@@ -483,6 +613,7 @@ function VizzyChatInner() {
     setIsLoading(false)
     setLightboxImage(null)
     setCurrentChatId(null)
+    setChatMode("home")
   }, [])
 
   const hasMessages = messages.length > 0
@@ -532,19 +663,35 @@ function VizzyChatInner() {
                     "linear-gradient(110deg, #2563EB 0%, #22D3EE 100%)",
                 }}
               >
-                Vizzy
+                {chatMode === "onboarding" ? "Vizzy Onboarding" : "Vizzy"}
               </span>
             </h1>
             <span
               className="text-[10px] tracking-wide uppercase leading-none mt-0.5"
-              style={{ color: "var(--vc-text-faint)" }}
+              style={{ color: chatMode === "onboarding" ? "var(--vc-accent-text)" : "var(--vc-text-faint)" }}
             >
-              Creative Studio
+              {chatMode === "onboarding" ? "Deep Persona Setup" : "Creative Studio"}
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-1">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Link to="/">
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
+                  aria-label="Go to homepage"
+                >
+                  <Home className="size-4" />
+                </Button>
+              </Link>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Home</TooltipContent>
+          </Tooltip>
+
           {hasMessages && (
             <>
               <Tooltip>
@@ -596,17 +743,59 @@ function VizzyChatInner() {
                 </Tooltip>
               </span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
+            <DropdownMenuContent align="end" className="w-48 bg-[var(--vc-glass-strong)] border-[var(--vc-glass-border-strong)] text-[var(--vc-text)] backdrop-blur-2xl" data-vc-theme={theme}>
               {VOICE_OPTIONS.map((voice) => (
                 <DropdownMenuItem
                   key={voice.id}
                   onClick={() => setSelectedVoice(voice)}
-                  className={selectedVoice.id === voice.id ? "bg-cyan-400/20" : ""}
+                  className={selectedVoice.id === voice.id ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
                 >
                   <div className="flex flex-col gap-0.5">
                     <span className="text-sm font-medium">{voice.name}</span>
-                    <span className="text-[10px] text-slate-400/70 uppercase tracking-wider">{voice.provider}</span>
+                    <span className="text-[10px] text-[var(--vc-text-muted)] uppercase tracking-wider">{voice.provider}</span>
                   </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <span>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant={selectedStyle ? "default" : "ghost"}
+                      size="icon-sm"
+                      className={selectedStyle ? "rounded-xl transition-all duration-300 bg-cyan-500 hover:bg-cyan-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)]" : "rounded-xl transition-all duration-300 text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)]"}
+                      aria-label="Select Art Style"
+                    >
+                      <Palette className="size-4" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    {selectedStyle ? `Style: ${selectedStyle}` : "Style Transfer"}
+                  </TooltipContent>
+                </Tooltip>
+              </span>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 max-h-80 overflow-y-auto bg-[var(--vc-glass-strong)] border-[var(--vc-glass-border-strong)] text-[var(--vc-text)] backdrop-blur-2xl" data-vc-theme={theme}>
+              <div className="px-2 py-1.5 text-xs font-semibold text-[var(--vc-text-muted)] border-b border-[var(--vc-glass-border)] uppercase tracking-wider">
+                Select Art Style
+              </div>
+              <DropdownMenuItem
+                onClick={() => setSelectedStyle(null)}
+                className={selectedStyle === null ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
+              >
+                <span className="text-sm">None (Normal Chat)</span>
+              </DropdownMenuItem>
+              {ART_STYLES.map((style) => (
+                <DropdownMenuItem
+                  key={style}
+                  onClick={() => setSelectedStyle(style)}
+                  className={selectedStyle === style ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
+                >
+                  <span className="text-sm">{style}</span>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
@@ -695,7 +884,11 @@ function VizzyChatInner() {
       {/* Chat Area */}
       <div className="relative z-10 flex-1 overflow-y-auto scroll-smooth">
         {!hasMessages ? (
-          <WelcomeScreen onSuggestionClick={handleSuggestionClick} />
+          <WelcomeScreen
+            onSuggestionClick={handleSuggestionClick}
+            isOnboardingCompleted={isOnboardingCompleted}
+            onStartOnboarding={handleStartOnboarding}
+          />
         ) : (
           <div className="flex flex-col gap-5 py-6">
             {messages.map((message) => (
@@ -731,6 +924,35 @@ function VizzyChatInner() {
             "linear-gradient(to top, var(--vc-bg-input-fade), color-mix(in srgb, var(--vc-bg-input-fade) 95%, transparent), transparent)",
         }}
       >
+        {selectedStyle && (
+          <div className="w-full max-w-3xl mx-auto px-4 mb-2 flex items-center justify-between bg-cyan-500/10 border border-cyan-500/20 rounded-xl p-2.5 backdrop-blur-md animate-in fade-in slide-in-from-bottom-2 duration-300">
+            <div className="flex items-center gap-2">
+              <Palette className="size-4 text-cyan-300 animate-pulse" />
+              <div className="text-xs">
+                <span className="font-semibold text-cyan-300">Style Transfer:</span>{" "}
+                <span className="text-slate-200">{selectedStyle}</span>
+              </div>
+            </div>
+            {!uploadedImage ? (
+              <span className="text-[10px] text-cyan-300/80 animate-pulse font-medium">
+                Please upload an image to apply this style
+              </span>
+            ) : (
+              <span className="text-[10px] text-emerald-400 font-medium">
+                Image ready! Click Send to generate
+              </span>
+            )}
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => setSelectedStyle(null)}
+              className="h-6 w-6 text-slate-400 hover:text-rose-300 hover:bg-rose-500/10 rounded-md"
+              aria-label="Disable style transfer"
+            >
+              <X className="size-3" />
+            </Button>
+          </div>
+        )}
         <ChatInput
           value={input}
           onChange={setInput}
@@ -759,6 +981,136 @@ function VizzyChatInner() {
           setLightboxPrompt("")
         }}
       />
+
+      {/* Deep Persona Modal */}
+      {showPersonaModal && persona && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-300">
+          <div
+            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl p-6 md:p-8 border border-[var(--vc-glass-border-strong)] bg-[var(--vc-glass-strong)] backdrop-blur-3xl shadow-2xl animate-in zoom-in-95 slide-in-from-bottom-4 duration-300 flex flex-col gap-6"
+          >
+            {/* Ambient gradients */}
+            <div className="absolute -left-16 -top-16 size-48 rounded-full blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, var(--vc-glow-1) 0%, transparent 70%)" }} />
+            <div className="absolute -right-16 -bottom-16 size-48 rounded-full blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, var(--vc-glow-3) 0%, transparent 70%)" }} />
+
+            <div className="flex items-start justify-between z-10">
+              <div>
+                <span className="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-cyan-400/20 text-cyan-300 border border-cyan-400/30">
+                  ✨ Core Profile Synced
+                </span>
+                <h2 className="font-serif text-3xl font-extrabold text-[var(--vc-text)] mt-3">
+                  Your Deep Persona Profile
+                </h2>
+                <p className="text-xs text-[var(--vc-text-muted)] mt-1">
+                  Generated by Vizzy based on your unique aesthetic sensibility, lifestyle and values.
+                </p>
+              </div>
+              <button
+                onClick={() => setShowPersonaModal(false)}
+                className="text-[var(--vc-text-muted)] hover:text-[var(--vc-text)] hover:bg-[var(--vc-glass-hover)] p-2 rounded-xl transition-all"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="flex flex-col gap-6 z-10 overflow-y-auto pr-1">
+              {/* Identity Section */}
+              <div className="rounded-2xl p-5 border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-md">
+                <h4 className="text-sm font-semibold text-[var(--vc-accent-text)] uppercase tracking-wider mb-3">Identity &amp; Rhythms</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-[var(--vc-text-faint)] tracking-wider">Preferred Name</label>
+                    <p className="text-sm font-medium text-[var(--vc-text)] mt-0.5">{persona.identity?.preferred_name || persona.identity?.name || "Explorer"}</p>
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-[var(--vc-text-faint)] tracking-wider">Location</label>
+                    <p className="text-sm font-medium text-[var(--vc-text)] mt-0.5">{persona.identity?.location?.city ? `${persona.identity.location.city}, ${persona.identity.location.country || ""}` : "Not specified"}</p>
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-[var(--vc-text-faint)] tracking-wider">Occupation</label>
+                    <p className="text-sm font-medium text-[var(--vc-text)] mt-0.5">{persona.vocation_and_passions?.occupation || "Not specified"}</p>
+                  </div>
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-[var(--vc-text-faint)] tracking-wider">Ideal Vibe / Home Pace</label>
+                    <p className="text-sm font-medium text-[var(--vc-text)] mt-0.5 capitalize">{persona.lifestyle?.home_mood_intent || "Not specified"}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Aesthetic Profile */}
+              <div className="rounded-2xl p-5 border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-md">
+                <h4 className="text-sm font-semibold text-[var(--vc-accent-text)] uppercase tracking-wider mb-3">Aesthetic &amp; Visual Styles</h4>
+                <div className="flex flex-col gap-3">
+                  {persona.aesthetics?.sensibility_notes && (
+                    <p className="text-xs text-[var(--vc-text)] italic">
+                      &ldquo;{persona.aesthetics.sensibility_notes}&rdquo;
+                    </p>
+                  )}
+                  <div>
+                    <label className="text-[10px] uppercase font-bold text-[var(--vc-text-faint)] tracking-wider">Visual Styles &amp; Eras</label>
+                    <div className="flex flex-wrap gap-1.5 mt-1.5">
+                      {[
+                        ...(persona.aesthetics?.visual_style_descriptors || []),
+                        ...(persona.aesthetics?.design_eras_of_interest || []),
+                        ...(persona.aesthetics?.art_styles || [])
+                      ].map((item: any, idx: number) => (
+                        <span key={idx} className="px-2.5 py-1 rounded-lg text-xs bg-[var(--vc-glass-hover)] border border-[var(--vc-glass-border)] text-[var(--vc-text)] capitalize">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  {persona.aesthetics?.colour_palette_preference?.length > 0 && (
+                    <div>
+                      <label className="text-[10px] uppercase font-bold text-[var(--vc-text-faint)] tracking-wider">Instinctive Palette</label>
+                      <div className="flex flex-wrap gap-1.5 mt-1.5">
+                        {persona.aesthetics.colour_palette_preference.map((item: string, idx: number) => (
+                          <span key={idx} className="px-2.5 py-1 rounded-lg text-xs bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 capitalize">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Core Values */}
+              {persona.values_and_beliefs?.core_values?.length > 0 && (
+                <div className="rounded-2xl p-5 border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-md">
+                  <h4 className="text-sm font-semibold text-[var(--vc-accent-text)] uppercase tracking-wider mb-3">Core Values &amp; Beliefs</h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {persona.values_and_beliefs.core_values.map((val: string, idx: number) => (
+                      <span key={idx} className="px-2.5 py-1 rounded-lg text-xs bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-medium">
+                        {val}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-end gap-3 z-10 pt-4 border-t border-[var(--vc-divider)]">
+              <Button
+                variant="ghost"
+                onClick={() => setShowPersonaModal(false)}
+                className="bg-[var(--vc-glass-hover)] hover:bg-[var(--vc-glass-border)] border border-[var(--vc-glass-border)] text-xs font-semibold px-5 py-2 rounded-xl"
+              >
+                Close
+              </Button>
+              <Button
+                onClick={() => {
+                  setShowPersonaModal(false)
+                  handleNewChat()
+                }}
+                className="text-white text-xs font-semibold px-5 py-2 rounded-xl shadow-lg"
+                style={{ background: "linear-gradient(135deg, #2563EB 0%, #22D3EE 100%)" }}
+              >
+                Let's Make Art!
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

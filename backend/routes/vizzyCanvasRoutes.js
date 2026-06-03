@@ -11,6 +11,9 @@ import { Op } from "sequelize";
 import DeckovizCuration from "../models/DeckovizCuration.js";
 import UserFavoritePrompt from "../models/UserFavoritePrompt.js";
 import { MusicTrack, VideoClip } from "../models/MediaTracks.js";
+import { MusicAttachment, MUSIC_TARGET_TYPES } from "../models/MusicAttachment.js";
+import UserPersona from "../models/UserPersona.js";
+import UserOnboarding from "../models/UserOnboarding.js";
 
 
 // ── Vizzy 2.0 — Agentic Architecture Imports ──────────────────────────────
@@ -44,6 +47,100 @@ const getUserFromToken = (req) => {
     return null;
   }
 };
+
+// ── Onboarding & Deep Persona Endpoints ─────────────────────────────────────
+router.get("/onboarding/status", async (req, res) => {
+  try {
+    const user = getUserFromToken(req);
+    if (!user) return res.status(401).json({ error: "Unauthorized" });
+
+    const [onboarding] = await UserOnboarding.findOrCreate({
+      where: { userId: user.id },
+      defaults: { completed: false, answers: "{}" }
+    });
+
+    const persona = await UserPersona.findOne({
+      where: { userId: user.id }
+    });
+
+    res.json({
+      completed: onboarding.completed,
+      hasPersona: !!persona,
+      persona: persona ? {
+        id: persona.id,
+        personaSummary: persona.personaSummary,
+        preferencesCard: JSON.parse(persona.preferencesCard || "{}")
+      } : null
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/onboarding/start", async (req, res) => {
+  try {
+    const user = getUserFromToken(req);
+    if (!user) return res.status(401).json({ error: "Unauthorized" });
+
+    const chat = await VizzyChat.create({
+      userId: user.id,
+      title: "Vizzy Onboarding",
+      messages: JSON.stringify([
+        {
+          id: `onb-${Date.now()}`,
+          role: "assistant",
+          content: "Hello! I'm Vizzy, your AI companion. I'd love to chat for a few minutes to get to know you, your home, and what moves you, so we can curate your personalized Deckoviz art frame and ambient sounds. To begin... what is your name, and what should I call you?",
+          timestamp: Date.now()
+        }
+      ]),
+      activeAgent: "onboarding",
+      mode: "onboarding"
+    });
+
+    res.json({ chat });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post("/onboarding/complete", async (req, res) => {
+  try {
+    const user = getUserFromToken(req);
+    if (!user) return res.status(401).json({ error: "Unauthorized" });
+
+    const { persona } = req.body;
+    if (!persona) return res.status(400).json({ error: "Persona JSON required" });
+
+    // Save/Upsert UserPersona
+    const personaSummary = persona.meta?.session_notes || 
+      (persona.aesthetics?.sensibility_notes ? `Aesthetic: ${persona.aesthetics.sensibility_notes}` : "User onboarding persona profile");
+    
+    const [userPersona] = await UserPersona.findOrCreate({
+      where: { userId: user.id },
+      defaults: {
+        personaSummary,
+        preferencesCard: JSON.stringify(persona)
+      }
+    });
+    userPersona.personaSummary = personaSummary;
+    userPersona.preferencesCard = JSON.stringify(persona);
+    await userPersona.save();
+
+    // Mark onboarding as completed
+    const [onbRecord] = await UserOnboarding.findOrCreate({
+      where: { userId: user.id },
+      defaults: { completed: true }
+    });
+    onbRecord.completed = true;
+    onbRecord.answers = JSON.stringify(persona);
+    await onbRecord.save();
+
+    res.json({ success: true, persona: userPersona });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 // Atomically check + deduct credits for a paid action.
 // Returns { ok: true, remaining } on success, or { ok: false, status, error }
@@ -347,6 +444,87 @@ router.post("/inpaint", async (req, res) => {
   } catch (err) {
     console.error("[inpaint] error:", err);
     res.status(500).json({ error: err.message || "Inpaint failed" });
+  }
+});
+
+// Neural Style Transfer endpoint using Replicate SDXL img2img
+router.post("/style-transfer", async (req, res) => {
+  try {
+    const { imageUrl, style } = req.body;
+    if (!imageUrl || !style) {
+      return res.status(400).json({ error: "Missing imageUrl or style" });
+    }
+    if (!REPLICATE_API_TOKEN) {
+      return res.status(500).json({ error: "Replicate token missing" });
+    }
+
+    const charge = await chargeCredits(req, "style_transfer");
+    if (!charge.ok) return res.status(charge.status).json({ error: charge.error });
+    const user = charge.user;
+
+    const stylePrompts = {
+      "Van Gogh (Impressionism)": "in the style of Vincent van Gogh, oil on canvas, starry night aesthetic, thick impasto brushstrokes, vibrant swirling colors, masterpiece painting",
+      "Picasso (Cubism)": "in the style of Pablo Picasso cubism, abstract geometric shapes, fragmented forms, multi-perspective modern art masterpiece",
+      "Claude Monet (Impressionism)": "in the style of Claude Monet impressionism, dappled light, soft pastel brushstrokes, outdoor atmospheric rendering, water lilies style painting",
+      "Salvador Dali (Surrealism)": "in the style of Salvador Dali surrealism, melting objects, dreamlike landscape, bizarre juxtaposition, highly detailed surrealist painting",
+      "Andy Warhol (Pop Art)": "in the style of Andy Warhol pop art, silkscreen print, vibrant high-contrast neon colors, screenprint halftone, retro modernism",
+      "Katsushika Hokusai (Ukiyo-e)": "in the style of Katsushika Hokusai, classic Ukiyo-e Japanese woodblock print, bold outlines, oceanic waves, Mount Fuji aesthetic",
+      "Edvard Munch (Expressionism)": "in the style of Edvard Munch expressionism, swirling brushstrokes of the Scream, intense emotional colors, flowing lines, haunting beauty",
+      "Jackson Pollock (Abstract Expressionism)": "in the style of Jackson Pollock action painting, abstract expressionism, paint splatters, chaotic drips, layered texture",
+      "Gustav Klimt (Art Nouveau)": "in the style of Gustav Klimt, golden phase, ornamental art nouveau, rich gold leaf detailing, intricate mosaic patterns",
+      "Henri Matisse (Fauvism)": "in the style of Henri Matisse fauvism, bold simplified shapes, vibrant raw colors, paper cut-out style, expressive modern art",
+      "Michelangelo (Renaissance)": "in the style of Michelangelo, classic high Renaissance fresco painting, Sistine Chapel style, muscular dynamic figures, classical antiquity",
+      "Jean-Michel Basquiat (Neo-Expressionism)": "in the style of Jean-Michel Basquiat, neo-expressionism, raw street art, graffiti writing, expressive sketch lines, crown motif",
+      "Piet Mondrian (De Stijl)": "in the style of Piet Mondrian, De Stijl, abstract grid pattern, primary colors red blue yellow, black thick lines, minimalist modern art",
+      "Roy Lichtenstein (Comic Book)": "in the style of Roy Lichtenstein comic book pop art, Ben-Day dots, bold ink outlines, vintage retro comic book style",
+      "William Morris (Arts & Crafts)": "in the style of William Morris, detailed arts and crafts movement, elegant floral wallpaper pattern, medieval aesthetic, intricate nature design",
+      "Yayoi Kusama (Polka Dots)": "in the style of Yayoi Kusama, infinite polka dot pattern, hypnotic repetition, bright contrasting colors, modern installation art",
+      "Keith Haring (Street Art)": "in the style of Keith Haring, vibrant street art, bold black outlines, dancing radiant figures, pop art iconographic style",
+      "Georgia O'Keeffe (Modernist Flower)": "in the style of Georgia O'Keeffe modernist painting, close-up magnified organic flowers, soft gradients, abstract natural forms",
+      "Wassily Kandinsky (Abstract)": "in the style of Wassily Kandinsky abstract art, geometric lines, colorful circles and shapes, musical rhythm composition",
+      "M.C. Escher (Surreal Mathematical)": "in the style of M.C. Escher, mathematical tessellations, impossible architecture, paradoxical structures, detailed lithography"
+    };
+
+    const stylePrompt = stylePrompts[style] || `in the style of ${style}, artistic rendering, masterpiece`;
+    const prompt = `neurally style transferred image, ${stylePrompt}`;
+
+    const replicate = new Replicate({ auth: REPLICATE_API_TOKEN });
+    const output = await replicate.run(
+      "stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc",
+      {
+        input: {
+          image: imageUrl,
+          prompt,
+          prompt_strength: 0.65, // balance between original structure and selected art style
+          num_outputs: 1,
+          negative_prompt: "deformed, blurry, ugly, low quality, photorealistic, photo, camera photograph",
+        },
+      }
+    );
+
+    const urls = Array.isArray(output) ? output.map(String) : [String(output)];
+    const transferredUrl = urls[0];
+
+    if (user) {
+      try {
+        await VizzyImage.create({
+          userId: user.id,
+          imageUrl: transferredUrl,
+          prompt: `[Style Transfer - ${style}]`,
+        });
+      } catch (dbErr) {
+        console.error("Failed to save style transferred image to DB:", dbErr);
+      }
+    }
+
+    res.json({
+      transferredImage: { url: transferredUrl },
+      style,
+      creditsRemaining: charge.remaining,
+    });
+  } catch (err) {
+    console.error("[style-transfer] error:", err);
+    res.status(500).json({ error: err.message || "Style transfer failed" });
   }
 });
 
@@ -808,11 +986,66 @@ router.post("/agent", async (req, res) => {
       }
     }
 
+    // ── Check if onboarding JSON is produced ──────────────────────────────
+    let onboardingCompleted = false;
+    let personaData = null;
+    if (mode === "onboarding" && result.content && userId) {
+      let jsonString = null;
+      const jsonMatch = result.content.match(/```json\s*([\s\S]*?)\s*```/) || result.content.match(/```\s*([\s\S]*?)\s*```/);
+      if (jsonMatch) {
+        jsonString = jsonMatch[1].trim();
+      } else {
+        const lastBrace = result.content.lastIndexOf("{");
+        const endBrace = result.content.lastIndexOf("}");
+        if (lastBrace !== -1 && endBrace !== -1 && endBrace > lastBrace) {
+          jsonString = result.content.substring(lastBrace, endBrace + 1).trim();
+        }
+      }
+
+      if (jsonString) {
+        try {
+          const parsed = JSON.parse(jsonString);
+          if (parsed && (parsed.meta || parsed.identity || parsed.aesthetics)) {
+            // Save/Upsert UserPersona
+            const personaSummary = parsed.meta?.session_notes || 
+              (parsed.aesthetics?.sensibility_notes ? `Aesthetic: ${parsed.aesthetics.sensibility_notes}` : "User onboarding persona profile");
+            
+            const [userPersona] = await UserPersona.findOrCreate({
+              where: { userId },
+              defaults: {
+                personaSummary,
+                preferencesCard: JSON.stringify(parsed)
+              }
+            });
+            userPersona.personaSummary = personaSummary;
+            userPersona.preferencesCard = JSON.stringify(parsed);
+            await userPersona.save();
+
+            // Mark onboarding as completed
+            const [onbRecord] = await UserOnboarding.findOrCreate({
+              where: { userId },
+              defaults: { completed: true }
+            });
+            onbRecord.completed = true;
+            onbRecord.answers = JSON.stringify(parsed);
+            await onbRecord.save();
+
+            onboardingCompleted = true;
+            personaData = parsed;
+          }
+        } catch (jsonErr) {
+          console.error("Failed to parse onboarding JSON:", jsonErr.message);
+        }
+      }
+    }
+
     return res.json({
       content: result.content,
       intent: result.intent,
       agentUsed: result.agentUsed,
       chatId: savedChatId,
+      onboardingCompleted,
+      persona: personaData,
     });
   } catch (err) {
     console.error("[/agent] Error:", err.message);
@@ -1098,6 +1331,155 @@ router.get("/music/system", async (req, res) => {
     res.json({ tracks });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+// ============================================================
+// 🎵 MUSIC ATTACHMENT ROUTES (attach a track to a collection / artwork / curation)
+// ============================================================
+
+// POST /api/vizzy-canvas/music/attach — attach (or replace) the music on an item
+// body: { targetType, targetId, musicTrackId }
+router.post("/music/attach", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const { targetType, targetId, musicTrackId } = req.body;
+
+    if (!targetType || !targetId || !musicTrackId) {
+      return res
+        .status(400)
+        .json({ error: "targetType, targetId and musicTrackId are required" });
+    }
+    if (!MUSIC_TARGET_TYPES.includes(targetType)) {
+      return res.status(400).json({
+        error: `Invalid targetType. Must be one of: ${MUSIC_TARGET_TYPES.join(", ")}`,
+      });
+    }
+
+    // Make sure the track exists and is usable by this user (system or own).
+    const track = await MusicTrack.findByPk(musicTrackId);
+    if (!track) {
+      return res.status(404).json({ error: "Music track not found" });
+    }
+    if (track.userId && track.userId !== tokenUser.id) {
+      return res.status(403).json({ error: "You cannot use this music track" });
+    }
+
+    // One track per item: update the existing attachment or create a new one.
+    const existing = await MusicAttachment.findOne({
+      where: { userId: tokenUser.id, targetType, targetId },
+    });
+
+    let attachment;
+    if (existing) {
+      existing.musicTrackId = musicTrackId;
+      await existing.save();
+      attachment = existing;
+    } else {
+      attachment = await MusicAttachment.create({
+        userId: tokenUser.id,
+        targetType,
+        targetId,
+        musicTrackId,
+      });
+    }
+
+    res.json({ success: true, attachment, track });
+  } catch (err) {
+    console.error("❌ Error attaching music:", err);
+    res.status(500).json({ error: "Failed to attach music" });
+  }
+});
+
+// DELETE /api/vizzy-canvas/music/attach — remove the music from an item
+// query or body: { targetType, targetId }
+router.delete("/music/attach", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const targetType = req.body.targetType || req.query.targetType;
+    const targetId = req.body.targetId || req.query.targetId;
+
+    if (!targetType || !targetId) {
+      return res
+        .status(400)
+        .json({ error: "targetType and targetId are required" });
+    }
+
+    const deleted = await MusicAttachment.destroy({
+      where: { userId: tokenUser.id, targetType, targetId },
+    });
+
+    res.json({ success: true, removed: deleted });
+  } catch (err) {
+    console.error("❌ Error detaching music:", err);
+    res.status(500).json({ error: "Failed to detach music" });
+  }
+});
+
+// GET /api/vizzy-canvas/music/attach?targetType=&targetId= — get the track on one item
+router.get("/music/attach", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const { targetType, targetId } = req.query;
+    if (!targetType || !targetId) {
+      return res
+        .status(400)
+        .json({ error: "targetType and targetId are required" });
+    }
+
+    const attachment = await MusicAttachment.findOne({
+      where: { userId: tokenUser.id, targetType, targetId },
+    });
+
+    if (!attachment) {
+      return res.json({ success: true, attachment: null, track: null });
+    }
+
+    const track = await MusicTrack.findByPk(attachment.musicTrackId);
+    res.json({ success: true, attachment, track });
+  } catch (err) {
+    console.error("❌ Error fetching music attachment:", err);
+    res.status(500).json({ error: "Failed to fetch music attachment" });
+  }
+});
+
+// GET /api/vizzy-canvas/music/attachments — all of the user's attachments (track hydrated)
+// optional query: ?targetType=collection  to filter
+router.get("/music/attachments", async (req, res) => {
+  try {
+    const tokenUser = getUserFromToken(req);
+    if (!tokenUser) return res.status(401).json({ error: "Unauthorized" });
+
+    const where = { userId: tokenUser.id };
+    if (req.query.targetType) where.targetType = req.query.targetType;
+
+    const attachments = await MusicAttachment.findAll({
+      where,
+      order: [["updatedAt", "DESC"]],
+    });
+
+    // Hydrate the tracks in a single query and map them onto each attachment.
+    const trackIds = [...new Set(attachments.map((a) => a.musicTrackId))];
+    const tracks = trackIds.length
+      ? await MusicTrack.findAll({ where: { id: trackIds } })
+      : [];
+    const trackById = Object.fromEntries(tracks.map((t) => [t.id, t]));
+
+    const result = attachments.map((a) => ({
+      ...a.toJSON(),
+      track: trackById[a.musicTrackId] || null,
+    }));
+
+    res.json({ success: true, attachments: result });
+  } catch (err) {
+    console.error("❌ Error fetching music attachments:", err);
+    res.status(500).json({ error: "Failed to fetch music attachments" });
   }
 });
 

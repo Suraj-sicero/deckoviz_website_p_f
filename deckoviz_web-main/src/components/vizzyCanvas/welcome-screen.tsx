@@ -46,15 +46,54 @@ const ICON_MAP: Record<string, React.ElementType> = {
 
 interface WelcomeScreenProps {
   onSuggestionClick: (suggestion: string) => void
+  isOnboardingCompleted: boolean | null
+  onStartOnboarding: () => void
 }
 
-export function WelcomeScreen({ onSuggestionClick }: WelcomeScreenProps) {
+export function WelcomeScreen({
+  onSuggestionClick,
+  isOnboardingCompleted,
+  onStartOnboarding,
+}: WelcomeScreenProps) {
   const [mode, setMode] = useState<CreativeMode>("home")
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null)
   const categories = getAllSuggestions(mode)
 
   return (
-    <div className="relative flex flex-col items-center h-full px-4 py-8 md:py-12 overflow-y-auto">
+    <div className="relative flex flex-col items-center w-full min-h-full px-4 py-8 md:py-12">
+      {/* Onboarding Banner */}
+      {isOnboardingCompleted === false && (
+        <div
+          className="relative w-full max-w-3xl mb-8 p-6 rounded-2xl border border-[var(--vc-glass-border-strong)] bg-[var(--vc-glass-strong)] backdrop-blur-2xl overflow-hidden shadow-2xl flex flex-col sm:flex-row items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500 z-10 shrink-0"
+        >
+          {/* Ambient glow inside the card */}
+          <div
+            className="absolute -right-20 -top-20 size-48 rounded-full blur-3xl pointer-events-none"
+            style={{ background: "radial-gradient(circle, var(--vc-glow-3) 0%, transparent 70%)" }}
+          />
+          <div className="flex-1 min-w-0 z-10">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold tracking-wider uppercase bg-cyan-400/20 text-cyan-300 border border-cyan-400/30 animate-pulse">
+                Tailored Experience
+              </span>
+              <span className="text-xs text-[var(--vc-text-muted)] font-medium">5-10 min session</span>
+            </div>
+            <h3 className="font-serif text-xl font-bold text-[var(--vc-text)] mb-1">
+              Meet Vizzy &amp; Setup Your Deep Persona
+            </h3>
+            <p className="text-xs text-[var(--vc-text-muted)] leading-relaxed max-w-xl">
+              Start a playful, fun chat with Vizzy to adapt the living art frames, ambient music, and environmental vibes of your Deckoviz exactly to your lifestyle and soul.
+            </p>
+          </div>
+          <button
+            onClick={onStartOnboarding}
+            className="relative z-10 shrink-0 w-full sm:w-auto px-6 py-2.5 text-white font-medium rounded-xl hover:scale-[1.02] active:scale-95 transition-all shadow-[0_4px_24px_rgba(37,99,235,0.35)]"
+            style={{ background: "linear-gradient(135deg, #2563EB 0%, #22D3EE 100%)" }}
+          >
+            Start Onboarding
+          </button>
+        </div>
+      )}
       {/* Subtle star/noise overlay (looks lovely in both themes) */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.30]"

@@ -155,6 +155,80 @@ Authorization: Bearer <your_jwt_auth_token>
     }
     ```
 
+### 3.8 Onboarding & Deep Persona Endpoints
+
+#### 3.8.1 Get Onboarding & Persona Status
+*   **Endpoint:** `GET /api/vizzy-canvas/onboarding/status`
+*   **Headers:** `Authorization: Bearer <token>`
+*   **Description:** Determines if the user has completed onboarding and retrieves the persona JSON schema if present.
+*   **Response (200 OK):**
+    ```json
+    {
+      "completed": false,
+      "hasPersona": false,
+      "persona": null
+    }
+    ```
+    *(If completed, returns `persona` schema details under preferencesCard)*
+
+#### 3.8.2 Start Onboarding Conversational Session
+*   **Endpoint:** `POST /api/vizzy-canvas/onboarding/start`
+*   **Headers:** `Authorization: Bearer <token>`
+*   **Description:** Instantiates a new chat session in `onboarding` mode. Returns the welcome message from Vizzy.
+*   **Response (200 OK):**
+    ```json
+    {
+      "chat": {
+        "id": "onb-1779991200000",
+        "userId": "user-uuid",
+        "title": "Vizzy Onboarding",
+        "messages": "[{\"id\":\"onb-1779991200000\",\"role\":\"assistant\",\"content\":\"Hello! I'm Vizzy, your AI companion...\"}]",
+        "activeAgent": "onboarding",
+        "mode": "onboarding"
+      }
+    }
+    ```
+
+#### 3.8.3 Submit / Upsert Deep Persona Manually
+*   **Endpoint:** `POST /api/vizzy-canvas/onboarding/complete`
+*   **Headers:** `Authorization: Bearer <token>`
+*   **Body (JSON):**
+    ```json
+    {
+      "persona": {
+        "meta": { "schema_version": "1.0", "completion_pct": 100 },
+        "identity": { "name": "Shashank", "preferred_name": "Shashank" },
+        "aesthetics": { "visual_style_descriptors": ["Minimalist", "Cyberpunk"] }
+      }
+    }
+    ```
+*   **Response (200 OK):**
+    ```json
+    {
+      "success": true,
+      "persona": {
+        "id": "persona-uuid",
+        "userId": "user-uuid",
+        "personaSummary": "Minimalist, Cyberpunk aesthetic",
+        "preferencesCard": "{\"meta\":...}"
+      }
+    }
+    ```
+
+#### 3.8.4 Agent Endpoint (Onboarding Mode Integration)
+When posting messages during the onboarding session, use the general `/api/vizzy-canvas/agent` endpoint but specify `mode: "onboarding"` in the request body. Once the LLM generates the final persona JSON block, the endpoint will automatically update the databases and return:
+```json
+{
+  "content": "Your frame is going to feel like it was made for you...",
+  "chatId": "...",
+  "onboardingCompleted": true,
+  "persona": {
+    "meta": { ... },
+    "identity": { ... }
+  }
+}
+```
+
 ---
 
 ## 🎨 4. Deckoviz Curations (Seed Artworks)
