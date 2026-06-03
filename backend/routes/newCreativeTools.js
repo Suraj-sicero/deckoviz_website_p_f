@@ -2062,7 +2062,7 @@ router.post("/gratitude-card/generate", upload.fields([
   { name: "recipientImage", maxCount: 1 }
 ]), async (req, res) => {
   try {
-    const { style = "painting", message = "", senderName = "", recipientName = "" } = req.body;
+    const { style = "painting", message = "", senderName = "", recipientName = "", customContext = "" } = req.body;
     const senderFile = req.files?.senderImage?.[0];
     const recipientFile = req.files?.recipientImage?.[0];
 
@@ -2116,8 +2116,13 @@ router.post("/gratitude-card/generate", upload.fields([
       genderReminder = "Both individuals depicted are women (no men in the image).";
     }
 
+    let settingPrompt = "Set in a beautiful background matching the style.";
+    if (customContext && customContext.trim()) {
+      settingPrompt = `Setting/Background environment: ${customContext.trim()}.`;
+    }
+
     // Build the image generation prompt with explicit headspace constraints
-    const artPrompt = `A beautiful, detailed illustration of ${pairingType} standing together happily. Framed as a medium-wide shot showing them from the chest up, with ample headspace above their heads, leaving space at the top of the image. First person is: ${senderDesc.trim()}. Second person is: ${recipientDesc.trim()}. Both are smiling, standing side-by-side, sharing a warm and close bond. ${genderReminder} Set in a beautiful background matching the style. Style: ${stylePrompt}. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks.`;
+    const artPrompt = `A beautiful, detailed illustration of ${pairingType} standing together happily. Framed as a medium-wide shot showing them from the chest up, with ample headspace above their heads, leaving space at the top of the image. First person is: ${senderDesc.trim()}. Second person is: ${recipientDesc.trim()}. Both are smiling, standing side-by-side, sharing a warm and close bond. ${genderReminder} ${settingPrompt} Style: ${stylePrompt}. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks.`;
 
     const negPrompt = "cropped heads, cut off heads, zoom-in, cropped faces, close-up, cropped hair, blurry, low quality, deformed, text, watermark";
 

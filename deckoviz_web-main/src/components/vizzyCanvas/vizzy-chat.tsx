@@ -7,6 +7,7 @@ import { ChatMessage } from "./chat-message"
 import { ChatInput } from "./chat-input"
 import { ImageLightbox } from "./image-lightbox"
 import { WelcomeScreen } from "./welcome-screen"
+import { ArtStylesReference } from "./art-styles-reference"
 import { Button } from "./ui/button"
 import {
   Tooltip,
@@ -179,6 +180,7 @@ function VizzyChatInner() {
   const [persona, setPersona] = useState<any>(null)
   const [showPersonaModal, setShowPersonaModal] = useState(false)
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
+  const [showStylesReference, setShowStylesReference] = useState(false)
 
   // Fetch Onboarding Status on mount
   useEffect(() => {
@@ -595,6 +597,18 @@ function VizzyChatInner() {
     setTemplateInsertToken((n) => n + 1)
   }, [])
 
+  const handleInsertStyle = useCallback((styleName: string) => {
+    setInput((prev) => {
+      const trimmed = prev.trim()
+      if (!trimmed) return styleName
+      if (trimmed.endsWith(",") || trimmed.endsWith(".")) {
+        return `${trimmed} ${styleName}`
+      }
+      return `${trimmed}, ${styleName}`
+    })
+    setTemplateInsertToken((n) => n + 1)
+  }, [])
+
   const handleRetry = useCallback(
     (messageId: string) => {
       const msgIndex = messages.findIndex((m) => m.id === messageId)
@@ -953,6 +967,17 @@ function VizzyChatInner() {
             </Button>
           </div>
         )}
+        <div className="w-full max-w-3xl mx-auto px-4 mb-2 flex justify-end">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setShowStylesReference(true)}
+            className="text-[11px] font-semibold px-3.5 py-1.5 h-auto rounded-xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] hover:bg-[var(--vc-glass-hover)] text-[var(--vc-accent-text)] transition-all flex items-center gap-1.5 shadow-sm"
+          >
+            <Palette className="size-3.5" />
+            Quick Reference For Some Common Art Styles
+          </Button>
+        </div>
         <ChatInput
           value={input}
           onChange={setInput}
@@ -979,6 +1004,17 @@ function VizzyChatInner() {
         onClose={() => {
           setLightboxImage(null)
           setLightboxPrompt("")
+        }}
+      />
+
+      {/* Art Styles Reference Guide */}
+      <ArtStylesReference
+        isOpen={showStylesReference}
+        onClose={() => setShowStylesReference(false)}
+        onInsertStyle={handleInsertStyle}
+        onPreviewImage={(url, title) => {
+          setLightboxImage(url)
+          setLightboxPrompt(title)
         }}
       />
 

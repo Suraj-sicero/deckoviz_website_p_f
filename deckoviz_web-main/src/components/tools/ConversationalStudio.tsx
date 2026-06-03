@@ -21,6 +21,7 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { StaticFilmCreator } from "./StaticFilmCreator";
 import { ImageMontageCreator } from "./ImageMontageCreator";
+import { SongVisualsCreator } from "./SongVisualsCreator";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com");
 
@@ -127,7 +128,7 @@ const ConversationalStudio: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"lobby" | "studio">("lobby");
   
   // Special Features Integration
-  const [activeSpecialFeature, setActiveSpecialFeature] = useState<"film_creator" | "montage_creator" | null>(null);
+  const [activeSpecialFeature, setActiveSpecialFeature] = useState<"film_creator" | "montage_creator" | "song_visuals_creator" | null>(null);
   const [showCoreFeaturesDropdown, setShowCoreFeaturesDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -340,6 +341,15 @@ const ConversationalStudio: React.FC = () => {
                   >
                     🎞️ Image Montage Video Creator
                   </button>
+                  <button
+                    onClick={() => {
+                      setActiveSpecialFeature("song_visuals_creator");
+                      setShowCoreFeaturesDropdown(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg hover:bg-white/5 text-xs text-slate-300 hover:text-indigo-400 font-bold transition-all"
+                  >
+                    🎵 Song with Visuals Creator
+                  </button>
                 </div>
 
                 <div className="p-2 space-y-1">
@@ -408,7 +418,7 @@ const ConversationalStudio: React.FC = () => {
             <div className="flex items-center gap-3">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse" />
-                {activeSpecialFeature === "film_creator" ? "Static Film Creator" : "Image Montage Creator"}
+                {activeSpecialFeature === "film_creator" ? "Static Film Creator" : activeSpecialFeature === "montage_creator" ? "Image Montage Creator" : "Song Visuals Creator"}
               </span>
               <button
                 onClick={() => {
@@ -437,6 +447,15 @@ const ConversationalStudio: React.FC = () => {
           />
         ) : activeSpecialFeature === "montage_creator" ? (
           <ImageMontageCreator
+            onClose={() => {
+              setActiveSpecialFeature(null);
+              setActiveTab("lobby");
+            }}
+            backendUrl={BACKEND_URL}
+            token={token || ""}
+          />
+        ) : activeSpecialFeature === "song_visuals_creator" ? (
+          <SongVisualsCreator
             onClose={() => {
               setActiveSpecialFeature(null);
               setActiveTab("lobby");
