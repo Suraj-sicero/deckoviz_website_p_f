@@ -3592,3 +3592,173 @@
 [2026-05-29T07:42:03.250Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-05-29T07:42:05.147Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-05-29T07:42:29.502Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:06:33.510Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:06:35.414Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:06:59.730Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:11:13.166Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:11:15.035Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:13:08.722Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:13:10.721Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:36:27.524Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:36:29.465Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:36:53.835Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:47:35.682Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T17:47:37.516Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T17:48:02.947Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T17:48:06.302Z] ERROR: ❌ Error detaching music: TypeError: Cannot read properties of undefined (reading 'targetType')
+[2026-05-29T18:04:05.019Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T18:04:06.902Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T18:04:20.828Z] ERROR: Profile fetch error: JsonWebTokenError: jwt malformed
+[2026-05-29T18:04:32.619Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T18:06:11.300Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T18:06:13.110Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T18:06:38.868Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-29T18:11:40.575Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-29T18:11:42.353Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-29T18:12:08.940Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-30T05:23:08.773Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-30T05:23:10.688Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-30T05:23:37.738Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-05-30T11:31:37.979Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-05-30T11:31:39.922Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-05-30T11:32:07.081Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-01T12:29:51.202Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-01T12:29:53.094Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-01T12:30:20.614Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-01T16:20:12.446Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-01T16:20:14.349Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-01T16:20:42.543Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-01T16:25:54.699Z] LOG: [VCS Studio] Dispatching chat query to LLM...
+[2026-06-01T17:42:35.277Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-01T17:42:40.252Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-01T17:43:48.751Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-02T15:03:34.732Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-02T15:03:36.632Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-02T15:04:06.944Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-02T15:31:22.124Z] ERROR: Profile fetch error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:22.130Z] ERROR: Profile fetch error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:27.377Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:30.657Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:31.529Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:31:31.919Z] ERROR: Signin error: SequelizeConnectionError: getaddrinfo EAI_AGAIN db.xedmnwhljuhbewqykggz.supabase.co
+[2026-06-02T15:40:21.101Z] LOG: [VCS Film] Generating 2 scene variations in parallel for prompt: "A astronaut walking in a temple , in anime illustration style, high quality anime artwork, colorful, detailed lineart, visual novel key visual"
+[2026-06-02T15:40:51.603Z] LOG: [VCS Film] Generating 2 scene variations in parallel for prompt: "A temple start to fly, in anime illustration style, high quality anime artwork, colorful, detailed lineart, visual novel key visual"
+[2026-06-02T15:48:42.371Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:48:42.371Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T15:48:47.496Z] ERROR: [VideoRenderService] Failed to parse python stdout: [Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415313/vizzy/uploads/z2g6pcbs5dgxf9gezhtr.svg...
+[Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415319/vizzy/uploads/wbfoulije8cikh5gpcwv.png...
+{"success": true, "outputVideo": "/uploads/video-1780415322371-4hisaoh.mp4"}
+
+[2026-06-02T15:48:47.496Z] ERROR: Montage rendering failed: SyntaxError: Unexpected token 'P', "[Python Sti"... is not valid JSON
+[2026-06-02T15:48:52.885Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:48:52.885Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T15:48:56.656Z] ERROR: [VideoRenderService] Failed to parse python stdout: [Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415313/vizzy/uploads/z2g6pcbs5dgxf9gezhtr.svg...
+[Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415319/vizzy/uploads/wbfoulije8cikh5gpcwv.png...
+{"success": true, "outputVideo": "/uploads/video-1780415332885-4dkdt7.mp4"}
+
+[2026-06-02T15:48:56.656Z] ERROR: Montage rendering failed: SyntaxError: Unexpected token 'P', "[Python Sti"... is not valid JSON
+[2026-06-02T15:49:06.658Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:49:06.658Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T15:49:10.401Z] ERROR: [VideoRenderService] Failed to parse python stdout: [Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415313/vizzy/uploads/z2g6pcbs5dgxf9gezhtr.svg...
+[Python Stitcher] Downloading https://res.cloudinary.com/dnu5ephbx/image/upload/v1780415319/vizzy/uploads/wbfoulije8cikh5gpcwv.png...
+{"success": true, "outputVideo": "/uploads/video-1780415346658-1x8fj.mp4"}
+
+[2026-06-02T15:49:10.401Z] ERROR: Montage rendering failed: SyntaxError: Unexpected token 'P', "[Python Sti"... is not valid JSON
+[2026-06-02T15:54:00.362Z] LOG: [VideoRenderService] Rendering direct montage with 2 images
+[2026-06-02T15:54:00.362Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T16:25:49.724Z] LOG: [VideoRenderService] Rendering direct montage with 13 images
+[2026-06-02T16:25:49.725Z] LOG: [VideoRenderService] Spawning Python script to render video...
+[2026-06-02T16:49:33.341Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-02T16:49:35.257Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-02T16:50:04.273Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-02T17:05:46.112Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-02T17:05:50.197Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-02T17:06:18.599Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T04:11:32.128Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T04:11:34.024Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T04:12:03.859Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T04:13:53.138Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T04:13:55.045Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T04:14:23.980Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T04:27:11.519Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T04:27:13.348Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T04:27:19.926Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T04:27:21.673Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T04:27:50.579Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T05:01:35.927Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T05:01:37.799Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T05:02:06.889Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T05:55:16.549Z] LOG: [gratitude-card/generate] Starting generation. Style: anime Ghibli style, message length: 92
+[2026-06-03T05:55:16.549Z] LOG: [gratitude-card/generate] Analyzing sender image with Gemini Vision...
+[2026-06-03T05:55:21.861Z] LOG: [gratitude-card/generate] Analyzing recipient image with Gemini Vision...
+[2026-06-03T05:55:29.189Z] LOG: [gratitude-card/generate] Descriptions obtained.\nSender: A young adult male with medium skin, dark brown hair and a beard, wearing black-framed glasses and a black turtleneck with a red stripe.\nRecipient: A man in his late 20s to early 30s, with medium-olive skin, dark wavy hair, a full dark beard, prominent eyebrows, dark brown eyes, and wearing a white t-shirt.
+[2026-06-03T05:55:29.189Z] LOG: [gratitude-card/generate] Generating base postcard artwork with prompt: "A beautiful, detailed illustration of two people standing together happily: a A young adult male with medium skin, dark brown hair and a beard, wearing black-framed glasses and a black turtleneck with a red stripe. and a A man in his late 20s to early 30s, with medium-olive skin, dark wavy hair, a full dark beard, prominent eyebrows, dark brown eyes, and wearing a white t-shirt.. They are smiling, sharing a warm and close bond. Set in a beautiful background matching the style. Style: Nostalgic anime studio Ghibli style, hand-drawn digital illustration, soft pastel colors, scenic skies, gentle lighting, detailed background.. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks."
+[2026-06-03T05:55:33.728Z] LOG: [gratitude-card/generate] Image generated at: https://replicate.delivery/yhqm/fXBp3SGTzSwsTKSkP1LiDVwZVqtt3iLP3qLAm01hHFHqnrVLA/out-0.png. Fetching buffer...
+[2026-06-03T05:55:35.506Z] LOG: [gratitude-card/generate] Formatting postcard layout...
+[2026-06-03T05:55:36.077Z] LOG: [gratitude-card/generate] Gratitude Card created successfully: ${fileName}
+[2026-06-03T05:58:13.800Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T05:58:15.741Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T05:58:44.951Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T05:58:57.008Z] LOG: [gratitude-card/generate] Starting generation. Style: anime Ghibli style, message length: 77
+[2026-06-03T05:58:57.008Z] LOG: [gratitude-card/generate] Analyzing sender image with Gemini Vision...
+[2026-06-03T05:59:02.342Z] LOG: [gratitude-card/generate] Analyzing recipient image with Gemini Vision...
+[2026-06-03T05:59:06.119Z] LOG: [gratitude-card/generate] Descriptions obtained.\nSender: A young adult male with an olive skin tone, dark hair, a full dark beard and mustache, and black-framed glasses, is wearing a black turtleneck sweater with a red collar stripe.\nRecipient: A medium-dark skinned man in his early 30s with dark, wavy hair and a full beard wears a white crew-neck t-shirt.
+[2026-06-03T05:59:06.119Z] LOG: [gratitude-card/generate] Generating base postcard artwork with prompt: "A beautiful, detailed illustration of two people standing together happily: a A young adult male with an olive skin tone, dark hair, a full dark beard and mustache, and black-framed glasses, is wearing a black turtleneck sweater with a red collar stripe. and a A medium-dark skinned man in his early 30s with dark, wavy hair and a full beard wears a white crew-neck t-shirt.. They are smiling, sharing a warm and close bond. Set in a beautiful background matching the style. Style: Nostalgic anime studio Ghibli style, hand-drawn digital illustration, soft pastel colors, scenic skies, gentle lighting, detailed background.. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks."
+[2026-06-03T05:59:09.394Z] LOG: [gratitude-card/generate] Image generated at: https://replicate.delivery/yhqm/g5BrLRbP8k5MAd1gq1jQCzkJEiLE0BfeFuJfBIY47FwZluWtA/out-0.png. Fetching buffer...
+[2026-06-03T05:59:10.737Z] LOG: [gratitude-card/generate] Formatting postcard layout...
+[2026-06-03T05:59:11.247Z] LOG: [gratitude-card/generate] Gratitude Card created successfully: ${fileName}
+[2026-06-03T06:03:08.995Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T06:03:10.832Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T06:03:26.923Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T06:03:28.736Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T06:03:57.685Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T06:06:30.595Z] LOG: [gratitude-card/generate] Starting generation. Style: anime Ghibli style, message length: 92
+[2026-06-03T06:06:30.595Z] LOG: [gratitude-card/generate] Analyzing sender image with Gemini Vision...
+[2026-06-03T06:06:34.253Z] LOG: [gratitude-card/generate] Analyzing recipient image with Gemini Vision...
+[2026-06-03T06:06:38.414Z] LOG: [gratitude-card/generate] Descriptions obtained.\nSender: A young adult male with an olive skin tone, dark brown hair and a groomed beard, wearing glasses and a black turtleneck sweater with a red collar stripe.\nRecipient: A young adult male with medium-olive skin, dark wavy hair styled upwards, a full dark beard, dark eyes, and wearing a white crew-neck t-shirt.
+[2026-06-03T06:06:38.414Z] LOG: [gratitude-card/generate] Generating base postcard artwork with prompt: "A beautiful, detailed illustration of two people standing together happily: a A young adult male with an olive skin tone, dark brown hair and a groomed beard, wearing glasses and a black turtleneck sweater with a red collar stripe. and a A young adult male with medium-olive skin, dark wavy hair styled upwards, a full dark beard, dark eyes, and wearing a white crew-neck t-shirt.. They are smiling, sharing a warm and close bond. Set in a beautiful background matching the style. Style: Nostalgic anime studio Ghibli style, hand-drawn digital illustration, soft pastel colors, scenic skies, gentle lighting, detailed background.. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks."
+[2026-06-03T06:06:41.035Z] LOG: [gratitude-card/generate] Image generated at: https://replicate.delivery/yhqm/kf5O8PIvvvRgdaUEjjwr7uARQEmfJLRZKHjL5fnyocXhzuWtA/out-0.png. Fetching buffer...
+[2026-06-03T06:06:42.102Z] LOG: [gratitude-card/generate] Formatting postcard layout...
+[2026-06-03T06:06:42.569Z] LOG: [gratitude-card/generate] Gratitude Card created successfully: gratitude_card_1780466802569.jpg
+[2026-06-03T06:07:36.346Z] LOG: [gratitude-card/generate] Starting generation. Style: anime Ghibli style, message length: 79
+[2026-06-03T06:07:36.346Z] LOG: [gratitude-card/generate] Analyzing sender image with Gemini Vision...
+[2026-06-03T06:07:41.728Z] LOG: [gratitude-card/generate] Analyzing recipient image with Gemini Vision...
+[2026-06-03T06:07:45.120Z] LOG: [gratitude-card/generate] Descriptions obtained.\nSender: A male in his late 20s to early 30s with medium-olive skin, dark wavy hair, a full dark beard and mustache, and dark eyes, wearing a white crew-neck t-shirt.\nRecipient: A middle-aged man with a medium to darker complexion has dark, swept-back hair and a neatly trimmed beard and mustache, wearing a light-colored V-neck long-sleeve shirt.
+[2026-06-03T06:07:45.120Z] LOG: [gratitude-card/generate] Generating base postcard artwork with prompt: "A beautiful, detailed illustration of two people standing together happily: a A male in his late 20s to early 30s with medium-olive skin, dark wavy hair, a full dark beard and mustache, and dark eyes, wearing a white crew-neck t-shirt. and a A middle-aged man with a medium to darker complexion has dark, swept-back hair and a neatly trimmed beard and mustache, wearing a light-colored V-neck long-sleeve shirt.. They are smiling, sharing a warm and close bond. Set in a beautiful background matching the style. Style: Nostalgic anime studio Ghibli style, hand-drawn digital illustration, soft pastel colors, scenic skies, gentle lighting, detailed background.. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks."
+[2026-06-03T06:07:46.925Z] LOG: [gratitude-card/generate] Image generated at: https://replicate.delivery/yhqm/5Lt4SCmkEprCOxqSqqpSHA8BKA2sO3u6aV8k35dcKdms21qF/out-0.png. Fetching buffer...
+[2026-06-03T06:07:50.030Z] LOG: [gratitude-card/generate] Formatting postcard layout...
+[2026-06-03T06:07:50.438Z] LOG: [gratitude-card/generate] Gratitude Card created successfully: gratitude_card_1780466870437.jpg
+[2026-06-03T06:09:59.960Z] LOG: [gratitude-card/generate] Starting generation. Style: watercolor, message length: 79
+[2026-06-03T06:09:59.960Z] LOG: [gratitude-card/generate] Analyzing sender image with Gemini Vision...
+[2026-06-03T06:10:04.686Z] LOG: [gratitude-card/generate] Analyzing recipient image with Gemini Vision...
+[2026-06-03T06:10:11.234Z] LOG: [gratitude-card/generate] Descriptions obtained.\nSender: A light-skinned, young adult to middle-aged male with short wavy brown hair and blue eyes wears a dark long-sleeved Henley shirt, with his arms crossed and a slight smile.\nRecipient: A middle-aged man with medium skin, dark brown and greying wavy hair, and a full grey beard wears a white polo shirt.
+[2026-06-03T06:10:11.235Z] LOG: [gratitude-card/generate] Generating base postcard artwork with prompt: "A beautiful, detailed illustration of two people standing together happily: a A light-skinned, young adult to middle-aged male with short wavy brown hair and blue eyes wears a dark long-sleeved Henley shirt, with his arms crossed and a slight smile. and a A middle-aged man with medium skin, dark brown and greying wavy hair, and a full grey beard wears a white polo shirt.. They are smiling, sharing a warm and close bond. Set in a beautiful background matching the style. Style: Dreamy soft watercolor painting, artistic ink washes, delicate paint splatters, pastel hues, elegant hand-painted texture, white paper edges.. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks."
+[2026-06-03T06:10:14.309Z] LOG: [gratitude-card/generate] Image generated at: https://replicate.delivery/yhqm/2z8upRuSyv73CpHQNKl9PWp5HkkFe6ID3banBfxJ6OTFdXrWA/out-0.png. Fetching buffer...
+[2026-06-03T06:10:15.428Z] LOG: [gratitude-card/generate] Formatting postcard layout...
+[2026-06-03T06:10:15.817Z] LOG: [gratitude-card/generate] Gratitude Card created successfully: gratitude_card_1780467015817.jpg
+[2026-06-03T06:12:38.275Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T06:12:40.368Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T06:12:44.859Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T06:12:46.686Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T06:13:15.857Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T06:15:56.773Z] LOG: [gratitude-card/generate] Starting generation. Style: futurism, message length: 79
+[2026-06-03T06:15:56.773Z] LOG: [gratitude-card/generate] Analyzing sender image with Gemini Vision...
+[2026-06-03T06:16:03.109Z] LOG: [gratitude-card/generate] Analyzing recipient image with Gemini Vision...
+[2026-06-03T06:16:09.530Z] LOG: [gratitude-card/generate] Descriptions obtained.\nSender: A man in his 30s with dark, wavy hair, a full beard and mustache, and a medium-brown complexion wears a white crew-neck t-shirt.\nRecipient: A light-skinned young adult male with short brown hair and blue eyes wears a dark long-sleeved Henley shirt, smiling faintly with arms crossed.
+[2026-06-03T06:16:09.530Z] LOG: [gratitude-card/generate] Generating base postcard artwork with prompt: "A beautiful, detailed illustration of two men, a male pair standing together happily. First person is: A man in his 30s with dark, wavy hair, a full beard and mustache, and a medium-brown complexion wears a white crew-neck t-shirt.. Second person is: A light-skinned young adult male with short brown hair and blue eyes wears a dark long-sleeved Henley shirt, smiling faintly with arms crossed.. Both are smiling, standing side-by-side, sharing a warm and close bond. Both individuals depicted are men (no women in the image). Set in a beautiful background matching the style. Style: Sleek futuristic digital painting, clean geometric shapes, polished metallic surfaces, neon circuit lines, advanced sci-fi city background.. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks."
+[2026-06-03T06:16:12.039Z] LOG: [gratitude-card/generate] Image generated at: https://replicate.delivery/yhqm/EfB1F93xz9TGMypHAle89teYzMF49FfZNe4JEGYckplfq41qF/out-0.png. Fetching buffer...
+[2026-06-03T06:16:13.640Z] LOG: [gratitude-card/generate] Formatting postcard layout...
+[2026-06-03T06:16:13.879Z] LOG: [gratitude-card/generate] Gratitude Card created successfully: gratitude_card_1780467373879.jpg
+[2026-06-03T06:17:31.374Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T06:17:33.128Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T06:17:41.816Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T06:17:43.903Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T06:18:12.971Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T06:20:26.523Z] LOG: [gratitude-card/generate] Starting generation. Style: watercolor, message length: 79
+[2026-06-03T06:20:26.523Z] LOG: [gratitude-card/generate] Analyzing sender image with Gemini Vision...
+[2026-06-03T06:20:33.285Z] LOG: [gratitude-card/generate] Analyzing recipient image with Gemini Vision...
+[2026-06-03T06:20:37.323Z] LOG: [gratitude-card/generate] Descriptions obtained.\nSender: A young to middle-aged adult male with an olive skin tone, dark wavy hair styled up, a neat dark beard and mustache, and dark eyes, is wearing a white crew-neck t-shirt.\nRecipient: A light-skinned young-to-middle-aged man with short brown hair, blue eyes, and a slight smile wears a dark grey long-sleeved Henley shirt with crossed arms.
+[2026-06-03T06:20:37.323Z] LOG: [gratitude-card/generate] Generating base postcard artwork with prompt: "A beautiful, detailed illustration of two men, a male pair standing together happily. Framed as a medium-wide shot showing them from the chest up, with ample headspace above their heads, leaving space at the top of the image. First person is: A young to middle-aged adult male with an olive skin tone, dark wavy hair styled up, a neat dark beard and mustache, and dark eyes, is wearing a white crew-neck t-shirt.. Second person is: A light-skinned young-to-middle-aged man with short brown hair, blue eyes, and a slight smile wears a dark grey long-sleeved Henley shirt with crossed arms.. Both are smiling, standing side-by-side, sharing a warm and close bond. Both individuals depicted are men (no women in the image). Set in a beautiful background matching the style. Style: Dreamy soft watercolor painting, artistic ink washes, delicate paint splatters, pastel hues, elegant hand-painted texture, white paper edges.. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks."
+[2026-06-03T06:20:40.136Z] LOG: [gratitude-card/generate] Image generated at: https://replicate.delivery/yhqm/eV8XoSOZOBTPbSSCW1C2DsfTbPY9OAMVMvboPFGHwmJ3mXrWA/out-0.png. Fetching buffer...
+[2026-06-03T06:20:41.127Z] LOG: [gratitude-card/generate] Formatting postcard layout...
+[2026-06-03T06:20:41.355Z] LOG: [gratitude-card/generate] Gratitude Card created successfully: gratitude_card_1780467641355.jpg

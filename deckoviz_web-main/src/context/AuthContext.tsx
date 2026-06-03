@@ -10,6 +10,7 @@ interface User {
   credits: number;
   tier?: "starter" | "creator" | "studio";
   emailVerified?: boolean;
+  isAdmin?: boolean;
 }
 
 interface AuthContextType {

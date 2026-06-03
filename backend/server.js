@@ -17,11 +17,13 @@ import creativeToolsRoutes from "./routes/creativeTools.js";
 import newCreativeToolsRoutes from "./routes/newCreativeTools.js";
 import wizzyRoutes from "./routes/wizzyRoutes.js";
 import vizzyRoutes from "./routes/vizzyRoutes.js";
+import vizzyStudioRoutes from "./routes/vizzyStudioRoutes.js";
 import dreamRoutes from "./routes/dreamRoutes.js";
 import memoryRoutes from "./routes/memoryRoutes.js";
 import worldRoutes from "./routes/worldRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import vizzyCanvasRoutes from "./routes/vizzyCanvasRoutes.js";
+import dailyCuratorRoutes from "./routes/dailyCuratorRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import storyForgeRoutes from "./routes/storyForgeRoutes.js";
 import {
@@ -51,6 +53,7 @@ import client from "./redisClient.js";
 // ── Vizzy 2.0 — New Agentic Models (auto-synced by sequelize.sync below) ───
 import "./models/VizzyMemory.js";
 import "./models/VizzyAgentSession.js";
+import "./models/VizzyStudioSession.js";
 import "./models/VizzySystemCard.js";
 import "./models/UserPersona.js";
 import "./models/UserOnboarding.js";
@@ -60,6 +63,7 @@ import "./models/UploadedMedia.js";
 import "./models/Collection.js";
 import "./models/DeckovizCuration.js";
 import "./models/UserFavoritePrompt.js";
+import "./models/FilmProject.js";
 import { seedSystemCards } from "./seeds/systemCardSeed.js";
 
 
@@ -152,7 +156,7 @@ app.use(
         callback(null, true); 
       }
     },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     credentials: true
   })
 );
@@ -264,7 +268,9 @@ app.use("/api", creativeToolsRoutes); // Creative Tools Hub (existing)
 app.use("/api", newCreativeToolsRoutes); // New Creative Tools
 app.use("/api/wizzy", wizzyRoutes);
 app.use("/api/vizzy", vizzyRoutes);
+app.use("/api/vizzy-studio", vizzyStudioRoutes);
 app.use("/api/vizzy-canvas", vizzyCanvasRoutes);
+app.use("/api/daily-curator", dailyCuratorRoutes);
 app.use("/api", uploadRoutes);
 app.use("/api", dreamRoutes);
 app.use("/api/memory", memoryRoutes);

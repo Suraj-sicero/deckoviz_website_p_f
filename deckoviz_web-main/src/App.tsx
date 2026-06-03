@@ -79,6 +79,7 @@ import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 
 import Audiobook from "./components/Audiobook";
 import CreativeStudio from "./components/tools/CreativeStudio";
+import ConversationalStudio from "./components/tools/ConversationalStudio";
 import CreativeJournalTool from "./components/tools/CreativeJournalTool";
 import AudiobookTool from "./components/tools/AudiobookTool";
 import StorybookTool from "./components/tools/StorybookTool";
@@ -97,6 +98,8 @@ import StorybookStudioTool from "./components/tools/StorybookStudioTool";
 import DailyInspirationTool from "./components/tools/DailyInspirationTool";
 import VisualAudiobookTool from "./components/tools/VisualAudiobookTool";
 import PostcardTool from "./components/tools/PostcardTool";
+import GratitudeCardTool from "./components/tools/GratitudeCardTool";
+import QuotePosterTool from "./components/tools/QuotePosterTool";
 import WizzyPage from "./components/wizzy/WizzyPage";
 import InfiniteWormhole from "./components/developerSpecs/InfiniteWormhole";
 import AmbientClock from "./components/developerSpecs/AmbientClock";
@@ -232,6 +235,8 @@ import ElinityAboutUs from "./components/elinity/ElinityAboutUs";
 import ElinityEllaris from "./components/elinity/ElinityEllaris";
 import ElinityContact from "./components/elinity/ElinityContact";
 import ElinityJoinUs from "./components/elinity/ElinityJoinUs";
+import DailyCuratorPage from "./components/dailyCurator/DailyCuratorPage";
+import AdminDailyCuratorPage from "./components/dailyCurator/AdminDailyCuratorPage";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -435,6 +440,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
 
           {/* ── Creative Studio Hub ── */}
           <Route path="/creative-studio" element={<CreativeStudio />} />
+          <Route path="/conversational-studio" element={<ProtectedRoute><ConversationalStudio /></ProtectedRoute>} />
           <Route path="/creative-journal" element={<ProtectedRoute><CreativeJournalTool /></ProtectedRoute>} />
           <Route path="/tools/audiobook" element={<ProtectedRoute><AudiobookTool /></ProtectedRoute>} />
           <Route path="/tools/visual-audiobook" element={<ProtectedRoute><VisualAudiobookTool /></ProtectedRoute>} />
@@ -454,6 +460,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/tools/soundscapes" element={<SoundscapesTool />} />
           <Route path="/soundscapes" element={<SoundscapesTool />} />
           <Route path="/tools/postcard" element={<PostcardTool />} />
+          <Route path="/tools/gratitude-card" element={<ProtectedRoute><GratitudeCardTool /></ProtectedRoute>} />
+          <Route path="/tools/quote-poster" element={<ProtectedRoute><QuotePosterTool /></ProtectedRoute>} />
           <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
           <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />
@@ -589,6 +597,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/flagship-games/cartographers/*" element={<CartographersApp />} />
           <Route path="/flagship-games/brilliant-minds/*" element={<BrilliantMindsApp />} />
           <Route path="/flagship-games/oracle/*" element={<OracleApp />} />
+
+          {/* Daily Curator + Music Curation */}
+          <Route path="/daily-curator" element={<ProtectedRoute><DailyCuratorPage /></ProtectedRoute>} />
+          <Route path="/admin/daily-curator" element={<ProtectedRoute><AdminDailyCuratorPage /></ProtectedRoute>} />
         </Routes>
       </main>
       {!isDeveloperTool && !isCanvasPage && <Footer />}

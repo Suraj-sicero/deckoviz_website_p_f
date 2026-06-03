@@ -6,6 +6,7 @@ import {
   type EnterpriseCategory, 
   type EnterpriseTemplate 
 } from "./lib/enterprise-templates"
+import { MoreEnterpriseModal } from "./more-enterprise-modal"
 import { 
   UtensilsCrossed, 
   ShoppingBag, 
@@ -42,6 +43,7 @@ interface EnterpriseLibraryProps {
 export function EnterpriseLibrary({ onSelect }: EnterpriseLibraryProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeCategory, setActiveCategory] = useState<string>("all")
+  const [show120More, setShow120More] = useState(false)
 
   // Handle filtering
   const filteredTemplates = useMemo(() => {
@@ -85,14 +87,23 @@ export function EnterpriseLibrary({ onSelect }: EnterpriseLibraryProps) {
   return (
     <section className="relative z-10 w-full max-w-4xl mt-12 animate-in fade-in duration-500">
       {/* Header */}
-      <div className="flex flex-col gap-2 mb-6 text-center sm:text-left">
-        <h3 className="text-xl font-bold tracking-tight text-[var(--vc-text)] flex items-center justify-center sm:justify-start gap-2">
-          <Sparkles className="size-5 text-blue-500" />
-          Enterprise Canvas — Template Library
-        </h3>
-        <p className="text-xs text-[var(--vc-text-muted)]">
-          {ENTERPRISE_TEMPLATES.length} starting points for businesses. Click any card to use it, fill in your brand details, and press submit.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-xl font-bold tracking-tight text-[var(--vc-text)] flex items-center justify-center sm:justify-start gap-2">
+            <Sparkles className="size-5 text-blue-500" />
+            Enterprise Canvas — Template Library
+          </h3>
+          <p className="text-xs text-[var(--vc-text-muted)] mt-1">
+            {ENTERPRISE_TEMPLATES.length} starting points for businesses. Click any card to use it, fill in your brand details, and press submit.
+          </p>
+        </div>
+        <button
+          onClick={() => setShow120More(true)}
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-cyan-500/20 bg-cyan-500/10 hover:bg-cyan-500/20 text-xs font-semibold text-cyan-400 transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0"
+        >
+          <Sparkles className="size-3.5 text-cyan-400" />
+          Open 120 more
+        </button>
       </div>
 
       {/* Search Input */}
@@ -216,6 +227,25 @@ export function EnterpriseLibrary({ onSelect }: EnterpriseLibraryProps) {
           })
         )}
       </div>
+
+      <div className="flex justify-center mt-6">
+        <button
+          onClick={() => setShow120More(true)}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-cyan-500/20 bg-cyan-500/10 hover:bg-cyan-500/25 text-xs font-medium text-cyan-400 hover:border-cyan-500/30 transition-all"
+        >
+          <Sparkles className="size-3.5 text-cyan-400" />
+          Open 120 more templates
+        </button>
+      </div>
+
+      <MoreEnterpriseModal
+        isOpen={show120More}
+        onClose={() => setShow120More(false)}
+        onSelect={(text) => {
+          if (onSelect) onSelect(text)
+          setShow120More(false)
+        }}
+      />
     </section>
   )
 }

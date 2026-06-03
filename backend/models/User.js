@@ -31,4 +31,12 @@ export const User = sequelize.define("User", {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  isAdmin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false, // Daily Curator admins manage users' curations
+  },
+  curationUpdatedAt: {
+    type: DataTypes.DATE,
+    allowNull: true, // bumped whenever this user's daily curation changes (mobile pull signal)
+  },
 });
