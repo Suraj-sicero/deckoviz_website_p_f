@@ -77,52 +77,46 @@ export default function WallOfLove() {
       {/* Main Content */}
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
         
-        {/* Top Badge with glow effect */}
-        <div className="flex justify-center pt-4 pb-2 mt-24 mb-4">
-          <div className="bg-[#7d39ec] text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg shadow-violet-500/50 hover:shadow-violet-500/80 transition-shadow duration-300">
-            Wall of Love
-          </div>
+        {/* Top Badge */}
+        <div className="flex justify-center pt-8 pb-4 mt-20 mb-2">
+          <p className="text-gray-500 text-sm font-bold tracking-widest uppercase">
+            Customer Testimonials ✨
+          </p>
         </div>
 
-        {/* Heading with gradient text */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-b from-gray-900 to-violet-500 bg-clip-text text-transparent leading-tight">
-          Wall Of Love
+        {/* Heading */}
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight pb-6">
+          <span className="font-serif text-[#182a4a]">Wall of </span>
+          <span className="font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] pr-2">Love</span>
         </h1>
 
-        {/* Subheading with enhanced styling */}
-        <div className="max-w-2xl mx-auto mb-10 sm:mb-8 px-4">
-          <p className="text-base sm:text-lg text-gray-700 leading-relaxed font-medium">
-            <span className="text-gray-900 text:4xl  sm:text-2xl md:text-3xl font-medium">Real People. Real Spaces. Real Magic.</span>
-          </p>
-        </div>
+        {/* Subheading */}
+        <p className="text-xl sm:text-2xl text-[#1e3a6e] font-semibold mb-8">
+          Real People. Real Spaces. Real Magic.
+        </p>
 
-        {/* Description section positioned over the gradient */}
+        {/* Description */}
         <div className="relative z-30 max-w-3xl mx-auto px-4 text-center">
-          <p className="text-base sm:text-lg text-gray-900 leading-relaxed font-normal mb-12">
-            We love hearing from you   whether it's feedback, ideas, creative sparks, bugs 
+          <p className="text-[17px] sm:text-[19px] leading-relaxed text-gray-700 mb-12">
+            We love hearing from you — whether it's feedback, ideas, creative sparks, bugs 
             you've noticed, feature suggestions, or simply your experience with Deckoviz. 
             Every message helps us grow, improve, and create more beautiful, 
-            <br />meaningful 
-            experiences.
+            meaningful experiences.
           </p>
 
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#6440ac] mb-6 leading-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#182a4a] mb-6 leading-tight">
             Here, you'll find voices from<br />
             across the world
           </h2>
 
-          <p className="text-base sm:text-lg text-gray-800 leading-relaxed font-medium mb-12">
-              from design lovers to digital creators, therapists to restaurateurs, 
-            <br />families to founders   all using Deckoviz to infuse their lives with:
+          <p className="text-[17px] sm:text-[19px] leading-relaxed text-gray-700 font-medium mb-12">
+            from design lovers to digital creators, therapists to restaurateurs, 
+            <br />families to founders — all using Deckoviz to infuse their lives with magic.
           </p>
 
           {/* CTA Button */}
-          <button className="group relative px-8 py-3 text-white font-medium rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/20 hover:scale-105 overflow-hidden text-base border border-white/20">
-            <div className="absolute inset-0 bg-gradient-to-r from-violet-500 via-pink-400 to-orange-300 transition-all duration-300 group-hover:from-violet-600 group-hover:via-pink-500 group-hover:to-orange-400"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/15 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-            <span className="relative z-10 flex items-center justify-center gap-2 font-light">
-             Join Our Wall of love 
-            </span>
+          <button className="inline-block px-10 py-5 rounded-full bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white font-bold text-lg shadow-[0_10px_30px_rgba(37,99,235,0.4)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.6)] hover:-translate-y-1 transition-all duration-300">
+            Join Our Wall of Love
           </button>
         </div>
       </div>
@@ -132,7 +126,7 @@ export default function WallOfLove() {
        <div className="relative z-10 w-full px-12">
          {/* Section Title */}
          <div className="text-center mb-16">
-           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-b from-gray-900 to-violet-500 bg-clip-text text-transparent mb-8">
+           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#182a4a] mb-8">
              What Our People Say:
            </h2>
          </div>
@@ -150,28 +144,28 @@ export default function WallOfLove() {
 
     {/* Card */}
     <div className="bg-white rounded-2xl p-5 shadow-lg">
-      <h4 className="font-bold text-[#6670d8] mb-2">Simon Lee</h4>
+      <h4 className="font-bold text-[#2563EB] mb-2">Simon Lee</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         Used it for a post about AI and it's got people having conversations already, more engagement than any of my previous value posts. This is exciting!
       </p>
     </div>
 
     <div className="bg-white rounded-2xl p-5 shadow-lg">
-      <h4 className="font-bold text-[#6670d8] mb-2">Amara, Toronto</h4>
+      <h4 className="font-bold text-[#2563EB] mb-2">Amara, Toronto</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         "Deckoviz has changed the way my home feels. It's not just decor it's dynamic, alive, and responsive to me. Every morning it greets me with something that feels right."
       </p>
     </div>
 
     <div className="bg-white rounded-2xl p-5 shadow-lg">
-      <h4 className="font-bold text-[#6670d8] mb-2">Jules, Berlin</h4>
+      <h4 className="font-bold text-[#2563EB] mb-2">Jules, Berlin</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         Just tested it and it is looking great. I actually published something, and actually learned something new. The writing is pretty good, and with a personal touch, it was fantastic.
       </p>
     </div>
 
     <div className="bg-white rounded-2xl p-5 shadow-lg">
-      <h4 className="font-bold text-[#6670d8] mb-2">Maya, Bangalore</h4>
+      <h4 className="font-bold text-[#2563EB] mb-2">Maya, Bangalore</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         "My favorite memory? Uploading a childhood photo, transforming it into a surreal dreamscape, and watching my daughter gasp in wonder."
       </p>
@@ -185,7 +179,7 @@ export default function WallOfLove() {
         borderRight: "1px solid rgba(255, 255, 255, 0.5)",
         borderBottom: "1px solid rgba(255, 255, 255, 0.5)",
       }}>
-      <h4 className="font-bold text-[#6670d8] mb-2">Marco, Florence</h4>
+      <h4 className="font-bold text-[#2563EB] mb-2">Marco, Florence</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         "Guests always ask where I got the 'wall that dances' in my wine bar. Deckoviz has become a centerpiece of experience, not just decor."
       </p>
@@ -199,7 +193,7 @@ export default function WallOfLove() {
         borderRight: "1px solid rgba(255, 255, 255, 0.5)",
         borderBottom: "1px solid rgba(255, 255, 255, 0.5)",
       }}>
-      <h4 className="font-bold text-[#6670d8] mb-2">Tashi, LA</h4>
+      <h4 className="font-bold text-[#2563EB] mb-2">Tashi, LA</h4>
       <p className="text-gray-700 text-sm leading-relaxed">
         "We use Deckoviz in our yoga studio. The ambient meditation visuals are unbelievable. It sets the tone for every class calm, beauty, presence."
       </p>
@@ -214,7 +208,7 @@ export default function WallOfLove() {
            style={{ 
              minHeight: "80vh",
              width: "calc(100vw - 6rem)",
-             background: "linear-gradient(135deg, rgba(147,51,234,0.08) 0%, rgba(236,72,153,0.12) 25%, rgba(255,182,193,0.15) 50%, rgba(230,230,250,0.10) 75%, rgba(255,255,255,0.95) 100%)",
+             background: "linear-gradient(135deg, rgba(37,99,235,0.08) 0%, rgba(59,130,246,0.12) 25%, rgba(96,165,250,0.15) 50%, rgba(239,246,255,0.10) 75%, rgba(255,255,255,0.95) 100%)",
              display:isMobile ? 'none' :'block'
            }}
          >
@@ -237,7 +231,7 @@ export default function WallOfLove() {
                  zIndex: 10
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3"> Simon Lee</h4>
+               <h4 className="font-bold text-[#2563EB] mb-3"> Simon Lee</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  Used it for a post about AI and it's got people having conversations already, more engagement than any of my previous value posts. This is exciting!
                </p>
@@ -259,7 +253,7 @@ export default function WallOfLove() {
                  zIndex: 12
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3"> Amara, Toronto</h4>
+               <h4 className="font-bold text-[#2563EB] mb-3"> Amara, Toronto</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  "Deckoviz has changed the way my home feels. It's not just decor   it's dynamic, alive, and responsive to me. Every morning it greets me with something that feels right."
                </p>
@@ -281,7 +275,7 @@ export default function WallOfLove() {
                  zIndex: 8
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3"> Jules, Berlin</h4>
+               <h4 className="font-bold text-[#2563EB] mb-3"> Jules, Berlin</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  Just tested it and it is looking great. I actually published something, and actually learned something new. The writing is pretty good, and with a personal touch, it was fantastic.
                </p>
@@ -303,7 +297,7 @@ export default function WallOfLove() {
                  zIndex: 15
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3"> Maya, Bangalore</h4>
+               <h4 className="font-bold text-[#2563EB] mb-3"> Maya, Bangalore</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  "My favorite memory? Uploading a childhood photo, transforming it into a surreal dreamscape, and watching my daughter gasp in wonder."   Maya, Bangalore
                </p>
@@ -325,7 +319,7 @@ export default function WallOfLove() {
                  zIndex: 11
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3"> Marco, Florence</h4>
+               <h4 className="font-bold text-[#2563EB] mb-3"> Marco, Florence</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  "Guests always ask where I got the 'wall that dances' in my wine bar. Deckoviz has become a centerpiece of experience, not just decor."   Marco, Florence
                </p>
@@ -347,7 +341,7 @@ export default function WallOfLove() {
                  zIndex: 13
                }}
              >
-               <h4 className="font-bold text-[#6670d8] mb-3"> Tashi, LA</h4>
+               <h4 className="font-bold text-[#2563EB] mb-3"> Tashi, LA</h4>
                <p className="text-gray-700 text-sm leading-relaxed">
                  "We use Deckoviz in our yoga studio. The ambient meditation visuals are unbelievable. It sets the tone for every class   calm, beauty, presence."   Tashi, LA
                </p>
@@ -357,12 +351,12 @@ export default function WallOfLove() {
            {/* Navigation Arrows */}
            <div className="absolute bottom-6 right-6 flex space-x-3">
              <button className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow duration-300">
-               <svg className="w-5 h-5 text-[#6670d8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <svg className="w-5 h-5 text-[#2563EB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                </svg>
              </button>
              <button className="w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center hover:shadow-lg transition-shadow duration-300">
-               <svg className="w-5 h-5 text-[#6670d8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+               <svg className="w-5 h-5 text-[#2563EB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                </svg>
              </button>
@@ -377,7 +371,7 @@ export default function WallOfLove() {
    <div
      className="relative rounded-3xl p-8 sm:p-12 lg:p-16 overflow-hidden shadow-2xl"
      style={{
-       background: "linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%)",
+       background: "linear-gradient(135deg, #182A4A 0%, #1e40af 50%, #3b82f6 100%)",
      }}
    >
      {/* Animated background elements */}
@@ -396,9 +390,9 @@ export default function WallOfLove() {
            </div>
          </div>
 
-         <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
+         <h2 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
            Want to be featured on our{' '}
-           <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+           <span className="font-serif italic text-blue-200 block mt-2">
              Wall of Love?
            </span>
          </h2>
@@ -408,7 +402,7 @@ export default function WallOfLove() {
            <span className="font-semibold text-yellow-300">@deckoviz</span>, send us your stories, or drop a memory in our inbox.
          </p>
 
-         <button className="group bg-white text-violet-600 font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-white/40 hover:scale-105 flex items-center gap-2 mb-6">
+         <button className="group bg-white text-blue-600 font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-white/40 hover:scale-105 flex items-center gap-2 mb-6">
            Submit your story here
            <svg
              className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"

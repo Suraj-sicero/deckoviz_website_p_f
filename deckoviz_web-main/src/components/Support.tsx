@@ -15,47 +15,26 @@ const Support: React.FC = () => {
         <div className="absolute bottom-[-80px] left-[25%] w-[700px] h-[400px] rounded-full blur-[120px]" style={{ background: "rgba(99, 102, 241, 0.15)" }} />
       </div>
 
-      <h1 className="text-4xl md:text-5xl font-extrabold font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-center mb-14 pb-2">
+      <h1 className="text-4xl md:text-5xl font-extrabold font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-center mb-6 pb-2">
         Support Center
       </h1>
 
+      <div className="max-w-3xl mx-auto text-center mb-16 px-4">
+        <p className="text-lg font-medium mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
+          Help, guidance, and real humans when you need them.
+        </p>
+
+        <p className="text-gray-600 text-lg mb-4 leading-relaxed">
+          Deckoviz is designed to feel effortless, calm, and intuitive.
+          Still, whenever you need help, clarity, or a human touch, we are here.
+        </p>
+
+        <p className="text-gray-600 text-lg leading-relaxed">
+          This support center is built for both Deckoviz home users and Deckoviz Enterprise customers, covering setup, usage, troubleshooting, and ongoing support.
+        </p>
+      </div>
+
       <div className="max-w-5xl mx-auto space-y-12">
-
-        {/* CARD 1 */}
-        <div
-          className="group rounded-3xl shadow-lg transition-all duration-300 p-10 flex flex-col md:flex-row gap-10 items-center"
-          style={{
-            background: "rgba(255,255,255,0.25)",
-            backdropFilter: "blur(24px) saturate(180%)",
-            WebkitBackdropFilter: "blur(24px) saturate(180%)",
-            border: "1px solid rgba(255,255,255,0.40)",
-            borderTop: "1px solid rgba(255,255,255,0.70)",
-            boxShadow: "0 8px 32px rgba(31,38,135,0.12), inset 0 1px 0 rgba(255,255,255,0.60)",
-          }}
-          onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.12), inset 0 1px 0 rgba(255,255,255,0.7)"}
-          onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.12), inset 0 1px 0 rgba(255,255,255,0.60)"}
-        >
-          <img src="/images/support-center.jpg" className="w-48 rounded-xl bg-blue-50 p-4" />
-
-          <div>
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900">
-              Deckoviz Support Center
-            </h2>
-
-            <p className="font-medium mb-3 text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">
-              Help, guidance, and real humans when you need them.
-            </p>
-
-            <p className="text-gray-600 mb-3 leading-relaxed">
-              Deckoviz is designed to feel effortless, calm, and intuitive.
-              Still, whenever you need help, clarity, or a human touch, we are here.
-            </p>
-
-            <p className="text-gray-600 leading-relaxed">
-              This support center is built for both Deckoviz home users and Deckoviz Enterprise customers, covering setup, usage, troubleshooting, and ongoing support.
-            </p>
-          </div>
-        </div>
 
         {/* CARD 2 */}
         <div
@@ -137,9 +116,9 @@ const Support: React.FC = () => {
             </ul>
 
             <p className="text-gray-600 mt-4">
-              If something feels unclear, unexpected, or simply not right   reach out.
+              If something feels unclear, unexpected, or simply not right, reach out at <a href="mailto:support@deckoviz.com" className="text-teal-600 font-semibold hover:text-teal-700 hover:underline transition-colors duration-200">support@deckoviz.com</a>.
               <br />
-              <strong className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">No question is too small.</strong>
+              <strong className="text-transparent bg-clip-text bg-gradient-to-r from-[#182A4A] to-[#2563EB]">No question is too small - we are here to help.</strong>
             </p>
           </div>
         </div>
