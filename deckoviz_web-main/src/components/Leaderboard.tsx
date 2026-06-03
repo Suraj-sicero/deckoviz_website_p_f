@@ -19,7 +19,7 @@ export default function Leaderboard() {
     {
       rank: 2,
       name: "Sophia@56",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face",
       country: "UK",
       countryFlag: "https://flagcdn.com/w40/gb.png",
       referrals: "*987 Invite & Ignite",
@@ -97,7 +97,7 @@ export default function Leaderboard() {
     {
       rank: 9,
       name: "Huzaifa @22",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face",
       country: "USA",
       countryFlag: "https://flagcdn.com/w40/us.png",
       referrals: "*987 Invite & Ignite",
@@ -175,7 +175,7 @@ export default function Leaderboard() {
     {
       rank: 15,
       name: "Arya#12@",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face",
       country: "South Korea",
       countryFlag: "https://flagcdn.com/w40/kr.png",
       referrals: "*987 Tack w... *987 Invite...",
@@ -253,7 +253,7 @@ export default function Leaderboard() {
     {
       rank: 21,
       name: "TridentS@12",
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face",
+      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=40&h=40&fit=crop&crop=face",
       country: "India",
       countryFlag: "https://flagcdn.com/w40/in.png",
       referrals: "*987 Invite & Ignite",
@@ -291,17 +291,10 @@ export default function Leaderboard() {
   }
 
   return (
-    <div className="relative min-h-screen bg-white">
-      {/* Top Badge */}
-      <div className="flex justify-center pt-28 pb-2 mb-4">
-        <div className="bg-blue-600 text-white px-4 py-1 rounded-lg text-sm font-medium shadow-lg">
-          DECKOVIZ LEADERBOARD
-        </div>
-      </div>
-
+    <div className="relative min-h-screen bg-white pb-24">
       {/* Main Heading */}
-      <div className="text-center mb-16 pt-8">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-8">Deckoviz <span className="bg-gradient-to-r from-blue-500 via-teal-600 to-indigo-600 bg-clip-text text-transparent">
+      <div className="text-center mb-16 pt-28">
+        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif italic text-gray-900 font-bold mb-8">Deckoviz <span className="bg-gradient-to-r from-blue-500 via-teal-600 to-indigo-600 bg-clip-text text-transparent">
               Leaderboard
             </span></h1>
         <p className="text-lg text-gray-900 mb-8 max-w-2xl mx-auto">
@@ -377,7 +370,7 @@ export default function Leaderboard() {
 
      
       {/* Leaderboard Container - Positioned to overlap gradient */}
-      <div className="relative z-20 max-w-6xl mx-auto px-4" style={{ marginTop: "8rem" }}>
+      <div className="relative z-20 max-w-6xl mx-auto px-4 mb-24" style={{ marginTop: "8rem" }}>
         {/* Browser Mockup Container */}
         <div className="bg-white rounded-3xl overflow-hidden shadow-2xl border border-gray-200">
           {/* Browser Header */}
@@ -542,19 +535,13 @@ export default function Leaderboard() {
       </div>
     
     {/* Referral Champions Section */}
-<div className="min-h-screen bg-white py-16 px-4 mt-20 relative">
- {/* Light pink gradient splash background */}
- <div 
-   className="absolute top-0 left-0 w-full h-80 opacity-80"
-   style={{
-     background: "linear-gradient(135deg, rgba(255, 240, 245, 0.8) 0%, rgba(255, 228, 240, 0.6) 30%, rgba(255, 218, 235, 0.4) 60%, rgba(255, 255, 255, 0.1) 100%)",
-     pointerEvents: "none"
-   }}
- />
+<div className="min-h-screen bg-gradient-to-br from-[#c7d2fe] via-[#eef2ff] to-[#bfdbfe] overflow-hidden py-16 px-4 pt-24 relative">
+ {/* Interactive dotted overlay for texture */}
+ <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle, #182A4A 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
  <div className="max-w-7xl mx-auto relative z-10">
    {/* Header Section */}
    <div className="text-center mb-16">
-     <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+     <h1 className="text-5xl md:text-6xl font-serif italic font-bold text-gray-900 mb-6">
        Referral Champions
      </h1>
      <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
@@ -566,7 +553,7 @@ export default function Leaderboard() {
    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
      
      {/* Top 5 Referrers Card */}
-     <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+     <div className="bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 group">
        <div className="text-center mb-6">
          <p className="text-sm text-gray-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>FOR</p>
          <h3 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Top 5 Referrers</h3>
@@ -574,7 +561,7 @@ export default function Leaderboard() {
        </div>
        
        {/* Image Grid */}
-       <div className="grid grid-cols-3 gap-2 rounded-2xl overflow-hidden">
+       <div className="grid grid-cols-3 gap-2 rounded-2xl overflow-hidden border border-white/50 shadow-[0_4px_16px_rgba(37,99,235,0.1)] p-2 bg-white/20 backdrop-blur-md">
          <img src="https://images.unsplash.com/photo-1532274402911-5a369e4c4bb5?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
               alt="Mountain landscape" className="w-full h-24 object-cover" />
          <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=120&h=120&fit=crop" 
@@ -591,7 +578,7 @@ export default function Leaderboard() {
      </div>
 
      {/* Top 100 Referrers Card */}
-     <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+     <div className="bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 group">
        <div className="text-center mb-6">
          <p className="text-sm text-gray-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>FOR</p>
          <h3 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Top 100 Referrers</h3>
@@ -599,21 +586,21 @@ export default function Leaderboard() {
        </div>
        
        {/* Browser Mockup */}
-       <div className="bg-gray-100 rounded-2xl overflow-hidden">
+       <div className="bg-white/30 backdrop-blur-md border border-white/50 rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(37,99,235,0.1)]">
          {/* Browser Header */}
-         <div className="bg-gray-200 px-4 py-3 flex items-center space-x-2">
+         <div className="bg-white/40 border-b border-white/50 px-4 py-3 flex items-center space-x-2">
            <div className="flex space-x-1">
              <div className="w-3 h-3 rounded-full bg-red-400"></div>
              <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
              <div className="w-3 h-3 rounded-full bg-green-400"></div>
            </div>
            <div className="flex-1 text-center">
-             <span className="text-xs text-gray-600" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>On Progress 🔥</span>
+             <span className="text-xs text-gray-800 font-medium" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>On Progress 🔥</span>
            </div>
          </div>
          
          {/* Browser Content */}
-         <div className="p-6 bg-white min-h-32">
+         <div className="p-6 bg-white/20 min-h-32">
            <div className="flex items-center justify-between mb-4">
              <div className="flex items-center space-x-2">
                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
@@ -643,7 +630,7 @@ export default function Leaderboard() {
      </div>
 
      {/* Top 250 Referrers Card */}
-     <div className="bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-shadow duration-300">
+     <div className="bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 group">
        <div className="text-center mb-6">
          <p className="text-sm text-gray-500 uppercase tracking-wider mb-2" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>FOR</p>
          <h3 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>Top 250 Referrers</h3>
@@ -651,8 +638,8 @@ export default function Leaderboard() {
        </div>
        
        {/* Dashboard Mockup */}
-       <div className="bg-gradient-to-br from-orange-100 to-orange-200 rounded-2xl p-6">
-         <div className="bg-white rounded-xl p-4 shadow-sm">
+       <div className="bg-blue-100/40 backdrop-blur-md rounded-2xl p-6 border border-white/50 shadow-[0_4px_16px_rgba(37,99,235,0.1)]">
+         <div className="bg-white/40 backdrop-blur-xl border border-white/60 rounded-xl p-4 shadow-sm">
            <div className="flex items-center justify-between mb-4">
              <div className="flex items-center space-x-2">
                <div className="w-6 h-6 bg-orange-400 rounded-full"></div>
@@ -688,29 +675,13 @@ export default function Leaderboard() {
 
 
 {/* Collector Royalty & Engagement Legends Section */}
-<div className="min-h-screen bg-white relative overflow-hidden py-16 px-4 mt-20">
- {/* Pink spiral gradient background */}
- <div 
-   className="absolute inset-0" 
-   style={{
-     background: `conic-gradient(from 0deg at center, 
-       rgba(236,72,153,0.25) 0%, 
-       rgba(147,51,234,0.18) 90deg, 
-       rgba(255,165,0,0.08) 180deg, 
-       rgba(236,72,153,0.12) 270deg, 
-       rgba(147,51,234,0.15) 360deg)`,
-     borderRadius: "50%",
-     filter: "blur(60px)",
-     zIndex: 1,
-   }}
- />
- 
+<div className="min-h-screen relative overflow-hidden py-16 px-4 mt-20 bg-gradient-to-br from-[#c7d2fe] via-[#eef2ff] to-[#bfdbfe]">
  {/* Subtle dot pattern overlay */}
  <div
-   className="absolute inset-0 opacity-[0.06]"
+   className="absolute inset-0 opacity-[0.03]"
    style={{
-     backgroundImage: "radial-gradient(circle, #ec4899 1px, transparent 1px)",
-     backgroundSize: "30px 30px",
+     backgroundImage: "radial-gradient(circle, #182A4A 1px, transparent 1px)",
+     backgroundSize: "32px 32px",
    }}
  />
  
@@ -719,7 +690,7 @@ export default function Leaderboard() {
    {/* Collector Royalty Section */}
    <div className="mb-24">
      <div className="text-left mb-12">
-       <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+       <h2 className="text-4xl md:text-5xl font-serif italic font-bold text-gray-900 mb-4">
          Collector Royalty
        </h2>
        <p className="text-lg text-gray-700 max-w-2xl">
@@ -731,7 +702,7 @@ export default function Leaderboard() {
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
        
        {/* Most Expensive Painting */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-red-50/50 via-pink-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -767,7 +738,7 @@ export default function Leaderboard() {
        </div>
 
        {/* Top Art Spenders */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-yellow-50/50 via-orange-50/30 to-pink-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -804,7 +775,7 @@ export default function Leaderboard() {
        </div>
 
        {/* Most Artworks Collected */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-indigo-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -838,7 +809,7 @@ export default function Leaderboard() {
        </div>
 
        {/* Most Resales */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-pink-50/50 via-rose-50/30 to-red-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -876,7 +847,7 @@ export default function Leaderboard() {
    {/* Engagement Legends Section */}
    <div>
      <div className="text-left mb-12">
-       <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+       <h2 className="text-4xl md:text-5xl font-serif italic font-bold text-gray-900 mb-4">
          Engagement Legends
        </h2>
        <p className="text-lg text-gray-700 max-w-3xl">
@@ -888,7 +859,7 @@ export default function Leaderboard() {
      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
        
        {/* Most Days Logged */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-green-50/50 via-emerald-50/30 to-teal-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -915,7 +886,7 @@ export default function Leaderboard() {
        </div>
 
        {/* Most Artwork Transformations */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-amber-50/50 via-yellow-50/30 to-orange-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -942,7 +913,7 @@ export default function Leaderboard() {
        </div>
 
        {/* Most User Uploads */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-cyan-50/50 via-blue-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -969,7 +940,7 @@ export default function Leaderboard() {
        </div>
 
        {/* Most Shared via Social */}
-       <div className="group relative bg-white rounded-3xl p-8 shadow-lg border border-gray-100 hover:shadow-2xl hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
+       <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:scale-105 hover:-rotate-1 transition-all duration-500 cursor-pointer">
          <div className="absolute inset-0 bg-gradient-to-br from-violet-50/50 via-violet-50/30 to-indigo-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
          
          <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50">
@@ -1002,27 +973,13 @@ export default function Leaderboard() {
 
 
 {/* University Leaderboards Section */}
-<div className="min-h-screen bg-white relative overflow-hidden py-16 px-4 mt-20">
- {/* Pink gradient splashes */}
- <div 
-   className="absolute top-0 left-0 w-full h-full opacity-40"
+<div className="min-h-screen relative overflow-hidden py-16 px-4 pt-24 bg-gradient-to-br from-[#c7d2fe] via-[#eef2ff] to-[#bfdbfe]">
+ {/* Subtle dot pattern overlay */}
+ <div
+   className="absolute inset-0 opacity-[0.03]"
    style={{
-     background: "radial-gradient(ellipse 600px 400px at 20% 30%, rgba(255, 192, 203, 0.2) 0%, rgba(255, 192, 203, 0.1) 40%, transparent 70%)",
-     pointerEvents: "none"
-   }}
- />
- <div 
-   className="absolute top-40 right-0 w-80 h-80 opacity-30"
-   style={{
-     background: "radial-gradient(circle, rgba(255, 182, 193, 0.25) 0%, rgba(255, 182, 193, 0.1) 50%, transparent 80%)",
-     pointerEvents: "none"
-   }}
- />
- <div 
-   className="absolute bottom-20 left-1/3 w-60 h-60 opacity-20"
-   style={{
-     background: "radial-gradient(circle, rgba(255, 105, 180, 0.3) 0%, rgba(255, 105, 180, 0.1) 60%, transparent 90%)",
-     pointerEvents: "none"
+     backgroundImage: "radial-gradient(circle, #182A4A 1px, transparent 1px)",
+     backgroundSize: "32px 32px",
    }}
  />
  
@@ -1032,7 +989,7 @@ export default function Leaderboard() {
    <div className="text-center mb-16">
      <div className="flex justify-center items-center mb-6">
        <span className="text-5xl mr-4">🎓</span>
-       <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+       <h2 className="text-4xl md:text-5xl font-serif italic font-bold text-gray-900">
          University Leaderboards
        </h2>
      </div>
@@ -1050,7 +1007,7 @@ export default function Leaderboard() {
    <div className="text-left mb-12">
      <div className="flex items-center mb-6">
        <span className="text-2xl mr-3">💌</span>
-       <h3 className="text-3xl md:text-4xl font-bold text-gray-900">
+       <h3 className="text-3xl md:text-4xl font-serif italic font-bold text-gray-900">
          Want to climb the ranks?
        </h3>
      </div>
@@ -1063,61 +1020,55 @@ export default function Leaderboard() {
    {/* Action Cards Grid */}
    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
      
-     {/* Inviting Friends Card */}
-     <div className="group relative bg-white rounded-3xl p-8 border border-gray-200 cursor-pointer hover:shadow-lg hover:border-pink-300 transition-all duration-300">
-       <div className="absolute inset-0 bg-gradient-to-br from-pink-50/0 to-red-50/0 group-hover:from-pink-50/60 group-hover:to-red-50/40 rounded-3xl transition-all duration-300"></div>
-       
+      {/* Inviting Friends Card */}
+      <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
        <div className="relative z-10 text-center">
          <div className="mx-auto mb-6">
-           <div className="w-20 h-20 mx-auto bg-gradient-to-br from-pink-100 to-red-100 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-pink-600">
+           <div className="w-20 h-20 mx-auto bg-white/70 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-white">
+             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-blue-600 drop-shadow-sm">
                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="currentColor"/>
                <circle cx="18" cy="8" r="3" fill="#f59e0b"/>
              </svg>
            </div>
          </div>
          
-         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-pink-700 transition-colors duration-300">
+         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors duration-300">
            Inviting friends (they get a<br />reward too!)
          </h4>
        </div>
      </div>
 
-     {/* Selling Art Card */}
-     <div className="group relative bg-white rounded-3xl p-8 border border-gray-200 cursor-pointer hover:shadow-lg hover:border-gray-300 transition-all duration-300">
-       <div className="absolute inset-0 bg-gradient-to-br from-gray-50/0 to-slate-50/0 group-hover:from-gray-50/60 group-hover:to-slate-50/40 rounded-3xl transition-all duration-300"></div>
-       
+      {/* Selling Art Card */}
+      <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
        <div className="relative z-10 text-center">
          <div className="mx-auto mb-6">
-           <div className="w-20 h-20 mx-auto bg-gradient-to-br from-gray-100 to-slate-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-gray-700">
+           <div className="w-20 h-20 mx-auto bg-white/70 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-white">
+             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-blue-600 drop-shadow-sm">
                <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.41 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" fill="currentColor"/>
                <circle cx="12" cy="8" r="2" fill="#3b82f6"/>
              </svg>
            </div>
          </div>
          
-         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-gray-700 transition-colors duration-300">
+         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors duration-300">
            Selling your art in our marketplace
          </h4>
        </div>
      </div>
 
-     {/* Curating Content Card */}
-     <div className="group relative bg-white rounded-3xl p-8 border border-gray-200 cursor-pointer hover:shadow-lg hover:border-emerald-300 transition-all duration-300">
-       <div className="absolute inset-0 bg-gradient-to-br from-emerald-50/0 to-green-50/0 group-hover:from-emerald-50/60 group-hover:to-green-50/40 rounded-3xl transition-all duration-300"></div>
-       
+      {/* Curating Content Card */}
+      <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
        <div className="relative z-10 text-center">
          <div className="mx-auto mb-6">
-           <div className="w-20 h-20 mx-auto bg-gradient-to-br from-emerald-100 to-green-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-emerald-700">
+           <div className="w-20 h-20 mx-auto bg-white/70 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-white">
+             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-blue-600 drop-shadow-sm">
                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" fill="currentColor"/>
                <circle cx="10" cy="13" r="1" fill="#f59e0b"/>
              </svg>
            </div>
          </div>
          
-         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-emerald-700 transition-colors duration-300">
+         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors duration-300">
            Curating and transforming content
          </h4>
        </div>
@@ -1127,33 +1078,29 @@ export default function Leaderboard() {
    {/* Second Row */}
    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
      
-     {/* Interacting Card */}
-     <div className="group relative bg-white rounded-3xl p-8 border border-gray-200 cursor-pointer hover:shadow-lg hover:border-orange-300 transition-all duration-300">
-       <div className="absolute inset-0 bg-gradient-to-br from-orange-50/0 to-amber-50/0 group-hover:from-orange-50/60 group-hover:to-amber-50/40 rounded-3xl transition-all duration-300"></div>
-       
+      {/* Interacting Card */}
+      <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
        <div className="relative z-10 text-center">
          <div className="mx-auto mb-6">
-           <div className="w-20 h-20 mx-auto bg-gradient-to-br from-orange-100 to-amber-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-orange-700">
+           <div className="w-20 h-20 mx-auto bg-white/70 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-white">
+             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-blue-600 drop-shadow-sm">
                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
              </svg>
            </div>
          </div>
          
-         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-orange-700 transition-colors duration-300">
+         <h4 className="text-lg font-bold text-gray-900 mb-4 group-hover:text-blue-700 transition-colors duration-300">
            Interacting with your Deckoviz regularly
          </h4>
        </div>
      </div>
 
-     {/* Sharing Card */}
-     <div className="group relative bg-white rounded-3xl p-8 border border-gray-200 cursor-pointer hover:shadow-lg hover:border-violet-300 transition-all duration-300">
-       <div className="absolute inset-0 bg-gradient-to-br from-violet-50/0 to-violet-50/0 group-hover:from-violet-50/60 group-hover:to-violet-50/40 rounded-3xl transition-all duration-300"></div>
-       
+      {/* Sharing Card */}
+      <div className="group relative bg-white/40 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] transition-all duration-500 hover:-translate-y-2 cursor-pointer">
        <div className="relative z-10 text-center">
          <div className="mx-auto mb-6">
-           <div className="w-20 h-20 mx-auto bg-gradient-to-br from-violet-100 to-violet-200 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-violet-700">
+           <div className="w-20 h-20 mx-auto bg-white/70 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-sm border border-white">
+             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" className="text-blue-600 drop-shadow-sm">
                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.50-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z" fill="currentColor"/>
              </svg>
            </div>

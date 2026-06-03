@@ -2,7 +2,7 @@ import InteractiveParticleGraphic from "./other/InteractiveParticleGraphic";
 import { useState, useEffect, useRef } from "react";
 
 export default function AboutUs() {
-  const [cursor, setCursor] = useState({ x: -200, y: -200 });
+  const cursorRef = useRef<HTMLDivElement>(null);
   const [cursorVisible, setCursorVisible] = useState(false);
   const smoothPos = useRef({ x: -200, y: -200 });
   const rafRef = useRef<number>(0);
@@ -22,7 +22,9 @@ export default function AboutUs() {
     const animate = () => {
       smoothPos.current.x = lerp(smoothPos.current.x, target.x, 0.07);
       smoothPos.current.y = lerp(smoothPos.current.y, target.y, 0.07);
-      setCursor({ x: smoothPos.current.x, y: smoothPos.current.y });
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate(${smoothPos.current.x - 200}px, ${smoothPos.current.y - 200}px)`;
+      }
       rafRef.current = requestAnimationFrame(animate);
     };
     rafRef.current = requestAnimationFrame(animate);
@@ -130,12 +132,12 @@ export default function AboutUs() {
 
       {/* Interactive Cursor Sphere */}
       <div
-        className="pointer-events-none fixed z-[9999] rounded-full transition-[opacity,transform] duration-[400ms,100ms] will-change-transform ease-out"
+        ref={cursorRef}
+        className="pointer-events-none fixed z-[9999] rounded-full transition-opacity duration-[400ms] will-change-transform ease-out top-0 left-0"
         style={{
           width: 400,
           height: 400,
-          left: cursor.x - 200,
-          top: cursor.y - 200,
+          transform: 'translate(-400px, -400px)',
           background: 'radial-gradient(circle at center, rgba(37,99,235,0.7) 0%, rgba(6,182,212,0.3) 40%, transparent 70%)',
           opacity: cursorVisible ? 1 : 0,
           filter: 'blur(60px)',
@@ -226,7 +228,7 @@ export default function AboutUs() {
               </div>
 
               {/* Label chip */}
-              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-[#182A4A]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-[#182A4A]/80  px-3 py-1.5 rounded-full border border-white/20">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#2563EB] animate-pulse" />
                 <span className="text-white text-[10px] font-bold tracking-widest uppercase">Living Space</span>
               </div>
@@ -250,7 +252,7 @@ export default function AboutUs() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </div>
 
-              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-teal-900/70 backdrop-blur-md px-3 py-1.5 rounded-full border border-teal-300/30">
+              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-teal-900/70  px-3 py-1.5 rounded-full border border-teal-300/30">
                 <div className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
                 <span className="text-teal-100 text-[10px] font-bold tracking-widest uppercase">Cosmic Art</span>
               </div>
@@ -277,7 +279,7 @@ export default function AboutUs() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </div>
 
-              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-[#182A4A]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20">
+              <div className="absolute top-5 left-5 z-20 flex items-center gap-2 bg-[#182A4A]/80  px-3 py-1.5 rounded-full border border-white/20">
                 <div className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
                 <span className="text-white text-[10px] font-bold tracking-widest uppercase">Interior</span>
               </div>
@@ -319,14 +321,10 @@ export default function AboutUs() {
           </div>
 
 
-{/* Interactive Particle Graphic */}
-<InteractiveParticleGraphic />
-
-
           {/* Flagship Products Container — frosted glass */}
           <div className="mb-20">
             <div className="group relative overflow-hidden rounded-3xl p-6 mt-8 sm:p-10 lg:p-14
-              bg-white/30 backdrop-blur-xl
+              bg-white/30  transform-gpu
               border border-white/50
               shadow-[0_8px_40px_rgba(37,99,235,0.08),inset_0_1px_1px_rgba(255,255,255,0.8)]
               hover:shadow-[0_16px_60px_rgba(37,99,235,0.15)]
@@ -375,33 +373,42 @@ export default function AboutUs() {
         <div className="relative mt-32 mb-32">
           <div className="relative z-10 max-w-6xl mx-auto px-4">
 
-            {/* Section Header */}
-            <div className="flex items-center gap-4 mb-10">
-              <div className="relative group cursor-default">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-40 transition duration-500" />
-                <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-5 py-1.5 rounded-xl text-xs font-black tracking-widest uppercase shadow-xl flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
-                  Our Philosophy
+            {/* Our Philosophy Grid Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 items-center">
+              
+              {/* Left Column: Text & Header */}
+              <div className="flex flex-col">
+                {/* Section Header */}
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="relative group cursor-default">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-40 transition duration-500" />
+                    <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-5 py-1.5 rounded-xl text-xs font-black tracking-widest uppercase shadow-xl flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
+                      Our Philosophy
+                    </div>
+                  </div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-[#2563EB]/30 to-transparent" />
+                </div>
+
+                <div className="text-left mb-6">
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
+                    We believe technology should not just be{' '}
+                    <span className="bg-gradient-to-r from-[#2563EB] to-teal-400 bg-clip-text text-transparent">functional</span>
+                  </h2>
+                </div>
+                <div className="text-left flex items-center">
+                  <p className="text-lg text-gray-500 leading-relaxed">
+                    At Deckoviz, we are pioneering a new category of<br />
+                    AI-powered spatial enhancement and state-setting — bringing<br />
+                    future-ready tech, personalization, and emotion<br />
+                    into homes, offices, restaurants, hotels, wellness spaces, and beyond.
+                  </p>
                 </div>
               </div>
-              <div className="h-px flex-1 bg-gradient-to-r from-[#2563EB]/30 to-transparent" />
-            </div>
 
-            {/* Main Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
-              <div className="text-left">
-                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-                  We believe technology should not just be{' '}
-                  <span className="bg-gradient-to-r from-[#2563EB] to-teal-400 bg-clip-text text-transparent">functional</span>
-                </h2>
-              </div>
-              <div className="text-left flex items-center">
-                <p className="text-lg text-gray-500 leading-relaxed">
-                  At Deckoviz, we are pioneering a new category of<br />
-                  AI-powered spatial enhancement and state-setting — bringing<br />
-                  future-ready tech, personalization, and emotion<br />
-                  into homes, offices, restaurants, hotels, wellness spaces, and beyond.
-                </p>
+              {/* Right Column: Interactive Graphic */}
+              <div className="w-full">
+                <InteractiveParticleGraphic />
               </div>
             </div>
 
@@ -418,7 +425,7 @@ export default function AboutUs() {
                   { img: '/images/3dicons-heart-dynamic-color.png', text: 'It should help us live more intentionally, more expressively, more joyfully', accent: 'from-[#182A4A] to-teal-400', glow: 'rgba(37,99,235,0.15)' },
                 ].map((card, i) => (
                   <div key={i} className="group relative overflow-hidden rounded-2xl p-7 text-center
-                    bg-white/60 backdrop-blur-lg
+                    bg-white/60 
                     border border-white/70
                     shadow-[0_4px_24px_rgba(37,99,235,0.07),inset_0_1px_1px_rgba(255,255,255,0.8)]
                     hover:shadow-[0_12px_40px_rgba(37,99,235,0.15)]
@@ -465,7 +472,7 @@ export default function AboutUs() {
               <div className="relative z-10 p-10 md:p-16 text-center">
                 {/* Badge */}
                 <div className="flex justify-center mb-6">
-                  <div className="bg-white/10 border border-white/20 text-white/90 px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase backdrop-blur-sm flex items-center gap-2">
+                  <div className="bg-white/10 border border-white/20 text-white/90 px-5 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase  flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-teal-400 animate-pulse" />
                     Our Mission and Vision
                   </div>
@@ -491,7 +498,7 @@ export default function AboutUs() {
                   { num: '02', title: 'We are building the next generation of ecosystem at the crossroads of evolving art, gen AI, emotional modelling, and soulful design', body: 'creating living environments that resonate emotionally, artistically, and intelligently with the people who inhabit them.' },
                 ].map((item) => (
                   <div key={item.num} className="group flex gap-5 items-start p-6 rounded-2xl
-                    bg-white/50 backdrop-blur-md border border-white/60
+                    bg-white/50  border border-white/60
                     shadow-[0_4px_20px_rgba(37,99,235,0.06)]
                     hover:shadow-[0_8px_32px_rgba(37,99,235,0.14)] hover:-translate-y-1 transition-all duration-400">
                     {/* Number badge */}
@@ -513,7 +520,7 @@ export default function AboutUs() {
                 <div className="relative bg-gradient-to-b from-[#2563EB] via-teal-400 to-[#182A4A] rounded-2xl shadow-lg max-w-sm mx-auto ml-8 overflow-hidden" style={{ zIndex: 2, padding: '4px' }}>
                   <img src="/images/Gemini_Generated_Image_qcetl0qcetl0qcet.jpeg" alt="AI-Powered Vision That Inspires You" className="w-full h-auto object-cover rounded-xl" />
                   {/* AI Badge */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-sm text-gray-900 px-4 py-3 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 w-max">
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/95  text-gray-900 px-4 py-3 rounded-2xl shadow-xl border border-white/60 flex items-center gap-3 w-max">
                     <div className="w-9 h-9 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center">
                       <span className="text-white text-xs font-bold">AI</span>
                     </div>
@@ -805,19 +812,19 @@ export default function AboutUs() {
             {/* Three Technology Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
               {/* Card 1 - Taste & Preference */}
-              <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                {/* Image container with exact gradient background */}
-                <div className="bg-gradient-to-br from-blue-100 via-blue-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+              <div className="relative rounded-3xl p-6 bg-white/30  transform-gpu border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.06)] hover:shadow-[0_16px_40px_rgba(37,99,235,0.12)] hover:-translate-y-1 transition-all duration-500">
+                {/* Image container with glass background */}
+                <div className="bg-white/40  transform-gpu border border-white/80 rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
                   <img
                     src="/images/doodle1.png"
                     alt="AI character representing taste and preferences"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain mix-blend-multiply drop-shadow-md"
                   />
                 </div>
 
                 {/* Single tag aligned left */}
                 <div className="mb-4 flex justify-start">
-                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">
+                  <span className="text-xs bg-white/60  border border-white/80 text-gray-700 px-3 py-1 rounded-full font-semibold shadow-sm">
                     Taste & Preference
                   </span>
                 </div>
@@ -833,26 +840,26 @@ export default function AboutUs() {
                 </h3>
 
                 {/* Learn More Button with exact styling */}
-                <button className="w-full bg-white border border-gray-300 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-300 shadow-sm">
+                <button className="w-full bg-white/60 hover:bg-white/90  border border-white/80 text-gray-800 py-3 rounded-xl font-bold transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_16px_rgba(37,99,235,0.08)] text-sm">
                   Learn More
                 </button>
               </div>
 
               {/* Card 2 - Dream & Moods */}
-              <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                {/* Image container with violet gradient */}
-                <div className="bg-gradient-to-br from-blue-100 via-indigo-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+              <div className="relative rounded-3xl p-6 bg-white/30  transform-gpu border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.06)] hover:shadow-[0_16px_40px_rgba(37,99,235,0.12)] hover:-translate-y-1 transition-all duration-500">
+                {/* Image container with glass background */}
+                <div className="bg-white/40  transform-gpu border border-white/80 rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
                   <img
                     src="/images/doodle2.png"
                     alt="AI character representing dreams and moods"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain mix-blend-multiply drop-shadow-md"
                   />
                 </div>
 
                 {/* Two tags aligned left */}
                 <div className="flex gap-2 mb-4">
-                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Dream</span>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Moods</span>
+                  <span className="text-xs bg-white/60  border border-white/80 text-gray-700 px-3 py-1 rounded-full font-semibold shadow-sm">Dream</span>
+                  <span className="text-xs bg-white/60  border border-white/80 text-gray-700 px-3 py-1 rounded-full font-semibold shadow-sm">Moods</span>
                 </div>
 
                 {/* Title with exact line breaks - left aligned with Bricolage Grotesque font */}
@@ -866,27 +873,27 @@ export default function AboutUs() {
                 </h3>
 
                 {/* Learn More Button */}
-                <button className="w-full bg-white border border-gray-300 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-300 shadow-sm">
+                <button className="w-full bg-white/60 hover:bg-white/90  border border-white/80 text-gray-800 py-3 rounded-xl font-bold transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_16px_rgba(37,99,235,0.08)] text-sm">
                   Learn More
                 </button>
               </div>
 
               {/* Card 3 - Beauty, Growth, Connection */}
-              <div className="bg-white rounded-3xl p-6 shadow-xl hover:shadow-2xl transition-shadow duration-300">
-                {/* Image container with pink gradient */}
-                <div className="bg-gradient-to-br from-pink-100 via-pink-50 to-white rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
+              <div className="relative rounded-3xl p-6 bg-white/30  transform-gpu border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.06)] hover:shadow-[0_16px_40px_rgba(37,99,235,0.12)] hover:-translate-y-1 transition-all duration-500">
+                {/* Image container with glass background */}
+                <div className="bg-white/40  transform-gpu border border-white/80 rounded-2xl p-4 mb-6 aspect-square flex items-center justify-center overflow-hidden">
                   <img
                     src="/images/doodle3.png"
                     alt="AI character representing beauty, growth and connection"
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain mix-blend-multiply drop-shadow-md"
                   />
                 </div>
 
                 {/* Three tags aligned left */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Beauty</span>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">Growth</span>
-                  <span className="text-xs bg-gray-100 text-gray-600 px-3 py-1 rounded-full font-medium">
+                  <span className="text-xs bg-white/60  border border-white/80 text-gray-700 px-3 py-1 rounded-full font-semibold shadow-sm">Beauty</span>
+                  <span className="text-xs bg-white/60  border border-white/80 text-gray-700 px-3 py-1 rounded-full font-semibold shadow-sm">Growth</span>
+                  <span className="text-xs bg-white/60  border border-white/80 text-gray-700 px-3 py-1 rounded-full font-semibold shadow-sm">
                     Connection
                   </span>
                 </div>
@@ -902,7 +909,7 @@ export default function AboutUs() {
                 </h3>
 
                 {/* Learn More Button */}
-                <button className="w-full bg-white border border-gray-300 text-gray-800 py-3 rounded-xl font-medium hover:bg-gray-50 transition-colors duration-300 shadow-sm">
+                <button className="w-full bg-white/60 hover:bg-white/90  border border-white/80 text-gray-800 py-3 rounded-xl font-bold transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_16px_rgba(37,99,235,0.08)] text-sm">
                   Learn More
                 </button>
               </div>
@@ -1159,11 +1166,11 @@ export default function AboutUs() {
             {/* Three Future Cards */}
             <div className="space-y-6 max-w-2xl mx-auto">
               {/* Card 1 - Home Spaces */}
-              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="relative rounded-[2rem] p-8 bg-white/30  transform-gpu border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.06)] hover:shadow-[0_16px_40px_rgba(37,99,235,0.12)] hover:-translate-y-1 transition-all duration-500">
                 <div className="flex items-start space-x-6">
                   {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <img src="/images/ourfuture1.png" alt="Home Spaces Icon" className="w-12 h-12 object-contain" />
+                  <div className="flex-shrink-0 bg-white/40  p-3 rounded-2xl border border-white/80 shadow-sm">
+                    <img src="/images/ourfuture1.png" alt="Home Spaces Icon" className="w-10 h-10 object-contain drop-shadow-sm" />
                   </div>
 
                   {/* Content */}
@@ -1180,7 +1187,7 @@ export default function AboutUs() {
                       mood.
                     </p>
                     <button onClick={() => (window.location.href = "/features")}
-                      className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                      className="bg-white/60 hover:bg-white/90  border border-white/80 text-gray-800 px-5 py-2.5 rounded-xl text-sm font-bold shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_16px_rgba(37,99,235,0.08)] transition-all duration-300">
                       Learn More
                     </button>
                   </div>
@@ -1188,11 +1195,11 @@ export default function AboutUs() {
               </div>
 
               {/* Card 2 - Offices */}
-              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="relative rounded-[2rem] p-8 bg-white/30  transform-gpu border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.06)] hover:shadow-[0_16px_40px_rgba(37,99,235,0.12)] hover:-translate-y-1 transition-all duration-500">
                 <div className="flex items-start space-x-6">
                   {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <img src="/images/ourfuture2.png" alt="Offices Icon" className="w-12 h-12 object-contain" />
+                  <div className="flex-shrink-0 bg-white/40  p-3 rounded-2xl border border-white/80 shadow-sm">
+                    <img src="/images/ourfuture2.png" alt="Offices Icon" className="w-10 h-10 object-contain drop-shadow-sm" />
                   </div>
 
                   {/* Content */}
@@ -1209,7 +1216,7 @@ export default function AboutUs() {
                       alignment, and vitality.
                     </p>
                     <button onClick={() => (window.location.href = "/deckoviz-for-offices")}
-                      className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                      className="bg-white/60 hover:bg-white/90  border border-white/80 text-gray-800 px-5 py-2.5 rounded-xl text-sm font-bold shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_16px_rgba(37,99,235,0.08)] transition-all duration-300">
                       Learn More
                     </button>
                   </div>
@@ -1217,11 +1224,11 @@ export default function AboutUs() {
               </div>
 
               {/* Card 3 - Restaurants, hotels, and public spaces */}
-              <div className="bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100">
+              <div className="relative rounded-[2rem] p-8 bg-white/30  transform-gpu border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.06)] hover:shadow-[0_16px_40px_rgba(37,99,235,0.12)] hover:-translate-y-1 transition-all duration-500">
                 <div className="flex items-start space-x-6">
                   {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <img src="/images/ourfuture3.png" alt="Public Spaces Icon" className="w-12 h-12 object-contain" />
+                  <div className="flex-shrink-0 bg-white/40  p-3 rounded-2xl border border-white/80 shadow-sm">
+                    <img src="/images/ourfuture3.png" alt="Public Spaces Icon" className="w-10 h-10 object-contain drop-shadow-sm" />
                   </div>
 
                   {/* Content */}
@@ -1236,7 +1243,7 @@ export default function AboutUs() {
                     </h3>
                     <p className="text-gray-700 leading-relaxed mb-4">As immersive emotional experiences.</p>
                     <button onClick={() => (window.location.href = "/deckoviz-for-restaurants")}
-                      className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors duration-300">
+                      className="bg-white/60 hover:bg-white/90  border border-white/80 text-gray-800 px-5 py-2.5 rounded-xl text-sm font-bold shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_6px_16px_rgba(37,99,235,0.08)] transition-all duration-300">
                       Learn More
                     </button>
                   </div>
@@ -1264,7 +1271,7 @@ export default function AboutUs() {
 
             {/* Frosted Glass Card */}
             <div className="relative -mt-14 overflow-hidden rounded-[2.5rem] group
-              bg-white/15 backdrop-blur-2xl
+              bg-white/15  transform-gpu
               border border-white/35
               shadow-[0_16px_60px_rgba(37,99,235,0.15),0_4px_20px_rgba(24,42,74,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
               hover:shadow-[0_24px_80px_rgba(37,99,235,0.25),inset_0_1px_1px_rgba(255,255,255,0.8)]
@@ -1316,7 +1323,7 @@ export default function AboutUs() {
                     {/* Glow */}
                     <div className="absolute -inset-1 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-2xl blur opacity-20 group-hover/form:opacity-40 transition duration-500" />
                     {/* Form glass container */}
-                    <div className="relative bg-white/80 backdrop-blur-sm rounded-2xl p-2 shadow-xl border border-white/60">
+                    <div className="relative bg-white/80  rounded-2xl p-2 shadow-xl border border-white/60">
                       <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
                         <div className="flex-1 relative">
                           <input
