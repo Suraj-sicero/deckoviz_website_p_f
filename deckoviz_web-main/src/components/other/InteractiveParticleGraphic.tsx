@@ -117,9 +117,8 @@ const InteractiveParticleGraphic = () => {
 
     // Animation loop
     const animate = () => {
-      // Clear canvas with WHITE background
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      // Clear canvas (transparent background)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw particles
       particlesRef.current.forEach(particle => {

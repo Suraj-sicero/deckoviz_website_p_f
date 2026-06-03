@@ -7,7 +7,7 @@ tagColor: "bg-emerald-100 text-emerald-700"
 date: "March 25, 2025"
 readTime: "35 min read"
 pinned: false
-image: "/blogs/beautiful-structures.jpg"
+image: "/images/sagrada1.jpg.jpeg"
 size: "large"
 ---
 
@@ -36,17 +36,18 @@ Human beings have always shaped stone, steel, glass, and earth into meaning. Str
 
 <br>
 
-## 1. Taj Mahal, India
+## 1. Sagrada Família, Spain
 
-
+![Sagrada Família](/images/sagrada1.jpg.jpeg)
 <br>
-A marble mausoleum built as an act of love, the Taj Mahal blends symmetry, light, and reflection into a vision of eternal devotion.
+Antoni Gaudí’s unfinished vision fuses nature, faith, and geometry into an organic architectural wonder.
 
 
 <br>
 
 ## 2. Eiffel Tower, France 
 
+![Eiffel Tower](/images/eiffel.png)
 <br>
 Once controversial, now iconic, this iron lattice transformed engineering into poetry and redefined the Paris skyline.
 
@@ -54,6 +55,8 @@ Once controversial, now iconic, this iron lattice transformed engineering into p
 <br>
 
 ## 3. Colosseum, Italy
+
+![Colosseum](/images/colosseum.png)
 <br>
 A colossal symbol of Roman engineering and spectacle, embodying both grandeur and the brutality of empire.
 
@@ -62,20 +65,25 @@ A colossal symbol of Roman engineering and spectacle, embodying both grandeur an
 <br>
 
 ## 4. Parthenon, Greece
+
+![Parthenon](/images/parthenon.png)
 <br>
 A masterpiece of classical proportion, representing harmony, democracy, and the pursuit of ideal beauty.
 
 
 <br>
 
-## 5. Sagrada Família, Spain
-<br>
-Antoni Gaudí’s unfinished vision fuses nature, faith, and geometry into an organic architectural wonder.
+## 5. Taj Mahal, India
+
+![Taj Mahal](/images/taj_mahal.png)
+<br>A marble mausoleum built as an act of love, the Taj Mahal blends symmetry, light, and reflection into a vision of eternal devotion.
 
 
 <br>
 
 ## 6. Machu Picchu, Peru
+
+![Machu Picchu](/images/machu_picchu.png)
 <br>
 An ancient city suspended among mountains, reflecting the Incas’ mastery of stone and landscape.
 
@@ -83,6 +91,8 @@ An ancient city suspended among mountains, reflecting the Incas’ mastery of st
 <br>
 
 ## 7. Notre-Dame Cathedral, France
+
+![Notre-Dame Cathedral](/images/notre_dame.png)
 <br>
 A triumph of Gothic architecture, defined by soaring vaults, stained glass, and spiritual ambition.
 
@@ -90,6 +100,8 @@ A triumph of Gothic architecture, defined by soaring vaults, stained glass, and 
 <br>
 
 ## 8. Sydney Opera House, Australia
+
+![Sydney Opera House](/images/sydney_opera_house.png)
 <br>
 Its sail-like forms rise from the harbor as a symbol of modern architectural daring.
 
@@ -97,6 +109,8 @@ Its sail-like forms rise from the harbor as a symbol of modern architectural dar
 <br>
 
 ## 9. Petra, Jordan
+
+![Petra](/images/petra.png)
 <br>
 Carved directly into rose-colored cliffs, Petra merges architecture with geology.
 
@@ -104,6 +118,8 @@ Carved directly into rose-colored cliffs, Petra merges architecture with geology
 <br>
 
 ## 10. Great Wall of China
+
+![Great Wall of China](/images/great_wall_of_china.png)
 <br>
 A monumental expression of defense, endurance, and imperial ambition stretching across landscapes.
 

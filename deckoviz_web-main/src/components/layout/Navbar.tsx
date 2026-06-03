@@ -328,7 +328,7 @@ const Navbar: React.FC = () => {
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
             >
               <button
-                className="text-gray-600 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-xl border border-white/30 hover:bg-white/40 hover:border-white/50 shadow-sm flex items-center justify-center bg-white/20 backdrop-blur-sm"
+                className="text-teal-700 hover:text-[#2563EB] transition-all duration-300 p-2 rounded-xl border border-white/30 hover:bg-white/40 hover:border-white/50 shadow-sm flex items-center justify-center bg-white/20 backdrop-blur-sm"
               >
                 <Menu size={18} />
               </button>
@@ -423,7 +423,7 @@ const Navbar: React.FC = () => {
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
                 onMouseLeave={() => setIsBusinessDropdownOpen(false)}
               >
-                <button className={`transition-colors duration-300 font-semibold text-sm relative group flex items-center space-x-1 px-2 py-2 ${currentPath.includes('deckoviz-for') ? 'text-[#2563EB]' : 'text-gray-500 hover:text-[#2563EB]'}`}>
+                <button className={`transition-colors duration-300 font-semibold text-sm relative group flex items-center space-x-1 px-2 py-2 ${currentPath.includes('deckoviz-for') ? 'text-[#2563EB]' : 'text-teal-700 hover:text-[#2563EB]'}`}>
                   <span>Deckoviz For Businesses</span>
                   <ChevronDown
                     size={14}
@@ -541,13 +541,13 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/pricing') ? 'text-[#2563EB]' : 'text-gray-500 hover:text-[#2563EB]'}`}
+                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/pricing') ? 'text-[#2563EB]' : 'text-teal-700 hover:text-[#2563EB]'}`}
               >
                 Pricing
               </a>
               <a
                 href="/blog"
-                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/blog') ? 'text-[#2563EB]' : 'text-gray-500 hover:text-[#2563EB]'}`}
+                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/blog') ? 'text-[#2563EB]' : 'text-teal-700 hover:text-[#2563EB]'}`}
               >
                 Blog
               </a>
@@ -610,7 +610,7 @@ const Navbar: React.FC = () => {
               ) : (
                 <button
                   onClick={() => openAuthModal()}
-                  className="transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 text-gray-500 hover:text-[#2563EB]"
+                  className="transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 text-teal-700 hover:text-[#2563EB]"
                 >
                   Login
                 </button>
