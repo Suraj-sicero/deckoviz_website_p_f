@@ -31,6 +31,17 @@ interface Segment {
   imageUrl?: string;
 }
 
+const ART_STYLE_GUIDE = [
+  { id: "watercolor", name: "Watercolor", desc: "Soft paint washes & textures", icon: "🎨" },
+  { id: "digital concept art", name: "Concept Art", desc: "Vibrant fantasy & game scene vibe", icon: "🎮" },
+  { id: "cyberpunk painting", name: "Cyberpunk", desc: "Neon lights & dark futuristic mood", icon: "🚀" },
+  { id: "anime illustration", name: "Anime", desc: "Bright cell-shaded Japanese style", icon: "🌸" },
+  { id: "retro comic book", name: "Retro Comic", desc: "Bold lineart & vintage halftone", icon: "💥" },
+  { id: "oil painting", name: "Oil Painting", desc: "Classical brush strokes & texture", icon: "🖼️" },
+  { id: "cinematic photo", name: "Cinematic", desc: "35mm realistic film photograph", icon: "🎬" },
+  { id: "pencil sketch", name: "Pencil Sketch", desc: "Detailed monochrome drawings", icon: "✏️" }
+];
+
 export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose, backendUrl, token }) => {
   // Chat State
   const [messages, setMessages] = useState<Message[]>([
@@ -48,6 +59,7 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
   const [musicStyle, setMusicStyle] = useState("Lofi");
   const [artStyle, setArtStyle] = useState("watercolor");
   const [transitionEffect, setTransitionEffect] = useState("fade-black");
+  const [visualFormat, setVisualFormat] = useState<"static" | "video">("static");
 
   // Rendering State
   const [isRendering, setIsRendering] = useState(false);
@@ -103,7 +115,70 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
 
   // Auto-adopt assistant reply as the active lyrics sheet
   const handleAdoptLyrics = (text: string) => {
-    setLyrics(text);
+    // 1. Try <lyrics> tags
+    const lyricsMatch = text.match(/<lyrics>([\s\S]*?)<\/lyrics>/i);
+    if (lyricsMatch) {
+      setLyrics(lyricsMatch[1].trim());
+      return;
+    }
+
+    // 2. Try markdown code blocks
+    const codeBlockMatch = text.match(/```(?:lyrics|text)?([\s\S]*?)```/i);
+    if (codeBlockMatch) {
+      setLyrics(codeBlockMatch[1].trim());
+      return;
+    }
+
+    // 3. Fallback: filter out common conversational intros/outros if present
+    const lines = text.split("\n");
+    const cleanLines = lines.filter(line => {
+      const l = line.trim().toLowerCase();
+      if (l.startsWith("sure,") || l.startsWith("here are") || l.startsWith("here is") || l.startsWith("hope you") || l.startsWith("let me know")) {
+        return false;
+      }
+      return true;
+    });
+
+    setLyrics(cleanLines.join("\n").trim());
+  };
+
+  // Helper to render message content with lyrics parsing
+  const renderMessageContent = (msg: { role: "user" | "assistant"; content: string }) => {
+    if (msg.role !== "assistant") {
+      return <div>{msg.content}</div>;
+    }
+
+    const lyricsMatch = msg.content.match(/<lyrics>([\s\S]*?)<\/lyrics>/i);
+    const codeBlockMatch = msg.content.match(/```(?:lyrics|text)?([\s\S]*?)```/i);
+
+    let mainText = msg.content;
+    let lyricsText = "";
+
+    if (lyricsMatch) {
+      mainText = msg.content.replace(/<lyrics>[\s\S]*?<\/lyrics>/i, "").trim();
+      lyricsText = lyricsMatch[1].trim();
+    } else if (codeBlockMatch) {
+      mainText = msg.content.replace(/```(?:lyrics|text)?[\s\S]*?```/i, "").trim();
+      lyricsText = codeBlockMatch[1].trim();
+    }
+
+    return (
+      <div className="space-y-3 w-full">
+        {mainText && <div className="text-slate-300">{mainText}</div>}
+        {lyricsText && (
+          <div className="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3 space-y-2 mt-2 text-left">
+            <div className="flex items-center justify-between border-b border-white/5 pb-1.5">
+              <span className="text-[10px] font-bold text-indigo-400 uppercase tracking-wider flex items-center gap-1">
+                🎶 Lyrics Suggestion
+              </span>
+            </div>
+            <div className="text-[11px] leading-relaxed text-slate-200 font-mono whitespace-pre-wrap max-h-48 overflow-y-auto pr-1">
+              {lyricsText}
+            </div>
+          </div>
+        )}
+      </div>
+    );
   };
 
   // Compile and Merged Song with Visuals
@@ -124,7 +199,11 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
       }, 5000);
 
       const timer2 = setTimeout(() => {
-        setRenderStep("3. Generating artwork images for each segment in parallel...");
+        setRenderStep(
+          visualFormat === "video" 
+            ? "3. Animating visual segments to AI video clips in parallel..." 
+            : "3. Generating artwork images for each segment in parallel..."
+        );
       }, 12000);
 
       const timer3 = setTimeout(() => {
@@ -142,7 +221,8 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
           n,
           musicStyle,
           artStyle,
-          transitionEffect
+          transitionEffect,
+          visualFormat
         })
       });
 
@@ -196,15 +276,14 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
       {/* Main Container */}
       <div className="lg:col-span-12 grid lg:grid-cols-12 gap-6 overflow-hidden" style={{ height: "calc(100% - 70px)" }}>
         
-        {/* LEFT PANEL: Chat Lyrics Co-creator (5 columns) */}
-        <div className="lg:col-span-5 bg-slate-950/40 border border-white/5 rounded-3xl flex flex-col overflow-hidden h-full">
+        <div className="lg:col-span-5 bg-slate-950/40 border border-white/5 rounded-3xl flex flex-col overflow-hidden h-full min-h-0">
           <div className="p-4 bg-slate-900/40 border-b border-white/5 flex items-center gap-2 shrink-0">
             <MessageSquare className="w-4 h-4 text-indigo-400" />
             <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider">Vizzy Lyrics Room</h3>
           </div>
 
           {/* Chat Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
             {messages.map((msg, idx) => (
               <div
                 key={idx}
@@ -213,13 +292,13 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
                 }`}
               >
                 <div
-                  className={`p-3.5 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap ${
+                  className={`p-3.5 rounded-2xl text-xs leading-relaxed whitespace-pre-wrap w-full ${
                     msg.role === "user"
                       ? "bg-indigo-600 text-white rounded-br-none"
                       : "bg-white/5 text-slate-300 border border-white/5 rounded-bl-none"
                   }`}
                 >
-                  {msg.content}
+                  {renderMessageContent(msg)}
                 </div>
                 
                 {msg.role === "assistant" && idx > 0 && (
@@ -289,7 +368,7 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
               Music & Art Room
             </h3>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {/* Segments count */}
               <div className="space-y-1.5">
                 <label className="text-[10px] font-bold text-slate-400 uppercase">Visual Segments (n)</label>
@@ -314,29 +393,12 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
                   onChange={(e) => setMusicStyle(e.target.value)}
                   className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 focus:outline-none"
                 >
-                  <option value="Lofi" className="bg-slate-950">Lofi (Relaxing/Study)</option>
-                  <option value="Synthwave" className="bg-slate-950">Synthwave (Retro/Neon)</option>
+                  <option value="Lofi" className="bg-slate-950">Lofi (Relax/Study)</option>
+                  <option value="Synthwave" className="bg-slate-950">Synthwave (Retro)</option>
                   <option value="Pop" className="bg-slate-950">Modern Pop (Upbeat)</option>
-                  <option value="Acoustic" className="bg-slate-950">Acoustic (Chilled Folk)</option>
-                  <option value="Cinematic" className="bg-slate-950">Cinematic (Epic Orchestral)</option>
-                  <option value="Hip-Hop" className="bg-slate-950">Hip-hop (Chill Trap)</option>
-                </select>
-              </div>
-
-              {/* Art Style */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold text-slate-400 uppercase">Art style</label>
-                <select
-                  value={artStyle}
-                  onChange={(e) => setArtStyle(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 focus:outline-none"
-                >
-                  <option value="watercolor" className="bg-slate-950">Watercolor</option>
-                  <option value="digital concept art" className="bg-slate-950">Digital Concept Art</option>
-                  <option value="cyberpunk painting" className="bg-slate-950">Cyberpunk Painting</option>
-                  <option value="anime illustration" className="bg-slate-950">Anime Illustration</option>
-                  <option value="retro comic book" className="bg-slate-950">Retro Comic Book</option>
-                  <option value="oil painting" className="bg-slate-950">Oil Painting</option>
+                  <option value="Acoustic" className="bg-slate-950">Acoustic (Chilled)</option>
+                  <option value="Cinematic" className="bg-slate-950">Cinematic (Epic)</option>
+                  <option value="Hip-Hop" className="bg-slate-950">Hip-hop (Chill)</option>
                 </select>
               </div>
 
@@ -352,8 +414,48 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
                   <option value="fade-white" className="bg-slate-950">Fade to White</option>
                   <option value="fade-red" className="bg-slate-950">Fade to Red</option>
                   <option value="fade-blue" className="bg-slate-950">Fade to Blue</option>
-                  <option value="none" className="bg-slate-950">None (Direct Cut)</option>
+                  <option value="none" className="bg-slate-950">None (Cut)</option>
                 </select>
+              </div>
+
+              {/* Visual Format */}
+              <div className="space-y-1.5">
+                <label className="text-[10px] font-bold text-slate-400 uppercase">Visual Format</label>
+                <select
+                  value={visualFormat}
+                  onChange={(e) => setVisualFormat(e.target.value as "static" | "video")}
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300 focus:outline-none"
+                >
+                  <option value="static" className="bg-slate-950">Static Images</option>
+                  <option value="video" className="bg-slate-950">Video AI (SVD)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Visual Style Guide */}
+            <div className="space-y-2">
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wide flex items-center gap-1.5">
+                <span>Visual Style Guide</span>
+                <span className="text-[8px] px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-bold border border-indigo-500/20">Unified Style</span>
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {ART_STYLE_GUIDE.map((style) => (
+                  <button
+                    key={style.id}
+                    onClick={() => setArtStyle(style.id)}
+                    className={`p-2.5 rounded-xl border text-left flex flex-col gap-1 transition-all ${
+                      artStyle === style.id
+                        ? "bg-indigo-600/20 border-indigo-500 text-slate-100 shadow-md shadow-indigo-500/10"
+                        : "bg-white/5 border-white/5 text-slate-400 hover:border-white/10 hover:text-slate-200"
+                    }`}
+                  >
+                    <span className="text-xs font-bold flex items-center gap-1.5">
+                      <span className="text-sm">{style.icon}</span>
+                      {style.name}
+                    </span>
+                    <span className="text-[9px] text-slate-400 line-clamp-1 leading-normal">{style.desc}</span>
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -411,7 +513,24 @@ export const SongVisualsCreator: React.FC<SongVisualsCreatorProps> = ({ onClose,
                       <div className="grid grid-cols-5 gap-2">
                         {outputSegments.map((seg) => (
                           <div key={seg.section} className="relative aspect-video rounded-lg overflow-hidden border border-white/10 bg-slate-950 group">
-                            {seg.imageUrl && <img src={seg.imageUrl} alt={`Section ${seg.section}`} className="w-full h-full object-cover" />}
+                            {seg.imageUrl && (
+                              (seg.imageUrl.toLowerCase().endsWith(".mp4") || seg.imageUrl.toLowerCase().endsWith(".webm")) ? (
+                                <video
+                                  src={seg.imageUrl.startsWith("http") ? seg.imageUrl : `${backendUrl}${seg.imageUrl}`}
+                                  muted
+                                  loop
+                                  autoPlay
+                                  playsInline
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                <img
+                                  src={seg.imageUrl.startsWith("http") ? seg.imageUrl : `${backendUrl}${seg.imageUrl}`}
+                                  alt={`Section ${seg.section}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              )
+                            )}
                             <span className="absolute bottom-1 right-1 bg-slate-900/90 text-[8px] font-bold text-indigo-400 px-1 rounded">
                               #{seg.section}
                             </span>

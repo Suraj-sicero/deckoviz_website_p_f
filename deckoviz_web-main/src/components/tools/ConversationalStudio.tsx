@@ -287,7 +287,9 @@ const ConversationalStudio: React.FC = () => {
   });
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans overflow-x-hidden selection:bg-fuchsia-600 selection:text-white">
+    <div className={`bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-fuchsia-600 selection:text-white ${
+      activeSpecialFeature ? "h-screen overflow-hidden" : "min-h-screen overflow-x-hidden"
+    }`}>
       {/* Background gradients */}
       <div className="absolute top-0 left-0 w-full h-[500px] bg-gradient-to-b from-purple-900/10 via-indigo-900/5 to-transparent pointer-events-none" />
 
