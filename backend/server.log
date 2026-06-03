@@ -3813,3 +3813,140 @@
 [2026-06-03T17:25:42.342Z] LOG: 🚀 Unified server running on http://localhost:5000
 [2026-06-03T17:25:44.162Z] LOG: ✅ PostgreSQL connected via Sequelize.
 [2026-06-03T17:26:14.209Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:16:30.760Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:16:35.104Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:17:46.768Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:28:31.772Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:28:36.349Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:29:00.487Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:29:04.862Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:29:50.370Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:29:54.113Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:29:57.222Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:30:01.214Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:30:03.071Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:30:06.570Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:31:17.191Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:36:02.131Z] LOG: [SongVisuals] Processing request with n=3, style=Lofi, art=digital concept art
+[2026-06-03T18:36:14.568Z] LOG: [SongVisuals] Attempting music generation via Gemini Lyria model...
+[2026-06-03T18:36:23.972Z] LOG: [SongVisuals] Gemini Lyria music generation successful: /uploads/song-gemini-1780511783969-otes5f.mp3
+[2026-06-03T18:36:23.972Z] LOG: [SongVisuals] Generating 3 images in parallel...
+[2026-06-03T18:36:32.624Z] LOG: [SongVisuals] Invoking renderVideo with transitionDuration=10s, transitionEffect=fade-black
+[2026-06-03T18:37:58.551Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:38:03.392Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:39:02.250Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:39:05.872Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:39:17.709Z] LOG: [SongVisuals] Processing request with n=3, style=Lofi, art=digital concept art
+[2026-06-03T18:39:27.240Z] LOG: [SongVisuals] Attempting music generation via Gemini Lyria model...
+[2026-06-03T18:39:38.117Z] LOG: [SongVisuals] Generating music via Replicate MusicGen: "A complete song, style of Lofi, bpm 95, theme: Soft light peeking through the blinds,
+ The world outside still sleeps,
+ A quiet breath, a peaceful "
+[2026-06-03T18:40:04.628Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:40:28.191Z] LOG: [SongVisuals] Replicate MusicGen generation successful: https://replicate.delivery/yhqm/AJ3MDAUrxf28ZSl7COzIODBY4iMaBGxGM7BnebM37a0ZcirWA/out.wav
+[2026-06-03T18:40:28.191Z] LOG: [SongVisuals] Generating 3 images in parallel...
+[2026-06-03T18:40:31.051Z] ERROR: Failed to generate image for segment 2: Prediction failed: NSFW content detected. Try running it again, or try a different prompt.
+[2026-06-03T18:40:32.177Z] LOG: [SongVisuals] Invoking renderVideo with transitionDuration=10s, transitionEffect=fade-black
+[2026-06-03T18:40:32.178Z] LOG: [VideoRenderService] Attempting rendering via Python script...
+[2026-06-03T18:43:49.096Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:43:53.894Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:44:26.482Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:44:31.554Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:45:41.184Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:46:26.831Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:46:30.669Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:47:40.413Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:49:26.411Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:49:30.246Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:50:31.874Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:52:05.612Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:52:08.636Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:52:50.669Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:52:53.823Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:53:45.323Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:54:27.357Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:54:31.158Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:54:57.621Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:55:02.072Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:55:12.368Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:55:15.755Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:55:16.615Z] LOG: [SongVisuals] Processing request with n=2, style=Lofi, art=watercolor
+[2026-06-03T18:55:24.272Z] LOG: [SongVisuals] Attempting music generation via Gemini Lyria model...
+[2026-06-03T18:55:34.312Z] LOG: [SongVisuals] Gemini Lyria music generation successful: /uploads/song-gemini-1780512934310-1imqny.mp3
+[2026-06-03T18:55:34.312Z] LOG: [SongVisuals] Generating 2 images in parallel...
+[2026-06-03T18:55:42.118Z] LOG: [SongVisuals] Invoking renderVideo with transitionDuration=15s, transitionEffect=fade-black
+[2026-06-03T18:55:42.118Z] LOG: [VideoRenderService] Attempting rendering via Python script...
+[2026-06-03T18:56:00.344Z] LOG: [VideoRenderService] Python stderr output:
+[Python Stitcher] Downloading https://replicate.delivery/yhqm/ilxUfzsoNySe9UzgDYDX5NAID7veqg3D6eN3pVzafoOeqq4qF/out-0.png...
+[Python Stitcher] Downloading https://replicate.delivery/yhqm/W6rGejqL63WsKS9un7PxFuIGJenegDf56TU1SI78qbS3qKuaB/out-0.png...
+
+[2026-06-03T18:56:17.388Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T18:56:32.799Z] LOG: [SongVisuals] Processing request with n=2, style=Lofi, art=watercolor
+[2026-06-03T18:56:38.580Z] LOG: [SongVisuals] Attempting music generation via Gemini Lyria model...
+[2026-06-03T18:56:47.366Z] LOG: [SongVisuals] Gemini Lyria music generation successful: /uploads/song-gemini-1780513007365-s1zfv.mp3
+[2026-06-03T18:56:47.366Z] LOG: [SongVisuals] Generating 2 images in parallel...
+[2026-06-03T18:56:52.206Z] LOG: [SongVisuals] Invoking renderVideo with transitionDuration=15s, transitionEffect=fade-black
+[2026-06-03T18:56:52.206Z] LOG: [VideoRenderService] Attempting rendering via Python script...
+[2026-06-03T18:57:10.325Z] LOG: [VideoRenderService] Python stderr output:
+[Python Stitcher] Downloading https://replicate.delivery/yhqm/kxOq4mtNxha5EZPbWAiu3Bw0Re1XeTxYqHrdi0Y8FPixrirWA/out-0.png...
+[Python Stitcher] Downloading https://replicate.delivery/yhqm/M7k85BQ1S9q4GVzQsyPyvVYQqgbW5reSmeOdKvmYXsBzrirWA/out-0.png...
+
+[2026-06-03T18:58:16.327Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:58:20.479Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:58:31.770Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:58:35.442Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:59:01.114Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T18:59:04.762Z] LOG: [SongVisuals] Processing request with n=2, style=Lofi, art=watercolor
+[2026-06-03T18:59:05.226Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T18:59:09.328Z] LOG: [SongVisuals] Attempting music generation via Gemini Lyria model...
+[2026-06-03T18:59:20.945Z] LOG: [SongVisuals] Gemini Lyria music generation successful: /uploads/song-gemini-1780513160943-hligcv.mp3
+[2026-06-03T18:59:20.945Z] LOG: [SongVisuals] Generating 2 images in parallel...
+[2026-06-03T18:59:25.988Z] LOG: [SongVisuals] Invoking renderVideo with transitionDuration=15s, transitionEffect=fade-black
+[2026-06-03T18:59:25.989Z] LOG: [VideoRenderService] Attempting rendering via Python script...
+[2026-06-03T18:59:45.508Z] LOG: [VideoRenderService] Python stderr output:
+[Python Stitcher] Downloading https://replicate.delivery/yhqm/ltK4e6RDDyXFNiYeaWfljYiQ7HoII55o3dFEVOK73DVWcFXtA/out-0.png...
+[Python Stitcher] Downloading https://replicate.delivery/yhqm/euXnrk7lcenTKkFevAn84dVjwlBdeOOSxTLrZUdn5Pb34KuaB/out-0.png...
+
+[2026-06-03T19:00:03.630Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T19:21:27.667Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:21:31.405Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:21:51.239Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:21:55.083Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:21:59.465Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:22:03.661Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:22:08.457Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:22:12.511Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:23:17.599Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T19:23:21.126Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:23:24.992Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:23:49.603Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:23:52.959Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:23:59.692Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:24:03.596Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:24:11.040Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:24:16.558Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:24:19.747Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:24:23.478Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:25:27.340Z] LOG: ✅ System cards seeded — 15 sections loaded.
+[2026-06-03T19:26:00.875Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:26:05.364Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:26:10.523Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:26:14.403Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:26:15.256Z] LOG: [SongVisuals] Processing request with n=2, style=Lofi, art=watercolor
+[2026-06-03T19:26:20.290Z] LOG: [SongVisuals] Attempting music generation via Gemini Lyria model...
+[2026-06-03T19:26:32.183Z] LOG: [SongVisuals] Gemini Lyria music generation successful: /uploads/song-gemini-1780514792181-439ioo.mp3
+[2026-06-03T19:26:32.183Z] LOG: [SongVisuals] Generating 2 visual assets (video) in parallel...
+[2026-06-03T19:26:32.183Z] LOG: [Gemini Imagen] Generating image for prompt: "A solitary figure, an intrepid explorer with a weathered backpack, stands on a high, desolate peak, gazing up at an impossibly vast, glittering starry night sky. The Milky Way stretches across the zenith, with nebulae and distant galaxies subtly visible. The landscape is rendered in soft, flowing watercolor strokes, with deep indigos and purples for the sky, contrasting with the muted earth tones of the mountain. There's a sense of awe and solitude, with the light from a distant moon or faint starlight illuminating the scene. SDXL style, hyperdetailed, atmospheric, celestial, traditional watercolor painting., watercolor painting, soft paint washes, organic textures, pastel palette, dreamy aesthetic, artistic, masterpiece"
+[2026-06-03T19:26:32.188Z] LOG: [Gemini Imagen] Generating image for prompt: "Close-up on the face of the explorer from section 1, their eyes closed or distant, a serene expression hinting at an internal journey. Around their head, ethereal, translucent bubbles or swirling celestial visions depict vibrant, fantastical alien worlds, abstract landscapes, and distant planets. These dream worlds are rendered in brilliant, imaginative watercolor washes – electric blues, vibrant greens, deep oranges, and soft pinks – bleeding into one another. The background gently fades into the starry night, suggesting the dreams are inspired by the cosmos. The style is fluid, impressionistic watercolor, conveying imagination and wonder. SDXL style, visionary, dreamlike, symbolic, highly detailed watercolor art., watercolor painting, soft paint washes, organic textures, pastel palette, dreamy aesthetic, artistic, masterpiece"
+[2026-06-03T19:26:41.738Z] LOG: [SongVisuals] Segment 2: Animating image to video clip...
+[2026-06-03T19:26:41.809Z] LOG: [SongVisuals] Segment 1: Animating image to video clip...
+[2026-06-03T19:26:49.202Z] LOG: [SongVisuals] Launching Stable Video Diffusion for: https://res.cloudinary.com/dnu5ephbx/image/upload/v1780514808/vizzy/uploads/tyi8vdt9pxih1hngfpns.jpg
+[2026-06-03T19:26:50.092Z] LOG: [SongVisuals] Launching Stable Video Diffusion for: https://res.cloudinary.com/dnu5ephbx/image/upload/v1780514809/vizzy/uploads/lfyzmzcctktngmr5hdoj.jpg
+[2026-06-03T19:26:50.512Z] ERROR: [SongVisuals] SVD Video generation failed, falling back to static image: Request to https://api.replicate.com/v1/predictions failed with status 422 Unprocessable Entity: {"detail":"- input: input_image is required\n- input.sizing_strategy: sizing_strategy must be one of the following: \"maintain_aspect_ratio\", \"crop_to_16_9\", \"use_image_dimensions\"\n","status":422,"title":"Input validation failed","invalid_fields":[{"type":"required","field":"input","description":"input_image is required"},{"type":"enum","field":"input.sizing_strategy","description":"sizing_strategy must be one of the following: \"maintain_aspect_ratio\", \"crop_to_16_9\", \"use_image_dimensions\""}]}
+.
+[2026-06-03T19:26:52.878Z] ERROR: [SongVisuals] SVD Video generation failed, falling back to static image: Request to https://api.replicate.com/v1/predictions failed with status 422 Unprocessable Entity: {"detail":"- input: input_image is required\n- input.sizing_strategy: sizing_strategy must be one of the following: \"maintain_aspect_ratio\", \"crop_to_16_9\", \"use_image_dimensions\"\n","status":422,"title":"Input validation failed","invalid_fields":[{"type":"required","field":"input","description":"input_image is required"},{"type":"enum","field":"input.sizing_strategy","description":"sizing_strategy must be one of the following: \"maintain_aspect_ratio\", \"crop_to_16_9\", \"use_image_dimensions\""}]}
+.
+[2026-06-03T19:26:52.878Z] LOG: [SongVisuals] Invoking renderVideo with transitionDuration=15s, transitionEffect=fade-black
+[2026-06-03T19:26:52.878Z] LOG: [VideoRenderService] Attempting rendering via Python script...
+[2026-06-03T19:27:17.649Z] LOG: 🚀 Unified server running on http://localhost:5000
+[2026-06-03T19:27:21.297Z] LOG: ✅ PostgreSQL connected via Sequelize.
+[2026-06-03T19:28:25.345Z] LOG: ✅ System cards seeded — 15 sections loaded.

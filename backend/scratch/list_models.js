@@ -1,20 +1,25 @@
-import dotenv from 'dotenv';
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
+
 dotenv.config();
 
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+
 async function listModels() {
-  const GEMINI_KEY = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-  if (!GEMINI_KEY) {
-    console.error("No API key found");
-    return;
+  if (!GOOGLE_API_KEY) {
+    console.error("GOOGLE_API_KEY is not defined in the environment!");
+    process.exit(1);
   }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models?key=${GEMINI_KEY}`;
+  const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
   try {
-    const res = await fetch(url);
-    const data = await res.json();
-    console.log(JSON.stringify(data, null, 2));
+    const response = await genAI.listModels();
+    console.log("Available models:");
+    for (const model of response.models) {
+      console.log(`- Name: ${model.name}, DisplayName: ${model.displayName}, Methods: ${model.supportedGenerationMethods.join(", ")}`);
+    }
   } catch (err) {
-    console.error("Error fetching models:", err.message);
+    console.error("Error listing models:", err.message);
   }
 }
 

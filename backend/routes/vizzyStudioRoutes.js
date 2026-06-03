@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import axios from "axios";
+import { v2 as cloudinary } from "cloudinary";
 import VizzyStudioSession from "../models/VizzyStudioSession.js";
 import FilmProject from "../models/FilmProject.js";
 import { renderVideo } from "../services/VideoRenderService.js";
@@ -14,6 +16,41 @@ dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const PUBLIC_DIR = path.resolve(__dirname, "../public");
+
+// Configure Cloudinary for video asset uploads if environment variables are set
+const CLOUDINARY_CONFIGURED = Boolean(
+  process.env.CLOUDINARY_CLOUD_NAME &&
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET
+);
+if (CLOUDINARY_CONFIGURED) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+}
+
+// Upload a local file to Cloudinary to make it publicly accessible for Replicate APIs
+async function uploadToCloudinary(localPath) {
+  if (!CLOUDINARY_CONFIGURED) return null;
+  try {
+    const relativePath = localPath.replace(PUBLIC_DIR, "");
+    const absolutePath = path.join(PUBLIC_DIR, relativePath);
+    if (!fs.existsSync(absolutePath)) {
+      console.warn(`[Upload Cloudinary] File not found: ${absolutePath}`);
+      return null;
+    }
+    const result = await cloudinary.uploader.upload(absolutePath, {
+      folder: "vizzy/uploads",
+    });
+    return result.secure_url;
+  } catch (err) {
+    console.error("[Upload Cloudinary] Error:", err.message);
+    return null;
+  }
+}
 
 const router = express.Router();
 
@@ -25,6 +62,17 @@ const GROQ_KEY = process.env.GROQ_API_KEY;
 const replicate = process.env.REPLICATE_API_TOKEN
   ? new Replicate({ auth: process.env.REPLICATE_API_TOKEN })
   : null;
+
+const ART_STYLE_SUFFIXES = {
+  "watercolor": "watercolor painting, soft paint washes, organic textures, pastel palette, dreamy aesthetic, artistic, masterpiece",
+  "digital concept art": "digital concept art, fantasy illustration, vibrant color scheme, dramatic volumetric lighting, sharp focus, gaming art style",
+  "cyberpunk painting": "cyberpunk digital painting, glowing neon lights, dark futuristic environment, synthwave color palette, blade runner aesthetic",
+  "anime illustration": "anime illustration, vibrant cell-shaded colors, modern anime movie key visual, high quality, macro details, Makoto Shinkai style",
+  "retro comic book": "retro comic book illustration, bold black lineart, vintage halftone dot pattern, classic comic colors, pulp art",
+  "oil painting": "classical oil painting on canvas, visible thick brush strokes, rich warm lighting, masterpiece, canvas texture",
+  "cinematic photo": "cinematic 35mm film photograph, dramatic side lighting, photorealistic, 8k resolution, film grain, depth of field, sharp details",
+  "pencil sketch": "pencil sketch, monochrome graphite drawing, detailed cross-hatching, hand-drawn paper texture, artistic line art, clean strokes"
+};
 
 const VCS_SYSTEM_PROMPT_TEMPLATE = `
 DECKOVIZ VIZZY CONVERSATIONAL STUDIO (VCS)
@@ -761,7 +809,13 @@ Your goal is to co-create song lyrics with the user.
 Engage in a friendly, conversational dialogue. Ask them about their preferences (genre, mood, theme, style, story).
 Suggest lyrics, stanzas, chorus options, and ask for their feedback to refine them.
 Always keep the conversation focused on song lyrics creation. Keep your responses engaging, creative, and concise.
-Once lyrics are agreed upon, format them clearly.`;
+When suggesting or updating lyrics, you must ALWAYS wrap the actual song lyrics block inside <lyrics>...</lyrics> tags (with the verse/chorus structure clearly formatted inside it). Example:
+Here are some lyrics I came up with:
+<lyrics>
+[Verse 1]
+Golden sunrise...
+</lyrics>
+Let me know if you want to change any lines!`;
 
     const formattedMessages = [
       { role: "system", content: systemPrompt },
@@ -837,10 +891,101 @@ async function generateMusicWithLyria(musicStyle, lyricsTheme) {
   }
 }
 
+// Helper to generate image using Gemini Imagen 4.0
+async function generateImageWithGemini(promptText, artStyle) {
+  const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  if (!GOOGLE_API_KEY) {
+    throw new Error("GOOGLE_API_KEY is not defined in the environment");
+  }
+
+  const combinedPrompt = `${promptText}, ${ART_STYLE_SUFFIXES[artStyle] || `${artStyle} style`}`;
+  console.log(`[Gemini Imagen] Generating image for prompt: "${combinedPrompt}"`);
+
+  const model = "imagen-4.0-generate-001";
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${GOOGLE_API_KEY}`;
+
+  const response = await axios.post(url, {
+    instances: [
+      {
+        prompt: combinedPrompt
+      }
+    ],
+    parameters: {
+      sampleCount: 1,
+      aspectRatio: "16:9",
+      outputOptions: {
+        mimeType: "image/jpeg"
+      }
+    }
+  }, {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    timeout: 45000
+  });
+
+  if (response.data && response.data.predictions && response.data.predictions.length > 0) {
+    const base64Data = response.data.predictions[0].bytesBase64Encoded;
+    const imgBuffer = Buffer.from(base64Data, "base64");
+    
+    const fileName = `image-gemini-${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+    const localPath = path.join(PUBLIC_DIR, "uploads", fileName);
+    fs.writeFileSync(localPath, imgBuffer);
+    
+    return `/uploads/${fileName}`;
+  } else {
+    throw new Error(`Invalid response from Gemini Imagen API: ${JSON.stringify(response.data)}`);
+  }
+}
+
+// Helper to generate video from image using Stable Video Diffusion on Replicate
+async function generateVideoWithSVD(localImagePath) {
+  if (!replicate) {
+    console.warn("[SongVisuals] Replicate is not configured. Falling back to static image.");
+    return localImagePath;
+  }
+
+  // Upload image to Cloudinary to get public URL
+  let publicUrl = null;
+  if (CLOUDINARY_CONFIGURED) {
+    const absolutePath = path.join(PUBLIC_DIR, localImagePath.replace(/^\/uploads\//, "uploads/"));
+    publicUrl = await uploadToCloudinary(absolutePath);
+  }
+
+  if (!publicUrl) {
+    console.warn("[SongVisuals] Cloudinary is not configured. Cannot generate AI video, falling back to static image.");
+    return localImagePath;
+  }
+
+  console.log(`[SongVisuals] Launching Stable Video Diffusion for: ${publicUrl}`);
+  try {
+    const output = await replicate.run(
+      "stability-ai/stable-video-diffusion:3f0457e4619daac51203dedb472816fd4af51f3149fa7a9e0b5ffcf1b8172438",
+      {
+        input: {
+          image: publicUrl,
+          video_length: "14_frames_with_svd",
+          sizing_strategy: "keep_aspect_ratio",
+          frames_per_second: 6,
+          motion_bucket_id: 127,
+          noise_aug_strength: 0.02
+        }
+      }
+    );
+
+    const videoUrl = Array.isArray(output) ? output[0] : output;
+    console.log(`[SongVisuals] SVD Video generation successful: ${videoUrl}`);
+    return videoUrl;
+  } catch (err) {
+    console.error("[SongVisuals] SVD Video generation failed, falling back to static image:", err.message);
+    return localImagePath;
+  }
+}
+
 // ── SONG WITH VISUALS CREATOR PROCESS & RENDER ──
 router.post("/song-visuals/process", authenticateUser, async (req, res) => {
   try {
-    const { lyrics, n = 5, musicStyle = "Lofi", artStyle = "watercolor", transitionEffect = "fade-black" } = req.body;
+    const { lyrics, n = 5, musicStyle = "Lofi", artStyle = "watercolor", transitionEffect = "fade-black", visualFormat = "static" } = req.body;
 
     if (!lyrics || !lyrics.trim()) {
       return res.status(400).json({ error: "Lyrics are required to generate song and visuals" });
@@ -942,30 +1087,28 @@ Return ONLY a JSON array of objects, with no markdown formatting, no explanation
 
     // Fallback if both fail
     if (!audioUrl) {
-      console.log("[SongVisuals] Using fallback audio track");
-      audioUrl = "https://res.cloudinary.com/dnu5ephbx/video/upload/v1780419798/vizzy/uploads/gz6xxh3gl1qdk0yseo9g.ogg";
+      console.log("[SongVisuals] Using local fallback audio track");
+      audioUrl = "/uploads/default_lofi.mp3";
     }
 
-    // Step 3: Generate Images in parallel using replicate/sdxl-lightning
-    console.log(`[SongVisuals] Generating ${numSegments} images in parallel...`);
+    // Step 3: Generate visual assets (Images or Video clips) in parallel
+    console.log(`[SongVisuals] Generating ${numSegments} visual assets (${visualFormat}) in parallel...`);
     const imageUrls = await Promise.all(
       segments.map(async (seg, idx) => {
         try {
-          if (replicate) {
-            const output = await replicate.run(
-              "bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
-              {
-                input: {
-                  prompt: seg.imagePrompt,
-                  negative_prompt: "deformed, blurry, ugly, low quality, disfigured, text, watermark, bad hands",
-                  seed: Math.floor(Math.random() * 1000000) + (idx * 13)
-                }
-              }
-            );
-            return Array.isArray(output) ? String(output[output.length - 1]) : String(output);
+          // 1. Generate image using Gemini Imagen 4.0
+          const localImagePath = await generateImageWithGemini(seg.imagePrompt, artStyle);
+          
+          // 2. If video format is requested, animate it via SVD
+          if (visualFormat === "video") {
+            console.log(`[SongVisuals] Segment ${idx + 1}: Animating image to video clip...`);
+            const videoUrl = await generateVideoWithSVD(localImagePath);
+            return videoUrl;
           }
+          
+          return localImagePath;
         } catch (e) {
-          console.error(`Failed to generate image for segment ${idx + 1}:`, e.message);
+          console.error(`Failed to generate visual asset for segment ${idx + 1}:`, e.message);
         }
         // Fallback placeholder with seed
         return `https://picsum.photos/seed/${Math.floor(Math.random() * 10000) + (idx * 17)}/1280/720`;
