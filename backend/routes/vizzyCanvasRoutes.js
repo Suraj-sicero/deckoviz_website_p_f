@@ -447,6 +447,87 @@ router.post("/inpaint", async (req, res) => {
   }
 });
 
+// Neural Style Transfer endpoint using Replicate SDXL img2img
+router.post("/style-transfer", async (req, res) => {
+  try {
+    const { imageUrl, style } = req.body;
+    if (!imageUrl || !style) {
+      return res.status(400).json({ error: "Missing imageUrl or style" });
+    }
+    if (!REPLICATE_API_TOKEN) {
+      return res.status(500).json({ error: "Replicate token missing" });
+    }
+
+    const charge = await chargeCredits(req, "style_transfer");
+    if (!charge.ok) return res.status(charge.status).json({ error: charge.error });
+    const user = charge.user;
+
+    const stylePrompts = {
+      "Van Gogh (Impressionism)": "in the style of Vincent van Gogh, oil on canvas, starry night aesthetic, thick impasto brushstrokes, vibrant swirling colors, masterpiece painting",
+      "Picasso (Cubism)": "in the style of Pablo Picasso cubism, abstract geometric shapes, fragmented forms, multi-perspective modern art masterpiece",
+      "Claude Monet (Impressionism)": "in the style of Claude Monet impressionism, dappled light, soft pastel brushstrokes, outdoor atmospheric rendering, water lilies style painting",
+      "Salvador Dali (Surrealism)": "in the style of Salvador Dali surrealism, melting objects, dreamlike landscape, bizarre juxtaposition, highly detailed surrealist painting",
+      "Andy Warhol (Pop Art)": "in the style of Andy Warhol pop art, silkscreen print, vibrant high-contrast neon colors, screenprint halftone, retro modernism",
+      "Katsushika Hokusai (Ukiyo-e)": "in the style of Katsushika Hokusai, classic Ukiyo-e Japanese woodblock print, bold outlines, oceanic waves, Mount Fuji aesthetic",
+      "Edvard Munch (Expressionism)": "in the style of Edvard Munch expressionism, swirling brushstrokes of the Scream, intense emotional colors, flowing lines, haunting beauty",
+      "Jackson Pollock (Abstract Expressionism)": "in the style of Jackson Pollock action painting, abstract expressionism, paint splatters, chaotic drips, layered texture",
+      "Gustav Klimt (Art Nouveau)": "in the style of Gustav Klimt, golden phase, ornamental art nouveau, rich gold leaf detailing, intricate mosaic patterns",
+      "Henri Matisse (Fauvism)": "in the style of Henri Matisse fauvism, bold simplified shapes, vibrant raw colors, paper cut-out style, expressive modern art",
+      "Michelangelo (Renaissance)": "in the style of Michelangelo, classic high Renaissance fresco painting, Sistine Chapel style, muscular dynamic figures, classical antiquity",
+      "Jean-Michel Basquiat (Neo-Expressionism)": "in the style of Jean-Michel Basquiat, neo-expressionism, raw street art, graffiti writing, expressive sketch lines, crown motif",
+      "Piet Mondrian (De Stijl)": "in the style of Piet Mondrian, De Stijl, abstract grid pattern, primary colors red blue yellow, black thick lines, minimalist modern art",
+      "Roy Lichtenstein (Comic Book)": "in the style of Roy Lichtenstein comic book pop art, Ben-Day dots, bold ink outlines, vintage retro comic book style",
+      "William Morris (Arts & Crafts)": "in the style of William Morris, detailed arts and crafts movement, elegant floral wallpaper pattern, medieval aesthetic, intricate nature design",
+      "Yayoi Kusama (Polka Dots)": "in the style of Yayoi Kusama, infinite polka dot pattern, hypnotic repetition, bright contrasting colors, modern installation art",
+      "Keith Haring (Street Art)": "in the style of Keith Haring, vibrant street art, bold black outlines, dancing radiant figures, pop art iconographic style",
+      "Georgia O'Keeffe (Modernist Flower)": "in the style of Georgia O'Keeffe modernist painting, close-up magnified organic flowers, soft gradients, abstract natural forms",
+      "Wassily Kandinsky (Abstract)": "in the style of Wassily Kandinsky abstract art, geometric lines, colorful circles and shapes, musical rhythm composition",
+      "M.C. Escher (Surreal Mathematical)": "in the style of M.C. Escher, mathematical tessellations, impossible architecture, paradoxical structures, detailed lithography"
+    };
+
+    const stylePrompt = stylePrompts[style] || `in the style of ${style}, artistic rendering, masterpiece`;
+    const prompt = `neurally style transferred image, ${stylePrompt}`;
+
+    const replicate = new Replicate({ auth: REPLICATE_API_TOKEN });
+    const output = await replicate.run(
+      "stability-ai/sdxl:7762fd07cf82c948538e41f63f77d685e02b063e37e496e96eefd46c929f9bdc",
+      {
+        input: {
+          image: imageUrl,
+          prompt,
+          prompt_strength: 0.65, // balance between original structure and selected art style
+          num_outputs: 1,
+          negative_prompt: "deformed, blurry, ugly, low quality, photorealistic, photo, camera photograph",
+        },
+      }
+    );
+
+    const urls = Array.isArray(output) ? output.map(String) : [String(output)];
+    const transferredUrl = urls[0];
+
+    if (user) {
+      try {
+        await VizzyImage.create({
+          userId: user.id,
+          imageUrl: transferredUrl,
+          prompt: `[Style Transfer - ${style}]`,
+        });
+      } catch (dbErr) {
+        console.error("Failed to save style transferred image to DB:", dbErr);
+      }
+    }
+
+    res.json({
+      transferredImage: { url: transferredUrl },
+      style,
+      creditsRemaining: charge.remaining,
+    });
+  } catch (err) {
+    console.error("[style-transfer] error:", err);
+    res.status(500).json({ error: err.message || "Style transfer failed" });
+  }
+});
+
 // Image analysis via Gemini vision. Returns a short description of what
 // landed in the generated image so the chat can offer follow-up tweaks.
 router.post("/analyze-image", async (req, res) => {

@@ -87,6 +87,7 @@ async function downloadOrResolve(urlOrPath, tempDir, baseName) {
 export async function renderVideo({
   images,
   transitionDuration,
+  transitionEffect = "fade-black",
   narration,
   music,
   narrationVolume = 100,
@@ -101,6 +102,7 @@ export async function renderVideo({
     return await renderVideoPython({
       images,
       transitionDuration,
+      transitionEffect,
       narration,
       music,
       narrationVolume,
@@ -111,6 +113,7 @@ export async function renderVideo({
     return await renderVideoJS({
       images,
       transitionDuration,
+      transitionEffect,
       narration,
       music,
       narrationVolume,
@@ -125,6 +128,7 @@ export async function renderVideo({
 function renderVideoPython({
   images,
   transitionDuration,
+  transitionEffect,
   narration,
   music,
   narrationVolume,
@@ -138,6 +142,7 @@ function renderVideoPython({
     const inputPayload = {
       images,
       transitionDuration,
+      transitionEffect,
       narration,
       music,
       narrationVolume,
@@ -192,6 +197,7 @@ function renderVideoPython({
 async function renderVideoJS({
   images,
   transitionDuration,
+  transitionEffect = "fade-black",
   narration,
   music,
   narrationVolume = 100,
@@ -221,7 +227,24 @@ async function renderVideoJS({
       const fadeOutStart = duration - fadeDuration;
 
       // Container optimized: 480p resolution, single thread, ultrafast preset, 10 fps
-      const cmd = `ffmpeg -y -threads 1 -loop 1 -t ${duration} -i "${localImages[i]}" -vf "scale=854:480:force_original_aspect_ratio=decrease,pad=854:480:(ow-iw)/2:(oh-ih)/2:black,fade=t=in:st=0:d=${fadeDuration},fade=t=out:st=${fadeOutStart}:d=${fadeDuration}" -c:v libx264 -preset ultrafast -pix_fmt yuv420p -r 10 "${clipPath}"`;
+      let vfFilters = `scale=854:480:force_original_aspect_ratio=decrease,pad=854:480:(ow-iw)/2:(oh-ih)/2:black`;
+      if (transitionEffect === "fade-black") {
+        vfFilters += `,fade=t=in:st=0:d=${fadeDuration},fade=t=out:st=${fadeOutStart}:d=${fadeDuration}`;
+      } else if (transitionEffect === "fade-white") {
+        vfFilters += `,fade=t=in:st=0:d=${fadeDuration}:color=white,fade=t=out:st=${fadeOutStart}:d=${fadeDuration}:color=white`;
+      } else if (transitionEffect === "fade-red") {
+        vfFilters += `,fade=t=in:st=0:d=${fadeDuration}:color=red,fade=t=out:st=${fadeOutStart}:d=${fadeDuration}:color=red`;
+      } else if (transitionEffect === "fade-blue") {
+        vfFilters += `,fade=t=in:st=0:d=${fadeDuration}:color=blue,fade=t=out:st=${fadeOutStart}:d=${fadeDuration}:color=blue`;
+      } else if (transitionEffect === "fade-green") {
+        vfFilters += `,fade=t=in:st=0:d=${fadeDuration}:color=green,fade=t=out:st=${fadeOutStart}:d=${fadeDuration}:color=green`;
+      } else if (transitionEffect === "fade-purple") {
+        vfFilters += `,fade=t=in:st=0:d=${fadeDuration}:color=purple,fade=t=out:st=${fadeOutStart}:d=${fadeDuration}:color=purple`;
+      } else if (transitionEffect === "fade-yellow") {
+        vfFilters += `,fade=t=in:st=0:d=${fadeDuration}:color=yellow,fade=t=out:st=${fadeOutStart}:d=${fadeDuration}:color=yellow`;
+      }
+
+      const cmd = `ffmpeg -y -threads 1 -loop 1 -t ${duration} -i "${localImages[i]}" -vf "${vfFilters}" -c:v libx264 -preset ultrafast -pix_fmt yuv420p -r 10 "${clipPath}"`;
 
       await runCmd(cmd);
       clips.push(clipPath);

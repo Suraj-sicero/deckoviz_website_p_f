@@ -710,7 +710,7 @@ router.post("/films/:id/render", authenticateUser, async (req, res) => {
 // ── DIRECT MONTAGE RENDER ──
 router.post("/render-montage", authenticateUser, async (req, res) => {
   try {
-    const { images, transitionDuration, narration, music, narrationVolume, musicVolume } = req.body;
+    const { images, transitionDuration, transitionEffect, narration, music, narrationVolume, musicVolume } = req.body;
 
     if (!images || !images.length) {
       return res.status(400).json({ error: "Images are required for rendering" });
@@ -721,6 +721,7 @@ router.post("/render-montage", authenticateUser, async (req, res) => {
     const videoUrl = await renderVideo({
       images,
       transitionDuration,
+      transitionEffect,
       narration,
       music,
       narrationVolume,

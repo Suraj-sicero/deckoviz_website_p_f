@@ -27,6 +27,7 @@ export const ACTION_COST = {
   image: 1,         // text-to-image
   imageBatch: 1,    // multiplied by num_outputs in code
   inpaint: 2,       // img2img edit
+  style_transfer: 2,// style transfer
   music: 5,         // ~30s clip
   video: 10,        // ~5s LTX clip
   chat: 0,          // free

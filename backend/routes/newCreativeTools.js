@@ -255,7 +255,7 @@ async function callVisionLLM(prompt, imageBuffer, isJson = false) {
   }
 }
 
-async function generateImage(prompt, negPrompt = "") {
+async function generateImage(prompt, negPrompt = "", width = 1024, height = 1024) {
   const REPLICATE_TOKEN = process.env.REPLICATE_API_TOKEN;
   if (!REPLICATE_TOKEN) return null;
 
@@ -269,6 +269,8 @@ async function generateImage(prompt, negPrompt = "") {
         input: {
           prompt,
           negative_prompt: finalNeg,
+          width,
+          height,
         },
       }
     );
@@ -2048,6 +2050,211 @@ The generated Decoviz frame should feel naturally built into the uploaded room w
   } catch (err) {
     console.error("[postcard/generate]", err);
     return res.status(500).json({ error: err.message });
+  }
+});
+
+// ──────────────────────────────────────────────────────────────────────────────
+// 10. GRATITUDE CARDS CREATOR
+// ──────────────────────────────────────────────────────────────────────────────
+
+router.post("/gratitude-card/generate", upload.fields([
+  { name: "senderImage", maxCount: 1 },
+  { name: "recipientImage", maxCount: 1 }
+]), async (req, res) => {
+  try {
+    const { style = "painting", message = "", senderName = "", recipientName = "" } = req.body;
+    const senderFile = req.files?.senderImage?.[0];
+    const recipientFile = req.files?.recipientImage?.[0];
+
+    if (!senderFile) return res.status(400).json({ error: "Missing sender image upload" });
+    if (!recipientFile) return res.status(400).json({ error: "Missing recipient image upload" });
+    if (!message?.trim()) return res.status(400).json({ error: "Missing message text" });
+
+    console.log(`[gratitude-card/generate] Starting generation. Style: ${style}, message length: ${message.length}`);
+
+    // Step 1: Use Gemini Vision to describe both the sender and recipient images
+    console.log("[gratitude-card/generate] Analyzing sender image with Gemini Vision...");
+    const senderDesc = await callVisionLLM(
+      "Describe the main person in this image. Focus ONLY on their physical description: gender, age range, hair color/style, clothing, skin tone, and key features. Keep it to one short sentence. Do not mention the background, photo quality, or borders.",
+      senderFile.buffer
+    );
+
+    console.log("[gratitude-card/generate] Analyzing recipient image with Gemini Vision...");
+    const recipientDesc = await callVisionLLM(
+      "Describe the main person in this image. Focus ONLY on their physical description: gender, age range, hair color/style, clothing, skin tone, and key features. Keep it to one short sentence. Do not mention the background, photo quality, or borders.",
+      recipientFile.buffer
+    );
+
+    console.log(`[gratitude-card/generate] Descriptions obtained.\\nSender: ${senderDesc}\\nRecipient: ${recipientDesc}`);
+
+    // Map style names to art style prompts
+    const stylePrompts = {
+      painting: "A classical, rich oil painting style, textured brushstrokes, fine art masterpiece, warm studio lighting.",
+      'anime Ghibli style': "Nostalgic anime studio Ghibli style, hand-drawn digital illustration, soft pastel colors, scenic skies, gentle lighting, detailed background.",
+      fantasy: "An enchanting fantasy illustration, magical ethereal atmosphere, glowing fairy lights, mystical forest backdrop, soft dreamlike glow.",
+      futurism: "Sleek futuristic digital painting, clean geometric shapes, polished metallic surfaces, neon circuit lines, advanced sci-fi city background.",
+      watercolor: "Dreamy soft watercolor painting, artistic ink washes, delicate paint splatters, pastel hues, elegant hand-painted texture, white paper edges.",
+      cyberpunk: "Vibrant cyberpunk art, neon glowing lights in pink and cyan, dark futuristic street, rain puddles reflecting neon lights, synthwave aesthetic."
+    };
+
+    const stylePrompt = stylePrompts[style] || stylePrompts.painting;
+
+    // Determine gender representation to enforce correct couples/pairings
+    const sDescLower = senderDesc.toLowerCase();
+    const rDescLower = recipientDesc.toLowerCase();
+    
+    const sIsFemale = sDescLower.includes("woman") || sDescLower.includes("female") || sDescLower.includes("girl") || sDescLower.includes("lady");
+    const rIsFemale = rDescLower.includes("woman") || rDescLower.includes("female") || rDescLower.includes("girl") || rDescLower.includes("lady");
+    
+    let pairingType = "a man and a woman";
+    let genderReminder = "One is a man and the other is a woman.";
+    if (!sIsFemale && !rIsFemale) {
+      pairingType = "two men, a male pair";
+      genderReminder = "Both individuals depicted are men (no women in the image).";
+    } else if (sIsFemale && rIsFemale) {
+      pairingType = "two women, a female pair";
+      genderReminder = "Both individuals depicted are women (no men in the image).";
+    }
+
+    // Build the image generation prompt with explicit headspace constraints
+    const artPrompt = `A beautiful, detailed illustration of ${pairingType} standing together happily. Framed as a medium-wide shot showing them from the chest up, with ample headspace above their heads, leaving space at the top of the image. First person is: ${senderDesc.trim()}. Second person is: ${recipientDesc.trim()}. Both are smiling, standing side-by-side, sharing a warm and close bond. ${genderReminder} Set in a beautiful background matching the style. Style: ${stylePrompt}. Masterpiece, high quality, balanced lighting, cinematic composition, no text, no watermarks.`;
+
+    const negPrompt = "cropped heads, cut off heads, zoom-in, cropped faces, close-up, cropped hair, blurry, low quality, deformed, text, watermark";
+
+    console.log(`[gratitude-card/generate] Generating base postcard artwork with prompt: "${artPrompt}"`);
+    // Generate as 1152x768 (3:2 landscape) to match the 1200x800 card template
+    const artUrl = await generateImage(artPrompt, negPrompt, 1152, 768);
+    if (!artUrl) {
+      throw new Error("Failed to generate postcard artwork via Replicate SDXL.");
+    }
+
+    console.log(`[gratitude-card/generate] Image generated at: ${artUrl}. Fetching buffer...`);
+    const artRes = await fetch(artUrl);
+    if (!artRes.ok) {
+      throw new Error("Failed to fetch generated image from Replicate.");
+    }
+    const artBuffer = Buffer.from(await artRes.arrayBuffer());
+
+    // Step 2: Overlay postcard layout and text onto the generated image using Sharp
+    console.log("[gratitude-card/generate] Formatting postcard layout...");
+    
+    // Helper to wrap text
+    function wrapText(text, maxCharsPerLine = 45) {
+      const words = text.split(" ");
+      const lines = [];
+      let currentLine = "";
+
+      for (const word of words) {
+        if ((currentLine + " " + word).trim().length <= maxCharsPerLine) {
+          currentLine = (currentLine + " " + word).trim();
+        } else {
+          if (currentLine) lines.push(currentLine);
+          currentLine = word;
+        }
+      }
+      if (currentLine) lines.push(currentLine);
+      return lines;
+    }
+
+    const wrappedLines = wrapText(message, 55);
+    const startY = 560 + (220 - (wrappedLines.length * 30)) / 2; // vertically center lines in 220px box
+    
+    const textElements = wrappedLines.map((line, idx) => {
+      // Escape XML characters to avoid SVG syntax errors
+      const escapedLine = line
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&apos;");
+      return `<text x="180" y="${startY + (idx * 30)}" font-family="'Outfit', 'Inter', 'Segoe UI', sans-serif" font-style="italic" font-weight="500" font-size="22" fill="#1e293b">${escapedLine}</text>`;
+    }).join("\n");
+
+    const escRecipient = recipientName
+      ? recipientName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").toUpperCase()
+      : "";
+    const escSender = senderName
+      ? senderName.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;").toUpperCase()
+      : "";
+
+    const recipientElement = escRecipient
+      ? `<text x="180" y="${startY - 25}" font-family="'Outfit', 'Inter', sans-serif" font-weight="bold" font-size="16" fill="#64748b" letter-spacing="1">DEAREST ${escRecipient}</text>`
+      : "";
+
+    const senderElement = escSender
+      ? `<text x="1000" y="705" font-family="'Outfit', 'Inter', sans-serif" font-weight="bold" font-size="16" fill="#64748b" text-anchor="end" letter-spacing="1">WITH LOVE, ${escSender}</text>`
+      : "";
+
+    // Assemble SVG overlay
+    const svgOverlay = `
+      <svg width="1200" height="800" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="white" stop-opacity="0.9" />
+            <stop offset="100%" stop-color="#f8fafc" stop-opacity="0.95" />
+          </linearGradient>
+          <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.15" />
+          </filter>
+        </defs>
+        
+        <!-- Postcard Elegant Border -->
+        <rect x="20" y="20" width="1160" height="760" fill="none" stroke="white" stroke-width="8" rx="16" />
+        <rect x="28" y="28" width="1144" height="744" fill="none" stroke="#f1f5f9" stroke-dasharray="10, 10" stroke-width="2" rx="10" />
+
+        <!-- Stamp on top right -->
+        <g transform="translate(1030, 50)" filter="url(#shadow)">
+          <rect x="0" y="0" width="110" height="130" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" rx="4" />
+          <rect x="8" y="8" width="94" height="114" fill="#eff6ff" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,4" />
+          <path d="M 12 21.35 l -1.45 -1.32 C 5.4 15.36 2 12.28 2 8.5 C 2 5.42 4.42 3 7.5 3 c 1.74 0 3.41 .81 4.5 2.09 C 13.09 3.81 14.76 3 16.5 3 C 19.58 3 22 5.42 22 8.5 c 0 3.78 -3.4 6.86 -8.55 11.54 Z" fill="#ef4444" transform="translate(32, 25) scale(1.6)" />
+          <text x="55" y="110" font-family="'Outfit', 'Inter', sans-serif" font-weight="bold" font-size="10" fill="#3b82f6" text-anchor="middle" letter-spacing="1">GRATITUDE</text>
+        </g>
+
+        <!-- Glassmorphic Message Box at Bottom -->
+        <rect x="80" y="520" width="1040" height="220" fill="url(#glass)" rx="24" filter="url(#shadow)" stroke="white" stroke-width="2" />
+        
+        <!-- Decorative Heart ornament inside Message Box -->
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="#ef4444" transform="translate(120, 565) scale(1.5)" />
+
+        <!-- Message Lines -->
+        ${recipientElement}
+        ${textElements}
+        ${senderElement}
+      </svg>
+    `;
+
+    // Process and composite using Sharp
+    const processedBase = await sharp(artBuffer)
+      .resize(1200, 800, { fit: "cover", position: "centre" })
+      .toBuffer();
+
+    const finalBuffer = await sharp(processedBase)
+      .composite([{ input: Buffer.from(svgOverlay), top: 0, left: 0 }])
+      .jpeg({ quality: 95 })
+      .toBuffer();
+
+    const publicDir = path.join(__dirname, "../public/generated");
+    if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
+
+    const timestamp = Date.now();
+    const fileName = `gratitude_card_${timestamp}.jpg`;
+    fs.writeFileSync(path.join(publicDir, fileName), finalBuffer);
+
+    const baseUrl = process.env.RENDER_EXTERNAL_URL || process.env.BACKEND_URL || `${req.protocol}://${req.get("host")}`;
+
+    console.log(`[gratitude-card/generate] Gratitude Card created successfully: ${fileName}`);
+    return res.json({
+      success: true,
+      imageUrl: `${baseUrl}/generated/${fileName}`,
+      message,
+      style,
+      senderDesc,
+      recipientDesc
+    });
+
+  } catch (err) {
+    console.error("[gratitude-card/generate] Error:", err);
+    return res.status(500).json({ error: err.message || "Failed to generate gratitude card." });
   }
 });
 

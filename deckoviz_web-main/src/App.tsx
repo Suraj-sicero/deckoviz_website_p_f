@@ -98,6 +98,8 @@ import StorybookStudioTool from "./components/tools/StorybookStudioTool";
 import DailyInspirationTool from "./components/tools/DailyInspirationTool";
 import VisualAudiobookTool from "./components/tools/VisualAudiobookTool";
 import PostcardTool from "./components/tools/PostcardTool";
+import GratitudeCardTool from "./components/tools/GratitudeCardTool";
+import QuotePosterTool from "./components/tools/QuotePosterTool";
 import WizzyPage from "./components/wizzy/WizzyPage";
 import InfiniteWormhole from "./components/developerSpecs/InfiniteWormhole";
 import AmbientClock from "./components/developerSpecs/AmbientClock";
@@ -458,6 +460,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/tools/soundscapes" element={<SoundscapesTool />} />
           <Route path="/soundscapes" element={<SoundscapesTool />} />
           <Route path="/tools/postcard" element={<PostcardTool />} />
+          <Route path="/tools/gratitude-card" element={<ProtectedRoute><GratitudeCardTool /></ProtectedRoute>} />
+          <Route path="/tools/quote-poster" element={<ProtectedRoute><QuotePosterTool /></ProtectedRoute>} />
           <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
           <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />
