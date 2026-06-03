@@ -34,6 +34,9 @@ const productLinks = [
   { name: "FAQ", path: "/faq" },
   { name: "Subscriptions & more Info", path: "/generalinfo" },
   { name: "Stories in Sound", path: "/audiobook" },
+  { name: "Experimental Art Modes", path: "/experimental-art-modes" },
+  { name: "Flagship Games", path: "/flagship-games" },
+  { name: "Vizzy Generative Chat", path: "/vizzy-generative-chat" },
 ]
 
 const companyLinks = [
@@ -44,8 +47,6 @@ const companyLinks = [
   { name: "Sitemap", path: "/sitemap" },
   { name: "Support", path: "/support" },
   { name: "Partnerships", path: "/partnership" },
-  { name: "Experimental Art Modes", path: "/experimental-art-modes" },
-  { name: "Flagship Games", path: "/flagship-games" },
 ]
 
 const legalLinks = [
@@ -195,32 +196,25 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Glowing orbs in background */}
-        <div className="absolute inset-0 pointer-events-none">
+        {/* Glowing orbs in background - Balanced across full width */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Left glowing ball */}
           <motion.div
-            className="absolute top-20 left-10 w-64 h-64 bg-violet-500/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
+            className="absolute bottom-10 left-[10%] w-72 h-72 bg-violet-500/20 rounded-full blur-[100px]"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
+          {/* Center glowing ball */}
           <motion.div
-            className="absolute bottom-20 right-10 w-80 h-80 bg-pink-500/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 10,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 1,
-            }}
+            className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-500/15 rounded-full blur-[120px]"
+            animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+          />
+          {/* Right glowing ball */}
+          <motion.div
+            className="absolute top-20 right-[10%] w-80 h-80 bg-pink-500/20 rounded-full blur-[100px]"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           />
         </div>
 
@@ -575,7 +569,12 @@ const Footer = () => {
             <p className="text-[12px] text-white/50 leading-relaxed text-center">
               © {year} Deckoviz. All rights reserved.<br className="md:hidden" />
               <span className="hidden md:inline"> • </span>
-              Made with <motion.span animate={{ scale: [1, 1.2, 1] }} transition={{ duration: 1, repeat: Infinity }} className="inline-block text-pink-400">♥</motion.span> by Deckoviz Team
+              <span className="inline-flex items-center gap-1.5 ml-1 align-middle">
+                <span style={{ fontFamily: "'Caveat', cursive, 'Dancing Script'" }} className="text-lg font-bold text-white/95 drop-shadow-md">Made with</span>
+                <motion.span animate={{ scale: [1, 1.25, 1], textShadow: ["0px 0px 8px rgba(96,165,250,0.4)", "0px 0px 16px rgba(96,165,250,0.8)", "0px 0px 8px rgba(96,165,250,0.4)"] }} transition={{ duration: 1.5, repeat: Infinity }} className="inline-block text-blue-400 text-lg">♥</motion.span>
+                <span style={{ fontFamily: "'Caveat', cursive, 'Dancing Script'" }} className="text-lg font-bold text-white/95 drop-shadow-md">by</span>
+                <span style={{ fontFamily: "'Comfortaa', sans-serif" }} className="text-sm sm:text-base font-extrabold bg-gradient-to-r from-white via-blue-200 to-teal-300 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(56,189,248,0.7)] tracking-wide ml-0.5">Deckoviz Space Labs Team</span>
+              </span>
             </p>
           </motion.div>
 

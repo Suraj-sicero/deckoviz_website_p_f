@@ -192,26 +192,20 @@ const Blog: React.FC = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Richer Indigo Blob Background */}
+      {/* Refined Plain Gradient Background */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#e8ecff] via-[#f5f7ff] to-[#e0e8ff]"></div>
-        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[110px]" style={{ background: "rgba(99,102,241,0.22)" }} />
-        <div className="absolute top-[5%] right-[-80px] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.18)" }} />
-        <div className="absolute top-[35%] left-[5%] w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(79,70,229,0.15)" }} />
-        <div className="absolute top-[35%] right-[0] w-[450px] h-[450px] rounded-full blur-[90px]" style={{ background: "rgba(59,130,246,0.16)" }} />
-        <div className="absolute top-[65%] left-[30%] w-[600px] h-[400px] rounded-full blur-[110px]" style={{ background: "rgba(99,102,241,0.14)" }} />
-        <div className="absolute bottom-[-80px] right-[10%] w-[500px] h-[400px] rounded-full blur-[100px]" style={{ background: "rgba(37,99,235,0.15)" }} />
-        <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: "radial-gradient(circle, #182A4A 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#c7d2fe] via-[#eef2ff] to-[#bfdbfe]"></div>
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "radial-gradient(circle, #182A4A 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 pt-10 pb-20">
         {/* Enhanced Header */}
         <div className="flex flex-col items-center mb-16">
           {/* Shiny Badge */}
-          <div className="flex justify-center pt-4 pb-2 mt-24 mb-6">
+          <div className="flex justify-center mt-24 mb-10 relative z-20">
             <div className="relative group cursor-default">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-500"></div>
-              <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-1.5 rounded-xl text-sm font-semibold tracking-wide shadow-xl flex items-center gap-2">
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-60 group-hover:opacity-100 transition duration-500"></div>
+              <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-2 rounded-xl text-sm font-semibold tracking-wide shadow-xl flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
                 Blog Sections
                 <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
@@ -219,7 +213,7 @@ const Blog: React.FC = () => {
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-6xl font-black text-center mb-8 leading-tight cursor-default bg-gradient-to-br from-gray-900 via-[#182A4A] to-[#2563EB] bg-clip-text text-transparent hover:scale-105 transition-transform duration-500">
+          <h1 className="text-5xl md:text-6xl font-black text-center mb-8 pb-4 leading-tight cursor-default bg-gradient-to-br from-gray-900 via-[#182A4A] to-[#2563EB] bg-clip-text text-transparent hover:scale-105 transition-transform duration-500">
             Blog And Articles
           </h1>
 
@@ -259,7 +253,7 @@ const Blog: React.FC = () => {
                   Pinned Blogs
                 </h2>
               </div>
-              <span className="hidden sm:block text-xs font-medium text-gray-400 bg-gray-100 px-3 py-1.5 rounded-full border border-gray-200">
+              <span className="hidden sm:block text-xs font-medium text-[#2563EB] bg-blue-50 px-3 py-1.5 rounded-full border border-blue-200 shadow-sm shadow-blue-100">
                 Featured &amp; highlighted posts
               </span>
             </div>
@@ -278,7 +272,7 @@ const Blog: React.FC = () => {
               </button>
 
               {/* SCROLL CONTAINER */}
-              <div className="overflow-hidden px-14">
+              <div className="overflow-hidden px-14 py-12 -my-12">
                 <div
                   ref={pinnedTrackRef}
                   className="flex gap-8 whitespace-nowrap will-change-transform"
@@ -286,20 +280,12 @@ const Blog: React.FC = () => {
                   {infinitePinnedBlogs.map((post) => (
                     <Link
                       to={`/blog/${post.slug}`}
-                      className="min-w-[320px] max-w-[320px] group rounded-2xl transition-all duration-700 hover:-translate-y-2"
-                      style={{
-                        background: "rgba(255,255,255,0.28)",
-                        backdropFilter: "blur(20px) saturate(180%)",
-                        WebkitBackdropFilter: "blur(20px) saturate(180%)",
-                        border: "1px solid rgba(255,255,255,0.50)",
-                        borderTop: "1px solid rgba(255,255,255,0.75)",
-                        boxShadow: "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.60)",
-                      }}
-                      onMouseEnter={e => { isPaused.current = true; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 20px 50px rgba(37,99,235,0.25), inset 0 1px 0 rgba(255,255,255,0.80)"; }}
-                      onMouseLeave={e => { isPaused.current = false; (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.60)"; }}
+                      className="whitespace-normal min-w-[320px] max-w-[320px] group rounded-2xl transition-all duration-700 hover:-translate-y-2 flex flex-col bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)]"
+                      onMouseEnter={e => { isPaused.current = true; }}
+                      onMouseLeave={e => { isPaused.current = false; }}
                     >
                       {/* Image */}
-                      <div className="relative h-48 overflow-hidden rounded-t-2xl">
+                      <div className="relative w-full h-48 overflow-hidden rounded-t-2xl">
                         <img
                           src={post.image}
                           alt={post.title}
@@ -326,7 +312,7 @@ const Blog: React.FC = () => {
                       </div>
 
                       {/* Content */}
-                      <div className="p-5">
+                      <div className="relative z-10 p-5">
                         <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-[#2563EB] transition-colors duration-300">
                           {post.title}
                         </h3>
@@ -445,13 +431,13 @@ const Blog: React.FC = () => {
                     <div
                       className={`relative overflow-hidden rounded-2xl transition-all duration-500 ${
                         isActive
-                          ? "bg-gradient-to-br from-[#182A4A] to-[#2563EB] p-1 shadow-2xl"
-                          : "bg-white shadow-lg hover:shadow-xl"
+                          ? "bg-gradient-to-br from-[#182A4A] to-[#2563EB] p-[2px] shadow-[0_8px_32px_rgba(37,99,235,0.3)]"
+                          : "bg-white/40 backdrop-blur-xl border border-white shadow-lg hover:shadow-[0_8px_32px_rgba(37,99,235,0.2)] hover:bg-white/60"
                       }`}
                     >
                       {/* Inner Content */}
                       <div
-                        className={`relative overflow-hidden rounded-xl ${isActive ? "bg-white" : ""}`}
+                        className={`relative overflow-hidden rounded-xl h-full ${isActive ? "bg-white/80 backdrop-blur-sm" : ""}`}
                       >
                         {/* Background Image */}
                         {previewPost && (
@@ -552,15 +538,7 @@ const Blog: React.FC = () => {
             {/* Active Category Info Bar */}
             {activeTag !== "View all" && (
               <div
-                className="mt-8 rounded-2xl p-6"
-                style={{
-                  background: "rgba(255,255,255,0.28)",
-                  backdropFilter: "blur(20px) saturate(180%)",
-                  WebkitBackdropFilter: "blur(20px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.50)",
-                  borderTop: "1px solid rgba(255,255,255,0.75)",
-                  boxShadow: "0 8px 32px rgba(31,38,135,0.10), inset 0 1px 0 rgba(255,255,255,0.60)",
-                }}
+                className="mt-8 rounded-2xl p-6 bg-white/60 backdrop-blur-xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)]"
               >
                 <div className="flex items-center justify-between">
                   <div>
@@ -592,20 +570,10 @@ const Blog: React.FC = () => {
       <Link
         key={post.slug}
         to={`/blog/${post.slug}`}
-        className="group rounded-3xl overflow-hidden transition-all duration-500 hover:-translate-y-2 flex flex-col"
-        style={{
-          background: "rgba(255,255,255,0.28)",
-          backdropFilter: "blur(20px) saturate(180%)",
-          WebkitBackdropFilter: "blur(20px) saturate(180%)",
-          border: "1px solid rgba(255,255,255,0.50)",
-          borderTop: "1px solid rgba(255,255,255,0.75)",
-          boxShadow: "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)",
-        }}
-        onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 20px 50px rgba(37,99,235,0.22), inset 0 1px 0 rgba(255,255,255,0.80)"}
-        onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.08), inset 0 1px 0 rgba(255,255,255,0.60)"}
+        className="group rounded-3xl transition-all duration-500 hover:-translate-y-2 flex flex-col bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)]"
       >
         {/* IMAGE - Square */}
-        <div className="aspect-square overflow-hidden relative">
+        <div className="relative aspect-square overflow-hidden rounded-t-3xl">
           <img
             src={post.image || "/placeholder.svg"}
             alt={post.title}
@@ -618,14 +586,14 @@ const Blog: React.FC = () => {
 
           <span
             className={`absolute top-4 left-4 px-3 py-1 rounded-full 
-                        text-xs font-semibold ${post.tagColor}`}
+                        text-xs font-semibold ${post.tagColor} backdrop-blur-lg`}
           >
             {post.tag}
           </span>
         </div>
 
         {/* CONTENT */}
-        <div className="p-6 flex flex-col flex-1">
+        <div className="relative z-10 p-6 flex flex-col flex-1">
           <h3 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 
                          group-hover:text-[#2563EB] transition-colors duration-300">
             {post.title}

@@ -74,9 +74,9 @@ const Sitemap: React.FC = () => {
               <p className="text-[15px] md:text-[16px] text-gray-700 leading-relaxed text-justify">
                 Welcome to the{" "}
                 <span className="font-semibold text-gray-900">
-                  Deckoviz Sitemap
+                  Deckoviz Sitemap,
                 </span>{" "}
-                  your treasure map to all the good stuff. Think of this as your
+                your treasure map to all the good stuff. Think of this as your
                 behind-the-scenes guide, minus the dusty corridors. Whether
                 you're hunting for product deep dives, enterprise insights,
                 creative tools, or that one page you swear you saw last week,
@@ -85,7 +85,7 @@ const Sitemap: React.FC = () => {
                 <br />
                 It's the calm, organized friend who always knows where
                 everything is, so you can skip the wandering and get straight to
-                what inspires you. Dive in   every click here leads somewhere
+                what inspires you. Dive in — every click here leads somewhere
                 worth exploring.
               </p>
             </div>
@@ -95,140 +95,148 @@ const Sitemap: React.FC = () => {
         {/* FIRST ROW */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16">
           {/* PRODUCT */}
-          <SitemapBox title="Product" icon={<ImageIcon className="w-6 h-6" />}>
-            <BoxSection title="Product Overview">
-              <li>Hardware &amp; Specs</li>
-              <li>Setup Guide</li>
-              <li>AI-Powered Art</li>
-              <li>Mood-Based Creation</li>
-              <li>Personal Photo Transformations</li>
-              <li>Story &amp; Memory Visuals</li>
-              <li>Ambient &amp; Meditation Modes</li>
-              <li>Marketplace (Sell &amp; Buy)</li>
-              <li>Multi-User &amp; Business Use Cases</li>
+          <SitemapBox title="Product" icon={<ImageIcon className="w-6 h-6" />} to="/features">
+            <BoxSection title="Product Overview" to="/features">
+              <LinkItem to="/features">Hardware &amp; Specs</LinkItem>
+              <LinkItem to="/how-it-works">Setup Guide</LinkItem>
+              <LinkItem to="/features">AI-Powered Art</LinkItem>
+              <LinkItem to="/features">Mood-Based Creation</LinkItem>
+              <LinkItem to="/features">Personal Photo Transformations</LinkItem>
+              <LinkItem to="/features">Story &amp; Memory Visuals</LinkItem>
+              <LinkItem to="/features">Ambient &amp; Meditation Modes</LinkItem>
+              <LinkItem to="/pricing">Marketplace (Sell &amp; Buy)</LinkItem>
+              <LinkItem to="/partnership">Multi-User &amp; Business Use Cases</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Use Case Hubs">
-              <li>For Homes</li>
-              <li>For Offices</li>
-              <li>For Cafes / Restaurants</li>
-              <li>For Therapy &amp; Wellness Spaces</li>
-              <li>For Schools / Education</li>
+            <BoxSection title="Mega Features" to="/features">
+              <LinkItem to="/creative-journal">Creative Journal</LinkItem>
+              <LinkItem to="/creative-studio">Creative Studio</LinkItem>
+              <LinkItem to="/deckoviz-storytelling">Deckoviz Storytelling</LinkItem>
+              <LinkItem to="/vizzy-canvas">Vizzy Creation Canvas</LinkItem>
+              <LinkItem to="/experimental-art-modes">Experimental Art Modes</LinkItem>
+              <LinkItem to="/flagship-games">Flagship Games</LinkItem>
+              <LinkItem to="/vizzy-generative-chat">Vizzy Generative Chat</LinkItem>
+            </BoxSection>
+
+            <BoxSection title="Use Case Hubs" to="/partnership">
+              <LinkItem to="/partnership">For Homes</LinkItem>
+              <LinkItem to="/partnership">For Offices</LinkItem>
+              <LinkItem to="/partnership">For Cafes / Restaurants</LinkItem>
+              <LinkItem to="/partnership">For Therapy &amp; Wellness Spaces</LinkItem>
+              <LinkItem to="/partnership">For Schools / Education</LinkItem>
             </BoxSection>
           </SitemapBox>
 
           {/* SUPPORT */}
-          <SitemapBox title="Support" icon={<Wrench className="w-6 h-6" />} to="/FAQ">
-            <BoxSection title="FAQ" to="/FAQ">
-              <li>General Questions</li>
-              <li>Technical Support</li>
-              <li>Billing Questions</li>
-              <li>Troubleshooting</li>
+          <SitemapBox title="Support" icon={<Wrench className="w-6 h-6" />} to="/faq">
+            <BoxSection title="FAQ" to="/faq">
+              <LinkItem to="/faq">General Questions</LinkItem>
+              <LinkItem to="/support">Technical Support</LinkItem>
+              <LinkItem to="/faq">Billing Questions</LinkItem>
+              <LinkItem to="/support">Troubleshooting</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Installation Guide">
-              <li>Unboxing</li>
-              <li>Wall Mounting</li>
-              <li>Initial Setup</li>
-              <li>Network Connection</li>
+            <BoxSection title="Installation Guide" to="/how-it-works">
+              <LinkItem to="/how-it-works">Unboxing</LinkItem>
+              <LinkItem to="/how-it-works">Wall Mounting</LinkItem>
+              <LinkItem to="/how-it-works">Initial Setup</LinkItem>
+              <LinkItem to="/how-it-works">Network Connection</LinkItem>
             </BoxSection>
 
-            <BoxSection title="User Manual">
-              <li>Getting Started</li>
-              <li>Feature Guide</li>
-              <li>Settings Configuration</li>
-              <li>Maintenance Tips</li>
+            <BoxSection title="User Manual" to="/support">
+              <LinkItem to="/support">Getting Started</LinkItem>
+              <LinkItem to="/features">Feature Guide</LinkItem>
+              <LinkItem to="/support">Settings Configuration</LinkItem>
+              <LinkItem to="/support">Maintenance Tips</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Troubleshooting">
-              <li>Common Issues</li>
-              <li>Error Codes</li>
-              <li>Reset Instructions</li>
-              <li>Performance Optimization</li>
+            <BoxSection title="Troubleshooting" to="/support">
+              <LinkItem to="/support">Common Issues</LinkItem>
+              <LinkItem to="/support">Error Codes</LinkItem>
+              <LinkItem to="/support">Reset Instructions</LinkItem>
+              <LinkItem to="/support">Performance Optimization</LinkItem>
             </BoxSection>
           </SitemapBox>
 
           {/* HOME */}
-          <SitemapBox title="Home" icon={<Home className="w-6 h-6" />} to="/AboutDeckoviz">
-            <SimpleItem>Hero Header Section</SimpleItem>
-            <SimpleItem>Key Features &amp; Capabilities</SimpleItem>
-            <SimpleItem>Testimonials Preview</SimpleItem>
-            <SimpleItem>Call to Action (CTA)</SimpleItem>
-          </SitemapBox>
-
-          {/* LEGAL */}
-          <SitemapBox title="Legal" icon={<Scale className="w-6 h-6" />} to="/PrivacyPolicy">
-            <BoxSection title="Privacy Policy" to="/PrivacyPolicy" />
-            <BoxSection title="Terms of Service" to="/TermsOfService" />
-            <SimpleItem>Cookie Policy</SimpleItem>
-            <SimpleItem>Community Guidelines</SimpleItem>
-            <SimpleItem>Accessibility Statement</SimpleItem>
-            <BoxSection title="Return Policy" to="/ReturnPolicy" />
-            <BoxSection title="Shipping Policy" to="/ShippingPolicy" />
-          </SitemapBox>
-
-          {/* BLOG & RESOURCES */}
-          <SitemapBox title="Blog &amp; Resources" icon={<FileText className="w-6 h-6" />} to="/Blog">
-            <BoxSection title="Navbar" />
-
-            <BoxSection title="All Blog Posts">
-              <li>Latest Posts</li>
-              <li>Art &amp; Technology</li>
-              <li>Smart Home Integration</li>
-              <li>Customer Stories</li>
-            </BoxSection>
-
-            <BoxSection title="Blog Categories">
-              <li>Product Tips &amp; Features</li>
-              <li>Artist Spotlights</li>
-              <li>Inspiration &amp; Interiors</li>
-              <li>Tech + Art Innovations</li>
-            </BoxSection>
-
-            <SimpleItem>Open Blog View (Individual Post)</SimpleItem>
-
-            <BoxSection title="Guides &amp; Resources">
-              <li>Setup Help</li>
-              <li>Art Transformation Guides</li>
-              <li>Artist Resource Kits</li>
-              <li>Meditation Visuals Help</li>
-            </BoxSection>
+          <SitemapBox title="Home" icon={<Home className="w-6 h-6" />} to="/">
+            <SimpleItem to="/">Hero Header Section</SimpleItem>
+            <SimpleItem to="/">Key Features &amp; Capabilities</SimpleItem>
+            <SimpleItem to="/">Testimonials Preview</SimpleItem>
+            <SimpleItem to="/">Call to Action (CTA)</SimpleItem>
           </SitemapBox>
         </div>
 
         {/* SECOND ROW */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-16">
-          {/* ORDER */}
-          <SitemapBox title="Order" icon={<ShoppingCart className="w-6 h-6" />} to="/Pricing">
-            <SimpleItem>Navbar</SimpleItem>
-            <SimpleItem>Pricing Tiers</SimpleItem>
-            <SimpleItem>Customize Your Order</SimpleItem>
-            <SimpleItem>Add-ons</SimpleItem>
-            <SimpleItem>Finalize Order + Checkout</SimpleItem>
-            <SimpleItem>Shipping &amp; Delivery Info</SimpleItem>
-            <SimpleItem>Warranty &amp; Returns Policy</SimpleItem>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-12">
+          {/* LEGAL */}
+          <SitemapBox title="Legal" icon={<Scale className="w-6 h-6" />} to="/privacy-policy">
+            <BoxSection title="Privacy Policy" to="/privacy-policy" />
+            <BoxSection title="Terms of Service" to="/terms-conditions" />
+            <BoxSection title="Return Policy" to="/return-policy" />
+            <BoxSection title="Shipping Policy" to="/shipping-policy" />
+            <SimpleItem to="/privacy-policy">Cookie Policy</SimpleItem>
+            <SimpleItem to="/terms-conditions">Community Guidelines</SimpleItem>
+            <SimpleItem to="/privacy-policy">Accessibility Statement</SimpleItem>
           </SitemapBox>
 
+          {/* BLOG & RESOURCES */}
+          <SitemapBox title="Blog &amp; Resources" icon={<FileText className="w-6 h-6" />} to="/blog">
+            <BoxSection title="All Blog Posts" to="/blog">
+              <LinkItem to="/blog">Latest Posts</LinkItem>
+              <LinkItem to="/blog">Art &amp; Technology</LinkItem>
+              <LinkItem to="/blog">Smart Home Integration</LinkItem>
+              <LinkItem to="/blog">Customer Stories</LinkItem>
+            </BoxSection>
+
+            <BoxSection title="Blog Categories" to="/blog">
+              <LinkItem to="/blog">Product Tips &amp; Features</LinkItem>
+              <LinkItem to="/blog">Artist Spotlights</LinkItem>
+              <LinkItem to="/blog">Inspiration &amp; Interiors</LinkItem>
+              <LinkItem to="/blog">Tech + Art Innovations</LinkItem>
+            </BoxSection>
+
+            <SimpleItem to="/blog">Open Blog View (Individual Post)</SimpleItem>
+
+            <BoxSection title="Guides &amp; Resources" to="/how-it-works">
+              <LinkItem to="/how-it-works">Setup Help</LinkItem>
+              <LinkItem to="/features">Art Transformation Guides</LinkItem>
+              <LinkItem to="/features">Artist Resource Kits</LinkItem>
+              <LinkItem to="/features">Meditation Visuals Help</LinkItem>
+            </BoxSection>
+          </SitemapBox>
+
+          {/* ORDER */}
+          <SitemapBox title="Order" icon={<ShoppingCart className="w-6 h-6" />} to="/pricing">
+            <SimpleItem to="/pricing">Pricing Tiers</SimpleItem>
+            <SimpleItem to="/pricing">Customize Your Order</SimpleItem>
+            <SimpleItem to="/pricing">Add-ons</SimpleItem>
+            <SimpleItem to="/pricing">Finalize Order + Checkout</SimpleItem>
+            <SimpleItem to="/shipping-policy">Shipping &amp; Delivery Info</SimpleItem>
+            <SimpleItem to="/return-policy">Warranty &amp; Returns Policy</SimpleItem>
+          </SitemapBox>
+        </div>
+
+        {/* THIRD ROW */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-12 mt-12 mb-16">
           {/* ABOUT */}
-          <SitemapBox title="About Us" icon={<Info className="w-6 h-6" />} to="/AboutDeckoviz">
-            <SimpleItem>Navbar</SimpleItem>
-
-            <BoxSection title="About Deckoviz">
-              <li>Mission &amp; Vision</li>
-              <li>What Makes Us Unique</li>
-              <li>Our Philosophy: Living Art, Living Spaces</li>
+          <SitemapBox title="About Us" icon={<Info className="w-6 h-6" />} to="/about">
+            <BoxSection title="About Deckoviz" to="/about">
+              <LinkItem to="/about">Mission &amp; Vision</LinkItem>
+              <LinkItem to="/about">What Makes Us Unique</LinkItem>
+              <LinkItem to="/about">Our Philosophy: Living Art, Living Spaces</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Join Us">
-              <li>Careers &amp; Internships</li>
-              <li>Deckoviz Ambassadors</li>
-              <li>Artists &amp; Creator Collaborations</li>
-              <li>Partner With Us</li>
+            <BoxSection title="Join Us" to="/contact">
+              <LinkItem to="https://www.linkedin.com/company/deckoviz-space/jobs/">Careers &amp; Internships</LinkItem>
+              <LinkItem to="/partnership">Deckoviz Ambassadors</LinkItem>
+              <LinkItem to="/partnership">Artists &amp; Creator Collaborations</LinkItem>
+              <LinkItem to="/partnership">Partner With Us</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Investor Inquiries">
-              <li>For Aligned Investors</li>
-              <li>Contact Email &amp; Pitch Info</li>
+            <BoxSection title="Investor Inquiries" to="/contact">
+              <LinkItem to="/contact">For Aligned Investors</LinkItem>
+              <LinkItem to="/contact">Contact Email &amp; Pitch Info</LinkItem>
             </BoxSection>
           </SitemapBox>
 
@@ -236,75 +244,75 @@ const Sitemap: React.FC = () => {
           <SitemapBox
             title="WebApp &amp; Companion App"
             icon={<MonitorSmartphone className="w-6 h-6" />}
-            to="/HowItWorks"
+            to="/how-it-works"
           >
-            <BoxSection title="Dashboard">
-              <li>Art Collections</li>
-              <li>Upload &amp; Transform</li>
-              <li>Moodboard Controls</li>
-              <li>Device Settings</li>
-              <li>Shared Frames &amp; Users</li>
-              <li>Marketplace Activity</li>
+            <BoxSection title="Dashboard" to="/features">
+              <LinkItem to="/features">Art Collections</LinkItem>
+              <LinkItem to="/features">Upload &amp; Transform</LinkItem>
+              <LinkItem to="/features">Moodboard Controls</LinkItem>
+              <LinkItem to="/features">Device Settings</LinkItem>
+              <LinkItem to="/features">Shared Frames &amp; Users</LinkItem>
+              <LinkItem to="/pricing">Marketplace Activity</LinkItem>
             </BoxSection>
 
-            <SimpleItem>Forum / Community Discussion</SimpleItem>
-            <SimpleItem>Artist Upload Portal</SimpleItem>
+            <SimpleItem to="/blog">Forum / Community Discussion</SimpleItem>
+            <SimpleItem to="/pricing">Artist Upload Portal</SimpleItem>
           </SitemapBox>
 
           {/* COMMUNITY */}
           <SitemapBox
             title="Community"
             icon={<Users className="w-6 h-6" />}
-            to="/GuestReactionsTestimonials"
+            to="/leaderboard"
           >
-            <BoxSection title="Wall of Love">
-              <li>User Photos, Videos, Stories</li>
-              <li>Submit Your Story (Form)</li>
+            <BoxSection title="Wall of Love" to="/leaderboard">
+              <LinkItem to="/leaderboard">User Photos, Videos, Stories</LinkItem>
+              <LinkItem to="/contact">Submit Your Story (Form)</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Leaderboard">
-              <li>Referrals Leaderboard</li>
-              <li>Most Engaged Users</li>
-              <li>Top Collectors</li>
-              <li>University Leaderboards</li>
+            <BoxSection title="Leaderboard" to="/leaderboard">
+              <LinkItem to="/leaderboard">Referrals Leaderboard</LinkItem>
+              <LinkItem to="/leaderboard">Most Engaged Users</LinkItem>
+              <LinkItem to="/leaderboard">Top Collectors</LinkItem>
+              <LinkItem to="/leaderboard">University Leaderboards</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Contact Us">
-              <li>Phone Support</li>
-              <li>Contact Section</li>
-              <li>Contact Form</li>
-              <li>Email Support</li>
+            <BoxSection title="Contact Us" to="/contact">
+              <LinkItem to="/contact">Phone Support</LinkItem>
+              <LinkItem to="/contact">Contact Section</LinkItem>
+              <LinkItem to="/contact">Contact Form</LinkItem>
+              <LinkItem to="/contact">Email Support</LinkItem>
             </BoxSection>
           </SitemapBox>
 
           {/* AI TECH */}
-          <SitemapBox title="AI Technology" icon={<Bot className="w-6 h-6" />} to="/Features">
-            <BoxSection title="AI Capabilities" to="/Features">
-              <li>Machine Learning Features</li>
-              <li>Image Recognition</li>
-              <li>Smart Curation</li>
-              <li>Personalization Engine</li>
+          <SitemapBox title="AI Technology" icon={<Bot className="w-6 h-6" />} to="/features">
+            <BoxSection title="AI Capabilities" to="/features">
+              <LinkItem to="/features">Machine Learning Features</LinkItem>
+              <LinkItem to="/features">Image Recognition</LinkItem>
+              <LinkItem to="/features">Smart Curation</LinkItem>
+              <LinkItem to="/features">Personalization Engine</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Smart Features">
-              <li>Adaptive Lighting</li>
-              <li>Color Matching</li>
-              <li>Time-Based Display</li>
-              <li>Mood Detection</li>
+            <BoxSection title="Smart Features" to="/features">
+              <LinkItem to="/features">Adaptive Lighting</LinkItem>
+              <LinkItem to="/features">Color Matching</LinkItem>
+              <LinkItem to="/features">Time-Based Display</LinkItem>
+              <LinkItem to="/features">Mood Detection</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Integration Options">
-              <li>Smart Home Compatibility</li>
-              <li>Voice Assistant Support</li>
-              <li>Mobile App Features</li>
-              <li>Third-Party APIs</li>
+            <BoxSection title="Integration Options" to="/features">
+              <LinkItem to="/features">Smart Home Compatibility</LinkItem>
+              <LinkItem to="/features">Voice Assistant Support</LinkItem>
+              <LinkItem to="/features">Mobile App Features</LinkItem>
+              <LinkItem to="/features">Third-Party APIs</LinkItem>
             </BoxSection>
 
-            <BoxSection title="Technical Specifications">
-              <li>Processing Power</li>
-              <li>Memory &amp; Storage</li>
-              <li>Connectivity Standards</li>
-              <li>Software Requirements</li>
+            <BoxSection title="Technical Specifications" to="/how-it-works">
+              <LinkItem to="/how-it-works">Processing Power</LinkItem>
+              <LinkItem to="/how-it-works">Memory &amp; Storage</LinkItem>
+              <LinkItem to="/how-it-works">Connectivity Standards</LinkItem>
+              <LinkItem to="/how-it-works">Software Requirements</LinkItem>
             </BoxSection>
           </SitemapBox>
         </div>
@@ -436,7 +444,7 @@ const BoxSection = ({
       )}
 
       {children && (
-        <ul className="text-sm space-y-1 leading-relaxed" style={{ color: "#4a5568" }}>
+        <ul className="text-sm space-y-1.5 leading-relaxed" style={{ color: "#4a5568" }}>
           {children}
         </ul>
       )}
@@ -444,23 +452,73 @@ const BoxSection = ({
   </div>
 );
 
-const SimpleItem = ({ children }: { children: React.ReactNode }) => (
-  <div
-    className="rounded-xl px-4 py-2 text-sm transition-colors duration-300 relative overflow-hidden"
-    style={{
-      background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.05) 100%)",
-      backdropFilter: "blur(20px) saturate(150%)",
-      WebkitBackdropFilter: "blur(20px) saturate(150%)",
-      border: "1px solid rgba(255,255,255,0.3)",
-      borderTop: "1px solid rgba(255,255,255,0.6)",
-      boxShadow: "0 4px 16px rgba(31, 38, 135, 0.06), inset 0 2px 8px rgba(255,255,255,0.5)",
-      color: "#374151",
-    }}
-  >
-    {/* Subtle inner reflection */}
-    <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/20 to-transparent" />
-    <span className="relative z-10">{children}</span>
-  </div>
-);
+const LinkItem = ({ children, to = "#" }: { children: React.ReactNode; to?: string }) => {
+  const isExternal = to.startsWith("http");
+  if (isExternal) {
+    return (
+      <li className="group flex items-center transition-all duration-200">
+        <a href={to} target="_blank" rel="noopener noreferrer" className="block w-full py-0.5 hover:text-blue-600 transition-colors duration-200">
+          <span className="inline-block group-hover:translate-x-1 transition-transform duration-300">{children}</span>
+        </a>
+      </li>
+    );
+  }
+
+  return (
+    <li className="group flex items-center transition-all duration-200">
+      <Link to={to} className="block w-full py-0.5 hover:text-blue-600 transition-colors duration-200">
+        <span className="inline-block group-hover:translate-x-1 transition-transform duration-300">{children}</span>
+      </Link>
+    </li>
+  );
+};
+
+const SimpleItem = ({ children, to = "#" }: { children: React.ReactNode, to?: string }) => {
+  const isExternal = to.startsWith("http");
+  
+  if (isExternal) {
+    return (
+      <a href={to} target="_blank" rel="noopener noreferrer" className="block group">
+        <div
+          className="rounded-xl px-4 py-2 text-sm transition-all duration-300 relative overflow-hidden group-hover:scale-[1.02]"
+          style={{
+            background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.05) 100%)",
+            backdropFilter: "blur(20px) saturate(150%)",
+            WebkitBackdropFilter: "blur(20px) saturate(150%)",
+            border: "1px solid rgba(255,255,255,0.3)",
+            borderTop: "1px solid rgba(255,255,255,0.6)",
+            boxShadow: "0 4px 16px rgba(31, 38, 135, 0.06), inset 0 2px 8px rgba(255,255,255,0.5)",
+            color: "#374151",
+          }}
+        >
+          {/* Subtle inner reflection */}
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/20 to-transparent" />
+          <span className="relative z-10 group-hover:text-blue-600 transition-colors duration-200">{children}</span>
+        </div>
+      </a>
+    );
+  }
+
+  return (
+    <Link to={to} className="block group">
+      <div
+        className="rounded-xl px-4 py-2 text-sm transition-all duration-300 relative overflow-hidden group-hover:scale-[1.02]"
+        style={{
+          background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.05) 100%)",
+          backdropFilter: "blur(20px) saturate(150%)",
+          WebkitBackdropFilter: "blur(20px) saturate(150%)",
+          border: "1px solid rgba(255,255,255,0.3)",
+          borderTop: "1px solid rgba(255,255,255,0.6)",
+          boxShadow: "0 4px 16px rgba(31, 38, 135, 0.06), inset 0 2px 8px rgba(255,255,255,0.5)",
+          color: "#374151",
+        }}
+      >
+        {/* Subtle inner reflection */}
+        <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-white/20 to-transparent" />
+        <span className="relative z-10 group-hover:text-blue-600 transition-colors duration-200">{children}</span>
+      </div>
+    </Link>
+  );
+};
 
 export default Sitemap;

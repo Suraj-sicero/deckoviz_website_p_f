@@ -141,7 +141,7 @@ const DeckovizCustomizer = () => {
               <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 text-center">
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-6 sm:mt-4 font-bold tracking-tight mb-2 sm:mb-3 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #7C3AED, #D946EF, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-6 sm:mt-4 font-bold tracking-tight mb-2 sm:mb-3 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                     Get Your Deckoviz
                   </h1>
                   <p className="text-gray-600 font-medium text-xs sm:text-sm md:text-base mt-3 sm:mt-4 md:mt-6 mb-2 px-4">
@@ -183,9 +183,7 @@ font-[450]
 "
                   >
                     <h3
-                      className="text-2xl font-semibold mb-2
-bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600
-bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
+                      className="text-2xl font-semibold mb-2 bg-clip-text text-transparent animate-gradient font-['Playfair_Display'] italic" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}
                     >
                       Pre-checkout notes ✨
                     </h3>
@@ -308,7 +306,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         <p className="space-y-3">
                           <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
                             <span>💌</span> 
-                            <span className="bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">A personal note before you order</span>
+                            <span className="bg-clip-text text-transparent animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto' }}>A personal note before you order</span>
                           </strong>
                           <span className="block">If you need us to answer any questions you may have, we'd love to talk before you decide.</span>
                           <span className="block">The DASPort is designed to be less a product, and more a personal companion for life, and we want it to feel that way from the very first moment.</span>
@@ -322,7 +320,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                         <p className="space-y-3">
                           <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
                             <span>✨</span> 
-                            <span className="bg-gradient-to-r from-indigo-700 to-violet-700 bg-clip-text text-transparent">About the anti-glare matte finish filter: Why it is an add-on, not a default</span>
+                            <span className="bg-clip-text text-transparent animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto' }}>About the anti-glare matte finish filter: Why it is an add-on, not a default</span>
                           </strong>
                           <span className="block">We made a deliberate choice to offer the Matte Finish Anti-Glare Filter as an optional add-on rather than building it into every frame. The reason being we want to bring the beauty and magic of the DASPort into as many homes as possible, and keeping the base unit more accessible is how we do that.</span>
                           <span className="block">We spoke with a lot of people during the process. Many were perfectly happy with the default display and had no particular need for matte finish or anti-glare. Others loved the idea of it and were glad to have it as an option they could add.</span>
@@ -370,7 +368,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                 <div className="group relative mt-8 mb-10 smooth-enter smooth-enter-active">
                   <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-400 opacity-70 blur-md group-hover:opacity-100 transition" />
                   <div className="relative rounded-[30px] bg-white/85 backdrop-blur-xl shadow-[0_30px_90px_rgba(79,70,229,0.25)] border border-white/50 p-8 sm:p-10 space-y-6 text-[15px] leading-relaxed text-gray-700 font-[450]">
-                    <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                    <h3 className="text-2xl font-semibold mb-2 bg-clip-text text-transparent animate-gradient font-['Playfair_Display'] italic" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                       ✨ Almost There! Here’s What Happens Next
                     </h3>
                     <p>
@@ -418,7 +416,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                     <p className="mt-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                       <strong>Note:</strong> Because our frames are bespoke - from the carved mottos to the choice of silk or wool - we finalize these specific details via email to ensure 100% accuracy before production begins.
                     </p>
-                    <p className="font-medium text-center text-lg mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                    <p className="font-medium text-center text-lg mt-6 bg-clip-text text-transparent animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto' }}>
                       Ready to customize your ambiance? Proceed to the next page to place your order.
                     </p>
                   </div>
@@ -480,7 +478,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
             <div className="max-w-4xl mx-auto">
               {/* Header - now scrollable */}
               <div className="relative z-10 text-center pt-12 sm:pt-16 md:pt-20 pb-3">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl mt-6 font-bold tracking-tight mb-3 sm:mb-4 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #7C3AED, #D946EF, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                <h1 className="text-4xl sm:text-5xl md:text-6xl mt-6 font-bold tracking-tight mb-3 sm:mb-4 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                   Get Your Deckoviz
                 </h1>
                 <p className="text-gray-800 font-medium text-xs sm:text-sm md:text-base mb-2 px-4">
@@ -526,9 +524,7 @@ font-[450]
 "
                 >
                   <h3
-                    className="text-2xl font-semibold mb-2
-bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600
-bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}
+                    className="text-2xl font-semibold mb-2 bg-clip-text text-transparent animate-gradient font-['Playfair_Display'] italic" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}
                   >
                     Pre-checkout notes ✨
                   </h3>
@@ -651,7 +647,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       <p className="space-y-3">
                         <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
                           <span>💌</span> 
-                          <span className="bg-gradient-to-r from-blue-700 to-indigo-700 bg-clip-text text-transparent">A personal note before you order</span>
+                          <span className="bg-clip-text text-transparent animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto' }}>A personal note before you order</span>
                         </strong>
                         <span className="block">If you need us to answer any questions you may have, we'd love to talk before you decide.</span>
                         <span className="block">The DASPort is designed to be less a product, and more a personal companion for life, and we want it to feel that way from the very first moment.</span>
@@ -665,7 +661,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                       <p className="space-y-3">
                         <strong className="flex items-center gap-2 text-lg font-semibold mb-1">
                           <span>✨</span> 
-                          <span className="bg-gradient-to-r from-indigo-700 to-violet-700 bg-clip-text text-transparent">About the anti-glare matte finish filter: Why it is an add-on, not a default</span>
+                          <span className="bg-clip-text text-transparent animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto' }}>About the anti-glare matte finish filter: Why it is an add-on, not a default</span>
                         </strong>
                         <span className="block">We made a deliberate choice to offer the Matte Finish Anti-Glare Filter as an optional add-on rather than building it into every frame. The reason being we want to bring the beauty and magic of the DASPort into as many homes as possible, and keeping the base unit more accessible is how we do that.</span>
                         <span className="block">We spoke with a lot of people during the process. Many were perfectly happy with the default display and had no particular need for matte finish or anti-glare. Others loved the idea of it and were glad to have it as an option they could add.</span>
@@ -713,7 +709,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
               <div className="group relative mt-8 mb-10 smooth-enter smooth-enter-active">
                 <div className="absolute -inset-[2px] rounded-[32px] bg-gradient-to-r from-blue-400 via-indigo-400 to-indigo-400 opacity-70 blur-md group-hover:opacity-100 transition" />
                 <div className="relative rounded-[30px] bg-white/85 backdrop-blur-xl shadow-[0_30px_90px_rgba(79,70,229,0.25)] border border-white/50 p-8 sm:p-10 space-y-6 text-[15px] leading-relaxed text-gray-700 font-[450]">
-                  <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-indigo-600 bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                  <h3 className="text-2xl font-semibold mb-2 bg-clip-text text-transparent animate-gradient font-['Playfair_Display'] italic" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                     ✨ Almost There! Here’s What Happens Next
                   </h3>
                   <p>
@@ -761,7 +757,7 @@ bg-clip-text text-transparent font-['Playfair_Display'] italic" style={{ fontFam
                   <p className="mt-4 p-4 bg-blue-50/50 rounded-xl border border-blue-100">
                     <strong>Note:</strong> Because our frames are bespoke - from the carved mottos to the choice of silk or wool - we finalize these specific details via email to ensure 100% accuracy before production begins.
                   </p>
-                  <p className="font-medium text-center text-lg mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+                  <p className="font-medium text-center text-lg mt-6 bg-clip-text text-transparent animate-gradient" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '200% auto' }}>
                     Ready to customize your ambiance? Proceed to the next page to place your order.
                   </p>
                 </div>

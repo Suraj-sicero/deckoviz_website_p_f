@@ -103,16 +103,17 @@ const BlogDetail = () => {
     })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-[#c7d2fe] via-[#eef2ff] to-[#bfdbfe] text-gray-900 relative">
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "radial-gradient(circle, #182A4A 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16 flex flex-col lg:flex-row gap-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-16 flex flex-col lg:flex-row gap-8 relative z-10">
 
         {/* Sidebar */}
         <aside className="lg:w-16 flex lg:flex-col items-center justify-between lg:justify-start gap-4 lg:pt-20">
 
           <Link
             to="/blog"
-            className="flex items-center gap-2 bg-white border border-violet-200 text-violet-700 px-4 py-2 rounded-full text-xs font-medium hover:bg-violet-50 transition"
+            className="flex items-center gap-2 bg-white/60 backdrop-blur-xl border border-white text-[#2563EB] px-4 py-2 rounded-full text-xs font-medium hover:bg-white/80 transition-all shadow-sm"
             style={{ width: "140px" }}
           >
             <ChevronLeft size={24} />
@@ -125,12 +126,12 @@ const BlogDetail = () => {
         <div className="flex-1 min-w-0">
 
           {/* Title */}
-          <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight bg-gradient-to-r from-pink-500 via-violet-600 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 leading-tight bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
             {post.title}
           </h1>
 
           {/* Meta */}
-          <div className="flex items-center gap-3 mb-8 text-sm text-violet-500">
+          <div className="flex items-center gap-3 mb-8 text-sm text-[#2563EB]">
             <span>{post.date}</span>
             <span>•</span>
             <span>{post.readTime}</span>
@@ -148,10 +149,10 @@ const BlogDetail = () => {
   className="
   mb-16
   rounded-[32px]
-  backdrop-blur-xl
-  bg-white/60
-  border border-violet-200/60
-  shadow-[0_20px_60px_rgba(168,85,247,0.25)]
+  backdrop-blur-2xl
+  bg-white/40
+  border border-white
+  shadow-[0_20px_60px_rgba(37,99,235,0.15)]
   px-8 py-10 md:px-12
 "
 >
@@ -163,13 +164,13 @@ const BlogDetail = () => {
     prose-headings:font-bold
     prose-h2:text-3xl
     prose-h3:text-2xl
-    prose-p:text-gray-700
-    prose-li:text-gray-700
-    prose-strong:text-gray-900
-    prose-a:text-violet-500
+    prose-p:text-black
+    prose-li:text-black
+    prose-strong:text-black
+    prose-a:text-[#2563EB]
     prose-a:no-underline
     prose-a:font-medium
-    prose-a:hover:text-pink-500
+    prose-a:hover:text-[#182A4A]
   "
   >
 <TypingMarkdown content={cleanContent} headingMap={headingMap} />
@@ -187,13 +188,13 @@ const BlogDetail = () => {
               <Link
                 to={`/blog/${article.slug}`}
                 key={article.slug}
-                className="bg-white rounded-2xl overflow-hidden border border-violet-200 p-4 hover:border-pink-300 hover:shadow-lg transition"
+                className="bg-white/40 backdrop-blur-xl rounded-2xl overflow-hidden border border-white p-4 hover:shadow-[0_8px_32px_rgba(37,99,235,0.2)] hover:bg-white/60 transition-all duration-300"
               >
                 <span className="text-sm font-bold block mb-2">
                   {article.title}
                 </span>
 
-                <span className="text-[10px] text-violet-400">
+                <span className="text-[10px] text-[#2563EB]">
                   {article.date}
                 </span>
               </Link>
@@ -206,18 +207,18 @@ const BlogDetail = () => {
         {headings.length > 0 && (
           <aside className="hidden xl:block w-[260px] sticky top-24 self-start">
 
-            <div className="bg-white border border-violet-200 rounded-2xl p-6 shadow-sm">
+            <div className="bg-white/40 backdrop-blur-xl border border-white rounded-2xl p-6 shadow-[0_8px_32px_rgba(37,99,235,0.15)]">
 
-              <p className="text-sm font-semibold text-violet-700 mb-4">
+              <p className="text-sm font-semibold text-[#182A4A] mb-4">
                 Table of Contents
               </p>
 
-              <ul className="space-y-3 text-sm text-violet-500">
+              <ul className="space-y-3 text-sm text-[#2563EB]">
 
                 {headings.map((h) => (
                   <li
                     key={h.id}
-                    className="cursor-pointer hover:text-pink-500 transition"
+                    className="cursor-pointer hover:text-[#182A4A] transition"
                     onClick={() =>
                       document
                         .getElementById(h.id)

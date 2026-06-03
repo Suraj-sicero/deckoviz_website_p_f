@@ -22,14 +22,14 @@ export default function Contact() {
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-50 group-hover:opacity-80 transition duration-500"></div>
             <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-1.5 rounded-xl text-sm font-semibold tracking-wide shadow-xl flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
-              Contact Us
+              Reach Out To Us
               <span className="w-1.5 h-1.5 rounded-full bg-white/80 animate-pulse"></span>
             </div>
           </div>
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-5xl md:text-6xl font-black text-center mb-6 leading-tight bg-gradient-to-br from-gray-900 via-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
+        <h1 className="text-5xl md:text-6xl font-serif italic font-bold text-center mb-6 leading-tight bg-gradient-to-br from-gray-900 via-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
           Contact Our Team
         </h1>
 
@@ -45,7 +45,7 @@ export default function Contact() {
         {/* Description */}
         <div className="text-center max-w-2xl mx-auto mb-14">
           <p className="text-lg text-gray-600 leading-relaxed mb-3">
-            We love hearing from you — whether it's feedback, ideas, creative sparks, bugs
+            We love hearing from you whether it's feedback, ideas, creative sparks, bugs
             you've noticed, feature suggestions, or simply your experience with Deckoviz.
           </p>
           <p className="text-lg text-gray-600 leading-relaxed">
@@ -72,14 +72,10 @@ export default function Contact() {
         </div>
 
         {/* Contact Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
           {/* Instagram Card — Frosted Glass */}
           <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
-            bg-white/30 backdrop-blur-xl
-            border border-white/50
-            shadow-[0_8px_32px_rgba(37,99,235,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
-            hover:shadow-[0_20px_50px_rgba(37,99,235,0.2),inset_0_1px_1px_rgba(255,255,255,0.8)]
-            hover:-translate-y-1 transition-all duration-500 p-8">
+            bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
             {/* Shiny top edge */}
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
             {/* Diagonal glare */}
@@ -118,11 +114,7 @@ export default function Contact() {
 
           {/* Call Us Card — Frosted Glass */}
           <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
-            bg-white/30 backdrop-blur-xl
-            border border-white/50
-            shadow-[0_8px_32px_rgba(37,99,235,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
-            hover:shadow-[0_20px_50px_rgba(37,99,235,0.2),inset_0_1px_1px_rgba(255,255,255,0.8)]
-            hover:-translate-y-1 transition-all duration-500 p-8">
+            bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
             {/* Shiny top edge */}
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
             {/* Diagonal glare */}
@@ -162,11 +154,7 @@ export default function Contact() {
 
           {/* Email Us Card — Frosted Glass */}
           <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
-            bg-white/30 backdrop-blur-xl
-            border border-white/50
-            shadow-[0_8px_32px_rgba(37,99,235,0.1),inset_0_1px_1px_rgba(255,255,255,0.7)]
-            hover:shadow-[0_20px_50px_rgba(37,99,235,0.2),inset_0_1px_1px_rgba(255,255,255,0.8)]
-            hover:-translate-y-1 transition-all duration-500 p-8">
+            bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
             {/* Shiny top edge */}
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
             {/* Diagonal glare */}
@@ -198,6 +186,32 @@ export default function Contact() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
               <span className="text-gray-900 font-medium">support@deckoviz.com</span>
+            </div>
+          </div>
+
+          {/* Join Us Card — Frosted Glass */}
+          <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+            <div className="absolute top-0 left-0 w-2/3 h-1/2 bg-gradient-to-br from-white/30 to-transparent rounded-tl-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+            <div className="absolute -inset-2 bg-[#2563EB]/10 rounded-[2rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+            
+            <div className="flex justify-start mb-6">
+              <img src="/images/contact1.png" alt="Join us" className="w-16 h-16 object-contain hue-rotate-180" />
+            </div>
+
+            <h3 className="text-2xl font-bold text-gray-900 mb-1 text-left flex-1" style={{ fontFamily: 'Bricolage Grotesque, sans-serif' }}>
+              Join us.
+            </h3>
+
+            <p className="text-gray-700 text-left text-sm mb-6 leading-relaxed">
+              If you resonate with what we are building and feel you want to be a part of the mission, reach out to us at vizzy@deckoviz.com or team@deckoviz.com.
+            </p>
+
+            <div className="flex items-center space-x-2 mt-auto">
+              <svg className="w-4 h-4 text-[#2563EB]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span className="text-gray-900 font-medium text-sm">team@deckoviz.com</span>
             </div>
           </div>
         </div>
