@@ -208,6 +208,7 @@ import SilenceArchitecture from "./components/developerSpecs/SilenceArchitecture
 import MusicResponsiveArt from "./components/developerSpecs/MusicResponsiveArt";
 import AgenticShapeVortex from "./components/developerSpecs/AgenticShapeVortex";
 import CreateWorld from "./pages/CreateWorld";
+import MasterSuiteOfFeatures from "./pages/MasterSuiteOfFeatures";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
 import FlagshipGamesPage from "./components/flagshipGames/FlagshipGamesPage";
 import StoryForgeApp from "./components/flagshipGames/storyForge/StoryForgeApp";
@@ -577,6 +578,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/developer-specs/agentic-shape-vortex" element={<AgenticShapeVortex />} />
           <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
           <Route path="/create-world" element={<CreateWorld />} />
+          <Route path="/master-suite" element={<MasterSuiteOfFeatures />} />
           <Route path="/elinity" element={<ElinityLanding />} />
           <Route path="/elinity/about" element={<ElinityAboutUs />} />
           <Route path="/elinity/ellaris" element={<ElinityEllaris />} />
