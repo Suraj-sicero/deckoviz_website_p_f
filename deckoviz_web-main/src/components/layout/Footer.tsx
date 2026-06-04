@@ -21,7 +21,8 @@ import {
   Music,
   Radio,
   Zap,
-  X
+  X,
+  Grid
 } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -37,6 +38,7 @@ const productLinks = [
   { name: "Experimental Art Modes", path: "/experimental-art-modes" },
   { name: "Flagship Games", path: "/flagship-games" },
   { name: "Vizzy Generative Chat", path: "/vizzy-generative-chat" },
+  { name: "Master Suite of Features", path: "/master-suite" },
 ]
 
 const companyLinks = [
@@ -446,6 +448,35 @@ const Footer = () => {
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
               <Gamepad2 className="relative z-10 w-4 h-4" />
               <span className="relative z-10">Flagship Games</span>
+              <svg
+                className="relative z-10 group-hover:translate-x-1 transition-transform"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+
+            <a
+              href="/master-suite"
+              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(167,139,250,0.5)] hover:shadow-[0_0_50px_rgba(167,139,250,0.8)] border border-indigo-400/30"
+              style={{
+                background: "linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6, #f59e0b)",
+                backgroundSize: "300% 300%",
+                animation: "footerGradientFlow 4s ease infinite",
+                color: "white",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+              <Grid className="relative z-10 w-4 h-4 text-amber-200 animate-pulse" />
+              <span className="relative z-10">Master Suite of Features</span>
               <svg
                 className="relative z-10 group-hover:translate-x-1 transition-transform"
                 width="16"
