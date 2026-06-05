@@ -63,6 +63,7 @@ import "./models/UploadedMedia.js";
 import "./models/Collection.js";
 import "./models/DeckovizCuration.js";
 import "./models/UserFavoritePrompt.js";
+import "./models/UserSavedArtwork.js";
 import "./models/FilmProject.js";
 import { seedSystemCards } from "./seeds/systemCardSeed.js";
 
