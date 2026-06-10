@@ -202,7 +202,7 @@ const Footer = () => {
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {/* Left glowing ball */}
           <motion.div
-            className="absolute bottom-10 left-[10%] w-72 h-72 bg-violet-500/20 rounded-full blur-[100px]"
+            className="absolute bottom-10 left-[10%] w-72 h-72 bg-indigo-500/20 rounded-full blur-[100px]"
             animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
           />
@@ -214,7 +214,7 @@ const Footer = () => {
           />
           {/* Right glowing ball */}
           <motion.div
-            className="absolute top-20 right-[10%] w-80 h-80 bg-pink-500/20 rounded-full blur-[100px]"
+            className="absolute top-20 right-[10%] w-80 h-80 bg-teal-500/20 rounded-full blur-[100px]"
             animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           />
@@ -238,7 +238,7 @@ const Footer = () => {
               <div
                 className="rounded-xl md:rounded-2xl p-2 md:p-2.5 shadow-[0_0_20px_rgba(167,139,250,0.3)] flex items-center space-x-1 md:space-x-2 border border-white/50"
                 style={{
-                  background: "linear-gradient(135deg, #e0e7ff, #fbcfe8, #bfdbfe, #e0e7ff)",
+                  background: "linear-gradient(135deg, #e0e7ff, #ccfbf1, #c7d2fe, #ccfbf1)",
                   backgroundSize: "300% 300%",
                   animation: "footerGradientFlow 6s ease infinite",
                 }}
@@ -644,7 +644,7 @@ const Footer = () => {
                 />
               ))}
               {/* Soft glowing ambient light */}
-              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
               <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
             </div>
 

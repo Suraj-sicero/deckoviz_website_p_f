@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Brain, Home, Sparkles, BookOpen, Image as ImageIcon, Leaf, MessageSquare, Frame, Palette, Heart, Clock, Wand2, BookMarked, ArrowRight } from "lucide-react";
 
 type Spark = {
   id: number;
@@ -91,7 +92,7 @@ const coreReadings = [
 ];
 
 /* ===== Card UI ===== */
-const emojis = ["🧠","🏡","✨","📘","🖼️","🌿","💭","🪟","🎨","🧘","⏳","🪄"];
+const icons = [Brain, Home, Sparkles, BookOpen, ImageIcon, Leaf, MessageSquare, Frame, Palette, Heart, Clock, Wand2];
 
 const ReadingCard = ({ title, description, slug, index }: any) => {
   const navigate = useNavigate();
@@ -99,21 +100,18 @@ const ReadingCard = ({ title, description, slug, index }: any) => {
   return (
     <div
       onClick={() => navigate(`/blog/${slug}`)}
-      className="group relative rounded-2xl p-8 pt-14 bg-white/60 backdrop-blur-xl border border-white/30
-      shadow-[0_20px_40px_rgba(168,85,247,0.15)]
-      hover:shadow-[0_30px_60px_rgba(168,85,247,0.25)]
-      hover:scale-105 transition-all duration-500 cursor-pointer"
+      className="group relative rounded-2xl p-8 pt-14 bg-gradient-to-br from-teal-50/95 to-cyan-50/95 backdrop-blur-xl border border-teal-200/60
+      shadow-[0_0_25px_rgba(37,99,235,0.25)]
+      hover:shadow-[0_0_45px_rgba(37,99,235,0.45)]
+      hover:scale-[1.03] transition-all duration-500 cursor-pointer"
     >
 
-      {/* Emoji */}
-      <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-3xl">
-        {emojis[index % emojis.length]}
+      {/* Icon Badge */}
+      <div className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 bg-gradient-to-br from-[#2563EB] to-indigo-500 rounded-2xl flex items-center justify-center shadow-[0_8px_16px_rgba(37,99,235,0.25)] border-[3px] border-white/90 group-hover:-translate-y-1 group-hover:shadow-[0_12px_24px_rgba(37,99,235,0.4)] group-hover:rotate-3 transition-all duration-500">
+        {React.createElement(icons[index % icons.length], { className: "w-6 h-6 text-white" })}
       </div>
 
-      <h3 className="text-xl font-bold mb-3 text-gray-900
-        group-hover:bg-gradient-to-r group-hover:from-violet-600
-        group-hover:to-pink-500 group-hover:bg-clip-text
-        group-hover:text-transparent transition-all">
+      <h3 className="text-xl font-bold mb-3 text-[#2563EB] group-hover:text-blue-800 transition-colors duration-300">
         {title}
       </h3>
 
@@ -161,7 +159,7 @@ useEffect(() => {
     
     
     <section className="min-h-screen px-6 py-24 relative overflow-hidden
-      bg-gradient-to-br from-indigo-50 via-violet-50 to-pink-50">
+      bg-gradient-to-br from-teal-50 via-teal-100/40 to-cyan-50">
 
     <div className="pointer-events-none fixed inset-0 z-50">
   {sparks.map(spark => (
@@ -184,16 +182,17 @@ useEffect(() => {
 
       {/* Glow blobs */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-violet-400/30 rounded-full blur-[120px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-pink-400/30 rounded-full blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] bg-teal-400/20 rounded-full blur-[120px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] bg-cyan-400/20 rounded-full blur-[120px]" />
       </div>
 
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-20">
-          <h1 className="text-5xl font-bold text-gray-900">
-            Core Reading
+          <h1 className="text-5xl md:text-6xl font-serif italic text-gray-900 relative inline-block font-medium">
+            <span className="relative z-10">Core Reading</span>
+            <span className="absolute bottom-2 left-[-10px] right-[-10px] h-4 bg-teal-300/80 -z-10 -rotate-2 rounded-sm" />
           </h1>
 
           <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
@@ -210,21 +209,27 @@ useEffect(() => {
 
         </div>
 
-        {/* Emoji Divider */}
-        <div className="text-center text-5xl mb-12">
-          📖
+        {/* Icon Divider */}
+        <div className="flex justify-center mb-8 mt-4">
+          <div className="w-16 h-16 bg-gradient-to-br from-teal-400 to-[#2563EB] rounded-full flex items-center justify-center shadow-[0_8px_20px_rgba(37,99,235,0.25)] border-4 border-white/80">
+            <BookMarked className="w-7 h-7 text-white" />
+          </div>
         </div>
 
         {/* Footer Text */}
-        <p className="text-center text-gray-700 max-w-xl mx-auto">
+        <p className="text-center text-gray-700 max-w-xl mx-auto font-medium">
           If Deckoviz resonates, you’ll feel it somewhere between the words.
         </p>
-<p
-  onClick={() => navigate("/blog")}
-  className="text-center mt-4 font-semibold text-violet-600 cursor-pointer hover:underline"
->
-  → Explore the Deckoviz Journal
-</p>
+        
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={() => navigate("/blog")}
+            className="flex items-center gap-2 px-8 py-3.5 font-bold text-white bg-gradient-to-r from-[#2563EB] to-indigo-600 rounded-full shadow-[0_8px_20px_rgba(37,99,235,0.3)] hover:shadow-[0_15px_30px_rgba(37,99,235,0.45)] hover:-translate-y-1 transition-all duration-300 group"
+          >
+            Explore the Deckoviz Journal
+            <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" />
+          </button>
+        </div>
 
 
       </div>

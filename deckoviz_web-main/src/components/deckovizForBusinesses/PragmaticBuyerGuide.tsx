@@ -696,8 +696,11 @@ export default function PragmaticBuyerGuide() {
                 For enterprises that understand where differentiation is heading, this is not a question of "why". It is a question of how soon.
               </p>
 
-              <div className="bg-gradient-to-r from-violet-600 to-pink-600 rounded-2xl p-6">
-                <p className="text-2xl text-white leading-relaxed font-bold text-center">
+              <div className="bg-gradient-to-r from-[#182A4A] via-[#2563EB] to-[#6d28d9] rounded-2xl p-6">
+                <p 
+                  className="text-2xl text-white leading-relaxed italic text-center" 
+                  style={{ fontFamily: "'Playfair Display', serif" }}
+                >
                   The businesses that win will not be the loudest or the cheapest. They will be the ones that make people feel something worth remembering.
                 </p>
               </div>

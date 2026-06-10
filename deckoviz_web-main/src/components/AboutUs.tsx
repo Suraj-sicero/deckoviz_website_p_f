@@ -1,11 +1,45 @@
+import { Sparkles, Wand2, Heart, Sun } from "lucide-react";
 import InteractiveParticleGraphic from "./other/InteractiveParticleGraphic";
 import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 15 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "0px 0px -50px 0px" },
+  transition: { duration: 0.6, ease: "easeOut" }
+};
+
+const ABOUT_US_IMAGES = [
+  "/images/about_us_images/Nov 18, 2025, 10_52_27 PM.png",
+  "/images/about_us_images/Nov 18, 2025, 10_52_46 PM.png",
+  "/images/about_us_images/Nov 18, 2025, 10_52_56 PM.png",
+  "/images/about_us_images/ee3164c2-c758-4655-b33c-04eaf3b9d52a.png",
+  "/images/about_us_images/f08689c6-51e8-4c9c-9025-da12d8cc2433.png",
+  "/images/about_us_images/f86905e0-a200-4c70-b595-4d039a0b905a.png",
+  "/images/about_us_images/freepik__the-style-is-candid-image-photography-with-natural__23850.png",
+  "/images/about_us_images/freepik__the-style-is-candid-image-photography-with-natural__23851.png",
+  "/images/about_us_images/freepik__the-style-is-candid-image-photography-with-natural__23854.png",
+  "/images/about_us_images/freepik__the-style-is-candid-image-photography-with-natural__23856.png",
+  "/images/about_us_images/freepik__the-style-is-candid-image-photography-with-natural__23857.png",
+  "/images/about_us_images/freepik__the-style-is-candid-image-photography-with-natural__23864.png"
+];
 
 export default function AboutUs() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [cursorVisible, setCursorVisible] = useState(false);
   const smoothPos = useRef({ x: -200, y: -200 });
   const rafRef = useRef<number>(0);
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [slideIndex2, setSlideIndex2] = useState(Math.floor(ABOUT_US_IMAGES.length / 2));
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlideIndex((prev) => (prev + 1) % ABOUT_US_IMAGES.length);
+      setSlideIndex2((prev) => (prev + 1) % ABOUT_US_IMAGES.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     let target = { x: -200, y: -200 };
@@ -68,9 +102,9 @@ export default function AboutUs() {
         .mesh-blob {
           position: absolute;
           border-radius: 50%;
-          filter: blur(140px); /* Massive blur for true liquid fusion */
-          opacity: 0.35;       /* Delicate opacity to not overpower text */
-          will-change: transform;
+          filter: blur(80px);
+          opacity: 0.12;
+          will-change: auto;
         }
 
         #about h1, #about h2 {
@@ -126,8 +160,6 @@ export default function AboutUs() {
           <div className="mesh-blob mesh-blob-3" />
           <div className="mesh-blob mesh-blob-4" />
         </div>
-        {/* Very subtle noise overlay for texture */}
-        <div className="absolute inset-0 opacity-[0.25] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\'/%3E%3C/svg%3E")' }} />
       </div>
 
       {/* Interactive Cursor Sphere */}
@@ -154,10 +186,10 @@ export default function AboutUs() {
         />
       </div>
 
-      <div className="absolute top-72 right-4 sm:right-12 md:right-72 w-16 h-16 sm:w-20 sm:h-20 z-30 cursor-pointer transform transition-all duration-300 hover:scale-125 hover:-rotate-12 hover:drop-shadow-2xl">
+      <div className="absolute top-80 left-8 sm:left-20 md:left-72 w-14 h-14 sm:w-16 sm:h-16 z-30 cursor-pointer transform transition-all duration-300 hover:scale-125 hover:-rotate-12 hover:drop-shadow-2xl">
         <img
-          src="/images/rocket3D.png"
-          alt="3D Rocket"
+          src="/images/3dicons-brush-dynamic-color.png"
+          alt="3D Brush"
           className="w-full h-full object-contain drop-shadow-lg pointer-events-auto"
         />
       </div>
@@ -165,21 +197,31 @@ export default function AboutUs() {
       {/* Main Content */}
       <div className="relative z-20 container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
         {/* Shiny glowing Badge */}
-        <div className="flex justify-center pt-4 pb-2 mt-24 mb-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          className="flex justify-center pt-4 pb-2 mt-24 mb-6"
+        >
           <div className="relative group cursor-default">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-40 group-hover:opacity-70 transition duration-500" />
             <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-6 py-1.5 rounded-xl text-sm font-semibold tracking-widest uppercase shadow-xl flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
-              About Us
+              Who We Are
               <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
             </div>
           </div>
-        </div>
+        </motion.div>
 
         {/* Hero heading */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl font-black mb-4 bg-gradient-to-br from-[#182A4A] via-[#2563EB] to-teal-400 bg-clip-text text-transparent leading-tight tracking-tight">
+        <motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+          className="text-5xl sm:text-6xl md:text-7xl font-black mb-4 bg-gradient-to-br from-[#182A4A] via-[#2563EB] to-teal-400 bg-clip-text text-transparent leading-tight tracking-tight"
+        >
           About Us
-        </h1>
+        </motion.h1>
 
         {/* Decorative divider */}
         <div className="flex items-center justify-center gap-3 mb-6">
@@ -191,14 +233,19 @@ export default function AboutUs() {
         </div>
 
         {/* Subheading */}
-        <div className="max-w-2xl mx-auto mb-20 sm:mb-28 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.25 }}
+          className="max-w-2xl mx-auto mb-20 sm:mb-28 px-4"
+        >
           <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
             At <span className="text-[#2563EB] font-bold">Deckoviz</span>, we are reimagining what it means to live, work,
           </p>
           <p className="text-base sm:text-lg text-gray-600 leading-relaxed font-medium">
             and <span className="text-teal-500 font-bold">feel</span> within a space.
           </p>
-        </div>
+        </motion.div>
 
         {/* Premium Staggered Image Showcase */}
         <div className="relative max-w-6xl mx-auto mb-28">
@@ -210,7 +257,12 @@ export default function AboutUs() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-end">
             {/* Card 1 — tall, left */}
-            <div className="group relative overflow-hidden rounded-[2rem] lg:translate-y-8 cursor-pointer"
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0 }}
+              className="group relative overflow-hidden rounded-[2rem] lg:translate-y-8 cursor-pointer"
               style={{ boxShadow: '0 24px 60px rgba(37,99,235,0.2), 0 4px 16px rgba(0,0,0,0.08)' }}>
               {/* Glow ring */}
               <div className="absolute -inset-1 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-[2.2rem] opacity-0 group-hover:opacity-60 transition-all duration-700 -z-10 blur-sm" />
@@ -218,9 +270,9 @@ export default function AboutUs() {
               <div className="absolute top-4 right-4 z-20 w-8 h-8 border-t-2 border-r-2 border-white/50 rounded-tr-xl" />
               <div className="absolute bottom-4 left-4 z-20 w-8 h-8 border-b-2 border-l-2 border-white/30 rounded-bl-xl" />
 
-              <div className="aspect-[3/4] relative overflow-hidden rounded-[2rem]">
+              <div className="aspect-[4/5] relative overflow-hidden rounded-[2rem]">
                 <img src="/images/about1.png" alt="Modern living room with mountain landscape display"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 scale-100" />
+                  className="w-full h-full object-cover object-[center_right] transition-transform duration-700 group-hover:scale-105 scale-100" />
                 {/* Always-on subtle vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b36]/70 via-[#0d1b36]/10 to-transparent" />
                 {/* Hover shimmer sweep */}
@@ -236,18 +288,23 @@ export default function AboutUs() {
               <div className="absolute bottom-5 inset-x-5 z-20">
                 <p className="text-white/80 text-xs font-medium leading-snug">Mountain landscape display — immersive & serene</p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2 — extra tall, center */}
-            <div className="group relative overflow-hidden rounded-[2rem] cursor-pointer"
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.12 }}
+              className="group relative overflow-hidden rounded-[2rem] cursor-pointer"
               style={{ boxShadow: '0 32px 80px rgba(20,184,166,0.2), 0 6px 20px rgba(0,0,0,0.10)' }}>
               <div className="absolute -inset-1 bg-gradient-to-br from-[#2563EB] to-teal-400 rounded-[2.2rem] opacity-0 group-hover:opacity-60 transition-all duration-700 -z-10 blur-sm" />
               <div className="absolute top-4 right-4 z-20 w-8 h-8 border-t-2 border-r-2 border-teal-300/60 rounded-tr-xl" />
               <div className="absolute bottom-4 left-4 z-20 w-8 h-8 border-b-2 border-l-2 border-teal-300/30 rounded-bl-xl" />
 
-              <div className="aspect-[3/5] relative overflow-hidden rounded-[2rem]">
+              <div className="aspect-[4/5] sm:aspect-[3/4] relative overflow-hidden rounded-[2rem]">
                 <img src="/images/about2.png" alt="Contemporary space with cosmic night sky display"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 scale-100" />
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105 scale-100" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d2b2e]/70 via-[#0d2b2e]/10 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </div>
@@ -263,18 +320,23 @@ export default function AboutUs() {
               <div className="absolute bottom-5 inset-x-5 z-20">
                 <p className="text-white/80 text-xs font-medium leading-snug">Cosmic night sky display — wonder & depth</p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3 — tall, right */}
-            <div className="group relative overflow-hidden rounded-[2rem] lg:translate-y-8 cursor-pointer"
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.24 }}
+              className="group relative overflow-hidden rounded-[2rem] lg:translate-y-8 cursor-pointer"
               style={{ boxShadow: '0 24px 60px rgba(24,42,74,0.2), 0 4px 16px rgba(0,0,0,0.08)' }}>
               <div className="absolute -inset-1 bg-gradient-to-br from-teal-400 to-[#182A4A] rounded-[2.2rem] opacity-0 group-hover:opacity-60 transition-all duration-700 -z-10 blur-sm" />
               <div className="absolute top-4 right-4 z-20 w-8 h-8 border-t-2 border-r-2 border-white/40 rounded-tr-xl" />
               <div className="absolute bottom-4 left-4 z-20 w-8 h-8 border-b-2 border-l-2 border-white/20 rounded-bl-xl" />
 
-              <div className="aspect-[3/4] relative overflow-hidden rounded-[2rem]">
+              <div className="aspect-[4/5] relative overflow-hidden rounded-[2rem]">
                 <img src="/images/about3.png" alt="Modern interior with ocean sunset display"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 scale-100" />
+                  className="w-full h-full object-cover object-[80%_center] transition-transform duration-700 group-hover:scale-105 scale-100" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0d1b2b]/70 via-[#0d1b2b]/10 to-transparent" />
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/8 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
               </div>
@@ -286,7 +348,7 @@ export default function AboutUs() {
               <div className="absolute bottom-5 inset-x-5 z-20">
                 <p className="text-white/80 text-xs font-medium leading-snug">Ocean sunset display — warmth & vitality</p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -294,7 +356,11 @@ export default function AboutUs() {
         <div className="mt-20 max-w-6xl mx-auto px-4">
 
           {/* Company Description Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
+          <motion.div
+            {...fadeUp}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16"
+          >
             <div className="text-left">
               {/* Accent bar */}
               <div className="flex items-start gap-5">
@@ -318,11 +384,11 @@ export default function AboutUs() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
 
           {/* Flagship Products Container — frosted glass */}
-          <div className="mb-20">
+          <motion.div {...fadeUp} className="mb-20">
             <div className="group relative overflow-hidden rounded-3xl p-6 mt-8 sm:p-10 lg:p-14
               bg-white/30  transform-gpu
               border border-white/50
@@ -351,10 +417,10 @@ export default function AboutUs() {
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Final Description — highlighted pull quote */}
-          <div className="relative mb-20">
+          <motion.div {...fadeUp} className="relative mb-20">
             {/* Background glow */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 via-teal-300/5 to-transparent rounded-3xl" />
             <div className="relative border-l-4 border-gradient-to-b border-[#2563EB] pl-8 py-4">
@@ -366,65 +432,75 @@ export default function AboutUs() {
                 intentions and needs. Every piece of art it displays, every visual it curates, is attuned to your unique life, spirit, and essence.
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Our Philosophy Section */}
-        <div className="relative mt-32 mb-32">
-          <div className="relative z-10 max-w-6xl mx-auto px-4">
+        <div className="relative mt-32 mb-32 overflow-hidden py-16">
+          <div className="absolute inset-0 z-0 pointer-events-auto opacity-70">
+            <InteractiveParticleGraphic />
+          </div>
+          <div className="relative z-10 max-w-6xl mx-auto px-4 pointer-events-none">
 
             {/* Our Philosophy Grid Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="flex flex-col items-center text-center max-w-4xl mx-auto mb-16 pointer-events-auto"
+            >
               
-              {/* Left Column: Text & Header */}
-              <div className="flex flex-col">
-                {/* Section Header */}
-                <div className="flex items-center gap-4 mb-10">
-                  <div className="relative group cursor-default">
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-40 transition duration-500" />
-                    <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-5 py-1.5 rounded-xl text-xs font-black tracking-widest uppercase shadow-xl flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
-                      Our Philosophy
-                    </div>
+              {/* Header */}
+              <div className="flex items-center gap-4 mb-10 w-full justify-center">
+                <div className="h-px flex-1 bg-gradient-to-l from-[#2563EB]/30 to-transparent" />
+                <div className="relative group cursor-default">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-40 transition duration-500" />
+                  <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-5 py-1.5 rounded-xl text-xs font-black tracking-widest uppercase shadow-xl flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-300 animate-pulse" />
+                    Our Philosophy
                   </div>
-                  <div className="h-px flex-1 bg-gradient-to-r from-[#2563EB]/30 to-transparent" />
                 </div>
-
-                <div className="text-left mb-6">
-                  <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
-                    We believe technology should not just be{' '}
-                    <span className="bg-gradient-to-r from-[#2563EB] to-teal-400 bg-clip-text text-transparent">functional</span>
-                  </h2>
-                </div>
-                <div className="text-left flex items-center">
-                  <p className="text-lg text-gray-500 leading-relaxed">
-                    At Deckoviz, we are pioneering a new category of<br />
-                    AI-powered spatial enhancement and state-setting — bringing<br />
-                    future-ready tech, personalization, and emotion<br />
-                    into homes, offices, restaurants, hotels, wellness spaces, and beyond.
-                  </p>
-                </div>
+                <div className="h-px flex-1 bg-gradient-to-r from-[#2563EB]/30 to-transparent" />
               </div>
 
-              {/* Right Column: Interactive Graphic */}
-              <div className="w-full">
-                <InteractiveParticleGraphic />
+              <div className="mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 leading-tight">
+                  We believe technology should not just be{' '}
+                  <span className="bg-gradient-to-r from-[#2563EB] to-teal-400 bg-clip-text text-transparent">functional</span>
+                </h2>
               </div>
-            </div>
+              <div className="flex items-center justify-center">
+                <p className="text-lg text-gray-500 leading-relaxed max-w-2xl">
+                  At Deckoviz, we are pioneering a new category of<br />
+                  AI-powered spatial enhancement and state-setting — bringing<br />
+                  future-ready tech, personalization, and emotion<br />
+                  into homes, offices, restaurants, hotels, wellness spaces, and beyond.
+                </p>
+              </div>
+            </motion.div>
 
             {/* Four Philosophy Cards — glassmorphic */}
-            <div className="relative">
+            <div className="relative pointer-events-auto">
               {/* Ambient glow */}
               <div className="absolute inset-0 -z-10" style={{ background: 'conic-gradient(from 0deg at center, rgba(37,99,235,0.12) 0%, rgba(24,42,74,0.10) 90deg, rgba(20,184,166,0.06) 180deg, rgba(37,99,235,0.04) 270deg, rgba(24,42,74,0.06) 360deg)', borderRadius: '60%', filter: 'blur(80px)' }} />
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                 {[
-                  { img: '/images/3dicons-notify-heart-dynamic-color.png', text: 'It should be beautiful.', accent: 'from-[#182A4A] to-[#2563EB]', glow: 'rgba(37,99,235,0.2)' },
-                  { img: '/images/3dicons-magic-trick-dynamic-color.png', text: 'It should be magical.', accent: 'from-[#2563EB] to-teal-400', glow: 'rgba(20,184,166,0.2)' },
-                  { img: '/images/3dicons-thumb-up-dynamic-color.png', text: 'It should be emotionally enriching.', accent: 'from-teal-400 to-[#182A4A]', glow: 'rgba(24,42,74,0.2)' },
-                  { img: '/images/3dicons-heart-dynamic-color.png', text: 'It should help us live more intentionally, more expressively, more joyfully', accent: 'from-[#182A4A] to-teal-400', glow: 'rgba(37,99,235,0.15)' },
-                ].map((card, i) => (
-                  <div key={i} className="group relative overflow-hidden rounded-2xl p-7 text-center
+                  { icon: Sparkles, text: 'It should be beautiful.', accent: 'from-[#182A4A] to-[#2563EB]', glow: 'rgba(37,99,235,0.2)' },
+                  { icon: Wand2, text: 'It should be magical.', accent: 'from-[#2563EB] to-teal-400', glow: 'rgba(20,184,166,0.2)' },
+                  { icon: Heart, text: 'It should be emotionally enriching.', accent: 'from-teal-400 to-[#182A4A]', glow: 'rgba(24,42,74,0.2)' },
+                  { icon: Sun, text: 'It should help us live more intentionally, more expressively, more joyfully', accent: 'from-[#182A4A] to-teal-400', glow: 'rgba(37,99,235,0.15)' },
+                ].map((card, i) => {
+                  const Icon = card.icon;
+                  return (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.55, ease: 'easeOut', delay: i * 0.1 }}
+                    className="group relative overflow-hidden rounded-2xl p-7 text-center
                     bg-white/60 
                     border border-white/70
                     shadow-[0_4px_24px_rgba(37,99,235,0.07),inset_0_1px_1px_rgba(255,255,255,0.8)]
@@ -436,27 +512,30 @@ export default function AboutUs() {
                     <div className={`absolute bottom-0 inset-x-0 h-1 bg-gradient-to-r ${card.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-b-2xl`} />
                     {/* Icon ring */}
                     <div className={`relative mx-auto mb-5 w-20 h-20 rounded-2xl bg-gradient-to-br ${card.accent} p-0.5`}>
-                      <div className="w-full h-full rounded-[0.9rem] bg-white/90 flex items-center justify-center">
-                        <img src={card.img} alt="" className="w-12 h-12 object-contain" />
+                      <div className="w-full h-full rounded-[0.9rem] bg-white/90 flex items-center justify-center text-[#2563EB]">
+                        <Icon className="w-8 h-8" strokeWidth={1.5} />
                       </div>
                     </div>
                     <h3 className="text-base font-bold text-gray-900 leading-snug">{card.text}</h3>
-                  </div>
-                ))}
+                  </motion.div>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
-
-        {/* Additional Content Placeholder */}
-        <div className="mt-32 mb-32">{/* Future content will go here */}</div>
 
         {/* Our Mission & Vision Section */}
         <div className="relative mt-32 mb-32">
           <div className="relative z-10 max-w-6xl mx-auto px-4">
 
             {/* Full-width dark glass panel */}
-            <div className="relative overflow-hidden rounded-[2.5rem] mb-16
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+              className="relative overflow-hidden rounded-[2.5rem] mb-16
               bg-gradient-to-br from-[#0d1b36] to-[#182A4A]
               border border-white/10
               shadow-[0_32px_80px_rgba(24,42,74,0.4),inset_0_1px_1px_rgba(255,255,255,0.08)]">
@@ -487,15 +566,15 @@ export default function AboutUs() {
                   every corner of your world, both inner and outer.
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Two Column Vision blocks */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <motion.div {...fadeUp} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               {/* Left — numbered vision statements */}
               <div className="space-y-6">
                 {[
-                  { num: '01', title: 'We envision a world where your spaces are not static, but alive with your story. Where art evolves with you, your moods, your states.', body: 'Where your home and work environments are extensions of your innermost self — vibrant, dynamic, evolving, richly expressed.' },
-                  { num: '02', title: 'We are building the next generation of ecosystem at the crossroads of evolving art, gen AI, emotional modelling, and soulful design', body: 'creating living environments that resonate emotionally, artistically, and intelligently with the people who inhabit them.' },
+                  { num: '01', title: 'We envision a world where your spaces are not static, but alive with your story. Where art evolves with you, your moods, your states.', body: 'Where your home and work environments are extensions of your innermost self – vibrant, dynamic, evolving, richly expressed.' },
+                  { num: '02', title: 'We are building the next generation of ecosystem at the crossroads of evolving art, gen AI, emotional modelling, and soulful design.', body: 'Creating living environments that resonate emotionally, artistically, and intelligently with the people who inhabit them.' },
                 ].map((item) => (
                   <div key={item.num} className="group flex gap-5 items-start p-6 rounded-2xl
                     bg-white/50  border border-white/60
@@ -525,13 +604,13 @@ export default function AboutUs() {
                       <span className="text-white text-xs font-bold">AI</span>
                     </div>
                     <div>
-                      <div className="text-sm font-bold text-gray-900">AI-Powered</div>
+                      <div className="text-sm font-bold text-gray-900">AI</div>
                       <div className="text-xs text-gray-500">Vision That Inspires You</div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
@@ -549,12 +628,12 @@ export default function AboutUs() {
             </div>
 
             {/* Two Column Layout - Text Left, Image Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <motion.div {...fadeUp} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               {/* Left Column - Text Content */}
               <div className="text-left space-y-8">
                 <div>
                   <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
-                    Our Product :
+                    Our First Product :
                     <br />
                     <span className="text-[#2563EB]">Deckoviz DASP</span>
                   </h2>
@@ -642,30 +721,40 @@ export default function AboutUs() {
 
                   {/* Image content */}
                   <div className="aspect-square relative overflow-hidden">
-                    <img
-                      src="/images/aboutusimg1.png"
-                      alt="Deckoviz AI Art Frame showing cosmic space scene"
-                      className="w-full h-full object-cover"
-                    />
+                    <AnimatePresence>
+                      <motion.img
+                        key={slideIndex2}
+                        src={ABOUT_US_IMAGES[slideIndex2]}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.2, ease: "easeInOut" }}
+                        alt="Deckoviz AI Art Frame"
+                        className="w-full h-full object-cover absolute top-0 left-0"
+                      />
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
+              </motion.div>
             </div>
-          </div>
         </div>
 
         {/* Product Section 2 - Think of Deckoviz */}
         <div className="relative mt-32 mb-32">
           <div className="relative z-10 max-w-6xl mx-auto px-4">
-            {/* Top Badge - White bg with gray border */}
-            <div className="flex justify-center mb-8 ml-60">
-              <div className="bg-white text-black px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 shadow-md">
-                Some Product Highlights
+            {/* Top Badge - Blue bg */}
+            <div className="flex justify-center mb-8 lg:justify-end lg:mr-10">
+              <div className="relative group cursor-default">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-30 transition duration-500" />
+                <div className="relative bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white px-5 py-1.5 rounded-xl text-xs font-black tracking-widest uppercase shadow-xl">
+                  Some Product Highlights
+                </div>
               </div>
             </div>
 
             {/* Two Column Layout - Image Left, Text Right */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            <motion.div {...fadeUp} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               {/* Left Column - Image with Browser Frame */}
               <div className="relative">
                 {/* Pink/Violet gradient background */}
@@ -713,11 +802,18 @@ export default function AboutUs() {
 
                   {/* Image content */}
                   <div className="aspect-square relative overflow-hidden">
-                    <img
-                      src="/images/aboutusimg1.png"
-                      alt="Deckoviz showing mountain landscape with cosmic elements"
-                      className="w-full h-full object-cover"
-                    />
+                    <AnimatePresence>
+                      <motion.img
+                        key={currentSlideIndex}
+                        src={ABOUT_US_IMAGES[currentSlideIndex]}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.2, ease: "easeInOut" }}
+                        alt="Deckoviz dynamically loading artwork displays"
+                        className="w-full h-full object-cover absolute top-0 left-0"
+                      />
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
@@ -746,19 +842,19 @@ export default function AboutUs() {
 
                   <div className="space-y-4">
                     <div className="flex items-start space-x-3">
-                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-6 h-6 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
                       <p className="text-gray-700">From static to alive.</p>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-6 h-6 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
                       <p className="text-gray-700">From generic to deeply personal.</p>
                     </div>
                     <div className="flex items-start space-x-3">
-                      <div className="w-6 h-6 bg-[#6670d8] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-6 h-6 bg-gradient-to-br from-[#182A4A] to-[#2563EB] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                         <span className="text-white text-xs">✓</span>
                       </div>
                       <p className="text-gray-700">
@@ -770,7 +866,7 @@ export default function AboutUs() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
 
