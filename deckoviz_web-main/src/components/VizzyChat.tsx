@@ -84,9 +84,9 @@ const MessageBubble: React.FC<{ message: Message; isLatest: boolean }> = ({
             <div className="absolute -top-1 left-[15%] right-[15%] h-[40%] bg-gradient-to-b from-white to-transparent rounded-full opacity-90"></div>
           </div>
           <motion.img 
-            src="/vizzy-robot-transparent.png" 
+            src="/images/vizzy.jpg" 
             alt="Vizzy" 
-            className="relative z-10 w-[88%] h-[88%] object-contain drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]"
+            className="relative z-10 w-[92%] h-[92%] object-cover rounded-full mix-blend-multiply drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]"
             animate={{ y: [0, -3, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
             whileHover={{ scale: 1.15, rotate: [0, -5, 5, 0] }}
@@ -133,9 +133,9 @@ const TypingIndicator = () => (
         <div className="absolute -top-1 left-[15%] right-[15%] h-[40%] bg-gradient-to-b from-white to-transparent rounded-full opacity-90"></div>
       </div>
       <motion.img 
-        src="/vizzy-robot-transparent.png" 
+        src="/images/vizzy.jpg" 
         alt="Vizzy" 
-        className="relative z-10 w-[88%] h-[88%] object-contain drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]"
+        className="relative z-10 w-[92%] h-[92%] object-cover rounded-full mix-blend-multiply drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]"
         animate={{ y: [0, -3, 0] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
         whileHover={{ scale: 1.15, rotate: [0, -5, 5, 0] }}
@@ -255,28 +255,45 @@ const VizzyChat: React.FC = () => {
       {/* ── Ask Vizzy Button Trigger ── */}
       <AnimatePresence>
         {!isOpen && (
-          <motion.button
+          <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            drag
+            dragMomentum={false}
+            className="group fixed bottom-4 right-4 md:bottom-6 md:right-6 z-[60] flex items-end cursor-pointer"
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 md:bottom-8 md:right-8 z-[60] flex items-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-[#182a4a] to-[#2563eb] border border-white/20 shadow-[0_8px_32px_rgba(24,42,74,0.4)] hover:shadow-[0_8px_32px_rgba(37,99,235,0.55)] transition-all duration-300 group"
+            style={{ touchAction: "none" }}
           >
-            {/* Playful Colorful Orbs sticking out the left */}
-            <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 pointer-events-none">
-              <div className="absolute top-1 left-0 w-3.5 h-3.5 bg-blue-300 rounded-full mix-blend-screen opacity-90 shadow-sm" />
-              <div className="absolute top-2 left-3 w-3 h-3 bg-purple-400 rounded-full mix-blend-screen opacity-90 shadow-sm" />
-              <div className="absolute bottom-0 left-1.5 w-4.5 h-4.5 bg-indigo-400 rounded-full mix-blend-screen opacity-90 shadow-sm" />
-              <div className="absolute top-0 left-1 w-6 h-6 bg-blue-400 rounded-full mix-blend-screen opacity-50 blur-[2px]" />
+            {/* Thought Bubble - Shows on hover */}
+            <div className="absolute right-full bottom-4 mr-4 z-20 pointer-events-none hidden md:block opacity-0 group-hover:opacity-100 translate-x-4 group-hover:translate-x-0 transition-all duration-500 delay-100">
+              <div 
+                className="bg-white/95 backdrop-blur-xl border border-white shadow-[0_12px_40px_rgba(37,99,235,0.2)] rounded-3xl p-5 w-[300px] text-[12px] leading-[1.6] text-[#2c3e50] font-medium relative transform transition-all duration-300"
+              >
+                <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 font-bold block mb-1.5 text-[13px]">Hey, I am Vizzy! ✨</span>
+                How are you enjoying exploring the magical Vizzyverse? It's pretty awesome, right! Anything I can help you with?
+                
+                {/* Bubble Tail pointing right */}
+                <div className="absolute top-1/2 -right-[7px] -translate-y-1/2 w-4 h-4 bg-white/95 border-t border-r border-white transform rotate-45 z-10"></div>
+              </div>
             </div>
-
-            <Sparkles size={18} className="text-white group-hover:animate-pulse z-10" />
-            <span className="font-semibold text-[15px] text-white tracking-wide z-10">
-              Ask Vizzy
-            </span>
-          </motion.button>
+            
+            {/* Mascot Image - Grows on hover */}
+            <div 
+              className="w-[70px] sm:w-[80px] md:w-[90px] group-hover:w-[130px] group-hover:sm:w-[150px] group-hover:md:w-[170px] relative z-10 translate-y-2 drop-shadow-xl transition-all duration-500 ease-out group-active:scale-95 origin-bottom"
+            >
+              <div className="absolute inset-0 bg-blue-500/10 rounded-full blur-xl animate-pulse"></div>
+              <img 
+                src="/images/vizzy.jpg" 
+                alt="Ask Vizzy Mascot" 
+                className="w-full h-auto object-contain rounded-[30px] mix-blend-multiply brightness-[1.05] pointer-events-none select-none transition-all duration-500" 
+                style={{ 
+                  maskImage: 'radial-gradient(ellipse at center, black 65%, transparent 75%)', 
+                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 65%, transparent 75%)',
+                }}
+              />
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -314,9 +331,9 @@ const VizzyChat: React.FC = () => {
                     <div className="absolute -top-1 left-[15%] right-[15%] h-[40%] bg-gradient-to-b from-white to-transparent rounded-full opacity-90"></div>
                   </div>
                   <motion.img 
-                    src="/vizzy-robot-transparent.png" 
+                    src="/images/vizzy.jpg" 
                     alt="Vizzy" 
-                    className="relative z-10 w-[88%] h-[88%] object-contain drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]" 
+                    className="relative z-10 w-[92%] h-[92%] object-cover rounded-full mix-blend-multiply drop-shadow-[0_3px_6px_rgba(0,0,0,0.4)]" 
                     animate={{ y: [0, -3, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     whileHover={{ scale: 1.2, rotate: 8 }}

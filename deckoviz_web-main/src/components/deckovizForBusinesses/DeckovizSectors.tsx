@@ -136,48 +136,7 @@ const DeckovizSectors: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           
-          {/* Enterprise Vision Microsite Trigger Button */}
-          <div className="flex justify-center mb-20">
-            <div className="relative group">
-              {/* Outer Glow Aura */}
-              <div className="absolute -inset-1.5 bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 rounded-full blur-md opacity-40 group-hover:opacity-75 group-hover:blur-lg transition-all duration-500" />
-              
-              <button
-                onClick={() => setShowEnterpriseMicrosite(true)}
-                className="relative flex items-center gap-4 p-2 pr-6 bg-gray-900 border border-white/10 rounded-full shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(59,130,246,0.4)]"
-              >
-                {/* Subtle gradient background inside button */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-900/40 via-cyan-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                {/* Shimmer sweep */}
-                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-1000 ease-in-out" />
-                
-                {/* Icon Container */}
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.4)] relative z-10 group-hover:scale-110 transition-transform duration-500 ease-out">
-                  <Building className="w-6 h-6" />
-                </div>
 
-                <div className="text-left relative z-10 py-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                    <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-cyan-300">
-                      Deckoviz For Enterprises
-                    </p>
-                  </div>
-                  <p className="text-white font-medium text-sm md:text-base leading-tight tracking-wide group-hover:text-cyan-100 transition-colors">
-                    The Problem It Solves
-                  </p>
-                </div>
-                
-                <div className="ml-4 w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 group-hover:bg-white group-hover:text-gray-900 transition-all duration-300 group-hover:translate-x-1 group-hover:scale-110 relative z-10">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14"></path>
-                    <path d="m12 5 7 7-7 7"></path>
-                  </svg>
-                </div>
-              </button>
-            </div>
-          </div>
 
           {/* Badge */}
           <div className="text-center mb-8 relative z-10">
