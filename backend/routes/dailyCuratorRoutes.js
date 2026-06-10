@@ -11,6 +11,10 @@ import { Collection } from "../models/Collection.js";
 import { User } from "../models/User.js";
 import { MusicAttachment } from "../models/MusicAttachment.js";
 import { MusicTrack } from "../models/MediaTracks.js";
+import {
+  UserSavedArtwork,
+  SAVED_ITEM_TYPES,
+} from "../models/UserSavedArtwork.js";
 import { authenticateUser, requireAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
@@ -100,6 +104,21 @@ async function hydrateItems(items, userId) {
       data: data || null,
       music: att ? trackById[att.musicTrackId] || null : null,
     };
+  });
+}
+
+// Attach this user's per-item Save/Like state (saved, liked) onto hydrated items,
+// keyed by "itemType:itemId". Defaults both to false when no row exists.
+async function attachSavedState(items, userId) {
+  if (!userId || !items.length) {
+    return items.map((i) => ({ ...i, saved: false, liked: false }));
+  }
+  const rows = await UserSavedArtwork.findAll({ where: { userId } });
+  const byKey = {};
+  for (const r of rows) byKey[`${r.itemType}:${r.itemId}`] = r;
+  return items.map((i) => {
+    const r = byKey[`${i.itemType}:${i.itemId}`];
+    return { ...i, saved: !!r?.saved, liked: !!r?.liked };
   });
 }
 
@@ -273,7 +292,10 @@ router.get("/me", authenticateUser, async (req, res) => {
       where: { userId: req.user.id, displayDate },
       order: [["order", "ASC"], ["createdAt", "ASC"]],
     });
-    const hydrated = await hydrateItems(items, req.user.id);
+    const hydrated = await attachSavedState(
+      await hydrateItems(items, req.user.id),
+      req.user.id
+    );
 
     const me = await User.findByPk(req.user.id, {
       attributes: ["curationUpdatedAt"],
@@ -311,6 +333,110 @@ router.get("/me/status", authenticateUser, async (req, res) => {
   } catch (err) {
     console.error("❌ daily-curator/me/status:", err);
     res.status(500).json({ error: "Failed to load status" });
+  }
+});
+
+// GET /me/saved — the user's permanently-saved items (artworks/collections),
+// hydrated like /me. These show in the "Collections" tab until removed.
+router.get("/me/saved", authenticateUser, async (req, res) => {
+  try {
+    const rows = await UserSavedArtwork.findAll({
+      where: { userId: req.user.id, saved: true },
+      order: [["updatedAt", "DESC"]],
+    });
+    const items = await hydrateItems(rows, req.user.id);
+    // Drop entries whose source artwork/collection was deleted.
+    res.json({ items: items.filter((i) => i.data) });
+  } catch (err) {
+    console.error("❌ daily-curator/me/saved GET:", err);
+    res.status(500).json({ error: "Failed to load saved items" });
+  }
+});
+
+// POST /me/saved — save an item to my Collections tab.
+// body: { itemType?: "artwork" | "collection" (default "artwork"), itemId }
+router.post("/me/saved", authenticateUser, async (req, res) => {
+  try {
+    const itemType = req.body.itemType || "artwork";
+    const { itemId } = req.body;
+    if (!itemId) return res.status(400).json({ error: "itemId is required" });
+    if (!SAVED_ITEM_TYPES.includes(itemType)) {
+      return res.status(400).json({
+        error: `Invalid itemType. Must be one of: ${SAVED_ITEM_TYPES.join(", ")}`,
+      });
+    }
+
+    const exists =
+      itemType === "artwork"
+        ? await DeckovizCuration.findByPk(itemId)
+        : await Collection.findByPk(itemId);
+    if (!exists) return res.status(404).json({ error: `${itemType} not found` });
+
+    const [row] = await UserSavedArtwork.findOrCreate({
+      where: { userId: req.user.id, itemType, itemId },
+      defaults: { saved: true },
+    });
+    if (!row.saved) {
+      row.saved = true;
+      await row.save();
+    }
+    res.json({ success: true, saved: true, liked: row.liked, item: row });
+  } catch (err) {
+    console.error("❌ daily-curator/me/saved POST:", err);
+    res.status(500).json({ error: "Failed to save item" });
+  }
+});
+
+// DELETE /me/saved/:itemId?itemType=artwork — remove a saved item.
+router.delete("/me/saved/:itemId", authenticateUser, async (req, res) => {
+  try {
+    const itemType = req.query.itemType || "artwork";
+    const row = await UserSavedArtwork.findOne({
+      where: { userId: req.user.id, itemType, itemId: req.params.itemId },
+    });
+    if (row) {
+      row.saved = false;
+      // No state left to track -> remove the row entirely.
+      if (!row.liked) await row.destroy();
+      else await row.save();
+    }
+    res.json({ success: true, saved: false });
+  } catch (err) {
+    console.error("❌ daily-curator/me/saved DELETE:", err);
+    res.status(500).json({ error: "Failed to remove saved item" });
+  }
+});
+
+// POST /me/like — toggle the like flag on an item (independent of save).
+// body: { itemType?: "artwork" | "collection" (default "artwork"), itemId }
+router.post("/me/like", authenticateUser, async (req, res) => {
+  try {
+    const itemType = req.body.itemType || "artwork";
+    const { itemId } = req.body;
+    if (!itemId) return res.status(400).json({ error: "itemId is required" });
+    if (!SAVED_ITEM_TYPES.includes(itemType)) {
+      return res.status(400).json({
+        error: `Invalid itemType. Must be one of: ${SAVED_ITEM_TYPES.join(", ")}`,
+      });
+    }
+
+    const [row, created] = await UserSavedArtwork.findOrCreate({
+      where: { userId: req.user.id, itemType, itemId },
+      defaults: { liked: true },
+    });
+    // A brand-new row starts liked=true; an existing row flips its like state.
+    if (!created) row.liked = !row.liked;
+
+    // Nothing left to track (not liked, not saved) -> remove the row.
+    if (!row.liked && !row.saved) {
+      await row.destroy();
+      return res.json({ success: true, liked: false });
+    }
+    await row.save();
+    res.json({ success: true, liked: row.liked });
+  } catch (err) {
+    console.error("❌ daily-curator/me/like POST:", err);
+    res.status(500).json({ error: "Failed to toggle like" });
   }
 });
 

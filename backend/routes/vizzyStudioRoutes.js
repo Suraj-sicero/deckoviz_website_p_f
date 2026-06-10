@@ -2,12 +2,55 @@ import express from "express";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Replicate from "replicate";
 import dotenv from "dotenv";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import axios from "axios";
+import { v2 as cloudinary } from "cloudinary";
 import VizzyStudioSession from "../models/VizzyStudioSession.js";
 import FilmProject from "../models/FilmProject.js";
 import { renderVideo } from "../services/VideoRenderService.js";
 import { authenticateUser } from "../middleware/auth.js";
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const PUBLIC_DIR = path.resolve(__dirname, "../public");
+
+// Configure Cloudinary for video asset uploads if environment variables are set
+const CLOUDINARY_CONFIGURED = Boolean(
+  process.env.CLOUDINARY_CLOUD_NAME &&
+    process.env.CLOUDINARY_API_KEY &&
+    process.env.CLOUDINARY_API_SECRET
+);
+if (CLOUDINARY_CONFIGURED) {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+  });
+}
+
+// Upload a local file to Cloudinary to make it publicly accessible for Replicate APIs
+async function uploadToCloudinary(localPath) {
+  if (!CLOUDINARY_CONFIGURED) return null;
+  try {
+    const relativePath = localPath.replace(PUBLIC_DIR, "");
+    const absolutePath = path.join(PUBLIC_DIR, relativePath);
+    if (!fs.existsSync(absolutePath)) {
+      console.warn(`[Upload Cloudinary] File not found: ${absolutePath}`);
+      return null;
+    }
+    const result = await cloudinary.uploader.upload(absolutePath, {
+      folder: "vizzy/uploads",
+    });
+    return result.secure_url;
+  } catch (err) {
+    console.error("[Upload Cloudinary] Error:", err.message);
+    return null;
+  }
+}
 
 const router = express.Router();
 
@@ -19,6 +62,17 @@ const GROQ_KEY = process.env.GROQ_API_KEY;
 const replicate = process.env.REPLICATE_API_TOKEN
   ? new Replicate({ auth: process.env.REPLICATE_API_TOKEN })
   : null;
+
+const ART_STYLE_SUFFIXES = {
+  "watercolor": "watercolor painting, soft paint washes, organic textures, pastel palette, dreamy aesthetic, artistic, masterpiece",
+  "digital concept art": "digital concept art, fantasy illustration, vibrant color scheme, dramatic volumetric lighting, sharp focus, gaming art style",
+  "cyberpunk painting": "cyberpunk digital painting, glowing neon lights, dark futuristic environment, synthwave color palette, blade runner aesthetic",
+  "anime illustration": "anime illustration, vibrant cell-shaded colors, modern anime movie key visual, high quality, macro details, Makoto Shinkai style",
+  "retro comic book": "retro comic book illustration, bold black lineart, vintage halftone dot pattern, classic comic colors, pulp art",
+  "oil painting": "classical oil painting on canvas, visible thick brush strokes, rich warm lighting, masterpiece, canvas texture",
+  "cinematic photo": "cinematic 35mm film photograph, dramatic side lighting, photorealistic, 8k resolution, film grain, depth of field, sharp details",
+  "pencil sketch": "pencil sketch, monochrome graphite drawing, detailed cross-hatching, hand-drawn paper texture, artistic line art, clean strokes"
+};
 
 const VCS_SYSTEM_PROMPT_TEMPLATE = `
 DECKOVIZ VIZZY CONVERSATIONAL STUDIO (VCS)
@@ -143,12 +197,12 @@ const VCS_60_FEATURES_REGISTRY = `
 const VCS_SYSTEM_PROMPT = VCS_SYSTEM_PROMPT_TEMPLATE.replace("[60 features placeholder]", VCS_60_FEATURES_REGISTRY);
 
 // Helper: LLM runner
-async function callLLM(messages) {
+async function callLLM(messages, isJson = true) {
   if (genAI) {
     try {
       const model = genAI.getGenerativeModel({
         model: "gemini-2.5-flash",
-        generationConfig: { responseMimeType: "application/json" }
+        generationConfig: isJson ? { responseMimeType: "application/json" } : undefined
       });
 
       const contents = messages.filter(m => m.role !== "system").map(m => ({
@@ -171,18 +225,22 @@ async function callLLM(messages) {
 
   if (GROQ_KEY) {
     try {
+      const body = {
+        model: "llama-3.3-70b-versatile",
+        messages: messages,
+        temperature: 0.8,
+      };
+      if (isJson) {
+        body.response_format = { type: "json_object" };
+      }
+
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${GROQ_KEY}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
-          messages: messages,
-          temperature: 0.8,
-          response_format: { type: "json_object" },
-        }),
+        body: JSON.stringify(body),
       });
 
       if (res.ok) {
@@ -735,6 +793,350 @@ router.post("/render-montage", authenticateUser, async (req, res) => {
   } catch (error) {
     console.error("Montage rendering failed:", error);
     res.status(500).json({ error: `Failed to render montage video: ${error.message}` });
+  }
+});
+
+// ── SONG WITH VISUALS CREATOR CHAT ──
+router.post("/song-visuals/chat", authenticateUser, async (req, res) => {
+  try {
+    const { messages } = req.body;
+    if (!messages || !messages.length) {
+      return res.status(400).json({ error: "Messages array is required" });
+    }
+
+    const systemPrompt = `You are Vizzy, an expert AI music producer and lyricist.
+Your goal is to co-create song lyrics with the user.
+Engage in a friendly, conversational dialogue. Ask them about their preferences (genre, mood, theme, style, story).
+Suggest lyrics, stanzas, chorus options, and ask for their feedback to refine them.
+Always keep the conversation focused on song lyrics creation. Keep your responses engaging, creative, and concise.
+When suggesting or updating lyrics, you must ALWAYS wrap the actual song lyrics block inside <lyrics>...</lyrics> tags (with the verse/chorus structure clearly formatted inside it). Example:
+Here are some lyrics I came up with:
+<lyrics>
+[Verse 1]
+Golden sunrise...
+</lyrics>
+Let me know if you want to change any lines!`;
+
+    const formattedMessages = [
+      { role: "system", content: systemPrompt },
+      ...messages.map(m => ({ role: m.role, content: m.content })).slice(-15) // Keep sliding window
+    ];
+
+    const reply = await callLLM(formattedMessages, false); // isJson = false
+    res.json({ success: true, reply });
+  } catch (error) {
+    console.error("Lyrics chat failed:", error);
+    res.status(500).json({ error: `Lyrics chat failed: ${error.message}` });
+  }
+});
+
+// Helper: Generate Music using Google Lyria
+async function generateMusicWithLyria(musicStyle, lyricsTheme) {
+  const apiKey = process.env.GOOGLE_API_KEY || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    throw new Error("No Gemini/Google API Key found in environment");
+  }
+
+  const model = "lyria-3-clip-preview";
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+  // Clean prompt to avoid copyright safety blocks
+  const cleanTheme = lyricsTheme.substring(0, 150).replace(/["'\r\n]/g, " ");
+  const promptText = `Generate a completely original background instrumental track. Style: ${musicStyle}. Vibe: inspired by theme: ${cleanTheme}. No vocals.`;
+
+  const body = {
+    contents: [
+      {
+        parts: [
+          { text: promptText }
+        ]
+      }
+    ],
+    generationConfig: {
+      responseModalities: ["AUDIO"]
+    }
+  };
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+
+  if (!res.ok) {
+    throw new Error(`Gemini Lyria API returned status ${res.status}: ${await res.text()}`);
+  }
+
+  const data = await res.json();
+  const candidateParts = data.candidates?.[0]?.content?.parts || [];
+  const audioPart = candidateParts.find(p => p.inlineData || p.inline_data);
+  const inline = audioPart?.inlineData || audioPart?.inline_data;
+  
+  if (inline && inline.data) {
+    const fileName = `song-gemini-${Date.now()}-${Math.random().toString(36).substring(7)}.mp3`;
+    const publicDir = path.join(__dirname, "../public");
+    const uploadDir = path.join(publicDir, "uploads");
+    await fs.promises.mkdir(uploadDir, { recursive: true });
+    
+    const filePath = path.join(uploadDir, fileName);
+    const buffer = Buffer.from(inline.data, "base64");
+    await fs.promises.writeFile(filePath, buffer);
+    
+    return `/uploads/${fileName}`;
+  } else {
+    const candidate = data.candidates?.[0];
+    const reason = candidate?.finishReason || "UNKNOWN";
+    const msg = candidate?.finishMessage || "No audio returned";
+    throw new Error(`Lyria generation skipped (Reason: ${reason}, Message: ${msg})`);
+  }
+}
+
+// Helper to generate image using Gemini Imagen 4.0
+async function generateImageWithGemini(promptText, artStyle) {
+  const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+  if (!GOOGLE_API_KEY) {
+    throw new Error("GOOGLE_API_KEY is not defined in the environment");
+  }
+
+  const combinedPrompt = `${promptText}, ${ART_STYLE_SUFFIXES[artStyle] || `${artStyle} style`}`;
+  console.log(`[Gemini Imagen] Generating image for prompt: "${combinedPrompt}"`);
+
+  const model = "imagen-4.0-generate-001";
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:predict?key=${GOOGLE_API_KEY}`;
+
+  const response = await axios.post(url, {
+    instances: [
+      {
+        prompt: combinedPrompt
+      }
+    ],
+    parameters: {
+      sampleCount: 1,
+      aspectRatio: "16:9",
+      outputOptions: {
+        mimeType: "image/jpeg"
+      }
+    }
+  }, {
+    headers: {
+      "Content-Type": "application/json"
+    },
+    timeout: 45000
+  });
+
+  if (response.data && response.data.predictions && response.data.predictions.length > 0) {
+    const base64Data = response.data.predictions[0].bytesBase64Encoded;
+    const imgBuffer = Buffer.from(base64Data, "base64");
+    
+    const fileName = `image-gemini-${Date.now()}-${Math.random().toString(36).substring(7)}.jpg`;
+    const localPath = path.join(PUBLIC_DIR, "uploads", fileName);
+    fs.writeFileSync(localPath, imgBuffer);
+    
+    return `/uploads/${fileName}`;
+  } else {
+    throw new Error(`Invalid response from Gemini Imagen API: ${JSON.stringify(response.data)}`);
+  }
+}
+
+// Helper to generate video from image using Stable Video Diffusion on Replicate
+async function generateVideoWithSVD(localImagePath) {
+  if (!replicate) {
+    console.warn("[SongVisuals] Replicate is not configured. Falling back to static image.");
+    return localImagePath;
+  }
+
+  // Upload image to Cloudinary to get public URL
+  let publicUrl = null;
+  if (CLOUDINARY_CONFIGURED) {
+    const absolutePath = path.join(PUBLIC_DIR, localImagePath.replace(/^\/uploads\//, "uploads/"));
+    publicUrl = await uploadToCloudinary(absolutePath);
+  }
+
+  if (!publicUrl) {
+    console.warn("[SongVisuals] Cloudinary is not configured. Cannot generate AI video, falling back to static image.");
+    return localImagePath;
+  }
+
+  console.log(`[SongVisuals] Launching Stable Video Diffusion for: ${publicUrl}`);
+  try {
+    const output = await replicate.run(
+      "stability-ai/stable-video-diffusion:3f0457e4619daac51203dedb472816fd4af51f3149fa7a9e0b5ffcf1b8172438",
+      {
+        input: {
+          image: publicUrl,
+          video_length: "14_frames_with_svd",
+          sizing_strategy: "keep_aspect_ratio",
+          frames_per_second: 6,
+          motion_bucket_id: 127,
+          noise_aug_strength: 0.02
+        }
+      }
+    );
+
+    const videoUrl = Array.isArray(output) ? output[0] : output;
+    console.log(`[SongVisuals] SVD Video generation successful: ${videoUrl}`);
+    return videoUrl;
+  } catch (err) {
+    console.error("[SongVisuals] SVD Video generation failed, falling back to static image:", err.message);
+    return localImagePath;
+  }
+}
+
+// ── SONG WITH VISUALS CREATOR PROCESS & RENDER ──
+router.post("/song-visuals/process", authenticateUser, async (req, res) => {
+  try {
+    const { lyrics, n = 5, musicStyle = "Lofi", artStyle = "watercolor", transitionEffect = "fade-black", visualFormat = "static" } = req.body;
+
+    if (!lyrics || !lyrics.trim()) {
+      return res.status(400).json({ error: "Lyrics are required to generate song and visuals" });
+    }
+
+    const numSegments = Math.min(Math.max(parseInt(n) || 5, 2), 15);
+    console.log(`[SongVisuals] Processing request with n=${numSegments}, style=${musicStyle}, art=${artStyle}`);
+
+    // Step 1: Segment lyrics using callLLM
+    const segmentPrompt = `
+You are an art director. Segment the following song lyrics into exactly ${numSegments} sequential sections.
+For each section, provide:
+1. The line(s) of lyrics belonging to that section.
+2. A highly descriptive image generation prompt (meta-prompt) suitable for an AI art generator (SDXL) representing that part of the song. Incorporate the art style "${artStyle}".
+
+Lyrics:
+"${lyrics}"
+
+Return ONLY a JSON array of objects, with no markdown formatting, no explanations:
+[
+  {
+    "section": 1,
+    "lyrics": "lyrics for this section",
+    "imagePrompt": "art prompt in ${artStyle} style..."
+  },
+  ...
+]
+`.trim();
+
+    const rawSegments = await callLLM([
+      { role: "system", content: "You output raw JSON arrays of objects." },
+      { role: "user", content: segmentPrompt }
+    ], true);
+
+    let segments;
+    try {
+      const jsonMatch = rawSegments.match(/\[[\s\S]*\]/);
+      if (!jsonMatch) throw new Error("Could not find array in LLM output");
+      segments = JSON.parse(jsonMatch[0]);
+    } catch (e) {
+      console.warn("Failed to parse segmentation JSON, using line-by-line fallback...", rawSegments);
+      const lines = lyrics.split("\n").map(l => l.trim()).filter(l => l.length > 0);
+      segments = [];
+      const linesPerSection = Math.max(1, Math.ceil(lines.length / numSegments));
+      for (let i = 0; i < numSegments; i++) {
+        const slice = lines.slice(i * linesPerSection, (i + 1) * linesPerSection);
+        segments.push({
+          section: i + 1,
+          lyrics: slice.join(" ") || "...",
+          imagePrompt: `A beautiful digital artwork representing: ${slice.join(" ") || "a melodic soundscape"}, ${artStyle} style, high quality`
+        });
+      }
+    }
+
+    // Ensure we have exactly numSegments
+    if (segments.length !== numSegments) {
+      segments = segments.slice(0, numSegments);
+      while (segments.length < numSegments) {
+        segments.push({
+          section: segments.length + 1,
+          lyrics: "...",
+          imagePrompt: `A beautiful digital artwork representing a song, ${artStyle} style`
+        });
+      }
+    }
+
+    // Step 2: Generate Music/Song using Gemini Lyria with Replicate fallback
+    const songDuration = 30; // seconds
+    let audioUrl = null;
+
+    try {
+      console.log(`[SongVisuals] Attempting music generation via Gemini Lyria model...`);
+      audioUrl = await generateMusicWithLyria(musicStyle, lyrics);
+      console.log(`[SongVisuals] Gemini Lyria music generation successful: ${audioUrl}`);
+    } catch (lyriaErr) {
+      console.warn(`[SongVisuals] Gemini Lyria generation failed, trying Replicate fallback... Details: ${lyriaErr.message}`);
+      
+      const musicApiKey = process.env.MUSIC_API_KEY || process.env.REPLICATE_API_TOKEN;
+      if (musicApiKey && replicate) {
+        try {
+          const musicPrompt = `A complete song, style of ${musicStyle}, bpm 95, theme: ${lyrics.slice(0, 100)}`;
+          console.log(`[SongVisuals] Generating music via Replicate MusicGen: "${musicPrompt}"`);
+          const output = await replicate.run(
+            "meta/musicgen:671ac645ce5e552cc63a54a2bbff63fcf798043055d2dac5fc9e36a837eedcfb",
+            {
+              input: {
+                prompt: musicPrompt,
+                duration: songDuration,
+              }
+            }
+          );
+          audioUrl = Array.isArray(output) ? output[0] : output;
+          console.log(`[SongVisuals] Replicate MusicGen generation successful: ${audioUrl}`);
+        } catch (repErr) {
+          console.error("[SongVisuals] Replicate MusicGen generation failed:", repErr.message);
+        }
+      }
+    }
+
+    // Fallback if both fail
+    if (!audioUrl) {
+      console.log("[SongVisuals] Using local fallback audio track");
+      audioUrl = "/uploads/default_lofi.mp3";
+    }
+
+    // Step 3: Generate visual assets (Images or Video clips) in parallel
+    console.log(`[SongVisuals] Generating ${numSegments} visual assets (${visualFormat}) in parallel...`);
+    const imageUrls = await Promise.all(
+      segments.map(async (seg, idx) => {
+        try {
+          // 1. Generate image using Gemini Imagen 4.0
+          const localImagePath = await generateImageWithGemini(seg.imagePrompt, artStyle);
+          
+          // 2. If video format is requested, animate it via SVD
+          if (visualFormat === "video") {
+            console.log(`[SongVisuals] Segment ${idx + 1}: Animating image to video clip...`);
+            const videoUrl = await generateVideoWithSVD(localImagePath);
+            return videoUrl;
+          }
+          
+          return localImagePath;
+        } catch (e) {
+          console.error(`Failed to generate visual asset for segment ${idx + 1}:`, e.message);
+        }
+        // Fallback placeholder with seed
+        return `https://picsum.photos/seed/${Math.floor(Math.random() * 10000) + (idx * 17)}/1280/720`;
+      })
+    );
+
+    // Step 4: Stitch video using renderVideo service
+    const transitionDuration = Math.max(1, Math.round(songDuration / numSegments));
+    console.log(`[SongVisuals] Invoking renderVideo with transitionDuration=${transitionDuration}s, transitionEffect=${transitionEffect}`);
+
+    const videoUrl = await renderVideo({
+      images: imageUrls,
+      transitionDuration,
+      transitionEffect,
+      music: audioUrl,
+      musicVolume: 100,
+      narration: null
+    });
+
+    res.json({
+      success: true,
+      videoUrl,
+      songUrl: audioUrl,
+      segments: segments.map((seg, idx) => ({ ...seg, imageUrl: imageUrls[idx] }))
+    });
+  } catch (error) {
+    console.error("Song Visuals processing failed:", error);
+    res.status(500).json({ error: `Failed to compile song visuals: ${error.message}` });
   }
 });
 

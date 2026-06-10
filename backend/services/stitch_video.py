@@ -51,7 +51,14 @@ def download_or_copy(url_or_path, temp_dir, base_name, public_dir):
             shutil.copyfileobj(response, out_file)
         return dest_path
     except Exception as e:
-        print(f"[Python Stitcher] Failed to download {url_or_path}: {e}", file=sys.stderr)
+        print(f"[Python Stitcher] Failed to download or copy {url_or_path}: {e}", file=sys.stderr)
+        if base_name == "music":
+            fallback_path = os.path.join(public_dir, "uploads", "default_lofi.mp3")
+            if os.path.exists(fallback_path):
+                print(f"[Python Stitcher] Falling back to default local lofi music: {fallback_path}", file=sys.stderr)
+                mp3_dest_path = os.path.join(temp_dir, f"{base_name}.mp3")
+                shutil.copy2(fallback_path, mp3_dest_path)
+                return mp3_dest_path
         raise Exception(f"Download failed for {url_or_path}: {str(e)}")
 
 def run_ffmpeg(cmd):
@@ -120,11 +127,20 @@ def main():
             elif transition_effect == "fade-yellow":
                 vf_filters += f",fade=t=in:st=0:d={fade_duration}:color=yellow,fade=t=out:st={fade_out_start}:d={fade_duration}:color=yellow"
 
-            cmd = [
-                "ffmpeg", "-y", "-threads", "1", "-loop", "1", "-t", str(duration), "-i", img_path,
-                "-vf", vf_filters,
-                "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", "10", clip_path
-            ]
+            is_video = img_path.lower().endswith(('.mp4', '.webm', '.mov', '.avi', '.mkv'))
+            if is_video:
+                cmd = [
+                    "ffmpeg", "-y", "-threads", "1", "-stream_loop", "-1", "-i", img_path,
+                    "-t", str(duration),
+                    "-vf", vf_filters,
+                    "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", "10", clip_path
+                ]
+            else:
+                cmd = [
+                    "ffmpeg", "-y", "-threads", "1", "-loop", "1", "-t", str(duration), "-i", img_path,
+                    "-vf", vf_filters,
+                    "-c:v", "libx264", "-preset", "ultrafast", "-pix_fmt", "yuv420p", "-r", "10", clip_path
+                ]
             run_ffmpeg(cmd)
             clips.append(clip_path)
 
