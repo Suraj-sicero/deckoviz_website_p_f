@@ -1,0 +1,12 @@
+{
+  "images": [
+    "https://picsum.photos/seed/1/1280/720",
+    "https://picsum.photos/seed/2/1280/720",
+    "https://picsum.photos/seed/3/1280/720"
+  ],
+  "transitionDuration": 10,
+  "transitionEffect": "fade-black",
+  "music": "https://replicate.delivery/yhqm/AJ3MDAUrxf28ZSl7COzIODBY4iMaBGxGM7BnebM37a0ZcirWA/out.wav",
+  "musicVolume": 100,
+  "outputPath": "/uploads/test-out-wav.mp4"
+}

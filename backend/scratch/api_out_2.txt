@@ -1,0 +1,20 @@
+Triggering song-visuals process API request...
+API Response Success: {
+  success: true,
+  videoUrl: '/uploads/video-1780513165989-5i264.mp4',
+  songUrl: '/uploads/song-gemini-1780513160943-hligcv.mp3',
+  segments: [
+    {
+      section: 1,
+      lyrics: 'Golden sunrise breaks the night, stars fade out of sight.',
+      imagePrompt: 'A breathtaking watercolor painting depicting the magical moment of dawn. Golden light spills across a vast, awakening landscape, painting the sky with hues of soft orange, rose, and pale yellow. Delicate, translucent washes show the last few faint stars dissolving into the brightening blue above a gentle horizon line. Dew-kissed foliage and misty hills are rendered with soft, flowing brushstrokes, emphasizing the quiet, ethereal beauty of the early morning as the night recedes. The overall atmosphere is serene and transformative, characteristic of a master watercolor artist.',
+      imageUrl: 'https://replicate.delivery/yhqm/ltK4e6RDDyXFNiYeaWfljYiQ7HoII55o3dFEVOK73DVWcFXtA/out-0.png'
+    },
+    {
+      section: 2,
+      lyrics: 'A new beginning has begun.',
+      imagePrompt: "A vibrant and hopeful watercolor artwork capturing the essence of a 'new beginning'. The composition features an abstract blend of uplifting colors – soft greens, serene blues, and hopeful yellows – swirling upwards, suggesting growth and optimism. In the foreground, a single, newly unfurled leaf or a delicate sprout emerges from a luminous pool, rendered with crisp, clean edges and a sense of fresh vitality. The background is a soft, undefined wash of pure light, symbolizing potential and a clean slate, all executed with the characteristic transparency and fluidity of watercolor, evoking a feeling of fresh opportunity and gentle expansion.",
+      imageUrl: 'https://replicate.delivery/yhqm/euXnrk7lcenTKkFevAn84dVjwlBdeOOSxTLrZUdn5Pb34KuaB/out-0.png'
+    }
+  ]
+}

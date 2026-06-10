@@ -64,20 +64,34 @@ async function downloadOrResolve(urlOrPath, tempDir, baseName) {
 
   // Otherwise, download from external URL
   console.log(`[VideoRenderService] Downloading external media: ${urlOrPath}`);
-  const response = await axios({
-    method: "get",
-    url: urlOrPath,
-    responseType: "stream",
-  });
+  try {
+    const response = await axios({
+      method: "get",
+      url: urlOrPath,
+      responseType: "stream",
+    });
 
-  await new Promise((resolve, reject) => {
-    const writer = fs.createWriteStream(destPath);
-    response.data.pipe(writer);
-    writer.on("finish", resolve);
-    writer.on("error", reject);
-  });
+    await new Promise((resolve, reject) => {
+      const writer = fs.createWriteStream(destPath);
+      response.data.pipe(writer);
+      writer.on("finish", resolve);
+      writer.on("error", reject);
+    });
 
-  return destPath;
+    return destPath;
+  } catch (err) {
+    console.warn(`[VideoRenderService] Failed to download or resolve ${urlOrPath}: ${err.message}`);
+    if (baseName === "music") {
+      const fallbackPath = path.join(PUBLIC_DIR, "uploads/default_lofi.mp3");
+      if (fs.existsSync(fallbackPath)) {
+        console.log(`[VideoRenderService] Falling back to default local lofi music: ${fallbackPath}`);
+        const mp3DestPath = path.join(tempDir, `${baseName}.mp3`);
+        fs.copyFileSync(fallbackPath, mp3DestPath);
+        return mp3DestPath;
+      }
+    }
+    throw err;
+  }
 }
 
 /**
@@ -169,6 +183,9 @@ function renderVideoPython({
     });
 
     py.on("close", (code) => {
+      if (stderr.trim()) {
+        console.log(`[VideoRenderService] Python stderr output:\n${stderr}`);
+      }
       if (code !== 0) {
         reject(new Error(stderr.trim() || `Python exited with code ${code}`));
       } else {
@@ -244,7 +261,13 @@ async function renderVideoJS({
         vfFilters += `,fade=t=in:st=0:d=${fadeDuration}:color=yellow,fade=t=out:st=${fadeOutStart}:d=${fadeDuration}:color=yellow`;
       }
 
-      const cmd = `ffmpeg -y -threads 1 -loop 1 -t ${duration} -i "${localImages[i]}" -vf "${vfFilters}" -c:v libx264 -preset ultrafast -pix_fmt yuv420p -r 10 "${clipPath}"`;
+      const isVideo = ['.mp4', '.webm', '.mov', '.avi', '.mkv'].some(ext => localImages[i].toLowerCase().endsWith(ext));
+      let cmd;
+      if (isVideo) {
+        cmd = `ffmpeg -y -threads 1 -stream_loop -1 -i "${localImages[i]}" -t ${duration} -vf "${vfFilters}" -c:v libx264 -preset ultrafast -pix_fmt yuv420p -r 10 "${clipPath}"`;
+      } else {
+        cmd = `ffmpeg -y -threads 1 -loop 1 -t ${duration} -i "${localImages[i]}" -vf "${vfFilters}" -c:v libx264 -preset ultrafast -pix_fmt yuv420p -r 10 "${clipPath}"`;
+      }
 
       await runCmd(cmd);
       clips.push(clipPath);

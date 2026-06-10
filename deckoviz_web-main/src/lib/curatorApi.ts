@@ -80,6 +80,8 @@ export interface DailyItem {
   seenAt: string | null;
   data: Curation | CollectionRow | null;
   music: MusicTrack | null;
+  saved?: boolean;
+  liked?: boolean;
 }
 
 export interface AdminUser {
@@ -136,6 +138,34 @@ export const getMyDailyCuration = (date?: string) =>
 export const markItemSeen = (itemId: string) =>
   req<{ success: boolean }>(`/api/daily-curator/me/items/${itemId}/seen`, {
     method: "POST",
+  });
+
+// ---------- Daily Curator — Save / Like (user) ----------
+export const getMySaved = () =>
+  req<{ items: DailyItem[] }>("/api/daily-curator/me/saved");
+
+export const saveItem = (itemId: string, itemType: DailyItemType = "artwork") =>
+  req<{ success: boolean; saved: boolean; liked: boolean }>(
+    "/api/daily-curator/me/saved",
+    { method: "POST", body: JSON.stringify({ itemType, itemId }) }
+  );
+
+export const unsaveItem = (
+  itemId: string,
+  itemType: DailyItemType = "artwork"
+) =>
+  req<{ success: boolean; saved: boolean }>(
+    `/api/daily-curator/me/saved/${itemId}?itemType=${itemType}`,
+    { method: "DELETE" }
+  );
+
+export const toggleLike = (
+  itemId: string,
+  itemType: DailyItemType = "artwork"
+) =>
+  req<{ success: boolean; liked: boolean }>("/api/daily-curator/me/like", {
+    method: "POST",
+    body: JSON.stringify({ itemType, itemId }),
   });
 
 // ---------- Daily Curator (Feature 2) — admin ----------
