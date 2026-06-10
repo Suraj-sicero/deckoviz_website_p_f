@@ -145,26 +145,30 @@ onClick={() => moveCarousel("next")}
         {[...frames, ...frames].map((frame, index) => (
           <div
             key={index}
-onMouseEnter={() => (isPaused.current = true)}
-onMouseLeave={() => (isPaused.current = false)}
-            className="relative min-w-[320px] flex-shrink-0 p-[2px] rounded-3xl bg-gradient-to-r from-[#182A4A] to-[#2563EB] transition-all duration-500 hover:scale-105"
+            onMouseEnter={() => (isPaused.current = true)}
+            onMouseLeave={() => (isPaused.current = false)}
+            className="flex flex-col items-center gap-6 min-w-[320px] flex-shrink-0 group"
           >
-            {/* Glow Effect */}
-            <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#182A4A] to-[#2563EB] blur-xl opacity-30 group-hover:opacity-60 transition-all duration-500"></div>
+            <div className="relative w-full h-[320px] p-[2px] rounded-3xl bg-gradient-to-r from-[#182A4A] to-[#2563EB] transition-all duration-500 group-hover:scale-[1.03]">
+              {/* Blue Shadow Effect */}
+              <div className="absolute -inset-3 rounded-3xl bg-blue-500 blur-2xl opacity-40 group-hover:opacity-75 transition-all duration-500"></div>
+              {/* Glow Effect */}
+              <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#182A4A] to-[#2563EB] blur-xl opacity-40 group-hover:opacity-70 transition-all duration-500"></div>
 
-            {/* Glass Card */}
-            <div className="relative backdrop-blur-xl bg-white/70 rounded-3xl p-6 shadow-2xl border border-indigo-100">
-              <img
-                src={`/images/${frame.file}`}
-                alt={frame.name}
-                className="h-64 w-full object-contain rounded-xl"
-              />
-
-              {/* BEAUTIFUL TEXT */}
-              <h3 className="mt-6 text-center text-lg font-bold tracking-wide bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent drop-shadow-sm">
-                {frame.name}
-              </h3>
+              {/* Glass Card */}
+              <div className="relative w-full h-full backdrop-blur-xl bg-white/70 rounded-3xl p-4 shadow-2xl border border-indigo-100 flex items-center justify-center overflow-hidden">
+                <img
+                  src={`/images/${frame.file}`}
+                  alt={frame.name}
+                  className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110"
+                />
+              </div>
             </div>
+
+            {/* BEAUTIFUL TEXT - OUTSIDE */}
+            <h3 className="text-center text-xl font-bold tracking-wide bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent drop-shadow-sm transition-all duration-500 group-hover:scale-105">
+              {frame.name}
+            </h3>
           </div>
         ))}
       </div>
@@ -368,10 +372,24 @@ const GeneralInfo = () => {
     <tbody className="divide-y divide-white/[0.05]">
 
       <tr className="hover:bg-white/[0.02] transition">
-        <td className="py-4 px-6 font-semibold text-gray-800">Pricing</td>
-        <td className="py-4 px-6">$8/mo<br/>$45 / 6-mo<br/>$80 / yr</td>
-        <td className="py-4 px-6">$16/mo<br/>$90 / 6-mo<br/>$160 / yr</td>
-        <td className="py-4 px-6">$24/mo<br/>$135 / 6-mo<br/>$240 / yr</td>
+        <td className="py-4 px-6 font-semibold text-gray-800">Pricing (Monthly)</td>
+        <td className="py-4 px-6">$8 / mo</td>
+        <td className="py-4 px-6">$16 / mo</td>
+        <td className="py-4 px-6">$24 / mo</td>
+      </tr>
+
+      <tr className="bg-white/70 hover:bg-white/[0.02] transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Pricing (6 Months)</td>
+        <td className="py-4 px-6">$45</td>
+        <td className="py-4 px-6">$90</td>
+        <td className="py-4 px-6">$135</td>
+      </tr>
+
+      <tr className="hover:bg-white/[0.02] transition">
+        <td className="py-4 px-6 font-semibold text-gray-800">Pricing (Yearly)</td>
+        <td className="py-4 px-6">$80</td>
+        <td className="py-4 px-6">$160</td>
+        <td className="py-4 px-6">$240</td>
       </tr>
 
       <tr className="bg-white/70 hover:bg-white/[0.02] transition">
