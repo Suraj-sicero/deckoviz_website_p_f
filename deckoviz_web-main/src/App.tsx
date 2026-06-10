@@ -73,6 +73,10 @@ import MoreInfo from "./components/MoreInfo";
 import DASPGuide from "./components/homepage/DASPGuide";
 import DASPHomesGuide from "./components/homepage/DASPHomesGuide";
 import StartHere from "./components/homepage/StartHere";
+import AlternateUseCasesGuide from "./components/homepage/AlternateUseCasesGuide";
+import VizzyArtEngineGuide from "./components/homepage/VizzyArtEngineGuide";
+import DeckovizManifesto from "./components/homepage/DeckovizManifesto";
+import VizzyRearchitectingDoc from "./components/homepage/VizzyRearchitectingDoc";
 import DASPBusinessGuide from "./components/deckovizForBusinesses/DASPBusinessGuide";
 import PragmaticBuyerGuide from "./components/deckovizForBusinesses/PragmaticBuyerGuide";
 import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
@@ -237,6 +241,7 @@ import ElinityContact from "./components/elinity/ElinityContact";
 import ElinityJoinUs from "./components/elinity/ElinityJoinUs";
 import DailyCuratorPage from "./components/dailyCurator/DailyCuratorPage";
 import AdminDailyCuratorPage from "./components/dailyCurator/AdminDailyCuratorPage";
+import ElinityDeckovizGuide from "./components/homepage/ElinityDeckovizGuide";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -369,6 +374,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           />
           <Route path="/dasp-guide" element={<DASPGuide />} />
           <Route path="/dasp-homes-guide" element={<DASPHomesGuide />} />
+          <Route path="/alternate-use-cases" element={<AlternateUseCasesGuide />} />
+          <Route path="/vizzy-art-engine" element={<VizzyArtEngineGuide />} />
+          <Route path="/deckoviz-manifesto" element={<DeckovizManifesto />} />
+          <Route path="/rearchitecting-hell" element={<VizzyRearchitectingDoc />} />
           <Route path="/dasp-business-guide" element={<DASPBusinessGuide />} />
           <Route path="/pragmatic-buyer-guide" element={<PragmaticBuyerGuide />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
@@ -601,6 +610,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           {/* Daily Curator + Music Curation */}
           <Route path="/daily-curator" element={<ProtectedRoute><DailyCuratorPage /></ProtectedRoute>} />
           <Route path="/admin/daily-curator" element={<ProtectedRoute><AdminDailyCuratorPage /></ProtectedRoute>} />
+          <Route path="/elinity-deckoviz-guide" element={<ElinityDeckovizGuide />} />
         </Routes>
       </main>
       {!isDeveloperTool && !isCanvasPage && <Footer />}

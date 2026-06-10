@@ -13,6 +13,7 @@ import {
   BarChart2,
   Shield,
   X,
+  Info,
   Video,
   Palette,
   Megaphone,
@@ -39,6 +40,9 @@ import { Link } from "react-router-dom";
 import DeckovizSectors from "./DeckovizSectors";
 import EnterpriseHorizontalScrollingFeatures from "./EnterpriseHorizontalScrollingFeatures";
 import EnterpriseWhyDeckoviz from "./EnterpriseWhyDeckoviz";
+import EnterpriseVisionMicrosite from "./EnterpriseVisionMicrosite";
+import useEmblaCarousel from "embla-carousel-react";
+import AutoScroll from "embla-carousel-auto-scroll";
 import {
   FadeUp,
   SlideLeft,
@@ -415,11 +419,11 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
             className="relative w-full max-w-[800px] max-h-[90vh] bg-[#fcfcfc] rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,0.4)] overflow-hidden flex flex-col border border-white/50"
           >
             {/* Elegant Top Gradient Bar */}
-            <div className="absolute top-0 inset-x-0 h-[6px] bg-gradient-to-r from-indigo-700 via-indigo-500 to-blue-500 opacity-90"></div>
+            <div className="absolute top-0 inset-x-0 h-[6px] bg-gradient-to-r from-[#182A4A] via-[#2563EB] to-[#60A5FA] opacity-90"></div>
 
             <div className="flex justify-between items-center px-8 py-6 border-b border-gray-100 bg-white/80 backdrop-blur-md z-10 sticky top-0">
               <h2 className="text-xl md:text-2xl font-bold tracking-tight text-gray-900 font-serif">
-                <span className="bg-gradient-to-r from-indigo-900 to-indigo-700 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent">
                   THE DECKOVIZ THESIS
                 </span>
                 <span className="text-gray-400 font-light ml-2 tracking-normal">FOR ENTERPRISES</span>
@@ -436,7 +440,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 <p className="text-2xl md:text-3xl font-serif text-gray-900 leading-tight">
                   From static physical spaces to <br className="hidden md:block" /> narrative-driven, adaptive experiences.
                 </p>
-                <div className="w-12 h-[2px] bg-indigo-200 mx-auto mt-6"></div>
+                <div className="w-12 h-[2px] bg-[#2563EB]/40 mx-auto mt-6"></div>
               </div>
 
               {/* Section 1 */}
@@ -450,7 +454,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 </ul>
                 <p>With AI, robotics, and optimized supply chains, almost everything that once felt differentiated is rapidly moving toward commoditisation.</p>
                 <p className="mt-4">And when everything becomes available, comparable, and replicable… the question shifts.</p>
-                <p className="text-xl font-medium text-indigo-900 mt-6 border-l-4 border-indigo-300 pl-6 py-2 bg-indigo-50/50 italic">
+                <p className="text-xl font-medium text-[#182A4A] mt-6 border-l-4 border-[#2563EB]/40 pl-6 py-2 bg-blue-50/70 italic">
                   It's no longer "what are you offering?" but "what does it feel like to experience you?"
                 </p>
               </div>
@@ -484,7 +488,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   <h3 className="text-xl font-bold text-gray-900 mb-4 font-serif">But most spaces are still static</h3>
                   <p>Despite this shift, the tools available to physical businesses are still stuck in an earlier era. Spaces today are largely static, non-adaptive, visually limited, and disconnected from the customer.</p>
                   <p className="mt-4">Walls display the same posters. Screens loop the same content. Ambience is fixed. There is no intelligence. No responsiveness. No evolution.</p>
-                  <p className="mt-4 font-bold text-indigo-900">This creates a fundamental mismatch: Dynamic customers entering static environments.</p>
+                  <p className="mt-4 font-bold text-[#182A4A]">This creates a fundamental mismatch: Dynamic customers entering static environments.</p>
                 </div>
               </div>
 
@@ -492,11 +496,11 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4 font-serif">The insight that created Deckoviz</h3>
                 <p>The breakthrough insight was simple, but powerful:</p>
-                <p className="text-xl font-serif text-indigo-900 mt-4 mb-4">If products are becoming commodities, stories become the differentiator.</p>
+                <p className="text-xl font-serif text-[#182A4A] mt-4 mb-4">If products are becoming commodities, stories become the differentiator.</p>
                 <p>Not just any stories. Coherent, immersive, visually rich narratives that connect the product, the brand, and the customer in a way that feels alive.</p>
                 <p className="mt-4">Because stories are what give meaning to things. Money is a story. Nations are stories. Movements are stories. Brands, at their best, are stories.</p>
                 <p className="mt-4 font-medium text-gray-900">And the only businesses that will thrive in the future will need to become brands. Your brand must become your business differentiator, not your products or services.</p>
-                <p className="mt-6 text-lg font-bold text-center text-indigo-900 tracking-wide uppercase">
+                <p className="mt-6 text-lg font-bold text-center text-[#182A4A] tracking-wide uppercase">
                   In a world where creation is abundant…<br />coherence becomes the moat.
                 </p>
               </div>
@@ -506,7 +510,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 <h3 className="text-xl font-bold text-gray-900 mb-4 font-serif">What we believe about spaces</h3>
                 <p>We believe that the spaces of the future will not be passive. They will be adaptive, emotionally attuned, context-aware, and continuously evolving.</p>
                 <p className="mt-4">They will not just host experiences. They will actively shape them. Spaces will influence how people feel, guide how they move, affect what they choose, and determine what they remember.</p>
-                <p className="mt-4 font-bold text-indigo-900">In short, spaces will become intelligent experience systems.</p>
+                <p className="mt-4 font-bold text-[#182A4A]">In short, spaces will become intelligent experience systems.</p>
               </div>
 
               {/* Section 7 */}
@@ -514,7 +518,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 <h3 className="text-xl font-bold text-gray-900 mb-4 font-serif">Deckoviz as the narrative layer</h3>
                 <p>Deckoviz was built to become this missing layer. A system that sits between your brand, your space, and your customer.</p>
                 <p className="mt-4">And brings them together through visual storytelling, dynamic content, adaptive ambience, and personalised experiences.</p>
-                <p className="mt-6 font-medium text-gray-900">Deckoviz is not just a display system. It is a <span className="text-indigo-600 font-bold">Generative Visual and Ambience Portal (GVAP)</span> - a platform for turning physical spaces into narrative-driven environments.</p>
+                <p className="mt-6 font-medium text-gray-900">Deckoviz is not just a display system. It is a <span className="text-[#2563EB] font-bold">Generative Visual and Ambience Portal (GVAP)</span> - a platform for turning physical spaces into narrative-driven environments.</p>
               </div>
 
               {/* Section 8 */}
@@ -523,7 +527,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
 
                 <div className="grid grid-cols-1 gap-8">
                   <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold font-serif">1</div>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] font-bold font-serif">1</div>
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Storytelling becomes part of the space</h4>
                       <p className="mt-2 text-gray-600">Instead of static menus or displays, you can show the inspiration behind a dish, the journey of an ingredient, the craftsmanship behind a product, or the history of a space.</p>
@@ -531,7 +535,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   </div>
 
                   <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold font-serif">2</div>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] font-bold font-serif">2</div>
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Products are elevated into experiences</h4>
                       <p className="mt-2 text-gray-600">A dish is no longer just food. It becomes visual, contextual, narrative-driven. A product becomes part of a story: how it was made, how it is used, how it fits into a life.</p>
@@ -539,7 +543,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   </div>
 
                   <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold font-serif">3</div>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] font-bold font-serif">3</div>
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Ambience becomes dynamic, not fixed</h4>
                       <p className="mt-2 text-gray-600">Spaces can adapt in real time: lunch vs dinner, weekday vs weekend, calm vs energetic. The same space can feel completely different depending on context.</p>
@@ -547,7 +551,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   </div>
 
                   <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold font-serif">4</div>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] font-bold font-serif">4</div>
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">Moments become memorable</h4>
                       <p className="mt-2 text-gray-600">Create personalised visuals for guests, celebratory moments, and unexpected delights. Small moments that stay with people and drive recall, sharing, and repeat visits.</p>
@@ -555,7 +559,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                   </div>
 
                   <div className="flex gap-4">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold font-serif">5</div>
+                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] font-bold font-serif">5</div>
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">The customer journey becomes immersive</h4>
                       <p className="mt-2 text-gray-600">Instead of isolated touchpoints, the entire journey becomes connected: entry, browsing, ordering, waiting, experiencing—all tied together through a coherent visual layer.</p>
@@ -565,14 +569,14 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               </div>
 
               {/* Section 9 */}
-              <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-8 border border-indigo-100 shadow-sm relative overflow-hidden">
-                <div className="absolute right-0 top-0 w-32 h-32 bg-indigo-200/50 rounded-full blur-3xl"></div>
-                <div className="absolute left-0 bottom-0 w-32 h-32 bg-indigo-200/50 rounded-full blur-3xl"></div>
+              <div className="bg-gradient-to-br from-[#182A4A]/5 to-[#2563EB]/10 rounded-2xl p-8 border border-blue-100 shadow-sm relative overflow-hidden">
+                <div className="absolute right-0 top-0 w-32 h-32 bg-blue-200/40 rounded-full blur-3xl"></div>
+                <div className="absolute left-0 bottom-0 w-32 h-32 bg-blue-200/40 rounded-full blur-3xl"></div>
 
-                <h3 className="text-xl font-bold text-indigo-900 mb-4 font-serif relative z-10">Vizzy — the brand, made alive</h3>
+                <h3 className="text-xl font-bold text-[#182A4A] mb-4 font-serif relative z-10">Vizzy — the brand, made alive</h3>
                 <p className="relative z-10">At the center of this is Vizzy. An AI avatar that becomes your brand representative, your storyteller, your guide, and your personality layer.</p>
                 <p className="mt-4 relative z-10">Vizzy can communicate your brand voice, interact with customers, guide discovery, and add a human-like layer to the experience.</p>
-                <p className="mt-4 font-bold text-indigo-900 relative z-10">Every space gets its own version of Vizzy. Every brand gets its own personality.</p>
+                <p className="mt-4 font-bold text-[#182A4A] relative z-10">Every space gets its own version of Vizzy. Every brand gets its own personality.</p>
               </div>
 
               {/* Section 10 */}
@@ -594,9 +598,9 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
               {/* Epic Closing Block */}
               <div className="relative mt-16 rounded-3xl overflow-hidden shadow-2xl">
                 <div className="absolute inset-0 bg-gray-900"></div>
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/80 via-gray-900 to-indigo-900/80"></div>
-                <div className="absolute -top-24 -left-24 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-30"></div>
-                <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-30"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-[#182A4A]/80 via-gray-900 to-[#0A192F]/80"></div>
+                <div className="absolute -top-24 -left-24 w-64 h-64 bg-[#2563EB] rounded-full blur-[100px] opacity-20"></div>
+                <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-[#60A5FA] rounded-full blur-[100px] opacity-20"></div>
 
                 <div className="relative p-10 md:p-14 text-center z-10 flex flex-col items-center justify-center min-h-[300px]">
                   <p className="text-lg md:text-xl font-medium text-gray-300 leading-relaxed max-w-2xl mx-auto">
@@ -606,12 +610,12 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                     Very few have a true experience layer.
                   </p>
 
-                  <div className="w-12 h-1 bg-gradient-to-r from-indigo-400 to-blue-400 mx-auto my-10 rounded-full"></div>
+                  <div className="w-12 h-1 bg-gradient-to-r from-[#2563EB] to-[#60A5FA] mx-auto my-10 rounded-full"></div>
 
                   <p className="text-2xl md:text-4xl font-serif text-white/90 leading-tight">
                     In a world where anything can be made…
                   </p>
-                  <p className="text-3xl md:text-5xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-indigo-300 to-indigo-300 mt-4 leading-tight">
+                  <p className="text-3xl md:text-5xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-[#93C5FD] via-[#60A5FA] to-[#3B82F6] mt-4 leading-tight">
                     what matters is how it is experienced.
                   </p>
 
@@ -632,6 +636,13 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
 export default function DeckovizForEnterprise() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isThesisModalOpen, setIsThesisModalOpen] = useState(false);
+  const [showEnterpriseMicrosite, setShowEnterpriseMicrosite] = useState(false);
+  
+  const [emblaRef] = useEmblaCarousel(
+    { loop: true, align: "start", dragFree: true },
+    [AutoScroll({ speed: 1, playOnInit: true, stopOnInteraction: false })]
+  );
+  
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [sparks, setSparks] = useState<Spark[]>([]);
 
@@ -1152,7 +1163,7 @@ export default function DeckovizForEnterprise() {
         <div className="absolute bottom-[-5%] left-[25%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-40"
           style={{ background: "radial-gradient(circle, #818cf8, #a5b4fc)" }} />
 
-        <div className="max-w-5xl mx-auto px-4 md:px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
 
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -1325,7 +1336,7 @@ export default function DeckovizForEnterprise() {
         <div className="absolute bottom-[-5%] right-[25%] w-[600px] h-[600px] rounded-full blur-[100px] pointer-events-none opacity-40"
           style={{ background: "radial-gradient(circle, #818cf8, #a5b4fc)" }} />
 
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -2246,8 +2257,8 @@ export default function DeckovizForEnterprise() {
 
 
 
-      <section className="flex justify-center items-center px-4">
-        <ScalePop>
+      <section className="flex justify-center items-center px-4 gap-4 flex-col sm:flex-row">
+        <ScalePop delay={0.1}>
           <Button
             onClick={() => setIsModalOpen(true)}
             className="
@@ -2269,6 +2280,27 @@ export default function DeckovizForEnterprise() {
             Schedule Your Enterprise Demo
           </Button>
         </ScalePop>
+        <ScalePop delay={0.2}>
+          <Button
+            onClick={() => navigate("/more-info")}
+            className="
+      w-full sm:w-auto
+      flex items-center justify-center gap-2
+      px-6 py-3 sm:px-10 sm:py-4
+      rounded-full
+      text-sm sm:text-lg
+      bg-gradient-to-r from-[#182A4A] via-[#2563EB] to-[#4f46e5] text-white
+      shadow-[0_10px_30px_rgba(79,70,229,0.35)]
+      hover:shadow-[0_20px_50px_rgba(79,70,229,0.55)]
+      hover:scale-[1.05]
+      transition-all duration-300
+      whitespace-nowrap
+    "
+          >
+            <Info size={18} className="sm:w-5 sm:h-5 text-white" />
+            More Information
+          </Button>
+        </ScalePop>
       </section>
       <div className="pt-16"></div>
 
@@ -2277,6 +2309,9 @@ export default function DeckovizForEnterprise() {
       )}
 
       <ThesisModal isOpen={isThesisModalOpen} onClose={() => setIsThesisModalOpen(false)} />
+      {showEnterpriseMicrosite && (
+        <EnterpriseVisionMicrosite onClose={() => setShowEnterpriseMicrosite(false)} />
+      )}
 
       {/* ================= EXPLORE FURTHER ================= */}
       <section className="bg-transparent py-0 border-t border-gray-100"
@@ -2300,17 +2335,12 @@ export default function DeckovizForEnterprise() {
             <p className="text-gray-500 text-lg max-w-xl mx-auto">High-fidelity deep dives into the future of the Deckoviz AI ecosystem</p>
           </div>
 
-          <div className="w-full overflow-hidden resource-ticker-container">
-            <div 
-              className="flex gap-10 px-8 py-8 w-max resource-ticker-track"
-              style={{
-                animation: "resourceTicker 40s linear infinite"
-              }}
-            >
-              {[1, 2].map((iteration) => (
+          <div className="w-full relative overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
+            <div className="flex ml-[-40px] touch-pan-y">
+              {[1, 2, 3].map((iteration) => (
                 <React.Fragment key={iteration}>
                   {/* 📘 Business DASP Guide Button */}
-                  <div className="min-w-[340px] md:min-w-[480px]">
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
                     <ScalePop delay={0.2}>
                       <button
                         onClick={() => navigate("/dasp-business-guide")}
@@ -2363,7 +2393,7 @@ export default function DeckovizForEnterprise() {
                   </div>
 
                   {/* THE DECKOVIZ THESIS BUTTON */}
-                  <div className="min-w-[340px] md:min-w-[480px]">
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
                     <ScalePop delay={0.4}>
                       <button
                         onClick={() => setIsThesisModalOpen(true)}
@@ -2411,7 +2441,7 @@ export default function DeckovizForEnterprise() {
                   </div>
 
                   {/* 📙 Pragmatic Enterprise Buyer Guide Button */}
-                  <div className="min-w-[340px] md:min-w-[480px]">
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
                     <ScalePop delay={0.6}>
                       <button
                         onClick={() => navigate("/pragmatic-buyer-guide")}
@@ -2454,6 +2484,63 @@ export default function DeckovizForEnterprise() {
                         </div>
 
                         <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-purple-400 to-indigo-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
+
+                  {/* ✨ The Problem It Solves Button */}
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
+                    <ScalePop delay={0.8}>
+                      <button
+                        onClick={() => setShowEnterpriseMicrosite(true)}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-3xl -z-10 group-hover:bg-cyan-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/10 blur-3xl -z-10 group-hover:bg-blue-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
+
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-cyan-50/80 shadow-[0_8px_16px_rgba(6,182,212,0.1)] border border-cyan-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-cyan-600">
+                               <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                               <path d="M9 22v-4h6v4"/>
+                               <path d="M8 6h.01"/>
+                               <path d="M16 6h.01"/>
+                               <path d="M12 6h.01"/>
+                               <path d="M8 10h.01"/>
+                               <path d="M16 10h.01"/>
+                               <path d="M12 10h.01"/>
+                               <path d="M8 14h.01"/>
+                               <path d="M16 14h.01"/>
+                               <path d="M12 14h.01"/>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-cyan-800/60 font-bold">Solutions</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-cyan-700 transition-colors duration-300">The Problem It Solves</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">Why static spaces fail & how to fix them.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-cyan-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-cyan-400 to-blue-500 group-hover:w-full transition-all duration-700 ease-in-out" />
                       </button>
                     </ScalePop>
                   </div>
@@ -2557,21 +2644,7 @@ export default function DeckovizForEnterprise() {
           </div>
         </section>
 
-        <div className="text-center mt-10">
-          <button
-            onClick={() => navigate("/more-info")}
-            className="
-      px-10 py-3 rounded-full
-      bg-gradient-to-r from-[#182A4A] via-[#2563EB] to-[#4f46e5]
-      text-white font-medium
-      shadow-[0_20px_50px_rgba(168,85,247,0.35)]
-      hover:shadow-[0_30px_70px_rgba(236,72,153,0.45)]
-      transition-all duration-300 hover:-translate-y-1
-    "
-          >
-            More Information
-          </button>
-        </div>
+
       </section>
 
     </div>

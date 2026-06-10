@@ -1,84 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const InteractiveParticleGraphic = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
-  const particlesRef = useRef<Particle[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-
-  class Particle {
-    originalX: number;
-    originalY: number;
-    x: number;
-    y: number;
-    size: number;
-    baseSize: number;
-    hue: number;
-    opacity: number;
-    baseOpacity: number;
-
-    constructor(x: number, y: number) {
-      this.originalX = x;
-      this.originalY = y;
-      this.x = x;
-      this.y = y;
-      this.baseSize = Math.random() * 4 + 4; // Bigger particles like in the image
-      this.size = this.baseSize;
-      // Orange, pink, violet color range (15-60 for orange, 280-340 for violet/pink)
-      this.hue = Math.random() < 0.33 
-        ? Math.random() * 30 + 15   // Orange range (15-45)
-        : Math.random() * 60 + 280; // Violet to pink range (280-340)
-      this.baseOpacity = Math.random() * 0.3 + 0.7; // Higher opacity for visibility
-      this.opacity = this.baseOpacity;
-    }
-
-    update(mouseX: number, mouseY: number) {
-      // Calculate distance from mouse
-      const dx = mouseX - this.originalX;
-      const dy = mouseY - this.originalY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      const maxDistance = 180; // Bigger radius
-
-      if (distance < maxDistance) {
-        // Calculate repulsion force with more gooey effect
-        const force = (maxDistance - distance) / maxDistance;
-        const angle = Math.atan2(dy, dx);
-        
-        // GLOOPY effect - stronger, more elastic movement
-        const pushDistance = force * force * 80; // Quadratic for more dramatic effect
-        this.x = this.originalX - Math.cos(angle) * pushDistance;
-        this.y = this.originalY - Math.sin(angle) * pushDistance;
-        
-        // More dramatic size changes for bigger particles
-        this.size = this.baseSize + force * 6;
-        this.opacity = Math.min(1, this.baseOpacity + force * 0.6);
-      } else {
-        // Slower, more gooey return - like thick liquid
-        this.x += (this.originalX - this.x) * 0.06; // Much slower return
-        this.y += (this.originalY - this.y) * 0.06;
-        this.size += (this.baseSize - this.size) * 0.08;
-        this.opacity += (this.baseOpacity - this.opacity) * 0.08;
-      }
-    }
-
-    draw(ctx: CanvasRenderingContext2D) {
-      // Brighter gradient for more vibrant colors
-      const gradient = ctx.createRadialGradient(
-        this.x, this.y, 0,
-        this.x, this.y, this.size * 2
-      );
-      
-      // More saturated colors for orange, pink, violet
-      gradient.addColorStop(0, `hsla(${this.hue}, 85%, 60%, ${this.opacity})`);
-      gradient.addColorStop(0.5, `hsla(${this.hue}, 80%, 65%, ${this.opacity * 0.7})`);
-      gradient.addColorStop(1, `hsla(${this.hue}, 70%, 70%, 0)`);
-
-      ctx.fillStyle = gradient;
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
+  const isVisibleRef = useRef(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -87,88 +12,123 @@ const InteractiveParticleGraphic = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set up canvas
+    // Pause when scrolled out of view
+    const observer = new IntersectionObserver(
+      ([entry]) => { isVisibleRef.current = entry.isIntersecting; },
+      { threshold: 0.05 }
+    );
+    observer.observe(canvas);
+
+    interface ParticleData {
+      ox: number; oy: number; x: number; y: number;
+      size: number; baseSize: number;
+      hue: number; opacity: number; baseOpacity: number;
+    }
+
+    let particles: ParticleData[] = [];
+    const mouse = { x: -1000, y: -1000 };
+
     const setupCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width;
-      canvas.height = rect.height;
+      const parent = canvas.parentElement;
+      canvas.width = parent ? parent.clientWidth : window.innerWidth;
+      canvas.height = parent ? parent.clientHeight : window.innerHeight;
       createParticles();
     };
 
-    // Create particle grid with more spacing
     const createParticles = () => {
-      particlesRef.current = [];
-      const spacing = 35; // Increased spacing for cleaner look
+      particles = [];
+      const spacing = 55; // wider spacing = fewer particles = faster
       const cols = Math.floor(canvas.width / spacing);
       const rows = Math.floor(canvas.height / spacing);
-      
-      // Center the grid
       const offsetX = (canvas.width - (cols - 1) * spacing) / 2;
       const offsetY = (canvas.height - (rows - 1) * spacing) / 2;
+
+      const excludeW = canvas.width * 0.55;
+      const excludeStartX = (canvas.width - excludeW) / 2;
+      const excludeEndX = excludeStartX + excludeW;
 
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
           const x = offsetX + i * spacing;
           const y = offsetY + j * spacing;
-          particlesRef.current.push(new Particle(x, y));
+          if (x > excludeStartX && x < excludeEndX) continue;
+          const hue = Math.random() < 0.5
+            ? Math.random() * 40 + 180  // cyan/teal
+            : Math.random() * 40 + 220; // blue
+          const baseSize = Math.random() * 3 + 3;
+          const baseOpacity = Math.random() * 0.3 + 0.55;
+          particles.push({ ox: x, oy: y, x, y, size: baseSize, baseSize, hue, opacity: baseOpacity, baseOpacity });
         }
       }
     };
 
-    // Animation loop
+    // Frame throttling: only re-render every other frame
+    let frameCount = 0;
     const animate = () => {
-      // Clear canvas (transparent background)
+      animationRef.current = requestAnimationFrame(animate);
+      if (!isVisibleRef.current) return;
+      frameCount++;
+      if (frameCount % 2 !== 0) return; // skip every other frame
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update and draw particles
-      particlesRef.current.forEach(particle => {
-        particle.update(mouseRef.current.x, mouseRef.current.y);
-        particle.draw(ctx);
-      });
+      for (const p of particles) {
+        const dx = mouse.x - p.ox;
+        const dy = mouse.y - p.oy;
+        const distSq = dx * dx + dy * dy;
+        const maxDist = 160;
 
-      animationRef.current = requestAnimationFrame(animate);
+        if (distSq < maxDist * maxDist) {
+          const dist = Math.sqrt(distSq);
+          const force = (maxDist - dist) / maxDist;
+          const angle = Math.atan2(dy, dx);
+          const push = force * force * 60;
+          p.x = p.ox - Math.cos(angle) * push;
+          p.y = p.oy - Math.sin(angle) * push;
+          p.size = p.baseSize + force * 4;
+          p.opacity = Math.min(1, p.baseOpacity + force * 0.5);
+        } else {
+          p.x += (p.ox - p.x) * 0.08;
+          p.y += (p.oy - p.y) * 0.08;
+          p.size += (p.baseSize - p.size) * 0.1;
+          p.opacity += (p.baseOpacity - p.opacity) * 0.1;
+        }
+
+        // Flat circle — no per-frame gradient creation
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 80%, 62%, ${p.opacity})`;
+        ctx.fill();
+      }
     };
 
-    // Mouse event handlers
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouseRef.current.x = e.clientX - rect.left;
-      mouseRef.current.y = e.clientY - rect.top;
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
     };
+    const handleMouseLeave = () => { mouse.x = -1000; mouse.y = -1000; };
 
-    const handleMouseLeave = () => {
-      // Move mouse far away to reset particles
-      mouseRef.current.x = -1000;
-      mouseRef.current.y = -1000;
-    };
-
-    // Add event listeners
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseleave', handleMouseLeave);
     window.addEventListener('resize', setupCanvas);
 
-    // Initialize
-    setupCanvas();
+    const timeoutId = setTimeout(setupCanvas, 100);
     animate();
 
-    // Cleanup
     return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      clearTimeout(timeoutId);
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', setupCanvas);
+      observer.disconnect();
     };
   }, []);
 
   return (
-    <div className="w-full h-96 my-4 relative overflow-hidden rounded-2xl">
-      <canvas
-        ref={canvasRef}
-        className="w-full h-full cursor-default"
-        style={{ display: 'block' }}
-      />
+    <div className="absolute inset-0 w-full h-full pointer-events-none">
+      <canvas ref={canvasRef} className="w-full h-full block" />
     </div>
   );
 };
