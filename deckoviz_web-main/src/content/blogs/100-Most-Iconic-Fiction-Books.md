@@ -15,13 +15,53 @@ size: "large"
 
 <b> Stories that shaped how we feel, think, and imagine ourselves </b>
 
-Fiction has never been mere entertainment. Long before psychology, sociology, or neuroscience, stories were how we explored the inner landscape of being human. Through imagined lives, invented worlds, and carefully chosen words, fiction lets us rehearse love, failure, courage, cruelty, hope, and redemption.
-The greatest novels endure because they do something rare. They reveal something essential about us. About how we desire. How we fear. How we justify ourselves. How we grow, or fail to.
-Across centuries and cultures, fiction has shaped our moral intuitions and emotional vocabularies. It has taught us empathy by letting us inhabit minds unlike our own. It has warned us about power, vanity, and self-deception. It has given language to feelings we could not otherwise articulate.
-A truly iconic work of fiction does not end when the last page is turned. It lingers. It reframes memory. It changes how we see relationships, society, or ourselves. In quiet ways, it alters the inner furniture of the mind.
+Fiction has never been mere entertainment.
 
-At Deckoviz, we think of stories as living environments. A novel is not just a text. It is a mood. A worldview. A rhythm of thought. When you visualize fiction, you are not illustrating a plot. You are externalizing an inner atmosphere. A feeling you want to revisit. A lens through which you want to see the world again.
-With Deckoviz, your favourite fiction can become part of your space. A visual interpretation of its themes. A shifting mood inspired by its emotional arc. A quiet reminder of the ideas and values that shaped you.
+Long before psychology, sociology, or neuroscience, stories were how we explored the inner landscape of being human.
+
+Through imagined lives, invented worlds, and carefully chosen words, fiction lets us rehearse love, failure, courage, cruelty, hope, and redemption.
+The greatest novels endure because they do something rare. They reveal something essential about us. About how we desire. How we fear. How we justify ourselves. How we grow, or fail to.
+Across centuries and cultures, fiction has shaped our moral intuitions and emotional vocabularies.
+
+It has taught us empathy by letting us inhabit minds unlike our own.
+
+It has warned us about power, vanity, and self-deception.
+
+It has given language to feelings we could not otherwise articulate.
+A truly iconic work of fiction does not end when the last page is turned.
+
+It lingers.
+
+It reframes memory.
+
+It changes how we see relationships, society, or ourselves.
+
+In quiet ways, it alters the inner furniture of the mind.
+
+At Deckoviz, we think of stories as living environments.
+
+A novel is not just a text.
+
+It is a mood.
+
+A worldview.
+
+A rhythm of thought.
+
+When you visualize fiction, you are not illustrating a plot.
+
+You are externalizing an inner atmosphere.
+
+A feeling you want to revisit.
+
+A lens through which you want to see the world again.
+With Deckoviz, your favourite fiction can become part of your space.
+
+A visual interpretation of its themes.
+
+A shifting mood inspired by its emotional arc.
+
+A quiet reminder of the ideas and values that shaped you.
 Below is a curated list of some of the most iconic works of fiction ever written. Not because they are universally liked, but because they are universally important.
 
 
@@ -659,35 +699,45 @@ A sharp and unsettling novel exploring identity, loyalty, and the contradictions
 
 ## 91. The Stranger by Albert Camus
 <br>
-A stark existential novel exploring absurdity, detachment, and the tension between individual truth and social expectation. Through its emotionally distant protagonist, the novel questions morality, meaning, and the human response to an indifferent universe.
+A stark existential novel exploring absurdity, detachment, and the tension between individual truth and social expectation.
+
+Through its emotionally distant protagonist, the novel questions morality, meaning, and the human response to an indifferent universe.
 
 
 <br>
 
 ## 92. Don Quixote by Miguel de Cervantes
 <br>
-Often considered the first modern novel, this satirical yet deeply human story explores idealism, madness, and the clash between imagination and reality. Don Quixote’s quest exposes both the beauty and danger of believing too deeply in illusions.
+Often considered the first modern novel, this satirical yet deeply human story explores idealism, madness, and the clash between imagination and reality.
+
+Don Quixote’s quest exposes both the beauty and danger of believing too deeply in illusions.
 
 
 <br>
 
 ## 93. The Trial by Franz Kafka
 <br>
-A nightmarish vision of bureaucracy and power, this novel depicts an individual trapped in a system without logic or mercy. It captures modern anxieties about authority, guilt, and the impossibility of justice.
+A nightmarish vision of bureaucracy and power, this novel depicts an individual trapped in a system without logic or mercy.
+
+It captures modern anxieties about authority, guilt, and the impossibility of justice.
 
 
 <br>
 
 ## 94. The Sun Also Rises by Ernest Hemingway
 <br>
-A defining novel of the Lost Generation, portraying emotional disillusionment and quiet longing after World War I. Beneath its restrained prose lies a profound meditation on love, masculinity, and meaning.
+A defining novel of the Lost Generation, portraying emotional disillusionment and quiet longing after World War I.
+
+Beneath its restrained prose lies a profound meditation on love, masculinity, and meaning.
 
 
 <br>
 
 ## 95. Love in the Time of Cholera by Gabriel García Márquez
 <br>
-A sweeping exploration of love across decades, examining patience, obsession, and devotion. The novel challenges conventional ideas of romance and celebrates love’s persistence beyond youth and reason.
+A sweeping exploration of love across decades, examining patience, obsession, and devotion.
+
+The novel challenges conventional ideas of romance and celebrates love’s persistence beyond youth and reason.
 
 
 <br>
@@ -722,4 +772,6 @@ A dystopian exploration of power, control, and resistance, examining how languag
 
 ## 100. War and Peace by Leo Tolstoy
 <br>
-A monumental literary achievement that blends personal lives with sweeping historical forces. Tolstoy explores love, war, faith, free will, and the illusion of control, offering a deeply human vision of history and existence.
+A monumental literary achievement that blends personal lives with sweeping historical forces.
+
+Tolstoy explores love, war, faith, free will, and the illusion of control, offering a deeply human vision of history and existence.

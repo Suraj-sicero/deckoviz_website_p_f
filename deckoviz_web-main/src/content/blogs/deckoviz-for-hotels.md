@@ -412,4 +412,6 @@ And it is already here.
 
 ~~~~
 
-[[Part 1 of the two-parter, written to speak directly to architects and interior designers, in a language of space, intent, materiality, emotion, and future-facing design. It is crafted so Part 2 can be appended seamlessly later.]]
+[[Part 1 of the two-parter, written to speak directly to architects and interior designers, in a language of space, intent, materiality, emotion, and future-facing design.
+
+It is crafted so Part 2 can be appended seamlessly later.]]

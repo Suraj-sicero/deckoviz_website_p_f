@@ -26,7 +26,13 @@ What if guests did not just consume information, but felt something?
 Deckoviz is built for enterprises that understand one truth:  
 People do not remember what they saw. They remember how a place made them feel.
 
-Below are real, concrete ways enterprises are already using Deckoviz to turn restaurants, hotels, retail spaces, and branded environments into living, emotional architecture. This is not exhaustive. We will continue publishing deeper guides as new features and use cases launch. But this will get you started experiencing the Deckoviz magic and value.
+Below are real, concrete ways enterprises are already using Deckoviz to turn restaurants, hotels, retail spaces, and branded environments into living, emotional architecture.
+
+This is not exhaustive.
+
+We will continue publishing deeper guides as new features and use cases launch.
+
+But this will get you started experiencing the Deckoviz magic and value.
 
 ---
 
@@ -246,5 +252,9 @@ We will continue sharing deeper guides, prompts, and inspiration for new feature
 
 ---
 
-[[Enterprise-facing blog article written as a companion to the previous enterprise use guide. This one is explicitly addressed to enterprises and leans heavily into concrete inspiration plus usable prompts, while still reading like a thoughtful strategic piece rather than a prompt dump. It is written so you can later merge it seamlessly with a second section.]]
+[[Enterprise-facing blog article written as a companion to the previous enterprise use guide.
+
+This one is explicitly addressed to enterprises and leans heavily into concrete inspiration plus usable prompts, while still reading like a thoughtful strategic piece rather than a prompt dump.
+
+It is written so you can later merge it seamlessly with a second section.]]
 

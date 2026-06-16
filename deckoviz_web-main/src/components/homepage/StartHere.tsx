@@ -491,12 +491,12 @@ export default function StartHere() {
                 </div>
               </button>
 
-              {/* 🔥 Deckoviz Manifesto Button */}
+              {/* ✍️ Blog & Articles Button */}
               <button
-                onClick={() => navigate("/deckoviz-manifesto")}
+                onClick={() => navigate("/blog")}
                 className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(249,115,22,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(249,115,22,0.32)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-400/10 via-rose-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-r from-orange-400/10 via-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
                      style={{
                        background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.7) 60%, transparent 80%)",
@@ -505,56 +505,22 @@ export default function StartHere() {
                      }}
                 />
                 <div className="flex items-center gap-3 sm:gap-4 relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-orange-500 to-rose-500 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(249,115,22,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                    <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(249,115,22,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <BookMarked className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                   </div>
                   <div className="flex flex-col text-left">
                     <div className="flex items-center gap-2 mb-1">
                       <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-orange-500 animate-pulse" />
                       <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-orange-800 font-bold opacity-80">
-                        Our Core Beliefs
+                        Dive Deeper
                       </span>
                     </div>
-                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-orange-800 transition-colors w-40 sm:w-48">
-                      Deckoviz Manifesto
+                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-amber-800 transition-colors w-40 sm:w-48">
+                      Blog & Insights
                     </span>
                   </div>
                 </div>
                 <div className="ml-auto w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full bg-white/50 border border-white/80 flex items-center justify-center text-orange-600 group-hover:bg-[#ea580c] group-hover:text-white transition-all duration-300 group-hover:scale-110 relative z-10 shadow-sm">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                </div>
-              </button>
-
-              {/* 🔮 Vizzy Rearchitecting Hell Button */}
-              <button
-                onClick={() => navigate("/rearchitecting-hell")}
-                className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(168,85,247,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(168,85,247,0.32)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 via-fuchsia-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
-                     style={{
-                       background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.7) 60%, transparent 80%)",
-                       backgroundSize: "200% 100%",
-                       animation: "glassShine 3s infinite linear"
-                     }}
-                />
-                <div className="flex items-center gap-3 sm:gap-4 relative z-10">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-purple-500 to-fuchsia-500 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(168,85,247,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                    <BrainCircuit className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-                  </div>
-                  <div className="flex flex-col text-left">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-500 animate-pulse" />
-                      <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-purple-800 font-bold opacity-80">
-                        The Phoenix Journey
-                      </span>
-                    </div>
-                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-purple-800 transition-colors w-40 sm:w-48">
-                      Surviving Rearchitecting
-                    </span>
-                  </div>
-                </div>
-                <div className="ml-auto w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full bg-white/50 border border-white/80 flex items-center justify-center text-purple-600 group-hover:bg-[#9333ea] group-hover:text-white transition-all duration-300 group-hover:scale-110 relative z-10 shadow-sm">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
                 </div>
               </button>

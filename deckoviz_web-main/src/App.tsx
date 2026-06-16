@@ -66,6 +66,7 @@ import MouseSparkles from "./components/MouseSparkles";
 
 
 import Benefits from "./components/homepage/Benefits";
+import AILayerForHome from "./components/homepage/AILayerForHome";
 import AllBenefits from "./components/homepage/AllBenefits";
 import WhyDeckoviz from "./components/homepage/WhyDeckoviz";
 import Support from "./components/Support";
@@ -80,6 +81,8 @@ import VizzyRearchitectingDoc from "./components/homepage/VizzyRearchitectingDoc
 import DASPBusinessGuide from "./components/deckovizForBusinesses/DASPBusinessGuide";
 import PragmaticBuyerGuide from "./components/deckovizForBusinesses/PragmaticBuyerGuide";
 import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
+import AILayerExpandedPage from "./components/homepage/AILayerExpandedPage";
+import AILayerBusinessExpandedPage from "./components/homepage/AILayerBusinessExpandedPage";
 
 import Audiobook from "./components/Audiobook";
 import CreativeStudio from "./components/tools/CreativeStudio";
@@ -333,6 +336,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                 <TransformWalls />
                 <Features />
                 <Benefits />
+                <AILayerForHome />
                 <WhyDeckoviz />
                 <WhoIsDeckovizFor />
                 <DesignedFor />
@@ -377,6 +381,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/dasp-homes-guide" element={<DASPHomesGuide />} />
           <Route path="/alternate-use-cases" element={<AlternateUseCasesGuide />} />
           <Route path="/vizzy-art-engine" element={<VizzyArtEngineGuide />} />
+          <Route path="/ai-layer-for-home" element={<AILayerExpandedPage />} />
+          <Route path="/ai-layer-for-business" element={<AILayerBusinessExpandedPage />} />
           <Route path="/deckoviz-manifesto" element={<DeckovizManifesto />} />
           <Route path="/rearchitecting-hell" element={<VizzyRearchitectingDoc />} />
           <Route path="/dasp-business-guide" element={<DASPBusinessGuide />} />

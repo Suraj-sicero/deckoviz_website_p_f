@@ -22,7 +22,9 @@ Even the best poster, when frozen in place for months or years, slowly fades int
 
 Deckoviz was built to challenge that static decision with walls.
 
-The Poster, Moodboard, and Vision Board Suite is one of the clearest expressions of that philosophy. It turns walls from fixed displays into living, evolving surfaces that respond to you, your life, your moods, and your moments.
+The Poster, Moodboard, and Vision Board Suite is one of the clearest expressions of that philosophy.
+
+It turns walls from fixed displays into living, evolving surfaces that respond to you, your life, your moods, and your moments.
 
 This is not about having more posters.  
 It’s about having the right ones, at the right time.
@@ -48,7 +50,15 @@ You can create and display:
 
 But the real shift comes from how these posters behave over time.
 
-Instead of choosing one and committing to it indefinitely, Deckoviz lets posters evolve. Some rotate daily. Some appear only in the morning. Some show up on weekends. Some surface only on birthdays, anniversaries, or meaningful dates.
+Instead of choosing one and committing to it indefinitely, Deckoviz lets posters evolve.
+
+Some rotate daily.
+
+Some appear only in the morning.
+
+Some show up on weekends.
+
+Some surface only on birthdays, anniversaries, or meaningful dates.
 
 Your wall becomes a gentle rhythm, not a static decision.
 
