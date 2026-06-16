@@ -7,55 +7,35 @@ import GithubSlugger from "github-slugger"
 
 import { ChevronLeft } from "lucide-react"
 
-const TypingMarkdown = ({
+const StaticMarkdown = ({
   content,
   headingMap,
 }: {
   content: string
   headingMap: Map<string, string>
 }) => {
-  const [displayed, setDisplayed] = useState("");
-
-  useEffect(() => {
-    let i = 0;
-
-    const interval = setInterval(() => {
-      setDisplayed(content.slice(0, i));
-      i += 2; // typing speed
-
-      if (i >= content.length) {
-        clearInterval(interval);
-        setDisplayed(content);
-      }
-    }, 8);
-
-    return () => clearInterval(interval);
-  }, [content]);
-
   return (
-    <div className="typing-markdown">
-<ReactMarkdown
-  rehypePlugins={[rehypeRaw]}
-  components={{
-    h2: ({ children }) => {
-      const text = String(children)
-      const id = headingMap.get(text)
+    <div className="markdown-content">
+      <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
+        components={{
+          h2: ({ children }) => {
+            const text = String(children)
+            const id = headingMap.get(text)
 
-      return (
-        <h2 id={id} className="scroll-mt-28">
-          {children}
-        </h2>
-      )
-    },
-  }}
->
-        {displayed}
+            return (
+              <h2 id={id} className="scroll-mt-28">
+                {children}
+              </h2>
+            )
+          },
+        }}
+      >
+        {content}
       </ReactMarkdown>
-      <span className="typing-cursor">|</span>
     </div>
   );
 };
-
 
 const BlogDetail = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -173,7 +153,7 @@ const BlogDetail = () => {
     prose-a:hover:text-[#182A4A]
   "
   >
-<TypingMarkdown content={cleanContent} headingMap={headingMap} />
+<StaticMarkdown content={cleanContent} headingMap={headingMap} />
 
           </article>
           </div>

@@ -15,14 +15,54 @@ size: "large"
 
 <b>Sentences that bend reality</b>
 
-Some passages do more than communicate ideas. They rearrange the furniture of the mind. A single paragraph can destabilize certainty, open a new dimension of thought, or linger for decades as a quiet internal companion.
+Some passages do more than communicate ideas.
+
+They rearrange the furniture of the mind.
+
+A single paragraph can destabilize certainty, open a new dimension of thought, or linger for decades as a quiet internal companion.
 These are not lines we simply read and move past. They return to us. In moments of stillness. In moments of crisis. In moments when the surface explanations of the world feel thin.
 
-Across literature, philosophy, science, mathematics, and human reflection, certain passages have achieved a rare density. They compress entire worldviews into a few sentences. They do not argue. They state. And in doing so, they invite the reader to sit with discomfort, wonder, humility, or awe.
-What makes a passage profound is not its complexity. It is its ability to feel inexhaustible. You can revisit it years later and discover a new meaning waiting for you. The words did not change. You did.
-At Deckoviz, we see passages like these as cognitive landmarks. They are not decorative quotes. They are anchors. They deserve space, time, and atmosphere. A great passage should not be glanced at while scrolling. It should be encountered.
-With Deckoviz, passages can become living presences in a space. A line can surface slowly in the morning light. A paragraph can fade in and out across the day. Words can be paired with abstract visuals, subtle motion, and sound that amplify their emotional and philosophical gravity.
-This collection brings together passages that have shaped how humans think about existence, time, consciousness, reality, meaning, and the limits of knowledge. They come from different eras and disciplines, but they share one trait. They refuse to be forgotten.
+Across literature, philosophy, science, mathematics, and human reflection, certain passages have achieved a rare density.
+
+They compress entire worldviews into a few sentences.
+
+They do not argue.
+
+They state.
+
+And in doing so, they invite the reader to sit with discomfort, wonder, humility, or awe.
+What makes a passage profound is not its complexity.
+
+It is its ability to feel inexhaustible.
+
+You can revisit it years later and discover a new meaning waiting for you.
+
+The words did not change.
+
+You did.
+At Deckoviz, we see passages like these as cognitive landmarks.
+
+They are not decorative quotes.
+
+They are anchors.
+
+They deserve space, time, and atmosphere.
+
+A great passage should not be glanced at while scrolling.
+
+It should be encountered.
+With Deckoviz, passages can become living presences in a space.
+
+A line can surface slowly in the morning light.
+
+A paragraph can fade in and out across the day.
+
+Words can be paired with abstract visuals, subtle motion, and sound that amplify their emotional and philosophical gravity.
+This collection brings together passages that have shaped how humans think about existence, time, consciousness, reality, meaning, and the limits of knowledge.
+
+They come from different eras and disciplines, but they share one trait.
+
+They refuse to be forgotten.
 
 
 <br>

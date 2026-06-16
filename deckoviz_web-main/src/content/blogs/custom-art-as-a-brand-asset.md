@@ -24,7 +24,9 @@ Personal art does something else entirely.
 
 It reflects who you are, who you were, and who you are becoming.
 
-Deckoviz makes it possible to create deeply personal artworks without needing to commission artists, master tools, or settle for generic aesthetics. This first volume focuses on three broad classes of personal art:
+Deckoviz makes it possible to create deeply personal artworks without needing to commission artists, master tools, or settle for generic aesthetics.
+
+This first volume focuses on three broad classes of personal art:
 
 • Symbolic artworks  
 • Abstract emotional artworks  
@@ -41,7 +43,17 @@ Concept:
 Your inner world rendered as terrain.
 
 Prompt:  
-Create an abstract landscape that represents my inner emotional state as a physical environment. Use terrain features like mountains, valleys, rivers, fog, or light to symbolize emotions, struggles, clarity, and growth. Avoid literal symbolism. The composition should feel expansive and immersive, as if the viewer is standing inside the mind itself. Color palette should reflect emotional tone rather than realism. The artwork should invite contemplation, not explanation.
+Create an abstract landscape that represents my inner emotional state as a physical environment.
+
+Use terrain features like mountains, valleys, rivers, fog, or light to symbolize emotions, struggles, clarity, and growth.
+
+Avoid literal symbolism.
+
+The composition should feel expansive and immersive, as if the viewer is standing inside the mind itself.
+
+Color palette should reflect emotional tone rather than realism.
+
+The artwork should invite contemplation, not explanation.
 
 ---
 
@@ -52,7 +64,13 @@ Concept:
 Invisible burdens made visible.
 
 Prompt:  
-Create a symbolic artwork showing a solitary human figure carrying an abstract weight that represents accumulated responsibilities, regrets, expectations, and emotional load. The weight should not be a literal object but an amalgamation of textures, shapes, and subtle symbols. The environment is minimal, emphasizing isolation and endurance. Lighting should suggest resilience rather than despair.
+Create a symbolic artwork showing a solitary human figure carrying an abstract weight that represents accumulated responsibilities, regrets, expectations, and emotional load.
+
+The weight should not be a literal object but an amalgamation of textures, shapes, and subtle symbols.
+
+The environment is minimal, emphasizing isolation and endurance.
+
+Lighting should suggest resilience rather than despair.
 
 ---
 
@@ -63,7 +81,13 @@ Concept:
 Transition over identity.
 
 Prompt:  
-Create an artwork that captures a person mid-transformation, not from one form to another, but from one state of being to another. Use layered translucency, fragmentation, or motion blur to suggest change. The subject is neither fully defined nor fully dissolved. The focus is on process, not arrival.
+Create an artwork that captures a person mid-transformation, not from one form to another, but from one state of being to another.
+
+Use layered translucency, fragmentation, or motion blur to suggest change.
+
+The subject is neither fully defined nor fully dissolved.
+
+The focus is on process, not arrival.
 
 ---
 
@@ -74,7 +98,17 @@ Concept:
 Thoughts as architecture.
 
 Prompt:  
-Create a surreal interior space that represents the inner mind. Objects, furniture, and light sources correspond to memories, ideas, fears, and aspirations. Some elements feel orderly, others chaotic. The room should feel lived-in, not fantastical. No overt symbolism. The viewer should sense meaning intuitively.
+Create a surreal interior space that represents the inner mind.
+
+Objects, furniture, and light sources correspond to memories, ideas, fears, and aspirations.
+
+Some elements feel orderly, others chaotic.
+
+The room should feel lived-in, not fantastical.
+
+No overt symbolism.
+
+The viewer should sense meaning intuitively.
 
 ---
 
@@ -85,7 +119,13 @@ Concept:
 A life pivot, without literal depiction.
 
 Prompt:  
-Create an artwork that captures the emotional atmosphere of a life-changing moment without showing the event itself. Use light, weather, environment, and composition to imply significance. The scene feels suspended in time. The mood carries both loss and possibility.
+Create an artwork that captures the emotional atmosphere of a life-changing moment without showing the event itself.
+
+Use light, weather, environment, and composition to imply significance.
+
+The scene feels suspended in time.
+
+The mood carries both loss and possibility.
 
 ---
 
@@ -96,7 +136,11 @@ Concept:
 Power without aggression.
 
 Prompt:  
-Create a minimalist artwork centered on a single symbolic form that represents endurance, discipline, and quiet resolve. Use restrained color, generous negative space, and subtle texture. The artwork should feel calm, grounded, and unwavering.
+Create a minimalist artwork centered on a single symbolic form that represents endurance, discipline, and quiet resolve.
+
+Use restrained color, generous negative space, and subtle texture.
+
+The artwork should feel calm, grounded, and unwavering.
 
 ---
 
@@ -107,7 +151,13 @@ Concept:
 Feelings as climate.
 
 Prompt:  
-Create an abstract composition where emotional states are represented as weather patterns. Storms, clear skies, shifting clouds, and light gradients coexist in the same frame. Avoid literal meteorological realism. The artwork should feel dynamic yet cohesive.
+Create an abstract composition where emotional states are represented as weather patterns.
+
+Storms, clear skies, shifting clouds, and light gradients coexist in the same frame.
+
+Avoid literal meteorological realism.
+
+The artwork should feel dynamic yet cohesive.
 
 ---
 
@@ -118,7 +168,11 @@ Concept:
 Public self versus private self.
 
 Prompt:  
-Create an artwork showing two overlapping representations of the same person: one outward-facing and composed, the other inward-facing and raw. Use transparency, reflection, or shadow rather than literal masks. The piece should feel intimate and psychologically truthful.
+Create an artwork showing two overlapping representations of the same person: one outward-facing and composed, the other inward-facing and raw.
+
+Use transparency, reflection, or shadow rather than literal masks.
+
+The piece should feel intimate and psychologically truthful.
 
 ---
 
@@ -129,7 +183,11 @@ Concept:
 How memories linger.
 
 Prompt:  
-Create an abstract artwork where memories are represented as light traces, reflections, or residual glow in an otherwise quiet space. The environment is subdued. The light feels soft, imperfect, and fading rather than sharp or dramatic.
+Create an abstract artwork where memories are represented as light traces, reflections, or residual glow in an otherwise quiet space.
+
+The environment is subdued.
+
+The light feels soft, imperfect, and fading rather than sharp or dramatic.
 
 ---
 
@@ -140,7 +198,13 @@ Concept:
 Perspective over urgency.
 
 Prompt:  
-Create a wide, expansive scene viewed from a high vantage point. The human presence is small or implied. The focus is scale, distance, and time. The artwork should evoke patience, perspective, and humility.
+Create a wide, expansive scene viewed from a high vantage point.
+
+The human presence is small or implied.
+
+The focus is scale, distance, and time.
+
+The artwork should evoke patience, perspective, and humility.
 
 ---
 

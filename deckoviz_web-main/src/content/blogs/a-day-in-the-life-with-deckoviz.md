@@ -39,17 +39,45 @@ Joslyn wakes before her alarm.
 
 Not because something buzzed, but because her room has already begun to change.
 
-The Deckoviz frame on her bedroom wall is glowing softly. A sunrise over distant mountains unfolds in slow motion. Mist lifting. Light warming. Birdsong drifting in, gentle enough that she barely notices the moment she opens her eyes.
+The Deckoviz frame on her bedroom wall is glowing softly.
+
+A sunrise over distant mountains unfolds in slow motion.
+
+Mist lifting.
+
+Light warming.
+
+Birdsong drifting in, gentle enough that she barely notices the moment she opens her eyes.
 
 This is her morning ritual. She set it once. Deckoviz remembers.
 
 She stays in bed a moment longer. Not scrolling. Just breathing.
 
-Last night, she dreamt vividly. One of those dreams that feels important, symbolic, half-understood. Instead of letting it fade, she opens the Dream Visualizer. The wall shifts. Abstract shapes, colors, fragments of narrative begin to form. Not a literal replay, but an interpretation. A visual memory, alive.
+Last night, she dreamt vividly.
+
+One of those dreams that feels important, symbolic, half-understood.
+
+Instead of letting it fade, she opens the Dream Visualizer.
+
+The wall shifts.
+
+Abstract shapes, colors, fragments of narrative begin to form.
+
+Not a literal replay, but an interpretation.
+
+A visual memory, alive.
 
 She smiles. The dream feels... held.
 
-Before the day pulls her outward, she turns inward. Meditation Mode. The visuals slow. Mandala-like forms expand and contract with her breath. The Interactive Visualization subtly responds to her rhythm, grounding her without instruction.
+Before the day pulls her outward, she turns inward.
+
+Meditation Mode.
+
+The visuals slow.
+
+Mandala-like forms expand and contract with her breath.
+
+The Interactive Visualization subtly responds to her rhythm, grounding her without instruction.
 
 Then movement.
 
@@ -58,7 +86,17 @@ Fitness Mode.
 
 The room brightens. Energy flows through the visuals now, still tasteful, still calm. She stretches, sweats, feels awake in her body.
 
-When she’s done, Deckoviz transitions again. Her vision board appears. Then her affirmations. Her to-do list, transformed into a clean, elegant poster. The sequence ends with a Richard Feynman quote she loves. It always ends with that.
+When she’s done, Deckoviz transitions again.
+
+Her vision board appears.
+
+Then her affirmations.
+
+Her to-do list, transformed into a clean, elegant poster.
+
+The sequence ends with a Richard Feynman quote she loves.
+
+It always ends with that.
 
 Her dream is ambitious. She wants to work on nuclear fusion. Today, she’s studying again.
 
@@ -70,7 +108,15 @@ As she reads, Deckoviz generates visuals inspired by the text. Cosmic abstractio
 
 In the afternoon, her creative side wakes up.
 
-She co-creates paintings with Vizzy. She generates a few melodies. She watches her ideas take form, listens, tweaks, iterates. The finished pieces live on her wall for a while. She lets herself enjoy them.
+She co-creates paintings with Vizzy.
+
+She generates a few melodies.
+
+She watches her ideas take form, listens, tweaks, iterates.
+
+The finished pieces live on her wall for a while.
+
+She lets herself enjoy them.
 
 Cooking time.
 
@@ -86,7 +132,13 @@ They tell stories. The visuals adapt in real time, responding to the cadence of 
 
 Then games. Generative, playful, slightly chaotic. Everyone joins in.
 
-Her brother is reading The Hitchhiker’s Guide to the Galaxy. He uses Book-to-Frames. The living room becomes absurd, cosmic, hilarious. He looks at his dad and says, completely seriously, “We need one for my bedroom.”
+Her brother is reading The Hitchhiker’s Guide to the Galaxy.
+
+He uses Book-to-Frames.
+
+The living room becomes absurd, cosmic, hilarious.
+
+He looks at his dad and says, completely seriously, “We need one for my bedroom.”
 
 Before they leave, she shares the collection with him. One tap. A memory travels.
 
@@ -209,13 +261,33 @@ Joslyn wakes before her alarm.
 
 Not because something buzzed, but because her room has already begun to change.
 
-The Deckoviz frame on her bedroom wall is glowing softly. A sunrise over distant mountains unfolds in slow motion. Mist lifting. Light warming. Birdsong drifting in, gentle enough that she barely notices the moment she opens her eyes.
+The Deckoviz frame on her bedroom wall is glowing softly.
+
+A sunrise over distant mountains unfolds in slow motion.
+
+Mist lifting.
+
+Light warming.
+
+Birdsong drifting in, gentle enough that she barely notices the moment she opens her eyes.
 
 This is her morning ritual. She set it once. Deckoviz remembers.
 
 She stays in bed a moment longer. Not scrolling. Just breathing.
 
-Last night, she dreamt vividly. One of those dreams that feels important, symbolic, half understood. Instead of letting it fade, she opens the Dream Visualizer. The wall shifts. Abstract shapes, colors, fragments of narrative begin to form. Not a literal replay, but an interpretation. A visual memory, alive.
+Last night, she dreamt vividly.
+
+One of those dreams that feels important, symbolic, half understood.
+
+Instead of letting it fade, she opens the Dream Visualizer.
+
+The wall shifts.
+
+Abstract shapes, colors, fragments of narrative begin to form.
+
+Not a literal replay, but an interpretation.
+
+A visual memory, alive.
 
 She smiles. The dream feels held.
 
@@ -248,7 +320,15 @@ As she reads, Deckoviz generates visuals inspired by the text. Cosmic abstractio
 
 In the afternoon, her creative side wakes up.
 
-She co creates paintings with Vizzy. She generates a few melodies. She watches her ideas take form, listens, tweaks, iterates. The finished pieces live on her wall for a while. She lets herself enjoy them.
+She co creates paintings with Vizzy.
+
+She generates a few melodies.
+
+She watches her ideas take form, listens, tweaks, iterates.
+
+The finished pieces live on her wall for a while.
+
+She lets herself enjoy them.
 
 Cooking time.
 
@@ -264,7 +344,13 @@ They tell stories. The visuals adapt in real time, responding to the cadence of 
 
 Then games. Generative, playful, slightly chaotic. Everyone joins in.
 
-Her brother is reading The Hitchhiker’s Guide to the Galaxy. He uses Book to Frames. The living room becomes absurd, cosmic, hilarious. He looks at his dad and says, completely seriously, “We need one for my bedroom.”
+Her brother is reading The Hitchhiker’s Guide to the Galaxy.
+
+He uses Book to Frames.
+
+The living room becomes absurd, cosmic, hilarious.
+
+He looks at his dad and says, completely seriously, “We need one for my bedroom.”
 
 Before they leave, she shares the collection with him. One tap. A memory travels.
 

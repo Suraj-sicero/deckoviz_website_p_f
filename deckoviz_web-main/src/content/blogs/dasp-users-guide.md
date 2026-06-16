@@ -17,7 +17,13 @@ It was designed to be a presence.
 A quiet companion.  
 A living canvas that adapts to who you are, how you feel, and how your days unfold.
 
-If you are new to Deckoviz, this guide is an invitation. A way to begin exploring the magic, emotion, and personal meaning the platform can bring into your home. These are not rules. They are starting points.
+If you are new to Deckoviz, this guide is an invitation.
+
+A way to begin exploring the magic, emotion, and personal meaning the platform can bring into your home.
+
+These are not rules.
+
+They are starting points.
 
 We will continue to add deeper guides, new ideas, and inspiration as Deckoviz grows. But this will get you into the flow.
 
@@ -30,9 +36,23 @@ Think of this as learning how to live with it.
 
 One of the most powerful things Deckoviz can do is turn your life into art.
 
-Start with a single photo. A portrait. A memory. A moment that matters to you. Then let Deckoviz reinterpret it across styles, eras, and emotional lenses. You might see yourself as a Renaissance oil painting in the morning, a soft watercolor by afternoon, and something cosmic and abstract by night.
+Start with a single photo.
 
-You can visualize dreams you barely remember. Childhood scenes that dissolve into symbols like doors, birds, rivers, or constellations. You can take a shared memory with your partner and turn it into one abstract painting that quietly weaves both of your lives together.
+A portrait.
+
+A memory.
+
+A moment that matters to you.
+
+Then let Deckoviz reinterpret it across styles, eras, and emotional lenses.
+
+You might see yourself as a Renaissance oil painting in the morning, a soft watercolor by afternoon, and something cosmic and abstract by night.
+
+You can visualize dreams you barely remember.
+
+Childhood scenes that dissolve into symbols like doors, birds, rivers, or constellations.
+
+You can take a shared memory with your partner and turn it into one abstract painting that quietly weaves both of your lives together.
 
 Some people use this feature as self reflection. Others as storytelling. Others simply as beauty.
 
@@ -47,7 +67,13 @@ The wall becomes a mirror   not of how you look, but of who you are becoming.
 
 Deckoviz does not treat music as background noise. It treats it as a visual force.
 
-You can generate music based on your mood and watch abstract forms pulse gently in response. A calm piano piece might cause slow waves of light and shape. A focus track might turn stars brighter with each beat. A romantic mode might make brush strokes dance softly to jazz.
+You can generate music based on your mood and watch abstract forms pulse gently in response.
+
+A calm piano piece might cause slow waves of light and shape.
+
+A focus track might turn stars brighter with each beat.
+
+A romantic mode might make brush strokes dance softly to jazz.
 
 For children, this becomes pure magic. A drawing can turn into a song. The visuals move as the music plays. Creativity becomes multisensory.
 
@@ -79,7 +105,11 @@ Posters do not have to shout. They can whisper.
 
 You can create a “Rules of This Home” poster that shifts tone through the day. Gentle in the morning. Playful by evening. Calm at night.
 
-Your favorite books can become cinematic posters that rotate quietly on a bookshelf wall. Your yearly goals can live visually, filling in slowly as progress happens. Affirmations can rephrase themselves every morning so they never go stale.
+Your favorite books can become cinematic posters that rotate quietly on a bookshelf wall.
+
+Your yearly goals can live visually, filling in slowly as progress happens.
+
+Affirmations can rephrase themselves every morning so they never go stale.
 
 This is where intention meets design.
 
@@ -90,7 +120,13 @@ This is where intention meets design.
 
 Some art is finished. Some art is alive.
 
-Deckoviz allows you to create pieces that evolve over time. One painting can change every day for a year. A child’s drawing can mature visually as months pass. A self portrait can subtly shift as your journal entries accumulate.
+Deckoviz allows you to create pieces that evolve over time.
+
+One painting can change every day for a year.
+
+A child’s drawing can mature visually as months pass.
+
+A self portrait can subtly shift as your journal entries accumulate.
 
 You can even have a conversation with the artwork. Small nudges. Gentle feedback.
 
@@ -105,7 +141,15 @@ This is especially powerful if you see your home as a living space, not a static
 
 Moodscapes are where Deckoviz becomes part of your daily rhythm.
 
-Morning mist in a forest with birds and light strings. Afternoon sunlight paired with ambient rhythms. Evening city glow layered with jazz textures. Rainy day windows with soft piano. Seasonal changes that happen naturally without you lifting a finger.
+Morning mist in a forest with birds and light strings.
+
+Afternoon sunlight paired with ambient rhythms.
+
+Evening city glow layered with jazz textures.
+
+Rainy day windows with soft piano.
+
+Seasonal changes that happen naturally without you lifting a finger.
 
 You stop choosing what to display.
 
@@ -133,7 +177,13 @@ They reward presence.
 
 Deckoviz can gently narrate stories as visuals unfold.
 
-A personal life story told like a quiet documentary. A meditation where visuals respond to your breath. A travel collection narrated with context and memory. A bedtime story illustrated live for a child.
+A personal life story told like a quiet documentary.
+
+A meditation where visuals respond to your breath.
+
+A travel collection narrated with context and memory.
+
+A bedtime story illustrated live for a child.
 
 Even abstract art can be explained softly, for those moments when curiosity takes over.
 
@@ -144,7 +194,15 @@ Even abstract art can be explained softly, for those moments when curiosity take
 
 Rituals turn days into something intentional.
 
-Morning modes for intention setting. Creativity modes that spark ideas without distraction. Celebration modes that turn a room into living joy. Romantic modes with warmth, slow motion, and intimacy. Weekly reflection modes that visualize your week emotionally rather than statistically.
+Morning modes for intention setting.
+
+Creativity modes that spark ideas without distraction.
+
+Celebration modes that turn a room into living joy.
+
+Romantic modes with warmth, slow motion, and intimacy.
+
+Weekly reflection modes that visualize your week emotionally rather than statistically.
 
 These are not schedules.
 

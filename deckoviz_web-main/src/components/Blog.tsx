@@ -37,7 +37,41 @@ const Blog: React.FC = () => {
   const isPaused = useRef(false);
 
   useEffect(() => {
-    loadBlogs().then(setBlogs);
+    loadBlogs().then((loaded) => {
+      const customItems: MarkdownBlog[] = [
+        {
+          id: -1,
+          slug: "manifesto-custom",
+          title: "The Manifesto We Live By",
+          description: "Some of Our Core Beliefs at Deckoviz Space Labs.",
+          tag: "Announcements",
+          tagColor: "bg-orange-100 text-orange-700",
+          date: "June 16, 2026",
+          readTime: "8 min read",
+          pinned: false,
+          image: "/images/manifesto_cover.png",
+          size: "medium",
+          content: "",
+          customLink: "/deckoviz-manifesto"
+        },
+        {
+          id: -2,
+          slug: "phoenix-custom",
+          title: "Surviving Rearchitecting Hell: Vizzy 2.0 and the Year of Discipline",
+          description: "After an arduous journey through what can only be described as pivot purgatory, we're back to the core idea that started it all.",
+          tag: "Announcements",
+          tagColor: "bg-purple-100 text-purple-700",
+          date: "June 16, 2026",
+          readTime: "10 min read",
+          pinned: false,
+          image: "/images/phoenix_rearchitecting.png",
+          size: "large",
+          content: "",
+          customLink: "/rearchitecting-hell"
+        }
+      ];
+      setBlogs([...customItems, ...loaded]);
+    });
   }, []);
 
   useEffect(() => {
@@ -277,9 +311,10 @@ const Blog: React.FC = () => {
                   ref={pinnedTrackRef}
                   className="flex gap-8 whitespace-nowrap will-change-transform"
                 >
-                  {infinitePinnedBlogs.map((post) => (
+                  {infinitePinnedBlogs.map((post, i) => (
                     <Link
-                      to={`/blog/${post.slug}`}
+                      key={i}
+                      to={post.customLink || `/blog/${post.slug}`}
                       className="whitespace-normal min-w-[320px] max-w-[320px] group rounded-2xl transition-all duration-700 hover:-translate-y-2 flex flex-col bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)]"
                       onMouseEnter={e => { isPaused.current = true; }}
                       onMouseLeave={e => { isPaused.current = false; }}
@@ -569,7 +604,7 @@ const Blog: React.FC = () => {
     {filteredPosts.map((post) => (
       <Link
         key={post.slug}
-        to={`/blog/${post.slug}`}
+        to={post.customLink || `/blog/${post.slug}`}
         className="group rounded-3xl transition-all duration-500 hover:-translate-y-2 flex flex-col bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)]"
       >
         {/* IMAGE - Square */}

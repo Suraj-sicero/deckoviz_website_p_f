@@ -15,12 +15,52 @@ size: "large"
 
 <b>Words that learned how to breathe </b>
 
-Poetry is humanity’s oldest technology for meaning. Before philosophy, before science, before history was written down, people shaped rhythm, sound, and metaphor to make sense of love, fear, loss, longing, divinity, and time itself.
-A poem does not explain the world. It compresses it. In a few lines, it can hold an entire lifetime of emotion. It can say what ordinary language cannot. That is why poems endure. They are memory made musical.
-Across civilizations, poems have carried values, myths, resistance, faith, grief, and hope. They have been whispered, sung, carved into stone, memorized, banned, rediscovered, and passed down like living artifacts. Some were written to honor gods. Others to survive suffering. Others simply to say, I was here, and this is how it felt to be alive.
-What makes a poem iconic is not length or complexity. It is resonance. The feeling that centuries later, the words are still speaking directly to you. As if the poet somehow knew you would be listening.
-At Deckoviz, we believe poetry is not just something you read. It is something you inhabit. A stanza can become a visual mood. A single line can shape a room. A favorite passage can unfold slowly across light, texture, motion, and sound.
-With Deckoviz, poetry can live on your walls. Lines can appear and fade with the time of day. Visuals can respond to rhythm and emotion. A poem can become an atmosphere, a ritual, or a quiet companion during reflection.
+Poetry is humanity’s oldest technology for meaning.
+
+Before philosophy, before science, before history was written down, people shaped rhythm, sound, and metaphor to make sense of love, fear, loss, longing, divinity, and time itself.
+A poem does not explain the world.
+
+It compresses it.
+
+In a few lines, it can hold an entire lifetime of emotion.
+
+It can say what ordinary language cannot.
+
+That is why poems endure.
+
+They are memory made musical.
+Across civilizations, poems have carried values, myths, resistance, faith, grief, and hope.
+
+They have been whispered, sung, carved into stone, memorized, banned, rediscovered, and passed down like living artifacts.
+
+Some were written to honor gods.
+
+Others to survive suffering.
+
+Others simply to say, I was here, and this is how it felt to be alive.
+What makes a poem iconic is not length or complexity.
+
+It is resonance.
+
+The feeling that centuries later, the words are still speaking directly to you.
+
+As if the poet somehow knew you would be listening.
+At Deckoviz, we believe poetry is not just something you read.
+
+It is something you inhabit.
+
+A stanza can become a visual mood.
+
+A single line can shape a room.
+
+A favorite passage can unfold slowly across light, texture, motion, and sound.
+With Deckoviz, poetry can live on your walls.
+
+Lines can appear and fade with the time of day.
+
+Visuals can respond to rhythm and emotion.
+
+A poem can become an atmosphere, a ritual, or a quiet companion during reflection.
 
 Below is a journey through 100 of the most iconic poems ever written. Together, they trace the emotional and imaginative history of humanity through language.
 </br>
@@ -140,7 +180,7 @@ A confessional poem of intense emotional power.
 
 <br>
 
-## Expanding the Canon (31–100)
+## Expanding the Canon (31-100)
 
 **31. Lycidas**   John Milton  
 **32. Kubla Khan**   Samuel Taylor Coleridge  
@@ -162,7 +202,7 @@ A confessional poem of intense emotional power.
 **48. This Is Just to Say**   William Carlos Williams  
 **49. A Dream Within a Dream**   Edgar Allan Poe  
 **50. Phenomenal Woman**   Maya Angelou  
-**51. Wild Nights – Wild Nights!**   Emily Dickinson  
+**51. Wild Nights - Wild Nights!**   Emily Dickinson  
 **52. Fire and Ice**   Robert Frost  
 **53. Dreams**   Langston Hughes  
 **54. O Captain! My Captain!**   Walt Whitman  
@@ -209,4 +249,6 @@ A confessional poem of intense emotional power.
 
 ## Closing Note
 
-These **100 iconic poems** represent the evolution of human expression from myth and faith to rebellion, identity, love, grief, and hope. Together, they form a living archive of humanity’s emotional and intellectual journey through language.
+These **100 iconic poems** represent the evolution of human expression from myth and faith to rebellion, identity, love, grief, and hope.
+
+Together, they form a living archive of humanity’s emotional and intellectual journey through language.

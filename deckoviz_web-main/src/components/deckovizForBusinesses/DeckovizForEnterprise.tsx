@@ -32,7 +32,7 @@ import {
   ClipboardList,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { loadBlogs, MarkdownBlog } from "../../lib/blogLoader";
 import ShopCarousel from "../other/ShopCarousel.tsx";
 import EnterpriseFeatures from "../other/core enterprise features.tsx";
@@ -41,6 +41,7 @@ import DeckovizSectors from "./DeckovizSectors";
 import EnterpriseHorizontalScrollingFeatures from "./EnterpriseHorizontalScrollingFeatures";
 import EnterpriseWhyDeckoviz from "./EnterpriseWhyDeckoviz";
 import EnterpriseVisionMicrosite from "./EnterpriseVisionMicrosite";
+import AILayerForBusiness from "./AILayerForBusiness";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import {
@@ -638,6 +639,41 @@ export default function DeckovizForEnterprise() {
   const [isThesisModalOpen, setIsThesisModalOpen] = useState(false);
   const [showEnterpriseMicrosite, setShowEnterpriseMicrosite] = useState(false);
   
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Watch the URL hash and open modals accordingly
+  useEffect(() => {
+    const hash = location.hash;
+    if (hash === '#demo') {
+      setIsModalOpen(true);
+    } else if (hash === '#thesis') {
+      setIsThesisModalOpen(true);
+    } else if (hash === '#vision') {
+      setShowEnterpriseMicrosite(true);
+    } else {
+      setIsModalOpen(false);
+      setIsThesisModalOpen(false);
+      setShowEnterpriseMicrosite(false);
+    }
+  }, [location.hash]);
+
+  // Helper to remove the hash when a modal is closed, which naturally triggers the effect above
+  const handleCloseModal = () => {
+    if (window.location.hash) {
+      // Remove hash without reloading
+      window.history.pushState(null, '', window.location.pathname + window.location.search);
+      // Trigger state reset manually to ensure it closes immediately
+      setIsModalOpen(false);
+      setIsThesisModalOpen(false);
+      setShowEnterpriseMicrosite(false);
+    } else {
+      setIsModalOpen(false);
+      setIsThesisModalOpen(false);
+      setShowEnterpriseMicrosite(false);
+    }
+  };
+  
   const [emblaRef] = useEmblaCarousel(
     { loop: true, align: "start", dragFree: true },
     [AutoScroll({ speed: 1, playOnInit: true, stopOnInteraction: false })]
@@ -883,7 +919,6 @@ export default function DeckovizForEnterprise() {
     return () => clearTimeout(timeout);
   }, [charIndex, deleting, wordIndex]);
 
-  const navigate = useNavigate();
 
   const enterpriseFeatures = [
     {
@@ -2194,7 +2229,7 @@ export default function DeckovizForEnterprise() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: false, amount: 0.3 }}
                         transition={{ duration: 0.7 }}
-                        className="relative p-3 rounded-[2.5rem] bg-white/30 backdrop-blur-2xl border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.15)] group hover:shadow-[0_20px_60px_rgba(37,99,235,0.25)] hover:border-white/90 transition-all duration-500 overflow-hidden"
+                        className="relative p-3 rounded-[2.5rem] bg-white/30 backdrop-blur-2xl border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.15)] group hover:shadow-[0_30px_80px_rgba(37,99,235,0.4)] hover:border-white/90 transition-all duration-500 overflow-hidden hover:scale-[1.45] hover:z-50"
                       >
                          {/* Shiny Glass Overlay */}
                         <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
@@ -2207,7 +2242,7 @@ export default function DeckovizForEnterprise() {
                         <img
                           src={feature.image}
                           alt={feature.title}
-                          className="w-full max-w-[580px] rounded-[1.8rem] shadow-xl relative z-10 group-hover:scale-[1.02] transition-transform duration-500"
+                          className="w-full max-w-[680px] rounded-[1.8rem] shadow-xl relative z-10 transition-transform duration-500"
                         />
                       </motion.div>
 
@@ -2235,6 +2270,8 @@ export default function DeckovizForEnterprise() {
         </div>
 
       </section>
+
+      <AILayerForBusiness />
 
       {/* DeckovizSectors Component */}
       <DeckovizSectors />
@@ -2305,12 +2342,12 @@ export default function DeckovizForEnterprise() {
       <div className="pt-16"></div>
 
       {isModalOpen && (
-        <DemoRequestModal onClose={() => setIsModalOpen(false)} />
+        <DemoRequestModal onClose={handleCloseModal} />
       )}
 
-      <ThesisModal isOpen={isThesisModalOpen} onClose={() => setIsThesisModalOpen(false)} />
+      <ThesisModal isOpen={isThesisModalOpen} onClose={handleCloseModal} />
       {showEnterpriseMicrosite && (
-        <EnterpriseVisionMicrosite onClose={() => setShowEnterpriseMicrosite(false)} />
+        <EnterpriseVisionMicrosite onClose={handleCloseModal} />
       )}
 
       {/* ================= EXPLORE FURTHER ================= */}
@@ -2396,7 +2433,9 @@ export default function DeckovizForEnterprise() {
                   <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
                     <ScalePop delay={0.4}>
                       <button
-                        onClick={() => setIsThesisModalOpen(true)}
+                        onClick={() => {
+                          window.location.hash = "thesis";
+                        }}
                         className="resource-card group relative flex flex-col items-center justify-center text-center
                         w-full px-8 py-8
                         rounded-[2rem]
@@ -2492,7 +2531,9 @@ export default function DeckovizForEnterprise() {
                   <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
                     <ScalePop delay={0.8}>
                       <button
-                        onClick={() => setShowEnterpriseMicrosite(true)}
+                        onClick={() => {
+                          window.location.hash = "vision";
+                        }}
                         className="resource-card group relative flex flex-col items-center justify-center text-center
                         w-full px-8 py-8
                         rounded-[2rem]

@@ -14,6 +14,7 @@ export type MarkdownBlog = {
   description?: string
   content: string
   enterpriseCategory?: string  
+  customLink?: string
 }
 
 export async function loadBlogs(): Promise<MarkdownBlog[]> {
