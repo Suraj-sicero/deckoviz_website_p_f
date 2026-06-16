@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { RetailUseCasesJourney } from './DeckovizForRetailStores';
 
-const retailImages = Array.from({ length: 15 }, (_, i) => `/images/h${(i % 5) + 1}.png`); // Placeholder images
+const retailImages = ["/images/retail-images/ChatGPT Image May 18, 2026, 12_58_36 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_58_45 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_58_49 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_58_53 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_58_57 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_59_01 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_59_05 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_59_12 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_59_17 AM.png","/images/retail-images/ChatGPT Image May 18, 2026, 12_59_20 AM.png"];
 
 const retailGalleryPaths = [
   "/images/retail-images/ChatGPT Image May 18, 2026, 12_58_36 AM.png",

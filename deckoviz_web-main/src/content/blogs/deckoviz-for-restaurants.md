@@ -19,7 +19,17 @@ Restaurants are no longer just places to eat.
 
 They are stages. Memory factories. Emotional touchpoints. Cultural statements.
 
-In a world where food quality is increasingly table stakes, what truly separates one restaurant from another is not the menu. It is the experience surrounding it. The feeling guests carry with them when they leave. The story they tell their friends. The moment they photograph. The reason they come back.
+In a world where food quality is increasingly table stakes, what truly separates one restaurant from another is not the menu.
+
+It is the experience surrounding it.
+
+The feeling guests carry with them when they leave.
+
+The story they tell their friends.
+
+The moment they photograph.
+
+The reason they come back.
 
 This is where Deckoviz Enterprise DASP changes everything.
 
@@ -260,4 +270,8 @@ Or DM us on Instagram @deckoviz
 Your food already deserves attention.  
 Now your space can earn memory.
 
-Part 2, written to seamlessly continue Part 1. It goes deeper into concrete restaurant use cases, enterprise features, future-facing differentiation, and a strong close + CTA. Same tone, same voice, no em-dash, and designed to feel like a high-conversion landing page section.
+Part 2, written to seamlessly continue Part 1.
+
+It goes deeper into concrete restaurant use cases, enterprise features, future-facing differentiation, and a strong close + CTA.
+
+Same tone, same voice, no em-dash, and designed to feel like a high-conversion landing page section.
