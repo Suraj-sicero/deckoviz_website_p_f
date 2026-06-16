@@ -12,7 +12,17 @@ size: "medium"
 
 
     ## Why we use this framing, and why it matters for the future of homes, enterprises, and human creativity
-    I’ve been thinking a lot about the language around technology. How we frame something determines how people understand it, fear it, or embrace it. And in the last year, there’s been an avalanche of “Cursor for X”, “Cursor for Y”, and “Cursor for Z” framing. Some of it is tired. Some of it is lazy. But some of it captures something real.
+I’ve been thinking a lot about the language around technology.
+
+How we frame something determines how people understand it, fear it, or embrace it.
+
+And in the last year, there’s been an avalanche of “Cursor for X”, “Cursor for Y”, and “Cursor for Z” framing.
+
+Some of it is tired.
+
+Some of it is lazy.
+
+But some of it captures something real.
 
 This is where Deckoviz sits.
 
@@ -62,7 +72,9 @@ Inside every person, there is an artist and a storyteller who never had tools ac
 
 We want to change that.
 
-We want every home to have an AI art and storytelling companion. We want every enterprise space to have dynamic brand storytelling, ambient intelligence, and living experiences that deepen connection.
+We want every home to have an AI art and storytelling companion.
+
+We want every enterprise space to have dynamic brand storytelling, ambient intelligence, and living experiences that deepen connection.
 
 This is the platform we’re building.
 <br/><br/><br/>
@@ -72,7 +84,13 @@ People fall into binary thinking. The finite-world fallacy.
 
 “AI does X, so humans who do X are finished.” No. Most of these domains are supply-constrained.
 
-We don’t have enough great teachers. We don’t have enough therapists. We definitely don’t have private artists for the 99.9%, the way nobility did. We don’t have enough brilliant storytellers or creative collaborators.
+We don’t have enough great teachers.
+
+We don’t have enough therapists.
+
+We definitely don’t have private artists for the 99.9%, the way nobility did.
+
+We don’t have enough brilliant storytellers or creative collaborators.
 
 AI doesn’t replace them. AI makes the potential of those professions accessible to everyone.
 
@@ -99,7 +117,13 @@ This is how you seed a new Renaissance.
 ## What happens when the technical grind is removed?
 People finally create.
 
-Someone who always wanted to paint but felt inadequate. Someone with a novel in their head but no time to write. Someone with stories about their kids, their culture, their memories, but no medium to express them. Someone with artistic spark but zero training.
+Someone who always wanted to paint but felt inadequate.
+
+Someone with a novel in their head but no time to write.
+
+Someone with stories about their kids, their culture, their memories, but no medium to express them.
+
+Someone with artistic spark but zero training.
 
 With a platform that feels like Cursor for art and storytelling - prompt-based, intuitive, expressive, emotionally aligned - something unlocks:
 
@@ -107,14 +131,32 @@ With a platform that feels like Cursor for art and storytelling - prompt-based, 
 
 People come alive.
 
-Homes come alive. Enterprises come alive. Shared spaces come alive. Brand experiences become uniquely expressive. Families begin creating rituals that reflect who they are. Restaurants tell their story, not just their menu. Retail stores communicate a feeling, not just a product.
+Homes come alive.
+
+Enterprises come alive.
+
+Shared spaces come alive.
+
+Brand experiences become uniquely expressive.
+
+Families begin creating rituals that reflect who they are.
+
+Restaurants tell their story, not just their menu.
+
+Retail stores communicate a feeling, not just a product.
 
 This is the frontier where Deckoviz lives.
 
 <br/><br/><br/>
 ## The world we’re building toward
 
-A world where hundreds of millions, maybe billions, engage with personal art and storytelling daily. Where your walls are alive with meaning, beauty, memories, dreams, stories. Where enterprises build deeper bonds through emotion, narrative, atmosphere, and delight. Where your home reflects your inner world and evolves with you.
+A world where hundreds of millions, maybe billions, engage with personal art and storytelling daily.
+
+Where your walls are alive with meaning, beauty, memories, dreams, stories.
+
+Where enterprises build deeper bonds through emotion, narrative, atmosphere, and delight.
+
+Where your home reflects your inner world and evolves with you.
 
 A world richer with taste, with emotion, with intelligence - human and artificial working together.
 

@@ -15,23 +15,53 @@ size: "large"
 
 Frozen dreams, living symbols, and the architecture that shaped human imagination
 
-Human beings have always built more than shelter. We build beliefs in stone, aspiration in steel, memory in marble. Across civilizations and centuries, our greatest structures have been attempts to make the invisible visible — love, power, faith, wonder, ambition, transcendence.
+Human beings have always built more than shelter.
+
+We build beliefs in stone, aspiration in steel, memory in marble.
+
+Across civilizations and centuries, our greatest structures have been attempts to make the invisible visible - love, power, faith, wonder, ambition, transcendence.
 
 A great structure is a frozen dream. It carries the emotional climate of its time, the values of its builders, and the quiet question they were asking the future: Will this matter?
 
-Some buildings answer with symmetry and silence. Others with audacity, scale, and defiance. Some were born from devotion, others from dominance. Many outlived the people who imagined them — and in doing so, became mirrors through which we still examine ourselves.
+Some buildings answer with symmetry and silence.
 
-This collection spans continents, eras, and cultures. It celebrates architecture not merely as engineering, but as art, storytelling, and emotional expression. These structures remind us that humans don’t just inhabit space — we shape it to reflect who we are, and who we hope to become.
+Others with audacity, scale, and defiance.
 
-At Deckoviz, we think of spaces the same way. Walls are not boundaries; they are canvases. Structures are not static; they are emotional environments. When you visualize architecture — whether it’s the Taj Mahal at sunrise or the Eiffel Tower glowing at night — you’re not just seeing a building. You’re stepping into a story, a mood, a worldview.
+Some were born from devotion, others from dominance.
 
-With Deckoviz, your favourite structures don’t have to live only in books or distant cities. You can bring them into your space, re-imagined through art, light, mood, and time. Let them inspire reflection, ambition, calm, or curiosity — not as replicas, but as living visual companions.
+Many outlived the people who imagined them - and in doing so, became mirrors through which we still examine ourselves.
+
+This collection spans continents, eras, and cultures.
+
+It celebrates architecture not merely as engineering, but as art, storytelling, and emotional expression.
+
+These structures remind us that humans don’t just inhabit space - we shape it to reflect who we are, and who we hope to become.
+
+At Deckoviz, we think of spaces the same way.
+
+Walls are not boundaries; they are canvases.
+
+Structures are not static; they are emotional environments.
+
+When you visualize architecture - whether it’s the Taj Mahal at sunrise or the Eiffel Tower glowing at night - you’re not just seeing a building.
+
+You’re stepping into a story, a mood, a worldview.
+
+With Deckoviz, your favourite structures don’t have to live only in books or distant cities.
+
+You can bring them into your space, re-imagined through art, light, mood, and time.
+
+Let them inspire reflection, ambition, calm, or curiosity - not as replicas, but as living visual companions.
 
 Below are some of the most beautiful structures humanity has ever created. Not ranked or reduced but simply honoured.
 
 Suggestion: Visualize your favourite structures.
 
-Human beings have always shaped stone, steel, glass, and earth into meaning. Structures are frozen dreams   reflections of belief, power, faith, beauty, and curiosity. This collection spans continents and centuries, celebrating architecture not just as shelter, but as art.
+Human beings have always shaped stone, steel, glass, and earth into meaning.
+
+Structures are frozen dreams   reflections of belief, power, faith, beauty, and curiosity.
+
+This collection spans continents and centuries, celebrating architecture not just as shelter, but as art.
 
 
 <br>

@@ -13,19 +13,33 @@ size: "large"
 
 # Deckoviz: Finding Inspiration, Joy, and Inner Strength Through Personal Art
 
-Art has always been a vessel for more than expression. It has been a way to imagine what could be, to feel what is possible, and to reconnect with parts of ourselves that everyday life often quiets. At Deckoviz, we believe art can do more than reflect emotion   it can *shape it*.
+Art has always been a vessel for more than expression.
 
-The Personal Painter is designed to help you access the opposite end of emotional experience   joy instead of pain, calm instead of chaos, belief instead of doubt, and hope instead of fear. Through deeply personalized, conversation-driven AI art, Deckoviz helps you step into emotional states you want to inhabit, not just observe.
+It has been a way to imagine what could be, to feel what is possible, and to reconnect with parts of ourselves that everyday life often quiets.
+
+At Deckoviz, we believe art can do more than reflect emotion   it can *shape it*.
+
+The Personal Painter is designed to help you access the opposite end of emotional experience   joy instead of pain, calm instead of chaos, belief instead of doubt, and hope instead of fear.
+
+Through deeply personalized, conversation-driven AI art, Deckoviz helps you step into emotional states you want to inhabit, not just observe.
 
 <br>
 
 ## Art as a Gateway to Positive Emotional States
 
-Emotions are not permanent traits. They are states   influenced by memory, imagination, intention, and environment. Visual imagery plays a powerful role in shaping these states, often more immediately than words.
+Emotions are not permanent traits.
+
+They are states   influenced by memory, imagination, intention, and environment.
+
+Visual imagery plays a powerful role in shaping these states, often more immediately than words.
 
 Deckoviz’s Personal Painter allows you to intentionally design emotional environments that support who you want to be.
 
-Instead of entering short prompts, you engage in conversation. You speak about what you want more of in your life   clarity, peace, joy, confidence, motivation, or belief. The AI listens not just to what you say, but to the emotional tone beneath it, translating those intentions into visual form.
+Instead of entering short prompts, you engage in conversation.
+
+You speak about what you want more of in your life   clarity, peace, joy, confidence, motivation, or belief.
+
+The AI listens not just to what you say, but to the emotional tone beneath it, translating those intentions into visual form.
 
 The result is not decorative art, but emotionally aligned imagery that feels personal and meaningful.
 
@@ -35,7 +49,9 @@ The result is not decorative art, but emotionally aligned imagery that feels per
 
 Creation with the Personal Painter begins with dialogue.
 
-You talk about your dreams, your aspirations, and the emotional states you want to return to. You describe moments when you felt strong, hopeful, grounded, or inspired   or moments you want to feel that way again.
+You talk about your dreams, your aspirations, and the emotional states you want to return to.
+
+You describe moments when you felt strong, hopeful, grounded, or inspired   or moments you want to feel that way again.
 
 Through this process, the AI creates artwork that reflects:
 
@@ -110,7 +126,9 @@ The resulting artwork becomes a visual alignment between intention and identity 
 
 Art does not only process emotion   it shapes it.
 
-With Deckoviz, you can consciously design the emotional atmosphere you want to inhabit. Whether you need motivation before a challenge, calm during uncertainty, or inspiration when creativity feels distant, your personalized art becomes a tool for emotional regulation and growth.
+With Deckoviz, you can consciously design the emotional atmosphere you want to inhabit.
+
+Whether you need motivation before a challenge, calm during uncertainty, or inspiration when creativity feels distant, your personalized art becomes a tool for emotional regulation and growth.
 
 Surrounding yourself with visuals that reflect the states you want to cultivate helps train your mind toward those states.
 
@@ -132,7 +150,13 @@ This is art that evolves with you, not something static.
 
 Art does not merely capture reality   it participates in shaping it.
 
-With Deckoviz’s Personal Painter, you are not just expressing emotion. You are practicing becoming. You are choosing which states you want to return to. You are building visual touchstones for joy, belief, calm, and hope.
+With Deckoviz’s Personal Painter, you are not just expressing emotion.
+
+You are practicing becoming.
+
+You are choosing which states you want to return to.
+
+You are building visual touchstones for joy, belief, calm, and hope.
 
 Sometimes, seeing the version of yourself you believe in is the first step toward becoming them.
 

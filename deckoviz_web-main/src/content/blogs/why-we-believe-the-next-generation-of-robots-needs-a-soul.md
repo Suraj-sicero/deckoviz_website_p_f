@@ -13,19 +13,41 @@ size: "medium"
 
     ## Exploring the design split between functional AI and experiential AI.
 
-    Neo from 1X just went on sale today   and it’s a “start of an era” kind of announcement. We’ve officially entered the age where general-purpose home robots are not a sci-fi dream, but a purchasable reality.
+Neo from 1X just went on sale today   and it’s a “start of an era” kind of announcement.
 
-Then you look at the actual robot. And let’s just say   the appearance of the Neo Home Robot is… interesting. Noteworthy, in how unnoteworthy it looks. Deliberately plain. Intentionally bland. A soft, neutral humanoid designed to offend no one and inspire… well, not much either.
+We’ve officially entered the age where general-purpose home robots are not a sci-fi dream, but a purchasable reality.
 
-And by interesting, I mean: it is emblematic of a design philosophy that a lot of robotics companies today are converging around. The plain. The minimalistic. The “neutral human.” A blank canvas for the future.
+Then you look at the actual robot.
 
-Companies like 1x, Tesla, Figure   they’re all building robots with the same aesthetic vocabulary: – muted colors – hyper-smooth surfaces – simplified humanoid shape – faces that are more suggestion than expression
+And let’s just say   the appearance of the Neo Home Robot is… interesting.
+
+Noteworthy, in how unnoteworthy it looks.
+
+Deliberately plain.
+
+Intentionally bland.
+
+A soft, neutral humanoid designed to offend no one and inspire… well, not much either.
+
+And by interesting, I mean: it is emblematic of a design philosophy that a lot of robotics companies today are converging around.
+
+The plain.
+
+The minimalistic.
+
+The “neutral human.” A blank canvas for the future.
+
+Companies like 1x, Tesla, Figure   they’re all building robots with the same aesthetic vocabulary: - muted colors - hyper-smooth surfaces - simplified humanoid shape - faces that are more suggestion than expression
 
 It’s the Ikea and Uniqlo phase of robot design.
 
 There are reasons for this. Some of them sensible. Some of them a little timid.
 
-The logic goes something like: Keep the robot visually uncommitted so users don’t feel threatened or judged. Make it functional, not “opinionated.” Avoid the “creepy valley.” Don’t pretend the robot has a soul when it clearly doesn’t. Maintain universal acceptability by avoiding any strong personality impulses.
+The logic goes something like: Keep the robot visually uncommitted so users don’t feel threatened or judged.
+
+Make it functional, not “opinionated.” Avoid the “creepy valley.” Don’t pretend the robot has a soul when it clearly doesn’t.
+
+Maintain universal acceptability by avoiding any strong personality impulses.
 
 Fine. Good strategy for early adoption in the home and workplace.
 
@@ -35,13 +57,31 @@ It is also, in my opinion, a little… boring.
 
 ## Our philosophy at Deckoviz Space Labs is almost the opposite.
 
-We aren’t building “functional robots”. We’re building experiential robots   characters for environments. Mood setters. Storytellers. Spatial companions. The living, feeling interface between humans and the intelligence shaping their space.
+We aren’t building “functional robots”.
+
+We’re building experiential robots   characters for environments.
+
+Mood setters.
+
+Storytellers.
+
+Spatial companions.
+
+The living, feeling interface between humans and the intelligence shaping their space.
 
 We want our robots to be: • playful • adorable • personalizable • personable • brand-expressive • emotionally present
 
 Robots that are not just in the space   but make the space feel alive.
 
-These robots will serve as mood agents, hospitality ambassadors, atmosphere creators. They will tell stories. They will welcome guests. They will understand context and identity. They will bring delight, curiosity, and wonder back into environments that have grown stale and screen-ridden.
+These robots will serve as mood agents, hospitality ambassadors, atmosphere creators.
+
+They will tell stories.
+
+They will welcome guests.
+
+They will understand context and identity.
+
+They will bring delight, curiosity, and wonder back into environments that have grown stale and screen-ridden.
 
 We are building for the era when robots aren’t treated like appliances… but like company.
 
@@ -53,7 +93,7 @@ Yes   these robots do not have true personalities today. We are not naïve about
 
 But here’s how we square that circle:
 
-We’re building for where we will be in ~2–5 years.
+We’re building for where we will be in ~2-5 years.
 
 At Elinity, one of our core mandates is building a new kind of mind: one that wins empathy and EQ evaluations   not by imitating human speech patterns with transformer architecture, but by an entirely different approach rooted in experiential models of the biological basis of emotion and awareness.
 
@@ -67,7 +107,11 @@ Their form is a future-proof vessel.
 
 <br/><br/><br/>
 ## The world we’re building toward
-The robots we are designing feel closer to the companion robots sci-fi promised us: Think TARS in Interstellar. Think a presence that changes a room by simply being there. Not a silent tool, but a co-participant in the space.
+The robots we are designing feel closer to the companion robots sci-fi promised us: Think TARS in Interstellar.
+
+Think a presence that changes a room by simply being there.
+
+Not a silent tool, but a co-participant in the space.
 
 They’ll be: • The emotional backbone of hospitality environments • Brand ambassadors who actually embody the brand • Custodians of ambience and memory • The connective tissue between human and place
 
@@ -75,7 +119,17 @@ They will make spaces expressive again.
 
 Deckoviz started with DASP   Dynamic Art & Storytelling Platform.
 
-The next phase: Expressive robotics that brings that intelligence into motion. Into personality. To seed more of everything we are attempting to seed. Into our inner spaces. Into relationships. Into our worlds.
+The next phase: Expressive robotics that brings that intelligence into motion.
+
+Into personality.
+
+To seed more of everything we are attempting to seed.
+
+Into our inner spaces.
+
+Into relationships.
+
+Into our worlds.
 
 Robots that help places feel human.
 

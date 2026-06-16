@@ -20,7 +20,11 @@ It is a state of being.
 
 And state is shaped by space.
 
-Gyms, spas, therapy studios, yoga rooms, recovery centers, and mental wellness clinics all share a quiet truth. What people feel inside these spaces matters as much as what they do. Movement, breath, therapy, and recovery are deeply influenced by atmosphere, emotion, and sensory cues.
+Gyms, spas, therapy studios, yoga rooms, recovery centers, and mental wellness clinics all share a quiet truth.
+
+What people feel inside these spaces matters as much as what they do.
+
+Movement, breath, therapy, and recovery are deeply influenced by atmosphere, emotion, and sensory cues.
 
 Deckoviz exists to design those invisible layers.
 
