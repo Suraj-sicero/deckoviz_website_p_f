@@ -56,7 +56,7 @@ export class CanvasErrorBoundary extends React.Component<Props, State> {
           </h1>
           <p className="text-sm text-slate-400 mb-6">
             We hit an unexpected error and couldn't render this view. Try reloading
-            — your chats and gallery are saved on the server.
+            - your chats and gallery are saved on the server.
           </p>
           {this.state.error?.message && (
             <p className="text-xs text-slate-500 font-mono bg-black/30 rounded-lg p-3 mb-6 break-all">

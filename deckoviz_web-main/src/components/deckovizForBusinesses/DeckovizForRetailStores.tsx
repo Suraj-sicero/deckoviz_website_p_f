@@ -295,7 +295,7 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           </span>
         </motion.div>
 
-        {/* The Full Deckoviz Retail Experience — Cinematic Closing */}
+        {/* The Full Deckoviz Retail Experience - Cinematic Closing */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}

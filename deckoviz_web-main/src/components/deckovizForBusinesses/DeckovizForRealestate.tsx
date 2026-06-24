@@ -67,7 +67,7 @@ const DeckovizForRealEstate = () => {
               <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-300">Living, Generative Environments.</span>
             </p>
 
-            {/* Story cards — break up dense paragraphs */}
+            {/* Story cards - break up dense paragraphs */}
             <div className="space-y-3 max-w-xl mb-10">
               {[
                 {

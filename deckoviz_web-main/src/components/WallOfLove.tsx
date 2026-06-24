@@ -98,7 +98,7 @@ export default function WallOfLove() {
         {/* Description */}
         <div className="relative z-30 max-w-3xl mx-auto px-4 text-center">
           <p className="text-[17px] sm:text-[19px] leading-relaxed text-gray-700 mb-12">
-            We love hearing from you — whether it's feedback, ideas, creative sparks, bugs 
+            We love hearing from you - whether it's feedback, ideas, creative sparks, bugs 
             you've noticed, feature suggestions, or simply your experience with Deckoviz. 
             Every message helps us grow, improve, and create more beautiful, 
             meaningful experiences.
@@ -111,7 +111,7 @@ export default function WallOfLove() {
 
           <p className="text-[17px] sm:text-[19px] leading-relaxed text-gray-700 font-medium mb-12">
             from design lovers to digital creators, therapists to restaurateurs, 
-            <br />families to founders — all using Deckoviz to infuse their lives with magic.
+            <br />families to founders - all using Deckoviz to infuse their lives with magic.
           </p>
 
           {/* CTA Button */}

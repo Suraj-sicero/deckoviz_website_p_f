@@ -190,9 +190,9 @@ const DailyInspirationTool: React.FC = () => {
                 <blockquote className="text-2xl font-bold text-gray-900 leading-relaxed mb-4 italic">
                   "{result.quote.text}"
                 </blockquote>
-                <p className="text-sm font-semibold text-amber-600">— {result.quote.author}</p>
+                <p className="text-sm font-semibold text-amber-600">- {result.quote.author}</p>
                 <button
-                  onClick={() => handleShare("quote", `"${result.quote.text}" — ${result.quote.author}`)}
+                  onClick={() => handleShare("quote", `"${result.quote.text}" - ${result.quote.author}`)}
                   className="mt-5 flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-sm font-semibold hover:bg-amber-100 transition-all"
                 >
                   📋 Copy Quote

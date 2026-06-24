@@ -405,7 +405,7 @@ const ExpeditionPlayView: React.FC = () => {
       id: `exp-${Date.now()}`,
       kind,
       title: template.label,
-      notes: filled.map((p) => `${p.q} — ${p.a}`).join("\n"),
+      notes: filled.map((p) => `${p.q} - ${p.a}`).join("\n"),
       loreIds: lore.map((l) => l.id),
       questionIds: [],
       layerIds: layers.map((l) => l.id),

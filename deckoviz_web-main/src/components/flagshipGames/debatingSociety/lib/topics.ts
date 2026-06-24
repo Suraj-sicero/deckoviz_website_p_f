@@ -94,7 +94,7 @@ export function rollTopic(mode: DebateMode): { topic: string; resolvedMode: Deba
 
 export const VIZZY_LINES = {
   openingIntro: [
-    "Ladies, gentlemen, miscellaneous geniuses — the topic.",
+    "Ladies, gentlemen, miscellaneous geniuses - the topic.",
     "Tonight's resolution requires more confidence than evidence.",
     "Before we begin, let me remind you: the truth is optional.",
   ],
@@ -106,7 +106,7 @@ export const VIZZY_LINES = {
   ],
   crossExamSetup: [
     "I have a question. You will not enjoy it.",
-    "If I may — and I will.",
+    "If I may - and I will.",
     "A small thing. A pointed thing.",
   ],
   heckleHit: [
@@ -120,9 +120,9 @@ export const VIZZY_LINES = {
     "That landed like a damp napkin.",
   ],
   verdictOpeners: [
-    "What this debate revealed —",
-    "What we actually argued about, in the end —",
-    "Setting aside who won —",
+    "What this debate revealed -",
+    "What we actually argued about, in the end -",
+    "Setting aside who won -",
   ],
 };
 

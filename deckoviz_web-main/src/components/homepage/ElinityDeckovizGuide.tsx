@@ -12,7 +12,7 @@ const sections = [
     accent: ["#4338ca", "#6366f1"],
     highlight: "Romantic mode. Celebration mode. Deep mode. Playful mode.",
     body: [
-      "Deckoviz has a suite of modes built around emotional and relational states. Romantic mode for an intimate evening — soft, atmospheric visuals, curated moodscapes, the right ambiance without any effort. Celebration mode when something worth marking has happened. Playful mode when the energy calls for lightness and fun. Deep mode for a conversation that deserves more than a distracted room.",
+      "Deckoviz has a suite of modes built around emotional and relational states. Romantic mode for an intimate evening - soft, atmospheric visuals, curated moodscapes, the right ambiance without any effort. Celebration mode when something worth marking has happened. Playful mode when the energy calls for lightness and fun. Deep mode for a conversation that deserves more than a distracted room.",
       "The environment you inhabit shapes the quality of the experience you have in it. Deckoviz gives you the ability to shape that environment intentionally, for the kind of moment you actually want to have.",
     ],
   },
@@ -24,7 +24,7 @@ const sections = [
     accent: ["#1d4ed8", "#4f46e5"],
     highlight: "Your environment is not neutral.",
     body: [
-      "Beyond modes, Deckoviz's moodscapes bring the right sensory atmosphere into your home. Imagine an evening with your partner — candlelight visuals on the wall, a soundscape layered with soft classical music, the entire room oriented around presence and connection rather than distraction.",
+      "Beyond modes, Deckoviz's moodscapes bring the right sensory atmosphere into your home. Imagine an evening with your partner - candlelight visuals on the wall, a soundscape layered with soft classical music, the entire room oriented around presence and connection rather than distraction.",
       "Or a slow Sunday morning with your family, the frame cycling through warm, unhurried imagery, the sound of rain, the feeling of nowhere else to be. Deckoviz treats your environment as an active ingredient in the quality of your relationships.",
     ],
   },
@@ -48,7 +48,7 @@ const sections = [
     accent: ["#4338ca", "#818cf8"],
     highlight: "When you create together, you know each other more.",
     body: [
-      "There is something quietly profound about making something with another person. Co-creating art, co-creating posters, co-creating stories — the act of building something together draws people closer in ways that conversation alone sometimes cannot.",
+      "There is something quietly profound about making something with another person. Co-creating art, co-creating posters, co-creating stories - the act of building something together draws people closer in ways that conversation alone sometimes cannot.",
       "Deckoviz gives you a shared creative canvas. Design a piece of art together. Build a visual that captures something true about your relationship. Write a story you then see displayed on your wall. Create a poster that means something only to the two of you. Creative actualization and relational actualization, it turns out, are deeply intertwined.",
     ],
   },
@@ -73,7 +73,7 @@ const sections = [
     highlight: "Words have always been one of the primary currencies of love.",
     body: [
       "Send each other beautiful notes through the frame. Gratitude cards. Reminder cards that say something you want them to come home to. A message waiting for your partner when they wake up. An anniversary note displayed as art.",
-      "Deckoviz gives words a canvas worthy of them — beautiful, living, yours.",
+      "Deckoviz gives words a canvas worthy of them - beautiful, living, yours.",
     ],
   },
   {
@@ -338,13 +338,13 @@ export default function ElinityDeckovizGuide() {
               <p className="text-indigo-100/90 text-base sm:text-lg leading-relaxed font-light">
                 The best relationships are deeply generative, built, tended, and deepened through{" "}
                 <em className="text-white not-italic font-medium">shared experience, shared creation, shared presence.</em>{" "}
-                They go from passivity into proactive co-creation — of moments, memories and magic.
+                They go from passivity into proactive co-creation - of moments, memories and magic.
               </p>
               <div className="h-px bg-gradient-to-r from-indigo-400/30 via-violet-400/20 to-transparent" />
               <p className="text-indigo-200/70 text-sm sm:text-base leading-relaxed font-light">
                 That is the thread connecting{" "}
                 <span className="text-indigo-300 font-medium">Elinity</span> and the{" "}
-                <span className="text-indigo-300 font-medium">DASPort</span> — two products designed around a single conviction: that the conditions for a meaningful life can be designed for, and lived in, every single day. Here is how Elinity users can bring Deckoviz into their relationships to create more depth, more beauty, more aliveness in those connections.
+                <span className="text-indigo-300 font-medium">DASPort</span> - two products designed around a single conviction: that the conditions for a meaningful life can be designed for, and lived in, every single day. Here is how Elinity users can bring Deckoviz into their relationships to create more depth, more beauty, more aliveness in those connections.
               </p>
             </div>
           </div>
@@ -375,7 +375,7 @@ export default function ElinityDeckovizGuide() {
             <div className="p-7 sm:p-10">
               <div className="flex flex-col sm:flex-row gap-6 sm:gap-8">
 
-                {/* Left column — number + emoji */}
+                {/* Left column - number + emoji */}
                 <div className="flex sm:flex-col items-center sm:items-center gap-4 sm:gap-4 sm:min-w-[80px]">
                   <div className="num-badge w-14 h-14 rounded-2xl flex items-center justify-center text-indigo-300 text-lg font-bold guide-serif">
                     {s.num}
@@ -385,7 +385,7 @@ export default function ElinityDeckovizGuide() {
                   <div className="hidden sm:block flex-1 w-px self-stretch mt-2" style={{ background: `linear-gradient(to bottom, ${s.accent[0]}40, transparent)` }} />
                 </div>
 
-                {/* Right column — content */}
+                {/* Right column - content */}
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-3 mb-4">
                     <span className="tag-pill text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1 rounded-full">
@@ -427,7 +427,7 @@ export default function ElinityDeckovizGuide() {
         {/* Divider */}
         <div className="flex items-center gap-5 mb-12">
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
-          <div className="text-indigo-400/40 text-xs tracking-[0.3em] uppercase">— fin —</div>
+          <div className="text-indigo-400/40 text-xs tracking-[0.3em] uppercase">- fin -</div>
           <div className="flex-1 h-px bg-gradient-to-r from-transparent via-indigo-500/30 to-transparent" />
         </div>
 

@@ -33,7 +33,7 @@ export const ARTWORK_DB: ArtworkRecord[] = [
       "It was not particularly admired during his lifetime.",
     ],
     context:
-      "Painted from a barred window in the asylum at Saint-Rémy, the view existed — the village did not. Van Gogh added it.",
+      "Painted from a barred window in the asylum at Saint-Rémy, the view existed - the village did not. Van Gogh added it.",
     poster: gradient("#1d4ed8", "#fbbf24", "#0c1a3a"),
   },
   {
@@ -48,7 +48,7 @@ export const ARTWORK_DB: ArtworkRecord[] = [
       "Munch wrote in his diary that the sky turning red gave him the original sensation.",
       "There are four versions: two paintings, two pastels.",
       "One version was stolen in broad daylight from the Munch Museum in 2004.",
-      "The figure is not screaming — it is hearing a scream pass through nature.",
+      "The figure is not screaming - it is hearing a scream pass through nature.",
     ],
     context:
       "The figure is not the one screaming. Munch wrote that he heard 'a scream pass through nature' on a walk near Oslo.",
@@ -63,13 +63,13 @@ export const ARTWORK_DB: ArtworkRecord[] = [
     difficulty: "curious",
     opener: "She has been turning to look at us for three hundred and sixty years.",
     truths: [
-      "It is technically a tronie — a study, not a portrait of a real sitter.",
+      "It is technically a tronie - a study, not a portrait of a real sitter.",
       "The earring may not be a pearl at all but polished tin.",
       "The painting was sold for two guilders in 1881.",
       "Vermeer used ultramarine made from ground lapis lazuli for the headscarf.",
     ],
     context:
-      "Not a portrait — a tronie, an idealized study. The 'pearl' is too large to be real and may be polished tin.",
+      "Not a portrait - a tronie, an idealized study. The 'pearl' is too large to be real and may be polished tin.",
     poster: gradient("#0e7490", "#fde68a", "#1e1b4b"),
   },
   {
@@ -83,7 +83,7 @@ export const ARTWORK_DB: ArtworkRecord[] = [
     truths: [
       "Dalí said the soft clocks were inspired by a wheel of camembert melting in the sun.",
       "The cliffs in the background are the coast of Catalonia, where Dalí grew up.",
-      "The painting is unusually small — about 24 by 33 centimeters.",
+      "The painting is unusually small - about 24 by 33 centimeters.",
       "The ants on the bronze clock symbolize decay.",
     ],
     context:
@@ -122,10 +122,10 @@ export const ARTWORK_DB: ArtworkRecord[] = [
       "Rothko insisted his paintings be hung low, almost touching the floor.",
       "He refused a Four Seasons commission and returned the fee after seeing the dining room.",
       "Many of Rothko's late works developed cracks within decades due to experimental media.",
-      "He considered his work to be about tragedy, ecstasy, and doom — not colour.",
+      "He considered his work to be about tragedy, ecstasy, and doom - not colour.",
     ],
     context:
-      "Rothko was furious when 'No. 14' was first hung — too high, too brightly lit, and across from a Pollock that he felt 'argued' with it.",
+      "Rothko was furious when 'No. 14' was first hung - too high, too brightly lit, and across from a Pollock that he felt 'argued' with it.",
     poster: gradient("#dc2626", "#1e3a8a", "#0a0a0a"),
   },
   {
@@ -143,7 +143,7 @@ export const ARTWORK_DB: ArtworkRecord[] = [
       "He was dismissed from his teaching post by the Nazis in 1933.",
     ],
     context:
-      "Klee, who taught form and design at the Bauhaus, kept thousands of pages of theoretical notebooks — many never translated into English in his lifetime.",
+      "Klee, who taught form and design at the Bauhaus, kept thousands of pages of theoretical notebooks - many never translated into English in his lifetime.",
     poster: gradient("#facc15", "#ea580c", "#1c1917"),
   },
 
@@ -160,7 +160,7 @@ export const ARTWORK_DB: ArtworkRecord[] = [
       "Almeida Júnior was murdered the year after he completed this painting.",
       "The Portuguese word 'saudade' has no direct English translation.",
       "He is considered the father of regionalism in Brazilian painting.",
-      "The model is unknown — possibly a friend's daughter from Itu, São Paulo.",
+      "The model is unknown - possibly a friend's daughter from Itu, São Paulo.",
     ],
     context:
       "Almeida Júnior was a celebrated 19th-century Brazilian painter, murdered in 1899 in Piracicaba by the husband of a woman he had been involved with.",

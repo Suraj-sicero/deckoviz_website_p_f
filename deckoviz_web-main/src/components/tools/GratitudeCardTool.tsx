@@ -160,7 +160,7 @@ const GratitudeCardTool: React.FC = () => {
     <ToolLayout
       icon="💝"
       title="Gratitude Cards"
-      subtitle="Celebrate your connections — turn photos of you and a loved one into a beautiful custom art postcard with a personal message."
+      subtitle="Celebrate your connections - turn photos of you and a loved one into a beautiful custom art postcard with a personal message."
       gradient="from-pink-500 via-rose-500 to-red-600"
     >
       <div className="space-y-8 max-w-4xl mx-auto">

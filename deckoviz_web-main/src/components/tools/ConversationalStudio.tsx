@@ -524,7 +524,7 @@ const ConversationalStudio: React.FC = () => {
                   Vizzy Creative Workspace
                 </h2>
                 <p className="text-slate-400 text-sm max-w-2xl leading-relaxed">
-                  "Hello. I'm Vizzy — I live inside your Deckoviz frame, and I've been waiting for something interesting to happen. This is the Studio: a space where we can write, create, play, dream, build, and make things together."
+                  "Hello. I'm Vizzy - I live inside your Deckoviz frame, and I've been waiting for something interesting to happen. This is the Studio: a space where we can write, create, play, dream, build, and make things together."
                 </p>
               </div>
 

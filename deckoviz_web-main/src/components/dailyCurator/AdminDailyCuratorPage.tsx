@@ -1,4 +1,4 @@
-// AdminDailyCuratorPage.tsx — admin tool to build a user's daily curation (Feature 2).
+// AdminDailyCuratorPage.tsx - admin tool to build a user's daily curation (Feature 2).
 // Pick a user + date, browse the library, and add/remove artworks & collections.
 // Gate this route to admins (see wiring notes); the backend also enforces requireAdmin.
 import { useEffect, useState } from "react";
@@ -97,7 +97,7 @@ export default function AdminDailyCuratorPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 pt-28 pb-12">
-      <h1 className="text-3xl font-bold text-gray-900">Daily Curator — Admin</h1>
+      <h1 className="text-3xl font-bold text-gray-900">Daily Curator - Admin</h1>
       <p className="mt-1 text-sm text-gray-500">
         Build a user's daily curation manually until Vizzy takes over.
       </p>
@@ -156,7 +156,7 @@ export default function AdminDailyCuratorPage() {
           )}
           {selectedUser && assigned.length === 0 && (
             <p className="mt-3 text-sm text-gray-400">
-              No items for {date} yet — add some from the library.
+              No items for {date} yet - add some from the library.
             </p>
           )}
           <div className="mt-3 space-y-2">

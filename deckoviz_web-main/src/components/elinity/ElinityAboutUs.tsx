@@ -630,7 +630,7 @@ export default function AboutUs() {
           }}
         >
           <p className="text-gray-400 text-sm sm:text-lg mb-4">
-            A world where everyone has access to emotionally attuned guides—AI companions, coaches, and guides that help them:
+            A world where everyone has access to emotionally attuned guides-AI companions, coaches, and guides that help them:
           </p>
 
           <motion.div

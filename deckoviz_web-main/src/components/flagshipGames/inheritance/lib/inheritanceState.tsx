@@ -44,7 +44,7 @@ function persistArchive(archive: FamilyArchive | null) {
     if (archive) localStorage.setItem(STORAGE_KEY, JSON.stringify(archive));
     else localStorage.removeItem(STORAGE_KEY);
   } catch {
-    /* noop — localStorage might be disabled */
+    /* noop - localStorage might be disabled */
   }
 }
 

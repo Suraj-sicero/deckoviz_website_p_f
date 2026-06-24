@@ -115,7 +115,7 @@ const QuotePosterTool: React.FC = () => {
     if (author) {
       ctx.font = `32px ${fontName}`;
       ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
-      ctx.fillText(`— ${author}`, 600, startY + lines.length * lineHeight + 80);
+      ctx.fillText(`- ${author}`, 600, startY + lines.length * lineHeight + 80);
     }
 
     // Logo watermark at bottom
@@ -228,7 +228,7 @@ const QuotePosterTool: React.FC = () => {
               </p>
               {author && (
                 <p className="text-xs md:text-sm text-white/70 mt-6 font-semibold uppercase tracking-wider">
-                  — {author}
+                  - {author}
                 </p>
               )}
             </div>

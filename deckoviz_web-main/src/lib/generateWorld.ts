@@ -20,7 +20,7 @@ export interface MarbleWorldResult {
 const BACKEND = `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}/api`;
 
 /**
- * Step 1 — Generate concept art image for preview.
+ * Step 1 - Generate concept art image for preview.
  * Still uses the existing image generation pipeline (Gemini/Runware).
  * Returns a URL to display during the "preview" step.
  */
@@ -36,7 +36,7 @@ export async function generatePreviewImage(prompt: string): Promise<string> {
 }
 
 /**
- * Step 2 — Generate the real Marble 3D world.
+ * Step 2 - Generate the real Marble 3D world.
  * Calls backend → Marble API → polls for completion.
  * Returns structured world assets including real .spz Gaussian splat URLs.
  *
@@ -68,7 +68,7 @@ export async function generateMarbleWorld(
 }
 
 /**
- * Legacy shim — used by old CreateWorld code.
+ * Legacy shim - used by old CreateWorld code.
  * Returns thumbnail URL (concept art preview).
  */
 export async function generateWorld(prompt: string): Promise<string> {

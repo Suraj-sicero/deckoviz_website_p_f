@@ -302,7 +302,7 @@ const StoryForgeLobby: React.FC = () => {
             </div>
 
             <div className="mt-4 px-1 text-[11px] text-white/40">
-              Tip: pass the device to each player on their turn — or open the
+              Tip: pass the device to each player on their turn - or open the
               same room code on another screen for a TV setup.
             </div>
           </div>

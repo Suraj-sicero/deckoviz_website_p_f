@@ -126,7 +126,7 @@ export default function AILayerForBusiness() {
                     {feature.title}
                   </h4>
                   <p className="text-gray-600 leading-relaxed font-medium mt-auto">
-                    <span className="hidden md:inline text-indigo-300 mr-1">—</span> 
+                    <span className="hidden md:inline text-indigo-300 mr-1">-</span> 
                     {feature.desc}
                   </p>
                 </div>

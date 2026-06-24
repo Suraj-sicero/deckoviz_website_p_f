@@ -1,7 +1,7 @@
 import type { FamilyArchive, Chapter, Heirloom, FamilyMember } from "./inheritanceTypes";
 
 /**
- * Compose an archival entry — a literary, melancholic record of what changed.
+ * Compose an archival entry - a literary, melancholic record of what changed.
  * Mock substitute for an LLM-backed historian.
  */
 export function writeArchivalEntry(input: {
@@ -45,7 +45,7 @@ export function currentDecade(): string {
 }
 
 /**
- * Continuity references — when narrating the next chapter, surface earlier wounds.
+ * Continuity references - when narrating the next chapter, surface earlier wounds.
  */
 export function continuityHints(archive: FamilyArchive): string[] {
   const hints: string[] = [];
@@ -77,7 +77,7 @@ export function unlocksAvailable(legacy: number): { type: string; label: string;
   ];
 }
 
-/* Letter composition — placeholder for AI letter writer */
+/* Letter composition - placeholder for AI letter writer */
 export function composeLetter(input: {
   from: FamilyMember | null;
   to: FamilyMember | null;

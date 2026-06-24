@@ -174,7 +174,7 @@ const RevealView: React.FC = () => {
         Question {state.questionsAnswered + 1} / {state.totalQuestions} {q.isVizzy && "· Vizzy speaks"}
       </div>
       <h2 className="font-serif text-3xl md:text-4xl text-white max-w-3xl mx-auto leading-snug">"{q.text}"</h2>
-      <p className="text-white/40 italic text-xs mt-8">— ten seconds of silence —</p>
+      <p className="text-white/40 italic text-xs mt-8">- ten seconds of silence -</p>
     </motion.div>
   );
 };
@@ -379,7 +379,7 @@ const GuessingView: React.FC = () => {
   const voter = state.players[state.current.voterIdx];
   const q = state.current.question;
 
-  // No guessing for Vizzy's question — skip straight to reveal
+  // No guessing for Vizzy's question - skip straight to reveal
   useEffect(() => {
     if (q?.isVizzy) dispatch({ type: "GOTO", phase: "asker-reveal" });
   }, [q?.isVizzy, dispatch]);
@@ -457,7 +457,7 @@ const AskerRevealView: React.FC = () => {
         <div className="text-[10px] uppercase tracking-[0.4em] text-teal-200 mb-2">Asker</div>
         <p className="font-serif text-white text-lg italic mb-4">"{q.text}"</p>
         {q.isVizzy ? (
-          <div className="text-[10px] uppercase tracking-[0.3em] text-amber-200">— Vizzy asked this. No reveal.</div>
+          <div className="text-[10px] uppercase tracking-[0.3em] text-amber-200">- Vizzy asked this. No reveal.</div>
         ) : asker ? (
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
@@ -472,7 +472,7 @@ const AskerRevealView: React.FC = () => {
           </motion.div>
         ) : null}
       </div>
-      {/* Courage award — once per session, gentle reasoning */}
+      {/* Courage award - once per session, gentle reasoning */}
       {!state.courageAwardedId && asker && (
         <div className="rounded-2xl border border-amber-300/30 bg-amber-500/10 p-4 text-center">
           <button
@@ -532,7 +532,7 @@ const LastQuestionView: React.FC = () => {
       </div>
       {player && (
         <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4 space-y-3">
-          <div className="text-xs text-white/60">{player.name} — passes the device when ready.</div>
+          <div className="text-xs text-white/60">{player.name} - passes the device when ready.</div>
           <textarea
             value={draft}
             onChange={(e) => setDraft(e.target.value.slice(0, 280))}

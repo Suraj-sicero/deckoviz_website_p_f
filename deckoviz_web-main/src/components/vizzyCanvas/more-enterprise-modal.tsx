@@ -79,7 +79,7 @@ export function MoreEnterpriseModal({ isOpen, onClose, onSelect }: MoreEnterpris
             section.title.toLowerCase().includes(query)
           ) {
             matches.push({
-              sectionTitle: `${group.category} — ${section.title}`,
+              sectionTitle: `${group.category} - ${section.title}`,
               template: tpl,
             })
           }

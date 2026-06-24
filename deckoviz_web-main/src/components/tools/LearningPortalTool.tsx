@@ -36,7 +36,7 @@ const LearningPortalTool: React.FC = () => {
     const welcomeMsg: Message = {
       id: Date.now().toString(),
       role: "assistant",
-      content: `Welcome! I'm Vizzy, your AI tutor for **${topic}**. 🎓\n\nI can help you with:\n• **📖 Explanations** — Ask me to explain any concept\n• **🧪 Quizzes** — Type "quiz me" for practice questions\n• **🗺️ Roadmap** — Type "show roadmap" for a learning path\n\nWhat would you like to explore first?`,
+      content: `Welcome! I'm Vizzy, your AI tutor for **${topic}**. 🎓\n\nI can help you with:\n• **📖 Explanations** - Ask me to explain any concept\n• **🧪 Quizzes** - Type "quiz me" for practice questions\n• **🗺️ Roadmap** - Type "show roadmap" for a learning path\n\nWhat would you like to explore first?`,
       type: "text",
     };
     setMessages([welcomeMsg]);
@@ -199,7 +199,7 @@ const LearningPortalTool: React.FC = () => {
     <ToolLayout
       icon="🎓"
       title="Visual Learning Portal"
-      subtitle="Chat with Vizzy AI tutor — get explanations, quizzes, and learning roadmaps"
+      subtitle="Chat with Vizzy AI tutor - get explanations, quizzes, and learning roadmaps"
       gradient="from-indigo-600 via-blue-700 to-cyan-800"
     >
       <div className="space-y-6">
@@ -339,7 +339,7 @@ const LearningPortalTool: React.FC = () => {
         {!sessionStarted && (
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: "💬", title: "Chat-Based Learning", desc: "Ask questions naturally — Vizzy adapts to your pace and learning style" },
+              { icon: "💬", title: "Chat-Based Learning", desc: "Ask questions naturally - Vizzy adapts to your pace and learning style" },
               { icon: "🧪", title: "Interactive Quizzes", desc: "Type 'quiz me' anytime for instant knowledge checks with explanations" },
               { icon: "🗺️", title: "Learning Roadmap", desc: "Get a structured step-by-step path from beginner to expert" },
             ].map((c) => (

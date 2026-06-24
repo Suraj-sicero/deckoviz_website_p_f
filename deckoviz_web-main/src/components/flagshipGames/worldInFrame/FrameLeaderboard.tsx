@@ -58,7 +58,7 @@ const FrameLeaderboard: React.FC = () => {
           <div className="mb-8 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-md p-5 text-center">
             <div className="text-[10px] uppercase tracking-[0.3em] text-amber-200 mb-1">Steady Voice Badge</div>
             <p className="font-serif text-white">
-              {steadyVoice.map((p) => p.name).join(", ")} — at least one vote every round.
+              {steadyVoice.map((p) => p.name).join(", ")} - at least one vote every round.
             </p>
           </div>
         )}
@@ -72,7 +72,7 @@ const FrameLeaderboard: React.FC = () => {
                 return (
                   <div key={s.id}>
                     <p className="font-serif text-white text-base leading-relaxed">"{s.text}"</p>
-                    <div className="text-[10px] text-white/40 italic">— {p?.name}</div>
+                    <div className="text-[10px] text-white/40 italic">- {p?.name}</div>
                   </div>
                 );
               })}

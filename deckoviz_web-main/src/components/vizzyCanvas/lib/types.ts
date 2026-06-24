@@ -37,7 +37,7 @@ export interface ChatMessage {
   isLoading?: boolean
   error?: string
   timestamp: number
-  // Vizzy 2.0 — agentic metadata (transparent to the user, available for dev tooling)
+  // Vizzy 2.0 - agentic metadata (transparent to the user, available for dev tooling)
   agentUsed?: string   // e.g. 'personal_artist', 'curator', 'vizzy_muse'
   intent?: string      // e.g. 'art_creation', 'ambiance_curation', 'storytelling'
 }

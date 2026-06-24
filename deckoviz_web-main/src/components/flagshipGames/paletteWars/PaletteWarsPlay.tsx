@@ -606,7 +606,7 @@ const ResultsView: React.FC<{
               <Award size={12} /> Vizzy's Pick
             </div>
             <p className="font-serif text-violet-50 leading-relaxed text-sm">
-              "{pickResp.text}" — {playerOf(pickResp.playerId)?.name}
+              "{pickResp.text}" - {playerOf(pickResp.playerId)?.name}
             </p>
             <p className="text-xs text-violet-200/70 italic mt-1">{vizzyPickLine()}</p>
           </motion.div>

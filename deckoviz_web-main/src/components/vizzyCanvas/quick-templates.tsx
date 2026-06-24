@@ -181,7 +181,7 @@ export function QuickTemplates({ onSelect }: QuickTemplatesProps) {
         <div className="flex-1 min-w-0">
           <h3 className="text-xl font-bold tracking-tight text-[var(--vc-text)] flex items-center justify-center sm:justify-start gap-2">
             <Sparkles className="size-5 text-blue-500" />
-            Creative Canvas — Quick Templates
+            Creative Canvas - Quick Templates
           </h3>
           <p className="text-xs text-[var(--vc-text-muted)] mt-1">
             {PROMPT_TEMPLATES.length} starting points for your home. Click any card to use it, customize the details, and press submit.
