@@ -83,7 +83,7 @@ export const FORMATS: WritingFormat[] = [
   { id: "letter-opening", label: "Letter Opening", prompt: "Write the first line of the letter someone here is about to write." },
 ];
 
-/* Real scene library — each item is a paragraph description that drives a procedural
+/* Real scene library - each item is a paragraph description that drives a procedural
    gradient backdrop. The mock provider builds a poster from these. */
 
 export interface SceneRecord {

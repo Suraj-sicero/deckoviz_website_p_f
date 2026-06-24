@@ -41,7 +41,7 @@ const VerdictPlay: React.FC = () => {
       votersWhoChose: [],
     };
     dispatch({ type: "BEGIN_REVEAL", artwork, truthHolderId: truthHolder.id });
-    // The state update is async — we use a microtask to inject after BEGIN_REVEAL clears facts
+    // The state update is async - we use a microtask to inject after BEGIN_REVEAL clears facts
     setTimeout(() => {
       dispatch({ type: "INJECT_TRUTH_CARD", card: truthCard });
     }, 0);
@@ -294,7 +294,7 @@ const BluffWritingView: React.FC<{ navigate: ReturnType<typeof useNavigate> }> =
               Pass to {player?.name}
             </div>
             <p className="text-xs text-white/60 italic">
-              {isTruthHolder ? "You're holding the truth — write two believable lies around it." : "You weren't handed the truth — invent two convincing facts."}
+              {isTruthHolder ? "You're holding the truth - write two believable lies around it." : "You weren't handed the truth - invent two convincing facts."}
             </p>
           </div>
 
@@ -426,7 +426,7 @@ const VotingView: React.FC<{ navigate: ReturnType<typeof useNavigate> }> = ({ na
     if (state.votingIdx < state.players.length - 1) {
       dispatch({ type: "BUMP_VOTER" });
     } else {
-      // finalize round — compute trap bonus: wrong answer that fooled the most players
+      // finalize round - compute trap bonus: wrong answer that fooled the most players
       // (most votes among non-truth facts excluding Vizzy bluff)
       const wrongAnswers = state.facts.filter((f) => !f.isTruth && f.source !== "vizzy");
       const sorted = [...wrongAnswers].sort((a, b) => b.voteCount + (b.id === factId ? 1 : 0) - (a.voteCount + (a.id === factId ? 1 : 0)));

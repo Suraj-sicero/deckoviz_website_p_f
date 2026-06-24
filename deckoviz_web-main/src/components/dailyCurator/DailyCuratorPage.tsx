@@ -1,4 +1,4 @@
-// DailyCuratorPage.tsx — the user-facing daily curation feed (Feature 2).
+// DailyCuratorPage.tsx - the user-facing daily curation feed (Feature 2).
 // Mirrors the mobile "Daily Curator" screen: Daily Artworks + Collections tabs.
 // Tapping "View" opens a detail modal with Like / Save / Add music. Saved
 // artworks persist in the Collections tab until the user removes them.
@@ -152,7 +152,7 @@ export default function DailyCuratorPage() {
 
       {!loading && !error && tab === "artworks" && artworks.length === 0 && (
         <p className="mt-12 text-center text-gray-500">
-          Nothing here yet — your curator hasn't added any artworks for today.
+          Nothing here yet - your curator hasn't added any artworks for today.
         </p>
       )}
       {!loading && !error && tab === "collections" && collectionsCount === 0 && (

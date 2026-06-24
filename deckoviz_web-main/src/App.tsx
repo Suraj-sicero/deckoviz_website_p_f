@@ -246,7 +246,7 @@ import ElinityJoinUs from "./components/elinity/ElinityJoinUs";
 import DailyCuratorPage from "./components/dailyCurator/DailyCuratorPage";
 import AdminDailyCuratorPage from "./components/dailyCurator/AdminDailyCuratorPage";
 import ElinityDeckovizGuide from "./components/homepage/ElinityDeckovizGuide";
-
+import DeckovizWebapp from "./components/webapp/DeckovizWebapp";
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -311,7 +311,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/elinity/about",
     "/elinity/ellaris",
     "/elinity/contact",
-    "/elinity/join-us"
+    "/elinity/join-us",
+    "/webapp"
   ].includes(location.pathname);
 
   return (
@@ -599,6 +600,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/elinity/ellaris" element={<ElinityEllaris />} />
           <Route path="/elinity/contact" element={<ElinityContact />} />
           <Route path="/elinity/join-us" element={<ElinityJoinUs />} />
+          <Route path="/webapp" element={<DeckovizWebapp />} />
 
           {/* ── Flagship Games ── */}
           <Route path="/flagship-games" element={<FlagshipGamesPage />} />

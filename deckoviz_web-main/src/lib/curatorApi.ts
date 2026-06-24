@@ -1,4 +1,4 @@
-// curatorApi.ts — client for the Music Curation + Daily Curator endpoints.
+// curatorApi.ts - client for the Music Curation + Daily Curator endpoints.
 // Self-contained: resolves the API base from VITE_API_URL and the auth token
 // from localStorage (falls back to scanning for a JWT-shaped value so it works
 // regardless of which key AuthContext uses).
@@ -129,7 +129,7 @@ export const detachMusic = (targetType: MusicTargetType, targetId: string) =>
 export const getMyMusicAttachments = () =>
   req<{ attachments: any[] }>("/api/vizzy-canvas/music/attachments");
 
-// ---------- Daily Curator (Feature 2) — user ----------
+// ---------- Daily Curator (Feature 2) - user ----------
 export const getMyDailyCuration = (date?: string) =>
   req<{ displayDate: string; artworks: DailyItem[]; collections: DailyItem[] }>(
     `/api/daily-curator/me${date ? `?date=${date}` : ""}`
@@ -140,7 +140,7 @@ export const markItemSeen = (itemId: string) =>
     method: "POST",
   });
 
-// ---------- Daily Curator — Save / Like (user) ----------
+// ---------- Daily Curator - Save / Like (user) ----------
 export const getMySaved = () =>
   req<{ items: DailyItem[] }>("/api/daily-curator/me/saved");
 
@@ -168,7 +168,7 @@ export const toggleLike = (
     body: JSON.stringify({ itemType, itemId }),
   });
 
-// ---------- Daily Curator (Feature 2) — admin ----------
+// ---------- Daily Curator (Feature 2) - admin ----------
 export const adminListUsers = (search?: string) =>
   req<{ users: AdminUser[] }>(
     `/api/daily-curator/admin/users${

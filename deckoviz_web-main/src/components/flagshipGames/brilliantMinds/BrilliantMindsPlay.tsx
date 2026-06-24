@@ -157,7 +157,7 @@ const BrilliantMindsPlay: React.FC = () => {
       <Shell navigate={navigate}>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-20">
           <h2 className="font-serif text-3xl md:text-5xl text-white max-w-3xl mx-auto leading-snug">
-            "Welcome. We're not here to know everything — we're here to connect things beautifully."
+            "Welcome. We're not here to know everything - we're here to connect things beautifully."
           </h2>
         </motion.div>
       </Shell>
@@ -330,7 +330,7 @@ const ResultsView: React.FC<{ onAdvance: () => void }> = ({ onAdvance }) => {
                   {s.scoreDelta > 0 ? `+${s.scoreDelta}` : s.scoreDelta}
                 </span>
               </div>
-              <p className="font-serif text-white text-sm leading-relaxed">{s.text || <span className="italic text-white/40">— no submission —</span>}</p>
+              <p className="font-serif text-white text-sm leading-relaxed">{s.text || <span className="italic text-white/40">- no submission -</span>}</p>
             </div>
           );
         })}

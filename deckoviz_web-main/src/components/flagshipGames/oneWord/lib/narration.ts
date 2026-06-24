@@ -18,13 +18,13 @@ export function narrate(sentence: string, mood: SessionMood): string {
   // Light decoration so it sounds 'narrated' in the chosen tone
   const cleaned = sentence.replace(/\s+/g, " ").trim();
   const trailers: Record<SessionMood["narrationTone"] | "default", string> = {
-    "Theatrical, overcommitted, slightly chaotic": ` — Vizzy delivers this with the full weight of unearned conviction.`,
-    "Poetic, lifted, breath-y": ` — Vizzy lets the pause that follows speak.`,
-    "Low, observational, faintly amused": ` — Vizzy lights a cigarette nobody actually lit.`,
-    "Sighing, slow, audiobook-warm": ` — Vizzy's voice cracks on the last word, just slightly.`,
-    "Bold, propulsive, breathless": ` — Vizzy delivers this like a film trailer running out of breath.`,
-    "Mercurial · changes every sentence": ` — Vizzy seems to mean it. Probably.`,
-    default: ` — Vizzy lets the silence land.`,
+    "Theatrical, overcommitted, slightly chaotic": ` - Vizzy delivers this with the full weight of unearned conviction.`,
+    "Poetic, lifted, breath-y": ` - Vizzy lets the pause that follows speak.`,
+    "Low, observational, faintly amused": ` - Vizzy lights a cigarette nobody actually lit.`,
+    "Sighing, slow, audiobook-warm": ` - Vizzy's voice cracks on the last word, just slightly.`,
+    "Bold, propulsive, breathless": ` - Vizzy delivers this like a film trailer running out of breath.`,
+    "Mercurial · changes every sentence": ` - Vizzy seems to mean it. Probably.`,
+    default: ` - Vizzy lets the silence land.`,
   };
   return `${cleaned}${trailers[mood.narrationTone as keyof typeof trailers] ?? trailers.default}`;
 }

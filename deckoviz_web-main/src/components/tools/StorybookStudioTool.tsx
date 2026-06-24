@@ -114,7 +114,7 @@ const StorybookStudioTool: React.FC = () => {
     <ToolLayout
       icon="🎨"
       title="Storybook Studio"
-      subtitle="Create, edit, and refine your storybook — modify text and regenerate images"
+      subtitle="Create, edit, and refine your storybook - modify text and regenerate images"
       gradient="from-teal-600 via-emerald-700 to-green-800"
     >
       <div className="space-y-8">
@@ -329,7 +329,7 @@ const StorybookStudioTool: React.FC = () => {
         {status !== "done" && (
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: "✏️", title: "Edit Any Page", desc: "Click on any page text to modify it — your story, your words" },
+              { icon: "✏️", title: "Edit Any Page", desc: "Click on any page text to modify it - your story, your words" },
               { icon: "🎨", title: "Regenerate Images", desc: "Not happy with an illustration? Hit regenerate for a fresh one" },
               { icon: "📖", title: "Live Preview", desc: "See your changes reflected instantly in the storybook reader" },
             ].map((c) => (

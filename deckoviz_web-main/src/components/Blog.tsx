@@ -655,7 +655,7 @@ const Blog: React.FC = () => {
   </div>
 </div>
        
-        {/* Newsletter Section — Deep Frosted Glass */}
+        {/* Newsletter Section - Deep Frosted Glass */}
         <div className="mt-24 relative rounded-[2rem] group/glass overflow-hidden"
           style={{ isolation: 'isolate' }}>
 

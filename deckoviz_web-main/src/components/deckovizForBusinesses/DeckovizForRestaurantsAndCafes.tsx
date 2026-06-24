@@ -306,7 +306,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           </span>
         </motion.div>
 
-        {/* The Full Deckoviz Restaurant Experience — Cinematic Closing */}
+        {/* The Full Deckoviz Restaurant Experience - Cinematic Closing */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -323,7 +323,7 @@ const UseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
               <p className="text-gray-500 text-lg">The real magic happens when all of this works together.</p>
             </div>
 
-            {/* Journey Steps — staggered narrative */}
+            {/* Journey Steps - staggered narrative */}
             <div className="relative max-w-2xl mx-auto mb-16">
               <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-orange-500/40 via-rose-500/40 to-indigo-500/40" />
               {journeySteps.map((step, i) => (
@@ -698,7 +698,7 @@ const DeckovizForRestaurantsAndCafes = () => {
               },
               {
                 title: 'Visual Noise vs. Resonance',
-                desc: 'Unlike traditional digital signage that feels like "ads," Deckoviz creates ambient discovery—visuals that feel like art, not persuasion.',
+                desc: 'Unlike traditional digital signage that feels like "ads," Deckoviz creates ambient discovery-visuals that feel like art, not persuasion.',
                 icon: <Palette className="w-8 h-8 text-pink-400" />
               }
             ].map((item, idx) => (
@@ -868,7 +868,7 @@ const DeckovizForRestaurantsAndCafes = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: 'Dynamic AI Menus', desc: 'Update specials and pricing instantly via voice or tap—zero printing costs.', icon: <Utensils /> },
+              { title: 'Dynamic AI Menus', desc: 'Update specials and pricing instantly via voice or tap-zero printing costs.', icon: <Utensils /> },
               { title: '"Vizzy" Dish Transformation', desc: 'Turn basic kitchen photos into professional, appetite-building product art.', icon: <Sparkles /> },
               { title: 'Silent Hosting', desc: 'Welcome guests with ambient visuals and light that set the mood before a word is spoken.', icon: <Users /> },
               { title: 'Culinary Storytelling', desc: 'Display the "Farm-to-Table" journey, chef inspirations, or ingredient origins.', icon: <Leaf /> },

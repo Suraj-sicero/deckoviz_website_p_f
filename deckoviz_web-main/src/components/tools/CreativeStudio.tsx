@@ -47,7 +47,7 @@ const toolCategories = [
       {
         id: "short-story",
         title: "Short Story Generator",
-        description: "Describe an idea — Gemini writes a complete, engaging short story in your chosen genre.",
+        description: "Describe an idea - Gemini writes a complete, engaging short story in your chosen genre.",
         icon: "✍️",
         route: "/tools/short-story",
         badge: "New",
@@ -97,7 +97,7 @@ const toolCategories = [
       {
         id: "visual-journal",
         title: "Visual Journal",
-        description: "Write your thoughts, feelings and mood — Vizzy converts them into personalized AI visual art cards.",
+        description: "Write your thoughts, feelings and mood - Vizzy converts them into personalized AI visual art cards.",
         icon: "🌸",
         route: "/tools/visual-journal",
         badge: "Live",
@@ -127,7 +127,7 @@ const toolCategories = [
       {
         id: "visual-book",
         title: "Visual Book Creator",
-        description: "Upload your photos — Gemini creates captions and weaves them into a visual narrative story.",
+        description: "Upload your photos - Gemini creates captions and weaves them into a visual narrative story.",
         icon: "📸",
         route: "/tools/visual-book",
         badge: "New",
@@ -137,7 +137,7 @@ const toolCategories = [
       {
         id: "postcard",
         title: "Before & After Postcard",
-        description: "Transform your business space — create high-quality before/after postcards with Deckoviz frames.",
+        description: "Transform your business space - create high-quality before/after postcards with Deckoviz frames.",
         icon: "🎴",
         route: "/tools/postcard",
         badge: "New",
@@ -227,7 +227,7 @@ const toolCategories = [
       {
         id: "learning-portal",
         title: "Learning Portal",
-        description: "Chat with Vizzy AI tutor — get explanations, interactive quizzes, and a learning roadmap.",
+        description: "Chat with Vizzy AI tutor - get explanations, interactive quizzes, and a learning roadmap.",
         icon: "🎓",
         route: "/tools/learning-portal",
         badge: "New",
@@ -247,7 +247,7 @@ const toolCategories = [
       {
         id: "daily",
         title: "Daily Inspiration Engine",
-        description: "Get your daily dose — quote, poem, book recommendation, and movie pick — all themed and visual.",
+        description: "Get your daily dose - quote, poem, book recommendation, and movie pick - all themed and visual.",
         icon: "🌅",
         route: "/tools/daily",
         badge: "New",
@@ -533,7 +533,7 @@ const CreativeStudio: React.FC = () => {
           </p>
 
           <p className="text-base md:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed mb-10">
-            Your all-in-one AI creative studio. From audio stories to visual journals, music to illustrated books — Vizzy brings your ideas to life.
+            Your all-in-one AI creative studio. From audio stories to visual journals, music to illustrated books - Vizzy brings your ideas to life.
           </p>
 
           {/* CTAs */}
@@ -577,7 +577,7 @@ const CreativeStudio: React.FC = () => {
             Choose Your Canvas
           </h2>
           <p className="text-gray-400 text-lg max-w-xl mx-auto">
-            Each tool is a full creative workflow — from a blank idea to a finished, shareable creation.
+            Each tool is a full creative workflow - from a blank idea to a finished, shareable creation.
           </p>
         </div>
 

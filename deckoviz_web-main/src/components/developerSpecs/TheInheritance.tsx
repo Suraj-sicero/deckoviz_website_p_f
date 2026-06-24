@@ -54,7 +54,7 @@ const TheInheritance: React.FC = () => {
           </div>
 
           <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-            Map what you have inherited—material objects, psychological traits, or emotional burdens.
+            Map what you have inherited-material objects, psychological traits, or emotional burdens.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

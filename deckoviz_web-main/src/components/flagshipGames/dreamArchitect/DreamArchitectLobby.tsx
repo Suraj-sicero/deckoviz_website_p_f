@@ -170,7 +170,7 @@ const DreamArchitectLobby: React.FC = () => {
                 <div>· 4 phases: Geography → Atmosphere → Inhabitants → Secret</div>
                 <div>· Vizzy paints after every contribution</div>
                 <div>· Final cinematic naming + library save</div>
-                <div>· No competition — only wonder</div>
+                <div>· No competition - only wonder</div>
               </div>
 
               <button

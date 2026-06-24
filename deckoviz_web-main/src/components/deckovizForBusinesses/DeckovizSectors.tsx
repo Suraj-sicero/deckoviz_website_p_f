@@ -198,7 +198,7 @@ const DeckovizSectors: React.FC = () => {
               </p>
             </div>
 
-            {/* Sector Cards — 2-column grid → 4 rows */}
+            {/* Sector Cards - 2-column grid → 4 rows */}
             <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
               {sectors.map((sector, index) => (
                 <div

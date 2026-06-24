@@ -81,7 +81,7 @@ export function MoreTemplatesModal({ isOpen, onClose, onSelect }: MoreTemplatesM
             section.title.toLowerCase().includes(query)
           ) {
             matches.push({
-              sectionTitle: `${group.category} — ${section.title}`,
+              sectionTitle: `${group.category} - ${section.title}`,
               template: tpl,
             })
           }

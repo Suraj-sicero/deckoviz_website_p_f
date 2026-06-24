@@ -116,7 +116,7 @@ const MuseumLobby: React.FC = () => {
                 <div>· 4 rounds · no timer pressure</div>
                 <div>· One anonymous round per session</div>
                 <div>· Vizzy contributes one piece at the end</div>
-                <div>· No scoring — only Presence Moments</div>
+                <div>· No scoring - only Presence Moments</div>
               </div>
 
               <button

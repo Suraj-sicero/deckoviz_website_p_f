@@ -213,7 +213,7 @@ const GreetingCardTool: React.FC = () => {
                 <p className="text-xl md:text-2xl font-bold leading-relaxed text-white drop-shadow-lg">
                   {result.message}
                 </p>
-                <p className="text-sm text-white/70 mt-5 font-medium">— With love ♥</p>
+                <p className="text-sm text-white/70 mt-5 font-medium">- With love ♥</p>
               </div>
             </div>
 
@@ -253,7 +253,7 @@ const GreetingCardTool: React.FC = () => {
         {/* Info */}
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: "✨", title: "Hyper-Personalised", desc: "Every card is unique — tailored to the recipient, occasion, and your personal notes" },
+            { icon: "✨", title: "Hyper-Personalised", desc: "Every card is unique - tailored to the recipient, occasion, and your personal notes" },
             { icon: "🎨", title: "AI Art Background", desc: "Each card comes with a matching AI-generated visual that fits the mood" },
             { icon: "📤", title: "Share Instantly", desc: "Download or copy the message to send via any platform" },
           ].map((c) => (

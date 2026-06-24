@@ -76,7 +76,7 @@ const VisualJournalTool: React.FC = () => {
     <ToolLayout
       icon="🌸"
       title="Visual Journal"
-      subtitle="Write your thoughts — Vizzy reads your emotion and creates an art card"
+      subtitle="Write your thoughts - Vizzy reads your emotion and creates an art card"
       gradient="from-pink-500 via-rose-600 to-fuchsia-700"
     >
       <div className="space-y-8">
@@ -94,7 +94,7 @@ const VisualJournalTool: React.FC = () => {
               rows={6}
               className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent transition-all font-medium"
             />
-            <p className="text-xs text-gray-400 mt-1">{entry.length} characters — the more you write, the richer the art</p>
+            <p className="text-xs text-gray-400 mt-1">{entry.length} characters - the more you write, the richer the art</p>
           </div>
 
           {/* Art Style */}
@@ -245,7 +245,7 @@ const VisualJournalTool: React.FC = () => {
           {[
             { icon: "🧠", title: "Emotion Analysis", desc: "Gemini analyses tone, feeling and emotional depth in your writing" },
             { icon: "🎨", title: "Personalised Art", desc: "Each card's palette, style and scene reflects your unique emotional state" },
-            { icon: "💾", title: "Save & Collect", desc: "Build a private art journal — one card for every entry you write" },
+            { icon: "💾", title: "Save & Collect", desc: "Build a private art journal - one card for every entry you write" },
           ].map((c) => (
             <div key={c.title} className="bg-white/60 border border-gray-100 rounded-2xl p-6 text-center">
               <div className="text-3xl mb-3">{c.icon}</div>

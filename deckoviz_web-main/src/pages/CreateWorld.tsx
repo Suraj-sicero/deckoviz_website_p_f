@@ -66,7 +66,7 @@ const CreateWorld: React.FC = () => {
   const currentStep = stage === 'idle' || stage === 'loading_image' ? 0
                     : stage === 'preview' ? 1 : 2;
 
-  // Step 1 — generate concept art preview
+  // Step 1 - generate concept art preview
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
     setStage('loading_image');
@@ -79,7 +79,7 @@ const CreateWorld: React.FC = () => {
     }
   };
 
-  // Step 2 — call Marble API to build real 3D world
+  // Step 2 - call Marble API to build real 3D world
   const handleBringToLife = async () => {
     setStage('loading_world');
     setMarbleWorld(null);
@@ -102,7 +102,7 @@ const CreateWorld: React.FC = () => {
       clearInterval(interval);
       console.error('[CreateWorld] Marble error:', err);
       setMarbleError(err?.message || 'World generation failed');
-      // Still go to ready — fall back to procedural world
+      // Still go to ready - fall back to procedural world
       setMarbleProgress(100);
       setStage('ready');
     }
@@ -120,7 +120,7 @@ const CreateWorld: React.FC = () => {
         <WorldScene textureUrl={previewUrl} prompt={prompt} marbleWorld={marbleWorld} />
         {marbleError && (
           <div className="fixed top-6 left-1/2 -translate-x-1/2 z-[60] bg-yellow-900/60 backdrop-blur border border-yellow-500/30 px-4 py-2 rounded-full">
-            <p className="text-yellow-300 text-xs font-mono">Marble unavailable — showing procedural world</p>
+            <p className="text-yellow-300 text-xs font-mono">Marble unavailable - showing procedural world</p>
           </div>
         )}
         <button onClick={handleReset}

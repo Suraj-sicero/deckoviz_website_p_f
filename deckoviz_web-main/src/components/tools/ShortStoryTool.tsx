@@ -86,7 +86,7 @@ const ShortStoryTool: React.FC = () => {
     <ToolLayout
       icon="✍️"
       title="Short Story Generator"
-      subtitle="Describe an idea — Gemini crafts a complete, engaging short story"
+      subtitle="Describe an idea - Gemini crafts a complete, engaging short story"
       gradient="from-amber-500 via-orange-600 to-red-700"
     >
       <div className="space-y-8">
@@ -100,7 +100,7 @@ const ShortStoryTool: React.FC = () => {
             <textarea
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              placeholder="e.g. A detective in a rainy city discovers that all recent crimes were committed by the same person — who died 10 years ago…"
+              placeholder="e.g. A detective in a rainy city discovers that all recent crimes were committed by the same person - who died 10 years ago…"
               rows={4}
               className="w-full px-4 py-3 rounded-2xl border border-gray-200 bg-white/80 text-gray-800 placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all"
             />
@@ -251,7 +251,7 @@ const ShortStoryTool: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { icon: "🧠", title: "Gemini Powered", desc: "Advanced AI crafts coherent narratives with proper story structure and pacing" },
-            { icon: "🎭", title: "8 Genres", desc: "From horror to comedy — every genre has its own tone, voice, and style" },
+            { icon: "🎭", title: "8 Genres", desc: "From horror to comedy - every genre has its own tone, voice, and style" },
             { icon: "📥", title: "Export Ready", desc: "Download as plain text or copy to your clipboard for any use" },
           ].map((c) => (
             <div key={c.title} className="bg-white/60 border border-gray-100 rounded-2xl p-6 text-center">

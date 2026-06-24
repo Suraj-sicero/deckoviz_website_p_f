@@ -170,7 +170,7 @@ const DebatePlay: React.FC = () => {
                 </div>
                 {state.phase === "rebuttal" && (
                   <div className="text-[10px] text-amber-200 italic">
-                    "{VIZZY_LINES.derailmentRebuttal[0]}" — Vizzy, if you wander off-topic.
+                    "{VIZZY_LINES.derailmentRebuttal[0]}" - Vizzy, if you wander off-topic.
                   </div>
                 )}
                 <textarea

@@ -153,7 +153,7 @@ export default function AILayerForHome() {
                   </h4>
                   
                   <p className="text-gray-700 leading-relaxed font-medium mt-auto">
-                    <span className="hidden md:inline text-indigo-300 mr-1">—</span> 
+                    <span className="hidden md:inline text-indigo-300 mr-1">-</span> 
                     {feature.desc}
                   </p>
                 </div>
