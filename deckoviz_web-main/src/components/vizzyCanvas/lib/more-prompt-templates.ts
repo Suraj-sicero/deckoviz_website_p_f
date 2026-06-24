@@ -19,7 +19,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Artwork",
     sections: [
       {
-        title: "Artwork — fill-in templates",
+        title: "Artwork - fill-in templates",
         templates: [
           {
             id: "more-art-fill-1",
@@ -43,12 +43,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-art-fill-5",
-            text: "Create a pure colour study based on the emotions I associate with these colours: [describe 2–4 pairings freely]. No representational imagery — just colour and form. Style: [abstract / geometric / painterly].",
+            text: "Create a pure colour study based on the emotions I associate with these colours: [describe 2–4 pairings freely]. No representational imagery - just colour and form. Style: [abstract / geometric / painterly].",
             isExample: false,
           },
           {
             id: "more-art-fill-6",
-            text: "Create an artwork from a recurring image that lives in my imagination. What I see: [describe — fragments are fine]. Style: [surrealist / abstract / painterly / symbolic].",
+            text: "Create an artwork from a recurring image that lives in my imagination. What I see: [describe - fragments are fine]. Style: [surrealist / abstract / painterly / symbolic].",
             isExample: false,
           },
           {
@@ -58,27 +58,27 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-art-fill-8",
-            text: "Create a portrait of someone important to me without showing their face — only the world they inhabit, the objects they love, the light around them. Who they are: [describe]. Style: [painterly / still life / interior / abstract].",
+            text: "Create a portrait of someone important to me without showing their face - only the world they inhabit, the objects they love, the light around them. Who they are: [describe]. Style: [painterly / still life / interior / abstract].",
             isExample: false,
           },
         ],
       },
       {
-        title: "Artwork — ready-to-use examples",
+        title: "Artwork - ready-to-use examples",
         templates: [
           {
             id: "more-art-ex-9",
-            text: "[example] Create a self-portrait that captures the feeling of being between two chapters of life — something ending, something not yet begun. A figure at the edge of a vast dark-blue sea at dusk. Painterly, impressionist, quiet. [Swap the situation to yours.]",
+            text: "[example] Create a self-portrait that captures the feeling of being between two chapters of life - something ending, something not yet begun. A figure at the edge of a vast dark-blue sea at dusk. Painterly, impressionist, quiet. [Swap the situation to yours.]",
             isExample: true,
           },
           {
             id: "more-art-ex-10",
-            text: "[example] Create an artwork inspired by the Hindu myth of Samudra Manthan — the churning of the cosmic ocean. Focus on the moment the poison emerges before Shiva drinks it. Dark, electric, epic. Contemporary painterly with classical composition. [Swap the myth to one you love.]",
+            text: "[example] Create an artwork inspired by the Hindu myth of Samudra Manthan - the churning of the cosmic ocean. Focus on the moment the poison emerges before Shiva drinks it. Dark, electric, epic. Contemporary painterly with classical composition. [Swap the myth to one you love.]",
             isExample: true,
           },
           {
             id: "more-art-ex-11",
-            text: "[example] Create a pure abstract colour study: deep indigo for longing, burnt orange for warmth, pale silver for clarity. No shapes, no figures — let the colours bleed and hold each other. Large format, painterly, textured.",
+            text: "[example] Create a pure abstract colour study: deep indigo for longing, burnt orange for warmth, pale silver for clarity. No shapes, no figures - let the colours bleed and hold each other. Large format, painterly, textured.",
             isExample: true,
           },
           {
@@ -88,7 +88,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-art-ex-13",
-            text: "[example] Create an abstract artwork that holds these three words at once: untethered, tender, vast. No literal imagery — just the feeling of all three coexisting. Abstract, painterly. Palette: deep green, cream, shadow grey. [Swap the words to yours.]",
+            text: "[example] Create an abstract artwork that holds these three words at once: untethered, tender, vast. No literal imagery - just the feeling of all three coexisting. Abstract, painterly. Palette: deep green, cream, shadow grey. [Swap the words to yours.]",
             isExample: true,
           },
           {
@@ -98,7 +98,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-art-ex-15",
-            text: "[example] Create an artwork that holds Bombay and London in the same frame — the chaos and colour of one, the grey and quiet of the other — not as contrast but as coexistence. Abstract, layered, painterly. [Swap the cities to yours.]",
+            text: "[example] Create an artwork that holds Bombay and London in the same frame - the chaos and colour of one, the grey and quiet of the other - not as contrast but as coexistence. Abstract, layered, painterly. [Swap the cities to yours.]",
             isExample: true,
           },
           {
@@ -114,7 +114,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Posters",
     sections: [
       {
-        title: "Posters — fill-in templates",
+        title: "Posters - fill-in templates",
         templates: [
           {
             id: "more-post-fill-17",
@@ -123,12 +123,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-post-fill-18",
-            text: "Create a poster that captures the defining feeling of a decade of my life. The decade: [e.g. my twenties / the 2010s]. What defined it: [describe — a mood, a place, a few images]. Style: [typographic / illustrated / collage / painterly].",
+            text: "Create a poster that captures the defining feeling of a decade of my life. The decade: [e.g. my twenties / the 2010s]. What defined it: [describe - a mood, a place, a few images]. Style: [typographic / illustrated / collage / painterly].",
             isExample: false,
           },
           {
             id: "more-post-fill-19",
-            text: "Create a night sky poster for a specific night that mattered to me. The night: [describe]. Style: [star map / illustrated / painterly / abstract]. Include: [a date, a place, a line of text — optional].",
+            text: "Create a night sky poster for a specific night that mattered to me. The night: [describe]. Style: [star map / illustrated / painterly / abstract]. Include: [a date, a place, a line of text - optional].",
             isExample: false,
           },
           {
@@ -149,7 +149,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         ],
       },
       {
-        title: "Posters — ready-to-use examples",
+        title: "Posters - ready-to-use examples",
         templates: [
           {
             id: "more-post-ex-23",
@@ -173,7 +173,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-post-ex-27",
-            text: "[example] Create a vintage travel poster for Varanasi — the ghats at dawn, diyas on the water, temple spires in morning mist. Mid-century illustrated, warm ochre and rose palette. Tagline: Where the river remembers everything. [Swap the city to yours.]",
+            text: "[example] Create a vintage travel poster for Varanasi - the ghats at dawn, diyas on the water, temple spires in morning mist. Mid-century illustrated, warm ochre and rose palette. Tagline: Where the river remembers everything. [Swap the city to yours.]",
             isExample: true,
           },
           {
@@ -183,12 +183,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-post-ex-29",
-            text: "[example] Create a poster that captures the feeling of being twenty-five — restless, hopeful, perpetually arriving. Abstract background in deep blue and amber. A single serif line: The decade you learned to want things. Painterly, slightly worn edges. [Swap the decade description to yours.]",
+            text: "[example] Create a poster that captures the feeling of being twenty-five - restless, hopeful, perpetually arriving. Abstract background in deep blue and amber. A single serif line: The decade you learned to want things. Painterly, slightly worn edges. [Swap the decade description to yours.]",
             isExample: true,
           },
           {
             id: "more-post-ex-30",
-            text: "[example] Create a star map poster for the night of 14 August 1947 over Delhi — the first night of independence. Deep indigo sky, a single line below: The stars that watched a country born. Elegant, minimal, black and gold. [Swap the date and city to yours.]",
+            text: "[example] Create a star map poster for the night of 14 August 1947 over Delhi - the first night of independence. Deep indigo sky, a single line below: The stars that watched a country born. Elegant, minimal, black and gold. [Swap the date and city to yours.]",
             isExample: true,
           },
         ],
@@ -199,7 +199,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Stories",
     sections: [
       {
-        title: "Stories — fill-in templates",
+        title: "Stories - fill-in templates",
         templates: [
           {
             id: "more-story-fill-31",
@@ -208,12 +208,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-story-fill-32",
-            text: "Create a short illustrated story set in an alternative version of history where [describe the change — one event went differently]. The world it creates: [describe briefly]. Tone: [serious and literary / playful / cinematic / speculative].",
+            text: "Create a short illustrated story set in an alternative version of history where [describe the change - one event went differently]. The world it creates: [describe briefly]. Tone: [serious and literary / playful / cinematic / speculative].",
             isExample: false,
           },
           {
             id: "more-story-fill-33",
-            text: "Create a short story told entirely through objects — no characters shown, no dialogue. The objects: [list 4–6 things]. The story they tell: [describe loosely, or leave to Vizzy]. Style: [painterly still life sequence / illustrated / cinematic].",
+            text: "Create a short story told entirely through objects - no characters shown, no dialogue. The objects: [list 4–6 things]. The story they tell: [describe loosely, or leave to Vizzy]. Style: [painterly still life sequence / illustrated / cinematic].",
             isExample: false,
           },
           {
@@ -234,7 +234,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         ],
       },
       {
-        title: "Stories — ready-to-use examples",
+        title: "Stories - ready-to-use examples",
         templates: [
           {
             id: "more-story-ex-37",
@@ -243,12 +243,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-story-ex-38",
-            text: "[example] Write and illustrate the origin story of a girl born during a thunderstorm who grew up believing she could hear what trees were thinking. Mythic tone, lush and green, illustrated storybook. Opening line: The night Mira was born, the oldest oak in the valley split clean in two — and grew back by morning. [Swap the character to someone you know or invent.]",
+            text: "[example] Write and illustrate the origin story of a girl born during a thunderstorm who grew up believing she could hear what trees were thinking. Mythic tone, lush and green, illustrated storybook. Opening line: The night Mira was born, the oldest oak in the valley split clean in two - and grew back by morning. [Swap the character to someone you know or invent.]",
             isExample: true,
           },
           {
             id: "more-story-ex-39",
-            text: "[example] Create a short illustrated story set in a world where the Library of Alexandria was never burned — and by 2024 it is the largest living archive on earth, still being written. Quietly epic, speculative, literary. Painterly stills, warm candlelit light, vast interiors.",
+            text: "[example] Create a short illustrated story set in a world where the Library of Alexandria was never burned - and by 2024 it is the largest living archive on earth, still being written. Quietly epic, speculative, literary. Painterly stills, warm candlelit light, vast interiors.",
             isExample: true,
           },
           {
@@ -258,12 +258,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-story-ex-41",
-            text: "[example] Create an illustrated children's story about a small creature called a Fumblesnap — looks like a cross between a hedgehog and a lantern, glows when nervous, lives under library floorboards. It accidentally swallowed the word \"enormous\" and now everything it touches turns into that thing. For children aged 5–8. Bright, playful, funny. [Swap the creature name and word to yours.]",
+            text: "[example] Create an illustrated children's story about a small creature called a Fumblesnap - looks like a cross between a hedgehog and a lantern, glows when nervous, lives under library floorboards. It accidentally swallowed the word \"enormous\" and now everything it touches turns into that thing. For children aged 5–8. Bright, playful, funny. [Swap the creature name and word to yours.]",
             isExample: true,
           },
           {
             id: "more-story-ex-42",
-            text: "[example] Create a short cinematic story about a woman who realised she had been living someone else's life — not dramatically, just quietly, like a coat she had worn so long she forgot it wasn't hers. Quiet and literary. Painterly stills, muted palette, interior spaces, no dialogue. [Make the character yours if you like.]",
+            text: "[example] Create a short cinematic story about a woman who realised she had been living someone else's life - not dramatically, just quietly, like a coat she had worn so long she forgot it wasn't hers. Quiet and literary. Painterly stills, muted palette, interior spaces, no dialogue. [Make the character yours if you like.]",
             isExample: true,
           },
           {
@@ -284,11 +284,11 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Narrative experiences",
     sections: [
       {
-        title: "Narrative experiences — fill-in templates",
+        title: "Narrative experiences - fill-in templates",
         templates: [
           {
             id: "more-narr-fill-45",
-            text: "Create a guided visualisation of a walk through [a landscape you love or invent — a forest, a beach, a mountain path, a childhood street]. Duration: [5 / 10 / 15 minutes]. Voice: [calm and slow / warm and descriptive / poetic]. Season and time of day: [describe].",
+            text: "Create a guided visualisation of a walk through [a landscape you love or invent - a forest, a beach, a mountain path, a childhood street]. Duration: [5 / 10 / 15 minutes]. Voice: [calm and slow / warm and descriptive / poetic]. Season and time of day: [describe].",
             isExample: false,
           },
           {
@@ -314,11 +314,11 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         ],
       },
       {
-        title: "Narrative experiences — ready-to-use examples",
+        title: "Narrative experiences - ready-to-use examples",
         templates: [
           {
             id: "more-narr-ex-50",
-            text: "[example] Create a 10-minute guided visualisation of walking through an ancient redwood forest at early morning — mist in the canopy, soft earth underfoot, birdsong arriving slowly. Calm, unhurried, no music. Voice: warm and descriptive, present enough to guide and then step back. [Swap the landscape to one you love.]",
+            text: "[example] Create a 10-minute guided visualisation of walking through an ancient redwood forest at early morning - mist in the canopy, soft earth underfoot, birdsong arriving slowly. Calm, unhurried, no music. Voice: warm and descriptive, present enough to guide and then step back. [Swap the landscape to one you love.]",
             isExample: true,
           },
           {
@@ -328,7 +328,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-narr-ex-52",
-            text: "[example] Create a recurring bedtime story ritual built around a character called the Night Librarian — an old woman who travels between sleeping children's dreams and leaves one small story in each. Each night, a new story. Sleepy, gently magical, safe. For children aged 4–9. [Add a child's name to personalise it.]",
+            text: "[example] Create a recurring bedtime story ritual built around a character called the Night Librarian - an old woman who travels between sleeping children's dreams and leaves one small story in each. Each night, a new story. Sleepy, gently magical, safe. For children aged 4–9. [Add a child's name to personalise it.]",
             isExample: true,
           },
           {
@@ -338,7 +338,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-narr-ex-54",
-            text: "[example] Read this letter aloud in a gentle, warm voice — a letter from my eighty-year-old self to me now. The letter says: \"You worried about the wrong things. The right things — the table, the people around it, the light through that particular window — those were always enough.\" Voice: slow, kind, a little amused. [Write your own version of the letter to swap it.]",
+            text: "[example] Read this letter aloud in a gentle, warm voice - a letter from my eighty-year-old self to me now. The letter says: \"You worried about the wrong things. The right things - the table, the people around it, the light through that particular window - those were always enough.\" Voice: slow, kind, a little amused. [Write your own version of the letter to swap it.]",
             isExample: true,
           },
         ],
@@ -349,21 +349,21 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Music & sound",
     sections: [
       {
-        title: "Music & sound — fill-in templates",
+        title: "Music & sound - fill-in templates",
         templates: [
           {
             id: "more-music-fill-55",
-            text: "Create a personal anthem for me — a song that sounds like who I am or who I'm becoming. I'd describe myself as: [write freely]. Genre: [folk / ambient / soul / cinematic / indie]. Lyric tone: [direct / poetic / understated / celebratory].",
+            text: "Create a personal anthem for me - a song that sounds like who I am or who I'm becoming. I'd describe myself as: [write freely]. Genre: [folk / ambient / soul / cinematic / indie]. Lyric tone: [direct / poetic / understated / celebratory].",
             isExample: false,
           },
           {
             id: "more-music-fill-56",
-            text: "Create a short original piece of music that sounds like [a place that lives in me — a city, a landscape, a room, a time of day]. What it feels like: [describe freely]. Genre: [ambient / classical / folk / electronic / cinematic]. Duration: [1 / 2 / 3 minutes].",
+            text: "Create a short original piece of music that sounds like [a place that lives in me - a city, a landscape, a room, a time of day]. What it feels like: [describe freely]. Genre: [ambient / classical / folk / electronic / cinematic]. Duration: [1 / 2 / 3 minutes].",
             isExample: false,
           },
           {
             id: "more-music-fill-57",
-            text: "Create a song about [a relationship that has shaped me — with a person, a place, a version of myself]. What I want the song to hold: [describe]. Genre: [folk / soul / ambient / cinematic]. Lyric style: [personal and direct / abstract and poetic].",
+            text: "Create a song about [a relationship that has shaped me - with a person, a place, a version of myself]. What I want the song to hold: [describe]. Genre: [folk / soul / ambient / cinematic]. Lyric style: [personal and direct / abstract and poetic].",
             isExample: false,
           },
           {
@@ -379,21 +379,21 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         ],
       },
       {
-        title: "Music & sound — ready-to-use examples",
+        title: "Music & sound - ready-to-use examples",
         templates: [
           {
             id: "more-music-ex-60",
-            text: "[example] Create a 2-minute ambient piece that sounds like Bombay at 5am — the city just beginning to stir, a call to prayer in the distance, the first autorickshaw, chai being made somewhere close. Warm, slightly humid, layered. Cinematic ambient. To loop softly in a kitchen in the morning. [Swap the city to yours.]",
+            text: "[example] Create a 2-minute ambient piece that sounds like Bombay at 5am - the city just beginning to stir, a call to prayer in the distance, the first autorickshaw, chai being made somewhere close. Warm, slightly humid, layered. Cinematic ambient. To loop softly in a kitchen in the morning. [Swap the city to yours.]",
             isExample: true,
           },
           {
             id: "more-music-ex-61",
-            text: "[example] Create a gentle lullaby called The Slow Hours — for a child who thinks too much at bedtime. Simple melody, soft voice, lyrics about the stars agreeing to stay put, the moon keeping watch, and tomorrow promising to wait. Unhurried, warm, a little magical. [Add the child's name to personalise it.]",
+            text: "[example] Create a gentle lullaby called The Slow Hours - for a child who thinks too much at bedtime. Simple melody, soft voice, lyrics about the stars agreeing to stay put, the moon keeping watch, and tomorrow promising to wait. Unhurried, warm, a little magical. [Add the child's name to personalise it.]",
             isExample: true,
           },
           {
             id: "more-music-ex-62",
-            text: "[example] Create a personal anthem for someone who rebuilt themselves quietly, without anyone watching — not triumphant, not dramatic, just steady and warm. Folk-soul. Lyric tone: understated and true. A song about continuing. [Describe yourself and I'll rewrite the brief around you.]",
+            text: "[example] Create a personal anthem for someone who rebuilt themselves quietly, without anyone watching - not triumphant, not dramatic, just steady and warm. Folk-soul. Lyric tone: understated and true. A song about continuing. [Describe yourself and I'll rewrite the brief around you.]",
             isExample: true,
           },
           {
@@ -403,7 +403,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-music-ex-64",
-            text: "[example] Create a wall art piece for a playlist called Late Light — music for the last hour before everyone goes to bed, the washing up done, a candle still going. Visual: a warm still life in amber tones, typographic title in a quiet serif. Painterly. [Rename the playlist to yours.]",
+            text: "[example] Create a wall art piece for a playlist called Late Light - music for the last hour before everyone goes to bed, the washing up done, a candle still going. Visual: a warm still life in amber tones, typographic title in a quiet serif. Painterly. [Rename the playlist to yours.]",
             isExample: true,
           },
         ],
@@ -414,61 +414,61 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Video & motion",
     sections: [
       {
-        title: "Video & motion — fill-in templates",
+        title: "Video & motion - fill-in templates",
         templates: [
           {
             id: "more-video-fill-65",
-            text: "Create a looping video portrait of my [living room / study / kitchen / bedroom] as I'd love it to feel — not as it is, but as it could be. The feeling I want: [describe]. Style: [cinematic / painterly / warm ambient].",
+            text: "Create a looping video portrait of my [living room / study / kitchen / bedroom] as I'd love it to feel - not as it is, but as it could be. The feeling I want: [describe]. Style: [cinematic / painterly / warm ambient].",
             isExample: false,
           },
           {
             id: "more-video-fill-66",
-            text: "Create a looping video that captures [morning / afternoon / evening / late night] in my home — the light, the rhythm, the feeling of that particular time. Mood: [describe]. Style: [slow cinematic / painterly / ambient].",
+            text: "Create a looping video that captures [morning / afternoon / evening / late night] in my home - the light, the rhythm, the feeling of that particular time. Mood: [describe]. Style: [slow cinematic / painterly / ambient].",
             isExample: false,
           },
           {
             id: "more-video-fill-67",
-            text: "Create a looping video that brings [a specific weather — heavy rain against glass / soft snow / morning fog / golden afternoon sun / a thunderstorm at a distance] into my home. Style: [photorealistic / painterly / cinematic / abstract].",
+            text: "Create a looping video that brings [a specific weather - heavy rain against glass / soft snow / morning fog / golden afternoon sun / a thunderstorm at a distance] into my home. Style: [photorealistic / painterly / cinematic / abstract].",
             isExample: false,
           },
           {
             id: "more-video-fill-68",
-            text: "Create a looping video of the view I wish I had from my window. The view: [describe — a mountain, a harbour, a forest, a city rooftop]. Style: [photorealistic / painterly / cinematic]. Season: [describe]. Time of day: [describe].",
+            text: "Create a looping video of the view I wish I had from my window. The view: [describe - a mountain, a harbour, a forest, a city rooftop]. Style: [photorealistic / painterly / cinematic]. Season: [describe]. Time of day: [describe].",
             isExample: false,
           },
           {
             id: "more-video-fill-69",
-            text: "Take this photograph [upload image] and bring it gently to life — subtle motion only. Leaves moving, curtains breathing, light shifting slowly. Style: [painterly / photorealistic / impressionistic]. Preserve everything that matters in the original.",
+            text: "Take this photograph [upload image] and bring it gently to life - subtle motion only. Leaves moving, curtains breathing, light shifting slowly. Style: [painterly / photorealistic / impressionistic]. Preserve everything that matters in the original.",
             isExample: false,
           },
         ],
       },
       {
-        title: "Video & motion — ready-to-use examples",
+        title: "Video & motion - ready-to-use examples",
         templates: [
           {
             id: "more-video-ex-70",
-            text: "[example] Create a looping video of heavy monsoon rain on a large window at night — city lights blurring through the glass, a single lamp reflected, the downpour outside. Photorealistic, warm inside and cool outside. For a bedroom or living room on a rainy evening. [Swap the weather to your favourite.]",
+            text: "[example] Create a looping video of heavy monsoon rain on a large window at night - city lights blurring through the glass, a single lamp reflected, the downpour outside. Photorealistic, warm inside and cool outside. For a bedroom or living room on a rainy evening. [Swap the weather to your favourite.]",
             isExample: true,
           },
           {
             id: "more-video-ex-71",
-            text: "[example] Create a looping video of the view from a high apartment over a Japanese city at 3am — a grid of lit windows, a slow river below, occasional headlights. Cinematic, still, slightly melancholy, beautiful. To play in a home office late at night. [Describe your ideal window view to swap it.]",
+            text: "[example] Create a looping video of the view from a high apartment over a Japanese city at 3am - a grid of lit windows, a slow river below, occasional headlights. Cinematic, still, slightly melancholy, beautiful. To play in a home office late at night. [Describe your ideal window view to swap it.]",
             isExample: true,
           },
           {
             id: "more-video-ex-72",
-            text: "[example] Create a looping video of an ideal study at dusk — floor-to-ceiling books, a wooden desk with a reading lamp, dust moving slowly in the last light, a city softening outside. Warm, cinematic, unhurried. [Describe your own ideal room to personalise it.]",
+            text: "[example] Create a looping video of an ideal study at dusk - floor-to-ceiling books, a wooden desk with a reading lamp, dust moving slowly in the last light, a city softening outside. Warm, cinematic, unhurried. [Describe your own ideal room to personalise it.]",
             isExample: true,
           },
           {
             id: "more-video-ex-73",
-            text: "[example] Create a slow looping video that captures 6am on a Sunday — pale light through curtains, coffee steam rising, no voices yet, the particular quality of an unhurried morning. Cinematic, painterly, quiet. [Swap the time to yours.]",
+            text: "[example] Create a slow looping video that captures 6am on a Sunday - pale light through curtains, coffee steam rising, no voices yet, the particular quality of an unhurried morning. Cinematic, painterly, quiet. [Swap the time to yours.]",
             isExample: true,
           },
           {
             id: "more-video-ex-74",
-            text: "[example] Take a photograph of my grandparents at their kitchen table [upload image] and bring it gently to life — steam rising from the cups, the curtain moving, light shifting a little, nothing more. Painterly, tender, preserve every detail of the original. [Upload any photograph to use this.]",
+            text: "[example] Take a photograph of my grandparents at their kitchen table [upload image] and bring it gently to life - steam rising from the cups, the curtain moving, light shifting a little, nothing more. Painterly, tender, preserve every detail of the original. [Upload any photograph to use this.]",
             isExample: true,
           },
         ],
@@ -479,16 +479,16 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Memory & personal",
     sections: [
       {
-        title: "Memory & personal — fill-in templates",
+        title: "Memory & personal - fill-in templates",
         templates: [
           {
             id: "more-mem-fill-75",
-            text: "Create a visual portrait of who I was in [a specific decade or period of my life]. What I remember about that version of me: [describe freely — what you wanted, where you lived, what you were afraid of]. Style: [painterly / illustrated / photographic / abstract].",
+            text: "Create a visual portrait of who I was in [a specific decade or period of my life]. What I remember about that version of me: [describe freely - what you wanted, where you lived, what you were afraid of]. Style: [painterly / illustrated / photographic / abstract].",
             isExample: false,
           },
           {
             id: "more-mem-fill-76",
-            text: "Create an artwork of a place I can no longer return to. The place: [describe — a childhood home, a city I left, a space that no longer exists]. What it felt like to be there: [describe]. Style: [painterly / dreamlike / impressionistic / abstract]. Not sad — just held.",
+            text: "Create an artwork of a place I can no longer return to. The place: [describe - a childhood home, a city I left, a space that no longer exists]. What it felt like to be there: [describe]. Style: [painterly / dreamlike / impressionistic / abstract]. Not sad - just held.",
             isExample: false,
           },
           {
@@ -498,22 +498,22 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-mem-fill-78",
-            text: "Create an artwork or short visual based on one of the best days I can remember. The day: [describe — where you were, who was there, what made it feel that way]. Style: [painterly / impressionistic / warm and cinematic].",
+            text: "Create an artwork or short visual based on one of the best days I can remember. The day: [describe - where you were, who was there, what made it feel that way]. Style: [painterly / impressionistic / warm and cinematic].",
             isExample: false,
           },
           {
             id: "more-mem-fill-79",
-            text: "Create an artwork that captures something I want to pass on — a value, a story, a way of seeing. What I want to pass on: [describe in your own words]. Who it's for: [children / grandchildren / no one specific — just the future]. Style: [painterly / illustrated / typographic / abstract].",
+            text: "Create an artwork that captures something I want to pass on - a value, a story, a way of seeing. What I want to pass on: [describe in your own words]. Who it's for: [children / grandchildren / no one specific - just the future]. Style: [painterly / illustrated / typographic / abstract].",
             isExample: false,
           },
         ],
       },
       {
-        title: "Memory & personal — ready-to-use examples",
+        title: "Memory & personal - ready-to-use examples",
         templates: [
           {
             id: "more-mem-ex-80",
-            text: "[example] Create an artwork of a grandmother's kitchen that no longer exists — brass utensils on a rack, a window onto a small courtyard, afternoon light, the warmth of cardamom and ghee implied in the palette. Painterly, impressionistic, warm. Held, not mourned. [Describe your own place to swap it in.]",
+            text: "[example] Create an artwork of a grandmother's kitchen that no longer exists - brass utensils on a rack, a window onto a small courtyard, afternoon light, the warmth of cardamom and ghee implied in the palette. Painterly, impressionistic, warm. Held, not mourned. [Describe your own place to swap it in.]",
             isExample: true,
           },
           {
@@ -523,12 +523,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-mem-ex-82",
-            text: "[example] Create an artwork based on a black-and-white photograph of my grandparents on their wedding day — transform it into a warm painterly oil portrait, adding colour guided by what the era suggests. Keep their faces exact, make everything else feel timeless. [Upload your own photograph to use this.]",
+            text: "[example] Create an artwork based on a black-and-white photograph of my grandparents on their wedding day - transform it into a warm painterly oil portrait, adding colour guided by what the era suggests. Keep their faces exact, make everything else feel timeless. [Upload your own photograph to use this.]",
             isExample: true,
           },
           {
             id: "more-mem-ex-83",
-            text: "[example] Create a painterly portrait of who I was at twenty-two — someone who owned almost nothing, rented a room with one window, read everything, and believed the world was about to open. Warm, slightly wistful, honest. Not romanticised — just true. [Write your own decade and I'll rewrite it around it.]",
+            text: "[example] Create a painterly portrait of who I was at twenty-two - someone who owned almost nothing, rented a room with one window, read everything, and believed the world was about to open. Warm, slightly wistful, honest. Not romanticised - just true. [Write your own decade and I'll rewrite it around it.]",
             isExample: true,
           },
           {
@@ -544,11 +544,11 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Ambient & living",
     sections: [
       {
-        title: "Ambient & living — fill-in templates",
+        title: "Ambient & living - fill-in templates",
         templates: [
           {
             id: "more-amb-fill-85",
-            text: "Create a set of four ambient displays for my [living room / bedroom / study] — one per season — that shift the feeling of the room with the year. My home's base mood: [describe]. What I want each season to feel like: [describe each or leave to Vizzy].",
+            text: "Create a set of four ambient displays for my [living room / bedroom / study] - one per season - that shift the feeling of the room with the year. My home's base mood: [describe]. What I want each season to feel like: [describe each or leave to Vizzy].",
             isExample: false,
           },
           {
@@ -558,7 +558,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-amb-fill-87",
-            text: "Create an ambient display to run during a dinner party at my home. The mood I want to create: [describe — sophisticated / warm and relaxed / eclectic / intimate]. Style: [gallery art / cinematic / illustrated / abstract]. Should feel like it belongs in the room, not demand attention.",
+            text: "Create an ambient display to run during a dinner party at my home. The mood I want to create: [describe - sophisticated / warm and relaxed / eclectic / intimate]. Style: [gallery art / cinematic / illustrated / abstract]. Should feel like it belongs in the room, not demand attention.",
             isExample: false,
           },
           {
@@ -568,7 +568,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-amb-fill-89",
-            text: "Create a slowly evolving display that runs all day in my home, shifting colour and mood with the light outside. Mood arc: [describe how you want the day to feel — from what to what]. Style: [abstract / painterly / botanical / architectural]. No hard transitions — everything breathes.",
+            text: "Create a slowly evolving display that runs all day in my home, shifting colour and mood with the light outside. Mood arc: [describe how you want the day to feel - from what to what]. Style: [abstract / painterly / botanical / architectural]. No hard transitions - everything breathes.",
             isExample: false,
           },
           {
@@ -579,7 +579,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         ],
       },
       {
-        title: "Ambient & living — ready-to-use examples",
+        title: "Ambient & living - ready-to-use examples",
         templates: [
           {
             id: "more-amb-ex-91",
@@ -593,12 +593,12 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-amb-ex-93",
-            text: "[example] Create an ambient display for a dinner party — something gallery-worthy that creates atmosphere without competing with conversation. A slow abstract painting in deep burgundy, gold, and slate — as if a Rothko were alive. No motion, just depth and warmth. To run silently on the frame all evening. [Describe your preferred palette to adjust it.]",
+            text: "[example] Create an ambient display for a dinner party - something gallery-worthy that creates atmosphere without competing with conversation. A slow abstract painting in deep burgundy, gold, and slate - as if a Rothko were alive. No motion, just depth and warmth. To run silently on the frame all evening. [Describe your preferred palette to adjust it.]",
             isExample: true,
           },
           {
             id: "more-amb-ex-94",
-            text: "[example] Create an ambient display for deep writing sessions — a slow abstract visual in forest green and warm black, like looking through glass at leaves in low wind. Barely moving. No text. The kind of thing you can look at for three seconds and return to the page. Painterly, minimal, deeply calm. [Describe your work and preferred visual to adjust.]",
+            text: "[example] Create an ambient display for deep writing sessions - a slow abstract visual in forest green and warm black, like looking through glass at leaves in low wind. Barely moving. No text. The kind of thing you can look at for three seconds and return to the page. Painterly, minimal, deeply calm. [Describe your work and preferred visual to adjust.]",
             isExample: true,
           },
         ],
@@ -609,11 +609,11 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Seasonal & celebrations",
     sections: [
       {
-        title: "Seasonal & celebrations — fill-in templates",
+        title: "Seasonal & celebrations - fill-in templates",
         templates: [
           {
             id: "more-seas-fill-95",
-            text: "Create a [season] celebration display for my home that feels genuinely mine — not generic. What this season means to me: [describe — a specific memory, a tradition, a feeling]. Style: [painterly / illustrated / botanical / abstract]. Colours: [describe the palette you want].",
+            text: "Create a [season] celebration display for my home that feels genuinely mine - not generic. What this season means to me: [describe - a specific memory, a tradition, a feeling]. Style: [painterly / illustrated / botanical / abstract]. Colours: [describe the palette you want].",
             isExample: false,
           },
           {
@@ -623,7 +623,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-seas-fill-97",
-            text: "Create a display to mark [an anniversary / a milestone / a personal achievement] — something I can put on the wall and come back to. The occasion: [describe]. Names or dates: [optional]. Style: [warm and illustrated / elegant typographic / painterly / abstract].",
+            text: "Create a display to mark [an anniversary / a milestone / a personal achievement] - something I can put on the wall and come back to. The occasion: [describe]. Names or dates: [optional]. Style: [warm and illustrated / elegant typographic / painterly / abstract].",
             isExample: false,
           },
           {
@@ -634,26 +634,26 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         ],
       },
       {
-        title: "Seasonal & celebrations — ready-to-use examples",
+        title: "Seasonal & celebrations - ready-to-use examples",
         templates: [
           {
             id: "more-seas-ex-99",
-            text: "[example] Create a Diwali display that feels warm and contemporary — not literal diyas and rangoli, but the feeling underneath them: light arriving, darkness gently retreating, the warmth of people gathered. Deep amber, gold, and terracotta. Abstract and painterly. [Describe your own Diwali feeling to personalise it.]",
+            text: "[example] Create a Diwali display that feels warm and contemporary - not literal diyas and rangoli, but the feeling underneath them: light arriving, darkness gently retreating, the warmth of people gathered. Deep amber, gold, and terracotta. Abstract and painterly. [Describe your own Diwali feeling to personalise it.]",
             isExample: true,
           },
           {
             id: "more-seas-ex-100",
-            text: "[example] Create a winter solstice display for my living room — the longest night, a single candle, the slow promise of more light. Not Christmas, not festive — just still and ancient and beautiful. Deep navy, silver, one warm amber. Painterly. [Swap to the seasonal moment that matters most to you.]",
+            text: "[example] Create a winter solstice display for my living room - the longest night, a single candle, the slow promise of more light. Not Christmas, not festive - just still and ancient and beautiful. Deep navy, silver, one warm amber. Painterly. [Swap to the seasonal moment that matters most to you.]",
             isExample: true,
           },
           {
             id: "more-seas-ex-101",
-            text: "[example] Create a New Year display for the home frame. Not celebratory — more like a quiet exhale, a turning of a page. Typography: a single line in a warm serif — The year that is still unwritten. Deep green, cream, and gold. Calm and intentional. [Swap the line and palette to yours.]",
+            text: "[example] Create a New Year display for the home frame. Not celebratory - more like a quiet exhale, a turning of a page. Typography: a single line in a warm serif - The year that is still unwritten. Deep green, cream, and gold. Calm and intentional. [Swap the line and palette to yours.]",
             isExample: true,
           },
           {
             id: "more-seas-ex-102",
-            text: "[example] Create a birthday display for someone who hates fuss but deserves to feel extraordinary — nothing loud, nothing with balloons. A painterly abstract in their favourite colours with a single line in quiet type: another year of being yourself, which turns out to be enough. [Add the name and favourite colours to personalise it.]",
+            text: "[example] Create a birthday display for someone who hates fuss but deserves to feel extraordinary - nothing loud, nothing with balloons. A painterly abstract in their favourite colours with a single line in quiet type: another year of being yourself, which turns out to be enough. [Add the name and favourite colours to personalise it.]",
             isExample: true,
           },
         ],
@@ -664,7 +664,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Kids & family",
     sections: [
       {
-        title: "Kids & family — fill-in templates",
+        title: "Kids & family - fill-in templates",
         templates: [
           {
             id: "more-kids-fill-103",
@@ -673,17 +673,17 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-kids-fill-104",
-            text: "Create a family portrait in an artistic style — not photographic, but expressive. Our family: [describe who we are — number of people, a few words on each]. The feeling I want it to carry: [describe]. Style: [painterly / illustrated / warm graphic / abstract].",
+            text: "Create a family portrait in an artistic style - not photographic, but expressive. Our family: [describe who we are - number of people, a few words on each]. The feeling I want it to carry: [describe]. Style: [painterly / illustrated / warm graphic / abstract].",
             isExample: false,
           },
           {
             id: "more-kids-fill-105",
-            text: "Create a story series for my child that keeps going — a new episode each week. Main character: [describe or let Vizzy invent]. My child's name and age: [optional]. Their interests: [describe]. Tone: [funny / adventurous / gentle / magical].",
+            text: "Create a story series for my child that keeps going - a new episode each week. Main character: [describe or let Vizzy invent]. My child's name and age: [optional]. Their interests: [describe]. Tone: [funny / adventurous / gentle / magical].",
             isExample: false,
           },
           {
             id: "more-kids-fill-106",
-            text: "Create a visual record of my child's year — a kind of illustrated annual. Key moments to include: [list or describe]. Style: [scrapbook and warm / clean editorial / painterly / storybook]. For them to look back on.",
+            text: "Create a visual record of my child's year - a kind of illustrated annual. Key moments to include: [list or describe]. Style: [scrapbook and warm / clean editorial / painterly / storybook]. For them to look back on.",
             isExample: false,
           },
           {
@@ -694,16 +694,16 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         ],
       },
       {
-        title: "Kids & family — ready-to-use examples",
+        title: "Kids & family - ready-to-use examples",
         templates: [
           {
             id: "more-kids-ex-108",
-            text: "[example] Create artwork for a seven-year-old's bedroom who is obsessed with deep sea creatures and wants their room to feel like being at the bottom of the ocean — dark blue, bioluminescent, slightly mysterious but not scary. Illustrated, detailed, wonder-filled. [Swap the age and interest to your child's.]",
+            text: "[example] Create artwork for a seven-year-old's bedroom who is obsessed with deep sea creatures and wants their room to feel like being at the bottom of the ocean - dark blue, bioluminescent, slightly mysterious but not scary. Illustrated, detailed, wonder-filled. [Swap the age and interest to your child's.]",
             isExample: true,
           },
           {
             id: "more-kids-ex-109",
-            text: "[example] Create a family portrait — not photographic, but impressionistic and warm. A family of four around a kitchen table on an ordinary evening: one child reading, one drawing, two adults with tea, a dog underfoot. The light from an overhead lamp. Painted as if Bonnard were watching. [Describe your own family scene.]",
+            text: "[example] Create a family portrait - not photographic, but impressionistic and warm. A family of four around a kitchen table on an ordinary evening: one child reading, one drawing, two adults with tea, a dog underfoot. The light from an overhead lamp. Painted as if Bonnard were watching. [Describe your own family scene.]",
             isExample: true,
           },
           {
@@ -719,7 +719,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
     category: "Reflective & philosophical",
     sections: [
       {
-        title: "Reflective & philosophical — fill-in templates",
+        title: "Reflective & philosophical - fill-in templates",
         templates: [
           {
             id: "more-phil-fill-111",
@@ -728,27 +728,27 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-phil-fill-112",
-            text: "Create a display that holds a belief I'm not sure I have the right words for yet. I'll try to describe it: [write as much or as little as you can]. Style: [abstract / typographic / painterly]. Not an illustration of the idea — just something that feels like it.",
+            text: "Create a display that holds a belief I'm not sure I have the right words for yet. I'll try to describe it: [write as much or as little as you can]. Style: [abstract / typographic / painterly]. Not an illustration of the idea - just something that feels like it.",
             isExample: false,
           },
           {
             id: "more-phil-fill-113",
-            text: "Create an artwork based on a period of difficulty I've come through. Not a celebration and not a wound — just a witness. What I went through: [describe as much as you're comfortable with]. Style: [abstract / painterly / symbolic]. Tone: [honest / tender / clear-eyed / quiet].",
+            text: "Create an artwork based on a period of difficulty I've come through. Not a celebration and not a wound - just a witness. What I went through: [describe as much as you're comfortable with]. Style: [abstract / painterly / symbolic]. Tone: [honest / tender / clear-eyed / quiet].",
             isExample: false,
           },
         ],
       },
       {
-        title: "Reflective & philosophical — ready-to-use examples",
+        title: "Reflective & philosophical - ready-to-use examples",
         templates: [
           {
             id: "more-phil-ex-114",
-            text: "[example] Create an artwork that holds the question I keep returning to: \"What is a life well lived, and would I know it if I was living it?\" Abstract, painted in deep blue and warm gold. No figures, no symbols — just the quality of the question itself. Large format, painterly, unhurried. [Swap the question to yours.]",
+            text: "[example] Create an artwork that holds the question I keep returning to: \"What is a life well lived, and would I know it if I was living it?\" Abstract, painted in deep blue and warm gold. No figures, no symbols - just the quality of the question itself. Large format, painterly, unhurried. [Swap the question to yours.]",
             isExample: true,
           },
           {
             id: "more-phil-ex-115",
-            text: "[example] Create an abstract artwork that feels like the concept of enough — not settling, not abundance, just the particular peace of sufficiency. Warm, still, slightly luminous. A painting you could look at for a long time and feel your shoulders drop. [Describe your own concept to swap it in.]",
+            text: "[example] Create an abstract artwork that feels like the concept of enough - not settling, not abundance, just the particular peace of sufficiency. Warm, still, slightly luminous. A painting you could look at for a long time and feel your shoulders drop. [Describe your own concept to swap it in.]",
             isExample: true,
           },
         ],
@@ -763,7 +763,7 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
         templates: [
           {
             id: "more-misc-116",
-            text: "Create something for my home that I wouldn't have thought to ask for — based on this about me: [describe yourself freely — your life, your home, your loves, your obsessions, what you're going through right now]. Surprise me.",
+            text: "Create something for my home that I wouldn't have thought to ask for - based on this about me: [describe yourself freely - your life, your home, your loves, your obsessions, what you're going through right now]. Surprise me.",
             isExample: false,
           },
           {
@@ -773,17 +773,17 @@ export const MORE_PROMPT_GROUPS: MorePromptGroup[] = [
           },
           {
             id: "more-misc-118",
-            text: "Create a display that rotates daily and always shows me something I haven't seen before — drawn from [a theme or category: nature / abstract art / poetry / world architecture / science / mythology]. Style: [painterly / photographic / illustrated / graphic]. My taste in a sentence: [describe].",
+            text: "Create a display that rotates daily and always shows me something I haven't seen before - drawn from [a theme or category: nature / abstract art / poetry / world architecture / science / mythology]. Style: [painterly / photographic / illustrated / graphic]. My taste in a sentence: [describe].",
             isExample: false,
           },
           {
             id: "more-misc-119",
-            text: "[example] Create a living room display that works like a slow, evolving painting — it shifts almost imperceptibly over the course of a day, so that the room feels subtly different at 8am, 1pm, 6pm, and 11pm without anyone quite knowing why. Palette: warm terracotta, deep olive, cream. Abstract and painterly throughout. [Describe your preferred palette and mood to adjust it.]",
+            text: "[example] Create a living room display that works like a slow, evolving painting - it shifts almost imperceptibly over the course of a day, so that the room feels subtly different at 8am, 1pm, 6pm, and 11pm without anyone quite knowing why. Palette: warm terracotta, deep olive, cream. Abstract and painterly throughout. [Describe your preferred palette and mood to adjust it.]",
             isExample: true,
           },
           {
             id: "more-misc-120",
-            text: "Create a single piece for my home that holds everything that matters to me right now — a visual diary of this particular moment in my life. What matters: [write freely — people, places, feelings, questions, objects, ambitions]. Style: [your choice — leave it open or describe what you want]. The kind of thing I'll look at in ten years and remember exactly who I was.",
+            text: "Create a single piece for my home that holds everything that matters to me right now - a visual diary of this particular moment in my life. What matters: [write freely - people, places, feelings, questions, objects, ambitions]. Style: [your choice - leave it open or describe what you want]. The kind of thing I'll look at in ten years and remember exactly who I was.",
             isExample: false,
           },
         ],

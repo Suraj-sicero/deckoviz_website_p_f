@@ -409,7 +409,7 @@ export default function AlternateUseCasesGuide() {
             </div>
 
             <H4>Why This Matters</H4>
-            <InfoBox><P className="text-white/90">The most valuable tools act as leverage—they unlock entirely new behaviors.</P></InfoBox>
+            <InfoBox><P className="text-white/90">The most valuable tools act as leverage-they unlock entirely new behaviors.</P></InfoBox>
 
             <Divider />
 

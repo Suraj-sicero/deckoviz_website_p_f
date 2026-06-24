@@ -101,7 +101,7 @@ const VisualBookTool: React.FC = () => {
     <ToolLayout
       icon="📸"
       title="Visual Book Creator"
-      subtitle="Upload your photos — Gemini creates captions and weaves them into a visual story"
+      subtitle="Upload your photos - Gemini creates captions and weaves them into a visual story"
       gradient="from-violet-600 via-violet-700 to-fuchsia-800"
     >
       <div className="space-y-8">
@@ -307,7 +307,7 @@ const VisualBookTool: React.FC = () => {
           {[
             { icon: "🖼️", title: "Photo Analysis", desc: "Gemini reads the content and emotion of each photo to write matching captions" },
             { icon: "📖", title: "Narrative Story", desc: "Your photos are connected into a flowing narrative with introduction and chapters" },
-            { icon: "🎨", title: "5 Story Styles", desc: "From personal memoir to fairy tale — pick the tone that fits your photos" },
+            { icon: "🎨", title: "5 Story Styles", desc: "From personal memoir to fairy tale - pick the tone that fits your photos" },
           ].map((c) => (
             <div key={c.title} className="bg-white/60 border border-gray-100 rounded-2xl p-6 text-center">
               <div className="text-3xl mb-3">{c.icon}</div>

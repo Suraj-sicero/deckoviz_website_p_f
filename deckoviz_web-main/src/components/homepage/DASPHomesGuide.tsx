@@ -681,7 +681,7 @@ export default function DASPHomesGuide() {
             </div>
 
             <p className="text-gray-700 text-lg leading-relaxed mb-5 max-w-3xl mx-auto">
-              Your home is the most important interface you have — it's your sacred space. Deckoviz
+              Your home is the most important interface you have - it's your sacred space. Deckoviz
               exists to make that interface{" "}
               <span className="font-semibold text-violet-700">alive</span>,{" "}
               <span className="font-semibold text-pink-600">intentional</span>, and{" "}

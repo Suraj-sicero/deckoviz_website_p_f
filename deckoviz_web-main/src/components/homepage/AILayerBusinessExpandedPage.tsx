@@ -79,11 +79,11 @@ export default function AILayerBusinessExpandedPage() {
             content={[
               "Every brand has a creative bottleneck. Campaigns take weeks. Seasonal refreshes require a designer, a brief, three rounds of revisions, and a deadline that always arrives faster than the work does. Meanwhile, your physical space sits there, static, while your social feeds and your website move on without it.",
               "Vizzy removes the bottleneck entirely. It's a proprietary generative intelligence engine that lives inside your space and inside your marketing stack simultaneously, acting as:",
-              "• Your in-house creative director — understands your brand's colours, typography, seasonal tone, and visual DNA, and generates on-brand work without a brief",
-              "• Your on-location brand storyteller — turns your walls into a living expression of what your brand is and what it stands for",
-              "• Your campaign generator — ideates and produces visual - and multisensory - campaigns for in-store displays and for social media, from the same creative brain",
-              "• Your brand representative, concierge, and greeter — the first and last impression a guest has of your space, warm, intelligent, and on-brand",
-              "• Your brand entertainer — for guests waiting, dining, browsing, or simply being in the space",
+              "• Your in-house creative director - understands your brand's colours, typography, seasonal tone, and visual DNA, and generates on-brand work without a brief",
+              "• Your on-location brand storyteller - turns your walls into a living expression of what your brand is and what it stands for",
+              "• Your campaign generator - ideates and produces visual - and multisensory - campaigns for in-store displays and for social media, from the same creative brain",
+              "• Your brand representative, concierge, and greeter - the first and last impression a guest has of your space, warm, intelligent, and on-brand",
+              "• Your brand entertainer - for guests waiting, dining, browsing, or simply being in the space",
               "This isn't a content library. It's synthesis infra. Give Vizzy a theme, \"Sustainable Summer,\" \"Cyber-Urban Tech,\" \"Quiet Luxury,\" and it generates an infinite stream of original, high-fidelity visuals that match that mood precisely. Your space never looks stale or boring or the same old again. It always feels exactly like you."
             ]}
           />
@@ -107,12 +107,12 @@ export default function AILayerBusinessExpandedPage() {
             content={[
               "A great host doesn't treat every guest, every hour, every day the same way. Neither does Deckoviz.",
               "The system is continuously aware of:",
-              "• Time of day — energising visuals for morning footfall, something more atmospheric as evening sets in",
-              "• Season and occasion — your space shifts with the calendar, automatically, without anyone scheduling it",
-              "• Footfall and traffic patterns — the system learns which visual cadences resonate with your actual customers, at the hours they're actually there, and optimises toward what works",
-              "• Visitor personas — a different emotional register for a weekday lunch crowd than for a Saturday night",
-              "• Special events — a private booking, a launch, a holiday, reflected in the space's atmosphere without manual intervention",
-              "• Ambient conditions — natural light levels, weather, even the energy of the room itself, factored into what the space shows and how it feels",
+              "• Time of day - energising visuals for morning footfall, something more atmospheric as evening sets in",
+              "• Season and occasion - your space shifts with the calendar, automatically, without anyone scheduling it",
+              "• Footfall and traffic patterns - the system learns which visual cadences resonate with your actual customers, at the hours they're actually there, and optimises toward what works",
+              "• Visitor personas - a different emotional register for a weekday lunch crowd than for a Saturday night",
+              "• Special events - a private booking, a launch, a holiday, reflected in the space's atmosphere without manual intervention",
+              "• Ambient conditions - natural light levels, weather, even the energy of the room itself, factored into what the space shows and how it feels",
               "This is the difference between a screen and a brain. The screen displays. The brain decides what should be displayed, and why, every hour of every day."
             ]}
           />
@@ -123,10 +123,10 @@ export default function AILayerBusinessExpandedPage() {
             content={[
               "This is the principle that underlies everything, particularly in hospitality, but increasingly in retail and dining too. The product was never just the product. It was always the feeling.",
               "Deckoviz becomes the Experience and Ambiance Layer that designs that feeling deliberately:",
-              "• Multisensory immersion — generative art paired with high-fidelity soundscapes and AI narration. A guest walks into their suite and finds a moving landscape on the wall, the soft sound of a local forest, and a narrated story of the region they've just arrived in. Not a TV. An arrival.",
-              "• Circadian alignment — for hotels, the ability to shift light frequencies and visual tones across the day to support better sleep, faster recovery from jet lag, and a genuine sense of well-being from the moment a guest enters their room",
-              "• Generative welcome moments — beyond \"Welcome, Mr. Smith\" on a screen, custom-generated art for honeymooners, anniversary guests, returning regulars, the kind of personalised moment that gets photographed and shared before the guest has even unpacked",
-              "• Calm tech, not commercial noise — minimalist hardware, halo backlighting, designed to disappear into the room's architecture rather than compete with it. The opposite of a hotel TV blasting promotional content at full volume",
+              "• Multisensory immersion - generative art paired with high-fidelity soundscapes and AI narration. A guest walks into their suite and finds a moving landscape on the wall, the soft sound of a local forest, and a narrated story of the region they've just arrived in. Not a TV. An arrival.",
+              "• Circadian alignment - for hotels, the ability to shift light frequencies and visual tones across the day to support better sleep, faster recovery from jet lag, and a genuine sense of well-being from the moment a guest enters their room",
+              "• Generative welcome moments - beyond \"Welcome, Mr. Smith\" on a screen, custom-generated art for honeymooners, anniversary guests, returning regulars, the kind of personalised moment that gets photographed and shared before the guest has even unpacked",
+              "• Calm tech, not commercial noise - minimalist hardware, halo backlighting, designed to disappear into the room's architecture rather than compete with it. The opposite of a hotel TV blasting promotional content at full volume",
               "For real estate developments, this same layer becomes a sales tool in itself: integrating an AI layer into the architecture of a building means you're no longer selling square footage, you're selling a future-ready lifestyle, a tangible, demonstrable \"wow\" that legacy developments simply cannot offer."
             ]}
           />

@@ -41,7 +41,7 @@ const SEED_LETTERS: Letter[] = [
     id: 1,
     target: "The Three-Year-Old Me",
     prompt: "What do you wish I knew right now?",
-    body: "I wish I could remember the world through your eyes, before language made everything fit into neat boxes. You experienced things purely — the warmth of sunlight, the smell of rain on concrete, laughter without reason. I have inherited so much from you that I cannot see.",
+    body: "I wish I could remember the world through your eyes, before language made everything fit into neat boxes. You experienced things purely - the warmth of sunlight, the smell of rain on concrete, laughter without reason. I have inherited so much from you that I cannot see.",
     savedAt: "May 9, 2025",
   },
   {
@@ -264,7 +264,7 @@ const LettersToUnknownSelf: React.FC = () => {
                       </h3>
                       <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 font-serif">
                         {letter.body || (
-                          <span className="italic text-gray-700">Draft — not yet written.</span>
+                          <span className="italic text-gray-700">Draft - not yet written.</span>
                         )}
                       </p>
                       {letter.savedAt && (
@@ -288,7 +288,7 @@ const LettersToUnknownSelf: React.FC = () => {
               exit={{ opacity: 0, y: -12 }}
               className="grid grid-cols-1 lg:grid-cols-3 gap-8"
             >
-              {/* Left — guiding sidebar */}
+              {/* Left - guiding sidebar */}
               <div className="lg:col-span-1 space-y-5">
                 <div className="p-6 rounded-2xl bg-white/5 border border-white/5">
                   <span className="text-xs font-semibold text-stone-400 uppercase tracking-widest block mb-1">
@@ -320,7 +320,7 @@ const LettersToUnknownSelf: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right — letter canvas */}
+              {/* Right - letter canvas */}
               <div className="lg:col-span-2">
                 <div className="relative rounded-2xl bg-gradient-to-b from-stone-900 to-stone-950 border border-white/10 overflow-hidden">
                   {/* Letter header */}

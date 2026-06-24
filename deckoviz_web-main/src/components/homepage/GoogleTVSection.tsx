@@ -101,7 +101,7 @@ const GoogleTVSection: React.FC = () => {
               transition={{ duration: 0.7, delay: 0.4 }}
               className="w-full lg:w-1/2 relative group"
             >
-              {/* Blue glow blob BEHIND the glass — visible through it on hover */}
+              {/* Blue glow blob BEHIND the glass - visible through it on hover */}
               <div className="absolute inset-0 -z-10 rounded-[2.5rem] overflow-visible pointer-events-none">
                 <div className="absolute -inset-6 bg-[#2563EB]/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 <div className="absolute -inset-4 bg-[#182A4A]/15 rounded-full blur-2xl opacity-0 group-hover:opacity-80 transition-opacity duration-700 delay-100" />
@@ -123,9 +123,9 @@ const GoogleTVSection: React.FC = () => {
                 <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none" />
                 {/* Left shiny edge */}
                 <div className="absolute left-0 inset-y-0 w-[1.5px] bg-gradient-to-b from-white/70 via-white/20 to-transparent pointer-events-none" />
-                {/* Diagonal glare — intensifies on hover */}
+                {/* Diagonal glare - intensifies on hover */}
                 <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white/30 to-transparent pointer-events-none rounded-tl-[2rem] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
-                {/* Blue tint wash on hover — makes glass feel lit from behind */}
+                {/* Blue tint wash on hover - makes glass feel lit from behind */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/5 via-transparent to-[#182A4A]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]" />
                 {/* Blue bottom accent */}
                 <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#2563EB]/50 to-transparent pointer-events-none" />
@@ -178,7 +178,7 @@ const GoogleTVSection: React.FC = () => {
                 <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/90 to-transparent pointer-events-none" />
                 {/* Left shiny edge */}
                 <div className="absolute left-0 inset-y-0 w-[1.5px] bg-gradient-to-b from-white/70 via-white/20 to-transparent pointer-events-none" />
-                {/* Diagonal glare — intensifies on hover */}
+                {/* Diagonal glare - intensifies on hover */}
                 <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-to-br from-white/30 to-transparent pointer-events-none rounded-tl-[2rem] opacity-50 group-hover:opacity-100 transition-opacity duration-700" />
                 {/* Blue tint wash on hover */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#2563EB]/5 via-transparent to-[#182A4A]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]" />

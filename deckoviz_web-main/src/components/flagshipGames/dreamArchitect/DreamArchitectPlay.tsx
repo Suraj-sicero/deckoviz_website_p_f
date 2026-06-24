@@ -376,7 +376,7 @@ const LibrarySaved: React.FC = () => {
                 </span>
                 <div className="flex-1">
                   <p className="font-serif text-white/90 leading-relaxed">{c.text}</p>
-                  <div className="text-[10px] text-white/40">— {p?.name}</div>
+                  <div className="text-[10px] text-white/40">- {p?.name}</div>
                 </div>
               </div>
             );

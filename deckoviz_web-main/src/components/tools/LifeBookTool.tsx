@@ -152,7 +152,7 @@ const LifeBookTool: React.FC = () => {
                 <textarea
                   value={memory.description}
                   onChange={(e) => updateMemory(index, "description", e.target.value)}
-                  placeholder="Describe this memory in detail — what happened, who was there, how you felt…"
+                  placeholder="Describe this memory in detail - what happened, who was there, how you felt…"
                   rows={3}
                   className="w-full px-3 py-2 rounded-xl border border-gray-200 text-gray-800 text-sm placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-emerald-400 bg-white"
                 />
@@ -201,7 +201,7 @@ const LifeBookTool: React.FC = () => {
           </div>
         )}
 
-        {/* Output — Book UI */}
+        {/* Output - Book UI */}
         {status === "done" && result && (
           <div className="space-y-6">
             {/* Book cover */}
@@ -287,9 +287,9 @@ const LifeBookTool: React.FC = () => {
         {/* Info */}
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: "📝", title: "Your Memories", desc: "Add as many memories as you want — Gemini groups and narrates them intelligently" },
+            { icon: "📝", title: "Your Memories", desc: "Add as many memories as you want - Gemini groups and narrates them intelligently" },
             { icon: "📚", title: "Organised Chapters", desc: "AI structures your memories into meaningful life chapters with a narrative arc" },
-            { icon: "🌿", title: "Themed Presentation", desc: "Each chapter gets its own visual theme — childhood, youth, love, wisdom, and more" },
+            { icon: "🌿", title: "Themed Presentation", desc: "Each chapter gets its own visual theme - childhood, youth, love, wisdom, and more" },
           ].map((c) => (
             <div key={c.title} className="bg-white/60 border border-gray-100 rounded-2xl p-6 text-center">
               <div className="text-3xl mb-3">{c.icon}</div>

@@ -131,7 +131,7 @@ const StoryForgeStorybook: React.FC = () => {
     doc.setFont("helvetica", "normal");
     for (const a of state.archetypes) {
       const player = state.players.find((p) => p.id === a.playerId);
-      doc.text(`${player?.name ?? "Player"} — ${a.archetype} (${a.reason})`, margin, y);
+      doc.text(`${player?.name ?? "Player"} - ${a.archetype} (${a.reason})`, margin, y);
       y += 16;
     }
 
@@ -139,7 +139,7 @@ const StoryForgeStorybook: React.FC = () => {
   };
 
   const share = async () => {
-    const text = `${state.storyTitle} — a Story Forge tale we just made.`;
+    const text = `${state.storyTitle} - a Story Forge tale we just made.`;
     if (navigator.share) {
       try {
         await navigator.share({ title: state.storyTitle ?? "Story Forge", text });
@@ -322,7 +322,7 @@ const StoryForgeStorybook: React.FC = () => {
                     </div>
                     <div>
                       <div className="text-white text-sm font-semibold">
-                        {p?.name ?? "Player"} — <span className="text-violet-200">{a.archetype}</span>
+                        {p?.name ?? "Player"} - <span className="text-violet-200">{a.archetype}</span>
                       </div>
                       <div className="text-xs text-white/50 italic">{a.reason}</div>
                     </div>

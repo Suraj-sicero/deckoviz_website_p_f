@@ -72,7 +72,7 @@ const MusicTool: React.FC = () => {
     <ToolLayout
       icon="🎼"
       title="Music Creator"
-      subtitle="Describe a mood or scene — Vizzy composes an original AI music track"
+      subtitle="Describe a mood or scene - Vizzy composes an original AI music track"
       gradient="from-cyan-500 via-teal-600 to-emerald-700"
     >
       <div className="space-y-8">
@@ -207,7 +207,7 @@ const MusicTool: React.FC = () => {
               </audio>
             ) : (
               <div className="w-full h-20 bg-gradient-to-r from-cyan-50 to-teal-50 rounded-xl border border-cyan-200 flex items-center justify-center mb-6">
-                <p className="text-sm text-cyan-600 font-medium">🎧 Audio ready — loading player…</p>
+                <p className="text-sm text-cyan-600 font-medium">🎧 Audio ready - loading player…</p>
               </div>
             )}
 
@@ -242,7 +242,7 @@ const MusicTool: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { icon: "🧠", title: "Gemini Enhanced", desc: "Your description is enriched by Gemini before the music API receives it" },
-            { icon: "🎹", title: "Multiple Genres", desc: "From ambient lo-fi to cinematic orchestral — full creative range" },
+            { icon: "🎹", title: "Multiple Genres", desc: "From ambient lo-fi to cinematic orchestral - full creative range" },
             { icon: "🔊", title: "Instant Playback", desc: "Listen directly in the browser, then download as MP3" },
           ].map((c) => (
             <div key={c.title} className="bg-white/60 border border-gray-100 rounded-2xl p-6 text-center">

@@ -13,7 +13,7 @@ const steps = [
   {
     icon: CreditCard,
     label: "They purchase",
-    desc: "They buy a Deckoviz Smart Frame — automatically tagged to you.",
+    desc: "They buy a Deckoviz Smart Frame - automatically tagged to you.",
     color: "from-[#182A4A] to-[#2563EB]",
   },
   {

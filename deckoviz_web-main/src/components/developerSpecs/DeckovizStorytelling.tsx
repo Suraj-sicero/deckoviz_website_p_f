@@ -389,7 +389,7 @@ const DeckovizStorytelling: React.FC = () => {
           >
             {/* Caveat cursive sub-label */}
             <p className="font-caveat text-amber-400/80 text-2xl mb-2 tracking-wide">
-              Deckoviz — Spaces that evolve with you.
+              Deckoviz - Spaces that evolve with you.
             </p>
 
             {/* Playfair Display serif main heading */}
@@ -400,7 +400,7 @@ const DeckovizStorytelling: React.FC = () => {
             </h1>
 
             <p className="text-gray-400 text-lg max-w-3xl mx-auto mb-8 font-light leading-relaxed">
-              Explore advanced tools designed for deep mood setting, state transition, and creative exploration — where every space becomes a story.
+              Explore advanced tools designed for deep mood setting, state transition, and creative exploration - where every space becomes a story.
             </p>
 
             {/* Background Controls */}

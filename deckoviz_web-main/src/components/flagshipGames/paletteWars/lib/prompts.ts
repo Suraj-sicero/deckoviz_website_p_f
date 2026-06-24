@@ -65,7 +65,7 @@ export function vizzyPickLine(): string {
     "For taking the long way to a feeling I didn't know we needed.",
     "Because it understood the colour before the colour understood itself.",
     "For sounding like a postcard I'd actually keep.",
-    "Quiet brilliance — the kind that doesn't ask for attention.",
+    "Quiet brilliance - the kind that doesn't ask for attention.",
     "It made the geometry honest.",
   ];
   return lines[Math.floor(Math.random() * lines.length)];

@@ -198,7 +198,7 @@ const CreatingView: React.FC = () => {
           <p className="font-serif text-white text-lg leading-snug">"{round.prompt}"</p>
           {isAnonymous && (
             <div className="mt-2 inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.25em] text-rose-200">
-              <EyeOff size={11} /> Anonymous round — names hidden until reveal
+              <EyeOff size={11} /> Anonymous round - names hidden until reveal
             </div>
           )}
         </div>
@@ -330,7 +330,7 @@ const RevealingView: React.FC = () => {
             <div className="text-xs text-white/60">{current.medium}</div>
             <p className="font-serif text-white/85 leading-relaxed">{current.description}</p>
             <div className="pt-2 text-[10px] uppercase tracking-[0.25em] text-white/40">
-              {isAnon ? "Artist withheld" : `— ${player?.name ?? "Visitor"}`}
+              {isAnon ? "Artist withheld" : `- ${player?.name ?? "Visitor"}`}
             </div>
           </motion.div>
         </AnimatePresence>
@@ -363,7 +363,7 @@ const SharingView: React.FC = () => {
         <div className="text-[10px] uppercase tracking-[0.3em] text-amber-200">An optional moment</div>
         <h3 className="font-serif text-xl text-white">Would anyone like to share?</h3>
         <p className="text-sm text-white/60 italic">
-          Speak about the real memory, the hidden meaning, why you made it — or simply sit with the room. Silence is welcome.
+          Speak about the real memory, the hidden meaning, why you made it - or simply sit with the room. Silence is welcome.
         </p>
         <div className="pt-2">
           <button
@@ -430,9 +430,9 @@ const AnonGuessView: React.FC = () => {
               <p className="text-sm text-white/70 italic mb-3">{a.description}</p>
               <div className="text-[10px] uppercase tracking-[0.25em]">
                 {revealed ? (
-                  <span className="text-amber-200">— {player?.name}</span>
+                  <span className="text-amber-200">- {player?.name}</span>
                 ) : (
-                  <span className="text-white/40">— hidden</span>
+                  <span className="text-white/40">- hidden</span>
                 )}
               </div>
             </div>
@@ -563,7 +563,7 @@ const CuratorNoteView: React.FC = () => {
       >
         "{state.curatorNote}"
       </motion.h2>
-      <p className="text-xs text-white/40 italic">— Curator's note</p>
+      <p className="text-xs text-white/40 italic">- Curator's note</p>
       <button
         onClick={() => dispatch({ type: "GOTO_FINAL_WALL" })}
         className="mt-4 px-5 py-2.5 rounded-full bg-white text-black text-sm font-semibold inline-flex items-center gap-2"

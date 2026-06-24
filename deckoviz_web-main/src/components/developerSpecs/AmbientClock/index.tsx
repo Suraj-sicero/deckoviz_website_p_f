@@ -654,7 +654,7 @@ const AmbientClock: React.FC = () => {
   const minHand = getHandCoords(minuteAngle, 90);
   const secHand = getHandCoords(secondAngle, 105);
 
-  // SVG Dial Tick Marks — themed per handStyle
+  // SVG Dial Tick Marks - themed per handStyle
   const renderDialTicks = () => {
     const ticks: React.ReactNode[] = [];
     const count = currentClock.numeralStyle === "roman" || currentClock.numeralStyle === "arabic" ? 12 : 60;
@@ -726,7 +726,7 @@ const AmbientClock: React.FC = () => {
           );
         }
       } else {
-        // Minor tick — always a short thin line
+        // Minor tick - always a short thin line
         if (currentClock.numeralStyle !== "roman" && currentClock.numeralStyle !== "arabic") {
           const x1 = 200 + rOuter * Math.sin(angle);
           const y1 = 200 - rOuter * Math.cos(angle);
@@ -898,7 +898,7 @@ const AmbientClock: React.FC = () => {
           {/* CLOCK PORTAL INNER CONTAINER */}
           <div className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[420px] md:h-[420px] flex items-center justify-center">
             
-            {/* Subtle color glow ring — NO dark fill, clock is transparent on the image */}
+            {/* Subtle color glow ring - NO dark fill, clock is transparent on the image */}
             <div 
               className="absolute inset-0 rounded-full pointer-events-none" 
               style={{
@@ -925,7 +925,7 @@ const AmbientClock: React.FC = () => {
 
                 {/* ── THEMED HOUR HAND ── */}
                 {currentClock.handStyle === "glowing" ? (
-                  // Wand — tapered elegant shape, wide at base narrowing to a tip
+                  // Wand - tapered elegant shape, wide at base narrowing to a tip
                   <path
                     d="M200,215 C198.5,202 197,162 197.5,138 C198,124 199,114 200,110 C201,114 202,124 202.5,138 C203,162 201.5,202 200,215 Z"
                     fill={currentClock.handColor}
@@ -933,7 +933,7 @@ const AmbientClock: React.FC = () => {
                     style={{ filter: `drop-shadow(0 0 10px ${currentClock.handColor})` }}
                   />
                 ) : currentClock.handStyle === "neon" ? (
-                  // Sharp diamond blade — aggressive point
+                  // Sharp diamond blade - aggressive point
                   <path
                     d="M200,215 L196,195 L200,110 L204,195 Z"
                     fill={currentClock.handColor}
@@ -951,7 +951,7 @@ const AmbientClock: React.FC = () => {
                     />
                   </g>
                 ) : currentClock.handStyle === "fluid" ? (
-                  // Wide organic blob — like coral or seaweed
+                  // Wide organic blob - like coral or seaweed
                   <path
                     d="M200,215 C196,200 192,165 193,138 C194,122 197,113 200,108 C203,113 206,122 207,138 C208,165 204,200 200,215 Z"
                     fill={currentClock.handColor}
@@ -959,7 +959,7 @@ const AmbientClock: React.FC = () => {
                     style={{ filter: `blur(1.5px) drop-shadow(0 0 8px ${currentClock.handColor})` }}
                   />
                 ) : currentClock.handStyle === "wooden" ? (
-                  // Rounded paddle — wide at tip, rounded ends
+                  // Rounded paddle - wide at tip, rounded ends
                   <path
                     d="M197,215 L196,180 C196,160 198,135 200,110 C202,135 204,160 204,180 L203,215 Q200,218 197,215 Z"
                     fill={currentClock.handColor}
@@ -1034,7 +1034,7 @@ const AmbientClock: React.FC = () => {
                   />
                 )}
 
-                {/* Second hand — slim sweep with counterweight */}
+                {/* Second hand - slim sweep with counterweight */}
                 <g transform={`rotate(${(secondAngle * 180) / Math.PI}, 200, 200)`}>
                   <line x1="200" y1="230" x2="200" y2="55"
                     stroke={currentClock.secondHandColor} strokeWidth="1.2" strokeLinecap="round"
@@ -1144,7 +1144,7 @@ const AmbientClock: React.FC = () => {
 
           </div>
 
-          {/* Clock identity badges — shown when AI has generated clock themes */}
+          {/* Clock identity badges - shown when AI has generated clock themes */}
           {(currentClock.handTheme || currentClock.markerTheme || currentClock.pivotTheme) && view === 'studio' && (
             <div className="mt-5 max-w-md w-full z-10">
               <div className="bg-black/50 border border-white/5 backdrop-blur-md rounded-2xl p-3 flex flex-col gap-1.5">
@@ -1220,9 +1220,9 @@ const AmbientClock: React.FC = () => {
                     <span>Generate a Clock Identity</span>
                   </h2>
                   <div className="mt-1.5 p-2.5 rounded-xl bg-indigo-950/30 border border-indigo-500/15">
-                    <p className="text-[10px] text-indigo-300 font-semibold uppercase tracking-wider mb-1">Not just a background — a whole clock world</p>
+                    <p className="text-[10px] text-indigo-300 font-semibold uppercase tracking-wider mb-1">Not just a background - a whole clock world</p>
                     <p className="text-[10px] text-gray-400 leading-relaxed">
-                      Describe any theme — fantasy, architecture, nature, sci-fi. AI generates the entire clock identity: the hands, markers, dial, materials, atmosphere, and soundscape as one cohesive living artwork.
+                      Describe any theme - fantasy, architecture, nature, sci-fi. AI generates the entire clock identity: the hands, markers, dial, materials, atmosphere, and soundscape as one cohesive living artwork.
                     </p>
                   </div>
                 </div>
@@ -1454,7 +1454,7 @@ const AmbientClock: React.FC = () => {
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"
                     >
                       {CITIES.map((c) => (
-                        <option key={c.id} value={c.id} className="bg-[#151515]">{c.name} — {c.desc}</option>
+                        <option key={c.id} value={c.id} className="bg-[#151515]">{c.name} - {c.desc}</option>
                       ))}
                     </select>
                   </div>

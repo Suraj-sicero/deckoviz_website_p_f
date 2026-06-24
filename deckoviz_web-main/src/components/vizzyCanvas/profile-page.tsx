@@ -74,7 +74,7 @@ function ProfilePageInner() {
           </div>
 
           <div className="space-y-3 mb-8">
-            <Field icon={<Mail className="size-4" />} label="Email" value={user?.email || "—"} />
+            <Field icon={<Mail className="size-4" />} label="Email" value={user?.email || "-"} />
             <Field icon={<Sparkles className="size-4" />} label="Credits" value={String(user?.credits ?? 0)} />
             <Field icon={<User className="size-4" />} label="Plan" value={(user?.tier || "starter").replace(/^./, (c) => c.toUpperCase())} />
           </div>

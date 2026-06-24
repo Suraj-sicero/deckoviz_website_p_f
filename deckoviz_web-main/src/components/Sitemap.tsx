@@ -85,7 +85,7 @@ const Sitemap: React.FC = () => {
                 <br />
                 It's the calm, organized friend who always knows where
                 everything is, so you can skip the wandering and get straight to
-                what inspires you. Dive in — every click here leads somewhere
+                what inspires you. Dive in - every click here leads somewhere
                 worth exploring.
               </p>
             </div>

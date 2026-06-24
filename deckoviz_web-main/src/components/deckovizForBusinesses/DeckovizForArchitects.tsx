@@ -113,7 +113,7 @@ const DeckovizArchitectsLanding = () => {
             <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-indigo-300">Intelligent Spaces.</span>
           </motion.p>
 
-          {/* Story Cards — break up the dense text */}
+          {/* Story Cards - break up the dense text */}
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5 text-left">
             {[
               {
@@ -131,7 +131,7 @@ const DeckovizArchitectsLanding = () => {
                 icon: "◉",
                 color: "border-indigo-500/30 bg-indigo-500/5",
                 accent: "text-indigo-400",
-                quote: "While the life within a building is dynamic — evolving through hours, seasons, and moods — the surfaces have remained",
+                quote: "While the life within a building is dynamic - evolving through hours, seasons, and moods - the surfaces have remained",
                 highlight: "frozen."
               },
               {
@@ -140,7 +140,7 @@ const DeckovizArchitectsLanding = () => {
                 icon: "◆",
                 color: "border-pink-500/30 bg-pink-500/5",
                 accent: "text-pink-400",
-                quote: "Deckoviz provides the world's first Generative Ambiance and Visual Platform (GAVP) — an architectural infrastructure with an AI-powered",
+                quote: "Deckoviz provides the world's first Generative Ambiance and Visual Platform (GAVP) - an architectural infrastructure with an AI-powered",
                 highlight: "Experience Layer."
               },
               {

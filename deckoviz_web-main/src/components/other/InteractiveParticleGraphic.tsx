@@ -94,7 +94,7 @@ const InteractiveParticleGraphic = () => {
           p.opacity += (p.baseOpacity - p.opacity) * 0.1;
         }
 
-        // Flat circle — no per-frame gradient creation
+        // Flat circle - no per-frame gradient creation
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = `hsla(${p.hue}, 80%, 62%, ${p.opacity})`;
