@@ -71,7 +71,7 @@ const StorybookTool: React.FC = () => {
     <ToolLayout
       icon="📖"
       title="Storybook Creator"
-      subtitle="Describe your idea — Gemini writes an illustrated story just for you"
+      subtitle="Describe your idea - Gemini writes an illustrated story just for you"
       gradient="from-violet-600 via-indigo-700 to-blue-800"
     >
       <div className="space-y-8">
@@ -168,7 +168,7 @@ const StorybookTool: React.FC = () => {
           </div>
         )}
 
-        {/* Output — Storybook reader */}
+        {/* Output - Storybook reader */}
         {status === "done" && pages.length > 0 && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">
@@ -255,7 +255,7 @@ const StorybookTool: React.FC = () => {
         {/* Info cards */}
         <div className="grid md:grid-cols-3 gap-6">
           {[
-            { icon: "💭", title: "Ideas Welcome", desc: "Any genre, any length — Gemini adapts your concept into structured pages" },
+            { icon: "💭", title: "Ideas Welcome", desc: "Any genre, any length - Gemini adapts your concept into structured pages" },
             { icon: "🎨", title: "Rich Visuals", desc: "Each page gets an AI-generated illustration prompt for immersive storytelling" },
             { icon: "📚", title: "Read & Share", desc: "Flip through your pages in the built-in reader, then save or share" },
           ].map((c) => (

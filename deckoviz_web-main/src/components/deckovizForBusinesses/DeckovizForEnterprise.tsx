@@ -563,7 +563,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] font-bold font-serif">5</div>
                     <div>
                       <h4 className="font-bold text-gray-900 text-lg">The customer journey becomes immersive</h4>
-                      <p className="mt-2 text-gray-600">Instead of isolated touchpoints, the entire journey becomes connected: entry, browsing, ordering, waiting, experiencing—all tied together through a coherent visual layer.</p>
+                      <p className="mt-2 text-gray-600">Instead of isolated touchpoints, the entire journey becomes connected: entry, browsing, ordering, waiting, experiencing-all tied together through a coherent visual layer.</p>
                     </div>
                   </div>
                 </div>
@@ -574,7 +574,7 @@ const ThesisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void
                 <div className="absolute right-0 top-0 w-32 h-32 bg-blue-200/40 rounded-full blur-3xl"></div>
                 <div className="absolute left-0 bottom-0 w-32 h-32 bg-blue-200/40 rounded-full blur-3xl"></div>
 
-                <h3 className="text-xl font-bold text-[#182A4A] mb-4 font-serif relative z-10">Vizzy — the brand, made alive</h3>
+                <h3 className="text-xl font-bold text-[#182A4A] mb-4 font-serif relative z-10">Vizzy - the brand, made alive</h3>
                 <p className="relative z-10">At the center of this is Vizzy. An AI avatar that becomes your brand representative, your storyteller, your guide, and your personality layer.</p>
                 <p className="mt-4 relative z-10">Vizzy can communicate your brand voice, interact with customers, guide discovery, and add a human-like layer to the experience.</p>
                 <p className="mt-4 font-bold text-[#182A4A] relative z-10">Every space gets its own version of Vizzy. Every brand gets its own personality.</p>
@@ -1715,7 +1715,7 @@ export default function DeckovizForEnterprise() {
               create stronger emotional connections, and deliver experiences that evolve over time.
             </motion.p>
 
-            {/* Premium Divider — now below description, above label */}
+            {/* Premium Divider - now below description, above label */}
             <motion.div
               variants={fadeUp}
               className="mt-10 mb-8 flex justify-center items-center gap-4"

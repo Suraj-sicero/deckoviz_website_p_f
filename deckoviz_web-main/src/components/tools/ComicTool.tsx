@@ -158,7 +158,7 @@ const ComicTool: React.FC = () => {
           </div>
         )}
 
-        {/* Output — Comic Layout */}
+        {/* Output - Comic Layout */}
         {status === "done" && result && (
           <div className="space-y-6">
             <div className="flex items-center justify-between">

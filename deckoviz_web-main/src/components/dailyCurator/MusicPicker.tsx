@@ -1,4 +1,4 @@
-// MusicPicker.tsx — attach one preset music track to a collection / artwork / curation.
+// MusicPicker.tsx - attach one preset music track to a collection / artwork / curation.
 // Self-contained: fetches the system tracks, shows the current attachment,
 // previews audio, and attaches/detaches via curatorApi.
 import { useEffect, useRef, useState } from "react";

@@ -31,7 +31,7 @@ function generateId() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Vizzy 2.0 — Intent classification has moved to the backend (vizzyMasterAgent)
+// Vizzy 2.0 - Intent classification has moved to the backend (vizzyMasterAgent)
 // The helpers below are kept only for the image refinement prompt builder,
 // which still runs client-side to assemble a richer prompt before sending.
 // ─────────────────────────────────────────────────────────────────────────────
@@ -319,7 +319,7 @@ function VizzyChatInner() {
       }
 
       // ─────────────────────────────────────────────────────────────────────
-      // VIZZY 2.0 — Step 1: Handle uploaded image (always client-detectable)
+      // VIZZY 2.0 - Step 1: Handle uploaded image (always client-detectable)
       // Image editing is detected by file presence, not LLM classification.
       // ─────────────────────────────────────────────────────────────────────
       const hasUploadedImage = uploadedImage !== null
@@ -376,7 +376,7 @@ function VizzyChatInner() {
       }
 
       // ─────────────────────────────────────────────────────────────────────
-      // VIZZY 2.0 — Step 2: Send to Vizzy Master Agent
+      // VIZZY 2.0 - Step 2: Send to Vizzy Master Agent
       // The backend classifies intent, selects sub-agent, loads memory +
       // system card, and either responds directly or signals media delegation.
       // ─────────────────────────────────────────────────────────────────────
@@ -406,8 +406,8 @@ function VizzyChatInner() {
       console.log("[Vizzy2.0] Intent:", agentData.intent, "| Agent:", agentData.agentUsed)
 
       // ─────────────────────────────────────────────────────────────────────
-      // VIZZY 2.0 — Step 3: If agent signals media delegation, call pipeline
-      // The master agent doesn't handle media — it delegates back to the
+      // VIZZY 2.0 - Step 3: If agent signals media delegation, call pipeline
+      // The master agent doesn't handle media - it delegates back to the
       // existing specialized endpoints (unchanged from v1).
       // ─────────────────────────────────────────────────────────────────────
       if (agentData.delegateToMedia) {
@@ -553,8 +553,8 @@ function VizzyChatInner() {
       }
 
       // ─────────────────────────────────────────────────────────────────────
-      // VIZZY 2.0 — Step 4: Conversational response from Master Agent
-      // The agent returned a full content response — render it directly.
+      // VIZZY 2.0 - Step 4: Conversational response from Master Agent
+      // The agent returned a full content response - render it directly.
       // ─────────────────────────────────────────────────────────────────────
       // Track onboarding completion
       if (agentData.onboardingCompleted && agentData.persona) {

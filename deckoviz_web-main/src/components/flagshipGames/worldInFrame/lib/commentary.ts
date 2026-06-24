@@ -9,7 +9,7 @@ export function vizzyCommentary(winner: Submission | null): string {
   if (wordCount > 20) lines.push("Long, but every clause was earned.");
   if (/[?]$/.test(winner.text)) lines.push("Ending in a question is more generous than it sounds.");
   if (/[!]$/.test(winner.text)) lines.push("The exclamation is doing the work of restraint.");
-  if (/^I /i.test(winner.text)) lines.push("First person, but turned outward — that's the trick.");
+  if (/^I /i.test(winner.text)) lines.push("First person, but turned outward - that's the trick.");
   return lines[Math.floor(Math.random() * lines.length)];
 }
 

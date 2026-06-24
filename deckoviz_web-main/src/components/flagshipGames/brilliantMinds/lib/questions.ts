@@ -106,7 +106,7 @@ export const BANK: QuestionBank = {
       prompt: "What's the only mammal capable of true flight?",
       answer: "Bat",
       contextAside:
-        "There are over 1,400 bat species — about a fifth of all mammals on Earth are bats.",
+        "There are over 1,400 bat species - about a fifth of all mammals on Earth are bats.",
       acceptable: ["bats", "the bat"],
     },
     {
@@ -122,7 +122,7 @@ export const BANK: QuestionBank = {
       universe: "human",
       prompt: "Whose 1922 novel begins 'Stately, plump Buck Mulligan came from the stairhead'?",
       answer: "James Joyce",
-      contextAside: "Ulysses takes place in a single day — June 16, 1904, now celebrated as Bloomsday.",
+      contextAside: "Ulysses takes place in a single day - June 16, 1904, now celebrated as Bloomsday.",
       acceptable: ["joyce"],
     },
     {
@@ -130,7 +130,7 @@ export const BANK: QuestionBank = {
       universe: "natural",
       prompt: "Which planet has the longest day in our solar system?",
       answer: "Venus",
-      contextAside: "A Venusian day is longer than its year — 243 Earth days versus 225.",
+      contextAside: "A Venusian day is longer than its year - 243 Earth days versus 225.",
     },
     {
       id: "s6",
@@ -148,7 +148,7 @@ export const BANK: QuestionBank = {
       prompt:
         "A village's water source has been polluted. They can move the village, decontaminate the source over months, or import bottled water indefinitely. Which is the most ethically defensible choice, and why?",
       exemplar:
-        "Decontamination respects the place, the people's ties to it, and avoids creating downstream waste — but it must include short-term imports.",
+        "Decontamination respects the place, the people's ties to it, and avoids creating downstream waste - but it must include short-term imports.",
     },
     {
       id: "r2",
@@ -156,7 +156,7 @@ export const BANK: QuestionBank = {
       prompt:
         "A bird species evolves to mimic the song of a predator. What pressures might lead to this, and what trade-offs would it face?",
       exemplar:
-        "Mimicry deters competitors but risks attracting actual predators and confusing mates — useful only in narrow ecological windows.",
+        "Mimicry deters competitors but risks attracting actual predators and confusing mates - useful only in narrow ecological windows.",
     },
     {
       id: "r3",
@@ -193,7 +193,7 @@ export const BANK: QuestionBank = {
       universe: "human",
       prompt: "Who wrote 'Frankenstein'?",
       popularAnswer: "Mary Shelley",
-      correctAnswer: "Mary Shelley", // popular and correct happen to align — placeholder
+      correctAnswer: "Mary Shelley", // popular and correct happen to align - placeholder
     },
     {
       id: "m2",
@@ -239,7 +239,7 @@ export const RABBIT_HOLES = [
   {
     title: "The Voynich manuscript",
     body:
-      "An early-15th-century book in an undeciphered script with no clear linguistic match. Recent statistical analysis suggests it follows real linguistic structure — but nobody has cracked it.",
+      "An early-15th-century book in an undeciphered script with no clear linguistic match. Recent statistical analysis suggests it follows real linguistic structure - but nobody has cracked it.",
   },
   {
     title: "Why we have eyebrows",

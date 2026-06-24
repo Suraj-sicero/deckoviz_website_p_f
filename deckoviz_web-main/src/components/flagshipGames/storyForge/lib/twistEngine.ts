@@ -25,7 +25,7 @@ const TWIST_POOL: Record<TwistCategory, string[]> = {
   ],
   emotional: [
     "Someone confesses something they meant to keep forever.",
-    "An old letter arrives — addressed to a name nobody used to know.",
+    "An old letter arrives - addressed to a name nobody used to know.",
     "A song plays that only one of them remembers.",
     "The youngest of them begins to cry without knowing why.",
     "A long-dead promise asks to be kept.",

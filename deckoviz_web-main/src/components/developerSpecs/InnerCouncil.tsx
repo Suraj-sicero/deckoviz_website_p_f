@@ -55,7 +55,7 @@ const InnerCouncil: React.FC = () => {
           </div>
 
           <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-            Meet and map the parts of yourself. The inner critic, the inner child, the achiever—they all have a voice and a purpose.
+            Meet and map the parts of yourself. The inner critic, the inner child, the achiever-they all have a voice and a purpose.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

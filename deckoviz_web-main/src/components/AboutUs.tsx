@@ -256,7 +256,7 @@ export default function AboutUs() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6 items-end">
-            {/* Card 1 — tall, left */}
+            {/* Card 1 - tall, left */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -286,11 +286,11 @@ export default function AboutUs() {
               </div>
               {/* Bottom caption */}
               <div className="absolute bottom-5 inset-x-5 z-20">
-                <p className="text-white/80 text-xs font-medium leading-snug">Mountain landscape display — immersive & serene</p>
+                <p className="text-white/80 text-xs font-medium leading-snug">Mountain landscape display - immersive & serene</p>
               </div>
             </motion.div>
 
-            {/* Card 2 — extra tall, center */}
+            {/* Card 2 - extra tall, center */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -318,11 +318,11 @@ export default function AboutUs() {
                 ★ Featured
               </div>
               <div className="absolute bottom-5 inset-x-5 z-20">
-                <p className="text-white/80 text-xs font-medium leading-snug">Cosmic night sky display — wonder & depth</p>
+                <p className="text-white/80 text-xs font-medium leading-snug">Cosmic night sky display - wonder & depth</p>
               </div>
             </motion.div>
 
-            {/* Card 3 — tall, right */}
+            {/* Card 3 - tall, right */}
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -346,7 +346,7 @@ export default function AboutUs() {
                 <span className="text-white text-[10px] font-bold tracking-widest uppercase">Interior</span>
               </div>
               <div className="absolute bottom-5 inset-x-5 z-20">
-                <p className="text-white/80 text-xs font-medium leading-snug">Ocean sunset display — warmth & vitality</p>
+                <p className="text-white/80 text-xs font-medium leading-snug">Ocean sunset display - warmth & vitality</p>
               </div>
             </motion.div>
           </div>
@@ -380,14 +380,14 @@ export default function AboutUs() {
                   where deep personalization, generative AI, new modalities of art and storytelling, new modalities of
                   mood and state setting, and emotionally intelligent technology converge. Our mission is
                   simple yet profound: to infuse environments with more beauty, meaning, emotion, vitality, and
-                  wonder — powered by the most human-centric, expression-amplifying technologies ever created.
+                  wonder - powered by the most human-centric, expression-amplifying technologies ever created.
                 </p>
               </div>
             </div>
           </motion.div>
 
 
-          {/* Flagship Products Container — frosted glass */}
+          {/* Flagship Products Container - frosted glass */}
           <motion.div {...fadeUp} className="mb-20">
             <div className="group relative overflow-hidden rounded-3xl p-6 mt-8 sm:p-10 lg:p-14
               bg-white/30  transform-gpu
@@ -419,7 +419,7 @@ export default function AboutUs() {
             </div>
           </motion.div>
 
-          {/* Final Description — highlighted pull quote */}
+          {/* Final Description - highlighted pull quote */}
           <motion.div {...fadeUp} className="relative mb-20">
             {/* Background glow */}
             <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/5 via-teal-300/5 to-transparent rounded-3xl" />
@@ -428,7 +428,7 @@ export default function AboutUs() {
               <p className="text-lg sm:text-xl text-gray-800 leading-relaxed font-medium max-w-5xl">
                 Through the power of proprietary modelling and personalization engines, generative creativity, intelligent
                 curation, and a suite of story-affirming features, Deckoviz creates deeply emotionally attuned, multisensory
-                visual experiences — designed to <span className="text-[#2563EB] font-semibold">inspire</span>, <span className="text-teal-500 font-semibold">soothe</span>, <span className="font-semibold text-[#182A4A]">energize</span>, or uplift, depending on your
+                visual experiences - designed to <span className="text-[#2563EB] font-semibold">inspire</span>, <span className="text-teal-500 font-semibold">soothe</span>, <span className="font-semibold text-[#182A4A]">energize</span>, or uplift, depending on your
                 intentions and needs. Every piece of art it displays, every visual it curates, is attuned to your unique life, spirit, and essence.
               </p>
             </div>
@@ -473,14 +473,14 @@ export default function AboutUs() {
               <div className="flex items-center justify-center">
                 <p className="text-lg text-gray-500 leading-relaxed max-w-2xl">
                   At Deckoviz, we are pioneering a new category of<br />
-                  AI-powered spatial enhancement and state-setting — bringing<br />
+                  AI-powered spatial enhancement and state-setting - bringing<br />
                   future-ready tech, personalization, and emotion<br />
                   into homes, offices, restaurants, hotels, wellness spaces, and beyond.
                 </p>
               </div>
             </motion.div>
 
-            {/* Four Philosophy Cards — glassmorphic */}
+            {/* Four Philosophy Cards - glassmorphic */}
             <div className="relative pointer-events-auto">
               {/* Ambient glow */}
               <div className="absolute inset-0 -z-10" style={{ background: 'conic-gradient(from 0deg at center, rgba(37,99,235,0.12) 0%, rgba(24,42,74,0.10) 90deg, rgba(20,184,166,0.06) 180deg, rgba(37,99,235,0.04) 270deg, rgba(24,42,74,0.06) 360deg)', borderRadius: '60%', filter: 'blur(80px)' }} />
@@ -570,7 +570,7 @@ export default function AboutUs() {
 
             {/* Two Column Vision blocks */}
             <motion.div {...fadeUp} className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-              {/* Left — numbered vision statements */}
+              {/* Left - numbered vision statements */}
               <div className="space-y-6">
                 {[
                   { num: '01', title: 'We envision a world where your spaces are not static, but alive with your story. Where art evolves with you, your moods, your states.', body: 'Where your home and work environments are extensions of your innermost self – vibrant, dynamic, evolving, richly expressed.' },
@@ -592,7 +592,7 @@ export default function AboutUs() {
                 ))}
               </div>
 
-              {/* Right — image with glow frame */}
+              {/* Right - image with glow frame */}
               <div className="relative">
                 <div className="absolute -inset-16 transform"
                   style={{ background: 'conic-gradient(from 0deg at center, rgba(37,99,235,0.18) 0%, rgba(24,42,74,0.14) 90deg, rgba(20,184,166,0.06) 180deg, rgba(37,99,235,0.10) 270deg, rgba(24,42,74,0.12) 360deg)', borderRadius: '50%', filter: 'blur(60px)', zIndex: 1 }} />
@@ -617,7 +617,7 @@ export default function AboutUs() {
         {/* Product Section 1 - Our Product Deckoviz */}
         <div className="relative mt-32 mb-32">
           <div className="relative z-10 max-w-6xl mx-auto px-4">
-            {/* Top Badge — brand pill */}
+            {/* Top Badge - brand pill */}
             <div className="flex justify-start mb-8">
               <div className="relative group cursor-default">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-[#182A4A] to-[#2563EB] rounded-xl blur opacity-30 transition duration-500" />
@@ -1349,7 +1349,7 @@ export default function AboutUs() {
           </div>
         </div>
 
-        {/* Join Our Community Section — Frosted Glass */}
+        {/* Join Our Community Section - Frosted Glass */}
         <div className="relative mt-32 mb-32" style={{ isolation: 'isolate' }}>
           <div className="relative max-w-6xl mx-auto px-4">
 

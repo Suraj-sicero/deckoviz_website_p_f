@@ -180,7 +180,7 @@ const Glass: React.FC<{
       ...style,
     }}
   >
-    {/* Strong top-left white sheen — the glass highlight */}
+    {/* Strong top-left white sheen - the glass highlight */}
     <div
       className="absolute inset-0 pointer-events-none"
       style={{
@@ -240,7 +240,7 @@ const EnterpriseWhyDeckoviz: React.FC = () => {
       /* White → indigo gradient base */
       style={{ background: "linear-gradient(145deg, #ffffff 0%, #f0f3ff 20%, #e0e7ff 40%, #c7d2fe 65%, #818cf8 85%, #6366f1 100%)" }}
     >
-      {/* ── Bold indigo/violet color blobs — clearly visible behind glass ── */}
+      {/* ── Bold indigo/violet color blobs - clearly visible behind glass ── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Large violet top-left */}
         <div className="absolute -top-40 -left-40 w-[700px] h-[700px] rounded-full"

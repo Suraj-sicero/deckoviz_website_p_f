@@ -265,7 +265,7 @@ export function useDebate(): Ctx {
   return ctx;
 }
 
-/* Rough rhetoric score — used by Crowd Reaction meter & Vizzy commendation */
+/* Rough rhetoric score - used by Crowd Reaction meter & Vizzy commendation */
 export function scoreRhetoric(text: string): number {
   const length = text.trim().length;
   if (length === 0) return 0;

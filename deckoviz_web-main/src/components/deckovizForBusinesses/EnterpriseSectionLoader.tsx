@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 // ─── Reusable scroll-triggered wrappers ───────────────────────────────────────
 
-/** Fade up — default for section headings / text blocks */
+/** Fade up - default for section headings / text blocks */
 export const FadeUp = ({
   children,
   delay = 0,
@@ -24,7 +24,7 @@ export const FadeUp = ({
   </motion.div>
 );
 
-/** Slide in from left — for odd-indexed cards / left-side content */
+/** Slide in from left - for odd-indexed cards / left-side content */
 export const SlideLeft = ({
   children,
   delay = 0,
@@ -45,7 +45,7 @@ export const SlideLeft = ({
   </motion.div>
 );
 
-/** Slide in from right — for even-indexed cards / right-side content */
+/** Slide in from right - for even-indexed cards / right-side content */
 export const SlideRight = ({
   children,
   delay = 0,
@@ -66,7 +66,7 @@ export const SlideRight = ({
   </motion.div>
 );
 
-/** Scale pop — for cards / feature boxes */
+/** Scale pop - for cards / feature boxes */
 export const ScalePop = ({
   children,
   delay = 0,
@@ -91,7 +91,7 @@ export const ScalePop = ({
   </motion.div>
 );
 
-/** Staggered grid container — wraps a list, staggers each child */
+/** Staggered grid container - wraps a list, staggers each child */
 export const StaggerGrid = ({
   children,
   className = "",
@@ -113,7 +113,7 @@ export const StaggerGrid = ({
   </motion.div>
 );
 
-/** Card item — used inside StaggerGrid */
+/** Card item - used inside StaggerGrid */
 export const StaggerItem = ({
   children,
   className = "",

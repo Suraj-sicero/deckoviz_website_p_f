@@ -82,7 +82,7 @@ const StoryForgePlay: React.FC = () => {
       if (submittedAfter < state.players.length) {
         dispatch({ type: "BUMP_TURN" });
       } else {
-        // round complete — generate scene + twist
+        // round complete - generate scene + twist
         void completeRound();
       }
     },
@@ -115,7 +115,7 @@ const StoryForgePlay: React.FC = () => {
 
   const finishVote = () => {
     dispatch({ type: "CLOSE_VOTING" });
-    // Reveal a twist (unless final round just ended — then go straight to ending vote)
+    // Reveal a twist (unless final round just ended - then go straight to ending vote)
     if (state.round >= state.roundLimit) {
       // If we're at the final round, jump to ending vote
       dispatch({ type: "ADVANCE_ROUND" });
@@ -327,7 +327,7 @@ const StoryForgePlay: React.FC = () => {
           </div>
           <div className="lg:col-span-2 space-y-4">
             <VizzyNarrator
-              text={`A turn in the tale — ${state.activeTwist.text}`}
+              text={`A turn in the tale - ${state.activeTwist.text}`}
               genre={genre}
               type="twist"
             />

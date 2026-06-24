@@ -1,4 +1,4 @@
-// Vizzy creation canvas — official template library (103 prompts, 7 categories).
+// Vizzy creation canvas - official template library (103 prompts, 7 categories).
 // Placeholders use [square brackets] and the renderer highlights them so users
 // see at a glance what they should fill in.
 
@@ -35,12 +35,12 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Video art",
     "video loop",
-    "Create a living art loop for my home in the style of [impressionist / watercolour / cinematic] — inspired by [a memory, place, or feeling you describe]."
+    "Create a living art loop for my home in the style of [impressionist / watercolour / cinematic] - inspired by [a memory, place, or feeling you describe]."
   ),
   t(
     "Video art",
     "ambient video",
-    "Create a calming ambient video for my living room featuring [a scene from nature, a cityscape at golden hour, or a landscape you love] — slow, looping, no sound."
+    "Create a calming ambient video for my living room featuring [a scene from nature, a cityscape at golden hour, or a landscape you love] - slow, looping, no sound."
   ),
   t(
     "Video art",
@@ -50,7 +50,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Video art",
     "family video",
-    "Turn this family photo [upload image] into a softly animated living portrait — subtle motion, painterly style, warm and timeless."
+    "Turn this family photo [upload image] into a softly animated living portrait - subtle motion, painterly style, warm and timeless."
   ),
   t(
     "Video art",
@@ -60,17 +60,17 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Video art",
     "nature loop",
-    "Create a looping nature video for my room that feels like [a Japanese forest in rain / the Amalfi coast at dusk / a snowy Nordic morning] — meditative and cinematic."
+    "Create a looping nature video for my room that feels like [a Japanese forest in rain / the Amalfi coast at dusk / a snowy Nordic morning] - meditative and cinematic."
   ),
   t(
     "Video art",
     "narrative art video",
-    "Create a short narrative art video based on the theme of [a theme you choose: grief, hope, wonder, solitude, joy] — visual poetry, no dialogue, 30–60 seconds."
+    "Create a short narrative art video based on the theme of [a theme you choose: grief, hope, wonder, solitude, joy] - visual poetry, no dialogue, 30–60 seconds."
   ),
   t(
     "Video art",
     "seasonal video",
-    "Create a [season] mood video for my home — [winter hygge / spring bloom / monsoon evenings / autumn light] — with [warm / cool / golden] tones and a sense of stillness."
+    "Create a [season] mood video for my home - [winter hygge / spring bloom / monsoon evenings / autumn light] - with [warm / cool / golden] tones and a sense of stillness."
   ),
 
   // ===== Artwork (12) =====
@@ -82,12 +82,12 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Artwork",
     "abstract art",
-    "Create an abstract artwork inspired by a memory that means a lot to me. The memory is [describe it — a place, a person, a moment, a feeling it left behind]."
+    "Create an abstract artwork inspired by a memory that means a lot to me. The memory is [describe it - a place, a person, a moment, a feeling it left behind]."
   ),
   t(
     "Artwork",
     "mood art",
-    "Create a hybrid representational and abstract piece that captures my mood today. My mood is [describe it freely — a weather metaphor, a colour, a texture, a few words]."
+    "Create a hybrid representational and abstract piece that captures my mood today. My mood is [describe it freely - a weather metaphor, a colour, a texture, a few words]."
   ),
   t(
     "Artwork",
@@ -97,22 +97,22 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Artwork",
     "collaborative art",
-    "Create a collaborative artwork for [me and my partner / me and my friend / our family]. Each of us will describe something: [Person 1: ...] [Person 2: ...] — blend our inputs into one cohesive piece."
+    "Create a collaborative artwork for [me and my partner / me and my friend / our family]. Each of us will describe something: [Person 1: ...] [Person 2: ...] - blend our inputs into one cohesive piece."
   ),
   t(
     "Artwork",
     "historic art",
-    "Create a historically inspired artwork in the style of [Renaissance / Mughal miniature / Ukiyo-e / Art Nouveau / Baroque] — themed around [a subject, scene, or story you describe]."
+    "Create a historically inspired artwork in the style of [Renaissance / Mughal miniature / Ukiyo-e / Art Nouveau / Baroque] - themed around [a subject, scene, or story you describe]."
   ),
   t(
     "Artwork",
     "conceptual art",
-    "Create a conceptual artwork that gives visual form to this idea or thought: [write your idea, question, or belief here]. Style: [minimal / symbolic / surrealist / figurative — your choice]."
+    "Create a conceptual artwork that gives visual form to this idea or thought: [write your idea, question, or belief here]. Style: [minimal / symbolic / surrealist / figurative - your choice]."
   ),
   t(
     "Artwork",
     "nature art",
-    "Create a painterly nature artwork inspired by [a specific landscape, plant, animal, or natural phenomenon you love] — in the style of [impressionism / botanical illustration / Chinese ink painting]."
+    "Create a painterly nature artwork inspired by [a specific landscape, plant, animal, or natural phenomenon you love] - in the style of [impressionism / botanical illustration / Chinese ink painting]."
   ),
   t(
     "Artwork",
@@ -122,17 +122,17 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Artwork",
     "seasonal art",
-    "Create a seasonal artwork that captures [spring / summer / monsoon / autumn / winter] as I experience it — inspired by [a specific place, feeling, or tradition connected to this season for you]."
+    "Create a seasonal artwork that captures [spring / summer / monsoon / autumn / winter] as I experience it - inspired by [a specific place, feeling, or tradition connected to this season for you]."
   ),
   t(
     "Artwork",
     "philosophical art",
-    "Create an artwork that visualises the concept of [love / impermanence / belonging / solitude / time] — rendered as [figurative / abstract / surrealist] with a [warm / cool / monochrome] palette."
+    "Create an artwork that visualises the concept of [love / impermanence / belonging / solitude / time] - rendered as [figurative / abstract / surrealist] with a [warm / cool / monochrome] palette."
   ),
   t(
     "Artwork",
     "generative series",
-    "Create a series of three related artworks — a visual triptych — around the theme of [a theme you choose]. Each piece should feel distinct but part of the same world."
+    "Create a series of three related artworks - a visual triptych - around the theme of [a theme you choose]. Each piece should feel distinct but part of the same world."
   ),
 
   // ===== Posters (12) =====
@@ -200,12 +200,12 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   // ===== Stories (10) =====
   t(
     "Stories",
-    "children's story — static",
+    "children's story - static",
     "Create an illustrated children's story for my [son / daughter / child, name and age optional] who loves [dinosaurs / space / magic / animals / adventure]. Tone: [gentle and warm / exciting / funny]. Length: [short / medium]."
   ),
   t(
     "Stories",
-    "thriller story — video",
+    "thriller story - video",
     "Create a short thriller story visual for my team / group who enjoy [suspense / mystery / sci-fi]. Style: [cinematic stills / comic panels / graphic novel]. Setting: [describe or leave to Vizzy]."
   ),
   t(
@@ -226,26 +226,26 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Stories",
     "mythological story",
-    "Create a story that retells [a myth, legend, or folk tale from a culture you name] — but set it in [a contemporary city / a future world / an imaginary landscape]. Tone: [lyrical / cinematic / graphic]."
+    "Create a story that retells [a myth, legend, or folk tale from a culture you name] - but set it in [a contemporary city / a future world / an imaginary landscape]. Tone: [lyrical / cinematic / graphic]."
   ),
   t(
     "Stories",
-    "family story — static",
+    "family story - static",
     "Create a visual storybook based on a family story or memory. The story is: [describe it]. Characters: [name and describe them]. Style: [warm illustrated / painterly / photorealistic / vintage]."
   ),
   t(
     "Stories",
     "comic strip",
-    "Create a comic strip story around this scenario: [describe the situation, characters, and tone — funny / dramatic / surreal / slice-of-life]. Panels: [3 / 6 / 9]. Style: [bold graphic / hand-drawn / noir / colourful]."
+    "Create a comic strip story around this scenario: [describe the situation, characters, and tone - funny / dramatic / surreal / slice-of-life]. Panels: [3 / 6 / 9]. Style: [bold graphic / hand-drawn / noir / colourful]."
   ),
   t(
     "Stories",
     "pet story",
-    "Create a short illustrated story starring my pet [name, species, and a brief personality description]. Adventure theme: [describe an imaginary scenario — a great escape, a quest, a mystery]."
+    "Create a short illustrated story starring my pet [name, species, and a brief personality description]. Adventure theme: [describe an imaginary scenario - a great escape, a quest, a mystery]."
   ),
   t(
     "Stories",
-    "future story — video",
+    "future story - video",
     "Create a short film-style visual story set in the year [a year you choose]. The world looks like [describe it briefly]. The story follows [a character you describe]. Tone: [hopeful / dystopian / whimsical / philosophical]."
   ),
 
@@ -310,7 +310,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Personal & memory",
     "memory artwork",
-    "Create an artwork from a memory I'd like to preserve. The memory: [describe it — who was there, where, what it felt like]. Style: [nostalgic and warm / dreamlike / painterly / photorealistic]."
+    "Create an artwork from a memory I'd like to preserve. The memory: [describe it - who was there, where, what it felt like]. Style: [nostalgic and warm / dreamlike / painterly / photorealistic]."
   ),
   t(
     "Personal & memory",
@@ -330,12 +330,12 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Personal & memory",
     "dream artwork",
-    "Create an artwork based on a dream I had. Here is what I remember: [describe the imagery, feelings, and fragments — as vivid or vague as you like]. Style: [surrealist / dreamlike / symbolic / abstract]."
+    "Create an artwork based on a dream I had. Here is what I remember: [describe the imagery, feelings, and fragments - as vivid or vague as you like]. Style: [surrealist / dreamlike / symbolic / abstract]."
   ),
   t(
     "Personal & memory",
     "self-portrait",
-    "Create an artistic self-portrait — not photographic, but expressive. Describe yourself: [appearance, mood, what you're carrying right now, what you want the portrait to say about you]. Style: [your choice]."
+    "Create an artistic self-portrait - not photographic, but expressive. Describe yourself: [appearance, mood, what you're carrying right now, what you want the portrait to say about you]. Style: [your choice]."
   ),
   t(
     "Personal & memory",
@@ -380,7 +380,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Personal & memory",
     "heritage artwork",
-    "Create an artwork that honours my cultural heritage and background. My background: [describe — country, traditions, imagery, textiles, stories]. Style: [traditional / contemporary reinterpretation / abstract]."
+    "Create an artwork that honours my cultural heritage and background. My background: [describe - country, traditions, imagery, textiles, stories]. Style: [traditional / contemporary reinterpretation / abstract]."
   ),
   t(
     "Personal & memory",
@@ -390,7 +390,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Personal & memory",
     "relationship artwork",
-    "Create an artwork that represents [a relationship that matters to me — with a partner, friend, parent, or child]. What defines it: [describe freely]. Style: [abstract / figurative / symbolic / illustrative]."
+    "Create an artwork that represents [a relationship that matters to me - with a partner, friend, parent, or child]. What defines it: [describe freely]. Style: [abstract / figurative / symbolic / illustrative]."
   ),
   t(
     "Personal & memory",
@@ -405,7 +405,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Personal & memory",
     "recipe artwork",
-    "Create a beautifully illustrated recipe card or food artwork for [a dish that means something to you — a family recipe, a favourite, a memory]. Style: [vintage botanical / editorial / warm and rustic]."
+    "Create a beautifully illustrated recipe card or food artwork for [a dish that means something to you - a family recipe, a favourite, a memory]. Style: [vintage botanical / editorial / warm and rustic]."
   ),
   t(
     "Personal & memory",
@@ -425,7 +425,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Personal & memory",
     "star map",
-    "Create a star map artwork for a night that mattered — [a birth, a wedding, a first meeting, an anniversary]. Date: [dd/mm/yyyy]. Location: [city or place]. Style: [minimal and elegant / celestial and romantic / bold graphic]."
+    "Create a star map artwork for a night that mattered - [a birth, a wedding, a first meeting, an anniversary]. Date: [dd/mm/yyyy]. Location: [city or place]. Style: [minimal and elegant / celestial and romantic / bold graphic]."
   ),
   t(
     "Personal & memory",
@@ -434,8 +434,8 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   ),
   t(
     "Personal & memory",
-    "home display — daily quote",
-    "Set up a daily rotating quote display for my Deckoviz frame. Theme of quotes: [wisdom / poetry / humour / philosophy / nature / love — choose yours]. Typography style: [minimal / bold / handwritten]."
+    "home display - daily quote",
+    "Set up a daily rotating quote display for my Deckoviz frame. Theme of quotes: [wisdom / poetry / humour / philosophy / nature / love - choose yours]. Typography style: [minimal / bold / handwritten]."
   ),
   t(
     "Personal & memory",
@@ -450,7 +450,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Personal & memory",
     "language & poetry",
-    "Create a visual artwork featuring writing in [a language I love — Hindi, Urdu, Arabic, Japanese, French, etc.]. Text: [a word, phrase, or poem you supply]. Style: [calligraphic / typographic / illustrated]."
+    "Create a visual artwork featuring writing in [a language I love - Hindi, Urdu, Arabic, Japanese, French, etc.]. Text: [a word, phrase, or poem you supply]. Style: [calligraphic / typographic / illustrated]."
   ),
   t(
     "Personal & memory",
@@ -477,21 +477,21 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Social & seasonal",
     "Eid display",
-    "Create an Eid celebration display. Style: [geometric and ornate / contemporary / calligraphic / soft and luminous]. Include: [a greeting, a crescent, lanterns, or floral motifs — your choice]."
+    "Create an Eid celebration display. Style: [geometric and ornate / contemporary / calligraphic / soft and luminous]. Include: [a greeting, a crescent, lanterns, or floral motifs - your choice]."
   ),
   t(
     "Social & seasonal",
     "Holi display",
-    "Create a Holi celebration display — an explosion of colour and joy. Style: [vibrant and painterly / abstract colour burst / illustrated / photographic]. Mood: [playful / celebratory / community]."
+    "Create a Holi celebration display - an explosion of colour and joy. Style: [vibrant and painterly / abstract colour burst / illustrated / photographic]. Mood: [playful / celebratory / community]."
   ),
   t(
     "Social & seasonal",
-    "seasonal display — spring",
+    "seasonal display - spring",
     "Create a spring seasonal display for my home frame. Imagery: [cherry blossom / wildflowers / light and green / a specific spring memory]. Style: [watercolour / painterly / photographic / illustrated]."
   ),
   t(
     "Social & seasonal",
-    "seasonal display — autumn",
+    "seasonal display - autumn",
     "Create an autumn seasonal display. Feeling: [cosy / melancholy and beautiful / harvest / woodland]. Colours: [amber / rust / deep green / golden]. Style: [painterly / photographic / illustrated / abstract]."
   ),
   t(
@@ -507,7 +507,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Social & seasonal",
     "Mother's Day artwork",
-    "Create a Mother's Day artwork for [Mum / a specific name]. Here is what I want to say about her: [write freely — a quality, a memory, a thank you]. Style: [warm and painterly / floral / illustrated / typographic]."
+    "Create a Mother's Day artwork for [Mum / a specific name]. Here is what I want to say about her: [write freely - a quality, a memory, a thank you]. Style: [warm and painterly / floral / illustrated / typographic]."
   ),
   t(
     "Social & seasonal",
@@ -532,7 +532,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Social & seasonal",
     "Lunar New Year display",
-    "Create a Lunar New Year display. Year of the [animal — look up which year it is]. Style: [traditional red and gold / contemporary / illustrated / brush painting]. Mood: [festive / prosperous / joyful]."
+    "Create a Lunar New Year display. Year of the [animal - look up which year it is]. Style: [traditional red and gold / contemporary / illustrated / brush painting]. Mood: [festive / prosperous / joyful]."
   ),
   t(
     "Social & seasonal",
@@ -547,7 +547,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Social & seasonal",
     "anniversary display",
-    "Create an anniversary display for [names] — [number] years. What the journey has looked like: [a sentence or two, or a few words]. Style: [romantic / typographic / illustrated / cinematic]."
+    "Create an anniversary display for [names] - [number] years. What the journey has looked like: [a sentence or two, or a few words]. Style: [romantic / typographic / illustrated / cinematic]."
   ),
   t(
     "Social & seasonal",
@@ -557,7 +557,7 @@ export const PROMPT_TEMPLATES: PromptTemplate[] = [
   t(
     "Social & seasonal",
     "neighbourhood welcome display",
-    "Create a welcome display for my home — something that reflects who we are for guests or visitors. Our home in three words: [describe]. Style: [warm / witty / illustrated / typographic / botanical]."
+    "Create a welcome display for my home - something that reflects who we are for guests or visitors. Our home in three words: [describe]. Style: [warm / witty / illustrated / typographic / botanical]."
   ),
 ]
 

@@ -61,7 +61,7 @@ const text = [
 
     `We're creating a new emotional operating system for how humans connect and flourish together. The old systems are broken. The new ones haven't been built yet. This is that liminal moment where everything is possible, where a small team with the right vision and execution can shape what comes next for billions of people.`,
 
-    `This role is for a person with a special set of attributes — the person who reads this and feels it in their chest. Who recognizes that this is exactly what they've been waiting for or preparing for. Who sees the enormity of what we're attempting and thinks: "yes, this, now."`
+    `This role is for a person with a special set of attributes - the person who reads this and feels it in their chest. Who recognizes that this is exactly what they've been waiting for or preparing for. Who sees the enormity of what we're attempting and thinks: "yes, this, now."`
   ];
 
 const points = [
@@ -83,11 +83,11 @@ const points = [
   ];
 
    const paragraphs = [
-    `We're launching in 15 days across NYC and London. We're planning to fundraise in one to two months. The moment is serious. Tectonic shifts are happening, and we might be trending toward dystopic futures — pardon the seeming hyperbole. This is urgent. It has never been more so.`,
+    `We're launching in 15 days across NYC and London. We're planning to fundraise in one to two months. The moment is serious. Tectonic shifts are happening, and we might be trending toward dystopic futures - pardon the seeming hyperbole. This is urgent. It has never been more so.`,
 
     `Elinity moves beyond the traditional connection paradigm into something people will use as their relationship flourishing buddy for years to come. We have a suite of connection-oriented games, smart voice journaling, reflections, and AI coaching built in. We're not just matching people. We're helping them thrive together over time.`,
 
-    `The world is breaking down socially. Loneliness and low relationship satisfaction are epidemic. Algorithms are shallow. Tech is anxiety-inducing — even parasitic. UX is hijacking our dopamine systems, frying our meaning circuitry, pushing us toward a simulacra.`,
+    `The world is breaking down socially. Loneliness and low relationship satisfaction are epidemic. Algorithms are shallow. Tech is anxiety-inducing - even parasitic. UX is hijacking our dopamine systems, frying our meaning circuitry, pushing us toward a simulacra.`,
 
     `We're building the antidote. A place where depth wins over breadth. Where meaning wins over metrics. Where conscious connection wins over mindless consumption.`
   ];

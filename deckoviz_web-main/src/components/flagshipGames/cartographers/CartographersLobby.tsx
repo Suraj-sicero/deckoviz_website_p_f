@@ -91,7 +91,7 @@ const CartographersLobby: React.FC = () => {
                 <ul className="mt-3 text-xs text-white/50 space-y-1">
                   <li>· 6 expedition types: People, History, Mythology, Language, Crisis, Hidden.</li>
                   <li>· An Open Question Board that never empties.</li>
-                  <li>· Contradictions surface naturally — keep, resolve, or canonize.</li>
+                  <li>· Contradictions surface naturally - keep, resolve, or canonize.</li>
                   <li>· Every third expedition: an unsolicited world event.</li>
                 </ul>
               </div>

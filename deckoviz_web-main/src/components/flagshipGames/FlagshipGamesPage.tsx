@@ -63,7 +63,7 @@ const games: FlagshipGame[] = [
     title: "Dream Architect",
     tagline: "Collaboratively dream a place into existence",
     description:
-      "A slow, atmospheric worldbuilding game for 2–5. Across four phases — Geography, Atmosphere, Inhabitants, Secret — you build an imaginary world together while Vizzy paints it onto a living TV frame, then names it and saves it to the World Library.",
+      "A slow, atmospheric worldbuilding game for 2–5. Across four phases - Geography, Atmosphere, Inhabitants, Secret - you build an imaginary world together while Vizzy paints it onto a living TV frame, then names it and saves it to the World Library.",
     route: "/flagship-games/dream-architect",
     players: "2–5 players · Solo Mode",
     duration: "30–45 mins",
@@ -116,7 +116,7 @@ const games: FlagshipGame[] = [
     title: "One Word At A Time",
     tagline: "Improv jazz, in language",
     description:
-      "A fast, chaotic, hilarious word-chain game for 2–8. Each turn you add ONE word — eight seconds, no edits, no plans. Vizzy narrates every completed sentence with full theatrical commitment and may interrupt to redirect the chaos.",
+      "A fast, chaotic, hilarious word-chain game for 2–8. Each turn you add ONE word - eight seconds, no edits, no plans. Vizzy narrates every completed sentence with full theatrical commitment and may interrupt to redirect the chaos.",
     route: "/flagship-games/one-word",
     players: "2–8 players",
     duration: "15–20 mins",
@@ -150,7 +150,7 @@ const games: FlagshipGame[] = [
     title: "The Inheritance",
     tagline: "A family saga, played across months",
     description:
-      "A long-form multi-session experience for 2–5. Together you found a fictional family, then return chapter by chapter — marriages, departures, reckonings — while Vizzy keeps an archive of every wound, heirloom, and letter. The family persists between sessions. Forever.",
+      "A long-form multi-session experience for 2–5. Together you found a fictional family, then return chapter by chapter - marriages, departures, reckonings - while Vizzy keeps an archive of every wound, heirloom, and letter. The family persists between sessions. Forever.",
     route: "/flagship-games/inheritance",
     players: "2–5 players · Solo Mode",
     duration: "Weeks to months",
@@ -167,7 +167,7 @@ const games: FlagshipGame[] = [
     title: "The Debating Society",
     tagline: "Oxford Union after midnight",
     description:
-      "A theatrical performance-debate game for 2–8 players. Vizzy moderates like a slightly smug professor. Open, rebut, get cross-examined, then close — Heckle and Pivot tokens raise the stakes. You're judged on persuasion and wit, not on whether you actually believe what you're saying.",
+      "A theatrical performance-debate game for 2–8 players. Vizzy moderates like a slightly smug professor. Open, rebut, get cross-examined, then close - Heckle and Pivot tokens raise the stakes. You're judged on persuasion and wit, not on whether you actually believe what you're saying.",
     route: "/flagship-games/debating-society",
     players: "2–8 players",
     duration: "25–40 mins",
@@ -184,7 +184,7 @@ const games: FlagshipGame[] = [
     title: "Cartographers",
     tagline: "A civilization, slowly drawn",
     description:
-      "A persistent long-form worldbuilding experience for 2–6. Begin from a blank parchment and seven founding questions, then return for Expeditions — peoples, history, mythology, language, crisis, hidden things. Vizzy maintains the atlas, the open questions, and the world events between sessions.",
+      "A persistent long-form worldbuilding experience for 2–6. Begin from a blank parchment and seven founding questions, then return for Expeditions - peoples, history, mythology, language, crisis, hidden things. Vizzy maintains the atlas, the open questions, and the world events between sessions.",
     route: "/flagship-games/cartographers",
     players: "2–6 players · Solo Mode",
     duration: "Weeks to months",
@@ -370,7 +370,7 @@ const FlagshipGamesPage: React.FC = () => {
             </motion.div>
           ))}
 
-          {/* Placeholder slot — invites players to anticipate more */}
+          {/* Placeholder slot - invites players to anticipate more */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -382,7 +382,7 @@ const FlagshipGamesPage: React.FC = () => {
             </div>
             <h4 className="text-white/80 font-semibold mb-2">More worlds coming</h4>
             <p className="text-xs text-white/40 max-w-xs">
-              New flagship games are added in sequence. Bookmark this page — the next title arrives soon.
+              New flagship games are added in sequence. Bookmark this page - the next title arrives soon.
             </p>
           </motion.div>
         </div>

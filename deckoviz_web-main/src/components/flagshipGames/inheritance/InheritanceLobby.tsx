@@ -43,7 +43,7 @@ const InheritanceLobby: React.FC = () => {
             What gets inherited
           </h1>
           <p className="text-white/60 mt-3 max-w-xl mx-auto italic">
-            Not only objects — ways of loving, fearing, remembering, and leaving.
+            Not only objects - ways of loving, fearing, remembering, and leaving.
           </p>
         </motion.div>
 

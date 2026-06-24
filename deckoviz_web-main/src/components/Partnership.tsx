@@ -44,7 +44,7 @@ const Partnership: React.FC = () => {
               Deckoviz is the world’s first AI-powered dynamic art frame. A portal
               of expression. A window into soul and space. We’re partnering with
               creators, tastemakers, retailers, sales professionals to bring this
-              magic to the world — together.
+              magic to the world - together.
             </p>
             <p>
               Whether you’re a designer, content creator, retailer, or sales
@@ -118,7 +118,7 @@ const Partnership: React.FC = () => {
             </p>
 
             <ul className="list-none space-y-4 text-lg text-gray-700 leading-relaxed bg-white/30 border border-white/40 rounded-2xl p-6 shadow-[inset_0_2px_15px_rgba(255,255,255,0.7)]">
-              <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span><strong>Up to $15k+ in commissions/month</strong> or more — no caps</li>
+              <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span><strong>Up to $15k+ in commissions/month</strong> or more - no caps</li>
               <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span><strong>$15-40K base salary</strong> for full-time roles, or uncapped earnings as a contractor</li>
               <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Full support with product demos, sales decks, onboarding and leads (where applicable)</li>
               <li className="flex items-start gap-3"><span className="mt-2 w-2 h-2 rounded-full bg-blue-500 flex-shrink-0"></span>Flexible location & working style - remote, on-ground, hybrid</li>
@@ -223,7 +223,7 @@ const Partnership: React.FC = () => {
           </h2>
 
           <p className="text-xl text-gray-700 leading-relaxed mb-10 max-w-2xl mx-auto">
-            We’re building a world of immersive, intentional spaces. Let’s create something unforgettable — together.
+            We’re building a world of immersive, intentional spaces. Let’s create something unforgettable - together.
           </p>
 
           <a href="/contact" className="inline-block px-10 py-5 rounded-full bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white font-bold text-lg shadow-[0_10px_30px_rgba(37,99,235,0.4)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.6)] hover:-translate-y-1 transition-all duration-300">

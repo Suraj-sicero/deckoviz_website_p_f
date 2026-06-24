@@ -513,7 +513,7 @@ const DetailHuntView: React.FC<{ onResume: () => void; navigate: ReturnType<type
           {!voting ? (
             <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4 space-y-3">
               <div className="text-xs text-white/60">
-                {state.players[activeIdx]?.name}'s turn — {activeIdx + 1} / {state.players.length}
+                {state.players[activeIdx]?.name}'s turn - {activeIdx + 1} / {state.players.length}
               </div>
               <input
                 value={draft}
@@ -592,12 +592,12 @@ const TheReturnView: React.FC<{ onFinish: () => void; navigate: ReturnType<typeo
           <div className="rounded-2xl border border-amber-300/30 bg-amber-500/10 p-4">
             <div className="text-[10px] uppercase tracking-[0.3em] text-amber-200 mb-1">The Return</div>
             <p className="text-sm text-white/80 italic">
-              "You've seen each other now. One final sentence — no format. The pieces will be saved together."
+              "You've seen each other now. One final sentence - no format. The pieces will be saved together."
             </p>
           </div>
           <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4 space-y-3">
             <div className="text-xs text-white/60">
-              {state.players[activeIdx]?.name}'s turn — {activeIdx + 1} / {state.players.length}
+              {state.players[activeIdx]?.name}'s turn - {activeIdx + 1} / {state.players.length}
             </div>
             <textarea
               value={draft}

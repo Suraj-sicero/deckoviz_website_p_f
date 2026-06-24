@@ -130,7 +130,7 @@ const OneWordPlay: React.FC = () => {
   const redirect = () => {
     const player = state.players[state.currentTurnIdx];
     if (!player || player.redirectUsed) return;
-    const text = buildSentenceText(state.currentWords) + "—";
+    const text = buildSentenceText(state.currentWords) + "-";
     const moodForSentence = state.mood ? rollMoodPerSentence(state.mood, state.sentenceIdx - 1) : null;
     const record: SentenceRecord = {
       id: `s-${state.sentenceIdx}-${Date.now()}-redir`,
@@ -512,7 +512,7 @@ const FinalVoteView: React.FC<{ onDone: () => void }> = ({ onDone }) => {
                 className="w-full text-left rounded-2xl border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] p-4 transition-colors"
               >
                 <p className="font-serif text-white leading-relaxed">"{s.text}"</p>
-                <div className="text-[10px] text-white/40 mt-1">{ender ? `closed by ${ender.name}` : "—"}</div>
+                <div className="text-[10px] text-white/40 mt-1">{ender ? `closed by ${ender.name}` : "-"}</div>
               </button>
             );
           })}

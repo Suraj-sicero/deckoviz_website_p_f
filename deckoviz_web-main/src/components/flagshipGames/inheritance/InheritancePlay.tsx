@@ -183,7 +183,7 @@ const FoundingPortraitView: React.FC = () => {
 
       <div className="rounded-2xl border border-amber-300/30 bg-amber-500/10 p-4">
         <p className="font-serif italic text-white/85 leading-relaxed">
-          A family that began in {state.archive.founding?.origin || "an unnamed place"} —
+          A family that began in {state.archive.founding?.origin || "an unnamed place"} -
           made {state.archive.founding?.craft || "things with their hands"},
           carried {state.archive.founding?.wound || "an old silence"},
           and treated {state.archive.founding?.relationToBeauty || "beauty"} with characteristic suspicion.
@@ -489,7 +489,7 @@ const ChapterPlayView: React.FC = () => {
 
       <div className="rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md p-4 space-y-2">
         <div className="text-[10px] uppercase tracking-[0.3em] text-amber-200">Heirloom (optional)</div>
-        <p className="text-xs text-white/50 italic">An object, a phrase, a tradition, a recipe — something to carry forward.</p>
+        <p className="text-xs text-white/50 italic">An object, a phrase, a tradition, a recipe - something to carry forward.</p>
         <div className="flex gap-2 flex-wrap">
           {(["Object", "Phrase", "Tradition", "Ritual", "Recipe", "Song", "Photograph"] as const).map((k) => (
             <button
@@ -674,7 +674,7 @@ const LibraryView: React.FC = () => {
         <div className="text-[10px] uppercase tracking-[0.3em] text-amber-200 mb-3 inline-flex items-center gap-1">
           <BookOpen size={11} /> Chapters
         </div>
-        {archive.chapters.length === 0 && <p className="text-white/40 text-sm italic">No chapters yet — begin one.</p>}
+        {archive.chapters.length === 0 && <p className="text-white/40 text-sm italic">No chapters yet - begin one.</p>}
         <div className="space-y-3">
           {archive.chapters.map((c, i) => (
             <div key={c.id} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">

@@ -154,7 +154,7 @@ export async function generateEnding(input: {
       : tone === "tragic"
       ? "And the world, indifferent, kept its slow turning, as worlds do."
       : tone === "surprising"
-      ? "And what came next, no one — not even the storyteller — had quite imagined."
+      ? "And what came next, no one - not even the storyteller - had quite imagined."
       : "And whether it was an ending at all, none of them could say for certain.";
 
   const closer = `In the quiet that followed, the ${input.genre.name.toLowerCase()} held its breath. ${tail}`;

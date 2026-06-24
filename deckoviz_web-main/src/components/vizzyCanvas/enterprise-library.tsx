@@ -91,7 +91,7 @@ export function EnterpriseLibrary({ onSelect }: EnterpriseLibraryProps) {
         <div className="flex-1 min-w-0">
           <h3 className="text-xl font-bold tracking-tight text-[var(--vc-text)] flex items-center justify-center sm:justify-start gap-2">
             <Sparkles className="size-5 text-blue-500" />
-            Enterprise Canvas — Template Library
+            Enterprise Canvas - Template Library
           </h3>
           <p className="text-xs text-[var(--vc-text-muted)] mt-1">
             {ENTERPRISE_TEMPLATES.length} starting points for businesses. Click any card to use it, fill in your brand details, and press submit.

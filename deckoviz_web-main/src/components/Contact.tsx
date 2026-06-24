@@ -53,7 +53,7 @@ export default function Contact() {
           </p>
         </div>
 
-        {/* Contact Options — glassy pills */}
+        {/* Contact Options - glassy pills */}
         <div className="flex flex-wrap justify-center items-center gap-4 mb-16">
           {[
             { label: 'Fill out the form below' },
@@ -73,7 +73,7 @@ export default function Contact() {
 
         {/* Contact Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-          {/* Instagram Card — Frosted Glass */}
+          {/* Instagram Card - Frosted Glass */}
           <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
             bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
             {/* Shiny top edge */}
@@ -112,7 +112,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Call Us Card — Frosted Glass */}
+          {/* Call Us Card - Frosted Glass */}
           <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
             bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
             {/* Shiny top edge */}
@@ -152,7 +152,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Email Us Card — Frosted Glass */}
+          {/* Email Us Card - Frosted Glass */}
           <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col
             bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
             {/* Shiny top edge */}
@@ -189,7 +189,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Join Us Card — Frosted Glass */}
+          {/* Join Us Card - Frosted Glass */}
           <div className="group relative overflow-hidden rounded-3xl h-80 flex flex-col bg-white/40 backdrop-blur-2xl border border-white shadow-[0_8px_32px_rgba(37,99,235,0.15)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:-translate-y-2 transition-all duration-500 p-8 cursor-pointer">
             <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/90 to-transparent" />
             <div className="absolute top-0 left-0 w-2/3 h-1/2 bg-gradient-to-br from-white/30 to-transparent rounded-tl-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />

@@ -520,7 +520,7 @@ boxShadow: `
       </p>
     </div>
 
-    {/* Form — using the top input design */}
+    {/* Form - using the top input design */}
     <form onSubmit={handleSubmit} className="max-w-sm sm:max-w-md mx-auto">
       <div className="relative group">
         {/* Glow effect */}
