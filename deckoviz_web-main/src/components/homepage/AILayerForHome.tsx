@@ -102,19 +102,19 @@ export default function AILayerForHome() {
             <span className="text-xs md:text-sm font-semibold tracking-wider text-indigo-900 uppercase">The AI Layer For Your Home</span>
           </motion.div>
           
-          <motion.h2 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight tracking-tight text-gray-900 font-serif">
+          <motion.h2 variants={itemVariants} className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight tracking-tight text-gray-900 font-serif">
             Every home is about to get an AI layer. <br className="hidden md:block" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 italic font-medium">This is the one worth having.</span>
           </motion.h2>
 
-          <div className="space-y-6 text-lg md:text-xl text-gray-700 leading-relaxed font-medium mx-auto max-w-3xl text-left md:text-center">
+          <div className="space-y-6 text-sm md:text-base text-gray-700 leading-relaxed font-medium mx-auto max-w-3xl text-left md:text-center">
             <motion.p variants={itemVariants}>
               Smart homes gave us switches, schedules, and thermostats that learn your temperature. Useful, but none of it actually knows you.
             </motion.p>
             <motion.p variants={itemVariants}>
               Deckoviz is different: an <span className="text-gray-900 font-bold">emotionally intelligent, context-aware AI presence</span> at the centre of your home, the layer that adapts to your moods, your days, and everyone who lives there.
             </motion.p>
-            <motion.p variants={itemVariants} className="text-xl md:text-2xl font-serif italic text-indigo-900/90 mt-8 border-l-4 md:border-l-0 border-indigo-300 pl-4 md:pl-0 bg-indigo-50/50 md:bg-transparent rounded-r-xl py-2 md:py-0">
+            <motion.p variants={itemVariants} className="text-base md:text-lg font-serif italic text-indigo-900/90 mt-8 border-l-4 md:border-l-0 border-indigo-300 pl-4 md:pl-0 bg-indigo-50/50 md:bg-transparent rounded-r-xl py-2 md:py-0">
               This is the heart and the hearth of your home. The thing "smart" always promised and never delivered.
             </motion.p>
           </div>
@@ -133,10 +133,37 @@ export default function AILayerForHome() {
             <div className="w-24 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto rounded-full opacity-50" />
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, idx) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+            {features.slice(0, 3).map((feature, idx) => (
               <motion.div 
                 key={idx} 
+                variants={itemVariants}
+                className={`group relative p-8 rounded-3xl bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.08)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.15)] transition-all duration-500 overflow-hidden ${feature.borderColor}`}
+              >
+                {/* Internal Glow on Hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
+                
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="w-14 h-14 rounded-2xl bg-white/80 border border-white flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500 shadow-sm">
+                    {feature.icon}
+                  </div>
+                  
+                  <h4 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-700 transition-colors">
+                    {feature.title}
+                  </h4>
+                  
+                  <p className="text-gray-700 leading-relaxed font-medium mt-auto">
+                    <span className="hidden md:inline text-indigo-300 mr-1">-</span> 
+                    {feature.desc}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {features.slice(3).map((feature, idx) => (
+              <motion.div 
+                key={idx + 3} 
                 variants={itemVariants}
                 className={`group relative p-8 rounded-3xl bg-white/40 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.08)] hover:shadow-[0_20px_50px_rgba(37,99,235,0.15)] transition-all duration-500 overflow-hidden ${feature.borderColor}`}
               >

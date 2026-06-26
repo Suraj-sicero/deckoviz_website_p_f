@@ -328,7 +328,7 @@ const Navbar: React.FC = () => {
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
             >
               <button
-                className={`transition-all duration-300 p-2 rounded-xl border border-white/30 shadow-sm flex items-center justify-center bg-white/20 backdrop-blur-sm ${isWallLeaderDropdownOpen ? 'text-teal-600 bg-white/40 border-white/50' : 'text-[#2563EB] hover:text-teal-600 hover:bg-white/40 hover:border-white/50'}`}
+                className={`transition-all duration-300 p-2 rounded-xl border border-white/30 shadow-sm flex items-center justify-center bg-white/20 backdrop-blur-sm ${isWallLeaderDropdownOpen ? 'text-cyan-500 bg-white/40 border-white/50' : 'text-[#2563EB] hover:text-cyan-500 hover:bg-white/40 hover:border-white/50'}`}
               >
                 <Menu size={18} />
               </button>
@@ -423,7 +423,7 @@ const Navbar: React.FC = () => {
                 onMouseEnter={() => setIsBusinessDropdownOpen(true)}
                 onMouseLeave={() => setIsBusinessDropdownOpen(false)}
               >
-                <button className={`transition-colors duration-300 font-semibold text-sm relative group flex items-center space-x-1 px-2 py-2 ${currentPath.includes('deckoviz-for') ? 'text-teal-600' : 'text-[#2563EB] hover:text-teal-600'}`}>
+                <button className={`transition-colors duration-300 font-semibold text-sm relative group flex items-center space-x-1 px-2 py-2 ${currentPath.includes('deckoviz-for') ? 'text-cyan-500' : 'text-[#2563EB] hover:text-cyan-500'}`}>
                   <span>Deckoviz For Businesses</span>
                   <ChevronDown
                     size={14}
@@ -541,13 +541,13 @@ const Navbar: React.FC = () => {
 
               <a
                 href="/pricing"
-                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/pricing') ? 'text-teal-600' : 'text-[#2563EB] hover:text-teal-600'}`}
+                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/pricing') ? 'text-cyan-500' : 'text-[#2563EB] hover:text-cyan-500'}`}
               >
                 Pricing
               </a>
               <a
                 href="/blog"
-                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/blog') ? 'text-teal-600' : 'text-[#2563EB] hover:text-teal-600'}`}
+                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/blog') ? 'text-cyan-500' : 'text-[#2563EB] hover:text-cyan-500'}`}
               >
                 Blog
               </a>
@@ -624,7 +624,7 @@ const Navbar: React.FC = () => {
               ) : (
                 <button
                   onClick={() => openAuthModal()}
-                  className="transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 text-[#2563EB] hover:text-teal-600"
+                  className="transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 text-[#2563EB] hover:text-cyan-500"
                 >
                   Login
                 </button>
@@ -663,7 +663,7 @@ const Navbar: React.FC = () => {
             </div>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-[#2563EB] hover:text-teal-600 transition-all duration-300 p-2 rounded-full hover:bg-white/50 border border-white/30 bg-white/20 backdrop-blur-sm"
+              className="text-[#2563EB] hover:text-cyan-500 transition-all duration-300 p-2 rounded-full hover:bg-white/50 border border-white/30 bg-white/20 backdrop-blur-sm"
             >
               <div className="relative w-5 h-5">
                 <Menu size={20} className={`absolute inset-0 transition-all duration-300 ${isOpen ? 'opacity-0 rotate-180 scale-0' : 'opacity-100 rotate-0 scale-100'}`} />
