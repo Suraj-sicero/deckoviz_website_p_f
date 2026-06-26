@@ -279,52 +279,8 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex justify-center items-center gap-4 flex-wrap mb-8"
+            className="flex flex-col items-center gap-8 mb-10"
           >
-            <a
-              href="/webapp"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,100,50,0.5)] hover:shadow-[0_0_50px_rgba(255,100,50,0.8)] border border-orange-400/30"
-              style={{
-                background: "linear-gradient(135deg, #f97316, #ea580c, #f59e0b, #ea580c, #f97316)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <Grid className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Webapp</span>
-            </a>
-            <a
-              href="/creative-journal"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(167,139,250,0.5)] hover:shadow-[0_0_50px_rgba(167,139,250,0.8)] border border-violet-400/30"
-              style={{
-                background: "linear-gradient(135deg, #a855f7, #6366f1, #ec4899, #6366f1, #a855f7)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <Notebook className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Creative Journal</span>
-            </a>
-
-            <a
-              href="/creative-studio"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-              style={{
-                background: "linear-gradient(135deg, #60A5FA, #2563EB, #0ea5e9, #2563EB, #60A5FA)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <Wand2 className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Creative Studio</span>
-            </a>
-
             <style dangerouslySetInnerHTML={{
               __html: `
                 @keyframes footerGradientFlow {
@@ -333,179 +289,102 @@ const Footer = () => {
                   100% { background-position: 0% 50%; }
                 }
               `}} />
-            <a
-              href="/experimental-art-modes"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-              style={{
-                background: "linear-gradient(135deg, #7c3aed, #ec4899, #3b82f6, #ec4899, #7c3aed)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <FlaskConical className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Experimental Art Modes</span>
-              <svg
-                className="relative z-10 group-hover:translate-x-1 transition-transform"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
 
-            <a
-              href="/deckoviz-storytelling"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-              style={{
-                background: "linear-gradient(135deg, #7dd3fc, #0ea5e9, #0284c7, #0ea5e9, #7dd3fc)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <BookOpen className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Deckoviz Storytelling</span>
-              <svg
-                className="relative z-10 group-hover:translate-x-1 transition-transform"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
+            {/* Top 2 Horizon Buttons */}
+            <div className="flex justify-center items-center gap-6 w-full flex-wrap">
+              {[
+                { label: "Home Webapp", href: "/webapp", icon: Grid, gradient: "linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7, #0ea5e9, #38bdf8)", shadow: "rgba(14,165,233,0.4)", hoverShadow: "rgba(14,165,233,0.7)" },
+                { label: "Enterprise Webapp", href: "/enterprise-webapp", icon: Grid, gradient: "linear-gradient(135deg, #1e40af, #1e3a5f, #3b82f6, #1e3a5f, #1e40af)", shadow: "rgba(30,64,175,0.4)", hoverShadow: "rgba(59,130,246,0.7)" },
+              ].map((btn) => (
+                <a
+                  key={btn.label}
+                  href={btn.href}
+                  className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-base transition-all duration-300 overflow-hidden hover:scale-105 border border-white/20"
+                  style={{
+                    background: btn.gradient,
+                    backgroundSize: "300% 300%",
+                    animation: "footerGradientFlow 4s ease infinite",
+                    color: "white",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = `0 15px 40px ${btn.hoverShadow}`;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = `0 10px 30px ${btn.shadow}`;
+                  }}
+                  ref={(el) => {
+                    if (el) el.style.boxShadow = `0 10px 30px ${btn.shadow}`;
+                  }}
+                >
+                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                  <btn.icon className="relative z-10 w-5 h-5 flex-shrink-0" />
+                  <span className="relative z-10">{btn.label}</span>
+                </a>
+              ))}
+            </div>
 
-            <a
-              href="/vizzy-canvas"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-              style={{
-                background: "linear-gradient(135deg, #10b981, #059669, #047857, #059669, #10b981)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <Brush className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Vizzy Creation Canvas</span>
-              <svg
-                className="relative z-10 group-hover:translate-x-1 transition-transform"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
+            {/* Remaining 8 Standardized Buttons */}
+            <div className="flex justify-center items-center gap-4 flex-wrap max-w-4xl">
+              {[
+                { label: "Creative Journal", href: "/creative-journal", icon: Notebook },
+                { label: "Creative Studio", href: "/creative-studio", icon: Wand2 },
+                { label: "Experimental Art Modes", href: "/experimental-art-modes", icon: FlaskConical },
+                { label: "Deckoviz Storytelling", href: "/deckoviz-storytelling", icon: BookOpen },
+                { label: "Vizzy Creation Canvas", href: "/vizzy-canvas", icon: Brush },
+                { label: "Vizzy Conversational Studio (VCS)", href: "/conversational-studio", icon: Sparkles },
+                { label: "Flagship Games", href: "/flagship-games", icon: Gamepad2 },
+                { label: "Master Suite of Features", href: "/master-suite", icon: Grid },
+              ].map((btn, index) => {
+                const isStyle1 = index % 2 === 0;
+                // Style 1: Vibrant transparent-like Blue (Creative Studio style)
+                // Style 2: Deep Blue to Light Blue to Slate Edge
+                const gradient = isStyle1
+                  ? "linear-gradient(90deg, #38bdf8, #0ea5e9, #38bdf8)"
+                  : "linear-gradient(90deg, #1d4ed8, #3b82f6, #94a3b8, #3b82f6, #1d4ed8)";
+                
+                const shadowColor = isStyle1 ? "rgba(14,165,233,0.4)" : "rgba(59,130,246,0.4)";
+                const hoverShadowColor = isStyle1 ? "rgba(14,165,233,0.7)" : "rgba(59,130,246,0.7)";
 
-            <a
-              href="/conversational-studio"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-              style={{
-                background: "linear-gradient(135deg, #a855f7, #d946ef, #8b5cf6, #d946ef, #a855f7)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <Sparkles className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Vizzy Conversational Studio (VCS)</span>
-              <svg
-                className="relative z-10 group-hover:translate-x-1 transition-transform"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-
-            <a
-              href="/flagship-games"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:shadow-[0_0_50px_rgba(255,255,255,0.9)]"
-              style={{
-                background: "linear-gradient(135deg, #f43f5e, #be123c, #9333ea, #be123c, #f43f5e)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <Gamepad2 className="relative z-10 w-4 h-4" />
-              <span className="relative z-10">Flagship Games</span>
-              <svg
-                className="relative z-10 group-hover:translate-x-1 transition-transform"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-
-            <a
-              href="/master-suite"
-              className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105 shadow-[0_0_30px_rgba(167,139,250,0.5)] hover:shadow-[0_0_50px_rgba(167,139,250,0.8)] border border-indigo-400/30"
-              style={{
-                background: "linear-gradient(135deg, #f59e0b, #ec4899, #8b5cf6, #3b82f6, #f59e0b)",
-                backgroundSize: "300% 300%",
-                animation: "footerGradientFlow 4s ease infinite",
-                color: "white",
-              }}
-            >
-              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
-              <Grid className="relative z-10 w-4 h-4 text-amber-200 animate-pulse" />
-              <span className="relative z-10">Master Suite of Features</span>
-              <svg
-                className="relative z-10 group-hover:translate-x-1 transition-transform"
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
+                return (
+                  <a
+                    key={btn.label}
+                    href={btn.href}
+                    className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                    style={{
+                      background: gradient,
+                      backgroundSize: "300% 300%",
+                      animation: "footerGradientFlow 4s ease infinite",
+                      color: "white",
+                      boxShadow: `0 0 20px ${shadowColor}`,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.boxShadow = `0 0 35px ${hoverShadowColor}`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.boxShadow = `0 0 20px ${shadowColor}`;
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                    <btn.icon className="relative z-10 w-4 h-4 flex-shrink-0" />
+                    <span className="relative z-10">{btn.label}</span>
+                    <svg
+                      className="relative z-10 group-hover:translate-x-1 transition-transform ml-1"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </a>
+                );
+              })}
+            </div>
           </motion.div>
 
 
