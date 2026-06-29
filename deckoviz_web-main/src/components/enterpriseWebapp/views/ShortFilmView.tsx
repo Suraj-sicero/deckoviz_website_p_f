@@ -16,8 +16,8 @@ export default function ShortFilmView() {
       {/* Creation Tools */}
       <div className="grid gap-4 md:grid-cols-3 mb-8">
         {[
-          { icon: Upload, label: "Import Media", desc: "Upload videos, images, and audio", gradient: "from-[#182a4a] to-indigo-600" },
-          { icon: Scissors, label: "Edit & Arrange", desc: "Cut, trim, and sequence your clips", gradient: "from-violet-500 to-purple-600" },
+          { icon: Upload, label: "Import Media", desc: "Upload videos, images, and audio", gradient: "from-[#182a4a] to-[#2563EB]" },
+          { icon: Scissors, label: "Edit & Arrange", desc: "Cut, trim, and sequence your clips", gradient: "from-[#182a4a] to-[#2563EB]" },
           { icon: Sparkles, label: "AI Enhancement", desc: "Auto-enhance with AI effects", gradient: "from-amber-500 to-orange-600" },
           { icon: Music, label: "Add Soundtrack", desc: "Select music or generate custom", gradient: "from-emerald-500 to-teal-600" },
           { icon: Type, label: "Add Text & Titles", desc: "Overlay text, credits, and titles", gradient: "from-pink-500 to-rose-600" },

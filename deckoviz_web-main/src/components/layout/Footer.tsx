@@ -1,6 +1,5 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import {
   Instagram,
   Linkedin,
@@ -13,18 +12,9 @@ import {
   Gamepad2,
   Notebook,
   Sparkles,
-  Heart,
-  MessageSquare,
-  Volume2,
-  FileText,
-  Clock,
-  Music,
-  Radio,
-  Zap,
-  X,
   Grid
 } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 // ───────────────── DATA ─────────────────
 
@@ -43,7 +33,7 @@ const productLinks = [
 
 const companyLinks = [
   { name: "About", path: "/about" },
-  { name: "Careers", path: "https://www.linkedin.com/company/deckoviz-space/jobs/" },
+  { name: "Careers", path: "/contact" },
   { name: "Blog", path: "/blog" },
   { name: "Contact Us", path: "/contact" },
   { name: "Sitemap", path: "/sitemap" },
@@ -65,114 +55,21 @@ const socialLinks = [
   { name: "LinkedIn", href: "https://www.linkedin.com/company/deckoviz/", icon: Linkedin },
 ]
 
-const funTools = [
-  {
-    name: "Before & After Postcard",
-    path: "/tools/postcard",
-    icon: Sparkles,
-    color: "from-[#ec4899] to-[#8b5cf6]",
-    glow: "rgba(236, 72, 153, 0.4)"
-  },
-  {
-    name: "Gratitude Cards",
-    path: "/tools/gratitude-card",
-    icon: Heart,
-    color: "from-[#ef4444] to-[#f43f5e]",
-    glow: "rgba(239, 68, 68, 0.4)"
-  },
-  {
-    name: "Conversational Studio",
-    path: "/conversational-studio",
-    icon: MessageSquare,
-    color: "from-[#3b82f6] to-[#8b5cf6]",
-    glow: "rgba(59, 130, 246, 0.4)"
-  },
-  {
-    name: "Audiobook Creator",
-    path: "/tools/audiobook",
-    icon: Volume2,
-    color: "from-[#f97316] to-[#eab308]",
-    glow: "rgba(249, 115, 22, 0.4)"
-  },
-  {
-    name: "Quote Poster Generator",
-    path: "/tools/quote-poster",
-    icon: FileText,
-    color: "from-[#10b981] to-[#06b6d4]",
-    glow: "rgba(16, 185, 129, 0.4)"
-  },
-  {
-    name: "Ambient Timescape",
-    path: "/developer-specs/ambient-clock",
-    icon: Clock,
-    color: "from-[#06b6d4] to-[#3b82f6]",
-    glow: "rgba(6, 182, 212, 0.4)"
-  },
-  {
-    name: "Music Responsive Art",
-    path: "/developer-specs/music-responsive-art",
-    icon: Music,
-    color: "from-[#d946ef] to-[#ec4899]",
-    glow: "rgba(217, 70, 239, 0.4)"
-  },
-  {
-    name: "Soundscape",
-    path: "/soundscapes",
-    icon: Radio,
-    color: "from-[#14b8a6] to-[#10b981]",
-    glow: "rgba(20, 184, 166, 0.4)"
-  },
-  {
-    name: "Shape Vortex",
-    path: "/developer-specs/agentic-shape-vortex",
-    icon: Zap,
-    color: "from-[#facc15] to-[#f97316]",
-    glow: "rgba(250, 204, 21, 0.4)"
-  },
-]
 
 // ───────────────── FOOTER ─────────────────
 
 const Footer = () => {
-  const [isToolsOpen, setIsToolsOpen] = useState(false)
-  const [radius, setRadius] = useState(220)
-  const [isMobile, setIsMobile] = useState(false)
   const year = new Date().getFullYear()
 
-  useEffect(() => {
-    const handleResize = () => {
-      const width = window.innerWidth
-      setIsMobile(width < 768)
-      if (width < 380) {
-        setRadius(95)
-      } else if (width < 480) {
-        setRadius(110)
-      } else if (width < 768) {
-        setRadius(130)
-      } else {
-        setRadius(230)
-      }
-    }
-    handleResize()
-    window.addEventListener("resize", handleResize)
-    return () => window.removeEventListener("resize", handleResize)
-  }, [])
+
 
   return (
     <footer className="relative bg-transparent overflow-hidden print:hidden">
 
-      {/* Main Footer Content with Floating Particles */}
-      <div
-        className="relative py-6 overflow-hidden"
-        style={{
-          backgroundImage: 'url(/images/wallhaven-962wqx.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
+      {/* Main Footer Content */}
+      <div className="relative py-6 overflow-hidden bg-[#0a1628]">
         {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-[#0a1628]/50"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050b14] to-transparent"></div>
 
         {/* Animated floating particles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -323,9 +220,10 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Remaining 8 Standardized Buttons */}
+            {/* Remaining 9 Standardized Buttons */}
             <div className="flex justify-center items-center gap-4 flex-wrap max-w-4xl">
               {[
+                { label: "Quick Access Zone: Some nifty little fun tools", href: "/vizzy-fun-zone", icon: Sparkles },
                 { label: "Creative Journal", href: "/creative-journal", icon: Notebook },
                 { label: "Creative Studio", href: "/creative-studio", icon: Wand2 },
                 { label: "Experimental Art Modes", href: "/experimental-art-modes", icon: FlaskConical },
@@ -388,7 +286,7 @@ const Footer = () => {
           </motion.div>
 
 
-          {/* Links Grid - Ultra compact 4 columns on desktop */}
+          {/* Links Grid - Ultra compact 3 columns on desktop */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -401,7 +299,7 @@ const Footer = () => {
                 },
               },
             }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-3 mb-3"
+            className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 mb-3 justify-items-center"
           >
 
             {/* Product */}
@@ -461,25 +359,6 @@ const Footer = () => {
               </ul>
             </motion.div>
 
-            {/* Some fun little tools */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              className="flex flex-col"
-            >
-              <h3 className="text-white font-semibold text-xs mb-1.5">Fun Zone</h3>
-              <div className="relative w-full">
-                <button
-                  onClick={() => setIsToolsOpen(!isToolsOpen)}
-                  className="w-full flex items-center justify-between gap-2 px-3 py-2 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl text-white text-[11px] transition-all text-left font-semibold shadow-[0_0_15px_rgba(255,255,255,0.05)] hover:shadow-[0_0_20px_rgba(167,139,250,0.15)]"
-                >
-                  <span>Some fun little tools</span>
-                  <Sparkles size={14} className="text-pink-400 animate-pulse" />
-                </button>
-              </div>
-            </motion.div>
 
           </motion.div>
 
@@ -493,187 +372,13 @@ const Footer = () => {
             <p className="text-[12px] text-white/50 leading-relaxed text-center">
               © {year} Deckoviz. All rights reserved.<br className="md:hidden" />
               <span className="hidden md:inline"> • </span>
-              <span className="inline-flex items-center gap-1.5 ml-1 align-middle">
-                <span style={{ fontFamily: "'Caveat', cursive, 'Dancing Script'" }} className="text-lg font-bold text-white/95 drop-shadow-md">Made with</span>
-                <motion.span animate={{ scale: [1, 1.25, 1], textShadow: ["0px 0px 8px rgba(96,165,250,0.4)", "0px 0px 16px rgba(96,165,250,0.8)", "0px 0px 8px rgba(96,165,250,0.4)"] }} transition={{ duration: 1.5, repeat: Infinity }} className="inline-block text-blue-400 text-lg">♥</motion.span>
-                <span style={{ fontFamily: "'Caveat', cursive, 'Dancing Script'" }} className="text-lg font-bold text-white/95 drop-shadow-md">by</span>
-                <span style={{ fontFamily: "'Comfortaa', sans-serif" }} className="text-sm sm:text-base font-extrabold bg-gradient-to-r from-white via-blue-200 to-teal-300 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(56,189,248,0.7)] tracking-wide ml-0.5">Deckoviz Space Labs Team</span>
-              </span>
+              Deckoviz Space Labs Division
             </p>
           </motion.div>
 
         </div>
       </div>
 
-      {/* Full-screen flying balls overlay */}
-      <AnimatePresence>
-        {isToolsOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#050b14]/95 backdrop-blur-lg flex flex-col items-center justify-center overflow-hidden"
-          >
-            {/* Background Animated Particles */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {[...Array(30)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1.5 h-1.5 bg-white/30 rounded-full"
-                  style={{
-                    left: `${Math.random() * 100}%`,
-                    top: `${Math.random() * 100}%`,
-                  }}
-                  animate={{
-                    y: [0, -40, 0],
-                    opacity: [0.1, 0.4, 0.1],
-                    scale: [0.8, 1.2, 0.8],
-                  }}
-                  transition={{
-                    duration: 5 + Math.random() * 5,
-                    repeat: Infinity,
-                    delay: Math.random() * 3,
-                  }}
-                />
-              ))}
-              {/* Soft glowing ambient light */}
-              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
-              <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-            </div>
-
-            {/* Close button */}
-            <button
-              onClick={() => setIsToolsOpen(false)}
-              className="absolute top-6 right-6 md:top-8 md:right-8 text-white/60 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 p-3 rounded-full transition-all duration-300 group z-50"
-              aria-label="Close Fun Zone"
-            >
-              <X size={20} className="transform group-hover:rotate-90 transition-transform duration-300" />
-            </button>
-
-            {/* Header Info */}
-            <div className="relative z-10 text-center mb-8 px-4">
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ type: "spring", duration: 0.8 }}
-                className="inline-flex items-center justify-center p-2.5 bg-white/5 border border-white/10 rounded-2xl mb-4"
-              >
-                <Sparkles className="w-5 h-5 text-pink-400 animate-pulse mr-2" />
-                <span className="text-white/80 font-bold text-xs uppercase tracking-wider">Interactive Hub</span>
-              </motion.div>
-              <h2
-                className="text-3xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-pink-400 to-cyan-400 tracking-tight drop-shadow-[0_0_15px_rgba(167,139,250,0.2)]"
-              >
-                Vizzy Fun Zone
-              </h2>
-              <p
-                className="text-white/50 text-xs md:text-sm max-w-sm mx-auto mt-2 leading-relaxed"
-              >
-                Click a floating ball to launch your generative adventure. Hover to feel the gravity pull.
-              </p>
-            </div>
-
-            {/* Balls Container */}
-            <div className="relative w-full max-w-4xl h-[450px] md:h-[550px] flex items-center justify-center">
-              {/* Center core */}
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-violet-600/20 to-pink-600/20 border border-white/10 flex items-center justify-center backdrop-blur-md shadow-[0_0_50px_rgba(139,92,246,0.15)] z-0"
-              >
-                <img src="/images/deckovizlogo.png" className="w-10 h-10 md:w-14 md:h-14 object-contain opacity-80 animate-pulse" alt="Core logo" />
-              </motion.div>
-
-              {/* Floating Balls */}
-              {funTools.map((tool, i) => {
-                const ToolIcon = tool.icon
-                const angle = (i * 2 * Math.PI) / funTools.length
-                
-                // Compute static initial target position
-                const targetX = Math.cos(angle) * radius
-                const targetY = Math.sin(angle) * radius
-
-                // Generate slight random variations for infinite float
-                const floatRangeX = [
-                  targetX,
-                  targetX + Math.sin(i) * 12,
-                  targetX + Math.cos(i) * 12,
-                  targetX
-                ]
-                const floatRangeY = [
-                  targetY,
-                  targetY + Math.cos(i) * 12,
-                  targetY + Math.sin(i) * 12,
-                  targetY
-                ]
-
-                return (
-                  <motion.a
-                    key={tool.name}
-                    href={tool.path}
-                    initial={{ scale: 0, x: 0, y: 0, opacity: 0 }}
-                    animate={{
-                      scale: 1,
-                      opacity: 1,
-                      x: floatRangeX,
-                      y: floatRangeY,
-                    }}
-                    transition={{
-                      x: {
-                        duration: 6 + (i % 3) * 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        times: [0, 0.33, 0.66, 1]
-                      },
-                      y: {
-                        duration: 7 + (i % 2) * 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        times: [0, 0.33, 0.66, 1]
-                      },
-                      scale: {
-                        type: "spring",
-                        stiffness: 100,
-                        damping: 15,
-                        delay: i * 0.05
-                      },
-                      opacity: {
-                        duration: 0.5,
-                        delay: i * 0.05
-                      }
-                    }}
-                    whileHover={{ 
-                      scale: 1.15,
-                      zIndex: 40,
-                      boxShadow: `0 0 35px ${tool.glow}`,
-                      transition: { duration: 0.2, type: "tween" }
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`absolute cursor-pointer rounded-full bg-gradient-to-br ${tool.color} p-[1px] hover:p-[2px] transition-all`}
-                    style={{
-                      boxShadow: `0 0 20px ${tool.glow}`,
-                    }}
-                  >
-                    <div 
-                      className={`rounded-full bg-[#0a1122]/90 backdrop-blur-md flex flex-col items-center justify-center text-center p-2 select-none transition-all ${
-                        isMobile ? "w-20 h-20" : "w-32 h-32"
-                      }`}
-                    >
-                      <div className={`p-1.5 rounded-full bg-white/5 border border-white/10 mb-1 group-hover:scale-110 transition-transform ${isMobile ? "p-1 mb-0.5" : "p-2 mb-1.5"}`}>
-                        <ToolIcon className={`${isMobile ? "w-4 h-4" : "w-5 h-5"} text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.6)]`} />
-                      </div>
-                      <span className={`${isMobile ? "text-[8px]" : "text-[10px] md:text-[11px]"} font-bold text-white/95 leading-tight max-w-[90%]`}>
-                        {tool.name}
-                      </span>
-                    </div>
-                  </motion.a>
-                )
-              })}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </footer>
   )
 }

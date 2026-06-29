@@ -18,7 +18,7 @@ export default function EnterpriseDashboardView() {
     <div className="mx-auto w-full max-w-[1120px] px-8 py-8">
       {/* Welcome Banner */}
       <div className="relative mb-8 overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] p-8">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 70% 30%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 20% 80%, #8b5cf6 0%, transparent 50%)" }} />
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 70% 30%, #3b82f6 0%, transparent 50%), radial-gradient(circle at 20% 80%, #2563EB 0%, transparent 50%)" }} />
         <div className="relative z-10 flex items-center justify-between">
           <div>
             <p className="mb-1 text-sm font-medium text-blue-300/80">Good evening</p>
@@ -56,8 +56,8 @@ export default function EnterpriseDashboardView() {
         <h2 className="mb-4 font-serif text-lg font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">Quick Actions</h2>
         <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
           {[
-            { label: "Create Art", icon: Sparkles, gradient: "from-[#182a4a] to-indigo-600" },
-            { label: "Create Poster", icon: FileImage, gradient: "from-violet-500 to-purple-600" },
+            { label: "Create Art", icon: Sparkles, gradient: "from-[#182a4a] to-[#2563EB]" },
+            { label: "Create Poster", icon: FileImage, gradient: "from-[#182a4a] to-[#2563EB]" },
             { label: "Create Signage", icon: PenTool, gradient: "from-amber-500 to-orange-600" },
             { label: "Change Collection", icon: RefreshCw, gradient: "from-emerald-500 to-teal-600" },
           ].map((act) => (
@@ -117,7 +117,7 @@ export default function EnterpriseDashboardView() {
                   <div className="flex items-start justify-between mb-1">
                     <p className="text-sm font-bold text-gray-800">{ev.title}</p>
                     {ev.recurring && (
-                      <span className="rounded-full bg-violet-50 px-2.5 py-0.5 text-[9px] font-bold text-violet-600 uppercase">{ev.frequency}</span>
+                      <span className="rounded-full bg-blue-50 px-2.5 py-0.5 text-[9px] font-bold text-[#2563EB] uppercase">{ev.frequency}</span>
                     )}
                   </div>
                   <div className="flex items-center gap-3 text-[11px] text-gray-400 font-medium">

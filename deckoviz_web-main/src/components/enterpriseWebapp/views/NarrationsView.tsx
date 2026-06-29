@@ -65,7 +65,7 @@ export default function NarrationsView() {
               }`}
             >
               <div className="flex items-center gap-2 mb-1.5">
-                <div className={`flex h-7 w-7 items-center justify-center rounded-full ${selectedVoice === voice ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white" : "bg-gray-100 text-gray-400"}`}>
+                <div className={`flex h-7 w-7 items-center justify-center rounded-full ${selectedVoice === voice ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white" : "bg-gray-100 text-gray-400"}`}>
                   <Mic size={12} />
                 </div>
                 <div className="flex h-5 w-5 items-center justify-center rounded-full bg-gray-50 text-gray-400 transition group-hover:bg-[#182a4a]/10 group-hover:text-[#182a4a]">

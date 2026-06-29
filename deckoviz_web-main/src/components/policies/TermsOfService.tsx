@@ -2,32 +2,20 @@ import React from "react";
 
 const TermsOfService: React.FC = () => {
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 px-4 bg-gradient-to-br from-pink-500 via-violet-600 to-fuchsia-600 overflow-hidden">
-
-      {/* Pattern */}
-      <div className="absolute inset-0 pointer-events-none z-0 grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-12 gap-6 opacity-20 text-white text-xl sm:text-2xl lg:text-3xl">
-        {Array.from({ length: 200 }).map((_, i) => (
-          <span key={i} className="flex justify-center">📃</span>
-        ))}
+    <section className="relative min-h-screen pt-28 pb-16 overflow-hidden bg-[#f5f6f8] text-[#111827]">
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[120px]" style={{ background: "rgba(37,99,235,0.08)" }} />
+        <div className="absolute bottom-10 right-0 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(24,42,74,0.05)" }} />
       </div>
 
-      {/* Glow blobs */}
-      <div className="absolute -top-40 -left-40 w-72 sm:w-96 h-72 sm:h-96 bg-pink-400 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-0 right-0 w-72 sm:w-96 h-72 sm:h-96 bg-violet-400 rounded-full blur-3xl opacity-40" />
+      <div className="relative max-w-4xl mx-auto px-6 z-10">
+        <h1 className="text-4xl md:text-5xl font-black mb-8 mt-4 text-center tracking-tight">
+          Terms of <span className="bg-gradient-to-r from-[#182a4a] to-[#2563EB] bg-clip-text text-transparent">Service</span>
+        </h1>
 
-      <div className="relative max-w-6xl mx-auto">
-        <div className="relative bg-white/60 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/40 p-6 sm:p-10 lg:p-14">
-
-          {/* Center lock */}
-          <div className="absolute inset-0 flex justify-center items-center opacity-10 pointer-events-none">
-            <span className="text-[120px] sm:text-[220px] lg:text-[300px]">🔐</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            Terms of <span className="text-primary-600">Service</span>
-          </h1>
-
-          <div className="relative z-10 text-left sm:text-justify leading-relaxed space-y-8 text-[15px] sm:text-[16px]">
+        <div className="w-full">
+          <div className="p-8 md:p-12 rounded-3xl bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5 text-left leading-relaxed space-y-10 text-gray-600 font-medium text-[16px]">
 
             <p><strong>Last updated:</strong> 31st January, 2026</p>
 
@@ -43,7 +31,7 @@ const TermsOfService: React.FC = () => {
             </p>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">1. Who Can Use Deckoviz</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">1. Who Can Use Deckoviz</h2>
               <p>
                 You must be at least 13 years old, or the minimum age required by
                 law in your jurisdiction, to use Deckoviz.
@@ -56,7 +44,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">2. Accounts and Access</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">2. Accounts and Access</h2>
               <p>You are responsible for:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Maintaining the confidentiality of your account credentials</li>
@@ -70,7 +58,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">3. Use of the Services</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">3. Use of the Services</h2>
               <p>
                 You agree to use Deckoviz only for lawful purposes and in
                 accordance with these Terms.
@@ -90,7 +78,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">4. User Content</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">4. User Content</h2>
               <p>
                 You retain ownership of any content you upload, create, or
                 generate through Deckoviz.
@@ -104,7 +92,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">5. AI and Generated Content</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">5. AI and Generated Content</h2>
               <p>Deckoviz may generate content using AI systems at your request.</p>
               <p>Generated content:</p>
               <ul className="list-disc pl-6 space-y-2">
@@ -120,7 +108,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">6. Payments, Subscriptions, and Hardware</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">6. Payments, Subscriptions, and Hardware</h2>
               <p>Certain Services require payment.</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Prices and billing terms will be disclosed before purchase</li>
@@ -133,7 +121,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">7. Intellectual Property</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">7. Intellectual Property</h2>
               <p>
                 All Deckoviz software, designs, trademarks, and branding are owned
                 by Deckoviz or its licensors.
@@ -145,7 +133,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">8. Enterprise Use</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">8. Enterprise Use</h2>
               <p>
                 Enterprise customers may be subject to additional terms,
                 service-level agreements, or contracts.
@@ -154,7 +142,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">9. Disclaimers</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">9. Disclaimers</h2>
               <p>
                 The Services are provided on an “as is” and “as available” basis.
               </p>
@@ -166,7 +154,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">10. Limitation of Liability</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">10. Limitation of Liability</h2>
               <p>
                 Deckoviz will not be liable for indirect, incidental,
                 consequential, or special damages.
@@ -178,7 +166,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">11. Indemnification</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">11. Indemnification</h2>
               <p>
                 You agree to indemnify and hold Deckoviz harmless from claims
                 arising out of:
@@ -191,7 +179,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">12. Termination</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">12. Termination</h2>
               <p>You may stop using Deckoviz at any time.</p>
               <p>
                 We may suspend or terminate access if you violate these Terms or
@@ -200,7 +188,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">13. Governing Law</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">13. Governing Law</h2>
               <p>
                 These Terms are governed by the laws of the United Kingdom,
                 without regard to conflict-of-law principles, unless otherwise
@@ -209,7 +197,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">14. Changes to These Terms</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">14. Changes to These Terms</h2>
               <p>
                 We may update these Terms from time to time. Continued use of the
                 Services after updates constitutes acceptance.
@@ -217,7 +205,7 @@ const TermsOfService: React.FC = () => {
             </section>
 
             <section className="space-y-4">
-              <h2 className="text-xl sm:text-2xl font-semibold">15. Contact</h2>
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a]">15. Contact</h2>
               <p>If you have questions about these Terms, contact us at:</p>
               <p>
                 legal@deckoviz.com <br />
