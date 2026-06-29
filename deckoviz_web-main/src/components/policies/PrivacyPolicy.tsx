@@ -2,32 +2,20 @@ import React from 'react';
 
 const PrivacyPolicy: React.FC = () => {
   return (
-    <section className="relative py-20 sm:py-24 px-4 bg-gradient-to-br from-pink-500 via-violet-600 to-fuchsia-600 overflow-hidden">
-
-      {/* LOCK PATTERN */}
-      <div className="absolute inset-0 pointer-events-none z-0 grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-12 gap-6 opacity-20 text-white text-xl sm:text-2xl lg:text-3xl">
-        {Array.from({ length: 220 }).map((_, i) => (
-          <span key={i} className="flex justify-center">🔐</span>
-        ))}
+    <section className="relative min-h-screen pt-28 pb-16 overflow-hidden bg-[#f5f6f8] text-[#111827]">
+      {/* Enterprise Indigo Blobs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full blur-[120px]" style={{ background: "rgba(37,99,235,0.08)" }} />
+        <div className="absolute bottom-10 right-0 w-[500px] h-[500px] rounded-full blur-[100px]" style={{ background: "rgba(24,42,74,0.05)" }} />
       </div>
 
-      {/* GLOW BLOBS */}
-      <div className="absolute -top-40 -left-40 w-72 sm:w-96 h-72 sm:h-96 bg-pink-400 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-0 right-0 w-72 sm:w-96 h-72 sm:h-96 bg-violet-400 rounded-full blur-3xl opacity-40" />
+      <div className="relative max-w-4xl mx-auto px-6 z-10">
+        <h1 className="text-4xl md:text-5xl font-black mb-8 mt-4 text-center tracking-tight">
+          Privacy <span className="bg-gradient-to-r from-[#182a4a] to-[#2563EB] bg-clip-text text-transparent">Policy</span>
+        </h1>
 
-      <div className="relative max-w-6xl mx-auto">
-        <div className="relative z-10 bg-white/60 backdrop-blur-2xl rounded-2xl sm:rounded-3xl shadow-2xl border border-white/40 p-6 sm:p-10 lg:p-16">
-
-          {/* CENTER LOCK */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
-            <span className="text-[120px] sm:text-[220px] lg:text-[320px]">🔐</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl font-bold text-center mb-12">
-            Privacy <span className="text-primary-600">Policy</span>
-          </h1>
-
-          <div className="relative z-10 max-w-none text-left sm:text-justify text-[15px] sm:text-[16px] leading-relaxed space-y-8">
+        <div className="w-full">
+          <div className="p-8 md:p-12 rounded-3xl bg-white/70 backdrop-blur-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5 text-left leading-relaxed space-y-10 text-gray-600 font-medium text-[16px]">
 
             <p>Last updated: 31st Jan., 2026</p>
 
@@ -39,13 +27,13 @@ const PrivacyPolicy: React.FC = () => {
               By accessing or using Deckoviz, you agree to the practices described in this Privacy Policy.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-4">1. Information We Collect</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-4">1. Information We Collect</h2>
 
             <p>
               We collect information to provide, improve, and personalize our Services. The types of information we collect depend on how you interact with Deckoviz.
             </p>
 
-            <h3 className="text-lg font-semibold pt-4">1.1 Information You Provide Directly</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">1.1 Information You Provide Directly</h3>
 
             <p>You may provide us with information such as:</p>
 
@@ -66,7 +54,7 @@ const PrivacyPolicy: React.FC = () => {
               <li>Configuration preferences and branding assets</li>
             </ul>
 
-            <h3 className="text-lg font-semibold pt-4">1.2 Information Collected Automatically</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">1.2 Information Collected Automatically</h3>
 
             <p>When you use our Services, we may automatically collect:</p>
 
@@ -81,7 +69,7 @@ const PrivacyPolicy: React.FC = () => {
               We do not collect precise GPS location unless explicitly required for a specific feature and clearly disclosed at the time of collection.
             </p>
 
-            <h3 className="text-lg font-semibold pt-4">1.3 Content and Creative Data</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">1.3 Content and Creative Data</h3>
 
             <p>
               Deckoviz allows users to create, upload, display, and generate visual content. This may include:
@@ -97,7 +85,7 @@ const PrivacyPolicy: React.FC = () => {
               This content remains yours. We do not claim ownership over user-generated content.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">2. How We Use Your Information</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">2. How We Use Your Information</h2>
 
             <p>We use information for the following purposes:</p>
 
@@ -114,7 +102,7 @@ const PrivacyPolicy: React.FC = () => {
 
             <p>We do not sell your personal data.</p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">3. AI and Automated Processing</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">3. AI and Automated Processing</h2>
 
             <p>
               Deckoviz uses artificial intelligence and automated systems to power creative, personalization, and assistance features.
@@ -132,11 +120,11 @@ const PrivacyPolicy: React.FC = () => {
               AI processing occurs only to deliver the requested functionality. We do not use AI to make legal, medical, financial, or other high-risk decisions about you.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">4. Data Sharing and Disclosure</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">4. Data Sharing and Disclosure</h2>
 
             <p>We share information only when necessary and under strict controls.</p>
 
-            <h3 className="text-lg font-semibold pt-4">4.1 Service Providers</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">4.1 Service Providers</h3>
 
             <ul className="list-disc pl-6 space-y-2">
               <li>Cloud hosting and infrastructure providers</li>
@@ -149,7 +137,7 @@ const PrivacyPolicy: React.FC = () => {
               These providers are contractually required to protect your data and use it only for authorized purposes.
             </p>
 
-            <h3 className="text-lg font-semibold pt-4">4.2 Legal and Safety Requirements</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">4.2 Legal and Safety Requirements</h3>
 
             <p>We may disclose information if required to do so by law, regulation, or legal process, or if necessary to:</p>
 
@@ -158,13 +146,13 @@ const PrivacyPolicy: React.FC = () => {
               <li>Prevent fraud, abuse, or security threats</li>
             </ul>
 
-            <h3 className="text-lg font-semibold pt-4">4.3 Business Transfers</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">4.3 Business Transfers</h3>
 
             <p>
               If Deckoviz is involved in a merger, acquisition, restructuring, or sale of assets, your information may be transferred as part of that transaction, subject to continued protection under this Privacy Policy.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">5. Data Retention</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">5. Data Retention</h2>
 
             <p>We retain personal information only as long as necessary to:</p>
 
@@ -178,7 +166,7 @@ const PrivacyPolicy: React.FC = () => {
               You may request deletion of your account and associated data, subject to applicable laws and legitimate business needs.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">6. Data Security</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">6. Data Security</h2>
 
             <ul className="list-disc pl-6 space-y-2">
               <li>Encryption in transit and at rest where appropriate</li>
@@ -190,7 +178,7 @@ const PrivacyPolicy: React.FC = () => {
               No system is 100% secure, but we take data protection seriously and continuously improve our safeguards.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">7. Your Rights and Choices</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">7. Your Rights and Choices</h2>
 
             <ul className="list-disc pl-6 space-y-2">
               <li>Accessing your personal data</li>
@@ -202,25 +190,25 @@ const PrivacyPolicy: React.FC = () => {
 
             <p>You can exercise these rights by contacting us at privacy@deckoviz.com.</p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">8. Children’s Privacy</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">8. Children’s Privacy</h2>
 
             <p>
               Deckoviz is not intended for children under the age of 13 (or the minimum age required by local law). We do not knowingly collect personal data from children.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">9. International Data Transfers</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">9. International Data Transfers</h2>
 
             <p>
               Deckoviz may operate and store data in multiple countries. When we transfer data internationally, we take steps to ensure appropriate safeguards.
             </p>
 
-            <h3 className="text-lg font-semibold pt-4">9.1 GDPR, UK GDPR, and CCPA Compliance</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">9.1 GDPR, UK GDPR, and CCPA Compliance</h3>
 
             <p>
               This section applies to users located in the European Economic Area (EEA), the United Kingdom, California, and other jurisdictions with similar data protection laws.
             </p>
 
-            <h3 className="text-lg font-semibold pt-4">9.2 Legal Bases for Processing (GDPR / UK GDPR)</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">9.2 Legal Bases for Processing (GDPR / UK GDPR)</h3>
 
             <ul className="list-disc pl-6 space-y-2">
               <li><strong>Performance of a contract</strong></li>
@@ -229,7 +217,7 @@ const PrivacyPolicy: React.FC = () => {
               <li><strong>Legal obligations</strong></li>
             </ul>
 
-            <h3 className="text-lg font-semibold pt-4">9.3 Your Rights Under GDPR and UK GDPR</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">9.3 Your Rights Under GDPR and UK GDPR</h3>
 
             <ul className="list-disc pl-6 space-y-2">
               <li>Access your personal data</li>
@@ -242,7 +230,7 @@ const PrivacyPolicy: React.FC = () => {
 
             <p>You also have the right to lodge a complaint with your local data protection authority.</p>
 
-            <h3 className="text-lg font-semibold pt-4">9.4 Your Rights Under the California Consumer Privacy Act (CCPA)</h3>
+            <h3 className="text-xl font-bold mb-3 tracking-tight text-[#182a4a] pt-4">9.4 Your Rights Under the California Consumer Privacy Act (CCPA)</h3>
 
             <ul className="list-disc pl-6 space-y-2">
               <li>Know what personal information we collect</li>
@@ -255,13 +243,13 @@ const PrivacyPolicy: React.FC = () => {
 
             <p>We will not discriminate against you for exercising your rights.</p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">10. Changes to This Privacy Policy</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">10. Changes to This Privacy Policy</h2>
 
             <p>
               We may update this Privacy Policy from time to time. Continued use of the Services constitutes acceptance.
             </p>
 
-            <h2 className="text-xl sm:text-2xl font-semibold pt-6">Contact Us</h2>
+            <h2 className="text-2xl font-bold mb-4 tracking-tight text-[#182a4a] pt-6">Contact Us</h2>
 
             <p>
               Deckoviz<br />

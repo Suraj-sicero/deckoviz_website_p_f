@@ -103,13 +103,16 @@ const Audiobook: React.FC = () => {
     window.URL.revokeObjectURL(url);
   };
   return (
-    <section className="relative min-h-screen px-6 py-24 bg-gradient-to-br from-[#fbcfe8] via-white to-gray overflow-hidden">
+    <section className="relative min-h-screen px-6 py-24 bg-[#f5f6f8] overflow-hidden">
+      {/* Background ambient blobs */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[120px] bg-blue-500/10 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] rounded-full blur-[120px] bg-indigo-500/10 pointer-events-none" />
 
       {/* Main container */}
-      <div className="max-w-5xl mx-auto bg-white/30 backdrop-blur-xl border border-white/40 rounded-3xl shadow-[0_60px_140px_rgba(0,0,0,0.15)] p-8 sm:p-12 md:p-16 space-y-20">
+      <div className="relative max-w-5xl mx-auto bg-white/70 backdrop-blur-xl border border-white/80 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] ring-1 ring-black/5 p-8 sm:p-12 md:p-16 space-y-20">
 
         {/* Page Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-violet-700 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-center bg-gradient-to-r from-[#182a4a] to-[#2563EB] bg-clip-text text-transparent drop-shadow-sm">
           Audiobook Creator: Turn Any Book Into a Voice You’ll Want to Listen To
         </h1>
 
@@ -124,7 +127,7 @@ const Audiobook: React.FC = () => {
         {/* Short Description */}
         <section className="space-y-4 text-gray-800 leading-relaxed">
 
-        <div className="mt-8 sm:mt-10 p-5 sm:p-8 rounded-2xl bg-white/30 backdrop-blur-xl border border-white/40 shadow-lg space-y-5 sm:space-y-6">
+        <div className="mt-8 sm:mt-10 p-5 sm:p-8 rounded-2xl bg-white/50 backdrop-blur-md border border-white/60 shadow-sm ring-1 ring-black/5 space-y-5 sm:space-y-6">
 
           {/* Intro line */}
           <p className="text-base sm:text-lg font-medium">
@@ -146,8 +149,8 @@ const Audiobook: React.FC = () => {
     }
   }}
   className="w-full rounded-xl p-3 sm:p-3.5 text-sm
-  bg-gradient-to-r from-violet-100 via-pink-100 to-blue-100 
-  border border-violet-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+  bg-white border border-gray-200 shadow-sm
+  focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all font-medium"
 />
 
             <p className="text-xs sm:text-sm text-gray-600">
@@ -168,12 +171,14 @@ const Audiobook: React.FC = () => {
   style={{
     width: "100%",
     padding: "12px 40px 12px 12px",
-    borderRadius: "10px",
-    border: "1px solid #c084fc",
+    borderRadius: "12px",
+    border: "1px solid #e5e7eb",
+    boxShadow: "0 1px 2px 0 rgba(0,0,0,0.05)",
     outline: "none",
     appearance: "none",
     backgroundColor: "#ffffff",
-    fontSize: "14px"
+    fontSize: "14px",
+    fontWeight: 500
   }}
 >
   <option value="british-male">British Male</option>
@@ -193,7 +198,7 @@ const Audiobook: React.FC = () => {
               transform: "translateY(-50%)",
               pointerEvents: "none",
               fontSize: "12px",
-              color: "#7c3aed"
+              color: "#2563EB"
             }}
           >
             ▼
@@ -213,8 +218,8 @@ const Audiobook: React.FC = () => {
     value={frames}
     onChange={(e) => setFrames(Number(e.target.value))}
     className="w-full rounded-xl p-3 text-sm
-    bg-gradient-to-r from-violet-100 via-pink-100 to-blue-100
-    border border-violet-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
+    bg-white border border-gray-200 shadow-sm font-medium
+    focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all"
   />
 
   <p className="text-xs text-gray-600">
@@ -227,11 +232,11 @@ const Audiobook: React.FC = () => {
 <button
   onClick={generateAudiobook}
   disabled={loading}
-  className="w-full py-3 rounded-xl font-semibold text-white text-sm sm:text-base
-  bg-gradient-to-r from-violet-600 via-pink-500 to-blue-500
-  active:scale-[0.98] sm:hover:scale-105
-  hover:shadow-[0_10px_30px_rgba(168,85,247,0.35)]
-  transition"
+  className="w-full py-4 rounded-xl font-bold text-white text-sm sm:text-base
+  bg-gradient-to-r from-[#182A4A] to-[#2563EB] shadow-md
+  active:scale-[0.98] sm:hover:-translate-y-0.5
+  hover:shadow-[0_10px_25px_rgba(37,99,235,0.35)]
+  transition-all duration-200"
 >
   {loading ? "Generating..." : "Generate Audiobook"}
 </button>
@@ -289,7 +294,7 @@ const Audiobook: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-8">
 
             {/* Step 1 */}
-            <div className="p-6 rounded-2xl bg-white/40 backdrop-blur-lg border border-white/40 shadow-lg">
+            <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] ring-1 ring-black/5 hover:-translate-y-1 transition-all">
               <h3 className="text-xl font-semibold mb-4">1. Upload Your PDF</h3>
 
               <p>Upload any PDF:</p>
@@ -308,7 +313,7 @@ const Audiobook: React.FC = () => {
             </div>
 
             {/* Step 2 */}
-            <div className="p-6 rounded-2xl bg-white/40 backdrop-blur-lg border border-white/40 shadow-lg">
+            <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] ring-1 ring-black/5 hover:-translate-y-1 transition-all">
               <h3 className="text-xl font-semibold mb-4">2. Choose a Voice</h3>
 
               <p>Select from multiple voice styles:</p>
@@ -328,7 +333,7 @@ const Audiobook: React.FC = () => {
             </div>
 
             {/* Step 3 */}
-            <div className="p-6 rounded-2xl bg-white/40 backdrop-blur-lg border border-white/40 shadow-lg">
+            <div className="p-6 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 shadow-[0_4px_20px_rgb(0,0,0,0.03)] ring-1 ring-black/5 hover:-translate-y-1 transition-all">
               <h3 className="text-xl font-semibold mb-4">3. Generate Your Audiobook</h3>
 
               <p>
@@ -394,9 +399,9 @@ const Audiobook: React.FC = () => {
                 <a
                   href={audioUrl}
                   download
-                  className="inline-block px-5 py-2 rounded-lg text-white
-                  bg-gradient-to-r from-violet-600 via-pink-500 to-blue-500
-                  hover:opacity-90 transition"
+                  className="inline-block px-6 py-2.5 rounded-lg text-white font-semibold
+                  bg-gradient-to-r from-[#182A4A] to-[#2563EB] shadow-md
+                  hover:-translate-y-0.5 hover:shadow-lg transition-all"
                 >
                   Download MP3
                 </a>

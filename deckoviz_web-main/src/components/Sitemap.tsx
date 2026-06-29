@@ -228,7 +228,7 @@ const Sitemap: React.FC = () => {
             </BoxSection>
 
             <BoxSection title="Join Us" to="/contact">
-              <LinkItem to="https://www.linkedin.com/company/deckoviz-space/jobs/">Careers &amp; Internships</LinkItem>
+              <LinkItem to="/contact">Careers &amp; Internships</LinkItem>
               <LinkItem to="/partnership">Deckoviz Ambassadors</LinkItem>
               <LinkItem to="/partnership">Artists &amp; Creator Collaborations</LinkItem>
               <LinkItem to="/partnership">Partner With Us</LinkItem>

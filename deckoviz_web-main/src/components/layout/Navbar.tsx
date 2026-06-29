@@ -324,10 +324,10 @@ const Navbar: React.FC = () => {
             {/* Wall/Leader Hamburger Menu */}
             <div
               className="relative"
-              onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
               onMouseLeave={() => setIsWallLeaderDropdownOpen(false)}
             >
               <button
+                onMouseEnter={() => setIsWallLeaderDropdownOpen(true)}
                 className={`transition-all duration-300 p-2 rounded-xl border border-white/30 shadow-sm flex items-center justify-center bg-white/20 backdrop-blur-sm ${isWallLeaderDropdownOpen ? 'text-cyan-500 bg-white/40 border-white/50' : 'text-[#2563EB] hover:text-cyan-500 hover:bg-white/40 hover:border-white/50'}`}
               >
                 <Menu size={18} />
@@ -419,11 +419,12 @@ const Navbar: React.FC = () => {
             {/* Main Links */}
             <div className="flex items-center space-x-1 lg:space-x-6">
               <div
-                className="relative"
-                onMouseEnter={() => setIsBusinessDropdownOpen(true)}
+                className="relative flex items-center h-full"
                 onMouseLeave={() => setIsBusinessDropdownOpen(false)}
               >
-                <button className={`transition-colors duration-300 font-semibold text-sm relative group flex items-center space-x-1 px-2 py-2 ${currentPath.includes('deckoviz-for') ? 'text-cyan-500' : 'text-[#2563EB] hover:text-cyan-500'}`}>
+                <button 
+                  onMouseEnter={() => setIsBusinessDropdownOpen(true)}
+                  className={`transition-colors duration-300 font-semibold text-sm relative group flex items-center space-x-1 px-1 py-1 ${currentPath.includes('deckoviz-for') ? 'text-cyan-500' : 'text-[#2563EB] hover:text-cyan-500'}`}>
                   <span>Deckoviz For Businesses</span>
                   <ChevronDown
                     size={14}
