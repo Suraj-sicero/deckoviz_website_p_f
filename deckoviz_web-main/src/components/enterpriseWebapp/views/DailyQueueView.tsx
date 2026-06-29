@@ -14,7 +14,7 @@ export default function DailyQueueView() {
           <p className="text-sm text-gray-400 mt-1">Manage your daily display schedule across all units</p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
+          <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
             <Plus size={16} /> Add to Queue
           </button>
         </div>
@@ -33,7 +33,7 @@ export default function DailyQueueView() {
               const end = parseInt(item.endTime.split(":")[0]);
               const left = (start / 24) * 100;
               const width = ((end - start) / 24) * 100;
-              const colors = ["bg-blue-500", "bg-emerald-500", "bg-violet-500", "bg-amber-500", "bg-rose-500"];
+              const colors = ["bg-blue-500", "bg-emerald-500", "bg-[#2563EB]", "bg-amber-500", "bg-rose-500"];
               return (
                 <div
                   key={item.id}

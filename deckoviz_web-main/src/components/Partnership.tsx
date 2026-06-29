@@ -2,6 +2,7 @@
 
 import React from "react"
 import { motion } from "framer-motion"
+import { Building, Star, Briefcase, Store, ArrowRight } from "lucide-react"
 
 const Partnership: React.FC = () => {
   return (
@@ -52,12 +53,55 @@ const Partnership: React.FC = () => {
               Deckoviz.
             </p>
           </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-10 max-w-4xl mx-auto">
+            <a href="#interior-designers" className="group flex items-center justify-between px-6 py-5 rounded-3xl bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.15)] hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                  <Building size={22} />
+                </div>
+                <span className="font-extrabold text-[17px] text-[#182a4a] tracking-tight">Interior designers & architects</span>
+              </div>
+              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#2563EB] group-hover:translate-x-2 transition-all duration-300" />
+            </a>
+            
+            <a href="#content-creators" className="group flex items-center justify-between px-6 py-5 rounded-3xl bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.15)] hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
+                  <Star size={22} />
+                </div>
+                <span className="font-extrabold text-[17px] text-[#182a4a] tracking-tight">Content creators</span>
+              </div>
+              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#2563EB] group-hover:translate-x-2 transition-all duration-300" />
+            </a>
+
+            <a href="#sales-partners" className="group flex items-center justify-between px-6 py-5 rounded-3xl bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.15)] hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300">
+                  <Briefcase size={22} />
+                </div>
+                <span className="font-extrabold text-[17px] text-[#182a4a] tracking-tight">Retail sales partnerships</span>
+              </div>
+              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#2563EB] group-hover:translate-x-2 transition-all duration-300" />
+            </a>
+
+            <a href="#retail-partners" className="group flex items-center justify-between px-6 py-5 rounded-3xl bg-gradient-to-br from-white/90 to-white/60 backdrop-blur-xl border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_15px_40px_rgba(37,99,235,0.15)] hover:-translate-y-1 transition-all duration-300">
+              <div className="flex items-center gap-5">
+                <div className="w-12 h-12 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#2563EB] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
+                  <Store size={22} />
+                </div>
+                <span className="font-extrabold text-[17px] text-[#182a4a] tracking-tight">Retail partner programme</span>
+              </div>
+              <ArrowRight size={20} className="text-gray-300 group-hover:text-[#2563EB] group-hover:translate-x-2 transition-all duration-300" />
+            </a>
+          </div>
         </div>
 
         {/* INDIVIDUAL CARDS FOR PARTNERSHIP TYPES */}
 
         {/* Interior Designers */}
         <PartnershipCard 
+          id="interior-designers"
           emoji="🏛️" 
           title="Interior Designers, Architects & Decorators"
         >
@@ -97,6 +141,7 @@ const Partnership: React.FC = () => {
 
         {/* Independent Sales Partners */}
         <PartnershipCard 
+          id="sales-partners"
           emoji="💼" 
           title="Independent Sales Partners"
         >
@@ -145,6 +190,7 @@ const Partnership: React.FC = () => {
 
         {/* Retail Partners */}
         <PartnershipCard 
+          id="retail-partners"
           emoji="🏬" 
           title="Retail Partners (Home Decor, Electronics & Lifestyle Stores)"
         >
@@ -174,6 +220,7 @@ const Partnership: React.FC = () => {
 
         {/* Influencers */}
         <PartnershipCard 
+          id="content-creators"
           emoji="🌟" 
           title="Influencers & Content Creators"
         >
@@ -236,9 +283,10 @@ const Partnership: React.FC = () => {
   )
 }
 
-const PartnershipCard = ({ emoji, title, children }: { emoji: string, title: string, children: React.ReactNode }) => {
+const PartnershipCard = ({ id, emoji, title, children }: { id?: string, emoji: string, title: string, children: React.ReactNode }) => {
   return (
     <motion.div
+      id={id}
       className="group relative rounded-[32px] p-8 md:p-12 overflow-hidden"
       style={{
         background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 100%)",

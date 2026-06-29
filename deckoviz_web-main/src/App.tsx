@@ -246,6 +246,7 @@ import ElinityJoinUs from "./components/elinity/ElinityJoinUs";
 import DailyCuratorPage from "./components/dailyCurator/DailyCuratorPage";
 import AdminDailyCuratorPage from "./components/dailyCurator/AdminDailyCuratorPage";
 import ElinityDeckovizGuide from "./components/homepage/ElinityDeckovizGuide";
+import VizzyFunZone from "./pages/VizzyFunZone";
 import DeckovizWebapp from "./components/webapp/DeckovizWebapp";
 import EnterpriseWebapp from "./components/enterpriseWebapp/EnterpriseWebapp";
 
@@ -314,8 +315,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/elinity/contact",
     "/elinity/join-us",
     "/webapp",
-    "/enterprise-webapp"
-  ].includes(location.pathname);
+  ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp");
 
   return (
     <>
@@ -455,13 +455,13 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/order-confirmed" element={<OrderConfirmed />} />
           <Route path="bulk-orders" element={<BulkOrder />} />
           <Route path="/bulk-confirm" element={<BulkConfirm />} />
-          <Route path="/audiobook" element={<ProtectedRoute><Audiobook /></ProtectedRoute>} />
+          <Route path="/audiobook" element={<Audiobook />} />
 
           {/* ── Creative Studio Hub ── */}
           <Route path="/creative-studio" element={<CreativeStudio />} />
           <Route path="/conversational-studio" element={<ProtectedRoute><ConversationalStudio /></ProtectedRoute>} />
           <Route path="/creative-journal" element={<ProtectedRoute><CreativeJournalTool /></ProtectedRoute>} />
-          <Route path="/tools/audiobook" element={<ProtectedRoute><AudiobookTool /></ProtectedRoute>} />
+          <Route path="/tools/audiobook" element={<AudiobookTool />} />
           <Route path="/tools/visual-audiobook" element={<ProtectedRoute><VisualAudiobookTool /></ProtectedRoute>} />
           <Route path="/tools/storybook" element={<ProtectedRoute><StorybookTool /></ProtectedRoute>} />
           <Route path="/tools/short-story" element={<ProtectedRoute><ShortStoryTool /></ProtectedRoute>} />
@@ -597,13 +597,14 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
           <Route path="/create-world" element={<CreateWorld />} />
           <Route path="/master-suite" element={<MasterSuiteOfFeatures />} />
+          <Route path="/vizzy-fun-zone" element={<VizzyFunZone />} />
           <Route path="/elinity" element={<ElinityLanding />} />
           <Route path="/elinity/about" element={<ElinityAboutUs />} />
           <Route path="/elinity/ellaris" element={<ElinityEllaris />} />
           <Route path="/elinity/contact" element={<ElinityContact />} />
           <Route path="/elinity/join-us" element={<ElinityJoinUs />} />
           <Route path="/webapp" element={<DeckovizWebapp />} />
-          <Route path="/enterprise-webapp" element={<EnterpriseWebapp />} />
+          <Route path="/enterprise-webapp/*" element={<EnterpriseWebapp />} />
 
           {/* ── Flagship Games ── */}
           <Route path="/flagship-games" element={<FlagshipGamesPage />} />

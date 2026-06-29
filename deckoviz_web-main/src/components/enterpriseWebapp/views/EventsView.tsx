@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calendar, Plus, Clock, Repeat, MapPin, Image as ImageIcon, ChevronDown } from "lucide-react";
+import { Calendar, Plus, Clock, Repeat, Image as ImageIcon } from "lucide-react";
 import { upcomingEvents, sampleCollections } from "../enterpriseData";
 
 export default function EventsView() {
@@ -13,7 +13,7 @@ export default function EventsView() {
           <h1 className="font-serif text-[24px] font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">Events</h1>
           <p className="text-sm text-gray-400 mt-1">Schedule and manage future collection events</p>
         </div>
-        <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
+        <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
           <Plus size={16} /> New Event
         </button>
       </div>
@@ -21,7 +21,7 @@ export default function EventsView() {
       {/* Filters */}
       <div className="mb-6 flex gap-2">
         {(["all", "upcoming", "recurring"] as const).map((f) => (
-          <button key={f} onClick={() => setFilter(f)} className={`rounded-lg px-4 py-2 text-xs font-bold capitalize transition ${filter === f ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white shadow" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
+          <button key={f} onClick={() => setFilter(f)} className={`rounded-lg px-4 py-2 text-xs font-bold capitalize transition ${filter === f ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
             {f}
           </button>
         ))}
@@ -47,7 +47,7 @@ export default function EventsView() {
                   </div>
                 </div>
                 {ev.recurring && (
-                  <span className="flex items-center gap-1 rounded-full bg-violet-50 px-3 py-1 text-[10px] font-bold text-violet-600">
+                  <span className="flex items-center gap-1 rounded-full bg-blue-50 px-3 py-1 text-[10px] font-bold text-[#2563EB]">
                     <Repeat size={10} /> {ev.frequency}
                   </span>
                 )}

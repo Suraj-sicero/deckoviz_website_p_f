@@ -67,7 +67,7 @@ export default function CreateCollectionView() {
               <p className="text-[10px] text-blue-400">Click images on the right to add or remove</p>
             </div>
 
-            <button className="w-full rounded-xl bg-gradient-to-r from-[#182a4a] to-indigo-600 py-3 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed" disabled={!name || selectedImages.length === 0}>
+            <button className="w-full rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] py-3 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed" disabled={!name || selectedImages.length === 0}>
               <Plus size={14} className="inline mr-1" /> Create Collection
             </button>
           </div>
@@ -92,7 +92,7 @@ export default function CreateCollectionView() {
                     <img src={img} alt="" className="h-full w-full object-cover transition-transform group-hover:scale-105" />
                     {selected && (
                       <div className="absolute inset-0 bg-blue-500/20 flex items-center justify-center">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white shadow-lg">
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg">
                           <Check size={14} />
                         </div>
                       </div>

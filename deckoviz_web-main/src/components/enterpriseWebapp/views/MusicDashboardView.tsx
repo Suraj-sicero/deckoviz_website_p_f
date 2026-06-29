@@ -14,10 +14,10 @@ export default function MusicDashboardView() {
 
       {/* Generator */}
       <div className="mb-8 rounded-2xl bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] p-8 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, #8b5cf6 0%, transparent 50%), radial-gradient(circle at 70% 50%, #3b82f6 0%, transparent 50%)" }} />
+        <div className="absolute inset-0 opacity-15" style={{ backgroundImage: "radial-gradient(circle at 30% 50%, #2563EB 0%, transparent 50%), radial-gradient(circle at 70% 50%, #3b82f6 0%, transparent 50%)" }} />
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/20 text-violet-400">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#2563EB]/20 text-blue-400">
               <Music size={20} />
             </div>
             <div>
@@ -31,9 +31,9 @@ export default function MusicDashboardView() {
               placeholder="e.g., Calm jazz piano for a luxury hotel lobby evening ambiance"
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
-              className="flex-1 h-12 rounded-xl border border-white/10 bg-white/5 px-5 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-violet-400/50 focus:bg-white/10 backdrop-blur-sm"
+              className="flex-1 h-12 rounded-xl border border-white/10 bg-white/5 px-5 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-blue-400/50 focus:bg-white/10 backdrop-blur-sm"
             />
-            <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-violet-500 to-indigo-600 px-6 text-sm font-bold text-white shadow-lg transition hover:scale-[1.02]">
+            <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-6 text-sm font-bold text-white shadow-lg transition hover:scale-[1.02]">
               <Music size={16} /> Generate
             </button>
           </div>
@@ -59,7 +59,7 @@ export default function MusicDashboardView() {
         <div className="divide-y divide-[#f5f5f8]">
           {musicPieces.map((piece) => (
             <div key={piece.id} className="flex items-center gap-4 px-6 py-4 transition hover:bg-blue-50/30 group">
-              <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-violet-50 text-violet-500 transition group-hover:bg-violet-500 group-hover:text-white">
+              <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-[#2563EB] transition group-hover:bg-[#2563EB] group-hover:text-white">
                 <Play size={14} />
               </button>
               <div className="flex-1 min-w-0">

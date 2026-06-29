@@ -24,7 +24,7 @@ export default function VGCView() {
           <h3 className="text-[13px] font-bold text-gray-600 flex items-center gap-2">
             <MessageSquare size={14} /> All Chats
           </h3>
-          <button className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white hover:bg-blue-600 transition shadow-sm">
+          <button className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white hover:bg-blue-600 transition shadow-sm">
             <Plus size={14} />
           </button>
         </div>
@@ -66,7 +66,7 @@ export default function VGCView() {
         {!activeAgent ? (
           <div className="flex-1 flex flex-col items-center justify-center px-8">
             <div className="mb-8 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#182a4a] to-indigo-600 shadow-xl shadow-[#182a4a]/20">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] shadow-xl shadow-[#182a4a]/20">
                 <Bot size={28} className="text-white" />
               </div>
               <h2 className="text-2xl font-bold text-gray-800 mb-2">Choose Your Creative Agent</h2>
@@ -114,7 +114,7 @@ export default function VGCView() {
               <div className="flex flex-col gap-4 max-w-[720px] mx-auto">
                 {/* Bot Welcome */}
                 <div className="flex gap-3 items-start">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#182a4a] to-indigo-600 text-white text-sm">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white text-sm">
                     <Sparkles size={14} />
                   </div>
                   <div className="rounded-2xl rounded-tl-md bg-gray-50 px-5 py-3.5 text-sm text-gray-600 leading-relaxed border border-gray-100">
@@ -137,7 +137,7 @@ export default function VGCView() {
                 onChange={(e) => setMessage(e.target.value)}
                 className="h-12 w-full rounded-xl border border-[#e2e4ea] bg-[#f8f9fb] pl-5 pr-14 text-sm outline-none transition focus:border-blue-400 focus:bg-white focus:shadow-sm"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white transition hover:bg-blue-600 shadow-sm">
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white transition hover:bg-blue-600 shadow-sm">
                 <Send size={14} />
               </button>
             </div>

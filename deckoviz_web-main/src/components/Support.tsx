@@ -50,7 +50,7 @@ const Support: React.FC = () => {
           onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.12), inset 0 1px 0 rgba(255,255,255,0.7)"}
           onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.12), inset 0 1px 0 rgba(255,255,255,0.60)"}
         >
-          <img src="/images/reach-us.jpg" className="w-48 rounded-xl bg-blue-50 p-4" />
+          <img src="/images/reach-us.png" className="w-48 rounded-2xl bg-white/40 border border-white/60 p-2 shadow-[0_8px_30px_rgb(0,0,0,0.06)]" />
 
           <div>
             <h2 className="text-2xl font-semibold mb-4">How to Reach Us</h2>
@@ -91,7 +91,7 @@ const Support: React.FC = () => {
           onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 20px 60px rgba(37,99,235,0.35), 0 4px 20px rgba(24,42,74,0.12), inset 0 1px 0 rgba(255,255,255,0.7)"}
           onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.boxShadow = "0 8px 32px rgba(31,38,135,0.12), inset 0 1px 0 rgba(255,255,255,0.60)"}
         >
-          <img src="/images/help.jpg" className="w-48 rounded-xl bg-blue-50 p-4" />
+          <img src="/images/help.png" className="w-48 rounded-2xl bg-white/40 border border-white/60 p-2 shadow-[0_8px_30px_rgb(0,0,0,0.06)]" />
 
           <div>
             <h2 className="text-2xl font-semibold mb-5">What We Can Help You With</h2>

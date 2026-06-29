@@ -31,17 +31,17 @@ export default function CurationsView() {
 
       {/* Tabs */}
       <div className="mb-8 flex gap-3">
-        <button onClick={() => setActiveTab("vizzy")} className={`flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-bold transition ${activeTab === "vizzy" ? "bg-gradient-to-r from-violet-500 to-indigo-600 text-white shadow-lg shadow-violet-500/20" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-violet-200"}`}>
+        <button onClick={() => setActiveTab("vizzy")} className={`flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-bold transition ${activeTab === "vizzy" ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/20" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
           <Sparkles size={14} /> Curated For You by Vizzy
         </button>
-        <button onClick={() => setActiveTab("deckoviz")} className={`flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-bold transition ${activeTab === "deckoviz" ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white shadow-lg shadow-[#182a4a]/20" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
+        <button onClick={() => setActiveTab("deckoviz")} className={`flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-bold transition ${activeTab === "deckoviz" ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/20" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
           Deckoviz Curations
         </button>
       </div>
 
       {activeTab === "vizzy" && (
-        <div className="mb-8 rounded-2xl bg-gradient-to-br from-violet-50 to-indigo-50 border border-violet-100 p-6 flex items-center gap-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500">
+        <div className="mb-8 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-50/50 border border-blue-100 p-6 flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2563EB]/10 text-[#2563EB]">
             <Sparkles size={22} />
           </div>
           <div>

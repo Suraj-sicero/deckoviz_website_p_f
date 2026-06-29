@@ -31,7 +31,7 @@ export default function AllMediaView() {
   const [activeTab, setActiveTab] = useState("gen_images");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
-  const activeTabData = mediaTabs.find(t => t.id === activeTab)!;
+  // removed unused activeTabData
   const isImageTab = activeTab.includes("images");
   const isVideoTab = activeTab.includes("videos");
 
@@ -58,13 +58,13 @@ export default function AllMediaView() {
           <div className="flex rounded-lg border border-[#e2e4ea] overflow-hidden">
             <button
               onClick={() => setViewMode("grid")}
-              className={`flex h-9 w-9 items-center justify-center transition ${viewMode === "grid" ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white" : "bg-white text-gray-400 hover:text-gray-600"}`}
+              className={`flex h-9 w-9 items-center justify-center transition ${viewMode === "grid" ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white" : "bg-white text-gray-400 hover:text-gray-600"}`}
             >
               <Grid size={14} />
             </button>
             <button
               onClick={() => setViewMode("list")}
-              className={`flex h-9 w-9 items-center justify-center transition ${viewMode === "list" ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white" : "bg-white text-gray-400 hover:text-gray-600"}`}
+              className={`flex h-9 w-9 items-center justify-center transition ${viewMode === "list" ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white" : "bg-white text-gray-400 hover:text-gray-600"}`}
             >
               <List size={14} />
             </button>
@@ -80,7 +80,7 @@ export default function AllMediaView() {
             onClick={() => setActiveTab(tab.id)}
             className={`flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-[12px] font-bold transition-all duration-200 ${
               activeTab === tab.id
-                ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white shadow-lg shadow-[#182a4a]/20"
+                ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/20"
                 : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200 hover:text-[#182a4a]"
             }`}
           >
@@ -136,7 +136,7 @@ export default function AllMediaView() {
         <div className="rounded-xl border border-[#e8eaef] bg-white divide-y divide-[#f5f5f8]">
           {Array.from({length: 8}, (_, i) => (
             <div key={i} className="flex items-center gap-4 px-6 py-4 transition hover:bg-blue-50/30 group">
-              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${activeTab.includes("music") ? "bg-violet-50 text-violet-500" : "bg-amber-50 text-amber-500"}`}>
+              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${activeTab.includes("music") ? "bg-blue-50 text-[#2563EB]" : "bg-amber-50 text-amber-500"}`}>
                 {activeTab.includes("music") ? <Music size={16} /> : <Mic size={16} />}
               </div>
               <div className="flex-1 min-w-0">

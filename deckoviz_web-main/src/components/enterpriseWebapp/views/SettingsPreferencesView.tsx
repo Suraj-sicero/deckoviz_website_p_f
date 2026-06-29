@@ -94,7 +94,7 @@ export default function SettingsPreferencesView() {
 
       {/* Save Button */}
       <div className="mt-8 flex justify-end">
-        <button className="rounded-xl bg-gradient-to-r from-[#182a4a] to-indigo-600 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
+        <button className="rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
           Save Changes
         </button>
       </div>

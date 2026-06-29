@@ -41,7 +41,7 @@ export default function ExploreLibraryView() {
             onClick={() => setActiveTab(tab.id)}
             className={`rounded-xl px-6 py-2.5 text-sm font-bold transition-all duration-200 ${
               activeTab === tab.id
-                ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white shadow-lg shadow-[#182a4a]/20"
+                ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/20"
                 : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200 hover:text-[#182a4a]"
             }`}
           >
