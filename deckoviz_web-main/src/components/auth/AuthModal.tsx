@@ -69,17 +69,26 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
                   {isLogin ? "Sign in to continue your creative journey" : "Create your account & get 50 free credits"}
                 </p>
               </div>
-              {effectiveAllowClose && (
-                <button
-                  onClick={closeAuthModal}
-                  className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-                  style={{ background: "rgba(37,99,235,0.15)", border: "1px solid rgba(37,99,235,0.3)" }}
-                >
-                  <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              )}
+              <button
+                onClick={() => {
+                  if (effectiveAllowClose) {
+                    closeAuthModal();
+                  } else {
+                    if (window.history.length > 2) {
+                      window.history.back();
+                    } else {
+                      window.location.href = '/';
+                    }
+                  }
+                }}
+                className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
+                style={{ background: "rgba(37,99,235,0.15)", border: "1px solid rgba(37,99,235,0.3)" }}
+                aria-label="Close or Go Back"
+              >
+                <svg className="w-4 h-4 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
             </div>
 
             {/* Thin divider */}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Play, Pause, Heart, Shuffle, Music, Headphones } from "lucide-react";
+import { Search, Play, Heart, Shuffle } from "lucide-react";
 
 const musicLib = [
   { title: "Soft Rain Ambiance", artist: "Deckoviz Sounds", duration: "8:30", category: "Nature" },
@@ -41,7 +41,7 @@ export default function MusicLibraryView() {
       {/* Categories */}
       <div className="mb-6 flex gap-2 overflow-x-auto pb-1">
         {categories.map((cat) => (
-          <button key={cat} onClick={() => setActiveCategory(cat)} className={`shrink-0 rounded-xl px-5 py-2 text-xs font-bold transition ${activeCategory === cat ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white shadow" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
+          <button key={cat} onClick={() => setActiveCategory(cat)} className={`shrink-0 rounded-xl px-5 py-2 text-xs font-bold transition ${activeCategory === cat ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
             {cat}
           </button>
         ))}

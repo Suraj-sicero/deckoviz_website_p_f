@@ -1,7 +1,7 @@
 import { Building2, MapPin, Globe, Mail, Phone, Shield, Users, Monitor, Calendar, Edit2 } from "lucide-react";
 import { enterpriseProfile } from "../enterpriseData";
 
-export default function EnterpriseProfileView() {
+export default function EnterpriseProfileView({ onEditProfile }: { onEditProfile?: () => void }) {
   return (
     <div className="mx-auto w-full max-w-[1120px] px-8 py-8">
       {/* Banner */}
@@ -22,7 +22,7 @@ export default function EnterpriseProfileView() {
               <p className="text-sm text-gray-400 font-medium">{enterpriseProfile.subtitle} · {enterpriseProfile.location}</p>
             </div>
           </div>
-          <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
+          <button onClick={onEditProfile} className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02]">
             <Edit2 size={14} /> Edit Profile
           </button>
         </div>
@@ -82,7 +82,7 @@ export default function EnterpriseProfileView() {
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {[
               { icon: Monitor, label: "Active Units", value: enterpriseProfile.units, color: "#3b82f6" },
-              { icon: Monitor, label: "Active Frames", value: enterpriseProfile.activeFrames, color: "#8b5cf6" },
+              { icon: Monitor, label: "Active Frames", value: enterpriseProfile.activeFrames, color: "#2563EB" },
               { icon: Calendar, label: "Total Events", value: "156", color: "#f59e0b" },
               { icon: Users, label: "Frequent Guests", value: "24", color: "#10b981" },
             ].map((stat) => (

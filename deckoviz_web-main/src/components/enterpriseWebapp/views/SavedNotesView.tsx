@@ -19,7 +19,7 @@ export default function SavedNotesView() {
           <h1 className="font-serif text-[24px] font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">Notes, Content & Templates</h1>
           <p className="text-sm text-gray-400 mt-1">AI workspace for content and text-based assets</p>
         </div>
-        <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-indigo-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20">
+        <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20">
           <Plus size={16} /> New Document
         </button>
       </div>
@@ -27,7 +27,7 @@ export default function SavedNotesView() {
       {/* Tabs */}
       <div className="mb-6 flex gap-2">
         {(["templates", "content"] as const).map((tab) => (
-          <button key={tab} onClick={() => setActiveTab(tab)} className={`rounded-xl px-6 py-2.5 text-sm font-bold capitalize transition ${activeTab === tab ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white shadow" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
+          <button key={tab} onClick={() => setActiveTab(tab)} className={`rounded-xl px-6 py-2.5 text-sm font-bold capitalize transition ${activeTab === tab ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow" : "bg-white text-gray-500 border border-[#e8eaef] hover:border-blue-200"}`}>
             {tab === "templates" ? "Saved Templates" : "Saved Content"}
           </button>
         ))}

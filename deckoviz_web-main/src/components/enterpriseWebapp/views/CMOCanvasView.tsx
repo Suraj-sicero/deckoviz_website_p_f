@@ -30,7 +30,7 @@ export default function CMOCanvasView() {
                 activeMode === mode.id ? "bg-white shadow-md border border-blue-100" : "hover:bg-white/60"
               }`}
             >
-              <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${activeMode === mode.id ? "bg-gradient-to-r from-[#182a4a] to-indigo-600 text-white" : "bg-gray-100 text-gray-400"}`}>
+              <div className={`flex h-8 w-8 items-center justify-center rounded-lg ${activeMode === mode.id ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white" : "bg-gray-100 text-gray-400"}`}>
                 <mode.icon size={14} />
               </div>
               <div className="min-w-0">
@@ -70,7 +70,7 @@ export default function CMOCanvasView() {
           <div className="mx-auto max-w-[720px]">
             {/* Welcome */}
             <div className="flex gap-3 items-start mb-6">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-violet-500 to-indigo-600 text-white">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white">
                 <Sparkles size={14} />
               </div>
               <div className="rounded-2xl rounded-tl-md bg-gray-50 px-5 py-3.5 text-sm text-gray-600 leading-relaxed border border-gray-100">
@@ -103,7 +103,7 @@ export default function CMOCanvasView() {
                 onChange={(e) => setMessage(e.target.value)}
                 className="h-12 w-full rounded-xl border border-[#e2e4ea] bg-[#f8f9fb] pl-5 pr-14 text-sm outline-none transition focus:border-blue-400 focus:bg-white focus:shadow-sm"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-lg bg-violet-500 text-white transition hover:bg-violet-600 shadow-sm">
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 flex h-8 w-8 items-center justify-center rounded-lg bg-[#2563EB] text-white transition hover:bg-[#182a4a] shadow-sm">
                 <Send size={14} />
               </button>
             </div>
