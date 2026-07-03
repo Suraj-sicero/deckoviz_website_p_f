@@ -67,7 +67,14 @@ const Footer = () => {
     <footer className="relative bg-transparent overflow-hidden print:hidden">
 
       {/* Main Footer Content */}
-      <div className="relative py-6 overflow-hidden bg-[#0a1628]">
+      <div 
+        className="relative py-6 overflow-hidden bg-[#0a1628]"
+        style={{
+          backgroundImage: "url('/images/wallhaven-962wqx.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center"
+        }}
+      >
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#050b14] to-transparent"></div>
 

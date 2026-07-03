@@ -14,25 +14,25 @@ const ScrollingImageGallery: React.FC = () => {
   
   const images = [
     {
-      src: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=600&q=80",
+      src: "/images/designed_for/g1.jpg",
       alt: "Abstract art piece",
     },
 
     {
-      src: "https://images.unsplash.com/photo-1557672172-298e090bd0f1?w=600&q=80",
+      src: "/images/designed_for/g2.jpg",
       alt: "Gradient paint strokes",
     },
 
     {
-      src: "https://images.unsplash.com/photo-1574169208507-84376144848b?w=600&q=80",
+      src: "/images/designed_for/g3.jpg",
       alt: "Close-up of a textured painting",
     },
     {
-      src: "https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=600&q=80",
+      src: "/images/designed_for/g4.jpg",
       alt: "Surreal digital art composition",
     },
     {
-      src: "https://images.unsplash.com/photo-1536924940846-227afb31e2a5?w=600&q=80",
+      src: "/images/designed_for/g5.jpg",
       alt: "Abstract geometric pattern",
     },
   ];
@@ -174,7 +174,7 @@ const frameImages = [
         " More intentional living. More love. More presence in everyday moments.",
       gradient: "from-pink-200 via-violet-100 to-pink-300",
       image:
-        "https://i.pinimg.com/736x/e8/28/11/e828112ea1446c27a69ce9fd789804ac.jpg",
+        "/images/designed_for/main1.jpg",
     },
     {
       title:
@@ -183,7 +183,7 @@ const frameImages = [
       caption:
         " More self-expression. More creativity. More inspiration in everyday life.",
       image:
-        "https://i.pinimg.com/736x/13/ab/dc/13abdc4a9b6360c442aba267f4d53386.jpg",
+        "/images/designed_for/main2.jpg",
     },
     {
       title: "For those who want to write odes to their memories",
@@ -191,7 +191,7 @@ const frameImages = [
         " More nostalgia. More sentimentality. More connection to the past.",
       gradient: "from-orange-200 via-pink-100 to-indigo-300",
       image:
-        "https://i.pinimg.com/736x/d3/2d/cb/d32dcb7469c4b31f7979eb98dbdb557c.jpg",
+        "/images/designed_for/main3.jpg",
     },
     {
       title:
@@ -200,7 +200,7 @@ const frameImages = [
       caption:
         " More aesthetics. More visual poetry. More beauty in everyday scenes.",
       image:
-        "https://i.pinimg.com/736x/97/da/5c/97da5c3d3494613f730da795965b3d87.jpg",
+        "/images/designed_for/main4.jpg",
     },
     {
       title:
@@ -209,7 +209,7 @@ const frameImages = [
         " More energy. More life. More movement in everyday environments.",
       gradient: "from-violet-200 via-pink-100 to-rose-300",
       image:
-        "https://i.pinimg.com/736x/ed/3d/1f/ed3d1f63878a4f606ef8ed170834b330.jpg",
+        "/images/designed_for/main5.jpg",
     },
     {
       title:
@@ -218,7 +218,7 @@ const frameImages = [
       caption:
         " More adaptability. More fluidity. More responsiveness in everyday settings.",
       image:
-        "https://www.istitutomarangoni.com/marangoni/entities/course/Digital_art_direction.png",
+        "/images/designed_for/main6.png",
     },
   ];
 
@@ -229,7 +229,7 @@ const frameImages = [
       caption:
         " More depth. More meaning. More connection to the transcendent.",
       image:
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&h=400&fit=crop",
+        "/images/h7.png",
     },
     {
       title: "For lovers of beauty, for lovers of art",
@@ -237,7 +237,7 @@ const frameImages = [
         " More aesthetics. More visual poetry. More beauty in everyday scenes.",
       gradient: "from-pink-200 via-rose-100 to-red-300",
       image:
-        "https://images.unsplash.com/photo-1578321272176-b7bbc0679853?w=500&h=400&fit=crop",
+        "/images/h8.png",
     },
     {
       title:
@@ -246,7 +246,7 @@ const frameImages = [
       caption:
         " More innovation. More futurism. More exploration in everyday life.",
       image:
-        "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=500&h=400&fit=crop",
+        "/images/h9.png",
     },
     {
       title: "For those seeking more intentionality, depth and love",
@@ -254,7 +254,7 @@ const frameImages = [
       caption:
         " More mindfulness. More presence. More connection in everyday moments.",
       image:
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=500&h=400&fit=crop",
+        "/images/h10.png",
     },
     {
       title:
@@ -262,7 +262,7 @@ const frameImages = [
       gradient: "from-yellow-200 via-orange-100 to-pink-300",
       caption: " More bonding. More traditions. More joy in family moments.",
       image:
-        "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=500&h=400&fit=crop",
+        "/images/h11.png",
     },
     {
       title:
@@ -270,7 +270,7 @@ const frameImages = [
       gradient: "from-rose-200 via-pink-100 to-indigo-300",
       caption: " More connection. More love. More shared experiences.",
       image:
-        "https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=500&h=400&fit=crop",
+        "/images/h12.png",
     },
     {
       title:
@@ -278,7 +278,7 @@ const frameImages = [
       gradient: "from-green-200 via-teal-100 to-blue-300",
       caption: " More balance. More harmony. More well-being in everyday life.",
       image:
-        "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=400&fit=crop",
+        "/images/h13.png",
     },
     {
       title:
@@ -287,7 +287,7 @@ const frameImages = [
       caption:
         " More sanctity. More uniqueness. More atmosphere in everyday environments.",
       image:
-        "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=500&h=400&fit=crop",
+        "/images/h14.png",
     },
     {
       title:
@@ -296,7 +296,7 @@ const frameImages = [
       caption:
         " More motivation. More clarity. More focus in everyday pursuits.",
       image:
-        "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=500&h=400&fit=crop",
+        "/images/h15.png",
     },
     {
       title: "For minimalists who want to pack a thousand things in one frame",
@@ -304,7 +304,7 @@ const frameImages = [
       caption:
         " More simplicity. More elegance. More functionality in everyday design.",
       image:
-        "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&h=400&fit=crop",
+        "/images/h16.png",
     },
   ];
 
