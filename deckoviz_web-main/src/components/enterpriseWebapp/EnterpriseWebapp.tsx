@@ -136,13 +136,19 @@ export default function EnterpriseWebapp() {
           <div className="absolute inset-0 pointer-events-none rounded-full" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, transparent 40%)" }} />
 
           <div className="flex min-w-0 items-center gap-6 relative z-10 w-full justify-between">
-            <a href="/" className="flex items-center gap-1.5 pl-2" aria-label="Go to main landing page">
-              <img src="/images/deckovizlogo.png" alt="Deckoviz Symbol" className="h-9 sm:h-10 md:h-11 w-auto object-contain" />
-              <img src="/images/bg_removed_logo.png" alt="Deckoviz Space Labs" className="h-9 sm:h-10 md:h-11 w-auto object-contain -ml-2" />
-              <div className="hidden sm:flex items-center ml-2 border-l-[1.5px] border-gray-400 pl-3 h-6">
-                <span className="text-[12px] font-black uppercase tracking-widest mt-0.5 bg-gradient-to-r from-[#182a4a] to-[#2563EB] bg-clip-text text-transparent">Enterprise</span>
-              </div>
-            </a>
+            <div className="flex items-center">
+              <a href="/" className="flex items-center gap-1.5 pl-2 hover:opacity-80 transition-opacity" aria-label="Go to main landing page">
+                <img src="/images/deckovizlogo.png" alt="Deckoviz Symbol" className="h-9 sm:h-10 md:h-11 w-auto object-contain" />
+                <img src="/images/bg_removed_logo.png" alt="Deckoviz Space Labs" className="h-9 sm:h-10 md:h-11 w-auto object-contain -ml-2" />
+              </a>
+              <button 
+                onClick={() => setActiveView("dashboard")} 
+                className="hidden sm:flex items-center ml-2 border-l-[1.5px] border-gray-400 pl-3 h-6 hover:opacity-80 transition-opacity"
+                aria-label="Go to Enterprise Home"
+              >
+                <span className="text-[12px] font-black uppercase tracking-widest mt-0.5 text-[#182a4a]">Enterprise Suite</span>
+              </button>
+            </div>
 
             <div className="flex-1 flex justify-center hidden md:flex mx-4">
               <label className="relative w-full max-w-md">
