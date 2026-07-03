@@ -62,13 +62,13 @@ export default function CreateCollectionView() {
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7a7f89]" size={20} />
               <input className="h-[54px] w-full pl-14 text-[15px] outline-none" placeholder="Search Tags" />
             </div>
-            <button className="w-[130px] bg-[#913cf3] text-[16px] font-medium text-white">Add Tags</button>
+            <button className="w-[130px] bg-[#182a4a] hover:bg-blue-600 transition-colors text-[16px] font-medium text-white">Add Tags</button>
           </div>
         </div>
 
         <div className="mb-5 flex items-center justify-between">
           <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[19px] font-medium ">Collection Images</h2>
-          <button className="rounded-[7px] bg-[#913cf3] px-10 py-3 text-[15px] font-medium text-white shadow-md">Add More+</button>
+          <button className="rounded-[7px] bg-[#182a4a] hover:bg-blue-600 transition-colors px-10 py-3 text-[15px] font-medium text-white shadow-md">Add More+</button>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">

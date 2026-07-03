@@ -2585,6 +2585,57 @@ export default function DeckovizForEnterprise() {
                       </button>
                     </ScalePop>
                   </div>
+
+                  {/* 🚀 New Blog: Why The Deckoviz Portal for Enterprises? */}
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8 pr-[40px]">
+                    <ScalePop delay={1.0}>
+                      <button
+                        onClick={() => navigate("/blog/why-the-deckoviz-portal-for-enterprises")}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 blur-3xl -z-10 group-hover:bg-rose-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-500/10 blur-3xl -z-10 group-hover:bg-orange-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
+
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-rose-50/80 shadow-[0_8px_16px_rgba(225,29,72,0.1)] border border-rose-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-rose-600">
+                               <path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4"/>
+                               <polyline points="14 2 14 8 20 8"/>
+                               <path d="M2 15h10"/>
+                               <path d="m9 18 3-3-3-3"/>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-rose-800/60 font-bold">Deep Dive</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-rose-700 transition-colors duration-300">Why Deckoviz for Enterprises?</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">When your space becomes a business asset.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-rose-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-orange-400 to-rose-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
+
                 </React.Fragment>
               ))}
             </div>
