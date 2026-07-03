@@ -525,6 +525,40 @@ export default function StartHere() {
                 </div>
               </button>
 
+              {/* 🏡 Why The Deckoviz Portal Button */}
+              <button
+                onClick={() => navigate("/blog/why-the-deckoviz-portal-for-homes")}
+                className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(16,185,129,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(16,185,129,0.32)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/10 via-teal-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
+                     style={{
+                       background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.7) 60%, transparent 80%)",
+                       backgroundSize: "200% 100%",
+                       animation: "glassShine 3s infinite linear"
+                     }}
+                />
+                <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(16,185,129,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <Home className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-emerald-800 font-bold opacity-80">
+                        Core Reading
+                      </span>
+                    </div>
+                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-emerald-800 transition-colors w-40 sm:w-48">
+                      Why The Deckoviz Portal for Homes?
+                    </span>
+                  </div>
+                </div>
+                <div className="ml-auto w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full bg-white/50 border border-white/80 flex items-center justify-center text-emerald-600 group-hover:bg-[#059669] group-hover:text-white transition-all duration-300 group-hover:scale-110 relative z-10 shadow-sm">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </div>
+              </button>
+
               {/* 💞 Elinity × Deckoviz Guide Button */}
               <button
                 onClick={() => navigate("/elinity-deckoviz-guide")}
