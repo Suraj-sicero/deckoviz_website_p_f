@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Home, Sparkles, Tv, BookOpen, Smartphone, BrainCircuit, BookMarked, Flame } from "lucide-react";
-import { UseCasesModal } from "./UseCasesModal";
 import HomesMicrosite from "./HomesMicrosite";
 
 export default function StartHere() {
   const navigate = useNavigate();
-  const [showUseCasesModal, setShowUseCasesModal] = useState(false);
   const [showHomesMicrosite, setShowHomesMicrosite] = useState(false);
 
   // Scrolling ticker state
@@ -301,7 +299,7 @@ export default function StartHere() {
               </button>
               {/* 🌟 Use Cases Button */}
               <button
-                onClick={() => setShowUseCasesModal(true)}
+                onClick={() => navigate("/use-cases")}
                 className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(37,99,235,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(14,165,233,0.3)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -600,10 +598,6 @@ export default function StartHere() {
         </div>
       </div>
 
-      <UseCasesModal 
-        isOpen={showUseCasesModal} 
-        onClose={() => setShowUseCasesModal(false)} 
-      />
       {showHomesMicrosite && (
         <HomesMicrosite onClose={() => setShowHomesMicrosite(false)} />
       )}

@@ -638,6 +638,7 @@ export default function DeckovizForEnterprise() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isThesisModalOpen, setIsThesisModalOpen] = useState(false);
   const [showEnterpriseMicrosite, setShowEnterpriseMicrosite] = useState(false);
+  const [expandedImage, setExpandedImage] = useState<string | null>(null);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -1160,15 +1161,10 @@ export default function DeckovizForEnterprise() {
                 hover:shadow-[0_35px_100px_rgba(80,0,200,0.25)]
               "
               images={[
-                "/images/h1.png",
                 "/images/h2.png",
-                "/images/h3.png",
                 "/images/h4.png",
                 "/images/h5.png",
                 "/images/h6.png",
-                "/images/h7.png",
-                "/images/h8.png",
-                "/images/h9.png",
                 "/images/h10.png",
                 "/images/h11.png",
                 "/images/h12.png",
@@ -1176,10 +1172,8 @@ export default function DeckovizForEnterprise() {
                 "/images/h14.png",
                 "/images/h15.png",
                 "/images/h16.png",
-                "/images/h17.png",
                 "/images/h18.png",
-                "/images/h19.png",
-                "/images/h20.png"
+                "/images/h19.png"
               ]}
               interval={3000}
             />
@@ -2055,7 +2049,7 @@ export default function DeckovizForEnterprise() {
 
 
       {/* Features Section */}
-      <section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-transparent overflow-hidden">
+      <section className="relative pt-24 md:pt-32 px-5 md:px-[110px] bg-transparent overflow-visible">
 
         {/* Brand Background Glows */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -2229,7 +2223,8 @@ export default function DeckovizForEnterprise() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: false, amount: 0.3 }}
                         transition={{ duration: 0.7 }}
-                        className="relative p-3 rounded-[2.5rem] bg-white/30 backdrop-blur-2xl border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.15)] group hover:shadow-[0_30px_80px_rgba(37,99,235,0.4)] hover:border-white/90 transition-all duration-500 overflow-hidden hover:scale-[1.45] hover:z-50"
+                        onMouseEnter={() => setExpandedImage(feature.image)}
+                        className="relative p-3 rounded-[2.5rem] bg-white/30 backdrop-blur-2xl border border-white/60 shadow-[0_8px_32px_rgba(37,99,235,0.15)] group hover:shadow-[0_20px_60px_rgba(37,99,235,0.4)] hover:border-white/90 transition-all duration-500 overflow-hidden cursor-pointer hover:scale-[1.02]"
                       >
                          {/* Shiny Glass Overlay */}
                         <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
@@ -2349,6 +2344,40 @@ export default function DeckovizForEnterprise() {
       {showEnterpriseMicrosite && (
         <EnterpriseVisionMicrosite onClose={handleCloseModal} />
       )}
+
+      {/* ================= FULL PAGE IMAGE EXPANSION MODAL ================= */}
+      <AnimatePresence>
+        {expandedImage && (
+          <motion.div
+            initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            animate={{ opacity: 1, backdropFilter: "blur(12px)" }}
+            exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="fixed inset-0 z-[999999] bg-black/80 flex items-center justify-center p-4 cursor-pointer"
+            onClick={() => setExpandedImage(null)}
+          >
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setExpandedImage(null);
+              }}
+              className="absolute top-6 right-6 md:top-10 md:right-10 p-3 rounded-full bg-white/10 hover:bg-white/30 text-white transition-colors duration-300 z-10"
+            >
+              <X size={32} />
+            </button>
+            <motion.img
+              initial={{ scale: 0.85, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 10 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              src={expandedImage}
+              alt="Expanded view"
+              className="w-full h-full max-w-[95vw] max-h-[92vh] object-contain rounded-2xl shadow-[0_0_100px_rgba(0,0,0,0.6)] cursor-auto"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ================= EXPLORE FURTHER ================= */}
       <section className="bg-transparent py-0 border-t border-gray-100"
@@ -2587,7 +2616,7 @@ export default function DeckovizForEnterprise() {
                   </div>
 
                   {/* 🚀 New Blog: Why The Deckoviz Portal for Enterprises? */}
-                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8 pr-[40px]">
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
                     <ScalePop delay={1.0}>
                       <button
                         onClick={() => navigate("/blog/why-the-deckoviz-portal-for-enterprises")}
@@ -2632,6 +2661,197 @@ export default function DeckovizForEnterprise() {
                         </div>
 
                         <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-orange-400 to-rose-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
+
+                  {/* 🌟 Alternate Guide to DASPort */}
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
+                    <ScalePop delay={1.2}>
+                      <button
+                        onClick={() => navigate("/blog/alternate-guide-deckoviz-dasport")}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 blur-3xl -z-10 group-hover:bg-amber-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-orange-500/10 blur-3xl -z-10 group-hover:bg-orange-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
+
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-amber-50/80 shadow-[0_8px_16px_rgba(245,158,11,0.1)] border border-amber-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600">
+                              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-amber-800/60 font-bold">Inspiration</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-amber-700 transition-colors duration-300">DASPort Alternate Use Cases</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">Out-of-the-box non-traditional applications.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-amber-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-yellow-400 to-amber-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
+
+                  {/* 🏡 Long and Evolving Guide to Home Use Cases */}
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
+                    <ScalePop delay={1.4}>
+                      <button
+                        onClick={() => navigate("/blog/evolving-guide-deckoviz-use-cases")}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl -z-10 group-hover:bg-emerald-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-green-500/10 blur-3xl -z-10 group-hover:bg-green-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
+
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-emerald-50/80 shadow-[0_8px_16px_rgba(16,185,129,0.1)] border border-emerald-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-600">
+                              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                              <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-emerald-800/60 font-bold">Living Guide</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-emerald-700 transition-colors duration-300">Evolving Guide to Homes</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">A growing anthology of possibilities.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-emerald-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-green-400 to-emerald-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
+
+                  {/* 📘 The Enterprise Guide to Use Cases, Possibilities & Experiences */}
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8">
+                    <ScalePop delay={1.6}>
+                      <button
+                        onClick={() => navigate("/blog/enterprise-guide-use-cases-possibilities")}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-slate-500/10 blur-3xl -z-10 group-hover:bg-slate-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-blue-500/10 blur-3xl -z-10 group-hover:bg-blue-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
+
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-slate-50/80 shadow-[0_8px_16px_rgba(71,85,105,0.1)] border border-slate-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-slate-600">
+                              <circle cx="12" cy="12" r="10"></circle>
+                              <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+                              <path d="M2 12h20"></path>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-slate-800/60 font-bold">Ultimate Library</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-blue-700 transition-colors duration-300">Enterprise Use Cases & Experiences</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">Possibilities across all spaces.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-slate-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-slate-400 to-blue-500 group-hover:w-full transition-all duration-700 ease-in-out" />
+                      </button>
+                    </ScalePop>
+                  </div>
+
+                  {/* ✨ Companion Guide for Creative Enterprise Use Cases */}
+                  <div className="flex-[0_0_auto] min-w-[340px] md:min-w-[480px] pl-[40px] py-8 pr-[40px]">
+                    <ScalePop delay={1.8}>
+                      <button
+                        onClick={() => navigate("/blog/enterprise-companion-guide-creative-use-cases")}
+                        className="resource-card group relative flex flex-col items-center justify-center text-center
+                        w-full px-8 py-8
+                        rounded-[2rem]
+                        transition-all duration-700
+                        hover:scale-[1.02] hover:-translate-y-2
+                        overflow-hidden"
+                        style={{
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(30px) saturate(200%)",
+                          border: "1px solid rgba(255, 255, 255, 0.25)",
+                          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255,255,255,0.1)"
+                        }}
+                      >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-fuchsia-500/10 blur-3xl -z-10 group-hover:bg-fuchsia-500/20 transition-colors duration-700" />
+                        <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-500/10 blur-3xl -z-10 group-hover:bg-purple-500/20 transition-colors duration-700" />
+                        
+                        <div className="shine-element absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -z-10" />
+
+                        <div className="relative flex items-center gap-6 w-full">
+                          <div className="floating-icon shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center text-2xl 
+                          bg-gradient-to-br from-white/90 to-fuchsia-50/80 shadow-[0_8px_16px_rgba(217,70,239,0.1)] border border-fuchsia-200/50">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-fuchsia-600">
+                              <path d="M12 2l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"></path>
+                            </svg>
+                          </div>
+                          
+                          <div className="flex flex-col items-start text-left gap-1.5">
+                            <span className="text-[11px] uppercase tracking-[0.25em] text-fuchsia-800/60 font-bold">Creative Possibilities</span>
+                            <span className="text-[17px] font-bold text-[#182A4A] leading-tight group-hover:text-fuchsia-700 transition-colors duration-300">Creative Use Cases</span>
+                            <span className="text-[13px] text-slate-500 leading-relaxed font-medium">Unexpected experiences for spaces.</span>
+                          </div>
+                          
+                          <div className="shrink-0 self-center ml-auto opacity-40 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-500 text-fuchsia-600 text-2xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-gradient-to-r from-fuchsia-400 to-purple-500 group-hover:w-full transition-all duration-700 ease-in-out" />
                       </button>
                     </ScalePop>
                   </div>

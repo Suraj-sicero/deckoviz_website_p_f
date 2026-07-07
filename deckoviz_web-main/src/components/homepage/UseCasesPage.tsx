@@ -1,79 +1,57 @@
-import React, { useEffect, useRef } from "react";
-import { X, Sparkles, Heart, Palette, Brain, Star, Wind, BookOpen } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect } from "react";
+import { ArrowLeft, Sparkles, Heart, Palette, Brain, Star, Wind } from "lucide-react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-interface UseCasesModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const UseCasesModal: React.FC<UseCasesModalProps> = ({ isOpen, onClose }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+export default function UseCasesPage() {
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, [isOpen]);
-
-  if (!isOpen) return null;
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <AnimatePresence>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.5 }}
-        className="fixed inset-0 z-[9999] flex flex-col bg-slate-100/40 backdrop-blur-[60px] overflow-hidden selection:bg-blue-500/20 font-sans"
-      >
-        {/* Soft floating background elements */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <motion.div 
-            animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-            transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-[10%] -left-[5%] w-[60vw] h-[60vw] bg-blue-300/10 rounded-full blur-[100px]" 
-          />
-          <motion.div 
-            animate={{ rotate: -360, scale: [1, 1.2, 1] }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute top-[30%] -right-[10%] w-[50vw] h-[50vw] bg-indigo-300/10 rounded-full blur-[100px]" 
-          />
-        </div>
+    <div className="min-h-screen bg-slate-100/40 relative overflow-hidden font-sans">
+      {/* Soft floating background elements */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <motion.div 
+          animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-[10%] -left-[5%] w-[60vw] h-[60vw] bg-blue-300/10 rounded-full blur-[100px]" 
+        />
+        <motion.div 
+          animate={{ rotate: -360, scale: [1, 1.2, 1] }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[30%] -right-[10%] w-[50vw] h-[50vw] bg-indigo-300/10 rounded-full blur-[100px]" 
+        />
+      </div>
 
-        {/* Minimal Header */}
-        <motion.div
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
-          className="absolute top-6 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none"
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-32">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-3 text-slate-600 hover:text-slate-900 mb-16 transition-all group"
         >
-          <div className="max-w-4xl w-full bg-white/50 backdrop-blur-3xl border border-white/70 shadow-[0_15px_30px_rgba(37,99,235,0.06)] rounded-full py-4 px-6 md:px-10 flex items-center justify-between pointer-events-auto">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center shadow-md">
-                <Sparkles className="w-5 h-5 text-white" />
-              </div>
-              <h2 className="text-xl md:text-2xl font-bold text-slate-900 tracking-wide" style={{ fontFamily: "'Playfair Display', serif" }}>
-                An Evolving Guide
-              </h2>
-            </div>
-            <button 
-              onClick={onClose}
-              className="p-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 transition-all duration-300 border border-slate-200 shadow-sm"
-            >
-              <X className="w-4 h-4" />
-            </button>
+          <div className="p-3 rounded-2xl bg-white/50 border border-slate-200/60 group-hover:bg-white/80 group-hover:scale-105 group-hover:-translate-x-1 transition-all shadow-sm">
+            <ArrowLeft className="w-5 h-5 text-[#2563EB]" />
           </div>
-        </motion.div>
+          <span className="text-sm font-bold tracking-widest uppercase text-[#182A4A]">Go Back</span>
+        </button>
 
-        {/* Content Wrapper */}
-        <div ref={scrollRef} className="custom-scrollbar flex-1 overflow-y-auto overflow-x-hidden relative z-10 pt-32 md:pt-40 pb-32 px-4">
-          <div className="max-w-5xl mx-auto">
+        {/* Minimal Header Substitute (Optional, replacing the modal header) */}
+        <motion.div
+           initial={{ y: -20, opacity: 0 }}
+           animate={{ y: 0, opacity: 1 }}
+           transition={{ delay: 0.2, duration: 0.6 }}
+           className="inline-flex items-center justify-center p-4 bg-gradient-to-br from-white/90 to-blue-50/80 border border-white/70 rounded-3xl shadow-[0_15px_30px_rgba(37,99,235,0.06)] mb-12"
+        >
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#182A4A] to-[#2563EB] flex items-center justify-center shadow-md">
+              <Sparkles className="w-6 h-6 text-white" />
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-wide ml-5 pr-4" style={{ fontFamily: "'Playfair Display', serif" }}>
+              An Evolving Guide
+            </h2>
+        </motion.div>
             
             {/* Title Section */}
             <motion.div 
@@ -629,28 +607,8 @@ export const UseCasesModal: React.FC<UseCasesModalProps> = ({ isOpen, onClose })
                 </div>
               </section>
 
-            </div>
-          </div>
         </div>
-
-        <style dangerouslySetInnerHTML={{__html: `
-          .custom-scrollbar::-webkit-scrollbar {
-            width: 14px;
-          }
-          .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-            margin-block: 80px; 
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(37, 99, 235, 0.4);
-            border-radius: 999px;
-            border: 4px solid #F8FAFC; 
-          }
-          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: rgba(37, 99, 235, 0.7);
-          }
-        `}} />
-      </motion.div>
-    </AnimatePresence>
+      </div>
+    </div>
   );
-};
+}

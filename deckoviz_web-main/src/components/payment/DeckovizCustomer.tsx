@@ -141,13 +141,28 @@ const DeckovizCustomizer = () => {
               <div className="max-w-4xl mx-auto">
                 {/* Header - now scrollable and centered */}
                 <div className="relative z-10 pt-12 sm:pt-16 md:pt-20 pb-6 sm:pb-8 text-center">
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-6 sm:mt-4 font-bold tracking-tight mb-2 sm:mb-3 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-                    Get Your Deckoviz
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-6 sm:mt-4 font-bold tracking-tight mb-2 sm:mb-3 font-['Playfair_Display']" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                    <span className="text-black">Get your</span> <span className="bg-clip-text text-transparent animate-gradient italic" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '300% auto' }}>Deckoviz Portal</span>
                   </h1>
                   <p className="text-gray-600 font-medium text-xs sm:text-sm md:text-base mt-3 sm:mt-4 md:mt-6 mb-2 px-4">
                     Follow the simple steps below to customize and place your
                     order.
                   </p>
+                  <div className="mt-4 mb-2 flex justify-center">
+                    <button
+                      onClick={confirmOrder}
+                      type="button"
+                      className="group relative overflow-hidden text-white py-2.5 px-7 rounded-xl font-medium text-sm hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-200/50 transition-all duration-500 ease-out backdrop-blur-sm border border-white/20 flex items-center gap-2"
+                      style={{
+                        background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)",
+                        boxShadow: "0 4px 14px 0 rgba(37,99,235,0.39), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                      }}
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
+                      <ShoppingCart className="w-4 h-4" />
+                      Quick checkout
+                    </button>
+                  </div>
                 </div>
                 {/*}
 
@@ -430,9 +445,9 @@ font-[450]
                     className="group relative overflow-hidden text-white py-3 px-6 sm:px-8 rounded-xl sm:rounded-2xl font-medium text-sm sm:text-base md:text-lg hover:shadow-2xl focus:outline-none focus:ring-4 focus:ring-blue-200/50 transition-[transform,box-shadow,opacity] duration-500 ease-out will-change-transform w-full sm:w-auto backdrop-blur-sm border border-white/20"
                     style={{
                       background:
-                        "linear-gradient(135deg, #2563eb 0%, #4f46e5 35%, #4338ca 70%, #1e1b4b 100%)",
+                        "linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)",
                       boxShadow:
-                        "0 8px 32px rgba(79, 70, 229, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                        "0 8px 32px rgba(37, 99, 235, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
                     }}
                   >
                     {/* Glass shimmer effect */}
@@ -478,8 +493,8 @@ font-[450]
             <div className="max-w-4xl mx-auto">
               {/* Header - now scrollable */}
               <div className="relative z-10 text-center pt-12 sm:pt-16 md:pt-20 pb-3">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl mt-6 font-bold tracking-tight mb-3 sm:mb-4 bg-clip-text text-transparent animate-gradient font-['Playfair_Display']" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '300% auto', fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-                  Get Your Deckoviz
+                <h1 className="text-4xl sm:text-5xl md:text-6xl mt-6 font-bold tracking-tight mb-3 sm:mb-4 font-['Playfair_Display']" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                  <span className="text-black">Get your</span> <span className="bg-clip-text text-transparent animate-gradient italic" style={{ backgroundImage: 'linear-gradient(90deg, #2563EB, #0EA5E9, #0D9488, #2563EB)', backgroundSize: '300% auto' }}>Deckoviz Portal</span>
                 </h1>
                 <p className="text-gray-800 font-medium text-xs sm:text-sm md:text-base mb-2 px-4">
                   Bring your walls to life with the world's most advanced
@@ -488,6 +503,21 @@ font-[450]
                   <br />
                   Please select a frame size to begin customizing your order.
                 </p>
+                <div className="mt-4 mb-2 flex justify-center">
+                  <button
+                    onClick={confirmOrder}
+                    type="button"
+                    className="group relative overflow-hidden text-white py-2.5 px-7 rounded-xl font-medium text-sm hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-200/50 transition-all duration-500 ease-out backdrop-blur-sm border border-white/20 flex items-center gap-2"
+                    style={{
+                      background: "linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%)",
+                      boxShadow: "0 4px 14px 0 rgba(37,99,235,0.39), inset 0 1px 0 rgba(255, 255, 255, 0.2)",
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 group-hover:opacity-100 transform -translate-x-full group-hover:translate-x-full transition-all duration-700 ease-out" />
+                    <ShoppingCart className="w-4 h-4" />
+                    Quick checkout
+                  </button>
+                </div>
               </div>
 
               {/* Content */}
