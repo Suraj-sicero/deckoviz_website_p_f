@@ -97,6 +97,7 @@ import ShortStoryTool from "./components/tools/ShortStoryTool";
 import GreetingCardTool from "./components/tools/GreetingCardTool";
 import ComicTool from "./components/tools/ComicTool";
 import LifeBookTool from "./components/tools/LifeBookTool";
+import UseCasesPage from "./components/homepage/UseCasesPage";
 import SongTool from "./components/tools/SongTool";
 import LearningBookTool from "./components/tools/LearningBookTool";
 import LearningPortalTool from "./components/tools/LearningPortalTool";
@@ -382,6 +383,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           />
           <Route path="/dasp-guide" element={<DASPGuide />} />
           <Route path="/dasp-homes-guide" element={<DASPHomesGuide />} />
+          <Route path="/use-cases" element={<UseCasesPage />} />
           <Route path="/alternate-use-cases" element={<AlternateUseCasesGuide />} />
           <Route path="/vizzy-art-engine" element={<VizzyArtEngineGuide />} />
           <Route path="/ai-layer-for-home" element={<AILayerExpandedPage />} />
