@@ -46,6 +46,8 @@ import agenticPresetsRouter from "./routes/agenticPresets.js";
 import soundscapeRoutes from "./routes/soundscapeRoutes.js";
 import creativeJournalRoutes from "./routes/creativeJournalRoutes.js";
 import ambientClockRoutes from "./routes/ambientClockRoutes.js";
+import enterpriseRoutes from "./routes/enterpriseRoutes.js";
+import homeRoutes from "./routes/homeRoutes.js";
 import { User } from "./models/User.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
@@ -296,6 +298,13 @@ app.use("/api/flagship-games/debating-society", debatingRouter);
 app.use("/api/flagship-games/cartographers", cartographersRouter);
 app.use("/api/flagship-games/brilliant-minds", mindsRouter);
 app.use("/api/flagship-games/oracle", oracleRouter);
+
+// ✅ Enterprise Webapp routes
+app.use("/api", enterpriseRoutes);
+
+// ✅ Home Suite routes
+app.use("/api", homeRoutes);
+
 
 // ✅ EJS routes (for admin panel / UI)
 app.use("/", blogRoutes); // Example: https://deckoviz-demo.onrender.com/blogs or /add
