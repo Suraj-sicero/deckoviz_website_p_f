@@ -43,3 +43,16 @@ deckoviz_web-main/temp_nav.txt
 
 # Netlify
 .netlify
+
+# Database
+*.sqlite
+
+# Logs
+*.log
+
+# Uploads
+backend/public/uploads/*
+
+# Test files
+__test_*.mjs
+__*_test.mjs

@@ -46,8 +46,9 @@ import agenticPresetsRouter from "./routes/agenticPresets.js";
 import soundscapeRoutes from "./routes/soundscapeRoutes.js";
 import creativeJournalRoutes from "./routes/creativeJournalRoutes.js";
 import ambientClockRoutes from "./routes/ambientClockRoutes.js";
-import enterpriseRoutes from "./routes/enterpriseRoutes.js";
 import homeRoutes from "./routes/homeRoutes.js";
+import webappRoutes from "./routes/webappRoutes.js";
+import enterpriseRoutes from "./routes/enterpriseRoutes.js";
 import { User } from "./models/User.js";
 import Stripe from "stripe";
 import client from "./redisClient.js";
@@ -67,39 +68,44 @@ import "./models/DeckovizCuration.js";
 import "./models/UserFavoritePrompt.js";
 import "./models/UserSavedArtwork.js";
 import "./models/FilmProject.js";
+// ── Home / Dashboard Models ───
+import "./models/HomeProfile.js";
+import "./models/HomeDeepProfile.js";
+import "./models/HomeDailyQueue.js";
+import "./models/HomeEvent.js";
+import "./models/HomeFavorite.js";
+import "./models/HomeSetting.js";
+import "./models/HomeVCCSession.js";
+import "./models/VizzyChat.js";
+import "./models/Folder.js";
+
+// ── Webapp / Enterprise Models ───
+import "./models/Address.js";
+import "./models/Artwork.js";
+import "./models/CartItem.js";
+import "./models/Comment.js";
+import "./models/Follower.js";
+import "./models/MediaFolder.js";
+import "./models/Order.js";
+import "./models/OrderSummary.js";
+import "./models/PaymentMethod.js";
+import "./models/Post.js";
+import "./models/SearchHistory.js";
+import "./models/SubscriptionPlan.js";
+import "./models/WebappProfile.js";
+// ── Enterprise Models ───
+import "./models/EnterpriseProfile.js";
+import "./models/EnterpriseUnit.js";
+import "./models/EnterpriseEvent.js";
+import "./models/EnterpriseDailyQueue.js";
+import "./models/EnterpriseGuest.js";
+import "./models/EnterpriseTemplate.js";
 import { seedSystemCards } from "./seeds/systemCardSeed.js";
+import fs from "fs";
 
-
-// ===== Startup Logic (Background) =====
-(async () => {
-  // 1. Database sync runs immediately and independently
-  try {
-    await sequelize.authenticate();
-    console.log("✅ PostgreSQL connected via Sequelize.");
-    await sequelize.sync({ alter: true });
-    // Seed system cards after DB is ready (safe to re-run — uses upsert)
-    await seedSystemCards();
-  } catch (error) {
-    console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
-  }
-
-  // 2. Redis test run separately so it never blocks DB operations
-  try {
-    if (client.isOpen) {
-      await client.set("hello", "Dekoviz");
-      console.log(await client.get("hello"));
-    } else {
-      console.warn("⚠️ Redis client is not connected, skipping initial test.");
-    }
-  } catch (redisErr) {
-    console.warn("⚠️ Redis not available, skipping initial test.");
-  }
-})();
-
-// DB logic moved to background IIFE above
 const app = express();
 const PORT = process.env.PORT || 5000;
-import fs from "fs";
+
 // ===== Resolve __dirname (for ES modules) =====
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -120,11 +126,30 @@ console.error = (...args) => {
     logStream.write(msg);
 };
 
-app.listen(PORT, () =>
-  console.log(`🚀 Unified server running on http://localhost:${PORT}`)
-);
+// ===== Startup Logic =====
+(async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("✅ PostgreSQL connected via Sequelize.");
+    await sequelize.sync({ alter: true });
+    await seedSystemCards();
+  } catch (error) {
+    console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
+  }
 
-// DB logic moved to background IIFE above
+  try {
+    if (client.isOpen) {
+      await client.set("hello", "Dekoviz");
+      console.log(await client.get("hello"));
+    }
+  } catch (redisErr) {
+    console.warn("⚠️ Redis not available, skipping initial test.");
+  }
+
+  app.listen(PORT, () =>
+    console.log(`🚀 Unified server running on http://localhost:${PORT}`)
+  );
+})();
 
 // ===== Stripe Configuration =====
 const stripe = new Stripe(
@@ -301,6 +326,9 @@ app.use("/api/flagship-games/oracle", oracleRouter);
 
 // ✅ Enterprise Webapp routes
 app.use("/api", enterpriseRoutes);
+
+// ✅ Webapp routes (marketplace, social feed, etc.)
+app.use("/api/webapp", webappRoutes);
 
 // ✅ Home Suite routes
 app.use("/api", homeRoutes);

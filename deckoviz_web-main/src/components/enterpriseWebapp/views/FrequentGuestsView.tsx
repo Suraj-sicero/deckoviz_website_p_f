@@ -1,13 +1,20 @@
+import { useState, useEffect } from "react";
 import { Search, Plus, Edit2, Star } from "lucide-react";
-import { frequentGuests } from "../enterpriseData";
+import { enterpriseApi } from "../../../lib/enterpriseApi";
 
 export default function FrequentGuestsView() {
+  const [guests, setGuests] = useState<any[]>([]);
+
+  useEffect(() => {
+    enterpriseApi.getGuests().then(setGuests).catch(console.error);
+  }, []);
+
   return (
     <div className="mx-auto w-full max-w-[1120px] px-8 py-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-serif text-[24px] font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">Frequent Guests</h1>
-          <p className="text-sm text-gray-400 mt-1">Manage guest profiles and personalization preferences</p>
+          <p className="text-sm text-gray-400 mt-1">{guests.length} guest profiles</p>
         </div>
         <div className="flex items-center gap-3">
           <label className="relative">
@@ -21,11 +28,11 @@ export default function FrequentGuestsView() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {frequentGuests.map((guest) => (
+        {guests.map((guest) => (
           <div key={guest.id} className="group rounded-2xl border border-[#e8eaef] bg-white p-6 transition-all hover:shadow-lg hover:-translate-y-0.5">
             <div className="flex items-start gap-4 mb-4">
               <div className="relative">
-                <img src={guest.photo} alt={guest.name} className="h-14 w-14 rounded-full object-cover ring-2 ring-blue-100" />
+                <img src={guest.photo || "/images/webapp/figma/artist-1.jpg"} alt={guest.name} className="h-14 w-14 rounded-full object-cover ring-2 ring-blue-100" />
                 <div className="absolute -bottom-0.5 -right-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-amber-400 text-white">
                   <Star size={10} fill="currentColor" />
                 </div>
