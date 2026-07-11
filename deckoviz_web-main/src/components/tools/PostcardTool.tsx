@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import ToolLayout from "./ToolLayout";
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com"}`);
 
 type Status = "idle" | "uploading" | "loading" | "done" | "error";
 

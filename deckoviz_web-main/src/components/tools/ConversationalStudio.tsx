@@ -23,7 +23,7 @@ import { StaticFilmCreator } from "./StaticFilmCreator";
 import { ImageMontageCreator } from "./ImageMontageCreator";
 import { SongVisualsCreator } from "./SongVisualsCreator";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com");
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com");
 
 interface Message {
   role: "user" | "assistant";

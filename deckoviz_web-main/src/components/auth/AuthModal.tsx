@@ -20,7 +20,7 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
     setLoading(true);
 
     const endpoint = isLogin ? "/signin" : "/signup";
-    const BASE_URL = import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com";
+    const BASE_URL = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
     const API_URL = `${BASE_URL}/api/auth`;
     try {
       const res = await axios.post(`${API_URL}${endpoint}`, { email, password });

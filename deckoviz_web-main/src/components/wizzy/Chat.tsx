@@ -6,7 +6,7 @@ interface ChatProps {
   onStoryGenerated: (structure: any) => void;
 }
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-web-f.onrender.com";
 
 const Chat: React.FC<ChatProps> = ({ onStoryGenerated }) => {
   const [messages, setMessages] = useState<Message[]>([

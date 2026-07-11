@@ -52,7 +52,7 @@ export const CreditSystemModal: React.FC<CreditSystemModalProps> = ({ isOpen, on
 
     setLoading(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}/create-checkout-session`, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com"}/create-checkout-session`, {
         email: user.email,
         productName: `${credits} Creative Studio Credits`,
         amount: price,

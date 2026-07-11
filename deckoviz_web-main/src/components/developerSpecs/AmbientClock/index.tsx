@@ -76,7 +76,7 @@ const SURPRISE_PROMPTS = [
   "Dark academia library with rain hitting the gothic arched windows"
 ];
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-web-f.onrender.com";
 
 interface ClockPreset {
   id?: string;

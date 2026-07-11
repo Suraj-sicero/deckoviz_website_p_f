@@ -5,7 +5,7 @@
 
 const API_BASE =
   (import.meta.env.VITE_API_URL as string) ||
-  "https://deckoviz-demo.onrender.com";
+  "https://deckoviz-web-f.onrender.com";
 
 export function getAuthToken(): string | null {
   const direct =

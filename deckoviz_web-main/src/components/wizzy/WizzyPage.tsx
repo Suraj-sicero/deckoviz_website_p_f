@@ -5,7 +5,7 @@ import ImageViewer from "./ImageViewer";
 import { StoryStructure } from "../../types/wizzy";
 import { Sparkles, Bot, ArrowRight } from "lucide-react";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-web-f.onrender.com";
 
 const WizzyPage: React.FC = () => {
   const [step, setStep] = useState<"ideation" | "builder" | "viewer">("ideation");

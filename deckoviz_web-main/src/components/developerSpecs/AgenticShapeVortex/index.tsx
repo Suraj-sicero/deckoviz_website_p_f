@@ -34,7 +34,7 @@ interface Preset {
   isPublic?: boolean;
 }
 
-const API_BASE = import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com";
+const API_BASE = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
 
 const SHAPES = [
   { id: 0, key: "galaxy", name: "Galaxy Spiral" },
