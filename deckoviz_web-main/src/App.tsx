@@ -250,6 +250,7 @@ import ElinityDeckovizGuide from "./components/homepage/ElinityDeckovizGuide";
 import VizzyFunZone from "./pages/VizzyFunZone";
 import DeckovizWebapp from "./components/webapp/DeckovizWebapp";
 import EnterpriseWebapp from "./components/enterpriseWebapp/EnterpriseWebapp";
+import WebFrame from "./components/WebFrame";
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -316,6 +317,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/elinity/contact",
     "/elinity/join-us",
     "/webapp",
+    "/webframe",
   ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp");
 
   return (
@@ -627,6 +629,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/daily-curator" element={<ProtectedRoute><DailyCuratorPage /></ProtectedRoute>} />
           <Route path="/admin/daily-curator" element={<ProtectedRoute><AdminDailyCuratorPage /></ProtectedRoute>} />
           <Route path="/elinity-deckoviz-guide" element={<ElinityDeckovizGuide />} />
+          <Route path="/webframe" element={<WebFrame />} />
         </Routes>
       </main>
       {!isDeveloperTool && !isCanvasPage && <Footer />}

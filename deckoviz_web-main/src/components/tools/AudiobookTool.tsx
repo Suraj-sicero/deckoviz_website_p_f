@@ -3,7 +3,7 @@ import { PDFDocument } from "pdf-lib";
 import ToolLayout from "./ToolLayout";
 import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-demo.onrender.com";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-web-f.onrender.com";
 const HF_AUDIOBOOK_URL = `${BACKEND_URL}/api/audiobook`;
 
 interface PDFChunk {

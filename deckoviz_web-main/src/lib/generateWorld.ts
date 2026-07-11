@@ -17,7 +17,7 @@ export interface MarbleWorldResult {
   worldId: string;
 }
 
-const BACKEND = `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}/api`;
+const BACKEND = `${import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com"}/api`;
 
 /**
  * Step 1 - Generate concept art image for preview.

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
 const API_URL = `${BASE_URL}/api/auth`;
 
 interface User {

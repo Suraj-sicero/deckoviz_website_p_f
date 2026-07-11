@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import ToolLayout from "./ToolLayout";
 import { useAuth } from "../../context/AuthContext";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-demo.onrender.com"}`);
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || (import.meta.env.VITE_API_URL || `${import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com"}`);
 
 interface Message {
   id: string;
