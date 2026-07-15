@@ -1,1617 +1,343 @@
-"use client"
+import { DynamicImageGrid } from "../other/DynamicImageGrid";
+import { motion } from "framer-motion";
 
-import React from 'react';
-// --- Assuming these components are available in your project ---
-import { DynamicImageGrid } from "../other/DynamicImageGrid"; 
+const officeImages = [
+  { src: '/images/office/43f8f906-c42a-4be3-9c76-c5e0ec7e93a2.png', tag: 'Creative Studio' },
+  { src: '/images/office/7e8ecf9f-422e-4995-bfdf-5eb60bdbd9c6.png', tag: 'Focus Zone' },
+  { src: '/images/office/b14c986f-f735-4d91-9c22-1043d6e82e41.png', tag: 'Modern Workspace' },
+  { src: '/images/office/c45bd925-09ce-4e36-bbbb-c0602b84c178.png', tag: 'Inspired Environment' },
+  { src: '/images/office/fd2f3ca8-b88e-4fbb-8632-2815470c875d.png', tag: 'Dynamic Meeting' },
+];
+
+const highlights = [
+  { icon: "🔄", title: "Dynamic Focus and Break Cycles", desc: "Immersive visuals for deep work, energising sequences for breaks. Deckoviz shifts intelligently through the day to sustain flow and head off burnout." },
+  { icon: "🏛️", title: "The Company Values Wall", desc: "Your mission, milestones, and values, rendered as evolving art. Culture made visible instead of laminated." },
+  { icon: "💡", title: "Creative Brainstorm Mode", desc: "Feed Vizzy a project theme and watch it generate a full visual thoughtscape, images, moods, and quotes designed to spark ideas." },
+  { icon: "🎉", title: "Team Rituals and Highlights", desc: "Birthdays, weekly wins, shoutouts, turned into art and posters. Syncs with Slack, Notion, and the tools your team already lives in." },
+  { icon: "💚", title: "Mood Check-ins and Visual Feedback", desc: "Anonymous sentiment tracking, translated into ambient visuals that reflect the real emotional temperature of the room." },
+  { icon: "🧘", title: "Mental Health and Reset Mode", desc: "Dedicated well-being corners with calming multisensory visuals and guided breathing sequences, scent and light integrations optional." },
+  { icon: "🎯", title: "Dynamic Meeting Spaces", desc: "Switch a room between Focus, Brainstorm, or Vision mode instantly. Visuals and soundscapes tailored to whatever the meeting actually needs." },
+  { icon: "🎨", title: "The Creative Collab Canvas", desc: "A living artboard where teams drop ideas, reflections, and wins. A shared visual memory of the work as it happens." },
+  { icon: "🤝", title: "Client-Facing First Impressions", desc: "Reception and lobby walls that tell visitors exactly what kind of company they're walking into, before anyone says a word." },
+  { icon: "✨", title: "Creative Studio Inspiration Mode", desc: "For design and creative teams, a constantly evolving visual mood board that keeps the room feeling like a place ideas want to happen." },
+  { icon: "🌐", title: "Coworking Community Walls", desc: "Shared spaces that showcase member work, events, and community milestones, giving coworking spaces an identity beyond the wifi password." },
+  { icon: "🎵", title: "Personalised Flow Modes", desc: "Individuals and teams set their own mode, Calm, Motivate, Inspire, Reflect, and Deckoviz curates the visual and sonic rhythm around it." },
+  { icon: "⚡", title: "Instant Multimodal Generation, On Demand", desc: "Type a prompt, describe a mood, or hum an idea, and Vizzy generates it, such as company-themed art instantly, in any style, for any wall, on the spot." },
+  { icon: "👤", title: "Employee-Generated Visuals", desc: "Let your team submit their own ideas, sketches, or prompts and watch them become real, gallery-quality art on the office walls, made by the people who work there." },
+  { icon: "🎧", title: "Multisensory Focus Music", desc: "Adaptive soundscapes and focus-tuned music, synced to the visuals on screen, turning any corner of the office into a deep-work zone in seconds." },
+  { icon: "🌿", title: "Wellbeing and Focus Art Series", desc: "A rotating library of calming, focus-enhancing visuals designed around attention and emotional regulation, not just aesthetics, for the moments a team needs to reset." },
+];
+
+const benefits = [
+  {
+    title: "Boost Focus and Creativity",
+    desc: "Environments designed for how the mind actually works, not just how a floor plan looks."
+  },
+  {
+    title: "Strengthen Culture, Visibly",
+    desc: "Shared rituals and aesthetic storytelling that make culture something people see and feel daily, not something buried in a handbook."
+  },
+  {
+    title: "Improve Emotional Climate",
+    desc: "Ambient visuals that respond to real sentiment, reducing cognitive fatigue across the team."
+  },
+  {
+    title: "Increase Retention and Performance",
+    desc: "People stay longer and do better work in spaces they genuinely want to be in."
+  },
+  {
+    title: "Elevate Your Employer Brand",
+    desc: "For offices and coworking spaces competing for talent, the room itself becomes part of the pitch."
+  },
+  {
+    title: "A Creative Partner That Never Clocks Out",
+    desc: "Vizzy generates fresh visual material on demand, no repeats, no stale décor, ever."
+  },
+  {
+    title: "Multisensory, Not Just Visual",
+    desc: "Synchronised visuals, sound, and light, with optional scent, built for focus, flow, or recovery depending on the moment."
+  },
+  {
+    title: "Zero Repetition, Ever",
+    desc: "A generative engine means the art on your walls evolves continuously alongside your people and your projects."
+  },
+  {
+    title: "A Stronger First Impression for Every Visitor",
+    desc: "Clients, candidates, and investors read a room in seconds. Give them something worth reading."
+  },
+  {
+    title: "Manage Energy, Not Just Tasks",
+    desc: "The best workplaces of the next decade won't just optimise output. They'll actively design for the energy behind it."
+  },
+];
+
+const fits = [
+  "Client meeting rooms with mode-matched visual backdrops",
+  "Sales team leaderboards, rendered as art instead of spreadsheets",
+  "Product launch walls for big reveal moments",
+  "Hybrid meeting backdrops that elevate remote calls",
+  "Focus pods and phone booths with calming, distraction-free visuals",
+  "Break rooms and kitchens with energising, appetising themes",
+  "Agency pitch rooms designed to impress before the deck even opens",
+  "Portfolio and case study walls for creative studios",
+  "New hire onboarding welcome walls",
+  "All-hands and town hall visual backdrops",
+  "Anniversary and milestone celebration displays",
+  "Investor and board meeting rooms with a polished, considered feel",
+  "Podcast and content studio backdrops",
+  "Coworking event and community meetup walls",
+  "Seasonal and festival decor across shared spaces",
+  "Wellness rooms with guided calm and reset sequences",
+  "Studio inspiration corners for photographers, designers, and artists",
+  "Rooftop or lounge ambience for after-hours team moments",
+];
 
 const DeckovizOfficesLanding = () => {
-  
-  // --- Image sources for the new DynamicImageGrid section ---
-  const officeImages = [
-    { src: '/images/office/workspace-lobby.png' },
-    { src: '/images/office/creative-studio.png' },
-    { src: '/images/office/meeting-room-focus.png' },
-    { src: '/images/office/break-room-calm.png' },
-    { src: '/images/office/executive-suite.png' },
-    { src: '/images/office/reception-branding.png' },
-    { src: '/images/office/collaborative-space.png' },
-    { src: '/images/office/wellness-pod.png' },
-  ];
-
-return (
-    <div className="bg-white">
-      {/* Hero Section with Gradient Background */}
-      <div className="min-h-screen relative overflow-hidden">
-        {/* Gradient Background Effects - Only for Hero Section */}
-        <div className="absolute inset-0">
-          {/* Animated Gradient Layers */}
-          <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/25 via-violet-400/15 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-500/20 via-violet-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-indigo-500/15 via-violet-400/8 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/25 via-violet-400/15 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
-          <div className="absolute top-0 left-0 w-1/6 h-1/3 bg-gradient-to-r from-indigo-600/30 via-rose-400/15 to-transparent blur-[30px] animate-[pulse_4s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/3 left-0 w-1/5 h-1/2 bg-gradient-to-r from-indigo-500/20 via-rose-400/17 to-transparent blur-[35px] animate-[floatLeft_5s_ease-in-out_infinite_1s]"></div>
-          <div className="absolute top-2/3 left-0 w-1/4 h-1/3 bg-gradient-to-r from-indigo-600/35 via-rose-400/20 to-transparent blur-[40px] animate-[floatCenter_6s_ease-in-out_infinite_2s]"></div>
-          <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-indigo-600/30 via-rose-400/15 to-transparent blur-[35px] animate-[floatRight_9s_ease-in-out_infinite_1.5s]"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-violet-300/20 via-pink-300/18 to-transparent blur-[45px] animate-[floatBottom_8s_ease-in-out_infinite_3s]"></div>
-
-          {/* Curved Grid Pattern - Barrel Distortion Effect */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-25 pointer-events-none"
-            viewBox="0 0 1000 800"
-            preserveAspectRatio="xMidYMid slice"
-          >
-            <g stroke="white" strokeWidth="1" fill="none">
-              {/* Vertical curved lines (longitude-style) */}
-              {Array.from({ length: 25 }).map((_, i) => {
-                const x = (i / 24) * 1000;
-                const curvature = Math.sin((i / 24) * Math.PI) * 120;
-                return (
-                  <path
-                    key={`v-${i}`}
-                    d={`M ${x} 0 Q ${x + curvature} 400 ${x} 800`}
-                  />
-                );
-              })}
-              
-              {/* Horizontal curved lines (latitude-style) */}
-              {Array.from({ length: 20 }).map((_, i) => {
-                const y = (i / 19) * 800;
-                const distanceFromCenter = Math.abs(y - 400) / 400;
-                const compression = 1 - distanceFromCenter * 0.7;
-                const curve = 150 * (1 - compression);
-                
-                return (
-                  <path
-                    key={`h-${i}`}
-                    d={`M 0 ${y} Q ${250 + curve} ${y} 500 ${y} T 1000 ${y}`}
-                  />
-                );
-              })}
-            </g>
-          </svg>
-        </div>
-
-        {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center pt-16">
-          {/* Top Badge */}
-          <div className="mt-28 mb-10 shadow-lg hover:shadow-xl">
-            <span className="inline-flex items-center px-3 py-1 bg-[#6670d8] text-white text-sm font-medium rounded-md">
-              Deckoviz For All
-            </span>
-          </div>
-
-          {/* Main Heading */}
-          <div className="mb-8">
-            <h1 className="text-5xl md:text-5xl font-semibold text-gray-900 leading-tight">
-              Deckoviz For Offices &
-              <br />
-              Workspaces
-            </h1>
-          </div>
-
-          {/* Subtitle */}
-          <div className="mb-12 max-w-2xl">
-            <p className="text-lg font-medium text-gray-900 leading-relaxed">
-              Build Inspired Teams. Design Emotionally Intelligent Environments.
-            	<br />
-            	Make Every Wall Speak.
-          	</p>
-        	</div>
-
-        	{/* Secondary Heading */}
-        	<div className="mb-8">
-        	  <h2 className="text-2xl md:text-2xl lg:text-3xl font-semibold text-gray-800 leading-tight mb-3">
-        	    Rethink the Modern Workplace
-        	  </h2>
-        	</div>
-
-        	{/* Description Paragraphs */}
-        	<div className="max-w-4xl space-y-6 text-gray-900 font-medium leading-relaxed">
-        	  <p className="text-base md:text-lg">
-        	    Today's offices aren't just about desks, emails, and deadlines. They're about culture,
-        	    <br />
-        	    creativity, wellness, connection, and identity. Your environment has the power to energize
-        	    <br />
-        	    your team, communicate your brand, and influence how people feel the moment they walk in.
-        	  </p>
-        	  
-        	  <p className="text-base md:text-lg">
-        	    Deckoviz gives you that power   through a living, AI-powered smart art frame that curates
-        	    <br />
-        	    the emotion, focus, culture, and story of your space.
-        	  </p>
-        	  
-        	  <div className="pt-4 pb-20">
-        	    <p className="text-base md:text-lg font-semibold text-gray-800">
-        	      No more cold corporate walls. No more lifeless break rooms.
-        	    </p>
-        	    <p className="text-base md:text-lg font-semibold text-gray-800">
-        	      Deckoviz brings your workspace to life   dynamically, beautifully, and intelligently.
-        	    </p>
-        	  </div>
-        	</div>
-      	</div>
-      </div>
-      {/* YT and Instagram */}
-      <div className="bg-white py-12 md:py-12">
-        <div className="max-w-7xl mx-auto px-4">
-          {/* Enhanced Heading Section */}
-          <div className="text-center mb-10">
-            <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight mb-7">
-              Learn More About
-              <span className="bg-gradient-to-r from-indigo-600 via-violet-600 to-pink-600 bg-clip-text text-transparent">
-                {" "}Deckoviz
-              </span>
-            </h2>
-            <p className="text-sm mb-16 md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Dive deeper into the world of AI-powered smart art frames and discover how Deckoviz is 
-              revolutionizing hospitality experiences through immersive visual storytelling.
-            </p>
-          </div>
-
-          {/* Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Left Side - YouTube Video */}
-            <div className="relative group mt-0 md:mt-[-3rem]">
-              <div className="relative p-10 sm:p-6 md:p-8">
-                <div 
-                  className="absolute -inset-12 opacity-60 group-hover:opacity-80 transition-opacity duration-500"
-                  style={{
-                    background: "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(147,51,234,0.3) 15%, rgba(124,58,237,0.35) 30%, rgba(168,85,247,0.3) 45%, rgba(251,146,60,0.25) 60%, rgba(219,39,119,0.2) 75%, rgba(139,69,19,0.1) 90%, transparent 100%)",
-                    filter: "blur(40px)"
-                  }}
-                />
-                <div className="relative bg-white/90 backdrop-blur-sm rounded-3xl p-4 shadow-2xl border border-white/50 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
-                  <div className="text-center mb-4">
-                    <h3 className="text-lg font-semibold text-gray-800">Watch Deckoviz Transform Spaces</h3>
-                  </div>
-                  <div className="aspect-video rounded-2xl overflow-hidden shadow-lg">
-                    <iframe
-                      src="https://www.youtube.com/embed/Rxms0gWUmMs"
-                      title="Deckoviz Demo"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="w-full h-full"
-                    ></iframe>
-                  </div>
-                  <p className="text-center text-gray-600 mt-4">
-                    Experience the magic of Deckoviz and see how it can transform your space.
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="relative group mt-0">
-              <div className="relative p-4 sm:p-6 md:p-8">
-              {/* Background Glow */}
-                <div 
-                  className="absolute -inset-12 opacity-70 group-hover:opacity-90 transition-opacity duration-500"
-                  style={{
-                    background: "radial-gradient(ellipse at center, rgba(99,102,241,0.4) 0%, rgba(147,51,234,0.3) 15%, rgba(124,58,237,0.35) 30%, rgba(168,85,247,0.3) 45%, rgba(251,146,60,0.25) 60%, rgba(219,39,119,0.2) 75%, rgba(139,69,19,0.1) 90%, transparent 100%)",
-                    filter: "blur(40px)"
-                  }}
-                />
-
-                {/* Instagram Container */}
-                <div className="relative bg-white/95 backdrop-blur-sm w-full max-w-md mx-auto rounded-3xl p-3 shadow-2xl border border-white/60 group-hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-2">
-                  
-                  {/* Responsive Instagram Embed */}
-                  <div className="w-full aspect-[4/5] overflow-hidden rounded-2xl">
-                    <iframe
-                      src="https://www.instagram.com/p/DLM9TrnSibN/embed"
-                      className="w-full h-full"
-                      frameBorder="0"
-                      allowTransparency={true}
-                      allow="encrypted-media"
-                      title="Instagram Post"
-                    ></iframe>
-                  </div>
-
-                  {/* Caption */}
-                  <div className="mt-4 text-center">
-                    <h3 className="text-lg font-semibold text-gray-800 mb-1">Follow Our Journey</h3>
-                    <p className="text-sm text-gray-600">Daily inspiration & updates.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  return (
+    <div className="bg-white min-h-screen text-gray-900 font-sans">
+      {/* ── 1. Immersive Hero ── */}
+      <div className="relative pt-32 pb-20 overflow-hidden lg:pt-40 lg:pb-32">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-blue-50/30 to-white"></div>
+          {/* Subtle animated blobs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#182A4A]/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#2563EB]/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/3 w-96 h-96 bg-[#182A4A]/5 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
         </div>
+
+        <motion.div 
+          className="relative z-10 max-w-7xl mx-auto px-6 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <span className="inline-block py-1.5 px-4 rounded-full bg-white/60 border border-gray-200 text-[#182A4A] font-semibold text-sm tracking-wide mb-6 shadow-sm backdrop-blur-sm">
+            Deckoviz for Offices, Coworking Spaces & Creative Studios
+          </span>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8 leading-tight font-serif">
+            Where Work Feels <br className="hidden md:block"/>
+            <span className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-transparent bg-clip-text">Inspired</span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto mb-6 font-medium leading-relaxed">
+            Most offices run on productivity software. Almost none run on mood, creativity, or flow, the actual human engines behind great work.
+          </p>
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
+            Deckoviz fixes that, by bringing a smart, evolving, performance- and culture-attuned architecture for inspired work to your space.
+          </p>
+        </motion.div>
       </div>
 
-      {/* What is Deckoviz Section with White Background */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
-            {/* Left Column */}
-            <div>
-              {/* Badge */}
-              <div className="flex justify-start mb-8">
-                <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                  What is Deckoviz
-                </div>
-              </div>
-              
-              {/* Main Heading */}
-              <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-                What is
-                <br />
-                Deckoviz
-              </h2>
-            </div>
-
-            {/* Right Column */}
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <p className="text-lg text-gray-800 leading-relaxed mt-14">
-                  Deckoviz is a smart art frame that displays
-                  <br />
-                  evolving, AI-curated visual collections based on
-                  <br />
-                  time of day, mood, environment, or intentional
-                  <br />
-                  design. It acts as:
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* It Act as section */}
-          <div className="mb-16 relative">
-            <h3 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-12">
-              It Act as:
-            </h3>
-
-            {/* Background gradient glow - positioned behind cards */}
-            <div
-              className="absolute -top-8 left-1/2 transform -translate-y-1/4 -translate-x-1/2 w-[70rem] h-[60rem]"
-              style={{
-                background: "radial-gradient(ellipse at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.20) 20%, rgba(236,72,153,0.16) 35%, rgba(168,85,247,0.12) 50%, rgba(168,85,247,0.06) 70%, transparent 85%)",
-                filter: "blur(90px)",
-                zIndex: 1,
-              }}
-            />
-
-            {/* Feature Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-10">
-              {/* Card 1 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    A dynamic
-                    <br />
-                    visual
-                    <br />
-                    designer
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 2 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    A mood
-                    <br />
-                    enhancer
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 3 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    A digital gallery
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 4 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    A cultural
-                    <br />
-                    storyteller
-                  </h4>
-                </div>
-              </div>
-
-              {/* Card 5 */}
-              <div className="relative group">
-                <div 
-                  className="backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 text-center h-full flex flex-col"
-                  style={{
-                    background: "linear-gradient(to top, rgba(99,102,241,0.4) 0%, rgba(129,140,248,0.35) 25%, rgba(147,51,234,0.3) 45%, rgba(168,85,247,0.2) 65%, rgba(199,210,254,0.1) 85%, rgba(255,255,255,1) 100%)"
-                  }}
-                >
-                  <div className="mb-4 flex justify-center">
-                    <span className="text-3xl">❤️</span>
-                  </div>
-                  <h4 className="text-lg font-medium text-gray-900 leading-tight" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    A personalized
-                    <br />
-                    productivity partner
-                  </h4>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Description */}
-          <div className="text-center max-w-6xl mx-auto">
-            <p className="text-lg text-gray-900 font-medium leading-relaxed">
-              It blends seamlessly into any office environment   and adds energy, identity, and emotion to every wall.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Why Offices Need Deckoviz Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-20">
-            {/* Left Column */}
-            <div>
-              {/* Badge */}
-              <div className="flex justify-start mb-8">
-                <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                  Why It Matters
-                </div>
-              </div>
-              
-              {/* Main Heading */}
-              <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-                Why Offices Need
-                <br />
-                Deckoviz
-              </h2>
-            </div>
-
-            {/* Right Column */}
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-              </div>
-            </div>
-          </div>
-
-          {/* Cards Section with Background Gradient */}
-          <div className="relative">
-            {/* Subtle, wide-radius circular glow near card area */}
-            <div
-              className="absolute bottom-24 right-16 w-[480px] h-[480px]"
-              style={{
-                background: "radial-gradient(circle at center, rgba(147,51,234,0.25) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
-                filter: "blur(120px)",
-                zIndex: 1,
-              }}
-            />
-
-
-            {/* Feature Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-              {/* Card 1 - Emotional Tone */}
-              <div className="relative group cursor-pointer">
-                <div
-                  className="absolute -inset-0.5 bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
-                />
-                
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
-                  
-                  {/* Icon and Header */}
-                  <div className="mb-6 flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 group-hover:scale-110 transition-transform duration-300">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                          <path d="M9 11H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h4l3 3a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1l-3 3"/>
-                          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
-                        </svg>
-                      </div>
-                      <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-amber-400 transition-colors duration-300" />
-                    </div>
-                    
-                    <div className="text-gray-400 group-hover:text-amber-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
-                    Set the Right Emotional Tone
-                  </h3>
-
-                  <div className="flex-1 space-y-4">
-                    <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
-                      Every room has a job. Deckoviz sets the mood to match it   whether that's deep focus, vibrant creativity, team celebration, or meditative calm.
-                    </p>
-                    
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Use calming visuals in quiet zones or lounges
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Use vibrant, abstract motion art in brainstorming rooms
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Use elegant, minimalist themes in executive suites
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Use motivational quotes or rituals in team areas
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 pt-4 border-t border-gray-100">
-                    <div className="h-1 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 2 - Culture & Communication */}
-              <div className="relative group cursor-pointer">
-                <div
-                  className="absolute -inset-0.5 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
-                />
-                
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
-                  
-                  <div className="mb-6 flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 rounded-2xl bg-gradient-to-r from-[#4f46e5] to-[#2563EB] group-hover:scale-110 transition-transform duration-300">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                          <path d="M8 10h.01"/>
-                          <path d="M12 10h.01"/>
-                          <path d="M16 10h.01"/>
-                        </svg>
-                      </div>
-                      <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-violet-400 transition-colors duration-300" />
-                    </div>
-                    
-                    <div className="text-gray-400 group-hover:text-[#2563EB] transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
-                    Enhance Culture & Internal Communication
-                  </h3>
-
-                  <div className="flex-1 space-y-4">
-                    <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
-                      Your walls can communicate your values. Deckoviz lets you:
-                    </p>
-                    
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Display your <strong>company mission</strong>, vision, and brand principles
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Highlight <strong>team wins</strong>, birthdays, and work anniversaries
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Celebrate <strong>employee stories</strong> and internal milestones
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Reinforce a culture of <strong>creativity, excellence, and emotional intelligence</strong>
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 pt-4 border-t border-gray-100">
-                    <div className="h-1 bg-gradient-to-r from-[#4f46e5] to-[#2563EB] rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 3 - Focus & Wellness */}
-              <div className="relative group cursor-pointer">
-                <div
-                  className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-3xl opacity-0 group-hover:opacity-20 transition-opacity duration-500 blur-sm"
-                />
-                
-                <div className="relative bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-white/50 h-full flex flex-col group-hover:bg-white/90">
-                  
-                  <div className="mb-6 flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="p-3 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 group-hover:scale-110 transition-transform duration-300">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white">
-                          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                        </svg>
-                      </div>
-                      <div className="w-8 h-1 bg-gradient-to-r from-gray-300 to-transparent rounded-full group-hover:from-emerald-400 transition-colors duration-300" />
-                    </div>
-                    
-                    <div className="text-gray-400 group-hover:text-emerald-600 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </div>
-                  </div>
-
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6 leading-tight group-hover:text-gray-800">
-                    Support Focus, Wellness, and Mental Flow
-                  </h3>
-
-                  <div className="flex-1 space-y-4">
-                    <p className="text-indigo-700 font-medium text-sm leading-relaxed mb-4">
-                      The modern team doesn't just need open space   they need <strong>emotional design</strong>. Deckoviz provides:
-                    </p>
-                    
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Focus-supporting visuals in deep work zones
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Nature-based calm in rest areas or meditation pods
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Gentle sunrise themes in the morning
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Soothing transitions in between meetings
-                      </p>
-                    </div>
-                    <div className="flex items-start group/bullet">
-                      <div className="w-2 h-2 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mt-2 mr-4 flex-shrink-0 group-hover/bullet:scale-125 transition-transform duration-200" />
-                      <p className="text-indigo-700 font-medium text-sm leading-relaxed group-hover/bullet:text-indigo-800 transition-colors duration-200">
-                        Mental reset visuals during afternoon slumps
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 pt-4 border-t border-gray-100">
-                    <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* --- NEWLY ADDED SECTION --- */}
-      <DynamicImageGrid 
+      {/* ── Dynamic Image Grid ── */}
+      <div className="relative z-20 pb-16">
+        <DynamicImageGrid 
           imageSources={officeImages}
-          sectionTitle="Intelligent Art for Inspired Work"
-          sectionDescription="From focus zones to collaborative hubs, see how Deckoviz transforms the modern workspace."
-      />
-
-      {/* Use Case Scenarios Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="text-center mb-20">
-            <div className="flex justify-center items-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-                Deckoviz Use Cases
-                <br />
-                Across the Office
-              </h2>
-            </div>
-          </div>
-
-          {/* Cards Section with Background Gradient */}
-          <div className="relative">
-            {/* Central radial gradient behind all cards */}
-            <div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem]"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(147,51,234,0.35) 0%, rgba(219,39,119,0.25) 30%, rgba(236,72,153,0.18) 60%, transparent 90%)",
-                filter: "blur(80px)",
-                zIndex: 1,
-              }}
-            />
-
-            <div className="space-y-6 relative z-10">
-              {/* Top Row - 2 Wide Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Card 1 - Meeting Rooms & Think Tanks */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          For Across the Office
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">Meeting Rooms & Think Tanks</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Rotate visual metaphors for ideation and problem-solving
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Display client success stories or past project imagery
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Customize each room to a different value (e.g., Innovation, Empathy, Focus)
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 2 - Entryways & Reception */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          For Across the Office
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">Entryways & Reception</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Make a strong first impression with branded welcome visuals
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Show company values, global team reach, or visual testimonials
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Row - 3 Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Card 3 - Open Work Areas */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          For Across the Office
-                        </span>
-                        <h3 className="text-xl font-semibold text-gray-900">Open Work Areas</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Use soft ambient visuals that don't distract but aid focus
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Rotate artwork that sparks creativity or aids concentration
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Display quotes, reminders, or brand inspiration loops
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 4 - Break Rooms, Cafés & Meditation */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          For Across the Office
-                        </span>
-                        <h3 className="text-xl font-semibold text-gray-900">Break Rooms, Cafés & Meditation</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Create emotional reset spaces with visuals that promote breath, calm, and recovery
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Use dynamic soundscapes and moodscapes synced to time of day
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 5 - All-Hands & Event Spaces */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          For Across the Office
-                        </span>
-                        <h3 className="text-xl font-semibold text-gray-900">All-Hands & Event Spaces</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Curate presentations, achievements, or cultural event visuals
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Match to company themes or product launch campaigns
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Use Deckoviz as a narrative anchor for storytelling
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>  
-          </div>
-        </div>
+          sectionTitle="Workspaces Reimagined"
+          sectionDescription="Intelligent art for inspired work. From focus zones to collaborative hubs."
+        />
       </div>
 
-      {/* Commercial & Hospitality Design Use Cases Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="text-center mb-20">
-            <div className="flex justify-center items-center mb-8">
-              <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-                Commercial & Hospitality
-                <br />
-                Design Use Cases
-              </h2>
-            </div>
-          </div>
-
-          {/* Cards Section with Background Gradient */}
-          <div className="relative">
-            {/* Central radial gradient behind all cards */}
-            <div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50rem] h-[50rem]"
-              style={{
-                background:
-                  "radial-gradient(ellipse at center, rgba(147,51,234,0.35) 0%, rgba(219,39,119,0.25) 30%, rgba(236,72,153,0.18) 60%, transparent 90%)",
-                filter: "blur(80px)",
-                zIndex: 1,
-              }}
-            />
-
-            <div className="space-y-6 relative z-10">
-              {/* Top Row - 2 Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Card 1 - Hotels & Resorts */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          Commercial & Hospitality Design
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">Hotels & Resorts</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Offer clients an evolving personal gallery   powered by their mood, story, and memories.
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Match art to the color palette of each room with AI-curated harmony.
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Display generative visuals that shift through day/night, season and event.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 2 - Cafés & Restaurants */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          Commercial & Hospitality Design
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">Cafés & Restaurants</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Replace static art or blank walls with a dynamic visual connection
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Use Deckoviz to reflect transitions   sunrise light, sunset warmth, rainy introspection
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Row - 2 Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Card 3 - Wellness & Therapy Spaces */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          Commercial & Hospitality Design
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">Wellness & Therapy Spaces</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Introduce calming visuals and soundscapes to support healing and regulation.
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Offer breath-guided animations, affirmations, or ambient meditations.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 4 - Office & Workspace Design */}
-                <div className="relative group">
-                  <div className="bg-[#faebf8] backdrop-blur-sm rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-200/50 h-full">
-                    <div className="flex justify-between items-start mb-6">
-                      <div>
-                        <span className="inline-block bg-white text-black text-sm font-semibold mb-2 px-3 py-[1px] rounded-md shadow-sm">
-                          Commercial & Hospitality Design
-                        </span>
-                        <h3 className="text-2xl font-semibold text-gray-900">Office & Workspace Design</h3>
-                      </div>
-                      <img src="/images/crown.png" alt="Crown" className="w-10 h-10 object-contain" />
-                    </div>
-                    
-                    <div className="space-y-3">
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Design team-specific mood zones   creative inspiration rooms, calm break zones, client welcome lobbies
-                        </p>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-2 h-2 bg-indigo-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
-                        <p className="text-indigo-600 font-medium">
-                          Use Deckoviz as a digital art installation that also supports wellness, focus, or cultural storytelling.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-6">
-                      <button className="bg-[#8b5cf6] hover:bg-[#7c3aed] text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                        Learn More
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>  
-          </div>
-        </div>
-      </div>
-
-      {/* Features Tailored for Workspaces Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="mb-16">
-            {/* Badge */}
-            <div className="flex justify-start mb-8">
-              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                FEATURES
-              </div>
-            </div>
-            
-            {/* Main Heading */}
-            <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-              Smart Features Tailored for Workspaces
-            </h2>
-          </div>
-
-          {/* Features Grid */}
-          <div className="relative">
-            {/* Background gradient glow */}
-            <div
-              className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[30rem]"
-              style={{
-                background: "radial-gradient(ellipse at center, rgba(147,51,234,0.2) 0%, rgba(219,39,119,0.15) 40%, rgba(236,72,153,0.08) 70%, transparent 90%)",
-                filter: "blur(100px)",
-                zIndex: 1,
-              }}
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 relative z-10">
-              {/* Feature 1 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☺</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Branded collections for your company values and identity
-                  </h3>
-                </div>
-              </div>
-
-              {/* Feature 2 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☻</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Motion graphics, inspirational quotes, or abstract art
-                  </h3>
-                </div>
-              </div>
-
-              {/* Feature 3 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☺</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Wide range of frame styles: classic, minimalist, modern, rustic, custom
-                  </h3>
-                </div>
-              </div>
-
-              {/* Feature 4 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☻</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Frame options to match modern, industrial, or creative interiors
-                  </h3>
-                </div>
-              </div>
-
-              {/* Feature 5 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☺</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Android TV capability for dual use (presentations, screensavers, etc.)
-                  </h3>
-                </div>
-              </div>
-
-              {/* Feature 6 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☻</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Personalizable per room or department
-                  </h3>
-                </div>
-              </div>
-
-              {/* Feature 7 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☺</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Control via app or central admin interface
-                  </h3>
-                </div>
-              </div>
-
-              {/* Feature 8 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full border-2 border-dashed border-gray-800 flex items-center justify-center group-hover:border-indigo-500 transition-colors">
-                    <span className="text-lg">☻</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Scheduled content rotation
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Business Benefit Section */}
-      <div className="bg-white relative py-24 md:py-24 overflow-hidden">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="mb-16">
-            {/* Badge */}
-            <div className="flex justify-start mb-8">
-              <div className="bg-[#6670d8] text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                Business ROI
-              </div>
-            </div>
-            
-            {/* Main Heading */}
-            <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight">
-              Business Benefits
-            </h2>
-          </div>
-
-          {/* Benefits Grid */}
-          <div className="relative">
-            {/* Background gradient glow */}
-            <div
-              className="absolute top-1/2 right-1/4 transform translate-x-1/2 -translate-y-1/2 w-[35rem] h-[25rem]"
-              style={{
-                background: "radial-gradient(ellipse at center, rgba(147,51,234,0.15) 0%, rgba(219,39,119,0.12) 40%, rgba(236,72,153,0.06) 70%, transparent 90%)",
-                filter: "blur(80px)",
-                zIndex: 1,
-              }}
-            />
-
-            <div className="relative z-10">
-              {/* Top Row - 2 boxes */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                {/* Benefit 1 - Top Left */}
-                <div className="relative group">
-                  <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-start mb-4">
-                      <div className="flex-shrink-0 mr-3">
-                        <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <span className="text-white text-sm">⚡</span>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                          Boost Productivity & Energy
-                        </h3>
-                      </div>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      Studies show ambient visuals can enhance mood, reduce stress, and support focus. Deckoviz turns your office into a productivity-optimized, neuro-aesthetic environment.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Benefit 2 - Top Right */}
-                <div className="relative group">
-                  <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-start mb-4">
-                      <div className="flex-shrink-0 mr-3">
-                        <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <span className="text-white text-sm">⚡</span>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                          Deepen Team Connection & Belonging
-                        </h3>
-                      </div>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      When your walls reflect your culture and story, your team feels seen, aligned, and emotionally invested.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Row - 2 boxes with offset */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ml-0 md:ml-32">
-                {/* Benefit 3 - Bottom Left */}
-                <div className="relative group">
-                  <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-start mb-4">
-                      <div className="flex-shrink-0 mr-3">
-                        <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <span className="text-white text-sm">⚡</span>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                          Reinforce Your Brand to Visitors & Clients
-                        </h3>
-                      </div>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      Deckoviz adds a layer of intelligent, emotionally tuned design that clients and partners will notice   instantly positioning your company as innovative, thoughtful, and design-forward.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Benefit 4 - Bottom Right */}
-                <div className="relative group">
-                  <div className="border-2 border-dashed border-gray-300 hover:border-[#6670d8] rounded-2xl p-6 bg-white/70 backdrop-blur-sm h-auto flex flex-col shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="flex items-start mb-4">
-                      <div className="flex-shrink-0 mr-3">
-                        <div className="w-8 h-8 bg-[#6670d8] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                          <span className="text-white text-sm">⚡</span>
-                        </div>
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-[#6670d8] leading-tight mb-3">
-                          Refresh Your Aesthetic Without Renovation
-                        </h3>
-                      </div>
-                    </div>
-                    <p className="text-gray-700 leading-relaxed group-hover:text-gray-800 transition-colors duration-300">
-                      Want a seasonal mood change? A different vibe by department? A design update for Q3? No problem   just update the visual programming.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Real Results: Sample Story Section */}
-      <div className="relative py-24 md:py-32 overflow-hidden">
-        {/* Background Gradient Effect */}
-        <div className="absolute inset-0">
-          {/* Animated Gradient Layers */}
-          <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/25 via-violet-400/15 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-500/20 via-violet-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-indigo-500/15 via-violet-400/8 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/25 via-violet-400/15 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
-          <div className="absolute top-0 left-0 w-1/6 h-1/3 bg-gradient-to-r from-indigo-600/30 via-rose-400/15 to-transparent blur-[30px] animate-[pulse_4s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/3 left-0 w-1/5 h-1/2 bg-gradient-to-r from-indigo-500/20 via-rose-400/17 to-transparent blur-[35px] animate-[floatLeft_5s_ease-in-out_infinite_1s]"></div>
-          <div className="absolute top-2/3 left-0 w-1/4 h-1/3 bg-gradient-to-r from-indigo-600/35 via-rose-400/20 to-transparent blur-[40px] animate-[floatCenter_6s_ease-in-out_infinite_2s]"></div>
-          <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-indigo-600/30 via-rose-400/15 to-transparent blur-[35px] animate-[floatRight_9s_ease-in-out_infinite_1.5s]"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-violet-300/20 via-pink-300/18 to-transparent blur-[45px] animate-[floatBottom_8s_ease-in-out_infinite_3s]"></div>
-
-          {/* Curved Grid Pattern - Barrel Distortion Effect */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-25 pointer-events-none"
-            viewBox="0 0 1000 800"
-            preserveAspectRatio="xMidYMid slice"
+      {/* ── 2. The Longer Story ── */}
+      <section className="py-24 bg-zinc-50 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
           >
-            <g stroke="white" strokeWidth="1" fill="none">
-              {/* Vertical curved lines (longitude-style) */}
-              {Array.from({ length: 25 }).map((_, i) => {
-                const x = (i / 24) * 1000;
-                const curvature = Math.sin((i / 24) * Math.PI) * 120;
-                return (
-                  <path
-                    key={`v-${i}`}
-                    d={`M ${x} 0 Q ${x + curvature} 400 ${x} 800`}
-                  />
-                );
-              })}
-              
-              {/* Horizontal curved lines (latitude-style) */}
-              {Array.from({ length: 20 }).map((_, i) => {
-                const y = (i / 19) * 800;
-                const distanceFromCenter = Math.abs(y - 400) / 400;
-                const compression = 1 - distanceFromCenter * 0.7;
-                const curve = 150 * (1 - compression);
-                
-                return (
-                  <path
-                    key={`h-${i}`}
-                    d={`M 0 ${y} Q ${250 + curve} ${y} 500 ${y} T 1000 ${y}`}
-                  />
-                );
-              })}
-            </g>
-          </svg>
+            <h2 className="text-3xl md:text-5xl font-bold font-serif text-gray-900 mb-6">Work is about to change faster<br/>than most offices are <span className="text-[#2563EB]">built for.</span></h2>
+          </motion.div>
+          <motion.div 
+            className="prose prose-lg prose-indigo mx-auto text-gray-600 space-y-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300">
+              By 2027, the best people won't just be choosing companies. They'll be choosing environments, choosing how they feel. Talent that's spent years working from kitchen tables and coffee shops has gotten used to spaces that feel considered, personal, alive. Then they walk into an office that hasn't changed since 2015. Beige walls. A motivational poster. Lighting that sucks the joy. All in all, just another example of a boring, uninspired place.
+            </p>
+            <motion.p 
+              className="text-xl leading-relaxed font-medium text-gray-900 border-l-4 border-[#2563EB] pl-6 my-8"
+              initial={{ x: -20, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              The tools we use to manage work have gotten radically smarter. The rooms we do that work in mostly haven't.
+            </motion.p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300">
+              That gap is exactly what's costing companies focus, creativity, and the kind of culture people actually want to be part of. Deep work needs an environment that supports it. Creative work needs a space that provokes it. Team culture needs somewhere to live besides a Slack channel.
+            </p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300">
+              Deckoviz helps create that space. With the AI-powered Generative Ambiance and Visual Portal running Vizzy, your always-on generative and experience companion, turning static walls into living, breathing environments that adapt to how your team actually works, thinks, and feels throughout the day.
+            </p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300 font-medium">
+              This is what offices, studios, and coworking spaces are supposed to feel like in the age of AI - spaces as inspired, as generative, as the people in them.
+            </p>
+          </motion.div>
         </div>
+      </section>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight bg-gradient-to-r from-[#9ca4f3] via-pink-600 to-indigo-400 bg-clip-text text-transparent">
-              Real Feedback from Workspaces
-            </h2>
+      {/* ── 3. 16 Key Highlights & Use Cases ── */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-[#182A4A] font-bold tracking-wider uppercase text-sm">Possibilities</span>
+            <h2 className="mt-3 text-4xl md:text-5xl font-bold font-serif text-gray-900">12 Key Highlights & Use Cases</h2>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {highlights.slice(0, 12).map((item, idx) => (
+              <motion.div 
+                key={idx} 
+                className="group p-8 rounded-3xl bg-white border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-2xl hover:-translate-y-2 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+              >
+                <div className="text-4xl mb-6 bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <span className="group-hover:grayscale brightness-200 group-hover:drop-shadow-md transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
+                </div>
+                <h3 className="text-xl font-bold font-serif text-gray-900 mb-3 leading-snug group-hover:text-[#2563EB] transition-colors duration-300">{item.title}</h3>
+                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
 
-          {/* Testimonials Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Testimonial 1 */}
-            <div className="group">
-              <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
-                <div className="mb-6">
-                  <p className="text-gray-800 leading-relaxed text-lg">
-                    "We use Deckoviz in our UX studio to rotate mood visuals   from conceptual design metaphors to kinetic energy pieces. It makes the entire floor feel alive."
-                  </p>
+          {/* Additional 4 highlights in a 2-col layout for variety */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {highlights.slice(12).map((item, idx) => (
+              <motion.div 
+                key={idx + 12} 
+                className="group flex gap-6 p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-blue-50/30 border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-2xl hover:-translate-y-1 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+              >
+                <div className="text-4xl bg-blue-50 w-16 h-16 min-w-[4rem] rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 transition-all duration-300">
+                  <span className="group-hover:grayscale brightness-200 group-hover:drop-shadow-md">{item.icon}</span>
                 </div>
-                
-                <div className="mb-6">
-                  <p className="text-gray-900 font-semibold">
-                      Creative Director, Design Agency
-                  </p>
+                <div>
+                  <h3 className="text-xl font-bold font-serif text-gray-900 mb-2 leading-snug group-hover:text-[#2563EB] transition-colors duration-300">{item.title}</h3>
+                  <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">{item.desc}</p>
                 </div>
-                
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600 font-medium">Genuine Compliments</span>
-                  <span className="text-green-600 text-lg">🌿</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial 2 */}
-            <div className="group">
-              <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
-                <div className="mb-6">
-                  <p className="text-gray-800 leading-relaxed text-lg">
-                    "Our HR team curates internal culture visuals on Deckoviz. It's made birthdays, wins, and employee shoutouts feel seen in a creative and beautiful way."
-                  </p>
-                </div>
-                
-                <div className="mb-6">
-                  <p className="text-gray-900 font-semibold">
-                      People Ops Lead, SaaS startup
-                  </p>
-                </div>
-                
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600 font-medium">Our Loved Memories</span>
-                  <span className="text-cyan-500 text-lg">✨</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Testimonial 3 */}
-            <div className="group">
-              <div className="bg-white/95 backdrop-blur-sm rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/60">
-                <div className="mb-6">
-                  <p className="text-gray-800 leading-relaxed text-lg">
-                    "We added Deckoviz to our meditation and recharge pod. It gives people something meaningful to stare into while they breathe and reset."
-                  </p>
-                </div>
-                
-                <div className="mb-6">
-                  <p className="text-gray-900 font-semibold">
-                      Wellness Coordinator, Fortune 500 HQ
-                  </p>
-                </div>
-                
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600 font-medium">Valuable Experiences</span>
-                  <span className="text-blue-600 text-lg">👍</span>
-                </div>
-              </div>
-            </div>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Curated Collections Section */}
-      <div className="bg-white relative py-24 md:py-24">
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          {/* Header Section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-16">
-            {/* Left Column */}
-            <div>
-              {/* Badge */}
-              <div className="flex justify-start mb-8">
-                <div className="bg-gray-800 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-lg">
-                  Our Product Deckoviz
-                </div>
-              </div>
-              
-              {/* Main Heading */}
-              <h2 className="text-4xl md:text-4xl font-semibold text-gray-900 leading-tight">
-                Flexible Packages for Teams
-                <br />
-                & Workspaces
-              </h2>
-            </div>
-
-            {/* Right Column */}
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <p className="text-lg text-gray-800 leading-relaxed mt-14">
-                  Whether you have a 10-person design studio or a
-                  <br />
-                  1,000-employee office HQ, we offer tailored
-                  <br />
-                  packages with:
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Use Cases Grid */}
-          <div className="relative">
-            {/* Background gradient glow */}
-            <div
-              className="absolute top-1/2 right-1/4 transform translate-x-1/2 -translate-y-1/2 w-[40rem] h-[30rem]"
-              style={{
-                background: "radial-gradient(ellipse at center, rgba(147,51,234,0.15) 0%, rgba(219,39,119,0.12) 40%, rgba(236,72,153,0.06) 70%, transparent 90%)",
-                filter: "blur(100px)",
-                zIndex: 1,
-              }}
-            />
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
-              {/* Package Feature 1 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-[#6670d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-sm">✓</span>
+      {/* ── 4. Core Benefits ── */}
+      <section className="py-24 relative overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(37,99,235,0.15),_transparent_40%),_radial-gradient(circle_at_top_right,_rgba(24,42,74,0.3),_transparent_40%)]" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
+            <motion.div 
+              className="col-span-1 lg:sticky lg:top-32"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-4xl md:text-5xl font-bold font-serif text-white mb-6">Core Benefits</h2>
+              <p className="text-lg text-slate-300 mb-8 leading-relaxed">
+                The best workplaces of the next decade won't just optimise output. They'll actively design for the energy behind it.
+              </p>
+              <div className="w-20 h-1 bg-gradient-to-r from-[#2563EB] to-[#182A4A] rounded-full" />
+            </motion.div>
+            <div className="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+              {benefits.map((benefit, idx) => (
+                <motion.div 
+                  key={idx} 
+                  className="relative group cursor-default"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                >
+                  <div className="absolute top-0 left-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#2563EB] font-bold text-sm group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">
+                    {idx + 1}
                   </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Bulk pricing for multiple frames
-                  </h3>
-                </div>
-              </div>
-
-              {/* Package Feature 2 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-[#6670d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-sm">✓</span>
+                  <div className="pl-12 group-hover:translate-x-1 transition-transform duration-300">
+                    <h3 className="text-xl font-bold font-serif text-white mb-3 group-hover:text-blue-200 transition-colors duration-300">{benefit.title}</h3>
+                    <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">{benefit.desc}</p>
                   </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Customized branded visuals
-                  </h3>
-                </div>
-              </div>
-
-              {/* Package Feature 3 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-[#6670d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    White-label content creation
-                  </h3>
-                </div>
-              </div>
-
-              {/* Package Feature 4 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-[#6670d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Visual curation services
-                  </h3>
-                </div>
-              </div>
-
-              {/* Package Feature 5 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-[#6670d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Frame recommendations for different space types
-                  </h3>
-                </div>
-              </div>
-
-              {/* Package Feature 6 */}
-              <div className="flex items-start space-x-4 group">
-                <div className="flex-shrink-0 mt-1">
-                  <div className="w-8 h-8 rounded-full bg-[#6670d8] flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <span className="text-white text-sm">✓</span>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-medium text-gray-900 mb-1" style={{fontFamily: 'Bricolage Grotesque, sans-serif'}}>
-                    Onboarding & content programming support
-                  </h3>
-                </div>
-              </div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
+      </section>
+
+      {/* ── 5. 18 More Ways Deckoviz Fits Your Space ── */}
+      <section className="py-24 bg-zinc-50 border-y border-zinc-200 overflow-hidden">
+        <motion.div 
+          className="max-w-7xl mx-auto px-6 mb-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold font-serif text-gray-900">18 More Ways Deckoviz Fits Your Space</h2>
+        </motion.div>
+        
+        {/* Continuous scroll layout for the fits items */}
+        <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
+          {fits.map((fit, idx) => (
+            <motion.div 
+              key={idx} 
+              className="px-6 py-3 bg-white border border-gray-200 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] text-gray-700 font-medium hover:bg-blue-50 hover:border-[#2563EB]/40 hover:text-[#182A4A] hover:-translate-y-1 transition-all duration-300 text-sm md:text-base cursor-default"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.4, delay: (Math.min(idx, 15)) * 0.05 }}
+            >
+              ✨ {fit}
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── 6. The Bottom Line (CTA) ── */}
+      <section className="py-32 relative text-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/50 to-blue-100/50 -z-10" />
+        <motion.div 
+          className="max-w-4xl mx-auto px-6"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold font-serif text-gray-900 mb-8">The Bottom Line</h2>
+          <p className="text-xl text-gray-700 mb-10 leading-relaxed font-medium cursor-default">
+            The best offices of tomorrow won't just manage tasks. They'll manage energy, they'll inspire creativity, and they will feel as alive as the work being done in these spaces.
+            <br/><br/>
+            Deckoviz turns any workspace into a living, intelligent environment built for focus, creativity, and connection. As core infrastructure for how great work actually happens.
+            <br/><br/>
+            The companies that make this shift now won't just have nicer walls. They'll have spaces people love to work in, where people create masterpieces just as rich as the ones they will see on their walls.
+          </p>
+          <motion.button 
+            onClick={() => window.location.href='/contact'} 
+            className="group px-10 py-5 bg-[#182A4A] text-white rounded-full font-bold text-lg hover:bg-[#2563EB] transition-all duration-300 shadow-xl shadow-[#182A4A]/20 flex items-center justify-center mx-auto gap-3"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Book a demo and see your workspace go from functional to phenomenal.
+            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+          </motion.button>
+        </motion.div>
+      </section>
+
+    </div>
+  );
 };
 
 export default DeckovizOfficesLanding;

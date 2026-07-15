@@ -1,378 +1,166 @@
 /* ═══════════════════════════════════════════════════════════
-   WebFrame – Virtual Frame Experience
+   WebFrame – Art Frame on Cream Wall with LED Backlight
    ═══════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
 
-.webframe-page {
+/* ── Page: scrollable so text + frame both fit on any screen ── */
+.wf-page {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 60px 24px 60px;
-  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
-/* ── Ambient Gradient Background ── */
-.webframe-ambient-bg {
+/* ── Cream plaster wall ── */
+.wf-wall {
   position: fixed;
   inset: 0;
   z-index: 0;
-  pointer-events: none;
-}
-
-/* Top half – golden / warm hues */
-.webframe-ambient-top {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 55%;
   background:
-    radial-gradient(ellipse 120% 80% at 50% 20%, rgba(212, 175, 95, 0.35) 0%, transparent 70%),
-    radial-gradient(ellipse 80% 60% at 30% 30%, rgba(184, 143, 60, 0.25) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 50% at 70% 15%, rgba(230, 195, 120, 0.2) 0%, transparent 55%),
-    linear-gradient(180deg, #1a1408 0%, #1c1610 40%, #181818 100%);
-  animation: ambientPulseTop 8s ease-in-out infinite alternate;
+    radial-gradient(ellipse 160% 140% at 50% 40%, #e9e2d8 0%, #d9d0c4 55%, #ccc3b5 100%);
 }
 
-/* Bottom half – grey / slate tones */
-.webframe-ambient-bottom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 55%;
-  background:
-    radial-gradient(ellipse 100% 70% at 50% 80%, rgba(80, 85, 95, 0.3) 0%, transparent 65%),
-    radial-gradient(ellipse 70% 50% at 40% 70%, rgba(60, 65, 75, 0.25) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 65% 85%, rgba(45, 50, 60, 0.2) 0%, transparent 50%),
-    linear-gradient(0deg, #0d0e10 0%, #141516 40%, #181818 100%);
-  animation: ambientPulseBottom 10s ease-in-out infinite alternate;
-}
-
-/* Floating ambient orbs for depth */
-.webframe-orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0;
-  animation: orbFloat 12s ease-in-out infinite;
-}
-
-.webframe-orb--gold-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(212, 175, 95, 0.18) 0%, transparent 70%);
-  top: 5%;
-  left: 15%;
-  animation-delay: 0s;
-  animation-duration: 14s;
-}
-
-.webframe-orb--gold-2 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(230, 195, 120, 0.14) 0%, transparent 70%);
-  top: 10%;
-  right: 10%;
-  animation-delay: 3s;
-  animation-duration: 11s;
-}
-
-.webframe-orb--gold-3 {
-  width: 250px;
-  height: 250px;
-  background: radial-gradient(circle, rgba(195, 160, 80, 0.12) 0%, transparent 70%);
-  top: 0%;
-  left: 45%;
-  animation-delay: 6s;
-  animation-duration: 16s;
-}
-
-.webframe-orb--grey-1 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(90, 95, 110, 0.16) 0%, transparent 70%);
-  bottom: 5%;
-  left: 20%;
-  animation-delay: 2s;
-  animation-duration: 13s;
-}
-
-.webframe-orb--grey-2 {
-  width: 280px;
-  height: 280px;
-  background: radial-gradient(circle, rgba(70, 75, 90, 0.14) 0%, transparent 70%);
-  bottom: 10%;
-  right: 15%;
-  animation-delay: 5s;
-  animation-duration: 15s;
-}
-
-/* ── Title & Subtitle ── */
-.webframe-header {
+/* ── Centred content column ── */
+.wf-content {
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 24px 80px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ══════════════════════════════
+   PREMIUM TEXT
+══════════════════════════════ */
+.wf-header {
   text-align: center;
-  margin-bottom: 36px;
-  max-width: 780px;
+  max-width: 700px;
+  margin-bottom: 52px;
 }
 
-.webframe-title {
+.wf-title {
   font-family: 'Cormorant Garamond', 'Georgia', serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
   font-weight: 300;
-  letter-spacing: 0.08em;
-  color: #f5f0e8;
-  margin: 0 0 20px;
+  letter-spacing: 0.09em;
+  color: #2a2218;
+  margin: 0 0 22px;
   line-height: 1.15;
-  text-shadow: 0 2px 30px rgba(212, 175, 95, 0.15);
-  animation: titleReveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  opacity: 0;
-  transform: translateY(20px);
+  /* Subtle warm text shadow for depth */
+  text-shadow: 0 1px 20px rgba(160, 120, 40, 0.10);
+  animation: wfFadeUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.webframe-subtitle {
+.wf-subtitle {
   font-family: 'Inter', -apple-system, sans-serif;
-  font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+  font-size: clamp(0.83rem, 1.35vw, 1rem);
   font-weight: 300;
-  line-height: 1.7;
-  color: rgba(200, 195, 185, 0.75);
+  line-height: 1.75;
+  color: rgba(60, 45, 25, 0.60);
   letter-spacing: 0.025em;
   margin: 0;
-  max-width: 640px;
+  max-width: 600px;
   margin-inline: auto;
-  animation: subtitleReveal 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
-  opacity: 0;
-  transform: translateY(16px);
+  animation: wfFadeUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
 }
 
-/* ── Frame Container ── */
-.webframe-frame-wrapper {
+/* ══════════════════════════════
+   FRAME WRAPPER – gives room for
+   the glow to bleed outside
+══════════════════════════════ */
+.wf-frame-wrap {
+  /* Padding so box-shadow/glow isn't clipped */
+  padding: 60px 80px;
+  animation: wfFadeUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* ══════════════════════════════
+   WOODEN FRAME + BACKLIGHT
+   The backlight is entirely done
+   with box-shadow so it always
+   renders correctly on the wall.
+══════════════════════════════ */
+.wf-frame {
   position: relative;
-  z-index: 2;
-  animation: frameReveal 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.5s forwards;
-  opacity: 0;
-  transform: scale(0.96) translateY(20px);
-}
-
-/* Backlight glow behind the frame */
-.webframe-backlight {
-  position: absolute;
-  inset: -30px;
-  border-radius: 12px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(212, 175, 95, 0.12) 0%,
-    rgba(180, 150, 70, 0.06) 40%,
-    transparent 70%
-  );
-  filter: blur(30px);
-  animation: backlightPulse 6s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-/* Outer frame shadow for depth */
-.webframe-frame-shadow {
-  position: absolute;
-  inset: -4px;
-  border-radius: 8px;
-  box-shadow:
-    0 25px 80px rgba(0, 0, 0, 0.6),
-    0 10px 30px rgba(0, 0, 0, 0.35);
-  pointer-events: none;
-}
-
-/* The frame container – no CSS border since image already has the frame */
-.webframe-frame {
-  position: relative;
-  display: block;
-  border-radius: 6px;
+  /* width & height set dynamically via inline style in React */
+  border-radius: 2px;
   overflow: hidden;
-  max-width: 900px;
-  width: 82vw;
+
+  /* Wood grain bezel – slim 8px */
+  outline: 8px solid transparent;
+  outline-offset: 0;
+
+  /* Warm honey-amber wood */
+  border: 8px solid #b07a38;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 8%, transparent 92%, rgba(0,0,0,0.20) 100%)
+    no-repeat center / cover;
+
+  border-image: none;
+
+  /* box-shadow (backlight + drop shadow) applied dynamically via React inline style */
+
+  animation: wfFadeUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
 }
 
-.webframe-frame img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-/* Inner frame edge shadow */
-.webframe-inner-shadow {
+/* Thin gold inner rim between wood and artwork */
+.wf-frame::before {
+  content: '';
   position: absolute;
   inset: 0;
+  border: 2px solid rgba(180, 130, 50, 0.40);
+  border-radius: 1px;
   pointer-events: none;
-  box-shadow:
-    inset 0 0 40px rgba(0, 0, 0, 0.35),
-    inset 0 0 12px rgba(0, 0, 0, 0.2);
-}
-
-/* ── Bottom info ── */
-.webframe-footer {
-  position: relative;
   z-index: 2;
-  margin-top: 48px;
-  text-align: center;
-  animation: footerReveal 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.8s forwards;
-  opacity: 0;
-  transform: translateY(12px);
 }
 
-.webframe-footer-line {
-  width: 60px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 95, 0.4), transparent);
-  margin: 0 auto 16px;
+/* Subtle screen glare on artwork */
+.wf-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04) 0%,
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 3;
 }
 
-.webframe-footer-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(180, 170, 155, 0.45);
+/* ── Artwork image ── */
+.wf-artwork {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.7s ease;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   Animations
-   ═══════════════════════════════════════════════════════════ */
-
-@keyframes ambientPulseTop {
-  0% {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  50% {
-    opacity: 0.92;
-    filter: brightness(1.08);
-  }
-  100% {
-    opacity: 1;
-    filter: brightness(0.95);
-  }
+/* ══════════════════════════════
+   ANIMATIONS
+══════════════════════════════ */
+@keyframes wfFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
-@keyframes ambientPulseBottom {
-  0% {
-    opacity: 1;
-    filter: brightness(1);
-  }
-  50% {
-    opacity: 0.95;
-    filter: brightness(1.05);
-  }
-  100% {
-    opacity: 1;
-    filter: brightness(0.97);
-  }
-}
-
-@keyframes orbFloat {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(1);
-  }
-  20% {
-    opacity: 0.6;
-  }
-  50% {
-    transform: translate(20px, -15px) scale(1.08);
-    opacity: 0.8;
-  }
-  80% {
-    opacity: 0.5;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-10px, 10px) scale(0.95);
-  }
-}
-
-@keyframes backlightPulse {
-  0% {
-    opacity: 0.7;
-    transform: scale(1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1.03);
-  }
-}
-
-@keyframes titleReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes subtitleReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes frameReveal {
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes footerReveal {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════
-   Responsive
-   ═══════════════════════════════════════════════════════════ */
-
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
 @media (max-width: 768px) {
-  .webframe-page {
-    padding: 40px 16px;
-  }
-
-  .webframe-header {
-    margin-bottom: 32px;
-  }
-
-  .webframe-frame {
-    width: 94vw;
-  }
-
-  .webframe-backlight {
-    inset: -18px;
-    filter: blur(20px);
-  }
-
-  .webframe-footer {
-    margin-top: 32px;
-  }
-
-  .webframe-orb {
-    filter: blur(50px);
-  }
+  .wf-content  { padding: 40px 16px 60px; }
+  .wf-header   { margin-bottom: 36px; }
+  .wf-frame-wrap { padding: 40px 48px; }
+  .wf-frame    { border-width: 6px; }
 }
 
 @media (max-width: 480px) {
-  .webframe-frame {
-    width: 98vw;
-  }
-
-  .webframe-subtitle {
-    font-size: 0.82rem;
-  }
+  .wf-frame-wrap { padding: 30px 32px; }
+  .wf-frame    { border-width: 5px; }
 }

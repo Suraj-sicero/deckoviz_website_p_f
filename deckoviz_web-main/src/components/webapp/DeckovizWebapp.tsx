@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import type React from "react";
 import {
   Bell,
@@ -19,6 +19,7 @@ import {
   Menu,
   MessageSquare,
   Mic,
+  Monitor,
   Music,
   Palette,
   PenTool,
@@ -35,6 +36,8 @@ import {
   Brush,
   Volume2,
   Wand2,
+  X,
+  CheckCircle2,
 } from "lucide-react";
 
 import AddImagesToCollectionView from "./views/AddImagesToCollectionView";
@@ -54,6 +57,7 @@ import PricingPlanView from "./views/PricingPlanView";
 import ProductInfoView from "./views/ProductInfoView";
 import ProfileView from "./views/ProfileView";
 import SearchView from "./views/SearchView";
+import { setFrameImage } from "../../lib/frameStore";
 
 type ViewType =
   | "drawing_room"
@@ -138,6 +142,7 @@ const quickActions = [
 export default function DeckovizWebapp() {
   const [activeView, setActiveView] = useState<ViewType>("drawing_room");
   const [showMenu, setShowMenu] = useState(false);
+  const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
 
   const handleMenuClick = (view: ViewType) => {
     setActiveView(view);
@@ -283,7 +288,7 @@ export default function DeckovizWebapp() {
         {/* Content Area */}
         <section className="min-w-0 flex-1">
           <div className="min-h-full">
-            {activeView === "drawing_room" && <DrawingRoomView onNavigate={setActiveView} />}
+            {activeView === "drawing_room" && <DrawingRoomView onNavigate={setActiveView} onSendToFrame={() => setShowVirtualFrameModal(true)} />}
             {activeView === "vgc" && <VGCPlaceholder />}
             {activeView === "create_collection" && <CreateCollectionView />}
             {activeView === "vcc" && <VCCPlaceholder />}
@@ -320,12 +325,219 @@ export default function DeckovizWebapp() {
           </div>
         </section>
       </main>
+
+      {/* Virtual Frame Modal */}
+      {showVirtualFrameModal && (
+        <VirtualFrameModal onClose={() => setShowVirtualFrameModal(false)} />
+      )}
+    </div>
+  );
+}
+
+/* ======================== VIRTUAL FRAME MODAL ======================== */
+const MEDIA_SAMPLES = [
+  "/images/herol (1).png",
+  "/images/herol (2).png",
+  "/images/herol (3).png",
+  "/images/herol (4).png",
+  "/images/herol (5).png",
+  "/images/herol (6).png",
+  "/images/herol (7).png",
+  "/images/herol (8).png",
+  "/images/herol (9).png",
+  "/images/herol (10).png",
+  "/images/herol (12).png",
+  "/images/herol (13).png",
+];
+
+function VirtualFrameModal({ onClose }: { onClose: () => void }) {
+  const [tab, setTab] = useState<"library" | "upload">("library");
+  const [selected, setSelected] = useState<string | null>(null);
+  const [uploadPreview, setUploadPreview] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    // Read as data-URL so the image survives cross-route navigation
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target?.result as string;
+      setUploadPreview(dataUrl);
+      setSelected(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  }, []);
+
+  const handleSend = () => {
+    if (!selected) return;
+    // Persist the image for the /webframe route
+    setFrameImage(selected);
+    setSent(true);
+    // Open the webframe in a new tab so the user can see the result live
+    setTimeout(() => {
+      window.open("/webframe", "_blank");
+      onClose();
+    }, 1400);
+  };
+
+  const activeImage = selected;
+
+  return (
+    <div
+      className="fixed inset-0 z-[200] overflow-y-auto flex items-start justify-center py-8 px-4"
+      style={{ background: "rgba(10,15,30,0.75)", backdropFilter: "blur(12px)" }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
+    >
+      <div
+        className="relative w-full max-w-3xl rounded-3xl overflow-hidden shadow-2xl my-auto"
+        style={{
+          background: "linear-gradient(145deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)",
+          border: "1px solid rgba(255,255,255,0.1)",
+        }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-7 pt-7 pb-5">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center shadow-lg">
+              <Monitor size={18} className="text-white" />
+            </div>
+            <div>
+              <h2 className="text-[18px] font-bold text-white">Send to Virtual Frame</h2>
+              <p className="text-[11px] text-white/40">Replace the default artwork on your Deckoviz frame</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-all">
+            <X size={16} />
+          </button>
+        </div>
+
+        {sent ? (
+          <div className="flex flex-col items-center justify-center py-16 px-8">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-xl mb-5 animate-bounce">
+              <CheckCircle2 size={32} className="text-white" />
+            </div>
+            <h3 className="text-xl font-bold text-white mb-2">Sent to Frame!</h3>
+            <p className="text-white/50 text-sm text-center">Your image is now live on your Deckoviz Virtual Frame.</p>
+          </div>
+        ) : (
+          <div className="px-7 pb-7">
+            {/* Tabs */}
+            <div className="flex gap-2 mb-5">
+              {(["library", "upload"] as const).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => { setTab(t); if (t === "library") { setUploadPreview(null); setSelected(null); } }}
+                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
+                    tab === t
+                      ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
+                      : "bg-white/10 text-white/50 hover:bg-white/20 hover:text-white"
+                  }`}
+                >
+                  {t === "library" ? "📁  My Media Library" : "⬆️  Upload from Device"}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex gap-6">
+              {/* Left panel */}
+              <div className="flex-1 min-w-0">
+                {tab === "library" ? (
+                  <div className="grid grid-cols-4 gap-2.5 max-h-[280px] overflow-y-auto pr-1" style={{ scrollbarWidth: "thin", scrollbarColor: "rgba(255,255,255,0.1) transparent" }}>
+                    {MEDIA_SAMPLES.map((img) => (
+                      <button
+                        key={img}
+                        onClick={() => setSelected(img)}
+                        className={`relative aspect-square rounded-xl overflow-hidden group transition-all duration-200 ${
+                          selected === img
+                            ? "ring-2 ring-[#2563EB] ring-offset-2 ring-offset-[#0f172a] scale-105"
+                            : "opacity-70 hover:opacity-100 hover:scale-105"
+                        }`}
+                      >
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                        {selected === img && (
+                          <div className="absolute inset-0 bg-[#2563EB]/20 flex items-center justify-center">
+                            <CheckCircle2 size={20} className="text-white drop-shadow-lg" />
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => fileRef.current?.click()}
+                    className="flex flex-col items-center justify-center h-[200px] rounded-2xl border-2 border-dashed border-white/20 hover:border-[#2563EB]/60 cursor-pointer transition-all hover:bg-white/5 group"
+                  >
+                    <Upload size={28} className="text-white/30 group-hover:text-[#2563EB] mb-3 transition-colors" />
+                    <p className="text-white/50 text-sm font-semibold group-hover:text-white/70 transition-colors">Click to choose an image</p>
+                    <p className="text-white/30 text-[11px] mt-1">JPG, PNG, WebP supported</p>
+                    <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                  </div>
+                )}
+              </div>
+
+              {/* Preview panel */}
+              <div className="w-[180px] shrink-0">
+                <p className="text-[10px] font-bold text-white/30 uppercase tracking-wider mb-2">Frame Preview</p>
+                <div
+                  className="relative w-full rounded-2xl overflow-hidden shadow-2xl"
+                  style={{
+                    background: "#111",
+                    border: "2px solid rgba(255,255,255,0.1)",
+                    boxShadow: "0 0 40px rgba(37,99,235,0.15)",
+                    aspectRatio: "9/16",
+                  }}
+                >
+                  {activeImage ? (
+                    <img src={activeImage} alt="Preview" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center">
+                      <Monitor size={24} className="text-white/15 mb-2" />
+                      <p className="text-[10px] text-white/20 text-center px-3">Select an image to preview</p>
+                    </div>
+                  )}
+                  {/* Frame overlay */}
+                  <div className="absolute inset-0 pointer-events-none rounded-2xl" style={{ boxShadow: "inset 0 0 0 2px rgba(255,255,255,0.06)" }} />
+                  <div className="absolute bottom-0 left-0 right-0 h-8 flex items-center justify-center" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}>
+                    <div className="flex gap-1">
+                      <div className="w-1 h-1 rounded-full bg-white/50" />
+                      <div className="w-1 h-1 rounded-full bg-white/30" />
+                      <div className="w-1 h-1 rounded-full bg-white/30" />
+                    </div>
+                  </div>
+                </div>
+                <p className="text-[9px] text-white/25 text-center mt-2">Virtual Frame</p>
+              </div>
+            </div>
+
+            {/* Send button */}
+            <div className="mt-6 flex items-center justify-between">
+              <p className="text-[11px] text-white/30">
+                {selected ? "Ready to send to your frame" : "No image selected yet"}
+              </p>
+              <button
+                onClick={handleSend}
+                disabled={!selected}
+                className={`flex items-center gap-2.5 px-7 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
+                  selected
+                    ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-xl hover:shadow-blue-500/30 hover:scale-105"
+                    : "bg-white/10 text-white/30 cursor-not-allowed"
+                }`}
+              >
+                <Monitor size={15} />
+                Send to Frame
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
 /* ======================== DRAWING ROOM VIEW ======================== */
-function DrawingRoomView({ onNavigate }: { onNavigate: (v: ViewType) => void }) {
+function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewType) => void; onSendToFrame: () => void }) {
   return (
     <div className="space-y-8 pb-12">
       {/* Welcome Header */}
@@ -347,7 +559,7 @@ function DrawingRoomView({ onNavigate }: { onNavigate: (v: ViewType) => void }) 
       {/* Quick Actions */}
       <div>
         <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 px-1">Quick Actions</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {quickActions.map((action) => (
             <button key={action.label} className="group relative flex flex-col items-center gap-3 p-5 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(24,42,74,0.12)] transition-all duration-300 hover:-translate-y-1">
               <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${action.color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
@@ -356,6 +568,18 @@ function DrawingRoomView({ onNavigate }: { onNavigate: (v: ViewType) => void }) 
               <span className="text-[13px] font-semibold text-gray-700 group-hover:text-[#182a4a] transition-colors">{action.label}</span>
             </button>
           ))}
+          {/* Send to Virtual Frame */}
+          <button
+            id="send-to-virtual-frame-home"
+            onClick={onSendToFrame}
+            className="group relative flex flex-col items-center gap-3 p-5 rounded-2xl bg-gradient-to-br from-[#0f172a] to-[#1e40af] border border-blue-900/60 shadow-[0_4px_20px_rgba(37,99,235,0.15)] hover:shadow-[0_12px_30px_rgba(37,99,235,0.3)] transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#1d4ed8] flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300 relative z-10">
+              <Monitor size={16} />
+            </div>
+            <span className="text-[13px] font-semibold text-blue-100 group-hover:text-white transition-colors relative z-10 text-center">Send to Virtual Frame</span>
+          </button>
         </div>
       </div>
 
