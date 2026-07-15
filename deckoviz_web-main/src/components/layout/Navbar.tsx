@@ -221,7 +221,7 @@ const Navbar: React.FC = () => {
       description: "Inspire productivity",
       image: "/images/officenavbar.png",
       gradient: "from-green-500 to-emerald-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-offices*/
+      route: "/deckoviz-for-offices",
       fallbackColor: "bg-gradient-to-br from-green-100 to-emerald-100",
     },
     {
@@ -233,11 +233,11 @@ const Navbar: React.FC = () => {
       fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
     },
     {
-      title: "Wellness & Therapy",
-      description: "Healing environments",
+      title: "Fitness & Wellness",
+      description: "Body & mind spaces",
       image: "/images/therapistnavbar.png",
       gradient: "from-teal-500 to-cyan-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-therapists*/
+      route: "/deckoviz-for-wellness",
       fallbackColor: "bg-gradient-to-br from-teal-100 to-cyan-100",
     },
     {
@@ -245,7 +245,7 @@ const Navbar: React.FC = () => {
       description: "Educational spaces",
       image: "/images/schoolnavbar.png",
       gradient: "from-yellow-500 to-orange-500",
-      route: "/deckoviz-for-enterprises",/*deckoviz-for-schools*/
+      route: "/deckoviz-for-schools",
       fallbackColor: "bg-gradient-to-br from-yellow-100 to-orange-100",
     },
     {

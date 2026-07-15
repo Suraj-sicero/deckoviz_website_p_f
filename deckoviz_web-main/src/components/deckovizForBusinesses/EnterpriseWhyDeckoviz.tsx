@@ -45,6 +45,12 @@ const IconWaves = ({ size = 22 }: { size?: number }) => (
     <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
   </svg>
 );
+const IconSun = ({ size = 26 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="4"/>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+  </svg>
+);
 const IconClock = ({ size = 22 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
@@ -143,6 +149,27 @@ const EIGHT_LAYERS = [
     body: "The most successful restaurants, hotels, and retail environments of the next decade will not compete on product alone. They will compete on the entire sensory and emotional experience of being there. Adaptive custom art, AI-powered engagement, and generative ambiance are not differentiators for the future. They are the baseline.",
     iconBg: "linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%)",
     accentColor: "#0284c7", glowColor: "rgba(14,165,233,0.18)", Icon: IconBuilding,
+  },
+];
+
+const HARDWARE_DESIGN = [
+  {
+    number: "01", title: "Firmware engineered for intelligence",
+    body: "Most smart displays run generic TV firmware patched together with a few apps. We went deeper. Our custom firmware optimisation on Google TV is built specifically to run Deckoviz's AI agents and avatars natively and seamlessly: the proactive art agent, the poster creation agent, the ambient curation engine, and more. \nThe result is an experience that feels fluid, responsive, and alive in a way that off-the-shelf hardware simply cannot deliver.",
+    iconBg: "linear-gradient(135deg, #10b981 0%, #3b82f6 100%)",
+    accentColor: "#059669", glowColor: "rgba(16,185,129,0.18)", Icon: IconBrain,
+  },
+  {
+    number: "02", title: "Halo backlights that breathe with your art",
+    body: "Deckoviz's signature halo backlights are an extension of the artwork itself. You can sync the halo lights dynamically to whatever is on screen; they pull the colours, mood, and energy of each piece out beyond the frame and into the room around it. \nWhen the art shifts, the light shifts with it. Your entire space becomes part of the canvas.",
+    iconBg: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)",
+    accentColor: "#d97706", glowColor: "rgba(245,158,11,0.18)", Icon: IconSun,
+  },
+  {
+    number: "03", title: "A frame as individual as you are",
+    body: "The frame you hang on your wall should feel like yours. With Deckoviz, it is. Choose your materials, your finish, your colour. Select design motifs that reflect your aesthetic. \nAnd if you want, go further: have your favourite quote, a family motto, or a line that means something to you engraved intricately into the frame itself. No two Deckoviz frames are identical. That is entirely the point.",
+    iconBg: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+    accentColor: "#4f46e5", glowColor: "rgba(99,102,241,0.18)", Icon: IconFrame,
   },
 ];
 
@@ -440,6 +467,53 @@ const EnterpriseWhyDeckoviz: React.FC = () => {
                 </ul>
               </div>
             </Glass>
+          </div>
+        </motion.div>
+
+        {/* ════ HARDWARE DESIGN ════ */}
+        <motion.div variants={stagger} initial="hidden" animate={inView ? "visible" : "hidden"} className="mb-24">
+          <SectionLabel label="Hardware Design" />
+          <div className="text-center mb-10">
+            <h3 className="text-gray-900 text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 max-w-4xl mx-auto leading-snug" style={{ fontFamily: "'Playfair Display', serif" }}>
+              3 more things on the hardware-design side that puts the DASPort in a class of its own
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-start">
+            {HARDWARE_DESIGN.map((layer) => (
+              <motion.div key={layer.number} variants={fadeUp}>
+                <Glass
+                  className="p-7 group cursor-default transition-all duration-500 hover:-translate-y-2"
+                  style={{ boxShadow: `0 8px 32px ${layer.glowColor}, 0 2px 8px rgba(0,0,0,0.04), inset 0 1.5px 0 rgba(255,255,255,0.8)` }}
+                >
+                  <div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-3xl"
+                    style={{ background: `radial-gradient(ellipse at 25% 0%, ${layer.glowColor} 0%, transparent 65%)` }}
+                  />
+                  <div className="relative z-10 flex flex-col items-start gap-4">
+                    <div
+                      className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform duration-300"
+                      style={{ background: layer.iconBg, boxShadow: `0 4px 16px ${layer.glowColor}` }}
+                    >
+                      <layer.Icon size={20} />
+                    </div>
+                    <div className="flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[11px] font-black tracking-[0.2em] uppercase" style={{ color: layer.accentColor }}>
+                          {layer.number}
+                        </span>
+                        <span className="w-5 h-px bg-indigo-200" />
+                      </div>
+                      <h4 className="text-gray-900 text-lg font-bold mb-2 leading-snug">{layer.title}</h4>
+                      <div className="relative overflow-hidden transition-all duration-700 ease-in-out md:max-h-[4.5rem] md:group-hover:max-h-[800px] md:[mask-image:linear-gradient(to_bottom,black_20%,transparent_100%)] md:group-hover:[mask-image:none]">
+                        <p className="text-gray-600 text-[13.5px] leading-relaxed whitespace-pre-line pb-2">
+                          {layer.body.split('\n').filter(Boolean).join('\n\n')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Glass>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 

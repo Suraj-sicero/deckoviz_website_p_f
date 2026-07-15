@@ -2,15 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 
-// Helper function to shuffle an array of ImageSource objects
-const shuffleArray = (array: ImageSource[]) => {
-  const newArray = [...array];
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-  }
-  return newArray;
-};
+
 
 // --- INTERFACES ---
 interface ImageSource {
@@ -20,7 +12,7 @@ interface ImageSource {
 
 interface DynamicImageGridProps {
   imageSources: ImageSource[];
-  intervalSeconds?: number;
+
   sectionTitle?: string;
   sectionDescription?: string;
 }
@@ -28,12 +20,12 @@ interface DynamicImageGridProps {
 // --- UPDATED COMPONENT ---
 export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
   imageSources,
-  intervalSeconds = 5,
+
   sectionTitle = "Explore Our Gallery",
   sectionDescription = "Discover inspiring visuals that spark joy and creativity.",
 }) => {
   const [displayedImages, setDisplayedImages] = useState<ImageSource[]>([]);
-  const [isFading, setIsFading] = useState(false);
+
   const [isPaused, setIsPaused] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -48,27 +40,38 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
   };
 
   const updateDisplayedImages = useCallback(() => {
-    setIsFading(true);
-    setTimeout(() => {
-      const shuffled = shuffleArray(imageSources);
-      setDisplayedImages(shuffled.slice(0, 6));
-      setIsFading(false);
-    }, 600);
+    // Always triplicate the array for seamless infinite scrolling
+    setDisplayedImages([...imageSources, ...imageSources, ...imageSources]);
   }, [imageSources]);
 
   useEffect(() => {
-    setDisplayedImages(imageSources.slice(0, 6));
+    updateDisplayedImages();
+  }, [updateDisplayedImages]);
 
-    let intervalId: ReturnType<typeof setInterval>;
+  // Continuous Auto-Scroll Logic
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
 
-    if (!isPaused) {
-      intervalId = setInterval(updateDisplayedImages, intervalSeconds * 1000);
-    }
+    let animationFrameId: number;
 
-    return () => {
-      if (intervalId) clearInterval(intervalId);
+    const scrollStep = () => {
+      if (!isPaused && scrollContainer) {
+        scrollContainer.scrollLeft += 0.8;
+
+        // When we've scrolled past the first copy, jump back seamlessly
+        const oneThird = scrollContainer.scrollWidth / 3;
+        if (scrollContainer.scrollLeft >= oneThird) {
+          scrollContainer.scrollLeft = 0;
+        }
+      }
+      animationFrameId = requestAnimationFrame(scrollStep);
     };
-  }, [intervalSeconds, isPaused, updateDisplayedImages]);
+
+    animationFrameId = requestAnimationFrame(scrollStep);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, [isPaused, displayedImages]);
 
   const getImageKey = useCallback((image: ImageSource, index: number) => {
     return `${image.src}-${index}`;
@@ -77,7 +80,7 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
   return (
     <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight bg-gradient-to-r from-[#4f46e5] via-pink-500 to-indigo-600 bg-clip-text text-transparent">
+        <h2 className="text-4xl md:text-5xl font-serif font-extrabold text-gray-900 mb-4 tracking-tight bg-gradient-to-r from-[#182a4a] to-[#2563EB] bg-clip-text text-transparent">
           {sectionTitle}
         </h2>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -129,7 +132,7 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
         {/* Carousel */}
         <div
           ref={scrollRef}
-          className="flex gap-5 md:gap-7 overflow-x-auto scroll-smooth scrollbar-hide"
+          className="flex gap-5 md:gap-7 overflow-x-auto scrollbar-hide"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
@@ -139,7 +142,7 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
             return (
               <div
                 key={getImageKey(image, index)}
-                className="relative min-w-[220px] md:min-w-[280px] aspect-square bg-gray-200 rounded-3xl overflow-hidden shadow-xl transition-shadow duration-300 hover:shadow-2xl group/item"
+                className="relative min-w-[320px] md:min-w-[420px] aspect-[16/10] bg-gray-100 rounded-3xl overflow-hidden shadow-xl transition-shadow duration-300 hover:shadow-2xl group/item"
               >
                 <img
                   src={image.src}
@@ -151,7 +154,7 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
                   className={`
                     w-full h-full object-cover
                     transition-all duration-700 ease-in-out
-                    ${isFading ? "opacity-0 scale-105" : "opacity-100 scale-100"}
+                    opacity-100 scale-100
                     ${delayClasses[index % delayClasses.length]}
                     group-hover/item:scale-110
                   `}

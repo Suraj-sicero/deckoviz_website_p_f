@@ -29,6 +29,7 @@ const productLinks = [
   { name: "Flagship Games", path: "/flagship-games" },
   { name: "Vizzy Generative Chat", path: "/vizzy-generative-chat" },
   { name: "Master Suite of Features", path: "/master-suite" },
+  { name: "Classical Music Gallery", path: "/classical-music-gallery.html" },
 ]
 
 const companyLinks = [

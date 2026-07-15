@@ -33,6 +33,7 @@ import DeckovizArchitectsLanding from "./components/deckovizForBusinesses/Deckov
 import DeckovizOfficesLanding from "./components/deckovizForBusinesses/DeckovizForOffices";
 import DeckovizForRealEstate from "./components/deckovizForBusinesses/DeckovizForRealestate";
 import DeckovizTherapistsLanding from "./components/deckovizForBusinesses/DeckovizForTherapists";
+import DeckovizForWellness from "./components/deckovizForBusinesses/DeckovizForWellness";
 import DeckovizSchoolsLanding from "./components/deckovizForBusinesses/DeckovizForSchools";
 import DeckovizForRetail from "./components/deckovizForBusinesses/DeckovizForStores";
 import DeckovizForEnterprise from "./components/deckovizForBusinesses/DeckovizForEnterprise";
@@ -436,6 +437,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route
             path="/deckoviz-for-therapists"
             element={<DeckovizTherapistsLanding />}
+          />
+          <Route
+            path="/deckoviz-for-wellness"
+            element={<DeckovizForWellness />}
           />
           <Route
             path="/deckoviz-for-schools"
