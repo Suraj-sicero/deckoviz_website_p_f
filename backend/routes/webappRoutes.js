@@ -36,7 +36,7 @@ router.get("/profile", async (req, res) => {
         postCount: 548,
         followerCount: 12700,
         followingCount: 221,
-        favoriteArtStyles: ["Surrealism", "Abstract Expressionism", "Conceptual Portraits", "Minimalism"],
+        favoriteArtStyles: "Surrealism, Abstract Expressionism, Conceptual Portraits, Minimalism",
       });
     }
     res.json(profile);
