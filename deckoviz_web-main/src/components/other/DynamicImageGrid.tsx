@@ -78,12 +78,15 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
   }, []);
 
   return (
-    <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-gray-50 to-white overflow-hidden">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12">
-        <h2 className="text-4xl md:text-5xl font-serif font-extrabold text-gray-900 mb-4 tracking-tight bg-gradient-to-r from-[#182a4a] to-[#2563EB] bg-clip-text text-transparent">
+    <section className="relative py-16 sm:py-20 md:py-24 bg-transparent overflow-hidden">
+      <div className="absolute inset-0 bg-[#0A0A0B] -z-10 w-full h-full"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-blue-600/10 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-12 relative z-10">
+        <h2 className="text-4xl md:text-5xl font-serif font-extrabold mb-4 tracking-tight bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
           {sectionTitle}
         </h2>
-        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        <p className="text-xl text-gray-300 max-w-3xl mx-auto">
           {sectionDescription}
         </p>
       </div>
@@ -93,7 +96,7 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
         {/* Left Arrow */}
         <button
           onClick={scrollLeft}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/70 backdrop-blur rounded-full shadow-md opacity-0 group-hover:opacity-100 transition"
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-3 bg-black/50 text-white border border-white/20 backdrop-blur rounded-full shadow-md opacity-0 group-hover:opacity-100 transition"
         >
           ←
         </button>
@@ -109,15 +112,15 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
         {/* Right Arrow */}
         <button
           onClick={scrollRight}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-3 bg-white/70 backdrop-blur rounded-full shadow-md opacity-0 group-hover:opacity-100 transition"
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-3 bg-black/50 text-white border border-white/20 backdrop-blur rounded-full shadow-md opacity-0 group-hover:opacity-100 transition"
         >
           →
         </button>
 
         {/* Pause Indicator */}
-        <div className="absolute top-4 right-4 z-20 p-2 bg-white/70 backdrop-blur-sm rounded-full shadow-md transition-all duration-300 opacity-0 group-hover:opacity-100 flex items-center justify-center transform group-hover:scale-105">
+        <div className="absolute top-4 right-4 z-20 p-2 bg-black/50 text-white border border-white/20 backdrop-blur-sm rounded-full shadow-md transition-all duration-300 opacity-0 group-hover:opacity-100 flex items-center justify-center transform group-hover:scale-105">
           <svg
-            className="w-5 h-5 text-gray-700"
+            className="w-5 h-5 text-gray-200"
             fill="currentColor"
             viewBox="0 0 20 20"
           >
@@ -142,7 +145,7 @@ export const DynamicImageGrid: React.FC<DynamicImageGridProps> = ({
             return (
               <div
                 key={getImageKey(image, index)}
-                className="relative min-w-[320px] md:min-w-[420px] aspect-[16/10] bg-gray-100 rounded-3xl overflow-hidden shadow-xl transition-shadow duration-300 hover:shadow-2xl group/item"
+                className="relative min-w-[320px] md:min-w-[420px] aspect-[16/10] bg-white/5 border border-white/10 rounded-3xl overflow-hidden shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-shadow duration-300 hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] group/item"
               >
                 <img
                   src={image.src}
