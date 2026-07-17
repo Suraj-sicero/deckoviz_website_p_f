@@ -94,15 +94,19 @@ const fits = [
 
 const DeckovizOfficesLanding = () => {
   return (
-    <div className="bg-white min-h-screen text-gray-900 font-sans">
+    <div className="bg-[#0A0A0B] min-h-screen text-white font-sans">
       {/* ── 1. Immersive Hero ── */}
       <div className="relative pt-32 pb-20 overflow-hidden lg:pt-40 lg:pb-32">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-blue-50/30 to-white"></div>
+          {/* Animated Gradient Layers */}
+          <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-blue-600/20 via-indigo-500/10 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
+          <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-blue-500/15 via-indigo-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
+          <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-blue-500/10 via-indigo-400/5 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/20 via-indigo-400/10 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
           {/* Subtle animated blobs */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#182A4A]/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-[#2563EB]/10 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-1/3 w-96 h-96 bg-[#182A4A]/5 rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/3 w-96 h-96 bg-blue-500/15 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
         </div>
 
         <motion.div 
@@ -111,18 +115,19 @@ const DeckovizOfficesLanding = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <span className="inline-block py-1.5 px-4 rounded-full bg-white/60 border border-gray-200 text-[#182A4A] font-semibold text-sm tracking-wide mb-6 shadow-sm backdrop-blur-sm">
+          <span className="inline-block py-1.5 px-4 rounded-full bg-white/10 border border-white/20 text-white font-semibold text-sm tracking-wide mb-6 shadow-sm backdrop-blur-md">
             Deckoviz for Offices, Coworking Spaces & Creative Studios
           </span>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8 leading-tight font-serif">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-8 leading-tight font-serif">
             Where Work Feels <br className="hidden md:block"/>
-            <span className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-transparent bg-clip-text">Inspired</span>
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Inspired</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto mb-6 font-medium leading-relaxed">
-            Most offices run on productivity software. Almost none run on mood, creativity, or flow, the actual human engines behind great work.
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-6 font-medium leading-relaxed">
+            Most offices run on <strong className="text-white">productivity software.</strong> <br className="hidden md:block"/><br className="hidden md:block"/>
+             Almost none run on <strong className="text-blue-300">mood, creativity, or flow</strong>, the actual <strong className="text-white">human engines</strong> behind great work.
           </p>
-          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12 leading-relaxed">
-            Deckoviz fixes that, by bringing a smart, evolving, performance- and culture-attuned architecture for inspired work to your space.
+          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+            <strong className="text-blue-400">Deckoviz fixes that</strong>, by bringing a smart, evolving, <strong className="text-blue-300">performance- and culture-attuned architecture</strong> for inspired work to your space.
           </p>
         </motion.div>
       </div>
@@ -137,7 +142,7 @@ const DeckovizOfficesLanding = () => {
       </div>
 
       {/* ── 2. The Longer Story ── */}
-      <section className="py-24 bg-zinc-50 relative overflow-hidden">
+      <section className="py-24 bg-[#08101a] relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-6">
           <motion.div 
             className="text-center mb-16"
@@ -146,20 +151,23 @@ const DeckovizOfficesLanding = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-5xl font-bold font-serif text-gray-900 mb-6">Work is about to change faster<br/>than most offices are <span className="text-[#2563EB]">built for.</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold font-serif text-white mb-6">Work is about to change faster<br/>than most offices are <span className="text-blue-400">built for.</span></h2>
           </motion.div>
           <motion.div 
-            className="prose prose-lg prose-indigo mx-auto text-gray-600 space-y-6"
+            className="prose prose-lg prose-indigo mx-auto text-gray-400 space-y-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300">
-              By 2027, the best people won't just be choosing companies. They'll be choosing environments, choosing how they feel. Talent that's spent years working from kitchen tables and coffee shops has gotten used to spaces that feel considered, personal, alive. Then they walk into an office that hasn't changed since 2015. Beige walls. A motivational poster. Lighting that sucks the joy. All in all, just another example of a boring, uninspired place.
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              By 2027, the best people won't just be choosing companies. They'll be choosing <strong className="text-blue-300">environments</strong>, choosing how they feel. <br/><br/>
+              Talent that's spent years working from kitchen tables and coffee shops has gotten used to spaces that feel <strong className="text-white">considered, personal, alive</strong>. <br/><br/>
+              Then they walk into an office that hasn't changed since 2015. Beige walls. A motivational poster. Lighting that sucks the joy. <br/>
+              All in all, just another example of a boring, uninspired place.
             </p>
             <motion.p 
-              className="text-xl leading-relaxed font-medium text-gray-900 border-l-4 border-[#2563EB] pl-6 my-8"
+              className="text-xl leading-relaxed font-medium text-white border-l-4 border-blue-500 pl-6 my-8"
               initial={{ x: -20, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
               viewport={{ once: true }}
@@ -167,13 +175,16 @@ const DeckovizOfficesLanding = () => {
             >
               The tools we use to manage work have gotten radically smarter. The rooms we do that work in mostly haven't.
             </motion.p>
-            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300">
-              That gap is exactly what's costing companies focus, creativity, and the kind of culture people actually want to be part of. Deep work needs an environment that supports it. Creative work needs a space that provokes it. Team culture needs somewhere to live besides a Slack channel.
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              That gap is exactly what's costing companies <strong className="text-white">focus, creativity, and culture</strong>. <br/><br/>
+              Deep work needs an environment that <strong className="text-blue-300">supports it</strong>. <br/>
+              Creative work needs a space that <strong className="text-blue-300">provokes it</strong>. <br/>
+              Team culture needs somewhere to live besides a Slack channel.
             </p>
-            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300">
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
               Deckoviz helps create that space. With the AI-powered Generative Ambiance and Visual Portal running Vizzy, your always-on generative and experience companion, turning static walls into living, breathing environments that adapt to how your team actually works, thinks, and feels throughout the day.
             </p>
-            <p className="text-xl leading-relaxed cursor-default hover:text-gray-900 transition-colors duration-300 font-medium">
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300 font-medium">
               This is what offices, studios, and coworking spaces are supposed to feel like in the age of AI - spaces as inspired, as generative, as the people in them.
             </p>
           </motion.div>
@@ -181,7 +192,7 @@ const DeckovizOfficesLanding = () => {
       </section>
 
       {/* ── 3. 16 Key Highlights & Use Cases ── */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-[#0A0A0B]">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             className="text-center mb-16"
@@ -189,25 +200,25 @@ const DeckovizOfficesLanding = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-[#182A4A] font-bold tracking-wider uppercase text-sm">Possibilities</span>
-            <h2 className="mt-3 text-4xl md:text-5xl font-bold font-serif text-gray-900">12 Key Highlights & Use Cases</h2>
+            <span className="text-blue-300 font-bold tracking-wider uppercase text-sm">Possibilities</span>
+            <h2 className="mt-3 text-4xl md:text-5xl font-bold font-serif text-white">12 Key Highlights & Use Cases</h2>
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
             {highlights.slice(0, 12).map((item, idx) => (
               <motion.div 
                 key={idx} 
-                className="group p-8 rounded-3xl bg-white border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-2xl hover:-translate-y-2 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
+                className="group p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 relative overflow-hidden group/card hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] hover:-translate-y-2 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: idx * 0.05 }}
               >
-                <div className="text-4xl mb-6 bg-blue-50 w-16 h-16 rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="text-4xl mb-6 bg-gradient-to-br from-blue-900/40 to-indigo-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)] w-16 h-16 rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   <span className="group-hover:grayscale brightness-200 group-hover:drop-shadow-md transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
                 </div>
-                <h3 className="text-xl font-bold font-serif text-gray-900 mb-3 leading-snug group-hover:text-[#2563EB] transition-colors duration-300">{item.title}</h3>
-                <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">{item.desc}</p>
+                <h3 className="text-xl font-bold font-serif text-white mb-3 leading-snug group-hover:text-blue-400 transition-colors duration-300">{item.title}</h3>
+                <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -217,18 +228,18 @@ const DeckovizOfficesLanding = () => {
             {highlights.slice(12).map((item, idx) => (
               <motion.div 
                 key={idx + 12} 
-                className="group flex gap-6 p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-blue-50/30 border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-2xl hover:-translate-y-1 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
+                className="group flex gap-6 p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md shadow-[0_0_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] hover:-translate-y-1 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
               >
-                <div className="text-4xl bg-blue-50 w-16 h-16 min-w-[4rem] rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 transition-all duration-300">
+                <div className="text-4xl bg-gradient-to-br from-blue-900/40 to-indigo-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)] w-16 h-16 min-w-[4rem] rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 transition-all duration-300">
                   <span className="group-hover:grayscale brightness-200 group-hover:drop-shadow-md">{item.icon}</span>
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold font-serif text-gray-900 mb-2 leading-snug group-hover:text-[#2563EB] transition-colors duration-300">{item.title}</h3>
-                  <p className="text-gray-600 leading-relaxed group-hover:text-gray-700 transition-colors duration-300">{item.desc}</p>
+                  <h3 className="text-xl font-bold font-serif text-white mb-2 leading-snug group-hover:text-blue-400 transition-colors duration-300">{item.title}</h3>
+                  <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">{item.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -252,7 +263,7 @@ const DeckovizOfficesLanding = () => {
               <p className="text-lg text-slate-300 mb-8 leading-relaxed">
                 The best workplaces of the next decade won't just optimise output. They'll actively design for the energy behind it.
               </p>
-              <div className="w-20 h-1 bg-gradient-to-r from-[#2563EB] to-[#182A4A] rounded-full" />
+              <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
             </motion.div>
             <div className="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
               {benefits.map((benefit, idx) => (
@@ -264,7 +275,7 @@ const DeckovizOfficesLanding = () => {
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: idx * 0.08 }}
                 >
-                  <div className="absolute top-0 left-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#2563EB] font-bold text-sm group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">
+                  <div className="absolute top-0 left-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold text-sm group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">
                     {idx + 1}
                   </div>
                   <div className="pl-12 group-hover:translate-x-1 transition-transform duration-300">
@@ -279,14 +290,17 @@ const DeckovizOfficesLanding = () => {
       </section>
 
       {/* ── 5. 18 More Ways Deckoviz Fits Your Space ── */}
-      <section className="py-24 bg-zinc-50 border-y border-zinc-200 overflow-hidden">
+      <section className="relative py-32 bg-[#050b14] overflow-hidden border-y border-white/5">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(37,99,235,0.08)_0%,_transparent_70%)] pointer-events-none"></div>
+        <div className="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
         <motion.div 
           className="max-w-7xl mx-auto px-6 mb-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold font-serif text-gray-900">18 More Ways Deckoviz Fits Your Space</h2>
+          <h2 className="text-3xl md:text-4xl font-bold font-serif text-white">18 More Ways Deckoviz Fits Your Space</h2>
         </motion.div>
         
         {/* Continuous scroll layout for the fits items */}
@@ -294,13 +308,17 @@ const DeckovizOfficesLanding = () => {
           {fits.map((fit, idx) => (
             <motion.div 
               key={idx} 
-              className="px-6 py-3 bg-white border border-gray-200 rounded-full shadow-[0_2px_10px_rgba(0,0,0,0.02)] text-gray-700 font-medium hover:bg-blue-50 hover:border-[#2563EB]/40 hover:text-[#182A4A] hover:-translate-y-1 transition-all duration-300 text-sm md:text-base cursor-default"
+              className="relative group px-6 py-3.5 bg-white/5 border border-white/10 rounded-full text-gray-300 font-medium hover:bg-white/10 hover:border-blue-500/50 hover:text-white hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all duration-300 text-sm md:text-base cursor-default backdrop-blur-md overflow-hidden"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "0px" }}
               transition={{ duration: 0.4, delay: (Math.min(idx, 15)) * 0.05 }}
             >
-              ✨ {fit}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
+              <div className="relative z-10 flex items-center gap-2">
+                <span className="text-yellow-400 group-hover:scale-125 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]">✨</span> 
+                <span className="group-hover:text-white transition-colors duration-300">{fit}</span>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -316,8 +334,8 @@ const DeckovizOfficesLanding = () => {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold font-serif text-gray-900 mb-8">The Bottom Line</h2>
-          <p className="text-xl text-gray-700 mb-10 leading-relaxed font-medium cursor-default">
+          <h2 className="text-4xl md:text-5xl font-bold font-serif text-white mb-8">The Bottom Line</h2>
+          <p className="text-xl text-gray-300 mb-10 leading-relaxed font-medium cursor-default">
             The best offices of tomorrow won't just manage tasks. They'll manage energy, they'll inspire creativity, and they will feel as alive as the work being done in these spaces.
             <br/><br/>
             Deckoviz turns any workspace into a living, intelligent environment built for focus, creativity, and connection. As core infrastructure for how great work actually happens.
@@ -326,7 +344,7 @@ const DeckovizOfficesLanding = () => {
           </p>
           <motion.button 
             onClick={() => window.location.href='/contact'} 
-            className="group px-10 py-5 bg-[#182A4A] text-white rounded-full font-bold text-lg hover:bg-[#2563EB] transition-all duration-300 shadow-xl shadow-[#182A4A]/20 flex items-center justify-center mx-auto gap-3"
+            className="group px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white border border-white/10 hover:from-blue-500 hover:to-indigo-500 rounded-full font-bold text-lg hover:bg-[#2563EB] transition-all duration-300 shadow-xl shadow-[#182A4A]/20 flex items-center justify-center mx-auto gap-3"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >

@@ -100,7 +100,7 @@ type ViewType =
 /* ── Sidebar items (8 main) ── */
 const sidebarMain: { icon: React.ReactNode; label: string; view: ViewType }[] = [
   { icon: <Home size={20} />, label: "Drawing Room", view: "drawing_room" },
-  { icon: <MessageSquare size={20} />, label: "VGC", view: "vgc" },
+  { icon: <Brush size={20} />, label: "Vizzy Creation Canvas", view: "vgc" },
   { icon: <PenTool size={20} />, label: "Create Collection", view: "create_collection" },
   { icon: <Palette size={20} />, label: "VCC", view: "vcc" },
   { icon: <Clock size={20} />, label: "Daily Queue", view: "daily_queue" },
@@ -111,7 +111,7 @@ const sidebarMain: { icon: React.ReactNode; label: string; view: ViewType }[] = 
 /* ── Dropdown menu items (3 bars) ── */
 const menuItems: { icon: React.ReactNode; label: string; view: ViewType; section?: string }[] = [
   { icon: <Home size={15} />, label: "Drawing Room", view: "drawing_room", section: "Core" },
-  { icon: <MessageSquare size={15} />, label: "VGC - Generative Chat", view: "vgc" },
+  { icon: <Brush size={15} />, label: "Vizzy Creation Canvas", view: "vgc" },
   { icon: <FolderOpen size={15} />, label: "All Collections", view: "all_collections" },
   { icon: <ImageIcon size={15} />, label: "All Media", view: "all_media" },
   { icon: <Users size={15} />, label: "Deep User Profile", view: "deep_profile" },
@@ -145,6 +145,10 @@ export default function DeckovizWebapp() {
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
 
   const handleMenuClick = (view: ViewType) => {
+    if (view === "vgc") {
+      window.location.href = "/vizzy-canvas";
+      return;
+    }
     setActiveView(view);
     setShowMenu(false);
   };
@@ -248,7 +252,13 @@ export default function DeckovizWebapp() {
               return (
                 <button
                   key={item.view}
-                  onClick={() => setActiveView(item.view)}
+                  onClick={() => {
+                    if (item.view === "vgc") {
+                      window.location.href = "/vizzy-canvas";
+                    } else {
+                      setActiveView(item.view);
+                    }
+                  }}
                   className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${
                     isActive
                       ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"

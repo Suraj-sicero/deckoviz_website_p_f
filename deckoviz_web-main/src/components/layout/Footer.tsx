@@ -5,13 +5,13 @@ import {
   Linkedin,
   Facebook,
   Twitter,
-  // Wand2,
-  // FlaskConical,
-  // BookOpen,
-  // Brush,
-  // Gamepad2,
-  // Notebook,
-  // Sparkles,
+  Wand2,
+  FlaskConical,
+  BookOpen,
+  Brush,
+  Gamepad2,
+  Notebook,
+  Sparkles,
   Grid
 } from "lucide-react"
 import { motion } from "framer-motion"
@@ -229,7 +229,6 @@ const Footer = () => {
             </div>
 
             {/* Remaining 9 Standardized Buttons */}
-            {/* 
             <div className="flex justify-center items-center gap-4 flex-wrap max-w-4xl">
               {[
                 { label: "Quick Access Zone: Some nifty little fun tools", href: "/vizzy-fun-zone", icon: Sparkles },
@@ -292,7 +291,6 @@ const Footer = () => {
                 );
               })}
             </div>
-            */}
           </motion.div>
 
 

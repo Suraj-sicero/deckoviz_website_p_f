@@ -3,6 +3,7 @@ import type React from "react";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import {
   Bell,
+  Brush,
   Building2,
   Calendar,
   Clock,
@@ -69,7 +70,7 @@ type ViewType =
 /* ── Sidebar quick-access items (5 main + 2 bottom) ── */
 const sidebarMain: { icon: React.ReactNode; label: string; view: ViewType }[] = [
   { icon: <Home size={20} />, label: "Dashboard", view: "dashboard" },
-  { icon: <MessageSquare size={20} />, label: "VGC", view: "vgc" },
+  { icon: <Brush size={20} />, label: "Vizzy Creation Canvas", view: "vgc" },
   { icon: <Clock size={20} />, label: "Daily Queue", view: "daily_queue" },
   { icon: <ImageIcon size={20} />, label: "All Media", view: "all_media" },
   { icon: <Library size={20} />, label: "Explore Library", view: "explore_library" },
@@ -78,7 +79,7 @@ const sidebarMain: { icon: React.ReactNode; label: string; view: ViewType }[] = 
 /* ── Dropdown menu items ── */
 const menuItems: { icon: React.ReactNode; label: string; view: ViewType }[] = [
   { icon: <Home size={15} />, label: "Enterprise Dashboard", view: "dashboard" },
-  { icon: <MessageSquare size={15} />, label: "VGC — Generative Chat", view: "vgc" },
+  { icon: <Brush size={15} />, label: "Vizzy Creation Canvas", view: "vgc" },
   { icon: <Palette size={15} />, label: "CMO Canvas", view: "cmo_canvas" },
   { icon: <FolderOpen size={15} />, label: "All Collections", view: "all_collections" },
   { icon: <ImageIcon size={15} />, label: "All Media", view: "all_media" },
@@ -110,6 +111,10 @@ export default function EnterpriseWebapp() {
   const activeView = currentSegment as ViewType;
 
   const setActiveView = (view: ViewType) => {
+    if (view === "vgc") {
+      window.location.href = "/vizzy-canvas";
+      return;
+    }
     navigate(`/enterprise-webapp/${view}`);
   };
 
