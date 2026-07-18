@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import type React from "react";
 import { useAuth } from "../../context/AuthContext";
+import { useWebSocket } from "../../hooks/useWebSocket";
 import { getAgents, getChats, sendMessage, createChat, getChat } from "../../lib/vgcApi";
 import type { VGCAgent, VGCChatSummary, VGCMessage } from "../../lib/vgcApi";
 import {
@@ -149,6 +150,7 @@ export default function DeckovizWebapp() {
   const [activeView, setActiveView] = useState<ViewType>("drawing_room");
   const [showMenu, setShowMenu] = useState(false);
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
+  const ws = useWebSocket();
 
   const handleMenuClick = (view: ViewType) => {
     setActiveView(view);
