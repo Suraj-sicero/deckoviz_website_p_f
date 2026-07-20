@@ -21,11 +21,25 @@ interface WSMessage {
   target?: { app_instance_id: string };
 }
 
+interface PendingMessage {
+  message_id: string;
+  action: string;
+  payload: Record<string, unknown>;
+  target?: { app_instance_id: string };
+  timer: ReturnType<typeof setTimeout>;
+  resolve: (value: boolean) => void;
+}
+
 type EventCallback = (payload: Record<string, unknown>) => void;
+type TokenProvider = () => string | null | Promise<string | null>;
+
+const ACK_TIMEOUT_MS = 15_000;
+const MAX_QUEUED_MESSAGES = 50;
 
 class DeckovizWS {
   private ws: WebSocket | null = null;
   private token: string | null = null;
+  private tokenProvider: TokenProvider | null = null;
   private listeners = new Map<string, Set<EventCallback>>();
   private reconnectAttempts = 0;
   private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
@@ -33,6 +47,8 @@ class DeckovizWS {
   private _status: ConnectionStatus = "disconnected";
   private _devices: WSDevice[] = [];
   private intentionalClose = false;
+  private pendingMessages = new Map<string, PendingMessage>();
+  private messageQueue: Array<{ msg: WSMessage; resolve: (v: boolean) => void }> = [];
 
   get status(): ConnectionStatus {
     return this._status;
@@ -40,6 +56,10 @@ class DeckovizWS {
 
   get devices(): WSDevice[] {
     return this._devices;
+  }
+
+  setTokenProvider(provider: TokenProvider) {
+    this.tokenProvider = provider;
   }
 
   on(event: string, cb: EventCallback): () => void {
@@ -62,7 +82,28 @@ class DeckovizWS {
     this.emit("status", { status: s });
   }
 
-  connect(token: string) {
+  private isTokenExpired(token: string): boolean {
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const now = Math.floor(Date.now() / 1000);
+      return payload.exp ? payload.exp < now + 60 : false;
+    } catch {
+      return false;
+    }
+  }
+
+  private async refreshToken(): Promise<string | null> {
+    if (this.tokenProvider) {
+      try {
+        return await this.tokenProvider();
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  async connect(token: string) {
     if (this.ws && (this.ws.readyState === WebSocket.OPEN || this.ws.readyState === WebSocket.CONNECTING)) {
       return;
     }
@@ -84,6 +125,7 @@ class DeckovizWS {
     this.ws.onopen = () => {
       this.reconnectAttempts = 0;
       this.setStatus("connected");
+      this.flushMessageQueue();
     };
 
     this.ws.onmessage = (event) => {
@@ -110,20 +152,43 @@ class DeckovizWS {
           this.emit("device_offline", msg.payload);
           break;
         }
-        case "acknowledgement":
+        case "acknowledgement": {
+          const refId = msg.payload.reference_message_id as string;
+          const pending = this.pendingMessages.get(refId);
+          if (pending) {
+            clearTimeout(pending.timer);
+            this.pendingMessages.delete(refId);
+            pending.resolve(true);
+          }
           this.emit("acknowledgement", msg.payload);
           break;
-        case "error":
+        }
+        case "error": {
+          const refId = msg.payload.reference_message_id as string;
+          const pending = this.pendingMessages.get(refId);
+          if (pending) {
+            clearTimeout(pending.timer);
+            this.pendingMessages.delete(refId);
+            pending.resolve(false);
+          }
           this.emit("error", msg.payload);
           break;
+        }
         default:
           this.emit(msg.action, msg.payload);
           break;
       }
     };
 
-    this.ws.onclose = () => {
+    this.ws.onclose = (event) => {
       this.setStatus("disconnected");
+      this.rejectPendingMessages("Connection closed");
+
+      if (event.code === 4401) {
+        this.emit("auth_expired", {});
+        return;
+      }
+
       if (!this.intentionalClose) {
         this.scheduleReconnect();
       }
@@ -141,6 +206,8 @@ class DeckovizWS {
       this.reconnectTimer = null;
     }
     this.reconnectAttempts = 0;
+    this.rejectPendingMessages("Disconnected");
+    this.messageQueue = [];
     if (this.ws) {
       this.ws.close();
       this.ws = null;
@@ -167,7 +234,74 @@ class DeckovizWS {
     }
 
     this.ws.send(JSON.stringify(msg));
+
+    const pending = this.createPendingMessage(msg);
+    this.pendingMessages.set(msg.message_id, pending);
+
     return true;
+  }
+
+  sendQueued(action: string, payload: Record<string, unknown> = {}, targetAppInstanceId?: string): boolean {
+    if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+      return this.send(action, payload, targetAppInstanceId);
+    }
+
+    if (this.messageQueue.length >= MAX_QUEUED_MESSAGES) {
+      this.messageQueue.shift();
+    }
+
+    const msg: WSMessage = {
+      protocol_version: 1,
+      message_id: crypto.randomUUID(),
+      timestamp: new Date().toISOString(),
+      action,
+      payload,
+    };
+
+    if (targetAppInstanceId) {
+      msg.target = { app_instance_id: targetAppInstanceId };
+    }
+
+    return new Promise<boolean>((resolve) => {
+      this.messageQueue.push({ msg, resolve });
+    }) as unknown as boolean;
+  }
+
+  private createPendingMessage(msg: WSMessage): PendingMessage {
+    return {
+      message_id: msg.message_id,
+      action: msg.action,
+      payload: msg.payload,
+      target: msg.target,
+      resolve: () => {},
+      timer: setTimeout(() => {
+        this.pendingMessages.delete(msg.message_id);
+        this.emit("ack_timeout", { message_id: msg.message_id, action: msg.action });
+      }, ACK_TIMEOUT_MS),
+    };
+  }
+
+  private rejectPendingMessages(reason: string) {
+    this.pendingMessages.forEach((pending) => {
+      clearTimeout(pending.timer);
+      pending.resolve(false);
+    });
+    this.pendingMessages.clear();
+  }
+
+  private flushMessageQueue() {
+    const queue = [...this.messageQueue];
+    this.messageQueue = [];
+    for (const item of queue) {
+      if (this.ws && this.ws.readyState === WebSocket.OPEN) {
+        this.ws.send(JSON.stringify(item.msg));
+        const pending = this.createPendingMessage(item.msg);
+        this.pendingMessages.set(item.msg.message_id, pending);
+        item.resolve(true);
+      } else {
+        item.resolve(false);
+      }
+    }
   }
 
   // ── Convenience methods ──────────────────────────────────────────────────
@@ -230,9 +364,19 @@ class DeckovizWS {
 
   // ── Reconnect logic ──────────────────────────────────────────────────────
 
-  private scheduleReconnect() {
+  private async scheduleReconnect() {
     if (this.intentionalClose) return;
     this.setStatus("reconnecting");
+
+    if (this.token && this.isTokenExpired(this.token)) {
+      const newToken = await this.refreshToken();
+      if (newToken) {
+        this.token = newToken;
+      } else {
+        this.emit("auth_expired", {});
+        return;
+      }
+    }
 
     const delay = Math.min(1000 * Math.pow(2, this.reconnectAttempts), this.maxReconnectDelay);
     this.reconnectAttempts++;
