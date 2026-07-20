@@ -1,5 +1,10 @@
+import { useState, useRef, useCallback, useEffect } from "react";
 import { useState, useRef, useCallback } from "react";
 import type React from "react";
+import { useAuth } from "../../context/AuthContext";
+import { useWebSocket } from "../../hooks/useWebSocket";
+import { getAgents, getChats, sendMessage, createChat, getChat } from "../../lib/vgcApi";
+import type { VGCAgent, VGCChatSummary, VGCMessage } from "../../lib/vgcApi";
 import {
   Bell,
   BookOpen,
@@ -29,7 +34,9 @@ import {
   Settings,
   Sparkles,
   Star,
+  Trash2,
   Upload,
+  UploadCloud,
   Users,
   FileText,
   Repeat,
@@ -58,6 +65,7 @@ import ProductInfoView from "./views/ProductInfoView";
 import ProfileView from "./views/ProfileView";
 import SearchView from "./views/SearchView";
 import { setFrameImage } from "../../lib/frameStore";
+import { webappApi } from "../../lib/webappApi";
 
 type ViewType =
   | "drawing_room"
@@ -143,6 +151,7 @@ export default function DeckovizWebapp() {
   const [activeView, setActiveView] = useState<ViewType>("drawing_room");
   const [showMenu, setShowMenu] = useState(false);
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
+  const ws = useWebSocket();
 
   const handleMenuClick = (view: ViewType) => {
     setActiveView(view);
@@ -728,16 +737,94 @@ function ViewHeader({ title, subtitle, icon }: { title: string; subtitle: string
 }
 
 /* ======================== VGC - GENERATIVE CHAT ======================== */
+const VGC_AGENT_ICONS: Record<string, React.ReactNode> = {
+  personal_artist: <Brush size={20} />,
+  poster_creator: <Layers size={20} />,
+  story_buddy: <Film size={20} />,
+  curator: <Music size={20} />,
+  journal_bud: <Mic size={20} />,
+  visual_companion: <Eye size={20} />,
+  vizzy_muse: <Wand2 size={20} />,
+};
+
 function VGCPlaceholder() {
-  const subAgents = [
-    { name: "Art Generator", desc: "Create unique artworks from text prompts", icon: <Brush size={20} /> },
-    { name: "Poster Studio", desc: "Design stunning posters and typography art", icon: <Layers size={20} /> },
-    { name: "Sequential Art", desc: "Generate comic strips and visual stories", icon: <Film size={20} /> },
-    { name: "Music Composer", desc: "Compose ambient sounds and melodies", icon: <Music size={20} /> },
-    { name: "Narration Studio", desc: "Create voiceovers and spoken content", icon: <Mic size={20} /> },
-    { name: "Video Creator", desc: "Transform images into short animations", icon: <Eye size={20} /> },
-    { name: "Style Advisor", desc: "Get recommendations for your space", icon: <Wand2 size={20} /> },
-  ];
+  const { token, openAuthModal } = useAuth();
+  const [agents, setAgents] = useState<VGCAgent[]>([]);
+  const [chats, setChats] = useState<VGCChatSummary[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
+  const [messages, setMessages] = useState<VGCMessage[]>([]);
+  const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (!token) return;
+    getAgents(token).then(setAgents).catch(() => {});
+    getChats(token).then(setChats).catch(() => {});
+  }, [token]);
+
+  const handleSend = async () => {
+    if (!input.trim() || isLoading) return;
+    if (!token) { openAuthModal(true); return; }
+    const userMsg = input.trim();
+    setInput("");
+    setMessages((prev) => [...prev, { role: "user", content: userMsg, timestamp: new Date().toISOString() }]);
+    setIsLoading(true);
+    try {
+      const res = await sendMessage(token, userMsg, activeChatId ?? undefined);
+      setMessages((prev) => [...prev, { role: "assistant", content: res.reply, timestamp: new Date().toISOString() }]);
+      if (!activeChatId && res.chatId) {
+        setActiveChatId(res.chatId);
+        getChats(token).then(setChats).catch(() => {});
+      }
+    } catch {
+      setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, something went wrong. Please try again.", timestamp: new Date().toISOString() }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAgentClick = async (agent: VGCAgent) => {
+    setActiveChatId(null);
+    setMessages([{ role: "assistant", content: `Hi! I'm your ${agent.name}. ${agent.description} How can I help you today?`, timestamp: new Date().toISOString() }]);
+    setInput("");
+  };
+
+  const handleChatClick = async (chat: VGCChatSummary) => {
+    if (!token) return;
+    setActiveChatId(chat.id);
+    setIsLoading(true);
+    try {
+      const detail = await getChat(token, chat.id);
+      setMessages(JSON.parse(detail.messages || "[]"));
+    } catch {
+      setMessages([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const displayAgents = agents.length > 0
+    ? agents.map((a) => ({ ...a, icon: VGC_AGENT_ICONS[a.id] || <Sparkles size={20} /> }))
+    : [
+        { id: "personal_artist", name: "Art Generator", description: "Create unique artworks from text prompts", icon: <Brush size={20} />, capabilities: [], tone: "" },
+        { id: "poster_creator", name: "Poster Studio", description: "Design stunning posters and typography art", icon: <Layers size={20} />, capabilities: [], tone: "" },
+        { id: "story_buddy", name: "Sequential Art", description: "Generate comic strips and visual stories", icon: <Film size={20} />, capabilities: [], tone: "" },
+        { id: "curator", name: "Music Composer", description: "Compose ambient sounds and melodies", icon: <Music size={20} />, capabilities: [], tone: "" },
+        { id: "journal_bud", name: "Narration Studio", description: "Create voiceovers and spoken content", icon: <Mic size={20} />, capabilities: [], tone: "" },
+        { id: "visual_companion", name: "Video Creator", description: "Transform images into short animations", icon: <Eye size={20} />, capabilities: [], tone: "" },
+        { id: "vizzy_muse", name: "Style Advisor", description: "Get recommendations for your space", icon: <Wand2 size={20} />, capabilities: [], tone: "" },
+      ];
+
+  const formatTime = (dateStr: string) => {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return "Just now";
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  };
+
   return (
     <div className="space-y-6 pb-12">
       <ViewHeader title="VGC - Generative Chat" subtitle="Create content and media with 7+ specialised AI sub-agents" icon={<MessageSquare size={24} />} />
@@ -746,11 +833,11 @@ function VGCPlaceholder() {
         <button className="text-xs font-semibold text-[#2563EB] flex items-center gap-1 hover:underline">All Chats <ChevronRight size={14} /></button>
       </div>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {subAgents.map((agent) => (
-          <button key={agent.name} className="group text-left p-5 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/60 hover:shadow-[0_12px_30px_rgba(24,42,74,0.1)] hover:-translate-y-1 transition-all duration-300">
+        {displayAgents.map((agent) => (
+          <button key={agent.id} onClick={() => handleAgentClick(agent)} className="group text-left p-5 rounded-2xl bg-white/60 backdrop-blur-xl border border-white/60 hover:shadow-[0_12px_30px_rgba(24,42,74,0.1)] hover:-translate-y-1 transition-all duration-300">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center text-white mb-3 shadow-md group-hover:scale-110 transition-transform">{agent.icon}</div>
             <p className="text-sm font-bold text-gray-800 mb-1">{agent.name}</p>
-            <p className="text-[11px] text-gray-400 leading-relaxed">{agent.desc}</p>
+            <p className="text-[11px] text-gray-400 leading-relaxed">{agent.description}</p>
           </button>
         ))}
         <button className="p-5 rounded-2xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center text-gray-400 hover:border-[#2563EB] hover:text-[#2563EB] transition-colors">
@@ -762,27 +849,61 @@ function VGCPlaceholder() {
       {/* Recent Chats */}
       <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mt-4">Recent Chats</h2>
       <div className="space-y-2">
-        {[
-          { title: "Generate a sunrise over calm ocean", agent: "Art Generator", time: "2 hours ago" },
-          { title: "Create ambient music for evening", agent: "Music Composer", time: "Yesterday" },
-          { title: "Design a motivational poster", agent: "Poster Studio", time: "2 days ago" },
-        ].map((chat, i) => (
-          <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer">
+        {chats.length > 0 ? chats.slice(0, 5).map((chat) => (
+          <div key={chat.id} onClick={() => handleChatClick(chat)} className={`flex items-center gap-4 p-4 rounded-xl border transition-all cursor-pointer ${activeChatId === chat.id ? "bg-white shadow-md border-[#2563EB]/30" : "bg-white/50 border-white/60 hover:bg-white hover:shadow-md"}`}>
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center text-white shrink-0"><MessageSquare size={14} /></div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-gray-800 truncate">{chat.title}</p>
-              <p className="text-[11px] text-gray-400">{chat.agent} - {chat.time}</p>
+              <p className="text-[11px] text-gray-400">{chat.activeAgent} &middot; {formatTime(chat.updatedAt)}</p>
             </div>
             <ChevronRight size={16} className="text-gray-300" />
           </div>
-        ))}
+        )) : (
+          [{ title: "Generate a sunrise over calm ocean", agent: "Art Generator", time: "2 hours ago" },
+           { title: "Create ambient music for evening", agent: "Music Composer", time: "Yesterday" },
+           { title: "Design a motivational poster", agent: "Poster Studio", time: "2 days ago" }].map((chat, i) => (
+            <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center text-white shrink-0"><MessageSquare size={14} /></div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-gray-800 truncate">{chat.title}</p>
+                <p className="text-[11px] text-gray-400">{chat.agent} - {chat.time}</p>
+              </div>
+              <ChevronRight size={16} className="text-gray-300" />
+            </div>
+          ))
+        )}
       </div>
+
+      {/* Active Chat Messages */}
+      {messages.length > 0 && (
+        <div className="space-y-3 mt-4">
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.role === "user" ? "bg-[#2563EB] text-white rounded-br-md" : "bg-white/70 border border-white/60 text-gray-800 rounded-bl-md"}`}>
+                {msg.content}
+              </div>
+            </div>
+          ))}
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className="bg-white/70 border border-white/60 p-3 rounded-2xl rounded-bl-md text-sm text-gray-400">Thinking...</div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Chat Input */}
       <div className="sticky bottom-4 mt-6">
         <div className="flex items-center gap-3 p-3 rounded-2xl bg-white/80 backdrop-blur-xl border border-white/70 shadow-[0_8px_30px_rgba(24,42,74,0.1)]">
-          <input type="text" placeholder="Describe what you'd like to create..." className="flex-1 bg-transparent text-sm outline-none px-3 py-2 placeholder-gray-400" />
-          <button className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform"><Send size={16} /></button>
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && (e.preventDefault(), handleSend())}
+            placeholder="Describe what you'd like to create..."
+            className="flex-1 bg-transparent text-sm outline-none px-3 py-2 placeholder-gray-400"
+          />
+          <button onClick={handleSend} disabled={isLoading || !input.trim()} className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center text-white shadow-lg hover:scale-105 transition-transform disabled:opacity-50 disabled:hover:scale-100"><Send size={16} /></button>
         </div>
       </div>
     </div>
@@ -873,17 +994,105 @@ function DailyQueuePlaceholder() {
 
 /* ======================== ALL MEDIA ======================== */
 function AllMediaPlaceholder() {
+  const { token } = useAuth();
+  const [mediaFiles, setMediaFiles] = useState<{ id: string; mediaUrl: string; fileName: string; mediaType: string }[]>([]);
+  const [activeTab, setActiveTab] = useState("Uploaded Images");
+  const [uploading, setUploading] = useState(false);
+  const [isDragActive, setIsDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const tabs = ["Generated Images", "Generated Videos", "Generated Narrations", "Generated Music", "Uploaded Images", "Uploaded Videos", "Uploaded Music"];
+
+  const fetchMedia = useCallback(async () => {
+    if (!token) return;
+    try {
+      const data = await webappApi.getMedia({ limit: 50 }, token);
+      let items = data.items || [];
+      if (activeTab === "Uploaded Images") items = items.filter((m: any) => m.mediaType?.startsWith("image/") && !m.mediaUrl?.includes("generated"));
+      else if (activeTab === "Uploaded Videos") items = items.filter((m: any) => m.mediaType?.startsWith("video/") && !m.mediaUrl?.includes("generated"));
+      else if (activeTab === "Uploaded Music") items = items.filter((m: any) => (m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/")) && !m.mediaUrl?.includes("generated"));
+      else if (activeTab === "Generated Images") items = items.filter((m: any) => m.mediaType?.startsWith("image/") && m.mediaUrl?.includes("generated"));
+      else if (activeTab === "Generated Videos") items = items.filter((m: any) => m.mediaType?.startsWith("video/") && m.mediaUrl?.includes("generated"));
+      else if (activeTab === "Generated Music") items = items.filter((m: any) => (m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/")) && m.mediaUrl?.includes("generated"));
+      else if (activeTab === "Generated Narrations") items = items.filter((m: any) => m.mediaType?.includes("narration"));
+      setMediaFiles(items);
+    } catch { /* ignore */ }
+  }, [token, activeTab]);
+
+  useEffect(() => { fetchMedia(); }, [fetchMedia]);
+
+  const uploadFiles = async (fileList: FileList | File[]) => {
+    if (!token) return;
+    setUploading(true);
+    for (const file of Array.from(fileList)) {
+      try { await webappApi.uploadMedia(file, token); } catch { /* skip */ }
+    }
+    await fetchMedia();
+    setUploading(false);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!token) return;
+    try { await webappApi.deleteMedia(id, token); setMediaFiles(f => f.filter(m => m.id !== id)); } catch { /* ignore */ }
+  };
+
   return (
     <div className="space-y-6 pb-12">
       <ViewHeader title="All Media" subtitle="All your generated and uploaded media in one place" icon={<ImageIcon size={24} />} />
       <div className="flex gap-2 flex-wrap">
-        {["Generated Images", "Generated Videos", "Generated Narrations", "Generated Music", "Uploaded Images", "Uploaded Videos", "Uploaded Music"].map((tab, i) => (
-          <button key={tab} className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${i === 0 ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg" : "bg-white/60 text-gray-500 hover:bg-white hover:text-gray-800 border border-gray-100"}`}>
+        {tabs.map((tab) => (
+          <button key={tab} onClick={() => setActiveTab(tab)} className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${activeTab === tab ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg" : "bg-white/60 text-gray-500 hover:bg-white hover:text-gray-800 border border-gray-100"}`}>
             {tab}
           </button>
         ))}
       </div>
-      <MediaView />
+
+      {/* Upload Zone */}
+      <div
+        className={`border-2 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all ${isDragActive ? "border-blue-400 bg-blue-50/50" : "border-gray-300 bg-gray-50 hover:bg-blue-50/30"}`}
+        onDragOver={(e) => { e.preventDefault(); setIsDragActive(true); }}
+        onDragLeave={() => setIsDragActive(false)}
+        onDrop={(e) => { e.preventDefault(); setIsDragActive(false); if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files); }}
+        onClick={() => fileInputRef.current?.click()}
+      >
+        <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-blue-50">
+          <UploadCloud size={32} className="text-blue-600" />
+        </div>
+        <h3 className="text-lg font-bold text-gray-800 mb-2">{uploading ? "Uploading..." : "Drop your images here to automatically tag, enhance, and organize them using Vizzy AI."}</h3>
+        <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Support for JPG, PNG, MP4, and more up to 25MB</p>
+        <input ref={fileInputRef} type="file" multiple accept="image/*,video/*,audio/*" className="hidden" onChange={(e) => { if (e.target.files?.length) uploadFiles(e.target.files); e.target.value = ""; }} />
+      </div>
+
+      {/* Media Grid */}
+      {mediaFiles.length > 0 && (
+        <div>
+          <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">{activeTab} ({mediaFiles.length})</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {mediaFiles.map((file) => (
+              <div key={file.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-white">
+                <img src={file.mediaUrl} alt={file.fileName} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <a href={file.mediaUrl} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-700 hover:bg-white transition shadow-md">
+                    <Eye size={18} />
+                  </a>
+                  <button onClick={(e) => { e.stopPropagation(); handleDelete(file.id); }} className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-700 hover:bg-red-50 hover:text-red-500 transition shadow-md">
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
+                  <p className="text-[10px] text-white/80 truncate">{file.fileName}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {mediaFiles.length === 0 && !uploading && (
+        <div className="text-center py-12 text-gray-400 text-sm">
+          No media found in this category. Upload files using the zone above.
+        </div>
+      )}
     </div>
   );
 }

@@ -33,7 +33,11 @@ const WebappProfile = sequelize.define("WebappProfile", {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
-  favoriteArtStyles: DataTypes.JSON,
+  favoriteArtStyles: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+    comment: "Comma-separated list of art styles (e.g. 'Surrealism, Abstract Expressionism')",
+  },
   theme: {
     type: DataTypes.STRING,
     defaultValue: "light",

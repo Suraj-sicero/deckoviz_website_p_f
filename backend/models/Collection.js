@@ -24,6 +24,11 @@ export const Collection = sequelize.define("Collection", {
     defaultValue: false,
     comment: "True for pre-defined system folders like 'Favorites'",
   },
+  coverUrl: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    comment: "URL of the collection cover image",
+  },
 });
 
 export const CollectionItem = sequelize.define("CollectionItem", {

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   User,
   Image as ImageIcon,
@@ -8,19 +8,45 @@ import {
   Heart,
   Star,
   Sparkles,
+  Pencil,
+  Save,
+  X,
 } from "lucide-react";
+import { useAuth } from "../../../context/AuthContext";
+import { webappApi } from "../../../lib/webappApi";
 import { figmaAssets } from "../webappData";
 
-/* ───────── DATA ───────── */
+/* ───────── Types ───────── */
 
-const favoriteArtStyles = [
-  "Surrealism",
-  "Abstract Expressionism",
-  "Conceptual Portraits",
-  "Minimalism",
-];
+interface ProfileData {
+  displayName: string;
+  username: string;
+  title: string;
+  bio: string;
+  location: string;
+  avatar: string;
+  banner: string;
+  postCount: number;
+  followerCount: number;
+  followingCount: number;
+  favoriteArtStyles: string[];
+}
 
-const favoriteArtworks = [
+const defaultProfile: ProfileData = {
+  displayName: "",
+  username: "",
+  title: "",
+  bio: "",
+  location: "",
+  avatar: "",
+  banner: "",
+  postCount: 0,
+  followerCount: 0,
+  followingCount: 0,
+  favoriteArtStyles: [],
+};
+
+const fallbackArtworks = [
   {
     title: "Boot in Pond",
     subtitle: "Ux Pilot Monet, 1919",
@@ -58,8 +84,86 @@ export default function ProfileView({
 }: {
   onNavigate?: (view: "profile" | "social" | "followers" | "following" | "ai_manager") => void;
 }) {
+  const { token, user } = useAuth();
   const [activeTab, setActiveTab] = useState("Profile");
   const [activeRightTab, setActiveRightTab] = useState("Favourite Artworks");
+  const [profile, setProfile] = useState<ProfileData>(defaultProfile);
+  const [editing, setEditing] = useState(false);
+  const [editForm, setEditForm] = useState<ProfileData>(defaultProfile);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!token) return;
+    webappApi.getProfile(token).then((data: any) => {
+      const p: ProfileData = {
+        displayName: data.displayName || data.display_name || "",
+        username: data.username || "",
+        title: data.title || "",
+        bio: data.bio || "",
+        location: data.location || "",
+        avatar: data.avatar || "",
+        banner: data.banner || "",
+        postCount: data.postCount || 0,
+        followerCount: data.followerCount || 0,
+        followingCount: data.followingCount || 0,
+        favoriteArtStyles: Array.isArray(data.favoriteArtStyles) ? data.favoriteArtStyles : [],
+      };
+      setProfile(p);
+      setEditForm(p);
+    }).catch(() => {});
+  }, [token]);
+
+  const startEditing = () => {
+    setEditForm(profile);
+    setEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setEditForm(profile);
+    setEditing(false);
+  };
+
+  const saveProfile = async () => {
+    setSaving(true);
+    try {
+      const updated = await webappApi.updateProfile({
+        displayName: editForm.displayName,
+        username: editForm.username,
+        title: editForm.title,
+        bio: editForm.bio,
+        location: editForm.location,
+        favoriteArtStyles: editForm.favoriteArtStyles,
+      }, token);
+      const p: ProfileData = {
+        displayName: updated.displayName || updated.display_name || editForm.displayName,
+        username: updated.username || editForm.username,
+        title: updated.title || editForm.title,
+        bio: updated.bio || editForm.bio,
+        location: updated.location || editForm.location,
+        avatar: updated.avatar || editForm.avatar,
+        banner: updated.banner || editForm.banner,
+        postCount: updated.postCount || editForm.postCount,
+        followerCount: updated.followerCount || editForm.followerCount,
+        followingCount: updated.followingCount || editForm.followingCount,
+        favoriteArtStyles: Array.isArray(updated.favoriteArtStyles) ? updated.favoriteArtStyles : editForm.favoriteArtStyles,
+      };
+      setProfile(p);
+      setEditing(false);
+    } catch (err) {
+      console.error("Failed to save profile:", err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const displayName = profile.displayName || user?.email?.split("@")[0] || "User";
+  const avatarSrc = profile.avatar || figmaAssets.surajAvatar;
+  const bannerSrc = profile.banner || figmaAssets.profileBanner;
+
+  const formatCount = (n: number) => {
+    if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
+    return String(n);
+  };
 
   return (
     <div className="relative flex w-full justify-center pb-20 pt-4 font-sans">
@@ -68,7 +172,7 @@ export default function ProfileView({
         <div className="relative mb-[82px]">
           <div className="h-[280px] w-full overflow-hidden rounded-[7px]">
             <img
-              src={figmaAssets.profileBanner}
+              src={bannerSrc}
               alt="Banner"
               className="w-full h-full object-cover"
             />
@@ -79,17 +183,34 @@ export default function ProfileView({
             <div className="flex min-w-0 items-center gap-5">
               <div className="h-[86px] w-[86px] shrink-0 overflow-hidden rounded-full border-[5px] border-white shadow-sm">
                 <img
-                  src={figmaAssets.surajAvatar}
-                  alt="Suraj Pandya"
+                  src={avatarSrc}
+                  alt={displayName}
                   className="h-full w-full object-cover"
                 />
               </div>
               <div className="min-w-0">
-                <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-0.5 text-[22px] font-bold leading-tight ">
-                  Suraj Pandya
-                </h1>
+                {editing ? (
+                  <input
+                    value={editForm.displayName}
+                    onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
+                    className="bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-0.5 text-[22px] font-bold leading-tight border-b border-[#3b82f6] outline-none bg-transparent w-full"
+                  />
+                ) : (
+                  <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-0.5 text-[22px] font-bold leading-tight ">
+                    {displayName}
+                  </h1>
+                )}
                 <p className="text-[15px] font-medium leading-tight text-[#70737b]">
-                  AI Enthusiast
+                  {editing ? (
+                    <input
+                      value={editForm.title}
+                      onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
+                      placeholder="Title"
+                      className="bg-transparent border-b border-gray-300 outline-none text-[15px] font-medium leading-tight text-[#70737b] w-full"
+                    />
+                  ) : (
+                    profile.title || "AI Enthusiast"
+                  )}
                 </p>
               </div>
               <button
@@ -103,13 +224,13 @@ export default function ProfileView({
             <div className="hidden items-center gap-6 pr-2 lg:flex">
               <div className="border-l border-[#c8c8cc] pl-6 text-center first:border-l-0 first:pl-0">
                 <div className="text-[16px] font-bold leading-tight text-black">
-                  548
+                  {formatCount(profile.postCount)}
                 </div>
                 <div className="text-[13px] font-medium text-black">Post</div>
               </div>
               <div className="border-l border-[#c8c8cc] pl-6 text-center">
                 <div className="text-[16px] font-bold leading-tight text-black">
-                  12.7k
+                  {formatCount(profile.followerCount)}
                 </div>
                 <div className="text-[13px] font-medium text-black">
                   Followers
@@ -117,7 +238,7 @@ export default function ProfileView({
               </div>
               <div className="border-l border-[#c8c8cc] pl-6 text-center">
                 <div className="text-[16px] font-bold leading-tight text-black">
-                  221
+                  {formatCount(profile.followingCount)}
                 </div>
                 <div className="text-[13px] font-medium text-black">
                   Following
@@ -155,16 +276,32 @@ export default function ProfileView({
               </button>
             ))}
           </div>
-          <div className="relative mr-2">
-            <Search
-              size={14}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-            <input
-              type="text"
-              placeholder="Search Followers ...."
-              className="h-[30px] w-64 rounded-[4px] border border-gray-100 bg-gray-50 pl-9 pr-4 text-[11px] font-medium text-gray-600 focus:outline-none"
-            />
+          <div className="flex items-center gap-2">
+            {editing ? (
+              <>
+                <button onClick={cancelEditing} className="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-[13px] font-bold text-gray-600 hover:bg-gray-50 transition">
+                  <X size={14} /> Cancel
+                </button>
+                <button onClick={saveProfile} disabled={saving} className="flex items-center gap-1.5 rounded-full bg-[#3f5fe0] px-4 py-2 text-[13px] font-bold text-white shadow-md hover:bg-[#344fd0] transition disabled:opacity-50">
+                  <Save size={14} /> {saving ? "Saving..." : "Save"}
+                </button>
+              </>
+            ) : (
+              <button onClick={startEditing} className="flex items-center gap-1.5 rounded-full border border-gray-200 px-4 py-2 text-[13px] font-bold text-gray-600 hover:bg-gray-50 transition">
+                <Pencil size={14} /> Edit Profile
+              </button>
+            )}
+            <div className="relative mr-2">
+              <Search
+                size={14}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              />
+              <input
+                type="text"
+                placeholder="Search Followers ...."
+                className="h-[30px] w-64 rounded-[4px] border border-gray-100 bg-gray-50 pl-9 pr-4 text-[11px] font-medium text-gray-600 focus:outline-none"
+              />
+            </div>
           </div>
         </div>
 
@@ -176,34 +313,60 @@ export default function ProfileView({
               <div className="relative mb-4">
                 <div className="w-28 h-28 rounded-full overflow-hidden border-[5px] border-[#3b5bdb]">
                   <img
-                    src={figmaAssets.surajAvatar}
-                    alt="Suraj Pandya"
+                    src={avatarSrc}
+                    alt={displayName}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="absolute bottom-1 right-1 w-5 h-5 bg-[#2563eb] rounded-full border-2"></div>
               </div>
 
-              <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-xl font-bold  mb-0.5">
-                Suraj Pandya
-              </h2>
+              {editing ? (
+                <input
+                  value={editForm.displayName}
+                  onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
+                  className="bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-xl font-bold mb-0.5 border-b border-[#3b82f6] outline-none bg-transparent text-center w-full"
+                />
+              ) : (
+                <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-xl font-bold  mb-0.5">
+                  {displayName}
+                </h2>
+              )}
               <p className="text-gray-500 text-sm font-medium mb-1">
-                @suraj pandya_123
+                {editing ? (
+                  <input
+                    value={editForm.username}
+                    onChange={(e) => setEditForm({ ...editForm, username: e.target.value })}
+                    placeholder="username"
+                    className="bg-transparent border-b border-gray-300 outline-none text-center text-gray-500 text-sm font-medium w-full"
+                  />
+                ) : (
+                  profile.username ? `@${profile.username}` : "@username"
+                )}
               </p>
               <p className="text-gray-500 text-xs font-medium mb-8">
-                UK, London Metropolitan
+                {editing ? (
+                  <input
+                    value={editForm.location}
+                    onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                    placeholder="Location"
+                    className="bg-transparent border-b border-gray-300 outline-none text-center text-gray-500 text-xs font-medium w-full"
+                  />
+                ) : (
+                  profile.location || "Add your location"
+                )}
               </p>
 
               <div className="flex items-center gap-10 w-full justify-center border-b border-gray-100 pb-8 mb-8">
                 <div className="text-center">
                   <div className="text-[20px] font-bold text-gray-900 leading-tight">
-                    548
+                    {formatCount(profile.postCount)}
                   </div>
                   <div className="text-gray-500 text-xs font-medium">Post</div>
                 </div>
                 <div className="text-center">
                   <div className="text-[20px] font-bold text-gray-900 leading-tight">
-                    12.7k
+                    {formatCount(profile.followerCount)}
                   </div>
                   <div className="text-gray-500 text-xs font-medium">
                     Followers
@@ -211,7 +374,7 @@ export default function ProfileView({
                 </div>
                 <div className="text-center">
                   <div className="text-[20px] font-bold text-gray-900 leading-tight">
-                    221
+                    {formatCount(profile.followingCount)}
                   </div>
                   <div className="text-gray-500 text-xs font-medium">
                     Following
@@ -223,18 +386,30 @@ export default function ProfileView({
                 <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[17px] font-bold  mb-3">
                   About me
                 </h3>
-                <p className="text-gray-500 text-[13px] leading-relaxed font-medium mb-4 text-justify">
-                  Hi there! I'm Suraj Pandya - an AI enthusiast, deep thinker, artist at heart, and passionate content creator. I thrive at the intersection of technology and creativity, constantly exploring how artificial intelligence can amplify human expression and storytelling.
-                </p>
-                <p className="text-gray-500 text-[13px] leading-relaxed font-medium text-justify mb-8">
-                  Whether it's translating complex ideas into compelling words, creating thought-provoking art, or diving into the possibilities of AI, my work is driven by curiosity, emotion, and purpose.
-                </p>
+                {editing ? (
+                  <textarea
+                    value={editForm.bio}
+                    onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+                    placeholder="Write something about yourself..."
+                    rows={4}
+                    className="w-full text-gray-500 text-[13px] leading-relaxed font-medium mb-4 text-justify border border-gray-200 rounded-lg p-3 outline-none focus:border-[#3b82f6] resize-none"
+                  />
+                ) : (
+                  <>
+                    <p className="text-gray-500 text-[13px] leading-relaxed font-medium mb-4 text-justify">
+                      {profile.bio || "Tell the world about yourself..."}
+                    </p>
+                  </>
+                )}
 
                 <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[17px] font-bold  mb-4">
                   My Favourite Art Styles
                 </h3>
                 <div className="flex flex-wrap gap-3">
-                  {favoriteArtStyles.map((style, idx) => (
+                  {(profile.favoriteArtStyles.length > 0
+                    ? profile.favoriteArtStyles
+                    : ["Surrealism", "Abstract Expressionism", "Conceptual Portraits", "Minimalism"]
+                  ).map((style, idx) => (
                     <div key={idx} className="flex items-center gap-1.5 px-4 py-2 bg-gray-50 rounded-full border border-gray-100"
                     >
                       <Sparkles size={14} className="text-[#2563eb]" />
@@ -270,7 +445,7 @@ export default function ProfileView({
 
               {/* List */}
               <div className="flex flex-col p-6 gap-6 h-[800px] overflow-y-auto custom-scrollbar">
-                {favoriteArtworks.map((art, idx) => (
+                {fallbackArtworks.map((art, idx) => (
                   <div key={idx} className="flex flex-col gap-4 border-b border-gray-100 pb-6 last:border-0 last:pb-0 relative group"
                   >
                     <button className="absolute top-0 right-0 text-red-500 hover:scale-110 transition z-10 p-2">
