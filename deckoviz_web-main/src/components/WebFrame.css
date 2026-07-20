@@ -1,0 +1,166 @@
+/* ═══════════════════════════════════════════════════════════
+   WebFrame – Art Frame on Cream Wall with LED Backlight
+   ═══════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap');
+
+/* ── Page: scrollable so text + frame both fit on any screen ── */
+.wf-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* ── Cream plaster wall ── */
+.wf-wall {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 160% 140% at 50% 40%, #e9e2d8 0%, #d9d0c4 55%, #ccc3b5 100%);
+}
+
+/* ── Centred content column ── */
+.wf-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 24px 80px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ══════════════════════════════
+   PREMIUM TEXT
+══════════════════════════════ */
+.wf-header {
+  text-align: center;
+  max-width: 700px;
+  margin-bottom: 52px;
+}
+
+.wf-title {
+  font-family: 'Cormorant Garamond', 'Georgia', serif;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 300;
+  letter-spacing: 0.09em;
+  color: #2a2218;
+  margin: 0 0 22px;
+  line-height: 1.15;
+  /* Subtle warm text shadow for depth */
+  text-shadow: 0 1px 20px rgba(160, 120, 40, 0.10);
+  animation: wfFadeUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.wf-subtitle {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: clamp(0.83rem, 1.35vw, 1rem);
+  font-weight: 300;
+  line-height: 1.75;
+  color: rgba(60, 45, 25, 0.60);
+  letter-spacing: 0.025em;
+  margin: 0;
+  max-width: 600px;
+  margin-inline: auto;
+  animation: wfFadeUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+
+/* ══════════════════════════════
+   FRAME WRAPPER – gives room for
+   the glow to bleed outside
+══════════════════════════════ */
+.wf-frame-wrap {
+  /* Padding so box-shadow/glow isn't clipped */
+  padding: 60px 80px;
+  animation: wfFadeUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* ══════════════════════════════
+   WOODEN FRAME + BACKLIGHT
+   The backlight is entirely done
+   with box-shadow so it always
+   renders correctly on the wall.
+══════════════════════════════ */
+.wf-frame {
+  position: relative;
+  /* width & height set dynamically via inline style in React */
+  border-radius: 2px;
+  overflow: hidden;
+
+  /* Wood grain bezel – slim 8px */
+  outline: 8px solid transparent;
+  outline-offset: 0;
+
+  /* Warm honey-amber wood */
+  border: 8px solid #b07a38;
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 8%, transparent 92%, rgba(0,0,0,0.20) 100%)
+    no-repeat center / cover;
+
+  border-image: none;
+
+  /* box-shadow (backlight + drop shadow) applied dynamically via React inline style */
+
+  animation: wfFadeUp 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+}
+
+/* Thin gold inner rim between wood and artwork */
+.wf-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid rgba(180, 130, 50, 0.40);
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Subtle screen glare on artwork */
+.wf-frame::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.04) 0%,
+    transparent 40%
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* ── Artwork image ── */
+.wf-artwork {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.7s ease;
+}
+
+/* ══════════════════════════════
+   ANIMATIONS
+══════════════════════════════ */
+@keyframes wfFadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ══════════════════════════════
+   RESPONSIVE
+══════════════════════════════ */
+@media (max-width: 768px) {
+  .wf-content  { padding: 40px 16px 60px; }
+  .wf-header   { margin-bottom: 36px; }
+  .wf-frame-wrap { padding: 40px 48px; }
+  .wf-frame    { border-width: 6px; }
+}
+
+@media (max-width: 480px) {
+  .wf-frame-wrap { padding: 30px 32px; }
+  .wf-frame    { border-width: 5px; }
+}

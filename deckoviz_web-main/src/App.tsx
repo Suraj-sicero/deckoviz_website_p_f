@@ -33,6 +33,7 @@ import DeckovizArchitectsLanding from "./components/deckovizForBusinesses/Deckov
 import DeckovizOfficesLanding from "./components/deckovizForBusinesses/DeckovizForOffices";
 import DeckovizForRealEstate from "./components/deckovizForBusinesses/DeckovizForRealestate";
 import DeckovizTherapistsLanding from "./components/deckovizForBusinesses/DeckovizForTherapists";
+import DeckovizForWellness from "./components/deckovizForBusinesses/DeckovizForWellness";
 import DeckovizSchoolsLanding from "./components/deckovizForBusinesses/DeckovizForSchools";
 import DeckovizForRetail from "./components/deckovizForBusinesses/DeckovizForStores";
 import DeckovizForEnterprise from "./components/deckovizForBusinesses/DeckovizForEnterprise";
@@ -250,6 +251,7 @@ import ElinityDeckovizGuide from "./components/homepage/ElinityDeckovizGuide";
 import VizzyFunZone from "./pages/VizzyFunZone";
 import DeckovizWebapp from "./components/webapp/DeckovizWebapp";
 import EnterpriseWebapp from "./components/enterpriseWebapp/EnterpriseWebapp";
+import WebFrame from "./components/WebFrame";
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -316,6 +318,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/elinity/contact",
     "/elinity/join-us",
     "/webapp",
+    "/webframe",
   ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp");
 
   return (
@@ -434,6 +437,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route
             path="/deckoviz-for-therapists"
             element={<DeckovizTherapistsLanding />}
+          />
+          <Route
+            path="/deckoviz-for-wellness"
+            element={<DeckovizForWellness />}
           />
           <Route
             path="/deckoviz-for-schools"
@@ -627,6 +634,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/daily-curator" element={<ProtectedRoute><DailyCuratorPage /></ProtectedRoute>} />
           <Route path="/admin/daily-curator" element={<ProtectedRoute><AdminDailyCuratorPage /></ProtectedRoute>} />
           <Route path="/elinity-deckoviz-guide" element={<ElinityDeckovizGuide />} />
+          <Route path="/webframe" element={<WebFrame />} />
         </Routes>
       </main>
       {!isDeveloperTool && !isCanvasPage && <Footer />}
