@@ -95,7 +95,15 @@ function routeToTarget(userId, targetAppInstanceId, message) {
 // ── Send devices_list to a browser ───────────────────────────────────────────
 async function sendDevicesList(userId, ws) {
   try {
-    const devices = await DeviceRegistration.findAll({ where: { userId } });
+    let devices = [];
+    try {
+      devices = await DeviceRegistration.findAll({ where: { userId } });
+    } catch (dbErr) {
+      console.error("[WS] devices_list DB query failed, using in-memory only:", dbErr.message);
+    }
+    const dbAppIds = new Set(devices.map(d => d.appInstanceId));
+
+    // Start with DB-registered devices
     const liveDevices = devices.map((d) => {
       const dj = d.toJSON();
       const userConns = connections.get(userId);
@@ -112,6 +120,25 @@ async function sendDevicesList(userId, ws) {
         playback_state: dj.playbackState,
       };
     });
+
+    // Also include in-memory TV connections not in DB (e.g. TV connected via WS but never registered via HTTP)
+    const userConns = connections.get(userId);
+    if (userConns) {
+      for (const [key, conn] of userConns) {
+        if (conn.clientType === "tv" && conn.appInstanceId && !dbAppIds.has(conn.appInstanceId)) {
+          liveDevices.push({
+            app_instance_id: conn.appInstanceId,
+            device_name: "TV Device",
+            platform: "unknown",
+            status: "online",
+            last_seen: new Date().toISOString(),
+            current_artwork: null,
+            playback_state: "playing",
+          });
+        }
+      }
+    }
+
     sendJSON(ws, {
       protocol_version: 1,
       message_id: crypto.randomUUID(),
@@ -143,13 +170,13 @@ function notifyBrowsersDeviceOffline(userId, appInstanceId) {
 
 // ── Resolve collection items with media URLs ──────────────────────────────────
 async function resolveCollection(collectionId, userId) {
-  const collection = await Collection.findByPk(collectionId, {
-    include: [{ model: CollectionItem, as: "items" }],
-  });
+  const collection = await Collection.findByPk(collectionId);
   if (!collection || collection.userId !== userId) return null;
 
+  const colItems = await CollectionItem.findAll({ where: { collectionId: collection.id } });
+
   const items = [];
-  for (const item of (collection.items || [])) {
+  for (const item of colItems) {
     let mediaUrl = null;
     let fileName = null;
     let mediaType = null;
@@ -435,6 +462,48 @@ const ACTION_HANDLERS = {
 // MAIN GATEWAY
 // ═════════════════════════════════════════════════════════════════════════════
 
+// ═════════════════════════════════════════════════════════════════════════════
+// HTTP HELPER EXPORTS (for deviceRoutes)
+// ═════════════════════════════════════════════════════════════════════════════
+
+export function getConnectedDevices(userId) {
+  const userConns = connections.get(userId);
+  if (!userConns) return [];
+  const result = [];
+  for (const [key, conn] of userConns) {
+    if (conn.clientType !== "tv") continue;
+    result.push({
+      app_instance_id: conn.appInstanceId,
+      status: "online",
+      last_seen: new Date().toISOString(),
+      current_artwork: null,
+      current_collection: null,
+      playback_state: "playing",
+      network_quality: null,
+    });
+  }
+  return result;
+}
+
+export function sendToDeviceById(userId, appInstanceId, action, payload) {
+  const userConns = connections.get(userId);
+  if (!userConns) return false;
+  for (const [key, conn] of userConns) {
+    if (conn.clientType === "tv" && conn.appInstanceId === appInstanceId) {
+      sendJSON(conn.ws, {
+        protocol_version: 1,
+        message_id: crypto.randomUUID(),
+        timestamp: new Date().toISOString(),
+        action,
+        target: { app_instance_id: appInstanceId },
+        payload,
+      });
+      return true;
+    }
+  }
+  return false;
+}
+
 export function initializeWebSocketServer(server) {
   const wss = new WebSocketServer({ noServer: true });
 
@@ -608,7 +677,7 @@ export function initializeWebSocketServer(server) {
       await sendDevicesList(userId, ws);
     }
 
-    // If TV, update device status to online
+    // If TV, update device status to online and notify all browsers
     if (clientType === "tv" && appInstanceId) {
       try {
         await DeviceRegistration.update(
@@ -617,6 +686,15 @@ export function initializeWebSocketServer(server) {
         );
       } catch (err) {
         console.error("[WS] Failed to update device status:", err.message);
+      }
+      // Notify all browsers of updated device list
+      const userConns = connections.get(userId);
+      if (userConns) {
+        for (const [key, conn] of userConns) {
+          if (conn.clientType === "browser") {
+            await sendDevicesList(userId, conn.ws);
+          }
+        }
       }
     }
   });

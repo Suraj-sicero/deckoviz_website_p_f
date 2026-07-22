@@ -337,7 +337,8 @@ router.get("/collections", async (req, res) => {
 
 router.post("/collections", async (req, res) => {
   try {
-    const collection = await Collection.create({ ...req.body, userId: USER_ID });
+    const userId = req.user?.id || USER_ID;
+    const collection = await Collection.create({ ...req.body, userId });
     if (req.body.itemIds) {
       const items = req.body.itemIds.map((itemId) => ({ collectionId: collection.id, itemId, itemType: req.body.itemType || "image" }));
       await CollectionItem.bulkCreate(items);

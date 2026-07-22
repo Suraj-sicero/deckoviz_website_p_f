@@ -213,7 +213,7 @@ router.post("/chat", async (req, res) => {
     }
 
     if (!genAI) {
-      return res.status(500).json({ error: "Gemini API key not configured" });
+      throw new Error("Gemini API key not configured");
     }
 
     const model = genAI.getGenerativeModel({

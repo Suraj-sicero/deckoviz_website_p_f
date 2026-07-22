@@ -12,7 +12,6 @@
     "seed:curations": "node seeds/seedCurations.js",
     "seed:data": "node seeds/seedCollectionsAndMusic.js",
     "test": "echo \"Error: no test specified\" && exit 1"
-
   },
   "keywords": [],
   "author": "",
@@ -46,7 +45,8 @@
     "sequelize": "^6.37.7",
     "sharp": "^0.34.5",
     "sqlite3": "^5.1.7",
-    "stripe": "^19.3.0"
+    "stripe": "^19.3.0",
+    "ws": "^8.21.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
