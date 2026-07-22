@@ -30,6 +30,7 @@ import {
   Sparkles,
   Star,
   ClipboardList,
+  Tv,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -861,6 +862,11 @@ export default function DeckovizForEnterprise() {
       title: "Dynamic Visual Menus & Catalogs",
       description: "Replace static menus or catalogs with living visual systems that rotate items, highlight specials, and tell stories visually.",
       icon: <ClipboardList size={28} className="text-[#2563EB]" />
+    },
+    {
+      title: "Google TV, Built In for Every Occasion",
+      description: "Doubles up as a full Google TV when needed, live sports, big games, and special-occasion streaming, all from the same frame.",
+      icon: <Tv size={28} className="text-[#2563EB]" />
     }
   ];
 
@@ -1904,8 +1910,6 @@ export default function DeckovizForEnterprise() {
         </div>
       </motion.section>
 
-      {/* ================= WHY DECKOVIZ ================= */}
-      <EnterpriseWhyDeckoviz />
 
       {/* YT and Instagram */}
 
@@ -2265,6 +2269,9 @@ export default function DeckovizForEnterprise() {
         </div>
 
       </section>
+
+      {/* ================= WHY DECKOVIZ ================= */}
+      <EnterpriseWhyDeckoviz />
 
       <AILayerForBusiness />
 
