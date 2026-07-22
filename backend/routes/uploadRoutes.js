@@ -5,6 +5,8 @@ import fs from "fs";
 import crypto from "crypto";
 import { fileURLToPath } from "url";
 import { v2 as cloudinary } from "cloudinary";
+import { authenticateUser } from "../middleware/auth.js";
+import UploadedMedia from "../models/UploadedMedia.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,13 +45,12 @@ const upload = multer({
     : multer.diskStorage({
         destination: (_req, _file, cb) => cb(null, UPLOAD_DIR),
         filename: (_req, file, cb) => {
-          const ext = path.extname(file.originalname).toLowerCase() || ".png";
-          const safeExt = /^\.(png|jpg|jpeg|webp|gif)$/.test(ext) ? ext : ".png";
+          const ext = path.extname(file.originalname).toLowerCase() || ".bin";
           const id = crypto.randomBytes(12).toString("hex");
-          cb(null, `${Date.now()}-${id}${safeExt}`);
+          cb(null, `${Date.now()}-${id}${ext}`);
         },
       }),
-  limits: { fileSize: 25 * 1024 * 1024 }, // increased to 25MB for video/audio/pdf files
+  limits: { fileSize: 25 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
     const allowedTypes = [
       "image/",
@@ -65,14 +66,15 @@ const upload = multer({
   },
 });
 
-router.post("/upload", upload.single("file"), async (req, res) => {
+router.post("/upload", authenticateUser, upload.single("file"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
 
   try {
+    let mediaUrl, publicId;
+
     if (CLOUDINARY_CONFIGURED) {
-      // Upload buffer via upload_stream
       const result = await new Promise((resolve, reject) => {
         const stream = cloudinary.uploader.upload_stream(
           { folder: "vizzy/uploads", resource_type: "auto" },
@@ -80,22 +82,26 @@ router.post("/upload", upload.single("file"), async (req, res) => {
         );
         stream.end(req.file.buffer);
       });
-
-      return res.json({
-        image: {
-          url: result.secure_url,
-          publicId: result.public_id,
-          fileName: req.file.originalname,
-          fileSize: req.file.size,
-        },
-      });
+      mediaUrl = result.secure_url;
+      publicId = result.public_id;
+    } else {
+      const host = `${req.protocol}://${req.get("host")}`;
+      mediaUrl = `${host}/uploads/${req.file.filename}`;
     }
 
-    // Local disk fallback
-    const host = `${req.protocol}://${req.get("host")}`;
+    const media = await UploadedMedia.create({
+      userId: req.user.id,
+      mediaUrl,
+      fileName: req.file.originalname,
+      mediaType: req.file.mimetype,
+      fileSize: req.file.size,
+    });
+
     return res.json({
       image: {
-        url: `${host}/uploads/${req.file.filename}`,
+        id: media.id,
+        url: mediaUrl,
+        publicId: publicId || null,
         fileName: req.file.originalname,
         fileSize: req.file.size,
       },
