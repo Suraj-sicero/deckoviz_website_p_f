@@ -993,11 +993,12 @@ function DailyQueuePlaceholder() {
 
 /* ======================== ALL MEDIA ======================== */
 function AllMediaPlaceholder() {
-  const { token } = useAuth();
+  const { token, openAuthModal } = useAuth();
   const [mediaFiles, setMediaFiles] = useState<{ id: string; mediaUrl: string; fileName: string; mediaType: string }[]>([]);
   const [activeTab, setActiveTab] = useState("Uploaded Images");
   const [uploading, setUploading] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
+  const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const tabs = ["Generated Images", "Generated Videos", "Generated Narrations", "Generated Music", "Uploaded Images", "Uploaded Videos", "Uploaded Music"];
@@ -1015,24 +1016,27 @@ function AllMediaPlaceholder() {
       else if (activeTab === "Generated Music") items = items.filter((m: any) => (m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/")) && m.mediaUrl?.includes("generated"));
       else if (activeTab === "Generated Narrations") items = items.filter((m: any) => m.mediaType?.includes("narration"));
       setMediaFiles(items);
-    } catch { /* ignore */ }
+    } catch (err: any) { console.error("[AllMedia] fetchMedia failed:", err); }
   }, [token, activeTab]);
 
   useEffect(() => { fetchMedia(); }, [fetchMedia]);
 
   const uploadFiles = async (fileList: FileList | File[]) => {
-    if (!token) return;
+    if (!token) { openAuthModal(true); setError("Please sign in to upload media."); return; }
     setUploading(true);
+    setError("");
+    let failed = 0;
     for (const file of Array.from(fileList)) {
-      try { await webappApi.uploadMedia(file, token); } catch { /* skip */ }
+      try { await webappApi.uploadMedia(file, token); } catch (err: any) { console.error("[AllMedia] upload failed:", err); failed++; }
     }
+    if (failed > 0) setError(`${failed} file(s) failed to upload.`);
     await fetchMedia();
     setUploading(false);
   };
 
   const handleDelete = async (id: string) => {
     if (!token) return;
-    try { await webappApi.deleteMedia(id, token); setMediaFiles(f => f.filter(m => m.id !== id)); } catch { /* ignore */ }
+    try { await webappApi.deleteMedia(id, token); setMediaFiles(f => f.filter(m => m.id !== id)); } catch (err: any) { console.error("[AllMedia] delete failed:", err); }
   };
 
   return (
@@ -1061,6 +1065,8 @@ function AllMediaPlaceholder() {
         <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Support for JPG, PNG, MP4, and more up to 25MB</p>
         <input ref={fileInputRef} type="file" multiple accept="image/*,video/*,audio/*" className="hidden" onChange={(e) => { if (e.target.files?.length) uploadFiles(e.target.files); e.target.value = ""; }} />
       </div>
+
+      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
       {/* Media Grid */}
       {mediaFiles.length > 0 && (
