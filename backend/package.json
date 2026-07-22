@@ -46,6 +46,7 @@
     "sharp": "^0.34.5",
     "sqlite3": "^5.1.7",
     "stripe": "^19.3.0",
+    "uuid": "^11.1.0",
     "ws": "^8.21.1"
   },
   "devDependencies": {

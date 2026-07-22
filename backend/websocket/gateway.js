@@ -660,6 +660,15 @@ export function initializeWebSocketServer(server) {
           console.error("[WS] Failed to update device offline:", err.message);
         }
         notifyBrowsersDeviceOffline(userId, appInstanceId);
+        // Also send refreshed devices_list so browsers see the TV as gone
+        const remainingConns = connections.get(userId);
+        if (remainingConns) {
+          for (const [key, conn] of remainingConns) {
+            if (conn.clientType === "browser") {
+              await sendDevicesList(userId, conn.ws);
+            }
+          }
+        }
       }
     });
 
