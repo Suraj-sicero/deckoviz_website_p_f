@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useAuth, API_URL } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
   const { isAuthModalOpen, isAuthModalForced, closeAuthModal, login } = useAuth();
@@ -20,6 +20,8 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
     setLoading(true);
 
     const endpoint = isLogin ? "/signin" : "/signup";
+    const BASE_URL = "https://deckoviz-web-f.onrender.com";
+    const API_URL = `${BASE_URL}/api/auth`;
     try {
       const res = await axios.post(`${API_URL}${endpoint}`, { email, password });
       login(res.data.token, res.data.user);
@@ -72,7 +74,6 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
                   if (effectiveAllowClose) {
                     closeAuthModal();
                   } else {
-                    closeAuthModal(true);
                     if (window.history.length > 2) {
                       window.history.back();
                     } else {

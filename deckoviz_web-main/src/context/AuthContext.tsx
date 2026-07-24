@@ -1,8 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-export const BASE_URL = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
-export const API_URL = `${BASE_URL}/api/auth`;
+const BASE_URL = "https://deckoviz-web-f.onrender.com";
+const API_URL = `${BASE_URL}/api/auth`;
 
 interface User {
   id: string;
@@ -19,7 +19,7 @@ interface AuthContextType {
   isAuthModalOpen: boolean;
   isAuthModalForced: boolean;
   openAuthModal: (forced?: boolean) => void;
-  closeAuthModal: (forceClose?: boolean) => void;
+  closeAuthModal: () => void;
   login: (token: string, user: User) => void;
   logout: () => void;
   refreshProfile: () => Promise<void>;
@@ -29,10 +29,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem("user");
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthModalForced, setIsAuthModalForced] = useState(false);
@@ -50,21 +47,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         headers: { Authorization: `Bearer ${token}` }
       });
       setUser(res.data.user);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
       setIsAuthModalOpen(false);
       setIsAuthModalForced(false);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Failed to load profile", err);
-      const status = err?.response?.status;
-      if (status === 401 || status === 404) {
-        logout();
-      }
+      logout();
     }
   };
 
   const login = (newToken: string, newUser: User) => {
     localStorage.setItem("token", newToken);
-    localStorage.setItem("user", JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
     setIsAuthModalOpen(false);
@@ -73,7 +65,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
     setToken(null);
     setUser(null);
     setIsAuthModalForced(false);
@@ -83,10 +74,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsAuthModalForced(forced);
     setIsAuthModalOpen(true);
   };
-  const closeAuthModal = (forceClose: boolean = false) => {
-    if (isAuthModalForced && !forceClose) return; // Prevent closing if forced
+  const closeAuthModal = () => {
+    if (isAuthModalForced) return; // Prevent closing if forced
     setIsAuthModalOpen(false);
-    setIsAuthModalForced(false);
   };
 
   const deductCredits = async (amount: number): Promise<boolean> => {

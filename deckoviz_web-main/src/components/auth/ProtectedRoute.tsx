@@ -1,20 +1,8 @@
-import React, { useEffect } from "react";
-import { useAuth } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
+// Auth guard temporarily disabled — all routes are accessible without login.
+// The login page still works; users just aren't forced to sign in.
 export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { token, openAuthModal, isAuthModalOpen } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!token && !isAuthModalOpen) {
-      openAuthModal(true);
-    }
-  }, [token, isAuthModalOpen, openAuthModal]);
-
-  if (!token) {
-    return null;
-  }
-
   return <>{children}</>;
 };
+
