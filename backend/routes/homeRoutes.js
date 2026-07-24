@@ -59,18 +59,34 @@ router.get("/home/drawing-room", async (req, res) => {
       HomeFavorite.findAll({ where: { userId } }),
       HomeDailyQueue.findAll({ where: { userId, active: true }, order: [["startTime", "ASC"]] }),
     ]);
-    const currentCollection = profile?.currentCollectionId
+
+    let currentCollection = profile?.currentCollectionId
       ? await Collection.findByPk(profile.currentCollectionId)
       : collections[0] || null;
-    const favCollections = favs.filter(f => f.itemType === "collection");
+
+    if (currentCollection) {
+      const colItems = await CollectionItem.findAll({ where: { collectionId: currentCollection.id } });
+      currentCollection = { ...currentCollection.toJSON(), items: colItems, itemCount: colItems.length };
+    }
+
+    const favCollectionIds = favs.filter(f => f.itemType === "collection").map(f => f.itemId);
+    const favCollections = favCollectionIds.length > 0
+      ? await Promise.all(favCollectionIds.map(async (itemId) => {
+          const col = await Collection.findByPk(itemId);
+          if (!col) return null;
+          const items = await CollectionItem.findAll({ where: { collectionId: col.id } });
+          return { ...col.toJSON(), itemCount: items.length };
+        }))
+      : [];
     const favArtworks = favs.filter(f => f.itemType === "artwork");
+
     res.json({
       profile: profile || {},
       currentCollection,
       collections: collections.slice(0, 4),
       upcomingEvents: events.slice(0, 5),
       totalMedia: mediaCount,
-      favoriteCollections: favCollections,
+      favoriteCollections: favCollections.filter(Boolean),
       favoriteArtworks: favArtworks,
       dailyQueue,
     });
@@ -226,7 +242,7 @@ router.post("/home/collections", async (req, res) => {
     if (itemIds && Array.isArray(itemIds)) {
       await CollectionItem.bulkCreate(itemIds.map(itemId => ({ collectionId: collection.id, itemType: itemType || "image", itemId })));
     }
-    res.status(201).json(collection);
+    res.status(201).json({ ...collection.toJSON(), itemCount: 0 });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

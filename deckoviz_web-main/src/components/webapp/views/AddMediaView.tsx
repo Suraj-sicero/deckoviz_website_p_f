@@ -1,5 +1,7 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { Image as ImageIcon, Video, Palette, Music, Eye, Trash2, UploadCloud, Plus } from "lucide-react";
+import { useAuth } from "../../../context/AuthContext";
+import { webappApi } from "../../../lib/webappApi";
 
 const mediaTypes = [
   { icon: <ImageIcon size={14} />, label: "Images" },
@@ -8,20 +10,50 @@ const mediaTypes = [
   { icon: <Music size={14} />, label: "Audio" },
 ];
 
-const uploadedFiles = [
-  { id: 1, image: "/images/webapp/vibrant_face_art.png", name: "face_art_01.png" },
-  { id: 2, image: "/images/webapp/city_fire_reflection.png", name: "city_reflection.png" },
-  { id: 3, image: "/images/webapp/vibrant_face_art.png", name: "cosmic_portrait.png" },
-];
+interface MediaFile {
+  id: string;
+  image: string;
+  name: string;
+}
 
 export default function AddMediaView() {
-  const [files, setFiles] = useState(uploadedFiles);
-  const [hoveredFile, setHoveredFile] = useState<number | null>(null);
+  const { token } = useAuth();
+  const [files, setFiles] = useState<MediaFile[]>([]);
+  const [hoveredFile, setHoveredFile] = useState<string | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleRemoveFile = (id: number) => {
-    setFiles(files.filter(f => f.id !== id));
+  const fetchMedia = useCallback(async () => {
+    if (!token) return;
+    try {
+      const data = await webappApi.getMedia({ limit: 50 }, token);
+      setFiles(data.items.map((m: any) => ({ id: m.id, image: m.mediaUrl, name: m.fileName || "uploaded" })));
+    } catch { /* ignore */ }
+  }, [token]);
+
+  useEffect(() => { fetchMedia(); }, [fetchMedia]);
+
+  const uploadFiles = async (fileList: FileList | File[]) => {
+    if (!token) return;
+    setUploading(true);
+    const newFiles: MediaFile[] = [];
+    for (const file of Array.from(fileList)) {
+      try {
+        const result = await webappApi.uploadMedia(file, token);
+        newFiles.push({ id: result.id, image: result.url, name: result.fileName });
+      } catch { /* skip failed uploads */ }
+    }
+    setFiles(prev => [...newFiles, ...prev]);
+    setUploading(false);
+  };
+
+  const handleRemoveFile = async (id: string) => {
+    if (!token) return;
+    try {
+      await webappApi.deleteMedia(id, token);
+      setFiles(files.filter(f => f.id !== id));
+    } catch { /* ignore */ }
   };
 
   return (
@@ -42,7 +74,7 @@ export default function AddMediaView() {
           }`}
           onDragOver={(e) => { e.preventDefault(); setIsDragActive(true); }}
           onDragLeave={() => setIsDragActive(false)}
-          onDrop={(e) => { e.preventDefault(); setIsDragActive(false); }}
+          onDrop={(e) => { e.preventDefault(); setIsDragActive(false); if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files); }}
         >
           <div className="flex flex-col items-center py-8">
             {/* Upload Icon */}
@@ -59,7 +91,7 @@ export default function AddMediaView() {
                 Browse
               </button>
             </h3>
-            <p className="text-gray-400 text-sm mb-5">Upload multiple artworks at once. Max file size of 20MB per file.</p>
+            <p className="text-gray-400 text-sm mb-5">{uploading ? "Uploading..." : "Upload multiple artworks at once. Max file size of 20MB per file."}</p>
             
             {/* Media Type Icons */}
             <div className="flex items-center gap-6">
@@ -77,6 +109,7 @@ export default function AddMediaView() {
             multiple 
             accept="image/*,video/*,audio/*"
             className="hidden" 
+            onChange={(e) => { if (e.target.files?.length) uploadFiles(e.target.files); e.target.value = ""; }}
           />
         </div>
 

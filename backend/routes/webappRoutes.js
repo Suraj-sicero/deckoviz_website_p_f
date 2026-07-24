@@ -15,17 +15,19 @@ import Follower from "../models/Follower.js";
 import MediaFolder from "../models/MediaFolder.js";
 import { Collection, CollectionItem } from "../models/Collection.js";
 import UploadedMedia from "../models/UploadedMedia.js";
+import { authenticateUser } from "../middleware/auth.js";
 
 const router = Router();
-const USER_ID = "default-user";
+
+router.use(authenticateUser);
 
 /* ── Profile ── */
 router.get("/profile", async (req, res) => {
   try {
-    let profile = await WebappProfile.findOne({ where: { userId: USER_ID } });
+    let profile = await WebappProfile.findOne({ where: { userId: req.user.id } });
     if (!profile) {
       profile = await WebappProfile.create({
-        userId: USER_ID,
+        userId: req.user.id,
         displayName: "Suraj Pandya",
         username: "suraj_pandya_123",
         title: "AI Enthusiast",
@@ -36,7 +38,7 @@ router.get("/profile", async (req, res) => {
         postCount: 548,
         followerCount: 12700,
         followingCount: 221,
-        favoriteArtStyles: ["Surrealism", "Abstract Expressionism", "Conceptual Portraits", "Minimalism"],
+        favoriteArtStyles: "Surrealism, Abstract Expressionism, Conceptual Portraits, Minimalism",
       });
     }
     res.json(profile);
@@ -47,7 +49,7 @@ router.get("/profile", async (req, res) => {
 
 router.put("/profile", async (req, res) => {
   try {
-    const [profile] = await WebappProfile.findOrCreate({ where: { userId: USER_ID }, defaults: { userId: USER_ID } });
+    const [profile] = await WebappProfile.findOrCreate({ where: { userId: req.user.id }, defaults: { userId: req.user.id } });
     await profile.update(req.body);
     res.json(profile);
   } catch (err) {
@@ -100,7 +102,7 @@ router.get("/artworks/:id", async (req, res) => {
 
 router.post("/artworks", async (req, res) => {
   try {
-    const artwork = await Artwork.create({ ...req.body, userId: USER_ID });
+    const artwork = await Artwork.create({ ...req.body, userId: req.user.id });
     res.status(201).json(artwork);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -119,7 +121,7 @@ router.get("/posts", async (req, res) => {
 
 router.post("/posts", async (req, res) => {
   try {
-    const post = await Post.create({ ...req.body, userId: USER_ID });
+    const post = await Post.create({ ...req.body, userId: req.user.id });
     res.status(201).json(post);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -149,7 +151,7 @@ router.get("/posts/:postId/comments", async (req, res) => {
 
 router.post("/posts/:postId/comments", async (req, res) => {
   try {
-    const comment = await Comment.create({ ...req.body, postId: req.params.postId, userId: USER_ID });
+    const comment = await Comment.create({ ...req.body, postId: req.params.postId, userId: req.user.id });
     await Post.increment("comments", { by: 1, where: { id: req.params.postId } });
     res.status(201).json(comment);
   } catch (err) {
@@ -160,7 +162,7 @@ router.post("/posts/:postId/comments", async (req, res) => {
 /* ── Cart ── */
 router.get("/cart", async (req, res) => {
   try {
-    const items = await CartItem.findAll({ where: { userId: USER_ID } });
+    const items = await CartItem.findAll({ where: { userId: req.user.id } });
     const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const deliveryFees = 39;
     res.json({ items, subtotal, deliveryFees, total: subtotal + deliveryFees });
@@ -171,7 +173,7 @@ router.get("/cart", async (req, res) => {
 
 router.post("/cart", async (req, res) => {
   try {
-    const item = await CartItem.create({ ...req.body, userId: USER_ID });
+    const item = await CartItem.create({ ...req.body, userId: req.user.id });
     res.status(201).json(item);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -180,7 +182,7 @@ router.post("/cart", async (req, res) => {
 
 router.put("/cart/:id", async (req, res) => {
   try {
-    const item = await CartItem.findOne({ where: { id: req.params.id, userId: USER_ID } });
+    const item = await CartItem.findOne({ where: { id: req.params.id, userId: req.user.id } });
     if (!item) return res.status(404).json({ error: "Cart item not found" });
     await item.update(req.body);
     res.json(item);
@@ -191,7 +193,7 @@ router.put("/cart/:id", async (req, res) => {
 
 router.delete("/cart/:id", async (req, res) => {
   try {
-    await CartItem.destroy({ where: { id: req.params.id, userId: USER_ID } });
+    await CartItem.destroy({ where: { id: req.params.id, userId: req.user.id } });
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -201,7 +203,7 @@ router.delete("/cart/:id", async (req, res) => {
 /* ── Orders ── */
 router.get("/orders", async (req, res) => {
   try {
-    const orders = await Order.findAll({ where: { userId: USER_ID }, order: [["createdAt", "DESC"]] });
+    const orders = await Order.findAll({ where: { userId: req.user.id }, order: [["createdAt", "DESC"]] });
     res.json(orders);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -210,8 +212,8 @@ router.get("/orders", async (req, res) => {
 
 router.post("/orders", async (req, res) => {
   try {
-    const order = await Order.create({ ...req.body, userId: USER_ID });
-    await CartItem.destroy({ where: { userId: USER_ID } });
+    const order = await Order.create({ ...req.body, userId: req.user.id });
+    await CartItem.destroy({ where: { userId: req.user.id } });
     res.status(201).json(order);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -221,10 +223,10 @@ router.post("/orders", async (req, res) => {
 /* ── Order Summary ── */
 router.get("/order-summary", async (req, res) => {
   try {
-    let summary = await OrderSummary.findOne({ where: { userId: USER_ID } });
+    let summary = await OrderSummary.findOne({ where: { userId: req.user.id } });
     if (!summary) {
       summary = await OrderSummary.create({
-        userId: USER_ID,
+        userId: req.user.id,
         productName: "Echoes of the Sea",
         productDescription: "Framed art print, 70x100cm, premium quality giclee on archival paper",
         totalItems: 2,
@@ -242,10 +244,10 @@ router.get("/order-summary", async (req, res) => {
 /* ── Payment Methods ── */
 router.get("/payment-methods", async (req, res) => {
   try {
-    const methods = await PaymentMethod.findAll({ where: { userId: USER_ID } });
+    const methods = await PaymentMethod.findAll({ where: { userId: req.user.id } });
     if (methods.length === 0) {
       const defaultCard = await PaymentMethod.create({
-        userId: USER_ID,
+        userId: req.user.id,
         cardHolder: "Marisa Lu",
         cardNumber: "**** **** **** 4523",
         balance: "$28,678.65",
@@ -264,7 +266,7 @@ router.get("/payment-methods", async (req, res) => {
 
 router.post("/payment-methods", async (req, res) => {
   try {
-    const method = await PaymentMethod.create({ ...req.body, userId: USER_ID });
+    const method = await PaymentMethod.create({ ...req.body, userId: req.user.id });
     res.status(201).json(method);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -274,11 +276,11 @@ router.post("/payment-methods", async (req, res) => {
 /* ── Addresses ── */
 router.get("/addresses", async (req, res) => {
   try {
-    const addresses = await Address.findAll({ where: { userId: USER_ID } });
+    const addresses = await Address.findAll({ where: { userId: req.user.id } });
     if (addresses.length === 0) {
       const defaultAddresses = await Address.bulkCreate([
-        { userId: USER_ID, label: "Home", phone: "(424) 985-8942", street: "114 Glann Rd", city: "Apalachin, New York(NY),", zip: "13732", selected: true },
-        { userId: USER_ID, label: "Offices", phone: "(424) 985-8942", street: "114 Glann Rd", city: "Apalachin, New York(NY),", zip: "13732", selected: false },
+        { userId: req.user.id, label: "Home", phone: "(424) 985-8942", street: "114 Glann Rd", city: "Apalachin, New York(NY),", zip: "13732", selected: true },
+        { userId: req.user.id, label: "Offices", phone: "(424) 985-8942", street: "114 Glann Rd", city: "Apalachin, New York(NY),", zip: "13732", selected: false },
       ]);
       return res.json(defaultAddresses);
     }
@@ -290,7 +292,7 @@ router.get("/addresses", async (req, res) => {
 
 router.post("/addresses", async (req, res) => {
   try {
-    const address = await Address.create({ ...req.body, userId: USER_ID });
+    const address = await Address.create({ ...req.body, userId: req.user.id });
     res.status(201).json(address);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -299,7 +301,7 @@ router.post("/addresses", async (req, res) => {
 
 router.put("/addresses/:id/select", async (req, res) => {
   try {
-    await Address.update({ selected: false }, { where: { userId: USER_ID } });
+    await Address.update({ selected: false }, { where: { userId: req.user.id } });
     await Address.update({ selected: true }, { where: { id: req.params.id } });
     res.json({ success: true });
   } catch (err) {
@@ -328,7 +330,7 @@ router.get("/subscription-plans", async (req, res) => {
 /* ── Collection Management (reuses existing Collection model) ── */
 router.get("/collections", async (req, res) => {
   try {
-    const collections = await Collection.findAll({ where: { userId: USER_ID }, order: [["createdAt", "DESC"]] });
+    const collections = await Collection.findAll({ where: { userId: req.user.id }, order: [["createdAt", "DESC"]] });
     res.json(collections);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -337,7 +339,8 @@ router.get("/collections", async (req, res) => {
 
 router.post("/collections", async (req, res) => {
   try {
-    const collection = await Collection.create({ ...req.body, userId: USER_ID });
+    const userId = req.user.id;
+    const collection = await Collection.create({ ...req.body, userId });
     if (req.body.itemIds) {
       const items = req.body.itemIds.map((itemId) => ({ collectionId: collection.id, itemId, itemType: req.body.itemType || "image" }));
       await CollectionItem.bulkCreate(items);
@@ -383,7 +386,7 @@ router.delete("/collections/:id", async (req, res) => {
 router.get("/media", async (req, res) => {
   try {
     const { type, page = 1, limit = 50 } = req.query;
-    const where = { userId: USER_ID };
+    const where = { userId: req.user.id };
     if (type) where.mediaType = type;
     const offset = (page - 1) * limit;
     const { rows, count } = await UploadedMedia.findAndCountAll({ where, offset, limit: Number(limit), order: [["createdAt", "DESC"]] });
@@ -396,13 +399,13 @@ router.get("/media", async (req, res) => {
 /* ── Search History ── */
 router.get("/search-history", async (req, res) => {
   try {
-    const history = await SearchHistory.findAll({ where: { userId: USER_ID }, order: [["createdAt", "DESC"]], limit: 8 });
+    const history = await SearchHistory.findAll({ where: { userId: req.user.id }, order: [["createdAt", "DESC"]], limit: 8 });
     if (history.length === 0) {
       const defaultHistory = await SearchHistory.bulkCreate([
-        { userId: USER_ID, query: "Abstract", image: "/images/webapp/abstract_landscape.png" },
-        { userId: USER_ID, query: "Minimalistic", image: "/images/webapp/minimalistic_night.png" },
-        { userId: USER_ID, query: "Nature", image: "/images/webapp/nature_garden.png" },
-        { userId: USER_ID, query: "Digital", image: "/images/webapp/digital_plants.png" },
+        { userId: req.user.id, query: "Abstract", image: "/images/webapp/abstract_landscape.png" },
+        { userId: req.user.id, query: "Minimalistic", image: "/images/webapp/minimalistic_night.png" },
+        { userId: req.user.id, query: "Nature", image: "/images/webapp/nature_garden.png" },
+        { userId: req.user.id, query: "Digital", image: "/images/webapp/digital_plants.png" },
       ]);
       return res.json(defaultHistory);
     }
@@ -414,7 +417,7 @@ router.get("/search-history", async (req, res) => {
 
 router.post("/search-history", async (req, res) => {
   try {
-    const entry = await SearchHistory.create({ ...req.body, userId: USER_ID });
+    const entry = await SearchHistory.create({ ...req.body, userId: req.user.id });
     res.status(201).json(entry);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -424,7 +427,7 @@ router.post("/search-history", async (req, res) => {
 /* ── Followers ── */
 router.get("/followers", async (req, res) => {
   try {
-    const followers = await Follower.findAll({ where: { followingId: USER_ID } });
+    const followers = await Follower.findAll({ where: { followingId: req.user.id } });
     res.json(followers);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -433,7 +436,7 @@ router.get("/followers", async (req, res) => {
 
 router.get("/following", async (req, res) => {
   try {
-    const following = await Follower.findAll({ where: { followerId: USER_ID } });
+    const following = await Follower.findAll({ where: { followerId: req.user.id } });
     res.json(following);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -442,7 +445,7 @@ router.get("/following", async (req, res) => {
 
 router.post("/follow", async (req, res) => {
   try {
-    const follow = await Follower.create({ followerId: USER_ID, followingId: req.body.userId });
+    const follow = await Follower.create({ followerId: req.user.id, followingId: req.body.userId });
     res.status(201).json(follow);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -451,7 +454,7 @@ router.post("/follow", async (req, res) => {
 
 router.delete("/unfollow/:userId", async (req, res) => {
   try {
-    await Follower.destroy({ where: { followerId: USER_ID, followingId: req.params.userId } });
+    await Follower.destroy({ where: { followerId: req.user.id, followingId: req.params.userId } });
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -461,12 +464,12 @@ router.delete("/unfollow/:userId", async (req, res) => {
 /* ── AI Photo Manager ── */
 router.get("/media-folders", async (req, res) => {
   try {
-    const folders = await MediaFolder.findAll({ where: { userId: USER_ID }, order: [["createdAt", "DESC"]] });
+    const folders = await MediaFolder.findAll({ where: { userId: req.user.id }, order: [["createdAt", "DESC"]] });
     if (folders.length === 0) {
       const defaultFolders = await MediaFolder.bulkCreate([
-        { userId: USER_ID, title: "Abstract", fileCount: 42, lastUpdated: "2 days ago", storage: "12.4 GB" },
-        { userId: USER_ID, title: "Portrait", fileCount: 28, lastUpdated: "5 days ago", storage: "8.1 GB" },
-        { userId: USER_ID, title: "Generated Artworks #1-3", fileCount: 12, lastUpdated: "2 days ago", storage: "3.2 GB" },
+        { userId: req.user.id, title: "Abstract", fileCount: 42, lastUpdated: "2 days ago", storage: "12.4 GB" },
+        { userId: req.user.id, title: "Portrait", fileCount: 28, lastUpdated: "5 days ago", storage: "8.1 GB" },
+        { userId: req.user.id, title: "Generated Artworks #1-3", fileCount: 12, lastUpdated: "2 days ago", storage: "3.2 GB" },
       ]);
       return res.json(defaultFolders);
     }
@@ -478,7 +481,7 @@ router.get("/media-folders", async (req, res) => {
 
 router.post("/media-folders", async (req, res) => {
   try {
-    const folder = await MediaFolder.create({ ...req.body, userId: USER_ID });
+    const folder = await MediaFolder.create({ ...req.body, userId: req.user.id });
     res.status(201).json(folder);
   } catch (err) {
     res.status(500).json({ error: err.message });

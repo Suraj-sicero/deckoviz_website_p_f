@@ -614,7 +614,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/elinity/ellaris" element={<ElinityEllaris />} />
           <Route path="/elinity/contact" element={<ElinityContact />} />
           <Route path="/elinity/join-us" element={<ElinityJoinUs />} />
-          <Route path="/webapp" element={<DeckovizWebapp />} />
+          <Route path="/webapp" element={<ProtectedRoute><DeckovizWebapp /></ProtectedRoute>} />
           <Route path="/enterprise-webapp/*" element={<EnterpriseWebapp />} />
 
           {/* ── Flagship Games ── */}

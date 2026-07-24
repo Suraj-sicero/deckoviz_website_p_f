@@ -3,6 +3,7 @@
 // ===== Core Imports =====
 import dotenv from "dotenv";
 import express from "express";
+import http from "http";
 import bodyParser from "body-parser";
 import methodOverride from "method-override";
 import expressLayouts from "express-ejs-layouts";
@@ -101,10 +102,21 @@ import "./models/EnterpriseDailyQueue.js";
 import "./models/EnterpriseGuest.js";
 import "./models/EnterpriseTemplate.js";
 import { seedSystemCards } from "./seeds/systemCardSeed.js";
+import { initializeWebSocketServer } from "./websocket/gateway.js";
+import deviceRoutes from "./routes/deviceRoutes.js";
+import "./models/DeviceRegistration.js";
 import fs from "fs";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Catch unhandled errors so the server stays up
+process.on("uncaughtException", (err) => {
+  console.error("⚠️ uncaughtException:", err);
+});
+process.on("unhandledRejection", (reason) => {
+  console.error("⚠️ unhandledRejection:", reason);
+});
 
 // ===== Resolve __dirname (for ES modules) =====
 const __filename = fileURLToPath(import.meta.url);
@@ -128,13 +140,26 @@ console.error = (...args) => {
 
 // ===== Startup Logic =====
 (async () => {
+  // Create HTTP server and attach WebSocket gateway
+  const server = http.createServer(app);
+  initializeWebSocketServer(server);
+
+  server.listen(PORT, () =>
+    console.log(`🚀 Unified server running on http://localhost:${PORT}`)
+  );
+
+  // DB sync with timeout — alter:true with 50+ models can hang on SQLite
   try {
     await sequelize.authenticate();
     console.log("✅ PostgreSQL connected via Sequelize.");
-    await sequelize.sync({ alter: true });
+
+    // Use sync() without alter:true — alter: true with 50+ models is extremely slow on SQLite
+    // Tables are created automatically; schema changes handled when Supabase/PostgreSQL is connected
+    await sequelize.sync();
+    console.log("✅ Database tables synced.");
     await seedSystemCards();
   } catch (error) {
-    console.warn("❌ Database connection failed. Non-DB features will still work.", error.message);
+    console.warn("⚠️ Database sync issue (server still running):", error.message);
   }
 
   try {
@@ -145,10 +170,6 @@ console.error = (...args) => {
   } catch (redisErr) {
     console.warn("⚠️ Redis not available, skipping initial test.");
   }
-
-  app.listen(PORT, () =>
-    console.log(`🚀 Unified server running on http://localhost:${PORT}`)
-  );
 })();
 
 // ===== Stripe Configuration =====
@@ -387,6 +408,9 @@ app.use("/api/webapp", webappRoutes);
 
 // ✅ Home Suite routes
 app.use("/api", homeRoutes);
+
+// ✅ Device Management routes
+app.use("/api/devices", deviceRoutes);
 
 
 // ✅ EJS routes (for admin panel / UI)
