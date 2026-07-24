@@ -167,7 +167,9 @@ app.use(expressLayouts);
 const allowedOrigins = [
   "http://localhost:5173",
   "https://deploy-preview-5--tubular-scone-336b8c.netlify.app",
-  "https://deckoviz.netlify.app" // Add your main production domain here too
+  "https://deckoviz.netlify.app", // Add your main production domain here too
+  "https://deckoviz.com",
+  "https://www.deckoviz.com"
 ];
 
 app.use(
