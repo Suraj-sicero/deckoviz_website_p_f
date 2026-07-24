@@ -43,6 +43,7 @@ import EnterpriseHorizontalScrollingFeatures from "./EnterpriseHorizontalScrolli
 import EnterpriseWhyDeckoviz from "./EnterpriseWhyDeckoviz";
 import EnterpriseVisionMicrosite from "./EnterpriseVisionMicrosite";
 import AILayerForBusiness from "./AILayerForBusiness";
+import EnterpriseFAQ from "./EnterpriseFAQ";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import {
@@ -2872,6 +2873,7 @@ export default function DeckovizForEnterprise() {
 
       </section>
 
+      <EnterpriseFAQ />
 
       <section className="bg-transparent py-20 border-t border-gray-100">
         {/* ================= EXPLORE FURTHER PREMIUM ================= */}

@@ -319,6 +319,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/elinity/join-us",
     "/webapp",
     "/webframe",
+    "/vizzy-generative-chat",
   ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp");
 
   return (
@@ -492,6 +493,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/tools/quote-poster" element={<ProtectedRoute><QuotePosterTool /></ProtectedRoute>} />
           <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
           <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
+          <Route path="/vizzy-generative-chat" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><VizzyProfilePage /></ProtectedRoute>} />
           <Route path="/subscription" element={<ProtectedRoute><VizzySubscriptionPage /></ProtectedRoute>} />
