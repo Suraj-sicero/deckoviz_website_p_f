@@ -157,35 +157,85 @@ const stripe = new Stripe(
     "sk_test_51S2RGMJ8RKkMEZ712u787r6VLZMz1XL7ZfjarZSFaU1Yat2ZjToH7D9pcV5iO5h4rA6DtxV5F2QbGxa7nr5b9iCG00B5k1Gdsa"
 );
 
-// ===== Enable CORS for Frontend (MUST be first middleware) =====
+// ============================================================
+// ====================== CORS CONFIG ==========================
+// ============================================================
+
+// Frontend URLs that are allowed to call this backend
 const allowedOrigins = [
+  // Local development
   "http://localhost:5173",
-  "https://deploy-preview-5--tubular-scone-336b8c.netlify.app",
+  "http://localhost:3000",
+
+  // Netlify production / old domains
   "https://deckoviz.netlify.app",
+
+  // Main production domain
   "https://deckoviz.com",
   "https://www.deckoviz.com"
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    // Check if the origin is in our allowed list or is a netlify preview
-    if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith(".netlify.app")) {
-      callback(null, true);
-    } else {
-      // Fallback: in development/preview, we can be more permissive
-      callback(null, true); 
+
+    // Allow requests without Origin header
+    // Example: Postman, curl, server-to-server requests
+    if (!origin) {
+      return callback(null, true);
     }
+
+    // Allow explicitly listed domains
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // Allow Netlify deploy previews
+    try {
+      const url = new URL(origin);
+
+      if (
+        url.protocol === "https:" &&
+        (
+          url.hostname.endsWith(".netlify.app") ||
+          url.hostname === "netlify.app"
+        )
+      ) {
+        return callback(null, true);
+      }
+    } catch (error) {
+      console.error("Invalid CORS origin:", origin);
+    }
+
+    console.warn("CORS blocked origin:", origin);
+
+    return callback(null, false);
   },
-  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
-  credentials: true
+
+  methods: [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS"
+  ],
+
+  allowedHeaders: [
+    "Origin",
+    "X-Requested-With",
+    "Content-Type",
+    "Accept",
+    "Authorization"
+  ],
+
+  credentials: true,
+
+  optionsSuccessStatus: 204
 };
 
-// Handle ALL preflight OPTIONS requests FIRST — before any other middleware
-app.options("*", cors(corsOptions));
+// IMPORTANT:
+// CORS must be registered BEFORE bodyParser and BEFORE all routes.
+
 app.use(cors(corsOptions));
 
 // ===== Middlewares =====
