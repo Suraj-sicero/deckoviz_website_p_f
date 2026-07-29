@@ -207,5 +207,89 @@ export const webappApi = {
   getStorage: (token?: string) => get("/storage", token),
 };
 
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Vizzy Canvas API — chat history, images, and media sync
+ * These wrap the /api/vizzy-canvas endpoints for persistence.
+ * ───────────────────────────────────────────────────────────────────────────── */
+async function vizzyGet(path: string, token?: string) {
+  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { headers: authHeaders(token) });
+  return handleResponse(res, "GET", path);
+}
+
+async function vizzyPost(path: string, body?: unknown, token?: string) {
+  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, {
+    method: "POST",
+    headers: authHeaders(token),
+    body: JSON.stringify(body ?? {}),
+  });
+  return handleResponse(res, "POST", path);
+}
+
+async function vizzyDel(path: string, token?: string) {
+  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { method: "DELETE", headers: authHeaders(token) });
+  return handleResponse(res, "DELETE", path);
+}
+
+export const vizzyApi = {
+  /* Chat Sessions */
+  getChats: (token?: string) => vizzyGet("/chats", token),
+  getChat: (id: string, token?: string) => vizzyGet(`/chats/${id}`, token),
+  deleteChat: (id: string, token?: string) => vizzyDel(`/chats/${id}`, token),
+
+  /* Generated Images */
+  getImages: (token?: string) => vizzyGet("/images", token),
+  deleteImage: (id: string, token?: string) => vizzyDel(`/images/${id}`, token),
+
+  /* Curations */
+  getCurations: (token?: string) => vizzyGet("/curations", token),
+};
+
+/**
+ * Saves a Vizzy-generated or uploaded image to the user's Home Webapp media library.
+ * Converts an image URL to a Blob and uploads via FormData to /api/home/media.
+ * This makes images appear in the Home Webapp Media view and Enterprise Library.
+ */
+export async function saveImageToMediaLibrary(
+  imageUrl: string,
+  metadata: { prompt?: string; source?: string; fileName?: string },
+  token?: string,
+): Promise<void> {
+  try {
+    const tkn = token || getToken();
+    if (!tkn) return; // No auth, skip
+
+    // Fetch image as blob
+    const imgRes = await fetch(imageUrl);
+    if (!imgRes.ok) return;
+    const blob = await imgRes.blob();
+
+    // Determine file name
+    const ext = blob.type.includes("png") ? "png" : blob.type.includes("webp") ? "webp" : "jpg";
+    const fileName = metadata.fileName || `vizzy-${Date.now()}.${ext}`;
+
+    // Build FormData
+    const formData = new FormData();
+    formData.append("file", blob, fileName);
+    if (metadata.prompt) formData.append("prompt", metadata.prompt);
+    if (metadata.source) formData.append("source", metadata.source);
+
+    // Upload to home media
+    const headers: Record<string, string> = {};
+    headers["Authorization"] = `Bearer ${tkn}`;
+    // Do NOT set Content-Type — let browser set boundary
+
+    await fetch(`${HOME}/media`, {
+      method: "POST",
+      headers,
+      body: formData,
+    });
+
+    console.log("[VizzySync] Image saved to media library:", fileName);
+  } catch (err) {
+    console.warn("[VizzySync] Failed to sync image to media library:", err);
+  }
+}
+
 // Export hdrs helper for compatibility
 export { authHeaders, hdrs };
+

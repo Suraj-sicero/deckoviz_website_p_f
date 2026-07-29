@@ -1,7 +1,7 @@
 
 
 import { useState, useRef, useCallback, useEffect } from "react"
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from "../../context/AuthContext"
 import { ChatMessage } from "./chat-message"
 import { ChatInput } from "./chat-input"
@@ -14,10 +14,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home, MessageSquare, ChevronRight, Image as ImageIcon, Upload } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL } from "../../lib/constants"
+import { vizzyApi, saveImageToMediaLibrary } from "../../lib/webappApi"
 import { CanvasThemeProvider, useCanvasTheme } from "./lib/canvas-theme"
 import {
   DropdownMenu,
@@ -25,6 +26,16 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu"
+
+// ─── Chat History Types ──────────────────────────────────────────────────────
+interface ChatHistoryItem {
+  id: string
+  title: string
+  updatedAt: string
+  messageCount: number
+  lastMessage?: string
+  hasImages?: boolean
+}
 
 function generateId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
@@ -160,6 +171,8 @@ export function VizzyChat() {
 
 function VizzyChatInner() {
   const router = useNavigate()
+  const [searchParams] = useSearchParams()
+  const initialChatId = searchParams.get("chatId")
   const { user, token, logout: signOut } = useAuth()
   const [messages, setMessages] = useState<ChatMessageType[]>([])
   const [input, setInput] = useState("")
@@ -182,6 +195,12 @@ function VizzyChatInner() {
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
   const [showStylesReference, setShowStylesReference] = useState(false)
 
+  // ─── Chat History Persistence State ───────────────────────────────────────
+  const [chatHistory, setChatHistory] = useState<ChatHistoryItem[]>([])
+  const [showChatHistory, setShowChatHistory] = useState(false)
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false)
+  const [isLoadingChat, setIsLoadingChat] = useState(false)
+
   // Fetch Onboarding Status on mount
   useEffect(() => {
     if (!token) return
@@ -199,6 +218,212 @@ function VizzyChatInner() {
       })
       .catch((err) => console.error("Error fetching onboarding status:", err))
   }, [token])
+
+  // ─── Save Chat to Local Storage Fallback Cache ─────────────────────────
+  const saveChatToLocalHistory = useCallback((chatId: string, msgs: ChatMessageType[]) => {
+    if (!chatId || msgs.length === 0) return
+    try {
+      const lastUserMsg = [...msgs].reverse().find((m) => m.role === 'user')
+      const hasImgs = msgs.some((m) => (m.images && m.images.length > 0) || (m.uploadedImages && m.uploadedImages.length > 0))
+      const item: ChatHistoryItem = {
+        id: chatId,
+        title: lastUserMsg?.content?.substring(0, 50) || 'Untitled Chat',
+        updatedAt: new Date().toISOString(),
+        messageCount: msgs.length,
+        lastMessage: lastUserMsg?.content?.substring(0, 80),
+        hasImages: hasImgs,
+      }
+      const cached = localStorage.getItem("vizzy_chat_sessions")
+      let list: ChatHistoryItem[] = cached ? JSON.parse(cached) : []
+      list = list.filter((c) => c.id !== chatId)
+      list.unshift(item)
+      localStorage.setItem("vizzy_chat_sessions", JSON.stringify(list.slice(0, 50)))
+      localStorage.setItem(`vizzy_chat_msgs_${chatId}`, JSON.stringify(msgs))
+
+      setChatHistory((prev) => {
+        const filtered = prev.filter((c) => c.id !== chatId)
+        return [item, ...filtered]
+      })
+    } catch (e) {
+      console.warn("Failed to cache local chat:", e)
+    }
+  }, [])
+
+  // ─── Fetch Chat History on mount ──────────────────────────────────────────
+  const fetchChatHistory = useCallback(async () => {
+    setIsLoadingHistory(true)
+    let localChats: ChatHistoryItem[] = []
+    try {
+      const cached = localStorage.getItem("vizzy_chat_sessions")
+      if (cached) localChats = JSON.parse(cached)
+    } catch (e) {}
+
+    const tkn = token || localStorage.getItem("token") || undefined
+    let apiChats: ChatHistoryItem[] = []
+
+    if (tkn) {
+      try {
+        const data = await vizzyApi.getChats(tkn)
+        const rawChats = Array.isArray(data) ? data : (data?.chats || data?.rows || data?.data || data?.history || [])
+        apiChats = rawChats.map((c: any) => {
+          const msgs = typeof c.messages === 'string' ? JSON.parse(c.messages || '[]') : (c.messages || [])
+          const lastUserMsg = [...msgs].reverse().find((m: any) => m.role === 'user')
+          const hasImgs = msgs.some((m: any) => (m.images && m.images.length > 0) || (m.uploadedImages && m.uploadedImages.length > 0))
+          return {
+            id: c.id,
+            title: c.title || lastUserMsg?.content?.substring(0, 50) || 'Untitled Chat',
+            updatedAt: c.updatedAt || c.createdAt || new Date().toISOString(),
+            messageCount: msgs.length,
+            lastMessage: lastUserMsg?.content?.substring(0, 80),
+            hasImages: hasImgs,
+          }
+        })
+      } catch (err) {
+        console.warn('[Vizzy] API fetch chat history warning:', err)
+      }
+    }
+
+    const map = new Map<string, ChatHistoryItem>()
+    localChats.forEach((c) => map.set(c.id, c))
+    apiChats.forEach((c) => map.set(c.id, c))
+
+    setChatHistory(Array.from(map.values()))
+    setIsLoadingHistory(false)
+  }, [token])
+
+  useEffect(() => { fetchChatHistory() }, [fetchChatHistory])
+
+  // ─── Sync chat messages (with images/media) to backend DB ───────────────
+  const syncChatToBackend = useCallback(async (chatId: string | null, msgs: ChatMessageType[]) => {
+    if (!chatId || msgs.length === 0) return
+    saveChatToLocalHistory(chatId, msgs)
+
+    const tkn = token || localStorage.getItem("token") || undefined
+    if (!tkn) return
+    try {
+      const cleanMsgs = msgs.map((m) => ({
+        id: m.id,
+        role: m.role,
+        content: m.content,
+        images: m.images,
+        uploadedImages: m.uploadedImages,
+        music: m.music,
+        videos: m.videos,
+        timestamp: m.timestamp,
+        agentUsed: m.agentUsed,
+        intent: m.intent,
+      }))
+
+      // Persist updated messages to backend chat record
+      await fetch(`${API_BASE_URL}/api/vizzy-canvas/chats/${chatId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${tkn}`,
+        },
+        body: JSON.stringify({ messages: cleanMsgs }),
+      }).catch(() => {})
+
+      // Also notify agent endpoint to sync messages
+      await fetch(`${API_BASE_URL}/api/vizzy-canvas/agent`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${tkn}`,
+        },
+        body: JSON.stringify({
+          messages: cleanMsgs,
+          chatId,
+          mode: chatMode,
+        }),
+      }).catch(() => {})
+    } catch (err) {
+      console.warn("[Vizzy] Failed to sync updated chat to backend:", err)
+    }
+  }, [token, chatMode, saveChatToLocalHistory])
+
+  // ─── Load a previous chat ─────────────────────────────────────────────────
+  const loadChat = useCallback(async (chatId: string) => {
+    setIsLoadingChat(true)
+    let rawMsgs: any[] = []
+    const tkn = token || localStorage.getItem("token") || undefined
+
+    if (tkn) {
+      try {
+        const data = await vizzyApi.getChat(chatId, tkn)
+        rawMsgs = typeof data.chat?.messages === 'string'
+          ? JSON.parse(data.chat.messages || '[]')
+          : (data.chat?.messages || data?.messages || [])
+      } catch (err) {
+        console.warn('[Vizzy] Failed to load chat from backend, trying local:', err)
+      }
+    }
+
+    if (rawMsgs.length === 0) {
+      try {
+        const local = localStorage.getItem(`vizzy_chat_msgs_${chatId}`)
+        if (local) rawMsgs = JSON.parse(local)
+      } catch (e) {}
+    }
+
+    const restoredMsgs: ChatMessageType[] = rawMsgs.map((m: any) => ({
+      id: m.id || generateId(),
+      role: m.role,
+      content: m.content || '',
+      images: Array.isArray(m.images) && m.images.length > 0 ? m.images.map((img: any) => ({
+        url: img.url || img.imageUrl || img.image_url || '',
+        prompt: img.prompt || '',
+        seed: img.seed,
+      })) : undefined,
+      uploadedImages: m.uploadedImages,
+      music: m.music,
+      videos: m.videos,
+      timestamp: m.timestamp || Date.now(),
+      agentUsed: m.agentUsed,
+      intent: m.intent,
+    }))
+
+    setMessages(restoredMsgs)
+    setCurrentChatId(chatId)
+    setChatMode('home')
+    setShowChatHistory(false)
+    setIsLoadingChat(false)
+  }, [token])
+
+  // Auto-load chat session if URL contains ?chatId=...
+  useEffect(() => {
+    if (initialChatId) {
+      loadChat(initialChatId)
+    }
+  }, [initialChatId, loadChat])
+
+  // ─── Delete a chat from history ───────────────────────────────────────────
+  const deleteChatFromHistory = useCallback(async (chatId: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (!confirm('Delete this chat session?')) return
+    try {
+      const tkn = token || localStorage.getItem("token") || undefined
+      if (tkn) {
+        await vizzyApi.deleteChat(chatId, tkn).catch(() => {})
+      }
+      try {
+        const cached = localStorage.getItem("vizzy_chat_sessions")
+        if (cached) {
+          const list: ChatHistoryItem[] = JSON.parse(cached)
+          localStorage.setItem("vizzy_chat_sessions", JSON.stringify(list.filter((c) => c.id !== chatId)))
+        }
+        localStorage.removeItem(`vizzy_chat_msgs_${chatId}`)
+      } catch (err) {}
+
+      setChatHistory((prev) => prev.filter((c) => c.id !== chatId))
+      if (currentChatId === chatId) {
+        setMessages([])
+        setCurrentChatId(null)
+      }
+    } catch (err) {
+      console.error('[Vizzy] Failed to delete chat:', err)
+    }
+  }, [token, currentChatId])
 
   const handleStartOnboarding = useCallback(async () => {
     setIsLoading(false)
@@ -292,29 +517,43 @@ function VizzyChatInner() {
         const data = await response.json()
         if (!response.ok) throw new Error(data.error || "Failed to perform style transfer")
 
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === assistantMessage.id
-              ? {
-                  ...m,
-                  content: `I've neurally transferred the **${selectedStyle}** style onto your image.`,
-                  images: [{ url: data.transferredImage.url, prompt: `Style Transfer: ${selectedStyle}` }],
-                  uploadedImages: [{
-                    id: generateId(),
-                    url: uploadedImage.url,
-                    fileName: uploadedImage.fileName,
-                    fileSize: 0,
-                    uploadedAt: Date.now(),
-                  }],
-                  isLoading: false,
-                  agentUsed: "vizzy_pipeline",
-                  intent: "style_transfer",
-                }
-              : m
-          )
-        )
+        const styleTransferredImages = [{ url: data.transferredImage.url, prompt: `Style Transfer: ${selectedStyle}` }]
+        const updatedWithStyle = messages.concat([
+          userMessage,
+          {
+            id: assistantMessage.id,
+            role: "assistant",
+            content: `I've neurally transferred the **${selectedStyle}** style onto your image.`,
+            images: styleTransferredImages,
+            uploadedImages: [{
+              id: generateId(),
+              url: uploadedImage.url,
+              fileName: uploadedImage.fileName,
+              fileSize: 0,
+              uploadedAt: Date.now(),
+            }],
+            isLoading: false,
+            agentUsed: "vizzy_pipeline",
+            intent: "style_transfer",
+            timestamp: Date.now(),
+          }
+        ])
+
+        setMessages(updatedWithStyle)
         setUploadedImage(null)
         setSelectedStyle(null)
+
+        // Sync complete messages (with images) to backend DB
+        syncChatToBackend(currentChatId, updatedWithStyle)
+
+        // Auto-sync style-transferred image to media library
+        if (data.transferredImage?.url) {
+          saveImageToMediaLibrary(
+            data.transferredImage.url,
+            { prompt: `Style Transfer: ${selectedStyle}`, source: 'vizzy_style_transfer' },
+            token || undefined,
+          )
+        }
         return
       }
 
@@ -333,25 +572,38 @@ function VizzyChatInner() {
         const data = await response.json()
         if (!response.ok) throw new Error(data.error || "Failed to edit image")
 
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === assistantMessage.id
-              ? {
-                  ...m,
-                  content: `I've edited your image: ${trimmedInput}`,
-                  images: [{ url: data.editedImage.url, prompt: trimmedInput }],
-                  uploadedImages: [{
-                    id: generateId(), url: uploadedImage!.url,
-                    fileName: uploadedImage!.fileName, fileSize: 0, uploadedAt: Date.now(),
-                  }],
-                  isLoading: false,
-                  agentUsed: "vizzy_pipeline",
-                  intent: "image_editing",
-                }
-              : m
-          )
-        )
+        const editedImages = [{ url: data.editedImage.url, prompt: trimmedInput }]
+        const updatedWithInpaint = updatedMessages.concat([
+          {
+            id: assistantMessage.id,
+            role: "assistant",
+            content: `I've edited your image: ${trimmedInput}`,
+            images: editedImages,
+            uploadedImages: [{
+              id: generateId(), url: uploadedImage!.url,
+              fileName: uploadedImage!.fileName, fileSize: 0, uploadedAt: Date.now(),
+            }],
+            isLoading: false,
+            agentUsed: "vizzy_pipeline",
+            intent: "image_editing",
+            timestamp: Date.now(),
+          }
+        ])
+
+        setMessages(updatedWithInpaint)
         setUploadedImage(null)
+
+        // Sync complete messages (with images) to backend DB
+        syncChatToBackend(currentChatId, updatedWithInpaint)
+
+        // Auto-sync edited image to media library
+        if (data.editedImage?.url) {
+          saveImageToMediaLibrary(
+            data.editedImage.url,
+            { prompt: trimmedInput, source: 'vizzy_image_edit' },
+            token || undefined,
+          )
+        }
         return
       }
 
@@ -538,24 +790,32 @@ function VizzyChatInner() {
             return url
           }
 
-          setMessages((prev) =>
-            prev.map((m) =>
-              m.id === assistantMessage.id
-                ? {
-                    ...m,
-                    content: generateAssistantText(data.images.length, refinedPrompt),
-                    images: data.images.map((img: { url: string; seed?: number }) => ({ url: normalizeImageUrl(img.url), prompt: refinedPrompt, seed: img.seed })),
-                    isLoading: false,
-                    agentUsed: "vizzy_pipeline",
-                    intent: "image_generation",
-                  }
-              : m
-            )
-          )
+          const generatedImages = data.images.map((img: { url: string; seed?: number }) => ({ url: normalizeImageUrl(img.url), prompt: refinedPrompt, seed: img.seed }))
+          const updatedWithGenImages = updatedMessages.concat([
+            {
+              id: assistantMessage.id,
+              role: "assistant",
+              content: generateAssistantText(data.images.length, refinedPrompt),
+              images: generatedImages,
+              isLoading: false,
+              agentUsed: "vizzy_pipeline",
+              intent: "image_generation",
+              timestamp: Date.now(),
+            }
+          ])
+
+          setMessages(updatedWithGenImages)
+
+          // Sync complete messages (including generated images) to backend DB
+          const activeChatId = agentData.chatId || currentChatId
+          syncChatToBackend(activeChatId, updatedWithGenImages)
 
           data.images.forEach((img: { url: string; seed?: number }, index: number) => {
             const cleanUrl = normalizeImageUrl(img.url)
-            imageCache.save({ id: `img-${Date.now()}-${index}`, image_url: cleanUrl, prompt: refinedPrompt, aspect_ratio: aspectRatio, created_at: new Date().toISOString(), is_favorited: false })
+            const cachedImage = { id: `img-${Date.now()}-${index}`, image_url: cleanUrl, prompt: refinedPrompt, aspect_ratio: aspectRatio, created_at: new Date().toISOString(), is_favorited: false }
+            imageCache.save(cachedImage)
+            // ── Auto-sync to Home Webapp media library ──
+            imageCache.syncToBackend(cachedImage, token || undefined)
           })
 
           // Post-generation analysis (fire and forget)
@@ -651,7 +911,9 @@ function VizzyChatInner() {
     setLightboxImage(null)
     setCurrentChatId(null)
     setChatMode("home")
-  }, [])
+    // Refresh history so the just-ended chat appears
+    fetchChatHistory()
+  }, [fetchChatHistory])
 
   const hasMessages = messages.length > 0
 
@@ -840,14 +1102,37 @@ function VizzyChatInner() {
 
           <Tooltip>
             <TooltipTrigger asChild>
+              <Button
+                variant={showChatHistory ? "default" : "ghost"}
+                size="icon-sm"
+                onClick={() => {
+                  setShowChatHistory((v) => {
+                    const next = !v
+                    if (next) fetchChatHistory()
+                    return next
+                  })
+                }}
+                className={showChatHistory
+                  ? "rounded-xl bg-cyan-500 hover:bg-cyan-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)]"
+                  : "text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
+                }
+                aria-label="Chat history"
+              >
+                <Clock className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Chat History</TooltipContent>
+          </Tooltip>
+          <Tooltip>
+            <TooltipTrigger asChild>
               <Link to="/gallery">
                 <Button
                   variant="ghost"
                   size="icon-sm"
                   className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
-                  aria-label="View generation history"
+                  aria-label="View gallery"
                 >
-                  <Clock className="size-4" />
+                  <ImageIcon className="size-4" />
                 </Button>
               </Link>
             </TooltipTrigger>
@@ -918,39 +1203,150 @@ function VizzyChatInner() {
         </div>
       </header>
 
-      {/* Chat Area */}
-      <div className="relative z-10 flex-1 overflow-y-auto scroll-smooth">
-        {!hasMessages ? (
-          <WelcomeScreen
-            onSuggestionClick={handleSuggestionClick}
-            isOnboardingCompleted={isOnboardingCompleted}
-            onStartOnboarding={handleStartOnboarding}
-          />
-        ) : (
-          <div className="flex flex-col gap-5 py-6">
-            {messages.map((message) => (
-              <ChatMessage
-                key={message.id}
-                message={message}
-                selectedVoice={selectedVoice}
-                onImageClick={(url, prompt) => {
-                  setLightboxImage(url)
-                  setLightboxPrompt(prompt)
-                }}
-                onQuoteMessage={(text, sender) => {
-                  setInput((prev) => {
-                    const quote = `> [${sender}]: "${text}"\n\n`;
-                    return prev ? quote + prev : quote;
-                  });
-                }}
-                onRetry={
-                  message.error ? () => handleRetry(message.id) : undefined
-                }
-              />
-            ))}
-            <div ref={messagesEndRef} />
+      {/* Chat Area with History Sidebar */}
+      <div className="relative z-10 flex-1 overflow-hidden flex">
+        {/* ─── Chat History Sidebar ─── */}
+        <div
+          className={`flex-shrink-0 transition-all duration-300 ease-in-out overflow-hidden border-r border-[var(--vc-divider)] ${
+            showChatHistory ? 'w-72 md:w-80' : 'w-0'
+          }`}
+          style={{ background: 'var(--vc-glass-bg)' }}
+        >
+          <div className="w-72 md:w-80 h-full flex flex-col">
+            {/* Sidebar Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--vc-divider)]">
+              <div className="flex items-center gap-2">
+                <MessageSquare className="size-4" style={{ color: 'var(--vc-accent-text)' }} />
+                <h2 className="text-sm font-semibold" style={{ color: 'var(--vc-text)' }}>Chat History</h2>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                onClick={() => setShowChatHistory(false)}
+                className="text-[var(--vc-text-muted)] hover:text-[var(--vc-text)] hover:bg-[var(--vc-glass-hover)] rounded-lg"
+              >
+                <ChevronRight className="size-4" />
+              </Button>
+            </div>
+
+            {/* New Chat Button */}
+            <div className="px-3 py-2">
+              <Button
+                variant="ghost"
+                onClick={() => { handleNewChat(); setShowChatHistory(false) }}
+                className="w-full justify-start gap-2 text-xs font-semibold rounded-xl border border-dashed border-[var(--vc-glass-border-strong)] hover:border-cyan-500/50 hover:bg-cyan-500/5 text-[var(--vc-accent-text)] h-9"
+              >
+                <Plus className="size-3.5" />
+                New Conversation
+              </Button>
+            </div>
+
+            {/* Chat List */}
+            <div
+              className="flex-1 overflow-y-auto px-2 pb-3 space-y-1"
+              style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'rgba(34, 211, 238, 0.3) transparent',
+              }}
+            >
+              {isLoadingHistory ? (
+                <div className="flex items-center justify-center py-12">
+                  <div className="size-5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                </div>
+              ) : chatHistory.length === 0 ? (
+                <div className="text-center py-12 px-4">
+                  <MessageSquare className="size-8 mx-auto mb-3" style={{ color: 'var(--vc-text-faint)' }} />
+                  <p className="text-xs font-medium" style={{ color: 'var(--vc-text-muted)' }}>No previous chats</p>
+                  <p className="text-[10px] mt-1" style={{ color: 'var(--vc-text-faint)' }}>Start a conversation and it will appear here</p>
+                </div>
+              ) : (
+                chatHistory.map((chat) => (
+                  <button
+                    key={chat.id}
+                    onClick={() => loadChat(chat.id)}
+                    className={`w-full text-left rounded-xl px-3 py-2.5 transition-all duration-200 group relative ${
+                      currentChatId === chat.id
+                        ? 'bg-cyan-500/15 border border-cyan-500/30'
+                        : 'hover:bg-[var(--vc-glass-hover)] border border-transparent'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold truncate" style={{ color: 'var(--vc-text)' }}>
+                          {chat.title}
+                        </p>
+                        {chat.lastMessage && (
+                          <p className="text-[10px] truncate mt-0.5" style={{ color: 'var(--vc-text-muted)' }}>
+                            {chat.lastMessage}
+                          </p>
+                        )}
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="text-[9px] font-medium" style={{ color: 'var(--vc-text-faint)' }}>
+                            {new Date(chat.updatedAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                          </span>
+                          <span className="text-[9px]" style={{ color: 'var(--vc-text-faint)' }}>
+                            {chat.messageCount} msgs
+                          </span>
+                          {chat.hasImages && (
+                            <ImageIcon className="size-2.5" style={{ color: 'var(--vc-accent-text)' }} />
+                          )}
+                        </div>
+                      </div>
+                      <button
+                        onClick={(e) => deleteChatFromHistory(chat.id, e)}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded-lg hover:bg-rose-500/10 hover:text-rose-400 text-[var(--vc-text-faint)]"
+                      >
+                        <Trash2 className="size-3" />
+                      </button>
+                    </div>
+                  </button>
+                ))
+              )}
+            </div>
           </div>
-        )}
+        </div>
+
+        {/* ─── Main Chat Area ─── */}
+        <div className="flex-1 overflow-y-auto scroll-smooth relative">
+          {isLoadingChat ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="flex flex-col items-center gap-3">
+                <div className="size-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs font-medium" style={{ color: 'var(--vc-text-muted)' }}>Loading conversation…</p>
+              </div>
+            </div>
+          ) : !hasMessages ? (
+            <WelcomeScreen
+              onSuggestionClick={handleSuggestionClick}
+              isOnboardingCompleted={isOnboardingCompleted}
+              onStartOnboarding={handleStartOnboarding}
+            />
+          ) : (
+            <div className="flex flex-col gap-5 py-6">
+              {messages.map((message) => (
+                <ChatMessage
+                  key={message.id}
+                  message={message}
+                  selectedVoice={selectedVoice}
+                  onImageClick={(url, prompt) => {
+                    setLightboxImage(url)
+                    setLightboxPrompt(prompt)
+                  }}
+                  onQuoteMessage={(text, sender) => {
+                    setInput((prev) => {
+                      const quote = `> [${sender}]: "${text}"\n\n`;
+                      return prev ? quote + prev : quote;
+                    });
+                  }}
+                  onRetry={
+                    message.error ? () => handleRetry(message.id) : undefined
+                  }
+                />
+              ))}
+              <div ref={messagesEndRef} />
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Input Area */}

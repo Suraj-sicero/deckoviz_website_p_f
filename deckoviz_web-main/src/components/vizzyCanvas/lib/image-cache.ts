@@ -68,4 +68,24 @@ export const imageCache = {
       console.error('[v0] Error clearing image cache:', error)
     }
   },
+
+  /**
+   * Syncs a generated image to the user's Home Webapp media library.
+   * This makes Vizzy-generated images appear in Media views across
+   * the Home Webapp and Enterprise Webapp.
+   * Fire-and-forget — errors are logged but don't block the UI.
+   */
+  syncToBackend: async (image: CachedImage, token?: string) => {
+    try {
+      const { saveImageToMediaLibrary } = await import('../../../lib/webappApi')
+      await saveImageToMediaLibrary(
+        image.image_url,
+        { prompt: image.prompt, source: 'vizzy_generated', fileName: `vizzy-${image.id}.png` },
+        token,
+      )
+    } catch (err) {
+      console.warn('[v0] Failed to sync image to backend:', err)
+    }
+  },
 }
+

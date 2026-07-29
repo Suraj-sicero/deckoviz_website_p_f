@@ -19,6 +19,8 @@ import {
   Pause,
 } from "lucide-react"
 import { CanvasThemeProvider, useCanvasTheme } from "./lib/canvas-theme"
+import { imageCache } from "./lib/image-cache"
+import { ImageLightbox } from "./image-lightbox"
 
 interface VizzyImageRecord {
   id: string
@@ -27,6 +29,24 @@ interface VizzyImageRecord {
   isFavorited: boolean
   createdAt?: string
   updatedAt?: string
+}
+
+const normalizeImageRecord = (img: any): VizzyImageRecord => {
+  let url = img.imageUrl || img.image_url || img.url || img.image_path || img.path || ""
+  if (typeof url === 'string' && url.startsWith('/pollinations-proxy')) {
+    url = url.replace('/pollinations-proxy', 'https://image.pollinations.ai')
+  }
+  if (!url && img.prompt) {
+    url = `https://image.pollinations.ai/prompt/${encodeURIComponent(img.prompt)}?nologo=true`
+  }
+  return {
+    id: img.id || `img-${Math.random().toString(36).slice(2)}`,
+    imageUrl: url,
+    prompt: img.prompt || img.title || "Generated Artwork",
+    isFavorited: !!(img.isFavorited || img.is_favorited),
+    createdAt: img.createdAt || img.created_at,
+    updatedAt: img.updatedAt || img.updated_at,
+  }
 }
 
 interface VizzyChatRecord {
@@ -80,50 +100,56 @@ function VizzyLibraryInner() {
   const [playingTrackId, setPlayingTrackId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [pendingId, setPendingId] = useState<string | null>(null)
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null)
+  const [lightboxPrompt, setLightboxPrompt] = useState("")
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!token) {
-        setIsLoading(false)
-        return
-      }
       setIsLoading(true)
       try {
         const [imagesRes, chatsRes, delImagesRes, delChatsRes, curationsRes, musicRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/api/vizzy-canvas/images`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`${API_BASE_URL}/api/vizzy-canvas/chats`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`${API_BASE_URL}/api/vizzy-canvas/images/deleted`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`${API_BASE_URL}/api/vizzy-canvas/chats/deleted`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`${API_BASE_URL}/api/vizzy-canvas/curations`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
-          fetch(`${API_BASE_URL}/api/vizzy-canvas/music/system`, {
-            headers: { Authorization: `Bearer ${token}` },
-          }),
+          token ? fetch(`${API_BASE_URL}/api/vizzy-canvas/images`, { headers: { Authorization: `Bearer ${token}` } }) : Promise.resolve(null),
+          token ? fetch(`${API_BASE_URL}/api/vizzy-canvas/chats`, { headers: { Authorization: `Bearer ${token}` } }) : Promise.resolve(null),
+          token ? fetch(`${API_BASE_URL}/api/vizzy-canvas/images/deleted`, { headers: { Authorization: `Bearer ${token}` } }) : Promise.resolve(null),
+          token ? fetch(`${API_BASE_URL}/api/vizzy-canvas/chats/deleted`, { headers: { Authorization: `Bearer ${token}` } }) : Promise.resolve(null),
+          token ? fetch(`${API_BASE_URL}/api/vizzy-canvas/curations`, { headers: { Authorization: `Bearer ${token}` } }) : Promise.resolve(null),
+          token ? fetch(`${API_BASE_URL}/api/vizzy-canvas/music/system`, { headers: { Authorization: `Bearer ${token}` } }) : Promise.resolve(null),
         ])
-        const imagesData = await imagesRes.json()
-        const chatsData = await chatsRes.json()
-        const delImagesData = await delImagesRes.json()
-        const delChatsData = await delChatsRes.json()
-        const curationsData = await curationsRes.json()
-        const musicData = await musicRes.json()
+
+        const imagesData = imagesRes?.ok ? await imagesRes.json() : {}
+        const chatsData = chatsRes?.ok ? await chatsRes.json() : {}
+        const delImagesData = delImagesRes?.ok ? await delImagesRes.json() : {}
+        const delChatsData = delChatsRes?.ok ? await delChatsRes.json() : {}
+        const curationsData = curationsRes?.ok ? await curationsRes.json() : {}
+        const musicData = musicRes?.ok ? await musicRes.json() : {}
         
-        setImages(imagesData.images || [])
+        const backendImgs = (imagesData.images || imagesData.rows || (Array.isArray(imagesData) ? imagesData : [])).map(normalizeImageRecord)
+        const localImgs = imageCache.getAll().map((c: any) => normalizeImageRecord({
+          id: c.id,
+          imageUrl: c.image_url || c.url,
+          prompt: c.prompt,
+          isFavorited: c.is_favorited,
+          createdAt: c.created_at,
+        }))
+
+        // Merge local & backend images
+        const imageMap = new Map<string, VizzyImageRecord>()
+        localImgs.forEach((img: VizzyImageRecord) => imageMap.set(img.id, img))
+        backendImgs.forEach((img: VizzyImageRecord) => imageMap.set(img.id, img))
+
+        setImages(Array.from(imageMap.values()))
         setChats(chatsData.chats || [])
-        setDeletedImages(delImagesData.images || [])
+        setDeletedImages((delImagesData.images || []).map(normalizeImageRecord))
         setDeletedChats(delChatsData.chats || [])
         setCurations(curationsData.curations || [])
         setMusicTracks(musicData.tracks || [])
       } catch (error) {
         console.error("Failed to fetch library data:", error)
+        // Fallback to local image cache if request fails
+        const fallbackImgs = imageCache.getAll().map((c: any) => normalizeImageRecord({
+          id: c.id, imageUrl: c.image_url, prompt: c.prompt, isFavorited: c.is_favorited, createdAt: c.created_at,
+        }))
+        setImages(fallbackImgs)
       } finally {
         setIsLoading(false)
       }
@@ -404,19 +430,28 @@ function VizzyLibraryInner() {
                     className="group relative rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04] backdrop-blur-xl shadow-[0_8px_24px_rgba(11,18,32,0.4)] hover:border-cyan-400/30 transition-all"
                   >
                     <img
-                      src={img.imageUrl}
+                      src={img.imageUrl || `https://image.pollinations.ai/prompt/${encodeURIComponent(img.prompt)}?nologo=true`}
                       alt={img.prompt}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-48 object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
+                      onClick={() => {
+                        setLightboxImage(img.imageUrl)
+                        setLightboxPrompt(img.prompt)
+                      }}
+                      onError={(e) => {
+                        const target = e.currentTarget
+                        const seed = encodeURIComponent(img.prompt || 'artwork')
+                        target.src = `https://picsum.photos/seed/${seed}/800/800`
+                      }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/90 via-[#0B1220]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end">
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/90 via-[#0B1220]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity p-3 flex flex-col justify-end pointer-events-none">
                       <p className="text-xs text-white line-clamp-2 mb-2">
                         {img.prompt}
                       </p>
-                      <div className="flex items-center gap-1">
+                      <div className="flex items-center gap-1 pointer-events-auto">
                         <Button
                           variant="ghost"
                           size="icon-sm"
-                          onClick={() => handleToggleFavorite(img)}
+                          onClick={(e) => { e.stopPropagation(); handleToggleFavorite(img) }}
                           disabled={pendingId === img.id}
                           className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/15"
                           aria-label={
@@ -434,7 +469,7 @@ function VizzyLibraryInner() {
                         <Button
                           variant="ghost"
                           size="icon-sm"
-                          onClick={() => handleDeleteImage(img)}
+                          onClick={(e) => { e.stopPropagation(); handleDeleteImage(img) }}
                           disabled={pendingId === img.id}
                           className="bg-white/10 hover:bg-rose-500/20 text-white hover:text-rose-300 backdrop-blur-md border border-white/15"
                           aria-label="Delete"
@@ -444,7 +479,7 @@ function VizzyLibraryInner() {
                       </div>
                     </div>
                     {img.isFavorited && (
-                      <div className="absolute top-2 right-2 size-6 rounded-full bg-rose-500/90 backdrop-blur-md flex items-center justify-center">
+                      <div className="absolute top-2 right-2 size-6 rounded-full bg-rose-500/90 backdrop-blur-md flex items-center justify-center pointer-events-none">
                         <Heart className="size-3 fill-white text-white" />
                       </div>
                     )}
@@ -460,64 +495,71 @@ function VizzyLibraryInner() {
 
             {activeTab === "chats" && (
               <div className="flex flex-col gap-3">
-                {chats.map((chat) => (
-                  <div
-                    key={chat.id}
-                    className="group p-4 rounded-2xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-xl hover:border-[var(--vc-accent-border)] transition-colors"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-[var(--vc-text)] truncate">
-                            {chat.title || "Untitled Chat"}
-                          </h3>
-                          {chat.isFavorited && (
-                            <Heart className="size-3.5 fill-rose-400 text-rose-400 flex-shrink-0" />
+                {chats.map((chat) => {
+                  const msgs = typeof chat.messages === 'string' ? JSON.parse(chat.messages || '[]') : (chat.messages || [])
+                  const lastMsg = msgs.length > 0 ? msgs[msgs.length - 1]?.content : ""
+                  return (
+                    <div
+                      key={chat.id}
+                      onClick={() => navigate(`/vizzy-canvas?chatId=${chat.id}`)}
+                      className="group p-4 rounded-2xl border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-xl hover:border-cyan-400/50 hover:bg-cyan-500/5 transition-all cursor-pointer shadow-md"
+                    >
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h3 className="font-semibold text-[var(--vc-text)] truncate text-base group-hover:text-cyan-300 transition-colors">
+                              {chat.title || "Untitled Chat"}
+                            </h3>
+                            {chat.isFavorited && (
+                              <Heart className="size-3.5 fill-rose-400 text-rose-400 flex-shrink-0" />
+                            )}
+                          </div>
+                          {lastMsg && (
+                            <p className="text-sm text-[var(--vc-text-muted)] line-clamp-1">
+                              {lastMsg}
+                            </p>
                           )}
+                          <div className="flex items-center gap-2 mt-2 text-xs text-[var(--vc-text-faint)]">
+                            <Clock className="size-3" />
+                            <span>
+                              {new Date(chat.updatedAt).toLocaleString()}
+                            </span>
+                            <span>•</span>
+                            <span>{msgs.length} messages</span>
+                          </div>
                         </div>
-                        <p className="text-sm text-[var(--vc-text-muted)] line-clamp-1">
-                          {chat.messages[chat.messages.length - 1]?.content}
-                        </p>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-[var(--vc-text-faint)]">
-                          <Clock className="size-3" />
-                          <span>
-                            {new Date(chat.updatedAt).toLocaleString()}
-                          </span>
-                          <span>•</span>
-                          <span>{chat.messages.length} messages</span>
+                        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={(e) => { e.stopPropagation(); handleToggleFavoriteChat(chat) }}
+                            disabled={pendingId === chat.id}
+                            className="text-[var(--vc-text-muted)] hover:text-rose-400 hover:bg-[var(--vc-glass-hover)]"
+                            aria-label={
+                              chat.isFavorited ? "Unfavorite chat" : "Favorite chat"
+                            }
+                          >
+                            <Heart
+                              className={`size-4 ${
+                                chat.isFavorited ? "fill-rose-400 text-rose-400" : ""
+                              }`}
+                            />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="icon-sm"
+                            onClick={(e) => { e.stopPropagation(); handleDeleteChat(chat) }}
+                            disabled={pendingId === chat.id}
+                            className="text-[var(--vc-text-muted)] hover:text-rose-500 hover:bg-rose-500/10"
+                            aria-label="Delete chat"
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
                         </div>
-                      </div>
-                      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleToggleFavoriteChat(chat)}
-                          disabled={pendingId === chat.id}
-                          className="text-[var(--vc-text-muted)] hover:text-rose-400 hover:bg-[var(--vc-glass-hover)]"
-                          aria-label={
-                            chat.isFavorited ? "Unfavorite chat" : "Favorite chat"
-                          }
-                        >
-                          <Heart
-                            className={`size-4 ${
-                              chat.isFavorited ? "fill-rose-400 text-rose-400" : ""
-                            }`}
-                          />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon-sm"
-                          onClick={() => handleDeleteChat(chat)}
-                          disabled={pendingId === chat.id}
-                          className="text-[var(--vc-text-muted)] hover:text-rose-500 hover:bg-rose-500/10"
-                          aria-label="Delete chat"
-                        >
-                          <Trash2 className="size-4" />
-                        </Button>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  )
+                })}
                 {chats.length === 0 && (
                   <div className="text-center text-[var(--vc-text-muted)] py-12">
                     No chats saved yet.
@@ -717,6 +759,16 @@ function VizzyLibraryInner() {
           </>
         )}
       </main>
+
+      {/* Lightbox Modal */}
+      <ImageLightbox
+        imageUrl={lightboxImage}
+        prompt={lightboxPrompt}
+        onClose={() => {
+          setLightboxImage(null)
+          setLightboxPrompt("")
+        }}
+      />
     </div>
   )
 }
