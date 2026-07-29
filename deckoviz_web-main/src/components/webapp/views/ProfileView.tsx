@@ -133,7 +133,7 @@ export default function ProfileView({
         bio: editForm.bio,
         location: editForm.location,
         favoriteArtStyles: editForm.favoriteArtStyles,
-      }, token);
+      }, token ?? undefined);
       const p: ProfileData = {
         displayName: updated.displayName || updated.display_name || editForm.displayName,
         username: updated.username || editForm.username,

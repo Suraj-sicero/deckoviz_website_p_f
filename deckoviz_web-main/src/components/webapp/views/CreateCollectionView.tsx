@@ -1,13 +1,9 @@
-import { useState, useRef } from "react";
-import { CalendarDays, Music, Search, Trash2, X, Loader2 } from "lucide-react";
-import type React from "react";
-import { useAuth } from "../../../context/AuthContext";
+import { CalendarDays, Music, Search, Trash2, X } from "lucide-react";
+import React, { useState, useRef } from "react";
 import { webappApi } from "../../../lib/webappApi";
 
 interface CollectionImage {
   id: string;
-  itemId: string;
-  itemType: string;
   title: string;
   displayHours: string;
   displaySeconds: string;
@@ -15,103 +11,69 @@ interface CollectionImage {
 }
 
 export default function CreateCollectionView() {
-  const { token } = useAuth();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [displayMinutes, setDisplayMinutes] = useState(0);
-  const [displayHours, setDisplayHours] = useState(0);
-  const [musicUrl, setMusicUrl] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [title, setTitle] = useState("Summer Memories 2025");
+  const [description, setDescription] = useState(
+    "A celebration of warmth, freedom, and vibrant energy, the Summer Collection captures the essence of sun-drenched days and golden horizons. Each piece is infused with the lightness of the season--bold colors, flowing forms, and textures that mimic the breeze, sand, and sea."
+  );
+  const [displayMinutes, setDisplayMinutes] = useState(30);
+  const [displayHours, setDisplayHours] = useState(1);
+  const [musicUrl, setMusicUrl] = useState("https://music.youtube.com/watch?v=UceaB4DOjpo");
+  const [tags, setTags] = useState<string[]>(["Minimalistic", "Portrait"]);
   const [tagInput, setTagInput] = useState("");
-  const [images, setImages] = useState<CollectionImage[]>([]);
+  const [images, setImages] = useState<CollectionImage[]>([
+    { id: "1", title: "Golden Sunset", displayHours: "00:00:00", displaySeconds: "00:30", metaNotes: "Warm tones" },
+  ]);
   const [saving, setSaving] = useState(false);
-  const [message, setMessage] = useState("");
   const musicFileRef = useRef<HTMLInputElement>(null);
 
+  const removeTag = (tagToRemove: string) => {
+    setTags((prev) => prev.filter((t) => t !== tagToRemove));
+  };
+
   const addTag = () => {
-    const t = tagInput.trim();
-    if (t && !tags.includes(t)) {
-      setTags([...tags, t]);
+    if (tagInput.trim() && !tags.includes(tagInput.trim())) {
+      setTags((prev) => [...prev, tagInput.trim()]);
       setTagInput("");
     }
   };
 
-  const removeTag = (tag: string) => setTags(tags.filter(t => t !== tag));
+  const handleMusicFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setMusicUrl(file.name);
+    }
+  };
 
   const addImage = () => {
-    setImages([...images, {
-      id: crypto.randomUUID(),
-      itemId: crypto.randomUUID(),
-      itemType: "image",
-      title: "",
-      displayHours: "",
-      displaySeconds: "",
-      metaNotes: "",
-    }]);
+    setImages((prev) => [
+      ...prev,
+      { id: String(Date.now()), title: "", displayHours: "00:00:00", displaySeconds: "00:30", metaNotes: "" },
+    ]);
   };
 
   const updateImage = (idx: number, field: keyof CollectionImage, value: string) => {
-    setImages(images.map((img, i) => i === idx ? { ...img, [field]: value } : img));
+    setImages((prev) => prev.map((img, i) => (i === idx ? { ...img, [field]: value } : img)));
   };
 
-  const removeImage = (idx: number) => setImages(images.filter((_, i) => i !== idx));
+  const removeImage = (idx: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== idx));
+  };
 
   const handleSave = async () => {
-    if (!token || !title.trim()) return;
     setSaving(true);
-    setMessage("");
     try {
-      const payload = {
-        name: title,
-        description,
-        musicUrl,
-        tags,
-        displayMinutes,
-        displayHours,
-        images: images.map(img => ({
-          itemId: img.itemId,
-          itemType: img.itemType,
-          title: img.title,
-          displayHours: img.displayHours,
-          displaySeconds: img.displaySeconds,
-          metaNotes: img.metaNotes,
-        })),
-      };
-      await webappApi.createCollection(payload, token);
-      setMessage("Collection created successfully!");
-      setTitle(""); setDescription(""); setMusicUrl(""); setTags([]); setImages([]);
-      setDisplayMinutes(0); setDisplayHours(0);
-    } catch {
-      setMessage("Failed to create collection");
+      await webappApi.createCollection({ title, description, displayMinutes, displayHours, musicUrl, tags, images });
+      alert("Collection created successfully!");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-  };
-
-  const handleMusicFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !token) return;
-    try {
-      const result = await webappApi.uploadMedia(file, token);
-      setMusicUrl(result.url);
-    } catch { /* ignore */ }
-    if (musicFileRef.current) musicFileRef.current.value = "";
   };
 
   return (
     <div className="mx-auto w-full max-w-[1090px] px-3 py-9">
-      <div className="flex items-center justify-between mb-5">
-        <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[27px] font-semibold tracking-[0.02em] ">Collection Media</h1>
-        <button 
-          onClick={handleSave}
-          disabled={saving || !title.trim()}
-          className="flex items-center gap-2 rounded-[7px] bg-[#182a4a] hover:bg-blue-600 transition-colors px-8 py-3 text-[15px] font-medium text-white shadow-md disabled:opacity-50"
-        >
-          {saving ? <Loader2 size={18} className="animate-spin" /> : null}
-          {saving ? "Saving..." : "Create Collection"}
-        </button>
-      </div>
-
-      {message && <div className={`mb-4 text-sm font-medium ${message.includes("success") ? "text-green-600" : "text-red-500"}`}>{message}</div>}
+      <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-5 text-[27px] font-semibold tracking-[0.02em] ">Collection Media</h1>
 
       <section className="rounded-[4px] px-6 py-7">
         <Field label="Collection Title*">
@@ -147,13 +109,13 @@ export default function CreateCollectionView() {
             <input ref={musicFileRef} type="file" accept="audio/*" className="hidden" onChange={handleMusicFile} />
           </div>
           <p className="mb-4 text-[15px] font-medium text-black">Or Add Music URL</p>
-          <input className="h-[48px] w-full rounded-[8px] border border-[#e5e7eb] bg-white px-5 text-[15px] shadow-[0_3px_10px_rgba(15,23,42,0.12)] outline-none" value={musicUrl} onChange={(e) => setMusicUrl(e.target.value)} placeholder="https://..." />
+          <input className="h-[48px] w-full rounded-[8px] border border-[#e5e7eb] bg-white px-5 text-[15px] shadow-[0_3px_10px_rgba(15,23,42,0.12)] outline-none" value={musicUrl} onChange={(e) => setMusicUrl(e.target.value)} />
         </div>
 
         <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-4 text-[19px] font-medium ">Tags and Labels</h2>
         <div className="mb-10 rounded-[14px] border border-[#e5e7eb] p-5">
           <p className="mb-5 text-[15px] font-medium text-black">Collection Tags</p>
-          <div className="mb-7 flex gap-4 flex-wrap">
+          <div className="mb-7 flex gap-4">
             {tags.map((tag) => (
               <span key={tag} className="flex items-center gap-2 rounded-full bg-[#6babee] px-5 py-2 text-[14px] font-medium text-white shadow-md cursor-pointer" onClick={() => removeTag(tag)}>
                 {tag}
@@ -164,7 +126,7 @@ export default function CreateCollectionView() {
           <div className="flex overflow-hidden rounded-[8px] border border-[#e5e7eb]">
             <div className="relative flex-1">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7a7f89]" size={20} />
-              <input className="h-[54px] w-full pl-14 text-[15px] outline-none" placeholder="Search Tags or type and press Enter" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }} />
+              <input className="h-[54px] w-full pl-14 text-[15px] outline-none" placeholder="Search Tags" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => e.key === "Enter" && addTag()} />
             </div>
             <button className="w-[130px] bg-[#182a4a] hover:bg-blue-600 transition-colors text-[16px] font-medium text-white" onClick={addTag}>Add Tags</button>
           </div>

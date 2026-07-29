@@ -14,7 +14,6 @@ import {
 import { figmaAssets } from "../webappData";
 import { useState, useEffect } from "react";
 import { webappApi } from "../../../lib/webappApi";
-import { useAuth } from "../../../context/AuthContext";
 
 const fallbackPosts = [
   {

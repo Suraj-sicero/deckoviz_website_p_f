@@ -82,7 +82,7 @@ export function ChatInput({
           }
         }
         if (transcript) {
-          onChange((prev) => (prev ? prev + " " + transcript : transcript))
+          onChange(value ? value + " " + transcript : transcript)
         }
       }
 

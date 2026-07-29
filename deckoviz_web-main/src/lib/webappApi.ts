@@ -1,3 +1,6 @@
+/**
+ * Deckoviz WebApp API Client module
+ */
 const BASE = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
@@ -13,6 +16,9 @@ function authHeaders(overrideToken?: string): Record<string, string> {
   return headers;
 }
 
+// Alias for authHeaders for backward compatibility
+const hdrs = authHeaders;
+
 async function handleResponse(res: Response, method: string, path: string) {
   if (res.status === 401) {
     window.dispatchEvent(new CustomEvent("deckoviz-auth-required"));
@@ -27,20 +33,20 @@ async function get(path: string, token?: string) {
   return handleResponse(res, "GET", path);
 }
 
-async function post(path: string, body: unknown, token?: string) {
+async function post(path: string, body?: unknown, token?: string) {
   const res = await fetch(`${API}${path}`, {
     method: "POST",
     headers: authHeaders(token),
-    body: JSON.stringify(body),
+    body: JSON.stringify(body ?? {}),
   });
   return handleResponse(res, "POST", path);
 }
 
-async function put(path: string, body: unknown, token?: string) {
+async function put(path: string, body?: unknown, token?: string) {
   const res = await fetch(`${API}${path}`, {
     method: "PUT",
     headers: authHeaders(token),
-    body: JSON.stringify(body),
+    body: JSON.stringify(body ?? {}),
   });
   return handleResponse(res, "PUT", path);
 }
@@ -55,20 +61,20 @@ async function homeGet(path: string, token?: string) {
   return handleResponse(res, "GET", path);
 }
 
-async function homePost(path: string, body: unknown, token?: string) {
+async function homePost(path: string, body?: unknown, token?: string) {
   const res = await fetch(`${HOME}${path}`, {
     method: "POST",
     headers: authHeaders(token),
-    body: JSON.stringify(body),
+    body: JSON.stringify(body ?? {}),
   });
   return handleResponse(res, "POST", path);
 }
 
-async function homePut(path: string, body: unknown, token?: string) {
+async function homePut(path: string, body?: unknown, token?: string) {
   const res = await fetch(`${HOME}${path}`, {
     method: "PUT",
     headers: authHeaders(token),
-    body: JSON.stringify(body),
+    body: JSON.stringify(body ?? {}),
   });
   return handleResponse(res, "PUT", path);
 }
@@ -81,7 +87,7 @@ async function homeDel(path: string, token?: string) {
 export const webappApi = {
   /* Profile */
   getProfile: (token?: string) => get("/profile", token),
-  updateProfile: (data: unknown, token?: string) => put("/profile", data, token),
+  updateProfile: (data?: unknown, token?: string) => put("/profile", data, token),
 
   /* Artworks / Marketplace */
   getArtworks: (params?: { search?: string; category?: string; page?: number; limit?: number }, token?: string) => {
@@ -95,63 +101,63 @@ export const webappApi = {
   },
   getFeaturedArtworks: (token?: string) => get("/artworks/featured", token),
   getTopArtists: (token?: string) => get("/artworks/top-artists", token),
-  getArtwork: (id: string, token?: string) => get(`/artworks/${id}`, token),
-  createArtwork: (data: unknown, token?: string) => post("/artworks", data, token),
+  getArtwork: (id: string | number, token?: string) => get(`/artworks/${id}`, token),
+  createArtwork: (data?: unknown, token?: string) => post("/artworks", data, token),
 
   /* Posts / Social Feed */
   getPosts: (token?: string) => get("/posts", token),
-  createPost: (data: unknown, token?: string) => post("/posts", data, token),
-  likePost: (id: string, token?: string) => put(`/posts/${id}/like`, {}, token),
+  createPost: (data?: unknown, token?: string) => post("/posts", data, token),
+  likePost: (id: string | number, token?: string) => put(`/posts/${id}/like`, {}, token),
 
   /* Comments */
-  getComments: (postId: string, token?: string) => get(`/posts/${postId}/comments`, token),
-  createComment: (postId: string, data: unknown, token?: string) => post(`/posts/${postId}/comments`, data, token),
+  getComments: (postId: string | number, token?: string) => get(`/posts/${postId}/comments`, token),
+  createComment: (postId: string | number, data?: unknown, token?: string) => post(`/posts/${postId}/comments`, data, token),
 
   /* Cart */
   getCart: (token?: string) => get("/cart", token),
-  addToCart: (data: unknown, token?: string) => post("/cart", data, token),
-  updateCartItem: (id: string, data: unknown, token?: string) => put(`/cart/${id}`, data, token),
-  removeFromCart: (id: string, token?: string) => del(`/cart/${id}`, token),
+  addToCart: (data?: unknown, token?: string) => post("/cart", data, token),
+  updateCartItem: (id: string | number, data?: unknown, token?: string) => put(`/cart/${id}`, data, token),
+  removeFromCart: (id: string | number, token?: string) => del(`/cart/${id}`, token),
 
   /* Orders */
   getOrders: (token?: string) => get("/orders", token),
-  createOrder: (data: unknown, token?: string) => post("/orders", data, token),
+  createOrder: (data?: unknown, token?: string) => post("/orders", data, token),
   getOrderSummary: (token?: string) => get("/order-summary", token),
 
   /* Payment Methods */
   getPaymentMethods: (token?: string) => get("/payment-methods", token),
-  addPaymentMethod: (data: unknown, token?: string) => post("/payment-methods", data, token),
+  addPaymentMethod: (data?: unknown, token?: string) => post("/payment-methods", data, token),
 
   /* Addresses */
   getAddresses: (token?: string) => get("/addresses", token),
-  addAddress: (data: unknown, token?: string) => post("/addresses", data, token),
-  selectAddress: (id: string, token?: string) => put(`/addresses/${id}/select`, {}, token),
+  addAddress: (data?: unknown, token?: string) => post("/addresses", data, token),
+  selectAddress: (id: string | number, token?: string) => put(`/addresses/${id}/select`, {}, token),
 
   /* Subscription Plans */
   getSubscriptionPlans: (token?: string) => get("/subscription-plans", token),
 
   /* Collections */
   getCollections: (token?: string) => get("/collections", token),
-  createCollection: (data: unknown, token?: string) => post("/collections", data, token),
-  getCollection: (id: string, token?: string) => get(`/collections/${id}`, token),
-  updateCollection: (id: string, data: unknown, token?: string) => put(`/collections/${id}`, data, token),
-  deleteCollection: (id: string, token?: string) => del(`/collections/${id}`, token),
+  createCollection: (data?: unknown, token?: string) => post("/collections", data, token),
+  getCollection: (id: string | number, token?: string) => get(`/collections/${id}`, token),
+  updateCollection: (id: string | number, data?: unknown, token?: string) => put(`/collections/${id}`, data, token),
+  deleteCollection: (id: string | number, token?: string) => del(`/collections/${id}`, token),
 
   /* Collection Items (via home routes) */
-  addCollectionItem: (collectionId: string, data: { itemId: string; itemType: string }, token?: string) =>
+  addCollectionItem: (collectionId: string | number, data: { itemId: string | number; itemType: string }, token?: string) =>
     homePost(`/collections/${collectionId}/items`, data, token),
-  removeCollectionItem: (collectionId: string, itemId: string, token?: string) =>
+  removeCollectionItem: (collectionId: string | number, itemId: string | number, token?: string) =>
     homeDel(`/collections/${collectionId}/items/${itemId}`, token),
 
   /* Daily Queue (via home routes) */
   getQueue: (token?: string) => homeGet("/daily-queue", token),
-  createQueueItem: (data: { collectionId?: string; collectionName: string; startTime: string; endTime: string; dayOfWeek?: number; active?: boolean }, token?: string) =>
+  createQueueItem: (data: { collectionId?: string; collectionName?: string; startTime?: string; endTime?: string; dayOfWeek?: number; active?: boolean }, token?: string) =>
     homePost("/daily-queue", data, token),
-  updateQueueItem: (id: string, data: unknown, token?: string) =>
+  updateQueueItem: (id: string | number, data?: unknown, token?: string) =>
     homePut(`/daily-queue/${id}`, data, token),
-  deleteQueueItem: (id: string, token?: string) =>
+  deleteQueueItem: (id: string | number, token?: string) =>
     homeDel(`/daily-queue/${id}`, token),
-  reorderQueue: (orderedIds: string[], token?: string) =>
+  reorderQueue: (orderedIds: (string | number)[], token?: string) =>
     homePut("/daily-queue/reorder", { orderedIds }, token),
 
   /* Media */
@@ -185,18 +191,21 @@ export const webappApi = {
 
   /* Search History */
   getSearchHistory: (token?: string) => get("/search-history", token),
-  addSearchHistory: (data: unknown, token?: string) => post("/search-history", data, token),
+  addSearchHistory: (data?: unknown, token?: string) => post("/search-history", data, token),
 
   /* Followers */
   getFollowers: (token?: string) => get("/followers", token),
   getFollowing: (token?: string) => get("/following", token),
-  follow: (userId: string, token?: string) => post("/follow", { userId }, token),
-  unfollow: (userId: string, token?: string) => del(`/unfollow/${userId}`, token),
+  follow: (userId: string | number, token?: string) => post("/follow", { userId }, token),
+  unfollow: (userId: string | number, token?: string) => del(`/unfollow/${userId}`, token),
 
   /* AI Photo Manager */
   getMediaFolders: (token?: string) => get("/media-folders", token),
-  createMediaFolder: (data: unknown, token?: string) => post("/media-folders", data, token),
+  createMediaFolder: (data?: unknown, token?: string) => post("/media-folders", data, token),
 
   /* Storage */
   getStorage: (token?: string) => get("/storage", token),
 };
+
+// Export hdrs helper for compatibility
+export { authHeaders, hdrs };

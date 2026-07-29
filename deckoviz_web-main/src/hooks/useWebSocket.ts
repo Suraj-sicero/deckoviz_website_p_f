@@ -15,7 +15,7 @@ export interface UseWebSocketReturn {
 }
 
 export function useWebSocket(): UseWebSocketReturn {
-  const { token, refreshToken } = useAuth();
+  const { token } = useAuth();
   const [status, setStatus] = useState<ConnectionStatus>(wsClient.status);
   const [devices, setDevices] = useState<WSDevice[]>(wsClient.devices);
   const mountedRef = useRef(true);
@@ -31,12 +31,7 @@ export function useWebSocket(): UseWebSocketReturn {
       return;
     }
 
-    wsClient.setTokenProvider(async () => {
-      if (refreshToken) {
-        return refreshToken();
-      }
-      return token;
-    });
+    wsClient.setTokenProvider(async () => token);
 
     const unsubStatus = wsClient.on("status", (p) => {
       if (mountedRef.current) setStatus(p.status as ConnectionStatus);
@@ -62,7 +57,7 @@ export function useWebSocket(): UseWebSocketReturn {
       unsubDevices();
       unsubOffline();
     };
-  }, [token, refreshToken]);
+  }, [token]);
 
   const sendCommand = useCallback(
     (action: string, payload: Record<string, unknown> = {}, target?: string) =>

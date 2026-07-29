@@ -241,11 +241,10 @@ export default function DeckovizWebapp() {
                           )}
                           <button
                             onClick={() => handleMenuClick(item.view)}
-                            className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-[13px] font-semibold transition ${
-                              item.view === activeView
-                                ? "bg-[#182a4a]/10 text-[#182a4a]"
-                                : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
-                            }`}
+                            className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-[13px] font-semibold transition ${item.view === activeView
+                              ? "bg-[#182a4a]/10 text-[#182a4a]"
+                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
+                              }`}
                           >
                             <span className={item.view === activeView ? "text-[#182a4a]" : "text-gray-400"}>{item.icon}</span>
                             <span>{item.label}</span>
@@ -281,11 +280,10 @@ export default function DeckovizWebapp() {
                       setActiveView(item.view);
                     }
                   }}
-                  className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${
-                    isActive
-                      ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"
-                      : "bg-transparent text-[#9ca3af] hover:bg-white hover:text-[#182a4a] hover:shadow-md"
-                  }`}
+                  className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${isActive
+                    ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"
+                    : "bg-transparent text-[#9ca3af] hover:bg-white hover:text-[#182a4a] hover:shadow-md"
+                    }`}
                   aria-label={item.label}
                 >
                   {item.icon}
@@ -302,11 +300,10 @@ export default function DeckovizWebapp() {
             {/* Bottom — Settings */}
             <button
               onClick={() => setActiveView("settings")}
-              className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${
-                activeView === "settings"
-                  ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"
-                  : "bg-transparent text-[#9ca3af] hover:bg-white hover:text-[#182a4a] hover:shadow-md"
-              }`}
+              className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${activeView === "settings"
+                ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"
+                : "bg-transparent text-[#9ca3af] hover:bg-white hover:text-[#182a4a] hover:shadow-md"
+                }`}
               aria-label="Settings & Preferences"
             >
               <Settings size={18} />
@@ -461,11 +458,10 @@ function VirtualFrameModal({ onClose }: { onClose: () => void }) {
                 <button
                   key={t}
                   onClick={() => { setTab(t); if (t === "library") { setUploadPreview(null); setSelected(null); } }}
-                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${
-                    tab === t
-                      ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
-                      : "bg-white/10 text-white/50 hover:bg-white/20 hover:text-white"
-                  }`}
+                  className={`px-5 py-2 rounded-full text-xs font-bold transition-all ${tab === t
+                    ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
+                    : "bg-white/10 text-white/50 hover:bg-white/20 hover:text-white"
+                    }`}
                 >
                   {t === "library" ? "📁  My Media Library" : "⬆️  Upload from Device"}
                 </button>
@@ -481,11 +477,10 @@ function VirtualFrameModal({ onClose }: { onClose: () => void }) {
                       <button
                         key={img}
                         onClick={() => setSelected(img)}
-                        className={`relative aspect-square rounded-xl overflow-hidden group transition-all duration-200 ${
-                          selected === img
-                            ? "ring-2 ring-[#2563EB] ring-offset-2 ring-offset-[#0f172a] scale-105"
-                            : "opacity-70 hover:opacity-100 hover:scale-105"
-                        }`}
+                        className={`relative aspect-square rounded-xl overflow-hidden group transition-all duration-200 ${selected === img
+                          ? "ring-2 ring-[#2563EB] ring-offset-2 ring-offset-[#0f172a] scale-105"
+                          : "opacity-70 hover:opacity-100 hover:scale-105"
+                          }`}
                       >
                         <img src={img} alt="" className="w-full h-full object-cover" />
                         {selected === img && (
@@ -551,11 +546,10 @@ function VirtualFrameModal({ onClose }: { onClose: () => void }) {
               <button
                 onClick={handleSend}
                 disabled={!selected}
-                className={`flex items-center gap-2.5 px-7 py-3 rounded-full text-sm font-bold transition-all duration-300 ${
-                  selected
-                    ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-xl hover:shadow-blue-500/30 hover:scale-105"
-                    : "bg-white/10 text-white/30 cursor-not-allowed"
-                }`}
+                className={`flex items-center gap-2.5 px-7 py-3 rounded-full text-sm font-bold transition-all duration-300 ${selected
+                  ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-xl hover:shadow-blue-500/30 hover:scale-105"
+                  : "bg-white/10 text-white/30 cursor-not-allowed"
+                  }`}
               >
                 <Monitor size={15} />
                 Send to Frame
@@ -781,8 +775,8 @@ function VGCPlaceholder() {
 
   useEffect(() => {
     if (!token) return;
-    getAgents(token).then(setAgents).catch(() => {});
-    getChats(token).then(setChats).catch(() => {});
+    getAgents(token).then(setAgents).catch(() => { });
+    getChats(token).then(setChats).catch(() => { });
   }, [token]);
 
   const handleSend = async () => {
@@ -797,7 +791,7 @@ function VGCPlaceholder() {
       setMessages((prev) => [...prev, { role: "assistant", content: res.reply, timestamp: new Date().toISOString() }]);
       if (!activeChatId && res.chatId) {
         setActiveChatId(res.chatId);
-        getChats(token).then(setChats).catch(() => {});
+        getChats(token).then(setChats).catch(() => { });
       }
     } catch {
       setMessages((prev) => [...prev, { role: "assistant", content: "Sorry, something went wrong. Please try again.", timestamp: new Date().toISOString() }]);
@@ -829,14 +823,14 @@ function VGCPlaceholder() {
   const displayAgents = agents.length > 0
     ? agents.map((a) => ({ ...a, icon: VGC_AGENT_ICONS[a.id] || <Sparkles size={20} /> }))
     : [
-        { id: "personal_artist", name: "Art Generator", description: "Create unique artworks from text prompts", icon: <Brush size={20} />, capabilities: [], tone: "" },
-        { id: "poster_creator", name: "Poster Studio", description: "Design stunning posters and typography art", icon: <Layers size={20} />, capabilities: [], tone: "" },
-        { id: "story_buddy", name: "Sequential Art", description: "Generate comic strips and visual stories", icon: <Film size={20} />, capabilities: [], tone: "" },
-        { id: "curator", name: "Music Composer", description: "Compose ambient sounds and melodies", icon: <Music size={20} />, capabilities: [], tone: "" },
-        { id: "journal_bud", name: "Narration Studio", description: "Create voiceovers and spoken content", icon: <Mic size={20} />, capabilities: [], tone: "" },
-        { id: "visual_companion", name: "Video Creator", description: "Transform images into short animations", icon: <Eye size={20} />, capabilities: [], tone: "" },
-        { id: "vizzy_muse", name: "Style Advisor", description: "Get recommendations for your space", icon: <Wand2 size={20} />, capabilities: [], tone: "" },
-      ];
+      { id: "personal_artist", name: "Art Generator", description: "Create unique artworks from text prompts", icon: <Brush size={20} />, capabilities: [], tone: "" },
+      { id: "poster_creator", name: "Poster Studio", description: "Design stunning posters and typography art", icon: <Layers size={20} />, capabilities: [], tone: "" },
+      { id: "story_buddy", name: "Sequential Art", description: "Generate comic strips and visual stories", icon: <Film size={20} />, capabilities: [], tone: "" },
+      { id: "curator", name: "Music Composer", description: "Compose ambient sounds and melodies", icon: <Music size={20} />, capabilities: [], tone: "" },
+      { id: "journal_bud", name: "Narration Studio", description: "Create voiceovers and spoken content", icon: <Mic size={20} />, capabilities: [], tone: "" },
+      { id: "visual_companion", name: "Video Creator", description: "Transform images into short animations", icon: <Eye size={20} />, capabilities: [], tone: "" },
+      { id: "vizzy_muse", name: "Style Advisor", description: "Get recommendations for your space", icon: <Wand2 size={20} />, capabilities: [], tone: "" },
+    ];
 
   const formatTime = (dateStr: string) => {
     const diff = Date.now() - new Date(dateStr).getTime();
@@ -883,8 +877,8 @@ function VGCPlaceholder() {
           </div>
         )) : (
           [{ title: "Generate a sunrise over calm ocean", agent: "Art Generator", time: "2 hours ago" },
-           { title: "Create ambient music for evening", agent: "Music Composer", time: "Yesterday" },
-           { title: "Design a motivational poster", agent: "Poster Studio", time: "2 days ago" }].map((chat, i) => (
+          { title: "Create ambient music for evening", agent: "Music Composer", time: "Yesterday" },
+          { title: "Design a motivational poster", agent: "Poster Studio", time: "2 days ago" }].map((chat, i) => (
             <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer">
               <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center text-white shrink-0"><MessageSquare size={14} /></div>
               <div className="flex-1 min-w-0">
@@ -1576,33 +1570,30 @@ function AddContentTabs() {
       <div className="mb-7 flex items-center gap-3">
         <button
           onClick={() => setSubTab("images")}
-          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-sm transition ${
-            subTab === "images"
-              ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
-              : "bg-white text-[#4b5563] ring-1 ring-[#e5e7eb] hover:bg-[#f7f8fb]"
-          }`}
+          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-sm transition ${subTab === "images"
+            ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
+            : "bg-white text-[#4b5563] ring-1 ring-[#e5e7eb] hover:bg-[#f7f8fb]"
+            }`}
         >
           <ImagePlus size={16} />
           Add Images
         </button>
         <button
           onClick={() => setSubTab("media")}
-          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-sm transition ${
-            subTab === "media"
-              ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
-              : "bg-white text-[#4b5563] ring-1 ring-[#e5e7eb] hover:bg-[#f7f8fb]"
-          }`}
+          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-sm transition ${subTab === "media"
+            ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
+            : "bg-white text-[#4b5563] ring-1 ring-[#e5e7eb] hover:bg-[#f7f8fb]"
+            }`}
         >
           <FolderOpen size={16} />
           Add Media
         </button>
         <button
           onClick={() => setSubTab("collection")}
-          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-sm transition ${
-            subTab === "collection"
-              ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
-              : "bg-white text-[#4b5563] ring-1 ring-[#e5e7eb] hover:bg-[#f7f8fb]"
-          }`}
+          className={`inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold shadow-sm transition ${subTab === "collection"
+            ? "bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-lg"
+            : "bg-white text-[#4b5563] ring-1 ring-[#e5e7eb] hover:bg-[#f7f8fb]"
+            }`}
         >
           <ImagePlus size={16} />
           Create Collection

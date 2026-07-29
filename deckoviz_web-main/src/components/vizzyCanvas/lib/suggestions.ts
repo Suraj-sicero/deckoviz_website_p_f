@@ -1,4 +1,4 @@
-import type { SuggestionCategory } from "@/lib/types"
+import type { SuggestionCategory } from "./types"
 
 export const HOME_SUGGESTIONS: SuggestionCategory[] = [
   {
