@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import { webappApi } from "../../../lib/webappApi";
-import { useAuth } from "../../../context/AuthContext";
 import {
   User,
   Image as ImageIcon,
@@ -112,7 +110,7 @@ export default function ProfileView({
       };
       setProfile(p);
       setEditForm(p);
-    }).catch(() => { });
+    }).catch(() => {});
   }, [token]);
 
   const startEditing = () => {
@@ -166,15 +164,6 @@ export default function ProfileView({
     if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
     return String(n);
   };
-  const { user } = useAuth();
-  const [profile, setProfile] = useState<any>(null);
-
-  useEffect(() => {
-    webappApi.getProfile()
-      .then(setProfile)
-      .catch(console.error);
-  }, []);
-
 
   return (
     <div className="relative flex w-full justify-center pb-20 pt-4 font-sans">
@@ -222,12 +211,7 @@ export default function ProfileView({
                   ) : (
                     profile.title || "AI Enthusiast"
                   )}
-                  <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-0.5 text-[22px] font-bold leading-tight ">
-                    {profile?.displayName || user?.email?.split('@')[0] || "Suraj Pandya"}
-                  </h1>
-                  <p className="text-[15px] font-medium leading-tight text-[#70737b]">
-                    {profile?.bio || "AI Enthusiast"}
-                  </p>
+                </p>
               </div>
               <button
                 onClick={() => onNavigate?.("ai_manager")}
@@ -241,14 +225,12 @@ export default function ProfileView({
               <div className="border-l border-[#c8c8cc] pl-6 text-center first:border-l-0 first:pl-0">
                 <div className="text-[16px] font-bold leading-tight text-black">
                   {formatCount(profile.postCount)}
-                  {profile?.postCount || "548"}
                 </div>
                 <div className="text-[13px] font-medium text-black">Post</div>
               </div>
               <div className="border-l border-[#c8c8cc] pl-6 text-center">
                 <div className="text-[16px] font-bold leading-tight text-black">
                   {formatCount(profile.followerCount)}
-                  {profile?.followerCount || "12.7k"}
                 </div>
                 <div className="text-[13px] font-medium text-black">
                   Followers
@@ -257,7 +239,6 @@ export default function ProfileView({
               <div className="border-l border-[#c8c8cc] pl-6 text-center">
                 <div className="text-[16px] font-bold leading-tight text-black">
                   {formatCount(profile.followingCount)}
-                  {profile?.followingCount || "221"}
                 </div>
                 <div className="text-[13px] font-medium text-black">
                   Following
@@ -284,10 +265,11 @@ export default function ProfileView({
                   if (tab.id === "Followers") onNavigate?.("followers");
                   if (tab.id === "Following") onNavigate?.("following");
                 }}
-                className={`flex h-[46px] items-center gap-2 whitespace-nowrap rounded-[12px] px-5 text-[15px] font-bold transition-all ${activeTab === tab.id
-                  ? "bg-[#eef2ff] text-[#3f5fe0]"
-                  : "text-[#676a72] hover:bg-gray-50 hover:text-gray-800"
-                  }`}
+                className={`flex h-[46px] items-center gap-2 whitespace-nowrap rounded-[12px] px-5 text-[15px] font-bold transition-all ${
+                  activeTab === tab.id
+                    ? "bg-[#eef2ff] text-[#3f5fe0]"
+                    : "text-[#676a72] hover:bg-gray-50 hover:text-gray-800"
+                }`}
               >
                 {tab.icon}
                 <span>{tab.id}</span>
@@ -373,88 +355,68 @@ export default function ProfileView({
                 ) : (
                   profile.location || "Add your location"
                 )}
-                <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-xl font-bold  mb-0.5">
-                  {profile?.displayName || user?.email?.split('@')[0] || "Suraj Pandya"}
-                </h2>
-                <p className="text-gray-500 text-sm font-medium mb-1">
-                  @{profile?.displayName?.toLowerCase().replace(/\s/g, '_') || user?.email?.split('@')[0] || "suraj_pandya_123"}
-                </p>
-                <p className="text-gray-500 text-xs font-medium mb-8">
-                  {profile?.location || "UK, London Metropolitan"}
-                </p>
+              </p>
 
-                <div className="flex items-center gap-10 w-full justify-center border-b border-gray-100 pb-8 mb-8">
-                  <div className="text-center">
-                    <div className="text-[20px] font-bold text-gray-900 leading-tight">
-                      {formatCount(profile.postCount)}
-                      {profile?.postCount || "548"}
-                    </div>
-                    <div className="text-gray-500 text-xs font-medium">Post</div>
+              <div className="flex items-center gap-10 w-full justify-center border-b border-gray-100 pb-8 mb-8">
+                <div className="text-center">
+                  <div className="text-[20px] font-bold text-gray-900 leading-tight">
+                    {formatCount(profile.postCount)}
                   </div>
-                  <div className="text-center">
-                    <div className="text-[20px] font-bold text-gray-900 leading-tight">
-                      {formatCount(profile.followerCount)}
-                      {profile?.followerCount || "12.7k"}
-                    </div>
-                    <div className="text-gray-500 text-xs font-medium">
-                      Followers
-                    </div>
+                  <div className="text-gray-500 text-xs font-medium">Post</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-[20px] font-bold text-gray-900 leading-tight">
+                    {formatCount(profile.followerCount)}
                   </div>
-                  <div className="text-center">
-                    <div className="text-[20px] font-bold text-gray-900 leading-tight">
-                      {formatCount(profile.followingCount)}
-                      {profile?.followingCount || "221"}
-                    </div>
-                    <div className="text-gray-500 text-xs font-medium">
-                      Following
-                    </div>
+                  <div className="text-gray-500 text-xs font-medium">
+                    Followers
                   </div>
                 </div>
+                <div className="text-center">
+                  <div className="text-[20px] font-bold text-gray-900 leading-tight">
+                    {formatCount(profile.followingCount)}
+                  </div>
+                  <div className="text-gray-500 text-xs font-medium">
+                    Following
+                  </div>
+                </div>
+              </div>
 
-                <div className="w-full text-left">
-                  <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[17px] font-bold  mb-3">
-                    About me
-                  </h3>
-                  {editing ? (
-                    <textarea
-                      value={editForm.bio}
-                      onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
-                      placeholder="Write something about yourself..."
-                      rows={4}
-                      className="w-full text-gray-500 text-[13px] leading-relaxed font-medium mb-4 text-justify border border-gray-200 rounded-lg p-3 outline-none focus:border-[#3b82f6] resize-none"
-                    />
-                  ) : (
-                    <>
-                      <p className="text-gray-500 text-[13px] leading-relaxed font-medium mb-4 text-justify">
-                        {profile.bio || "Tell the world about yourself..."}
-                      </p>
-                    </>
-                  )}
+              <div className="w-full text-left">
+                <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[17px] font-bold  mb-3">
+                  About me
+                </h3>
+                {editing ? (
+                  <textarea
+                    value={editForm.bio}
+                    onChange={(e) => setEditForm({ ...editForm, bio: e.target.value })}
+                    placeholder="Write something about yourself..."
+                    rows={4}
+                    className="w-full text-gray-500 text-[13px] leading-relaxed font-medium mb-4 text-justify border border-gray-200 rounded-lg p-3 outline-none focus:border-[#3b82f6] resize-none"
+                  />
+                ) : (
                   <p className="text-gray-500 text-[13px] leading-relaxed font-medium mb-4 text-justify">
-                    {profile?.aboutText || `Hi there! I'm ${profile?.displayName || 'Suraj Pandya'} - an AI enthusiast, deep thinker, artist at heart, and passionate content creator. I thrive at the intersection of technology and creativity, constantly exploring how artificial intelligence can amplify human expression and storytelling.`}
+                    {profile.bio || "Tell the world about yourself..."}
                   </p>
-                  <p className="text-gray-500 text-[13px] leading-relaxed font-medium text-justify mb-8">
-                    Whether it's translating complex ideas into compelling words, creating thought-provoking art, or diving into the possibilities of AI, my work is driven by curiosity, emotion, and purpose.
-                  </p>
+                )}
 
-                  <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[17px] font-bold  mb-4">
-                    My Favourite Art Styles
-                  </h3>
-                  <div className="flex flex-wrap gap-3">
-                    {(profile.favoriteArtStyles.length > 0
-                      ? profile.favoriteArtStyles
-                      : ["Surrealism", "Abstract Expressionism", "Conceptual Portraits", "Minimalism"]
-                    ).map((style, idx) => (
-                      <div key={idx} className="flex items-center gap-1.5 px-4 py-2 bg-gray-50 rounded-full border border-gray-100"
-                      >
-                        <Sparkles size={14} className="text-[#2563eb]" />
-                        <span className="text-[13px] font-bold text-gray-600">
-                          {style}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[17px] font-bold  mb-4">
+                  My Favourite Art Styles
+                </h3>
+                <div className="flex flex-wrap gap-3">
+                  {(profile.favoriteArtStyles.length > 0
+                    ? profile.favoriteArtStyles
+                    : ["Surrealism", "Abstract Expressionism", "Conceptual Portraits", "Minimalism"]
+                  ).map((style, idx) => (
+                    <div key={idx} className="flex items-center gap-1.5 px-4 py-2 bg-gray-50 rounded-full border border-gray-100">
+                      <Sparkles size={14} className="text-[#2563eb]" />
+                      <span className="text-[13px] font-bold text-gray-600">
+                        {style}
+                      </span>
+                    </div>
+                  ))}
                 </div>
+              </div>
             </div>
           </div>
 
@@ -467,10 +429,11 @@ export default function ProfileView({
                   <button
                     key={tab}
                     onClick={() => setActiveRightTab(tab)}
-                    className={`flex-1 py-4 text-sm font-bold transition border-b-2 ${activeRightTab === tab
-                      ? "border-[#1a237e] text-gray-900"
-                      : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50"
-                      }`}
+                    className={`flex-1 py-4 text-sm font-bold transition border-b-2 ${
+                      activeRightTab === tab
+                        ? "border-[#1a237e] text-gray-900"
+                        : "border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                    }`}
                   >
                     {tab}
                   </button>
@@ -480,12 +443,11 @@ export default function ProfileView({
               {/* List */}
               <div className="flex flex-col p-6 gap-6 h-[800px] overflow-y-auto custom-scrollbar">
                 {fallbackArtworks.map((art, idx) => (
-                  <div key={idx} className="flex flex-col gap-4 border-b border-gray-100 pb-6 last:border-0 last:pb-0 relative group"
-                  >
+                  <div key={idx} className="flex flex-col gap-4 border-b border-gray-100 pb-6 last:border-0 last:pb-0 relative group">
                     <button className="absolute top-0 right-0 text-red-500 hover:scale-110 transition z-10 p-2">
-                      <Heart size={16} fill="currentColor" />
+                       <Heart size={16} fill="currentColor" />
                     </button>
-
+                    
                     <div className="flex gap-5">
                       <div className="w-44 h-[110px] rounded-xl overflow-hidden shrink-0">
                         <img
@@ -502,40 +464,40 @@ export default function ProfileView({
                           {art.subtitle}
                         </p>
                         <div className="flex items-center gap-1 mb-3">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} size={14} className={i < 4 ? "text-yellow-400" : "text-gray-300"} fill={i < 4 ? "currentColor" : "none"} />
-                          ))}
-                          <span className="text-xs font-bold text-gray-700 ml-1 mt-0.5">{art.rating}</span>
+                           {[...Array(5)].map((_, i) => (
+                              <Star key={i} size={14} className={i < 4 ? "text-yellow-400" : "text-gray-300"} fill={i < 4 ? "currentColor" : "none"} />
+                           ))}
+                           <span className="text-xs font-bold text-gray-700 ml-1 mt-0.5">{art.rating}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          {art.tags.map(tag => (
-                            <span key={tag} className="px-3 py-1 bg-blue-50 text-blue-500 text-[11px] font-bold rounded-md">
-                              {tag}
-                            </span>
-                          ))}
+                           {art.tags.map(tag => (
+                             <span key={tag} className="px-3 py-1 bg-blue-50 text-blue-500 text-[11px] font-bold rounded-md">
+                               {tag}
+                             </span>
+                           ))}
                         </div>
                       </div>
                     </div>
-
+                    
                     <div className="relative pt-2 pl-4 border-l-[3px] border-[#2563eb]/30 ml-2">
-                      <span className="absolute -top-1 left-1 text-2xl text-[#2563eb] font-serif leading-none">"</span>
-                      <p className="text-[13px] text-blue-500 font-medium leading-relaxed mb-3 mt-1">
-                        {art.quote}
-                      </p>
-                      <p className="text-[10px] text-gray-400 font-medium">
-                        {art.date}
-                      </p>
-                      <span className="absolute bottom-2 right-12 text-2xl text-[#2563eb] font-serif leading-none">"</span>
+                       <span className="absolute -top-1 left-1 text-2xl text-[#2563eb] font-serif leading-none">"</span>
+                       <p className="text-[13px] text-blue-500 font-medium leading-relaxed mb-3 mt-1">
+                         {art.quote}
+                       </p>
+                       <p className="text-[10px] text-gray-400 font-medium">
+                         {art.date}
+                       </p>
+                       <span className="absolute bottom-2 right-12 text-2xl text-[#2563eb] font-serif leading-none">"</span>
                     </div>
                   </div>
                 ))}
               </div>
-
+              
               <div className="p-4 border-t border-gray-100 flex justify-center bg-gray-50">
-                <button className="flex items-center gap-2 text-gray-500 text-sm font-bold hover:text-gray-800 transition">
-                  <ChevronDown size={16} />
-                  View More
-                </button>
+                 <button className="flex items-center gap-2 text-gray-500 text-sm font-bold hover:text-gray-800 transition">
+                    <ChevronDown size={16} />
+                    View More
+                 </button>
               </div>
             </div>
           </div>
