@@ -1,26 +1,29 @@
-import { useState } from "react";
-import { Sparkles, Bookmark, ChevronRight } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Sparkles, Bookmark, ChevronRight, Loader2, Image as ImageIcon } from "lucide-react";
+import { enterpriseApi } from "../../../lib/enterpriseApi";
+import { EmptyState } from "./ui/EmptyState";
 
 export default function CurationsView() {
   const [activeTab, setActiveTab] = useState<"vizzy" | "deckoviz">("vizzy");
+  const [curationsData, setCurationsData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
-  const vizzyCurations = [
-    { title: "Morning Serenity Bundle", desc: "Curated based on your lobby's morning schedule — calm, bright, inviting", items: 12, cover: "/images/webapp/nature_garden.png" },
-    { title: "Corporate Welcome Pack", desc: "Professional yet warm art for your boardroom and conference spaces", items: 8, cover: "/images/webapp/minimalistic_night.png" },
-    { title: "Evening Ambiance Palette", desc: "Warm tones, abstract forms, perfect for dinner ambiance", items: 15, cover: "/images/webapp/figma/abstract-wave-wide.jpg" },
-    { title: "Spa Wellness Collection", desc: "Nature-inspired calming visuals for your spa and wellness area", items: 20, cover: "/images/webapp/digital_plants.png" },
-  ];
+  useEffect(() => {
+    enterpriseApi.getCurations().then((res) => {
+      if (res && res.vizzy && res.deckoviz) {
+        setCurationsData(res);
+      } else {
+        setCurationsData({ vizzy: [], deckoviz: [] });
+      }
+    }).catch((err) => {
+      console.error("Curations API error", err);
+      setCurationsData({ vizzy: [], deckoviz: [] });
+    }).finally(() => setLoading(false));
+  }, []);
 
-  const deckovizCurations = [
-    { title: "Renaissance Revival", desc: "Classic masterpieces reimagined for modern digital display", items: 24, cover: "/images/webapp/figma/spiral-ocean.jpg" },
-    { title: "Urban Contemporary", desc: "Bold cityscapes and urban art for dynamic spaces", items: 18, cover: "/images/webapp/city_fire_reflection.png" },
-    { title: "Botanical Dreams", desc: "Lush botanical illustrations and nature art", items: 30, cover: "/images/webapp/digital_plants.png" },
-    { title: "Abstract Horizons", desc: "Vibrant abstract art with bold colors and gradients", items: 22, cover: "/images/webapp/vibrant_face_art.png" },
-    { title: "Minimalist Focus", desc: "Clean, minimal artwork for professional spaces", items: 16, cover: "/images/webapp/abstract_landscape.png" },
-    { title: "Coastal Serenity", desc: "Ocean-inspired art for relaxing environments", items: 20, cover: "/images/webapp/figma/aurora-lake.jpg" },
-  ];
-
-  const curations = activeTab === "vizzy" ? vizzyCurations : deckovizCurations;
+  const curations = curationsData 
+    ? (activeTab === "vizzy" ? curationsData.vizzy : curationsData.deckoviz) 
+    : [];
 
   return (
     <div className="mx-auto w-full max-w-[1120px] px-8 py-8">
@@ -39,7 +42,7 @@ export default function CurationsView() {
         </button>
       </div>
 
-      {activeTab === "vizzy" && (
+      {activeTab === "vizzy" && curations.length > 0 && (
         <div className="mb-8 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-50/50 border border-blue-100 p-6 flex items-center gap-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#2563EB]/10 text-[#2563EB]">
             <Sparkles size={22} />
@@ -51,31 +54,45 @@ export default function CurationsView() {
         </div>
       )}
 
-      <div className="grid gap-5 md:grid-cols-2">
-        {curations.map((cur) => (
-          <div key={cur.title} className="group overflow-hidden rounded-2xl border border-[#e8eaef] bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
-            <div className="relative h-[180px] overflow-hidden">
-              <img src={cur.cover} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute top-3 right-3 flex gap-2">
-                <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40">
-                  <Bookmark size={14} />
-                </button>
+      {loading ? (
+        <div className="grid gap-5 md:grid-cols-2">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-64 rounded-2xl border border-gray-100 bg-gray-50/50 p-5 animate-pulse" />
+          ))}
+        </div>
+      ) : curations.length === 0 ? (
+        <EmptyState
+          icon={ImageIcon}
+          title="No curations available"
+          description={activeTab === "vizzy" ? "Vizzy is currently analyzing your space to prepare new curations." : "There are no curated collections available at the moment."}
+        />
+      ) : (
+        <div className="grid gap-5 md:grid-cols-2">
+          {curations.map((cur: any) => (
+            <div key={cur.title} className="group overflow-hidden rounded-2xl border border-[#e8eaef] bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+              <div className="relative h-[180px] overflow-hidden">
+                <img src={cur.cover} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                <div className="absolute top-3 right-3 flex gap-2">
+                  <button className="flex h-8 w-8 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition hover:bg-white/40">
+                    <Bookmark size={14} />
+                  </button>
+                </div>
+                <div className="absolute bottom-4 left-4">
+                  <span className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-sm">{cur.items} artworks</span>
+                </div>
               </div>
-              <div className="absolute bottom-4 left-4">
-                <span className="rounded-full bg-white/20 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-sm">{cur.items} artworks</span>
+              <div className="p-5 flex items-start justify-between">
+                <div>
+                  <h3 className="text-[15px] font-bold text-gray-800 mb-1">{cur.title}</h3>
+                  <p className="text-[11px] text-gray-400 leading-relaxed max-w-[360px]">{cur.desc}</p>
+                </div>
+                <ChevronRight size={16} className="text-gray-300 group-hover:text-[#182a4a] transition mt-1" />
               </div>
             </div>
-            <div className="p-5 flex items-start justify-between">
-              <div>
-                <h3 className="text-[15px] font-bold text-gray-800 mb-1">{cur.title}</h3>
-                <p className="text-[11px] text-gray-400 leading-relaxed max-w-[360px]">{cur.desc}</p>
-              </div>
-              <ChevronRight size={16} className="text-gray-300 group-hover:text-[#182a4a] transition mt-1" />
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

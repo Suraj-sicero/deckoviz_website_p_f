@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useAuth } from "../../context/AuthContext";
 
-// Auth guard temporarily disabled — all routes are accessible without login.
-// The login page still works; users just aren't forced to sign in.
 export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { token, openAuthModal, isAuthModalOpen } = useAuth();
+
+  useEffect(() => {
+    if (!token && !isAuthModalOpen) {
+      openAuthModal(true);
+    }
+  }, [token, isAuthModalOpen, openAuthModal]);
+
+  if (!token) {
+    // Show empty screen or loading while forcing auth
+    return <div className="min-h-screen bg-[#f8f9fb]" />;
+  }
+
   return <>{children}</>;
 };
-

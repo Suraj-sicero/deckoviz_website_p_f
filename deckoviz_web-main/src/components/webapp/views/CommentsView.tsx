@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Image as ImageIcon,
   Smile,
@@ -11,11 +11,13 @@ import {
   ChevronDown,
   ArrowUpDown,
   Pencil,
+  Loader2
 } from "lucide-react";
 import { figmaAssets } from "../webappData";
+import { webappApi } from "../../../lib/webappApi";
 
 /* ───── Data ───── */
-const commentsData = [
+const fallbackComments = [
   {
     id: 1,
     user: "Harry Kington",
@@ -48,33 +50,44 @@ const commentsData = [
     dislikes: 3,
     verified: false,
     replies: [],
-  },
-  {
-    id: 3,
-    user: "Harry Kington",
-    avatar: figmaAssets.surajAvatar,
-    time: "28 minutes ago",
-    text: "The composition and emotion in this piece are truly captivating. I love how the details subtly guide the viewer's eye, and the use of color/texture brings such depth and feeling. Beautifully done!",
-    likes: 12,
-    dislikes: 3,
-    verified: false,
-    replies: [],
-  },
-  {
-    id: 4,
-    user: "Harry Kington",
-    avatar: figmaAssets.surajAvatar,
-    time: "28 minutes ago",
-    text: "The composition and emotion in this piece are truly captivating. I love how the details subtly guide the viewer's eye, and the use of color/texture brings such depth and feeling. Beautifully done!",
-    likes: 12,
-    dislikes: 3,
-    verified: false,
-    replies: [],
-  },
+  }
 ];
 
-export default function CommentsView() {
+export default function CommentsView({ postId = "1" }: { postId?: string }) {
   const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetchComments();
+  }, [postId]);
+
+  const fetchComments = async () => {
+    try {
+      const res = await webappApi.getComments(postId);
+      setComments(res.length ? res : fallbackComments);
+    } catch (err) {
+      console.error(err);
+      setComments(fallbackComments);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!commentText.trim()) return;
+    setSubmitting(true);
+    try {
+      await webappApi.createComment(postId, { content: commentText });
+      setCommentText("");
+      fetchComments();
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <div className="flex w-full justify-center pb-20 pt-6 font-sans">
@@ -100,8 +113,12 @@ export default function CommentsView() {
             <button className="flex h-[34px] w-[34px] items-center justify-center rounded-full border border-[#e5e7eb] text-[#6b7280] transition hover:bg-gray-50">
               <Mic size={18} />
             </button>
-            <button className="ml-1 h-[36px] rounded-[8px] bg-[#f04444] px-6 text-[14px] font-semibold text-white shadow-sm transition hover:bg-[#dc2626]">
-              Submit
+            <button 
+              onClick={handleSubmit} 
+              disabled={submitting || !commentText.trim()}
+              className="flex items-center justify-center ml-1 h-[36px] min-w-[80px] rounded-[8px] bg-[#f04444] px-6 text-[14px] font-semibold text-white shadow-sm transition hover:bg-[#dc2626] disabled:opacity-50"
+            >
+              {submitting ? <Loader2 size={16} className="animate-spin" /> : "Submit"}
             </button>
           </div>
         </div>
@@ -112,7 +129,7 @@ export default function CommentsView() {
             <div className="flex items-center gap-3">
               <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[20px] font-bold ">Comments</h2>
               <span className="flex h-[26px] items-center rounded-full bg-[#4657bd] px-3 text-[13px] font-bold text-white">
-                36
+                {comments.length}
               </span>
             </div>
             <button className="flex items-center gap-2 text-[14px] font-medium text-[#374151] transition hover:text-[#111827]">
@@ -125,38 +142,42 @@ export default function CommentsView() {
 
         {/* ─── Comments List ─── */}
         <div className="rounded-b-[12px] border border-[#e5e7eb]">
-          {commentsData.map((comment, idx) => (
-            <div
-              key={comment.id}
-              className={`px-6 py-6 ${idx < commentsData.length - 1 ? "border-b border-[#f3f4f6]" : ""}`}
-            >
-              {/* Main Comment */}
-              <CommentItem
-                user={comment.user}
-                avatar={comment.avatar}
-                time={comment.time}
-                text={comment.text}
-                likes={comment.likes}
-                dislikes={comment.dislikes}
-                verified={comment.verified}
-              />
+          {loading ? (
+            <div className="flex justify-center p-8"><Loader2 className="animate-spin text-blue-500 w-8 h-8" /></div>
+          ) : (
+            comments.map((comment, idx) => (
+              <div
+                key={comment.id}
+                className={`px-6 py-6 ${idx < comments.length - 1 ? "border-b border-[#f3f4f6]" : ""}`}
+              >
+                {/* Main Comment */}
+                <CommentItem
+                  user={comment.user?.name || comment.user || "User"}
+                  avatar={comment.user?.avatar || comment.avatar || figmaAssets.surajAvatar}
+                  time={comment.time || "Just now"}
+                  text={comment.content || comment.text}
+                  likes={comment.likes || 0}
+                  dislikes={comment.dislikes || 0}
+                  verified={comment.verified || false}
+                />
 
-              {/* Replies (indented) */}
-              {comment.replies.map((reply) => (
-                <div key={reply.id} className="ml-12 mt-5 rounded-[8px] border-l-[3px] border-[#e5e7eb] pl-5">
-                  <CommentItem
-                    user={reply.user}
-                    avatar={reply.avatar}
-                    time={reply.time}
-                    text={reply.text}
-                    likes={reply.likes}
-                    dislikes={reply.dislikes}
-                    verified={reply.verified}
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
+                {/* Replies (indented) */}
+                {comment.replies?.map((reply: any) => (
+                  <div key={reply.id} className="ml-12 mt-5 rounded-[8px] border-l-[3px] border-[#e5e7eb] pl-5">
+                    <CommentItem
+                      user={reply.user?.name || reply.user || "User"}
+                      avatar={reply.user?.avatar || reply.avatar || figmaAssets.emmaAvatar}
+                      time={reply.time || "Just now"}
+                      text={reply.content || reply.text}
+                      likes={reply.likes || 0}
+                      dislikes={reply.dislikes || 0}
+                      verified={reply.verified || false}
+                    />
+                  </div>
+                ))}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>

@@ -51,15 +51,47 @@ const MessageBubble: React.FC<{ message: Message; isLatest: boolean }> = ({
 }) => {
   const isUser = message.role === "user";
 
-  // Render markdown-lite: bold **text** and line breaks
+  // Render markdown-lite: bold **text**, line breaks, and images
   const renderContent = (text: string) => {
     return text.split("\n").map((line, i) => {
-      const parts = line.split(/(\*\*[^*]+\*\*)/g);
+      // Check for markdown image ![alt](url)
+      const imgMatch = line.match(/!\[([^\]]*)\]\(([^)]+)\)/);
+      if (imgMatch) {
+        return (
+          <div key={i} className="my-2">
+            <img src={imgMatch[2]} alt={imgMatch[1]} className="max-w-full rounded-xl shadow-md border border-white/10" />
+          </div>
+        );
+      }
+
+      // Check if line is just a bare URL
+      const trimmed = line.trim();
+      const isImageUrl = trimmed.startsWith("http") && (
+        trimmed.match(/\.(jpeg|jpg|gif|png|webp)(\?.*)?$/i) ||
+        trimmed.includes("cloudinary.com") ||
+        trimmed.includes("replicate.delivery") ||
+        trimmed.includes("runware") ||
+        trimmed.includes("onrender.com") ||
+        /^https?:\/\/[^\s]+$/.test(trimmed)
+      );
+
+      if (isImageUrl) {
+        return (
+          <div key={i} className="my-2">
+            <img src={trimmed} alt="Generated output" className="max-w-full rounded-xl shadow-md border border-white/10" />
+          </div>
+        );
+      }
+
+      const parts = line.split(/(\*\*[^*]+\*\*|https?:\/\/[^\s]+)/g);
       return (
         <span key={i}>
           {parts.map((part, j) => {
             if (part.startsWith("**") && part.endsWith("**")) {
               return <strong key={j}>{part.slice(2, -2)}</strong>;
+            }
+            if (part.startsWith("http")) {
+              return <a key={j} href={part} target="_blank" rel="noopener noreferrer" className="text-[#4F75FF] hover:underline break-all">{part}</a>;
             }
             return part;
           })}

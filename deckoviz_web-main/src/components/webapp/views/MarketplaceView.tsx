@@ -1,16 +1,32 @@
 import { Heart } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type React from "react";
-import { artworkCard, figmaAssets, topArtists } from "../webappData";
+import { webappApi } from "../../../lib/webappApi";
+import { artworkCard as fallbackArtworkCard, figmaAssets, topArtists as fallbackTopArtists } from "../webappData";
 
 const filterTabs = ["Filters", "Price", "Medium", "Style", "More..."];
 
 type MarketplaceMode = "home" | "artists" | "grid";
 
 export default function MarketplaceView({ mode = "home" }: { mode?: MarketplaceMode }) {
+  const [artworks, setArtworks] = useState<any[]>([]);
+  const [topArtists, setTopArtists] = useState<any[]>([]);
+
+  useEffect(() => {
+    webappApi.getArtworks({ limit: 12 })
+      .then(res => setArtworks(res.items || []))
+      .catch(console.error);
+
+    webappApi.getTopArtists()
+      .then(res => setTopArtists(res.length ? res : fallbackTopArtists))
+      .catch(() => setTopArtists(fallbackTopArtists));
+  }, []);
+
   const artistGrid = Array.from({ length: mode === "artists" ? 40 : 10 }, (_, index) => {
-    return topArtists[index % topArtists.length];
+    return topArtists[index % topArtists.length] || fallbackTopArtists[0];
   });
+
+  const displayArtworks = artworks.length > 0 ? artworks : Array.from({ length: 6 }).map(() => fallbackArtworkCard);
 
   if (mode === "artists") {
     return (
@@ -20,7 +36,7 @@ export default function MarketplaceView({ mode = "home" }: { mode?: MarketplaceM
           <SectionTitle title="Top Artist & Trending Artist" />
           <div className="grid grid-cols-5 gap-x-7 gap-y-8 sm:grid-cols-6 lg:grid-cols-10">
             {artistGrid.map((artist, index) => (
-              <ArtistBubble key={`${artist.name}-${index}`} artist={artist} />
+              <ArtistBubble key={`${artist.name || artist.artist}-${index}`} artist={artist} />
             ))}
           </div>
         </section>
@@ -34,25 +50,25 @@ export default function MarketplaceView({ mode = "home" }: { mode?: MarketplaceM
       <section className="rounded-[5px] px-9 py-6">
         <SectionTitle title="Trending Artworks and artworks for you" />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <ArtworkCard key={`trending-${index}`} />
+          {displayArtworks.slice(0, 3).map((art, index) => (
+            <ArtworkCard key={`trending-${index}`} artwork={art} />
           ))}
         </div>
 
         <SectionTitle title="Artworks for you" className="mt-7" />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {Array.from({ length: 3 }).map((_, index) => (
-            <ArtworkCard key={`for-you-${index}`} />
+          {displayArtworks.slice(3, 6).map((art, index) => (
+            <ArtworkCard key={`for-you-${index}`} artwork={art} />
           ))}
         </div>
 
         <SectionTitle title="Top Artworks" className="mt-8" />
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <WideArtwork image={figmaAssets.violinArt} />
-          <WideArtwork image={figmaAssets.abstractWaveWide} />
+          <WideArtwork image={displayArtworks[0]?.image || figmaAssets.violinArt} />
+          <WideArtwork image={displayArtworks[1]?.image || figmaAssets.abstractWaveWide} />
         </div>
         <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-4">
-          {[figmaAssets.interiorTech, figmaAssets.auroraLake, figmaAssets.interiorTech, figmaAssets.auroraLake].map(
+          {[displayArtworks[2]?.image || figmaAssets.interiorTech, displayArtworks[3]?.image || figmaAssets.auroraLake, displayArtworks[4]?.image || figmaAssets.interiorTech, displayArtworks[5]?.image || figmaAssets.auroraLake].map(
             (image, index) => (
               <SmallArtwork key={`${image}-${index}`} image={image} />
             ),
@@ -62,7 +78,7 @@ export default function MarketplaceView({ mode = "home" }: { mode?: MarketplaceM
         <SectionTitle title="Top Artist & Trending Artist" className="mt-10" />
         <div className="grid grid-cols-5 gap-x-5 gap-y-5 lg:grid-cols-10">
           {artistGrid.map((artist, index) => (
-            <ArtistBubble key={`${artist.name}-${index}`} artist={artist} compact />
+            <ArtistBubble key={`${artist.name || artist.artist}-${index}`} artist={artist} compact />
           ))}
         </div>
       </section>
@@ -113,24 +129,25 @@ function SectionTitle({ title, className = "" }: { title: string; className?: st
   );
 }
 
-function ArtworkCard() {
+function ArtworkCard({ artwork }: { artwork?: any }) {
+  const data = artwork || fallbackArtworkCard;
   return (
     <article className="overflow-hidden rounded-[7px] ring-1 ring-[#ded9f8]">
-      <img src={artworkCard.image} alt={artworkCard.title} className="h-[193px] w-full object-cover" />
+      <img src={data.image || fallbackArtworkCard.image} alt={data.title} className="h-[193px] w-full object-cover" />
       <div className="px-4 pb-3 pt-3">
-        <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-2 text-[15px] font-bold ">{artworkCard.title}</h3>
+        <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-2 text-[15px] font-bold ">{data.title}</h3>
         <p className="mb-3 max-w-[245px] text-[10px] font-medium leading-[1.45] text-[#686b73]">
-          {artworkCard.description}
+          {data.description || fallbackArtworkCard.description}
         </p>
         <div className="flex items-end justify-between">
           <div className="flex items-center gap-2">
-            <img src={artworkCard.avatar} alt="" className="h-[22px] w-[22px] rounded-full object-cover" />
+            <img src={data.artistAvatar || fallbackArtworkCard.avatar} alt="" className="h-[22px] w-[22px] rounded-full object-cover" />
             <div>
               <p className="text-[8px] text-[#8b8d93]">Artist</p>
-              <p className="text-[9px] font-bold text-[#24272d]">{artworkCard.artist}</p>
+              <p className="text-[9px] font-bold text-[#24272d]">{data.artist || fallbackArtworkCard.artist}</p>
             </div>
           </div>
-          <p className="text-[12px] font-bold text-black">${artworkCard.price}</p>
+          <p className="text-[12px] font-bold text-black">${data.price || fallbackArtworkCard.price}</p>
         </div>
       </div>
     </article>
@@ -163,17 +180,17 @@ function ArtistBubble({
   artist,
   compact = false,
 }: {
-  artist: (typeof topArtists)[number];
+  artist: any;
   compact?: boolean;
 }) {
   return (
     <div className="flex min-w-0 flex-col items-center gap-2">
       <img
-        src={artist.avatar}
-        alt={artist.name}
+        src={artist.artistAvatar || artist.avatar || fallbackTopArtists[0].avatar}
+        alt={artist.artist || artist.name}
         className={`${compact ? "h-[75px] w-[75px]" : "h-[88px] w-[88px]"} rounded-full object-cover`}
       />
-      <span className="max-w-full truncate text-center text-[15px] font-medium text-black">{artist.name}</span>
+      <span className="max-w-full truncate text-center text-[15px] font-medium text-black">{artist.artist || artist.name}</span>
     </div>
   );
 }

@@ -3,10 +3,11 @@ import type React from "react";
 import {
   Monitor, Calendar, Image as ImageIcon, Sparkles, PenTool,
   FileImage, RefreshCw, ArrowUpRight, Clock, Layers, Play,
-  Upload, X, CheckCircle2,
+  Upload, X, CheckCircle2, Loader2, LayoutDashboard
 } from "lucide-react";
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { setFrameImage } from "../../../lib/frameStore";
+import { EmptyState } from "./ui/EmptyState";
 
 interface DashboardData {
   profile: { name: string; subtitle: string; location: string; units: number; activeFrames: number };
@@ -213,16 +214,47 @@ function EnterpriseVirtualFrameModal({ onClose }: { onClose: () => void }) {
 
 export default function EnterpriseDashboardView() {
   const [data, setData] = useState<DashboardData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
 
   useEffect(() => {
-    enterpriseApi.getDashboard().then(setData).catch(console.error);
+    enterpriseApi.getDashboard().then((res) => {
+      // Validate the response has required shape, otherwise fallback
+      if (res && res.profile && res.stats) {
+        setData(res);
+      } else {
+        setData(null);
+      }
+    }).catch((err) => {
+      console.error("Dashboard API error", err);
+      setData(null);
+    }).finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return (
+      <div className="mx-auto w-full max-w-[1120px] px-8 py-8 animate-pulse">
+        <div className="mb-8 h-32 rounded-2xl bg-gray-100" />
+        <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {[1, 2, 3, 4].map((i) => <div key={i} className="h-28 rounded-xl bg-gray-50 border border-gray-100" />)}
+        </div>
+        <div className="mb-8 h-20 rounded-xl bg-gray-100" />
+        <div className="grid gap-6 lg:grid-cols-5">
+           <div className="lg:col-span-3 h-64 rounded-xl bg-gray-50 border border-gray-100" />
+           <div className="lg:col-span-2 h-64 rounded-xl bg-gray-50 border border-gray-100" />
+        </div>
+      </div>
+    );
+  }
 
   if (!data) {
     return (
       <div className="mx-auto w-full max-w-[1120px] px-8 py-8">
-        <div className="flex items-center justify-center h-64 text-gray-400 text-sm">Loading dashboard...</div>
+        <EmptyState
+          icon={LayoutDashboard}
+          title="Dashboard Unavailable"
+          description="We couldn't load your dashboard data. Please try again later or contact support."
+        />
       </div>
     );
   }
@@ -253,10 +285,10 @@ export default function EnterpriseDashboardView() {
       <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {stats.map((stat) => (
           <div key={stat.label} className="group relative overflow-hidden rounded-xl border border-[#e8eaef] bg-white p-5 transition-all duration-300 hover:shadow-lg hover:shadow-[#182a4a]/5 hover:-translate-y-0.5">
-            <div className="absolute top-0 right-0 h-20 w-20 rounded-full opacity-[0.06]" style={{ background: stat.color, transform: "translate(30%, -30%)" }} />
+            <div className="absolute top-0 right-0 h-20 w-20 rounded-full opacity-[0.06]" style={{ background: stat.color || "#3b82f6", transform: "translate(30%, -30%)" }} />
             <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400">{stat.label}</p>
             <p className="text-[26px] font-bold text-gray-900">{stat.value}</p>
-            <p className="mt-1 text-[11px] font-semibold" style={{ color: stat.color }}>{stat.delta}</p>
+            <p className="mt-1 text-[11px] font-semibold" style={{ color: stat.color || "#3b82f6" }}>{stat.delta}</p>
           </div>
         ))}
       </div>

@@ -1,7 +1,9 @@
-import { CalendarDays, Check, CreditCard, Package, Search, Users } from "lucide-react";
+import { CalendarDays, Check, CreditCard, Package, Search, Users, Loader2 } from "lucide-react";
+import { useState, useEffect } from "react";
 import type React from "react";
+import { webappApi } from "../../../lib/webappApi";
 
-const plans = [
+const fallbackPlans = [
   {
     name: "Basic Plan",
     description: "Best for those who simply love art.",
@@ -31,6 +33,19 @@ const features = [
 ];
 
 export default function ChoosePlanView() {
+  const [plans, setPlans] = useState<any[]>(fallbackPlans);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    webappApi.getSubscriptionPlans()
+      .then(res => setPlans(res.length ? res : fallbackPlans))
+      .catch((err) => {
+        console.error(err);
+        setPlans(fallbackPlans);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div className="flex w-full justify-center pb-16 pt-5">
       <div className="grid w-full max-w-[1094px] gap-9 rounded-[3px] px-8 py-8 lg:grid-cols-[520px_1fr]">
@@ -44,20 +59,24 @@ export default function ChoosePlanView() {
           </div>
 
           <div className="space-y-6">
-            {plans.map((plan) => (
-              <article
-                key={plan.name}
-                className={`rounded-[16px] border bg-white p-7 ${
-                  plan.active
-                    ? "border-[#9bd8ff] shadow-[0_0_0_6px_#bde4ff,0_10px_22px_rgba(47,123,208,0.16)]"
-                    : "border-[#dddddf] shadow-[0_0_0_6px_#f2f2f2]"
-                }`}
-              >
-                <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-5 text-[22px] font-medium ">{plan.name}</h2>
-                <p className="mb-7 text-[17px] text-[#333333]">{plan.description}</p>
-                <p className="text-[25px] font-semibold text-black">{plan.price}</p>
-              </article>
-            ))}
+            {loading ? (
+              <div className="flex justify-center p-8"><Loader2 className="animate-spin text-blue-500" /></div>
+            ) : (
+              plans.map((plan) => (
+                <article
+                  key={plan.name}
+                  className={`rounded-[16px] border bg-white p-7 ${
+                    plan.active || plan.isPopular
+                      ? "border-[#9bd8ff] shadow-[0_0_0_6px_#bde4ff,0_10px_22px_rgba(47,123,208,0.16)]"
+                      : "border-[#dddddf] shadow-[0_0_0_6px_#f2f2f2]"
+                  }`}
+                >
+                  <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-5 text-[22px] font-medium ">{plan.name}</h2>
+                  <p className="mb-7 text-[17px] text-[#333333]">{plan.description}</p>
+                  <p className="text-[25px] font-semibold text-black">{plan.price}</p>
+                </article>
+              ))
+            )}
 
             <div className="-mt-2 rounded-[8px] bg-[#bde4ff] p-4">
               <div className="mb-4 grid grid-cols-2 gap-3">

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const BASE_URL = "https://deckoviz-web-f.onrender.com";
@@ -43,6 +43,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, [token]);
 
+  // Listen for 401 events from API clients (webappApi, enterpriseApi)
+  // When any API call returns 401, it dispatches this event to auto-open the login modal
+  useEffect(() => {
+    const handleAuthRequired = () => {
+      console.warn("[Auth] 401 received — opening login modal");
+      setIsAuthModalForced(true);
+      setIsAuthModalOpen(true);
+    };
+    window.addEventListener("deckoviz-auth-required", handleAuthRequired);
+    return () => window.removeEventListener("deckoviz-auth-required", handleAuthRequired);
+  }, []);
+
   const refreshProfile = async () => {
     if (!token) return;
     try {
@@ -79,10 +91,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsAuthModalForced(false);
   };
 
-  const openAuthModal = (forced: boolean = false) => {
+  const openAuthModal = useCallback((forced: boolean = false) => {
     setIsAuthModalForced(forced);
     setIsAuthModalOpen(true);
-  };
+  }, []);
+
   const closeAuthModal = () => {
     if (isAuthModalForced) return; // Prevent closing if forced
     setIsAuthModalOpen(false);

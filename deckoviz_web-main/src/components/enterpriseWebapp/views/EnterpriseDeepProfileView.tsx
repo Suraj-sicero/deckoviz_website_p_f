@@ -558,8 +558,27 @@ export default function EnterpriseDeepProfileView({ onBack }: { onBack: () => vo
   const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set(["identity"]));
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [completedSections, setCompletedSections] = useState<Set<string>>(new Set());
+  const [loading, setLoading] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useEffect(() => {
+    import("../../../lib/enterpriseApi").then(({ enterpriseApi }) => {
+      enterpriseApi.getProfile().then((res) => {
+        if (res && res.deepProfileData) {
+          setFormData(res.deepProfileData);
+        }
+      }).catch(console.error).finally(() => setLoading(false));
+    });
+  }, []);
+
+  const handleSave = () => {
+    import("../../../lib/enterpriseApi").then(({ enterpriseApi }) => {
+      enterpriseApi.updateProfile({ deepProfileData: formData })
+        .then(() => alert("Profile saved successfully"))
+        .catch(console.error);
+    });
+  };
 
   // Track completion
   useEffect(() => {
@@ -681,9 +700,9 @@ export default function EnterpriseDeepProfileView({ onBack }: { onBack: () => vo
               Build a comprehensive strategic intelligence profile for Vizzy.
             </p>
           </div>
-          <button className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02] hover:shadow-xl">
+          <button onClick={handleSave} disabled={loading} className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02] hover:shadow-xl disabled:opacity-50">
             <Save size={14} />
-            Save Profile
+            {loading ? "Loading..." : "Save Profile"}
           </button>
         </div>
 

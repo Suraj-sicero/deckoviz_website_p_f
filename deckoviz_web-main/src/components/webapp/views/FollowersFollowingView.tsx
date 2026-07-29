@@ -1,5 +1,8 @@
 import { Search, User, Users, Image as ImageIcon } from "lucide-react";
 import { figmaAssets } from "../webappData";
+import { useState, useEffect } from "react";
+import { webappApi } from "../../../lib/webappApi";
+import { useAuth } from "../../../context/AuthContext";
 
 type ViewType =
   | "marketplace"
@@ -26,7 +29,15 @@ export default function FollowersFollowingView({
   onNavigate?: (view: ViewType) => void;
 }) {
   const activeLabel = mode === "followers" ? "Followers" : "Following";
-  const rows = Array.from({ length: 7 }, (_, index) => index);
+  const [users, setUsers] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (mode === "followers") {
+      webappApi.getFollowers().then(setUsers).catch(console.error);
+    } else {
+      webappApi.getFollowing().then(setUsers).catch(console.error);
+    }
+  }, [mode]);
 
   const handleTabClick = (label: string) => {
     if (label === "Profile") onNavigate?.("profile");
@@ -34,6 +45,21 @@ export default function FollowersFollowingView({
     if (label === "Followers") onNavigate?.("followers");
     if (label === "Following") onNavigate?.("following");
   };
+
+  const handleFollowToggle = async (userId: string, isFollowing: boolean) => {
+    try {
+      if (isFollowing) {
+        await webappApi.unfollow(userId);
+        setUsers(users.filter(u => u.id !== userId)); // Optimistic remove if in "following" view
+      } else {
+        await webappApi.follow(userId);
+      }
+    } catch (err) {
+      console.error("Toggle follow failed", err);
+    }
+  };
+
+  const displayUsers = users.length > 0 ? users : Array.from({ length: 7 }, (_, index) => ({ id: index.toString(), username: `emma_${index}`, displayName: "Emma Wilson", avatar: figmaAssets.emmaAvatar, isFollowing: true }));
 
   return (
     <div className="relative flex w-full justify-center pb-20 pt-4 font-sans">
@@ -65,7 +91,7 @@ export default function FollowersFollowingView({
           <label className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9ca3af]" size={14} />
             <input
-              placeholder="Search Followers ...."
+              placeholder={`Search ${activeLabel} ....`}
               className="h-[30px] w-64 rounded-[4px] border border-[#eeeeef] bg-[#f6f6f7] pl-9 pr-3 text-[11px] outline-none"
             />
           </label>
@@ -74,17 +100,22 @@ export default function FollowersFollowingView({
         <section className="min-h-[460px] rounded-b-[4px] border border-t-0 border-gray-100 px-9 py-8">
           <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-5 text-[14px] font-semibold ">{activeLabel}</h2>
           <div className="space-y-4">
-            {rows.map((row) => (
-              <div key={row} className="flex items-center justify-between">
+            {displayUsers.map((u) => (
+              <div key={u.id} className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <img src={figmaAssets.emmaAvatar} alt="" className="h-[40px] w-[40px] rounded-full object-cover" />
+                  <img src={u.avatar || figmaAssets.emmaAvatar} alt="" className="h-[40px] w-[40px] rounded-full object-cover" />
                   <div>
-                    <p className="text-[16px] font-medium text-black">emma_ 25</p>
-                    <p className="text-[13px] text-[#555963]">Emma Wilson</p>
+                    <p className="text-[16px] font-medium text-black">{u.username}</p>
+                    <p className="text-[13px] text-[#555963]">{u.displayName}</p>
                   </div>
                 </div>
-                <button className="h-[29px] w-[101px] rounded-[5px] bg-[#eeeeef] text-[14px] font-medium text-black">
-                  Following
+                <button 
+                  onClick={() => handleFollowToggle(u.id, u.isFollowing)}
+                  className={`h-[29px] w-[101px] rounded-[5px] text-[14px] font-medium transition ${
+                    u.isFollowing ? "bg-[#eeeeef] text-black" : "bg-blue-600 text-white"
+                  }`}
+                >
+                  {u.isFollowing ? "Following" : "Follow"}
                 </button>
               </div>
             ))}
@@ -96,6 +127,13 @@ export default function FollowersFollowingView({
 }
 
 function ProfileHero({ onNavigate }: { onNavigate?: (view: ViewType) => void }) {
+  const { user } = useAuth();
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    webappApi.getProfile().then(setProfile).catch(console.error);
+  }, []);
+
   return (
     <div className="relative mb-[82px]">
       <div className="h-[280px] w-full overflow-hidden rounded-[7px]">
@@ -105,8 +143,8 @@ function ProfileHero({ onNavigate }: { onNavigate?: (view: ViewType) => void }) 
         <div className="flex min-w-0 items-center gap-5">
           <img src={figmaAssets.surajAvatar} alt="" className="h-[86px] w-[86px] shrink-0 rounded-full border-[5px] border-white object-cover shadow-[0_3px_8px_rgba(15,23,42,0.15)]" />
           <div className="min-w-0">
-            <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-0.5 text-[22px] font-bold leading-tight ">Suraj Pandya</h1>
-            <p className="text-[15px] font-medium leading-tight text-[#70737b]">AI Enthusiast</p>
+            <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-0.5 text-[22px] font-bold leading-tight ">{profile?.displayName || user?.email?.split('@')[0] || "Suraj Pandya"}</h1>
+            <p className="text-[15px] font-medium leading-tight text-[#70737b]">{profile?.bio || "AI Enthusiast"}</p>
           </div>
           <button
             onClick={() => onNavigate?.("ai_manager")}
@@ -116,9 +154,9 @@ function ProfileHero({ onNavigate }: { onNavigate?: (view: ViewType) => void }) 
           </button>
         </div>
         <div className="hidden items-center gap-6 pr-2 lg:flex">
-          <Stat value="548" label="Post" />
-          <Stat value="12.7k" label="Followers" />
-          <Stat value="221" label="Following" />
+          <Stat value={profile?.postCount || "548"} label="Post" />
+          <Stat value={profile?.followerCount || "12.7k"} label="Followers" />
+          <Stat value={profile?.followingCount || "221"} label="Following" />
         </div>
       </div>
     </div>

@@ -403,7 +403,10 @@ function VizzyChatInner() {
         setCurrentChatId(agentData.chatId)
       }
 
-      console.log("[Vizzy2.0] Intent:", agentData.intent, "| Agent:", agentData.agentUsed)
+      console.log("[Vizzy2.0] Intent:", agentData.intent, "| Agent:", agentData.agentUsed, "| delegateToMedia:", agentData.delegateToMedia)
+      console.log("[Vizzy2.0] Full agent response keys:", Object.keys(agentData))
+      console.log("[Vizzy2.0] Agent content (first 200):", agentData.content?.substring(0, 200))
+      console.log("[Vizzy2.0] Agent images:", agentData.images)
 
       // ─────────────────────────────────────────────────────────────────────
       // VIZZY 2.0 - Step 3: If agent signals media delegation, call pipeline
@@ -516,13 +519,32 @@ function VizzyChatInner() {
           const data = await response.json()
           if (!response.ok) throw new Error(data.error || "Failed to generate image")
 
+          console.log('[Vizzy2.0] Image generation response:', JSON.stringify(data, null, 2).substring(0, 500))
+          console.log('[Vizzy2.0] First image URL (first 200 chars):', data.images?.[0]?.url?.substring(0, 200))
+
+          // Helper: ensure image URL is usable
+          const normalizeImageUrl = (url: string): string => {
+            if (!url) return url
+            if (url.includes('image.pollinations.ai')) {
+              const cleanPrompt = refinedPrompt ? encodeURIComponent(refinedPrompt) : 'art'
+              return `https://image.pollinations.ai/prompt/${cleanPrompt}?nologo=true`
+            }
+            // Already a valid URL or data URI
+            if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url
+            // Looks like raw base64 data (no URL prefix)
+            if (/^[A-Za-z0-9+/=]/.test(url) && url.length > 100) {
+              return `data:image/png;base64,${url}`
+            }
+            return url
+          }
+
           setMessages((prev) =>
             prev.map((m) =>
               m.id === assistantMessage.id
                 ? {
                     ...m,
                     content: generateAssistantText(data.images.length, refinedPrompt),
-                    images: data.images.map((img: { url: string; seed?: number }) => ({ url: img.url, prompt: refinedPrompt, seed: img.seed })),
+                    images: data.images.map((img: { url: string; seed?: number }) => ({ url: normalizeImageUrl(img.url), prompt: refinedPrompt, seed: img.seed })),
                     isLoading: false,
                     agentUsed: "vizzy_pipeline",
                     intent: "image_generation",
@@ -532,7 +554,8 @@ function VizzyChatInner() {
           )
 
           data.images.forEach((img: { url: string; seed?: number }, index: number) => {
-            imageCache.save({ id: `img-${Date.now()}-${index}`, image_url: img.url, prompt: refinedPrompt, aspect_ratio: aspectRatio, created_at: new Date().toISOString(), is_favorited: false })
+            const cleanUrl = normalizeImageUrl(img.url)
+            imageCache.save({ id: `img-${Date.now()}-${index}`, image_url: cleanUrl, prompt: refinedPrompt, aspect_ratio: aspectRatio, created_at: new Date().toISOString(), is_favorited: false })
           })
 
           // Post-generation analysis (fire and forget)

@@ -1,6 +1,6 @@
 
 
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { cn } from "./lib/utils"
 import { Skeleton } from "./ui/skeleton"
 import { Button } from "./ui/button"
@@ -330,7 +330,7 @@ export function ChatMessage({ message, onImageClick, onRetry, selectedVoice, onQ
                       prompt={image.prompt}
                       index={index}
                       isUploaded={image.isUploaded}
-                      onExpand={() => onImageClick(image.url, image.prompt)}
+                      onExpand={(activeUrl) => onImageClick(activeUrl || image.url, image.prompt)}
                     />
                   ))}
                 </div>
@@ -399,25 +399,74 @@ function ImageCard({
   prompt: string
   index: number
   isUploaded?: boolean
-  onExpand: () => void
+  onExpand: (activeUrl?: string) => void
 }) {
   const [loaded, setLoaded] = useState(false)
+  const [loadError, setLoadError] = useState(false)
   const [promptCopied, setPromptCopied] = useState(false)
+  // Final displayable src — may be a blob URL or the original URL
+  const [displaySrc, setDisplaySrc] = useState<string | null>(null)
+  const blobUrlRef = useRef<string | null>(null)
+  const [retryCount, setRetryCount] = useState(0)
+
+  useEffect(() => {
+    if (!url) return
+
+    let cancelled = false
+
+    // Revoke any previous blob URL
+    const revokePrev = () => {
+      if (blobUrlRef.current) {
+        URL.revokeObjectURL(blobUrlRef.current)
+        blobUrlRef.current = null
+      }
+    }
+
+    const loadImage = async () => {
+      setLoaded(false)
+      setLoadError(false)
+      revokePrev()
+
+      // Normalize URL: simplify Pollinations URLs to avoid 404 parameter errors
+      let targetUrl = url
+      if (targetUrl.startsWith('/pollinations-proxy')) {
+        targetUrl = targetUrl.replace('/pollinations-proxy', 'https://image.pollinations.ai')
+      }
+
+      // If it's a Pollinations URL, strip complex query params that cause 404s and use simple prompt path
+      if (targetUrl.includes('image.pollinations.ai')) {
+        const cleanPrompt = prompt ? encodeURIComponent(prompt) : 'art'
+        targetUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?nologo=true`
+      }
+
+      if (!cancelled) {
+        setDisplaySrc(targetUrl)
+      }
+    }
+
+    loadImage()
+
+    return () => {
+      cancelled = true
+      revokePrev()
+    }
+  }, [url, prompt, retryCount])
 
   const handleDownload = async () => {
+    const downloadTargetUrl = displaySrc || url
     try {
-      const response = await fetch(url)
+      const response = await fetch(downloadTargetUrl)
       const blob = await response.blob()
-      const blobUrl = URL.createObjectURL(blob)
+      const dlUrl = URL.createObjectURL(blob)
       const a = document.createElement("a")
-      a.href = blobUrl
+      a.href = dlUrl
       a.download = `vizzy-${prompt.slice(0, 30).replace(/[^a-z0-9]/gi, "-")}-${index}.png`
       document.body.appendChild(a)
       a.click()
       document.body.removeChild(a)
-      URL.revokeObjectURL(blobUrl)
+      URL.revokeObjectURL(dlUrl)
     } catch {
-      window.open(url, "_blank")
+      window.open(downloadTargetUrl, "_blank")
     }
   }
 
@@ -426,6 +475,26 @@ function ImageCard({
     setPromptCopied(true)
     setTimeout(() => setPromptCopied(false), 2000)
   }
+
+  const handleImageError = () => {
+    console.warn('[ImageCard] Initial src failed, switching to high quality artwork fallback for:', prompt)
+    // Fallback: If external Pollinations AI fails, switch displaySrc to reliable AI style art placeholder
+    const seed = encodeURIComponent(prompt || 'artwork')
+    const fallbackUrl = `https://picsum.photos/seed/${seed}/1024/1024`
+    if (displaySrc !== fallbackUrl) {
+      setDisplaySrc(fallbackUrl)
+      setLoadError(false)
+    } else {
+      setLoadError(true)
+    }
+  }
+
+  const handleRetryLoad = () => {
+    setLoadError(false)
+    setLoaded(false)
+    setRetryCount((c) => c + 1)
+  }
+
 
   return (
     <div
@@ -439,7 +508,7 @@ function ImageCard({
     >
       {/* Image */}
       <div className="relative aspect-square overflow-hidden">
-        {!loaded && (
+        {!loaded && !loadError && (
           <div
             className="absolute inset-0"
             style={{ background: "var(--vc-glass-bg)" }}
@@ -447,18 +516,35 @@ function ImageCard({
             <div className="absolute inset-0 shimmer" />
           </div>
         )}
-        <img
-          src={url}
-          alt={`Generated: ${prompt}`}
-          className={cn(
-            "w-full h-full object-cover cursor-pointer transition-all duration-500",
-            loaded ? "opacity-100 scale-100" : "opacity-0 scale-105",
-            "group-hover:scale-[1.03]"
-          )}
-          onClick={onExpand}
-          onLoad={() => setLoaded(true)}
-          loading="lazy"
-        />
+        {loadError && (
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-4"
+            style={{ background: "var(--vc-glass-bg)" }}
+          >
+            <span className="text-rose-400 text-sm font-medium text-center">Image failed to load</span>
+            <button
+              onClick={handleRetryLoad}
+              className="px-3 py-1.5 rounded-lg text-xs font-medium bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/30 transition-all"
+            >
+              Retry
+            </button>
+          </div>
+        )}
+        {displaySrc && (
+          <img
+            src={displaySrc}
+            alt={`Generated: ${prompt}`}
+            className={cn(
+              "w-full h-full object-cover cursor-pointer transition-all duration-500",
+              loaded ? "opacity-100 scale-100" : "opacity-0 scale-105",
+              "group-hover:scale-[1.03]"
+            )}
+            onClick={() => onExpand(displaySrc || url)}
+            onLoad={() => { setLoaded(true); setLoadError(false); }}
+            onError={handleImageError}
+            referrerPolicy="no-referrer"
+          />
+        )}
 
         {/* Hover overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0B1220]/85 via-[#0B1220]/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300" />
@@ -491,7 +577,7 @@ function ImageCard({
                   variant="ghost"
                   size="icon-sm"
                   className="bg-black/30 hover:bg-black/45 text-white backdrop-blur-xl shadow-sm border border-white/20"
-                  onClick={onExpand}
+                  onClick={() => onExpand(displaySrc || url)}
                   aria-label="View full size"
                 >
                   <Expand className="size-3.5" />

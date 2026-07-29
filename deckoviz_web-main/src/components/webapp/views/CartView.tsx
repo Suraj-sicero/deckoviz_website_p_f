@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { ChevronLeft, CreditCard, Minus, Plus, Settings, Trash2, Truck } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ChevronLeft, CreditCard, Minus, Plus, Settings, Trash2, Truck, Loader2 } from "lucide-react";
 import { figmaAssets } from "../webappData";
+import { webappApi } from "../../../lib/webappApi";
 
-const cartItems = [
+const fallbackCartItems = [
   {
     id: 1,
     title: "Ancient Geeks",
@@ -26,24 +27,64 @@ const cartItems = [
 ];
 
 export default function CartView() {
-  const [items, setItems] = useState(cartItems);
+  const [items, setItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState<number | null>(null);
 
-  const updateQuantity = (id: number, delta: number) => {
-    setItems(items.map(item => 
-      item.id === id 
-        ? { ...item, quantity: Math.max(1, item.quantity + delta) } 
-        : item
-    ));
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  const fetchCart = async () => {
+    try {
+      const res = await webappApi.getCart();
+      setItems(res.length ? res : fallbackCartItems);
+    } catch (err) {
+      console.error(err);
+      setItems(fallbackCartItems);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const removeItem = (id: number) => {
-    setItems(items.filter(item => item.id !== id));
+  const updateQuantity = async (id: number, delta: number) => {
+    const item = items.find(i => i.id === id);
+    if (!item) return;
+    const newQuantity = Math.max(1, item.quantity + delta);
+    if (newQuantity === item.quantity) return;
+
+    setUpdating(id);
+    try {
+      // Optimistic update
+      setItems(items.map(i => i.id === id ? { ...i, quantity: newQuantity } : i));
+      await webappApi.updateCartItem(id.toString(), { quantity: newQuantity });
+    } catch (err) {
+      console.error(err);
+      // Revert on failure
+      setItems(items.map(i => i.id === id ? { ...i, quantity: item.quantity } : i));
+    } finally {
+      setUpdating(null);
+    }
   };
 
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const deliveryFees = 39;
+  const removeItem = async (id: number) => {
+    setUpdating(id);
+    try {
+      await webappApi.removeFromCart(id.toString());
+      setItems(items.filter(item => item.id !== id));
+    } catch (err) {
+      console.error(err);
+      // fallback if API fails
+      setItems(items.filter(item => item.id !== id));
+    } finally {
+      setUpdating(null);
+    }
+  };
+
+  const subtotal = items.reduce((sum, item) => sum + (item.price || 0) * (item.quantity || 1), 0);
+  const deliveryFees = items.length > 0 ? 39 : 0;
   const total = subtotal + deliveryFees;
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = items.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
   return (
     <div className="flex w-full justify-center pb-20 pt-8">

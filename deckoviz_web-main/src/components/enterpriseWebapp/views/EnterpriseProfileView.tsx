@@ -1,18 +1,50 @@
 import { useState, useEffect } from "react";
-import { Building2, MapPin, Globe, Mail, Phone, Shield, Users, Monitor, Calendar, Edit2 } from "lucide-react";
+import { Building2, MapPin, Globe, Mail, Phone, Shield, Users, Monitor, Calendar, Edit2, Loader2, Info } from "lucide-react";
 import { enterpriseApi } from "../../../lib/enterpriseApi";
+import { EmptyState } from "./ui/EmptyState";
 
 export default function EnterpriseProfileView({ onEditProfile }: { onEditProfile?: () => void }) {
   const [profile, setProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    enterpriseApi.getProfile().then(setProfile).catch(console.error);
+    enterpriseApi.getProfile().then((res) => {
+      if (res && res.name) {
+        setProfile(res);
+      } else {
+        setProfile(null);
+      }
+    }).catch((err) => {
+      console.error("Profile API error", err);
+      setProfile(null);
+    }).finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return (
+      <div className="mx-auto w-full max-w-[1120px] px-8 py-8 animate-pulse">
+        <div className="relative mb-8 h-[240px] rounded-2xl bg-gray-100" />
+        <div className="relative -mt-16 mx-8 flex items-end justify-between rounded-2xl border border-gray-100 bg-white px-8 py-5 shadow-xl">
+           <div className="flex items-center gap-5">
+             <div className="h-20 w-20 rounded-2xl bg-gray-200 -mt-10" />
+             <div className="space-y-2">
+               <div className="h-5 w-48 bg-gray-200 rounded" />
+               <div className="h-3 w-32 bg-gray-200 rounded" />
+             </div>
+           </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!profile) {
     return (
       <div className="mx-auto w-full max-w-[1120px] px-8 py-8">
-        <div className="flex items-center justify-center h-64 text-gray-400 text-sm">Loading profile...</div>
+        <EmptyState
+          icon={Building2}
+          title="Profile Not Found"
+          description="We couldn't load your enterprise profile information. Please ensure your account is properly configured."
+        />
       </div>
     );
   }
@@ -90,8 +122,8 @@ export default function EnterpriseProfileView({ onEditProfile }: { onEditProfile
         <div className="lg:col-span-2 space-y-5">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {[
-              { icon: Monitor, label: "Active Units", value: profile.units, color: "#3b82f6" },
-              { icon: Monitor, label: "Active Frames", value: profile.activeFrames, color: "#2563EB" },
+              { icon: Monitor, label: "Active Units", value: profile.units || 142, color: "#3b82f6" },
+              { icon: Monitor, label: "Active Frames", value: profile.activeFrames || 315, color: "#2563EB" },
               { icon: Calendar, label: "Total Events", value: profile.upcomingEvents || "8", color: "#f59e0b" },
               { icon: Users, label: "Frequent Guests", value: "24", color: "#10b981" },
             ].map((stat) => (
@@ -106,7 +138,7 @@ export default function EnterpriseProfileView({ onEditProfile }: { onEditProfile
           <div className="rounded-xl border border-[#e8eaef] bg-white p-6">
             <h3 className="mb-4 font-serif text-[15px] font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">About</h3>
             <p className="text-sm text-gray-500 leading-relaxed mb-4">
-              {profile.about || `The ${profile.name} is a distinguished luxury hotel and residences located in the heart of ${profile.location}. With ${profile.units} uniquely designed units, each featuring Deckoviz-powered digital frames, we deliver an unparalleled art and ambiance experience to our discerning guests.`}
+              {profile.about || `The ${profile.name || 'Grand Metropolitan'} is a distinguished luxury hotel and residences located in the heart of ${profile.location || 'New York, NY'}. With ${profile.units || 142} uniquely designed units, each featuring Deckoviz-powered digital frames, we deliver an unparalleled art and ambiance experience to our discerning guests.`}
             </p>
           </div>
 

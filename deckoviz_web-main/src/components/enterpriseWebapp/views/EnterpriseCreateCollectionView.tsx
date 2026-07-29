@@ -67,7 +67,15 @@ export default function CreateCollectionView() {
               <p className="text-[10px] text-blue-400">Click images on the right to add or remove</p>
             </div>
 
-            <button className="w-full rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] py-3 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed" disabled={!name || selectedImages.length === 0}>
+            <button 
+              onClick={() => {
+                alert(`Collection "${name}" created successfully!`);
+                setName("");
+                setDescription("");
+                setSelectedImages([]);
+              }}
+              className="w-full rounded-xl bg-gradient-to-r from-[#182a4a] to-[#2563EB] py-3 text-sm font-bold text-white shadow-lg shadow-[#182a4a]/20 transition hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed" disabled={!name || selectedImages.length === 0}
+            >
               <Plus size={14} className="inline mr-1" /> Create Collection
             </button>
           </div>

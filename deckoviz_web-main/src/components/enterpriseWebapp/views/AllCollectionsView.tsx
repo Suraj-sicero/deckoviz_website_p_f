@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { X, Eye, Search } from "lucide-react";
-import { sampleCollections } from "../enterpriseData";
+import { useState, useEffect } from "react";
+import { X, Eye, Search, Loader2, Library } from "lucide-react";
+import { enterpriseApi } from "../../../lib/enterpriseApi";
+import { EmptyState } from "./ui/EmptyState";
 
 const placeholderImages = [
   "/images/webapp/figma/spiral-ocean.jpg",
@@ -14,7 +15,18 @@ const placeholderImages = [
 ];
 
 export default function AllCollectionsView() {
-  const [selectedCollection, setSelectedCollection] = useState<typeof sampleCollections[0] | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<any | null>(null);
+  const [collections, setCollections] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    enterpriseApi.getLibrary().then((res) => {
+      setCollections(res);
+    }).catch((err) => {
+      console.error("Library API error", err);
+      setCollections([]);
+    }).finally(() => setLoading(false));
+  }, []);
 
   if (selectedCollection) {
     return (
@@ -73,30 +85,44 @@ export default function AllCollectionsView() {
       </div>
 
       {/* Collections Grid */}
-      <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {sampleCollections.map((collection) => (
-          <button
-            key={collection.id}
-            onClick={() => setSelectedCollection(collection)}
-            className="group overflow-hidden rounded-2xl border border-[#e8eaef] bg-white text-left transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
-          >
-            <div className="h-[180px] overflow-hidden relative">
-              <img
-                src={collection.cover}
-                alt={collection.title}
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div className="absolute top-3 right-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold text-gray-600 backdrop-blur-sm shadow-sm">
-                {collection.count} items
+      {loading ? (
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="h-64 rounded-2xl border border-gray-100 bg-gray-50/50 p-5 animate-pulse" />
+          ))}
+        </div>
+      ) : collections.length === 0 ? (
+        <EmptyState
+          icon={Library}
+          title="No collections found"
+          description="We couldn't find any collections right now. Please try again later."
+        />
+      ) : (
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {collections.map((collection) => (
+            <button
+              key={collection.id}
+              onClick={() => setSelectedCollection(collection)}
+              className="group overflow-hidden rounded-2xl border border-[#e8eaef] bg-white text-left transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+            >
+              <div className="h-[180px] overflow-hidden relative bg-gray-100">
+                <img
+                  src={collection.cover}
+                  alt={collection.title}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className="absolute top-3 right-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold text-gray-600 backdrop-blur-sm shadow-sm">
+                  {collection.count} items
+                </div>
               </div>
-            </div>
-            <div className="p-5">
-              <h3 className="text-[15px] font-bold text-gray-800 mb-1.5">{collection.title}</h3>
-              <p className="text-[11px] text-gray-400 leading-relaxed line-clamp-2">{collection.description}</p>
-            </div>
-          </button>
-        ))}
-      </div>
+              <div className="p-5">
+                <h3 className="text-[15px] font-bold text-gray-800 mb-1.5">{collection.title}</h3>
+                <p className="text-[11px] text-gray-400 leading-relaxed line-clamp-2">{collection.description}</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

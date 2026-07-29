@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { Plus, MoreHorizontal, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plus, MoreHorizontal, ChevronDown, Loader2 } from "lucide-react";
+import { webappApi } from "../../../lib/webappApi";
 
 /* ───────── DATA ───────── */
 
-const addresses = [
+const fallbackAddresses = [
   {
-    id: 1,
+    id: "1",
     label: "Home",
     phone: "(424) 985-8942",
     street: "114 Glann Rd",
@@ -14,7 +15,7 @@ const addresses = [
     selected: true,
   },
   {
-    id: 2,
+    id: "2",
     label: "Offices",
     phone: "(424) 985-8942",
     street: "114 Glann Rd",
@@ -24,9 +25,9 @@ const addresses = [
   },
 ];
 
-const savedCards = [
+const fallbackCards = [
   {
-    id: 1,
+    id: "1",
     name: "Marisa Lu",
     number: "**** **** **** 4523",
     balance: "$28,678.65",
@@ -36,7 +37,7 @@ const savedCards = [
     type: "VISA",
   },
   {
-    id: 2,
+    id: "2",
     name: "Marisa Lu",
     number: "**** **** **** 4523",
     balance: "$28,678.65",
@@ -50,7 +51,48 @@ const savedCards = [
 /* ═══════════════════════════ COMPONENT ═══════════════════════════ */
 
 export default function PaymentDetailsView() {
-  const [selectedAddress, setSelectedAddress] = useState(1);
+  const [addresses, setAddresses] = useState<any[]>([]);
+  const [savedCards, setSavedCards] = useState<any[]>([]);
+  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([
+      webappApi.getAddresses().catch(() => []),
+      webappApi.getPaymentMethods().catch(() => [])
+    ]).then(([addrRes, cardsRes]) => {
+      const addrs = addrRes.length ? addrRes : fallbackAddresses;
+      setAddresses(addrs);
+      setSavedCards(cardsRes.length ? cardsRes : fallbackCards);
+      
+      const defaultAddr = addrs.find((a: any) => a.selected);
+      if (defaultAddr) setSelectedAddress(defaultAddr.id);
+      else if (addrs.length > 0) setSelectedAddress(addrs[0].id);
+    }).finally(() => setLoading(false));
+  }, []);
+
+  const handleSelectAddress = async (id: string) => {
+    setSelectedAddress(id);
+    try {
+      await webappApi.selectAddress(id);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handlePlaceOrder = async () => {
+    try {
+      await webappApi.createOrder({ addressId: selectedAddress });
+      alert("Order placed successfully!");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to place order.");
+    }
+  };
+
+  if (loading) {
+    return <div className="flex w-full justify-center p-20"><Loader2 className="animate-spin text-blue-500 w-10 h-10" /></div>;
+  }
 
   return (
     <div className="w-full flex justify-center pb-20">
@@ -79,7 +121,7 @@ export default function PaymentDetailsView() {
                 {addresses.map((addr) => (
                   <div
                     key={addr.id}
-                    onClick={() => setSelectedAddress(addr.id)}
+                    onClick={() => handleSelectAddress(addr.id)}
                     className={`rounded-2xl p-5 cursor-pointer transition-all relative ${
                       selectedAddress === addr.id
                         ? "border-2 border-blue-400 bg-blue-50/30 shadow-md"
@@ -92,7 +134,7 @@ export default function PaymentDetailsView() {
                     </button>
 
                     <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-sm font-bold  mb-2">
-                      {addr.label}
+                      {addr.label || addr.street}
                     </h3>
                     <p className="text-sm text-gray-600 mb-1">{addr.phone}</p>
                     <p className="text-sm text-gray-600">{addr.street}</p>
@@ -143,7 +185,7 @@ export default function PaymentDetailsView() {
                         Credit Card
                       </div>
                       <div className="absolute top-4 right-4 mt-3 text-white text-xs font-bold tracking-wider">
-                        VISA
+                        {card.type || "VISA"}
                       </div>
                       <div className="absolute bottom-4 left-4 text-white text-xs font-medium">
                         {card.name}
@@ -162,25 +204,25 @@ export default function PaymentDetailsView() {
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">Card number</span>
                       <span className="text-xs font-medium text-gray-400">
-                        ****
+                        {card.number || "**** **** **** 4523"}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">Balance</span>
                       <span className="text-xs font-bold text-gray-900">
-                        {card.balance}
+                        {card.balance || "$0.00"}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">Currency</span>
                       <span className="text-xs font-medium text-gray-700">
-                        {card.currency}
+                        {card.currency || "USD"}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-xs text-gray-500">Status card</span>
                       <span className="text-xs font-medium text-gray-700">
-                        {card.status}
+                        {card.status || "Active"}
                       </span>
                     </div>
                   </div>
@@ -269,7 +311,7 @@ export default function PaymentDetailsView() {
               </div>
 
               {/* Place Order Button */}
-              <button className="w-full bg-[#3b5bdb] hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5 text-sm">
+              <button onClick={handlePlaceOrder} className="w-full bg-[#3b5bdb] hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5 text-sm">
                 Place Order
               </button>
             </div>

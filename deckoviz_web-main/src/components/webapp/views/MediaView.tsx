@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { ArrowRight, FileText, Folder, Image as ImageIcon, Plus, Sparkles, UploadCloud, Video } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowRight, FileText, Folder, Image as ImageIcon, Plus, Sparkles, UploadCloud, Video, Loader2 } from "lucide-react";
 import { figmaAssets } from "../webappData";
+import { webappApi } from "../../../lib/webappApi";
 
 export default function MediaView() {
   const [activeTab, setActiveTab] = useState("AI Photo Manager");
@@ -32,6 +33,14 @@ export default function MediaView() {
 }
 
 function AIPhotoManager() {
+  const [collections, setCollections] = useState<any[]>([]);
+
+  useEffect(() => {
+    webappApi.getCollections()
+      .then(res => setCollections(res))
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="rounded-3xl p-8">
       <div className="flex items-center gap-3 mb-8">
@@ -45,7 +54,13 @@ function AIPhotoManager() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {[1, 2, 3].map((folder) => (
+        {collections.length > 0 ? collections.map((col) => (
+          <div key={col.id} className="border border-gray-200 p-6 rounded-2xl hover:border-blue-300 hover: transition cursor-pointer group">
+            <Folder className="text-yellow-400 w-10 h-10 mb-4 group-hover:scale-110 transition" />
+            <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif font-bold  mb-1">{col.name}</h3>
+            <p className="text-xs text-gray-500">{col.tags?.join(", ")}</p>
+          </div>
+        )) : [1, 2, 3].map((folder) => (
           <div key={folder} className="border border-gray-200 p-6 rounded-2xl hover:border-blue-300 hover: transition cursor-pointer group">
             <Folder className="text-yellow-400 w-10 h-10 mb-4 group-hover:scale-110 transition" />
             <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif font-bold  mb-1">Generated Artworks #{folder}</h3>
@@ -87,17 +102,45 @@ function AddMedia() {
 }
 
 function CreateCollection() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleCreate = async () => {
+    if (!name) return;
+    setLoading(true);
+    setSuccess(false);
+    try {
+      await webappApi.createCollection({ name, description });
+      setSuccess(true);
+      setName("");
+      setDescription("");
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-2xl rounded-3xl p-8">
       <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-2xl font-bold  mb-6">Create New Collection</h2>
+      
+      {success && (
+        <div className="mb-6 rounded-[8px] bg-green-50 p-4 border border-green-200 text-green-700 font-medium">
+          Collection created successfully!
+        </div>
+      )}
+
       <div className="space-y-6">
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-2">Collection Name</label>
-          <input type="text" placeholder="e.g. Summer Dreams 2026" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input value={name} onChange={e => setName(e.target.value)} type="text" placeholder="e.g. Summer Dreams 2026" className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-2">Description</label>
-          <textarea rows={4} placeholder="Describe the theme and context of this collection..." className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <textarea value={description} onChange={e => setDescription(e.target.value)} rows={4} placeholder="Describe the theme and context of this collection..." className="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
         </div>
         <div>
           <label className="block text-sm font-bold text-gray-700 mb-2">Cover Image</label>
@@ -106,8 +149,13 @@ function CreateCollection() {
             <span className="text-sm font-bold text-blue-600">Browse</span> <span className="text-sm text-gray-500">to upload cover</span>
           </div>
         </div>
-        <button className="w-full bg-gray-900 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-800 flex items-center justify-center gap-2">
-          Create Collection <ArrowRight size={18} />
+        <button 
+          onClick={handleCreate} 
+          disabled={loading || !name}
+          className="w-full bg-gray-900 text-white font-bold py-4 rounded-xl shadow-lg hover:bg-gray-800 flex items-center justify-center gap-2 disabled:opacity-50"
+        >
+          {loading ? <Loader2 size={18} className="animate-spin" /> : <ArrowRight size={18} />}
+          {loading ? "Creating..." : "Create Collection"}
         </button>
       </div>
     </div>
@@ -115,25 +163,43 @@ function CreateCollection() {
 }
 
 function AddImagesToCollection() {
+  const [media, setMedia] = useState<any[]>([]);
+  const [selected, setSelected] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    webappApi.getMedia({ limit: 20 })
+      .then(res => setMedia(res.items || []))
+      .catch(console.error);
+  }, []);
+
+  const toggleSelect = (id: number) => {
+    const next = new Set(selected);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setSelected(next);
+  };
+
+  const displayMedia = media.length > 0 ? media : Array.from({ length: 10 }).map((_, i) => ({ id: i, url: figmaAssets.soloRafting }));
+
   return (
     <div className="rounded-3xl p-8">
       <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-2xl font-bold  mb-2">Add Images to Collection</h2>
-      <p className="text-gray-500 text-sm mb-8">Select multiple artworks to add to 'Summer Dreams 2026'</p>
+      <p className="text-gray-500 text-sm mb-8">Select multiple artworks to add to collection</p>
 
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-8">
-        {[1,2,3,4,5,6,7,8,9,10].map((img) => (
-          <div key={img} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200">
-             <img src={figmaAssets.soloRafting} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Art" />
-             <div className="absolute top-2 right-2 w-6 h-6 rounded-full /80 border border-gray-300 flex items-center justify-center cursor-pointer hover:bg-blue-500 hover:border-blue-500 transition">
-                {/* Select ring */}
+        {displayMedia.map((img) => (
+          <div key={img.id} onClick={() => toggleSelect(img.id)} className={`relative aspect-square rounded-2xl overflow-hidden group border-2 ${selected.has(img.id) ? 'border-blue-500' : 'border-gray-200 cursor-pointer'}`}>
+             <img src={img.url || figmaAssets.soloRafting} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Art" />
+             <div className={`absolute top-2 right-2 w-6 h-6 rounded-full border flex items-center justify-center transition ${selected.has(img.id) ? 'bg-blue-500 border-blue-500 text-white' : 'bg-white/80 border-gray-300 group-hover:border-blue-500'}`}>
+                {selected.has(img.id) && <div className="w-2.5 h-2.5 bg-white rounded-full"></div>}
              </div>
           </div>
         ))}
       </div>
 
       <div className="flex justify-between items-center bg-gray-50 p-4 rounded-2xl border border-gray-200">
-        <span className="font-medium text-gray-600">0 images selected</span>
-        <button className="bg-blue-600 text-white px-8 py-2.5 rounded-xl font-bold hover:bg-blue-700 shadow-md">Add to Collection</button>
+        <span className="font-medium text-gray-600">{selected.size} images selected</span>
+        <button disabled={selected.size === 0} className="bg-blue-600 text-white px-8 py-2.5 rounded-xl font-bold hover:bg-blue-700 shadow-md disabled:opacity-50">Add to Collection</button>
       </div>
     </div>
   );

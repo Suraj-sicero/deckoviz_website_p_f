@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { CalendarDays, Music, Search, Trash2, X } from "lucide-react";
+import { CalendarDays, Music, Search, Trash2, X, Loader2 } from "lucide-react";
 import type React from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { webappApi } from "../../../lib/webappApi";
@@ -30,7 +30,10 @@ export default function CreateCollectionView() {
 
   const addTag = () => {
     const t = tagInput.trim();
-    if (t && !tags.includes(t)) { setTags([...tags, t]); setTagInput(""); }
+    if (t && !tags.includes(t)) {
+      setTags([...tags, t]);
+      setTagInput("");
+    }
   };
 
   const removeTag = (tag: string) => setTags(tags.filter(t => t !== tag));
@@ -96,7 +99,17 @@ export default function CreateCollectionView() {
 
   return (
     <div className="mx-auto w-full max-w-[1090px] px-3 py-9">
-      <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-5 text-[27px] font-semibold tracking-[0.02em] ">Collection Media</h1>
+      <div className="flex items-center justify-between mb-5">
+        <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[27px] font-semibold tracking-[0.02em] ">Collection Media</h1>
+        <button 
+          onClick={handleSave}
+          disabled={saving || !title.trim()}
+          className="flex items-center gap-2 rounded-[7px] bg-[#182a4a] hover:bg-blue-600 transition-colors px-8 py-3 text-[15px] font-medium text-white shadow-md disabled:opacity-50"
+        >
+          {saving ? <Loader2 size={18} className="animate-spin" /> : null}
+          {saving ? "Saving..." : "Create Collection"}
+        </button>
+      </div>
 
       {message && <div className={`mb-4 text-sm font-medium ${message.includes("success") ? "text-green-600" : "text-red-500"}`}>{message}</div>}
 
@@ -107,13 +120,11 @@ export default function CreateCollectionView() {
 
         <Field label="Description">
           <textarea
-            className="min-h-[112px] w-full resize-none rounded-[8px] border border-[#e5e7eb] bg-white px-5 py-4 text-[16px] leading-relaxed shadow-[0_3px_10px_rgba(15,23,42,0.12)] outline-none"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className="min-h-[112px] w-full resize-none rounded-[8px] border border-[#e5e7eb] bg-white px-5 py-4 text-[16px] leading-relaxed shadow-[0_3px_10px_rgba(15,23,42,0.12)] outline-none"
           />
         </Field>
-
-        <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-4 mt-7 text-[19px] font-medium ">Collection Display Period</h2>
         <div className="mb-8 rounded-[14px] border border-[#e5e7eb] p-5">
           <p className="mb-5 text-[16px] font-medium text-black">Time of display</p>
           <div className="grid gap-4 md:grid-cols-2">
@@ -146,14 +157,14 @@ export default function CreateCollectionView() {
             {tags.map((tag) => (
               <span key={tag} className="flex items-center gap-2 rounded-full bg-[#6babee] px-5 py-2 text-[14px] font-medium text-white shadow-md cursor-pointer" onClick={() => removeTag(tag)}>
                 {tag}
-                <X size={15} />
+                <X size={15} className="cursor-pointer" onClick={() => removeTag(tag)} />
               </span>
             ))}
           </div>
           <div className="flex overflow-hidden rounded-[8px] border border-[#e5e7eb]">
             <div className="relative flex-1">
               <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-[#7a7f89]" size={20} />
-              <input className="h-[54px] w-full pl-14 text-[15px] outline-none" placeholder="Search Tags" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }} />
+              <input className="h-[54px] w-full pl-14 text-[15px] outline-none" placeholder="Search Tags or type and press Enter" value={tagInput} onChange={(e) => setTagInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addTag(); } }} />
             </div>
             <button className="w-[130px] bg-[#182a4a] hover:bg-blue-600 transition-colors text-[16px] font-medium text-white" onClick={addTag}>Add Tags</button>
           </div>

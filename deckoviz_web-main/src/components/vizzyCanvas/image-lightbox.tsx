@@ -137,6 +137,7 @@ export function ImageLightbox({ imageUrl, prompt, onClose }: ImageLightboxProps)
             zoomed ? "max-w-[95vw] cursor-zoom-out" : "max-w-[85vw] md:max-w-[70vw]"
           )}
           onClick={() => setZoomed(!zoomed)}
+          referrerPolicy="no-referrer"
         />
 
         {prompt && (

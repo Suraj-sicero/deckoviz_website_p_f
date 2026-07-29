@@ -2,72 +2,80 @@ const BASE = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.co
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
 
-function hdrs(token: string): Record<string, string> {
-  return { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
+function getToken(): string | null {
+  return localStorage.getItem("token");
+}
+
+function authHeaders(overrideToken?: string): Record<string, string> {
+  const token = overrideToken || getToken();
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  return headers;
+}
+
+async function handleResponse(res: Response, method: string, path: string) {
+  if (res.status === 401) {
+    window.dispatchEvent(new CustomEvent("deckoviz-auth-required"));
+    throw new Error("Authentication required. Please log in.");
+  }
+  if (!res.ok) throw new Error(`${method} ${path} failed: ${res.status}`);
+  return res.json();
 }
 
 async function get(path: string, token?: string) {
-  const res = await fetch(`${API}${path}`, { headers: token ? hdrs(token) : {} });
-  if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`);
-  return res.json();
+  const res = await fetch(`${API}${path}`, { headers: authHeaders(token) });
+  return handleResponse(res, "GET", path);
 }
 
 async function post(path: string, body: unknown, token?: string) {
   const res = await fetch(`${API}${path}`, {
     method: "POST",
-    headers: hdrs(token || ""),
+    headers: authHeaders(token),
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`POST ${path} failed: ${res.status}`);
-  return res.json();
+  return handleResponse(res, "POST", path);
 }
 
 async function put(path: string, body: unknown, token?: string) {
   const res = await fetch(`${API}${path}`, {
     method: "PUT",
-    headers: hdrs(token || ""),
+    headers: authHeaders(token),
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`PUT ${path} failed: ${res.status}`);
-  return res.json();
+  return handleResponse(res, "PUT", path);
 }
 
 async function del(path: string, token?: string) {
-  const res = await fetch(`${API}${path}`, { method: "DELETE", headers: token ? hdrs(token) : {} });
-  if (!res.ok) throw new Error(`DELETE ${path} failed: ${res.status}`);
-  return res.json();
+  const res = await fetch(`${API}${path}`, { method: "DELETE", headers: authHeaders(token) });
+  return handleResponse(res, "DELETE", path);
 }
 
-async function homeGet(path: string, token: string) {
-  const res = await fetch(`${HOME}${path}`, { headers: hdrs(token) });
-  if (!res.ok) throw new Error(`GET ${path} failed: ${res.status}`);
-  return res.json();
+async function homeGet(path: string, token?: string) {
+  const res = await fetch(`${HOME}${path}`, { headers: authHeaders(token) });
+  return handleResponse(res, "GET", path);
 }
 
-async function homePost(path: string, body: unknown, token: string) {
+async function homePost(path: string, body: unknown, token?: string) {
   const res = await fetch(`${HOME}${path}`, {
     method: "POST",
-    headers: hdrs(token),
+    headers: authHeaders(token),
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`POST ${path} failed: ${res.status}`);
-  return res.json();
+  return handleResponse(res, "POST", path);
 }
 
-async function homePut(path: string, body: unknown, token: string) {
+async function homePut(path: string, body: unknown, token?: string) {
   const res = await fetch(`${HOME}${path}`, {
     method: "PUT",
-    headers: hdrs(token),
+    headers: authHeaders(token),
     body: JSON.stringify(body),
   });
-  if (!res.ok) throw new Error(`PUT ${path} failed: ${res.status}`);
-  return res.json();
+  return handleResponse(res, "PUT", path);
 }
 
-async function homeDel(path: string, token: string) {
-  const res = await fetch(`${HOME}${path}`, { method: "DELETE", headers: hdrs(token) });
-  if (!res.ok) throw new Error(`DELETE ${path} failed: ${res.status}`);
-  return res.json();
+async function homeDel(path: string, token?: string) {
+  const res = await fetch(`${HOME}${path}`, { method: "DELETE", headers: authHeaders(token) });
+  return handleResponse(res, "DELETE", path);
 }
 
 export const webappApi = {
@@ -130,20 +138,20 @@ export const webappApi = {
   deleteCollection: (id: string, token?: string) => del(`/collections/${id}`, token),
 
   /* Collection Items (via home routes) */
-  addCollectionItem: (collectionId: string, data: { itemId: string; itemType: string }, token: string) =>
+  addCollectionItem: (collectionId: string, data: { itemId: string; itemType: string }, token?: string) =>
     homePost(`/collections/${collectionId}/items`, data, token),
-  removeCollectionItem: (collectionId: string, itemId: string, token: string) =>
+  removeCollectionItem: (collectionId: string, itemId: string, token?: string) =>
     homeDel(`/collections/${collectionId}/items/${itemId}`, token),
 
   /* Daily Queue (via home routes) */
-  getQueue: (token: string) => homeGet("/daily-queue", token),
-  createQueueItem: (data: { collectionId?: string; collectionName: string; startTime: string; endTime: string; dayOfWeek?: number; active?: boolean }, token: string) =>
+  getQueue: (token?: string) => homeGet("/daily-queue", token),
+  createQueueItem: (data: { collectionId?: string; collectionName: string; startTime: string; endTime: string; dayOfWeek?: number; active?: boolean }, token?: string) =>
     homePost("/daily-queue", data, token),
-  updateQueueItem: (id: string, data: unknown, token: string) =>
+  updateQueueItem: (id: string, data: unknown, token?: string) =>
     homePut(`/daily-queue/${id}`, data, token),
-  deleteQueueItem: (id: string, token: string) =>
+  deleteQueueItem: (id: string, token?: string) =>
     homeDel(`/daily-queue/${id}`, token),
-  reorderQueue: (orderedIds: string[], token: string) =>
+  reorderQueue: (orderedIds: string[], token?: string) =>
     homePut("/daily-queue/reorder", { orderedIds }, token),
 
   /* Media */
@@ -157,12 +165,14 @@ export const webappApi = {
   },
 
   /* Upload Media (multipart to /api/upload) */
-  uploadMedia: async (file: File, token: string): Promise<{ id: string; url: string; fileName: string; fileSize: number }> => {
+  uploadMedia: async (file: File, token?: string): Promise<{ id: string; url: string; fileName: string; fileSize: number }> => {
     const formData = new FormData();
     formData.append("file", file);
+    const headers = authHeaders(token);
+    delete headers["Content-Type"]; // Let browser set boundary
     const res = await fetch(`${BASE}/api/upload`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
+      headers,
       body: formData,
     });
     if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
@@ -171,7 +181,7 @@ export const webappApi = {
   },
 
   /* Delete Media (via home routes) */
-  deleteMedia: (id: string, token: string) => homeDel(`/media/${id}`, token),
+  deleteMedia: (id: string | number, token?: string) => homeDel(`/media/${id}`, token),
 
   /* Search History */
   getSearchHistory: (token?: string) => get("/search-history", token),

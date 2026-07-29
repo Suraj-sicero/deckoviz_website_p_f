@@ -65,6 +65,20 @@ import ProfileView from "./views/ProfileView";
 import SearchView from "./views/SearchView";
 import { setFrameImage } from "../../lib/frameStore";
 import { webappApi } from "../../lib/webappApi";
+import {
+  HomeDailyQueueView,
+  HomeEventsView,
+  HomeRitualsView,
+  HomeMembersView,
+  HomeCurationsView,
+  HomeMusicDashboardView,
+  HomeMusicLibraryView,
+  HomeNarrationsView,
+  HomeSavedNotesView,
+  HomeShortFilmView,
+  HomeCreativeJournalView,
+  HomeSettingsView,
+} from "./HomeViews";
 
 type ViewType =
   | "drawing_room"
@@ -310,22 +324,22 @@ export default function DeckovizWebapp() {
             {activeView === "vgc" && <VGCPlaceholder />}
             {activeView === "create_collection" && <CreateCollectionView />}
             {activeView === "vcc" && <VCCPlaceholder />}
-            {activeView === "daily_queue" && <DailyQueuePlaceholder />}
+            {activeView === "daily_queue" && <HomeDailyQueueView />}
             {activeView === "all_media" && <AllMediaPlaceholder />}
             {activeView === "explore_library" && <ExploreLibraryPlaceholder />}
-            {activeView === "settings" && <SettingsPlaceholder />}
+            {activeView === "settings" && <HomeSettingsView />}
             {activeView === "all_collections" && <AIPhotoManagerView />}
             {activeView === "deep_profile" && <ProfileView onNavigate={setActiveView} />}
-            {activeView === "events" && <EventsPlaceholder />}
-            {activeView === "rituals" && <RitualsPlaceholder />}
-            {activeView === "members" && <MembersPlaceholder />}
-            {activeView === "curations" && <CurationsPlaceholder />}
-            {activeView === "music_dashboard" && <MusicDashboardPlaceholder />}
-            {activeView === "music_library" && <MusicLibraryPlaceholder />}
-            {activeView === "narrations" && <NarrationsPlaceholder />}
-            {activeView === "saved_notes" && <SavedNotesPlaceholder />}
-            {activeView === "short_film" && <ShortFilmPlaceholder />}
-            {activeView === "creative_journal" && <CreativeJournalPlaceholder />}
+            {activeView === "events" && <HomeEventsView />}
+            {activeView === "rituals" && <HomeRitualsView />}
+            {activeView === "members" && <HomeMembersView />}
+            {activeView === "curations" && <HomeCurationsView />}
+            {activeView === "music_dashboard" && <HomeMusicDashboardView />}
+            {activeView === "music_library" && <HomeMusicLibraryView />}
+            {activeView === "narrations" && <HomeNarrationsView />}
+            {activeView === "saved_notes" && <HomeSavedNotesView />}
+            {activeView === "short_film" && <HomeShortFilmView />}
+            {activeView === "creative_journal" && <HomeCreativeJournalView />}
             {activeView === "profile" && <ProfileView onNavigate={setActiveView} />}
             {activeView === "marketplace" && <MarketplaceView mode="home" />}
             {activeView === "add" && <AddContentTabs />}

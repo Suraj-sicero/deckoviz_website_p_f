@@ -1,7 +1,6 @@
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image as ImageIcon, Video, Palette, Music, Eye, Trash2, UploadCloud, Plus } from "lucide-react";
-import { useAuth } from "../../../context/AuthContext";
-import { webappApi } from "../../../lib/webappApi";
+import { homeApi } from "../../../lib/homeApi";
 
 const mediaTypes = [
   { icon: <ImageIcon size={14} />, label: "Images" },
@@ -10,50 +9,51 @@ const mediaTypes = [
   { icon: <Music size={14} />, label: "Audio" },
 ];
 
-interface MediaFile {
-  id: string;
-  image: string;
-  name: string;
-}
-
 export default function AddMediaView() {
-  const { token } = useAuth();
-  const [files, setFiles] = useState<MediaFile[]>([]);
-  const [hoveredFile, setHoveredFile] = useState<string | null>(null);
+  const [files, setFiles] = useState<any[]>([]);
+  const [hoveredFile, setHoveredFile] = useState<string | number | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
-  const [uploading, setUploading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const fetchMedia = useCallback(async () => {
-    if (!token) return;
-    try {
-      const data = await webappApi.getMedia({ limit: 50 }, token);
-      setFiles(data.items.map((m: any) => ({ id: m.id, image: m.mediaUrl, name: m.fileName || "uploaded" })));
-    } catch { /* ignore */ }
-  }, [token]);
-
-  useEffect(() => { fetchMedia(); }, [fetchMedia]);
-
-  const uploadFiles = async (fileList: FileList | File[]) => {
-    if (!token) return;
-    setUploading(true);
-    const newFiles: MediaFile[] = [];
-    for (const file of Array.from(fileList)) {
-      try {
-        const result = await webappApi.uploadMedia(file, token);
-        newFiles.push({ id: result.id, image: result.url, name: result.fileName });
-      } catch { /* skip failed uploads */ }
-    }
-    setFiles(prev => [...newFiles, ...prev]);
-    setUploading(false);
+  const fetchMedia = () => {
+    homeApi.getMedia()
+      .then(res => setFiles(Array.isArray(res) ? res : res.rows || []))
+      .catch(console.error);
   };
 
-  const handleRemoveFile = async (id: string) => {
-    if (!token) return;
+  useEffect(() => {
+    fetchMedia();
+  }, []);
+
+  const handleUpload = async (uploadFiles: FileList | null) => {
+    if (!uploadFiles || uploadFiles.length === 0) return;
+    setIsUploading(true);
+
     try {
-      await webappApi.deleteMedia(id, token);
+      for (let i = 0; i < uploadFiles.length; i++) {
+        const formData = new FormData();
+        formData.append("file", uploadFiles[i]);
+        await homeApi.uploadMedia(formData);
+      }
+      fetchMedia();
+    } catch (e) {
+      console.error(e);
+      alert("Failed to upload some files.");
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
+
+  const handleRemoveFile = async (id: string | number) => {
+    try {
       setFiles(files.filter(f => f.id !== id));
-    } catch { /* ignore */ }
+      await homeApi.deleteMedia(id);
+    } catch (e) {
+      console.error(e);
+      fetchMedia(); // Revert
+    }
   };
 
   return (
@@ -71,10 +71,14 @@ export default function AddMediaView() {
             isDragActive 
               ? "border-blue-400 bg-blue-50/50 shadow-blue-500/10" 
               : "border-gray-200 hover:border-blue-300"
-          }`}
+          } ${isUploading ? "opacity-50 pointer-events-none cursor-wait" : ""}`}
           onDragOver={(e) => { e.preventDefault(); setIsDragActive(true); }}
           onDragLeave={() => setIsDragActive(false)}
-          onDrop={(e) => { e.preventDefault(); setIsDragActive(false); if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files); }}
+          onDrop={(e) => { 
+            e.preventDefault(); 
+            setIsDragActive(false); 
+            handleUpload(e.dataTransfer.files); 
+          }}
         >
           <div className="flex flex-col items-center py-8">
             {/* Upload Icon */}
@@ -83,15 +87,19 @@ export default function AddMediaView() {
             </div>
             
             <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold  mb-2">
-              Drag and drop files here, or{" "}
-              <button 
-                onClick={() => fileInputRef.current?.click()}
-                className="text-blue-600 hover:text-blue-700 underline underline-offset-2 transition"
-              >
-                Browse
-              </button>
+              {isUploading ? "Uploading files..." : (
+                <>
+                  Drag and drop files here, or{" "}
+                  <button 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="text-blue-600 hover:text-blue-700 underline underline-offset-2 transition"
+                  >
+                    Browse
+                  </button>
+                </>
+              )}
             </h3>
-            <p className="text-gray-400 text-sm mb-5">{uploading ? "Uploading..." : "Upload multiple artworks at once. Max file size of 20MB per file."}</p>
+            <p className="text-gray-400 text-sm mb-5">{isUploading ? "Uploading..." : "Upload multiple artworks at once. Max file size of 20MB per file."}</p>
             
             {/* Media Type Icons */}
             <div className="flex items-center gap-6">
@@ -108,36 +116,40 @@ export default function AddMediaView() {
             type="file" 
             multiple 
             accept="image/*,video/*,audio/*"
-            className="hidden" 
-            onChange={(e) => { if (e.target.files?.length) uploadFiles(e.target.files); e.target.value = ""; }}
+            className="hidden"
+            onChange={(e) => handleUpload(e.target.files)}
           />
         </div>
 
         {/* Upload Files Grid */}
         {files.length > 0 && (
           <div className="px-2">
-            <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold  mb-5">Upload Files ({files.length})</h2>
+            <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold  mb-5">Uploaded Files ({files.length})</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5">
               {files.map((file) => (
                 <div key={file.id} className="relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer"
                   onMouseEnter={() => setHoveredFile(file.id)}
                   onMouseLeave={() => setHoveredFile(null)}
                 >
-                  <img 
-                    src={file.image} 
-                    alt={file.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  />
+                  {file.mediaType?.startsWith('video') ? (
+                    <video src={file.url || file.mediaUrl} className="w-full h-full object-cover" />
+                  ) : (
+                    <img 
+                      src={file.url || file.mediaUrl || "/images/webapp/figma/abstract-wave-wide.jpg"} 
+                      alt={file.filename || file.name || "Media"} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                    />
+                  )}
                   
                   {/* Hover Overlay */}
                   <div className={`absolute inset-0 bg-black/40 flex items-center justify-center gap-3 transition-opacity duration-200 ${
                     hoveredFile === file.id ? "opacity-100" : "opacity-0"
                   }`}>
-                    <button className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-700 hover:bg-white transition shadow-md">
+                    <button onClick={() => window.open(file.url || file.mediaUrl, '_blank')} className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-700 hover:bg-white transition shadow-md">
                       <Eye size={18} />
                     </button>
                     <button 
-                      onClick={() => handleRemoveFile(file.id)}
+                      onClick={(e) => { e.stopPropagation(); handleRemoveFile(file.id); }}
                       className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-700 hover:bg-red-50 hover:text-red-500 transition shadow-md"
                     >
                       <Trash2 size={18} />
