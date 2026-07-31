@@ -3,6 +3,10 @@ import { ArrowRight, FileText, Folder, Image as ImageIcon, Plus, Sparkles, Uploa
 import { figmaAssets } from "../webappData";
 import { webappApi } from "../../../lib/webappApi";
 
+import AddMediaView from "./AddMediaView";
+import CreateCollectionView from "./CreateCollectionView";
+import AddImagesToCollectionView from "./AddImagesToCollectionView";
+
 export default function MediaView() {
   const [activeTab, setActiveTab] = useState("AI Photo Manager");
 
@@ -25,9 +29,9 @@ export default function MediaView() {
       </div>
 
       {activeTab === "AI Photo Manager" && <AIPhotoManager />}
-      {activeTab === "Add Media" && <AddMedia />}
-      {activeTab === "Create Collection" && <CreateCollection />}
-      {activeTab === "Add Images to Collection" && <AddImagesToCollection />}
+      {activeTab === "Add Media" && <AddMediaView />}
+      {activeTab === "Create Collection" && <CreateCollectionView />}
+      {activeTab === "Add Images to Collection" && <AddImagesToCollectionView />}
     </div>
   );
 }

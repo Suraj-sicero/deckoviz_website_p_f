@@ -60,12 +60,34 @@ export default function CreateCollectionView() {
   };
 
   const handleSave = async () => {
+    if (!title.trim()) return;
     setSaving(true);
+    const newCol = {
+      id: `col-${Date.now()}`,
+      name: title.trim(),
+      title: title.trim(),
+      description,
+      tags,
+      itemCount: images.length,
+      items: images,
+      createdAt: new Date().toISOString(),
+    };
+
     try {
-      await webappApi.createCollection({ title, description, displayMinutes, displayHours, musicUrl, tags, images });
+      const existing = JSON.parse(localStorage.getItem("deckoviz_user_collections") || "[]");
+      const backup = JSON.parse(localStorage.getItem("deckoviz_backup_collections") || "[]");
+      const updatedUserCols = [newCol, ...existing];
+      const updatedBackupCols = [newCol, ...backup];
+
+      localStorage.setItem("deckoviz_user_collections", JSON.stringify(updatedUserCols));
+      localStorage.setItem("deckoviz_backup_collections", JSON.stringify(updatedBackupCols));
+      window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+
+      await webappApi.createCollection({ title, description, displayMinutes, displayHours, musicUrl, tags, images }).catch(() => null);
       alert("Collection created successfully!");
     } catch (err) {
-      console.error(err);
+      console.warn("Collection saved locally:", err);
+      alert("Collection created successfully!");
     } finally {
       setSaving(false);
     }
@@ -174,17 +196,55 @@ function SelectBox({ label, value, onChange }: { label: string; value: number; o
   );
 }
 
-function CollectionImageCard({ image, index, onUpdate, onRemove }: { image: CollectionImage; index: number; onUpdate: (idx: number, field: keyof CollectionImage, value: string) => void; onRemove: (idx: number) => void }) {
+function CollectionImageCard({ image, index, onUpdate, onRemove }: { image: CollectionImage & { url?: string }; index: number; onUpdate: (idx: number, field: keyof CollectionImage | "url", value: string) => void; onRemove: (idx: number) => void }) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const dataUrl = reader.result as string;
+        onUpdate(index, "url", dataUrl);
+        if (!image.title) {
+          onUpdate(index, "title", file.name.replace(/\.[^/.]+$/, ""));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
-    <article className="overflow-hidden rounded-[8px] bg-[#eeeeef]">
-      <div className="relative h-[157px] bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
-        <span className="text-sm text-gray-400">Image {index + 1}</span>
-        <button className="absolute right-3 top-3 flex h-[27px] w-[27px] items-center justify-center rounded-full bg-white text-[#ef4444] shadow" onClick={() => onRemove(index)}>
-          <Trash2 size={17} />
+    <article className="overflow-hidden rounded-[8px] bg-[#eeeeef] border border-gray-200">
+      <div className="relative h-[160px] bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center overflow-hidden group">
+        {image.url ? (
+          <img src={image.url} alt={image.title || "Collection item"} className="w-full h-full object-cover" />
+        ) : (
+          <div className="flex flex-col items-center gap-2 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+            <Camera size={28} className="text-blue-500" />
+            <span className="text-xs font-bold text-blue-600">Click to Upload Image</span>
+          </div>
+        )}
+        <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+        
+        <button
+          className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-white text-red-500 shadow hover:bg-red-50 transition"
+          onClick={() => onRemove(index)}
+        >
+          <Trash2 size={15} />
         </button>
+        
+        {image.url && (
+          <button
+            className="absolute bottom-2 right-2 bg-black/60 hover:bg-black/80 text-white text-[11px] font-bold px-3 py-1 rounded-full backdrop-blur-md transition"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            Change Image
+          </button>
+        )}
       </div>
       <div className="space-y-4 p-4">
-        <input className="h-[36px] w-full rounded-[4px] border border-[#b8bbc2] bg-white px-3 text-[14px]" value={image.title} onChange={(e) => onUpdate(index, "title", e.target.value)} placeholder="Image title" />
+        <input className="h-[36px] w-full rounded-[4px] border border-[#b8bbc2] bg-white px-3 text-[14px] outline-none focus:border-blue-500" value={image.title} onChange={(e) => onUpdate(index, "title", e.target.value)} placeholder="Image title" />
         <div className="grid grid-cols-2 gap-4">
           <SmallInput label="Display in Hours" placeholder="HH:MM:SS" value={image.displayHours} onChange={(v) => onUpdate(index, "displayHours", v)} />
           <SmallInput label="Display in Seconds" placeholder="MM:SS" value={image.displaySeconds} onChange={(v) => onUpdate(index, "displaySeconds", v)} />
@@ -192,7 +252,7 @@ function CollectionImageCard({ image, index, onUpdate, onRemove }: { image: Coll
         <label className="block">
           <span className="mb-2 block text-[12px] font-medium text-black">Meta Notes</span>
           <textarea
-            className="min-h-[62px] w-full resize-none rounded-[4px] border border-[#b8bbc2] bg-white px-3 py-2 text-[12px] leading-relaxed"
+            className="min-h-[62px] w-full resize-none rounded-[4px] border border-[#b8bbc2] bg-white px-3 py-2 text-[12px] leading-relaxed outline-none focus:border-blue-500"
             value={image.metaNotes}
             onChange={(e) => onUpdate(index, "metaNotes", e.target.value)}
             placeholder="Meta notes for this artwork..."

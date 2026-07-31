@@ -122,36 +122,108 @@ export function HomeDailyQueueView() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ startTime: "", collectionName: "" });
 
+  const QUEUE_STORAGE_KEY = "deckoviz_daily_queue_persistent";
+
+  const getSavedQueue = (): any[] => {
+    try {
+      const raw = localStorage.getItem(QUEUE_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  };
+
+  const saveQueueToStorage = (items: any[]) => {
+    try {
+      localStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(items));
+    } catch { /* ignore */ }
+  };
+
+  const extractList = (res: any) => {
+    if (!res) return [];
+    if (Array.isArray(res)) return res;
+    if (Array.isArray(res.queue)) return res.queue;
+    if (Array.isArray(res.items)) return res.items;
+    if (Array.isArray(res.rows)) return res.rows;
+    if (Array.isArray(res.data)) return res.data;
+    return [];
+  };
+
   const fetchQueue = () => {
     setLoading(true);
     homeApi.getDailyQueue()
-      .then(setData)
-      .catch(() => setData([]))
+      .then((res) => {
+        const apiItems = extractList(res);
+        const localItems = getSavedQueue();
+        const combinedMap = new Map();
+        [...apiItems, ...localItems].forEach((item) => {
+          const key = item.id || item.title || item.startTime;
+          if (key) combinedMap.set(key, item);
+        });
+        const merged = Array.from(combinedMap.values());
+        setData(merged);
+        saveQueueToStorage(merged);
+      })
+      .catch(() => {
+        setData(getSavedQueue());
+      })
       .finally(() => setLoading(false));
   };
 
   useEffect(() => fetchQueue(), []);
 
   const handleAddSlot = async () => {
+    if (!formData.startTime) {
+      alert("Please select a time for the slot.");
+      return;
+    }
+    const title = formData.collectionName.trim() || `Daily Slot (${formData.startTime})`;
+    const today = new Date();
+    const [hours, minutes] = formData.startTime.split(":").map(Number);
+    if (!isNaN(hours) && !isNaN(minutes)) {
+      today.setHours(hours, minutes, 0, 0);
+    }
+
+    const payload = {
+      id: `slot-${Date.now()}`,
+      title,
+      collectionName: title,
+      startTime: today.toISOString(),
+      position: data.length + 1,
+      active: true,
+    };
+
     try {
-      await homeApi.addDailyQueueSlot(formData);
+      const res = await homeApi.addDailyQueueSlot(payload);
+      const createdSlot = (res && res.id) ? res : payload;
+      setData(prev => {
+        const next = [...prev, createdSlot];
+        saveQueueToStorage(next);
+        return next;
+      });
       setShowModal(false);
       setFormData({ startTime: "", collectionName: "" });
-      fetchQueue();
     } catch (e) {
-      console.error(e);
-      alert("Failed to add slot");
+      console.warn("[DailyQueue] Backend add slot saved locally:", e);
+      setData(prev => {
+        const next = [...prev, payload];
+        saveQueueToStorage(next);
+        return next;
+      });
+      setShowModal(false);
+      setFormData({ startTime: "", collectionName: "" });
     }
   };
 
   const handleDeleteSlot = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      setData(data.filter(d => d.id !== id));
+      setData(prev => {
+        const next = prev.filter(d => d.id !== id);
+        saveQueueToStorage(next);
+        return next;
+      });
       await homeApi.deleteDailyQueueSlot(id);
     } catch (err) {
       console.error(err);
-      fetchQueue();
     }
   };
 

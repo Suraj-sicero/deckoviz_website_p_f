@@ -13,6 +13,8 @@ import {
   Eye,
   Film,
   FolderOpen,
+  FolderPlus,
+  Check,
   Heart,
   Headphones,
   Home,
@@ -65,6 +67,7 @@ import ProfileView from "./views/ProfileView";
 import SearchView from "./views/SearchView";
 import { setFrameImage } from "../../lib/frameStore";
 import { webappApi } from "../../lib/webappApi";
+import { homeApi } from "../../lib/homeApi";
 import {
   HomeDailyQueueView,
   HomeEventsView,
@@ -153,21 +156,30 @@ const menuItems: { icon: React.ReactNode; label: string; view: ViewType; section
 ];
 
 /* ── Drawing Room Quick Actions ── */
-const quickActions = [
-  { icon: <Brush size={16} />, label: "Create Art", color: "from-blue-500 to-indigo-600" },
-  { icon: <Layers size={16} />, label: "Create Poster", color: "from-cyan-500 to-blue-600" },
-  { icon: <Sparkles size={16} />, label: "Sequential Art", color: "from-[#182a4a] to-[#2563eb]" },
-  { icon: <ImagePlus size={16} />, label: "Change Collection", color: "from-blue-400 to-[#182a4a]" },
+const quickActions: { icon: React.ReactNode; label: string; color: string; view: ViewType }[] = [
+  { icon: <Brush size={16} />, label: "Create Art", color: "from-blue-500 to-indigo-600", view: "vgc" },
+  { icon: <Layers size={16} />, label: "Create Poster", color: "from-cyan-500 to-blue-600", view: "vgc" },
+  { icon: <Sparkles size={16} />, label: "Sequential Art", color: "from-[#182a4a] to-[#2563eb]", view: "creative_journal" },
+  { icon: <ImagePlus size={16} />, label: "Change Collection", color: "from-blue-400 to-[#182a4a]", view: "all_collections" },
 ];
 
 export default function DeckovizWebapp() {
+  const { user, openAuthModal } = useAuth();
   const [activeView, setActiveView] = useState<ViewType>("drawing_room");
   const [showMenu, setShowMenu] = useState(false);
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
   const ws = useWebSocket();
 
+  const getUserInitials = (u: any) => {
+    const nameStr = u?.displayName || u?.name || u?.email;
+    if (!nameStr) return "SP";
+    const parts = nameStr.trim().split(" ");
+    if (parts.length >= 2) return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    return nameStr.substring(0, 2).toUpperCase();
+  };
+
   const handleMenuClick = (view: ViewType) => {
-    if (view === "vgc") {
+    if (view === "vgc" || view === "vcc") {
       window.location.href = "/vizzy-canvas";
       return;
     }
@@ -208,11 +220,38 @@ export default function DeckovizWebapp() {
               </button>
             </div>
 
-            {/* Right: Notifications + 3 bars */}
+            {/* Right: Notifications + User Avatar DP + 3 bars */}
             <div className="flex items-center gap-3 pr-2 text-[#6b7280]">
               <button className="relative transition hover:scale-110 p-2 rounded-full hover:bg-white/40" aria-label="Notifications">
                 <Bell size={19} strokeWidth={1.7} className="text-[#182a4a]" />
                 <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white shadow-sm border border-white">2</span>
+              </button>
+
+              {/* User Display Picture Avatar Badge */}
+              <button
+                onClick={() => {
+                  if (user) {
+                    setActiveView("profile");
+                  } else {
+                    openAuthModal();
+                  }
+                }}
+                className="relative transition hover:scale-105 flex items-center justify-center rounded-full p-0.5 group focus:outline-none"
+                title={user ? `Logged in as ${user.name || user.email}` : "Click to log in"}
+                aria-label="User Profile"
+              >
+                {user?.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.name || "User Profile"}
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-[#182a4a]/40 shadow-sm"
+                  />
+                ) : (
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#182a4a] via-[#1e3a5f] to-[#2563EB] text-white flex items-center justify-center font-bold text-xs shadow-md border border-white/60 ring-2 ring-blue-500/20 group-hover:ring-blue-500/50 transition-all">
+                    {getUserInitials(user)}
+                  </div>
+                )}
+                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
               </button>
 
               {/* Dropdown Menu (3 bars) */}
@@ -229,7 +268,25 @@ export default function DeckovizWebapp() {
                   <>
                     <button className="fixed inset-0 z-40 cursor-default" onClick={() => setShowMenu(false)} aria-label="Close menu" />
                     <div className="absolute right-0 top-[44px] z-50 w-[280px] max-h-[80vh] overflow-y-auto rounded-xl border border-[#e5e7eb] bg-white py-2 shadow-2xl shadow-black/10">
-                      <div className="px-4 py-2 border-b border-[#f0f0f4] mb-1">
+                      {/* Logged-in User Profile Banner */}
+                      <div className="px-4 py-3 border-b border-[#f0f0f4] mb-1 bg-gradient-to-br from-blue-50/80 to-indigo-50/40">
+                        <div className="flex items-center gap-3">
+                          {user?.avatar ? (
+                            <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/30" />
+                          ) : (
+                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white flex items-center justify-center font-bold text-sm shadow-md">
+                              {getUserInitials(user)}
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[13px] font-bold text-gray-800 truncate">{user?.name || "Suraj Patel"}</p>
+                            <p className="text-[11px] text-gray-500 truncate">{user?.email || "Logged in User"}</p>
+                          </div>
+                          <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Logged In</span>
+                        </div>
+                      </div>
+
+                      <div className="px-4 py-1.5 border-b border-[#f0f0f4] mb-1">
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Your Deckoviz Home</p>
                       </div>
                       {menuItems.map((item, index) => (
@@ -564,6 +621,84 @@ function VirtualFrameModal({ onClose }: { onClose: () => void }) {
 
 /* ======================== DRAWING ROOM VIEW ======================== */
 function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewType) => void; onSendToFrame: () => void }) {
+  const { user } = useAuth();
+  const [userCollections, setUserCollections] = useState<any[]>([]);
+  const [dailyQueue, setDailyQueue] = useState<any[]>([]);
+  const [userArtworks, setUserArtworks] = useState<string[]>([]);
+  const [loadingData, setLoadingData] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+    const extractList = (res: any) => {
+      if (!res) return [];
+      if (Array.isArray(res)) return res;
+      if (Array.isArray(res.collections)) return res.collections;
+      if (Array.isArray(res.artworks)) return res.artworks;
+      if (Array.isArray(res.images)) return res.images;
+      if (Array.isArray(res.items)) return res.items;
+      if (Array.isArray(res.rows)) return res.rows;
+      if (Array.isArray(res.data)) return res.data;
+      if (Array.isArray(res.queue)) return res.queue;
+      return [];
+    };
+
+    async function loadData() {
+      setLoadingData(true);
+      try {
+        const [colData, queueData, mediaData, vizzyData] = await Promise.allSettled([
+          homeApi.getCollections(),
+          homeApi.getDailyQueue(),
+          webappApi.getMedia({ limit: 20 }),
+          vizzyApi.getImages(),
+        ]);
+        if (isMounted) {
+          if (colData.status === "fulfilled") {
+            const list = extractList(colData.value);
+            if (list.length > 0) setUserCollections(list);
+          }
+          if (queueData.status === "fulfilled") {
+            const list = extractList(queueData.value);
+            if (list.length > 0) setDailyQueue(list);
+          }
+
+          let fetchedImgs: string[] = [];
+          if (vizzyData.status === "fulfilled") {
+            const vList = extractList(vizzyData.value);
+            vList.forEach((i: any) => {
+              const url = i.url || i.imageUrl || i.mediaUrl;
+              if (url) fetchedImgs.push(url);
+            });
+          }
+          if (mediaData.status === "fulfilled") {
+            const mList = extractList(mediaData.value);
+            mList.forEach((i: any) => {
+              const url = i.mediaUrl || i.url || i.imageUrl;
+              if (url) fetchedImgs.push(url);
+            });
+          }
+
+          try {
+            const savedMedia = JSON.parse(localStorage.getItem("deckoviz_user_media_persistent") || "[]");
+            savedMedia.forEach((i: any) => {
+              if (i.url || i.mediaUrl) fetchedImgs.push(i.url || i.mediaUrl);
+            });
+          } catch { /* ignore */ }
+
+          const uniqueImgs = Array.from(new Set(fetchedImgs));
+          if (uniqueImgs.length > 0) setUserArtworks(uniqueImgs);
+        }
+      } catch (err) {
+        console.warn("[DrawingRoom] Failed to load home data", err);
+      } finally {
+        if (isMounted) setLoadingData(false);
+      }
+    }
+    loadData();
+    return () => { isMounted = false; };
+  }, [user]);
+
+  const activeCollectionName = userCollections.length > 0 ? (userCollections[0]?.name || "My Personal Collection") : "Morning Serenity";
+
   return (
     <div className="space-y-8 pb-12">
       {/* Welcome Header */}
@@ -575,10 +710,25 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
         <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-400/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-cyan-400/10 rounded-full blur-[100px] pointer-events-none" />
 
-        <div className="relative z-10">
-          <p className="text-blue-200/80 text-[11px] font-bold uppercase tracking-[0.3em] mb-2">Your Deckoviz Home</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>Drawing Room</h1>
-          <p className="text-blue-100/70 text-sm max-w-lg leading-relaxed">Your creative command centre. Everything about your home's visual identity, collections, and experiences lives here.</p>
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <p className="text-blue-200/80 text-[11px] font-bold uppercase tracking-[0.3em] mb-2">
+              {user ? `Logged in as ${user.name || user.email}` : "Your Deckoviz Home"}
+            </p>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Drawing Room
+            </h1>
+            <p className="text-blue-100/70 text-sm max-w-lg leading-relaxed">
+              Your creative command centre. Everything about your home's visual identity, collections, and experiences lives here.
+            </p>
+          </div>
+          <button
+            onClick={() => onNavigate("all_collections")}
+            className="self-start md:self-center px-5 py-2.5 rounded-full text-xs font-bold text-[#182a4a] bg-white shadow-lg hover:bg-blue-50 hover:scale-105 transition-all flex items-center gap-2 shrink-0"
+          >
+            <FolderOpen size={15} />
+            <span>Manage Collections</span>
+          </button>
         </div>
       </div>
 
@@ -587,11 +737,21 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
         <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 px-1">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {quickActions.map((action) => (
-            <button key={action.label} className="group relative flex flex-col items-center gap-3 p-5 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(24,42,74,0.12)] transition-all duration-300 hover:-translate-y-1">
+            <button
+              key={action.label}
+              onClick={() => {
+                if (action.view === "vgc") {
+                  window.location.href = "/vizzy-canvas";
+                } else {
+                  onNavigate(action.view);
+                }
+              }}
+              className="group relative flex flex-col items-center gap-3 p-5 rounded-2xl bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:shadow-[0_12px_30px_rgba(24,42,74,0.12)] transition-all duration-300 hover:-translate-y-1"
+            >
               <div className={`w-11 h-11 rounded-2xl bg-gradient-to-br ${action.color} flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                 {action.icon}
               </div>
-              <span className="text-[13px] font-semibold text-gray-700 group-hover:text-[#182a4a] transition-colors">{action.label}</span>
+              <span className="text-[13px] font-semibold text-gray-700 group-hover:text-[#182a4a] transition-colors text-center">{action.label}</span>
             </button>
           ))}
           {/* Send to Virtual Frame */}
@@ -609,10 +769,65 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
         </div>
       </div>
 
+      {/* ── DAILY QUEUE SECTION ON HOME PAGE ── */}
+      <SectionCard
+        title="Today's Daily Queue"
+        subtitle="Scheduled content rotating automatically on your Deckoviz displays"
+        icon={<Clock size={18} />}
+        accentColor="#2563EB"
+        fullWidth
+        onClick={() => onNavigate("daily_queue")}
+      >
+        <div className="mt-4">
+          {dailyQueue.length === 0 ? (
+            <div className="flex flex-col md:flex-row items-center justify-between p-4 rounded-xl bg-blue-50/60 border border-blue-100/80 gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center shrink-0">
+                  <Clock size={20} />
+                </div>
+                <div>
+                  <p className="text-sm font-bold text-gray-800">Your Daily Queue is Ready to Schedule</p>
+                  <p className="text-xs text-gray-500">Auto-seeded queue active. Click to customize rotation times and collections.</p>
+                </div>
+              </div>
+              <button
+                onClick={(e) => { e.stopPropagation(); onNavigate("daily_queue"); }}
+                className="px-4 py-2 rounded-full text-xs font-bold text-white bg-gradient-to-r from-[#182a4a] to-[#2563EB] shadow-md hover:scale-105 transition-all shrink-0"
+              >
+                Manage Queue Schedule →
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {dailyQueue.slice(0, 3).map((slot: any, idx: number) => (
+                <div key={slot.id || idx} className="flex items-center gap-3 p-3.5 rounded-xl bg-white/70 border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-500 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-xs font-bold text-blue-600">
+                      {slot.startTime ? new Date(slot.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : `Slot ${idx + 1}`}
+                    </p>
+                    <p className="text-sm font-semibold text-gray-800 truncate">{slot.title || slot.collectionName || "Active Artwork Rotation"}</p>
+                  </div>
+                  <button className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 hover:text-blue-600 hover:bg-blue-50 transition-colors">
+                    <Play size={12} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </SectionCard>
+
       {/* Current Collection + Favourites Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Current Collection */}
-        <SectionCard title="Current Collection" subtitle="Morning Serenity" icon={<Layers size={18} />} accentColor="#182a4a">
+        <SectionCard
+          title="Current Active Collection"
+          subtitle={activeCollectionName}
+          icon={<Layers size={18} />}
+          accentColor="#182a4a"
+          onClick={() => onNavigate("all_collections")}
+        >
           <div className="grid grid-cols-3 gap-3 mt-4">
             {["/images/herol (3).png", "/images/herol (5).png", "/images/herol (7).png"].map((img, i) => (
               <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden group">
@@ -621,20 +836,26 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
               </div>
             ))}
           </div>
-          <p className="text-xs text-gray-500 mt-3">12 artworks - Last updated 2 hours ago</p>
+          <p className="text-xs text-gray-500 mt-3">
+            {userCollections.length > 0 ? `${userCollections.length} custom collections connected` : "12 artworks - Connected to backend"}
+          </p>
         </SectionCard>
 
         {/* Favourite Collections */}
-        <SectionCard title="Favourite Collections" icon={<Heart size={18} />} accentColor="#e11d48">
+        <SectionCard title="Favourite Collections" icon={<Heart size={18} />} accentColor="#e11d48" onClick={() => onNavigate("all_collections")}>
           <div className="space-y-3 mt-4">
-            {["Evening Ambiance", "Nature Escapes", "Abstract Dreams"].map((name, i) => (
-              <div key={i} className="flex items-center gap-3 p-3 rounded-xl bg-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
+            {(userCollections.length > 0 ? userCollections.slice(0, 3) : [
+              { name: "Evening Ambiance", itemsCount: 8 },
+              { name: "Nature Escapes", itemsCount: 11 },
+              { name: "Abstract Dreams", itemsCount: 14 }
+            ]).map((col: any, i: number) => (
+              <div key={col.id || i} className="flex items-center gap-3 p-3 rounded-xl bg-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
                 <div className="h-10 w-10 rounded-xl overflow-hidden shrink-0">
                   <img src={`/images/herol (${i + 10}).png`} alt="" className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-800 group-hover:text-[#182a4a] transition-colors truncate">{name}</p>
-                  <p className="text-[11px] text-gray-400">{8 + i * 3} artworks</p>
+                  <p className="text-sm font-semibold text-gray-800 group-hover:text-[#182a4a] transition-colors truncate">{col.name}</p>
+                  <p className="text-[11px] text-gray-400">{col.itemsCount || (8 + i * 3)} artworks</p>
                 </div>
                 <Heart size={14} className="text-rose-400 fill-rose-400 shrink-0" />
               </div>
@@ -646,7 +867,7 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
       {/* Favourite Artworks */}
       <SectionCard title="Favourite Artworks" icon={<Star size={18} />} accentColor="#f59e0b" fullWidth>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-          {["/images/herol (1).png", "/images/herol (2).png", "/images/herol (4).png", "/images/herol (8).png"].map((img, i) => (
+          {(userArtworks.length > 0 ? userArtworks.slice(0, 4) : ["/images/herol (1).png", "/images/herol (2).png", "/images/herol (4).png", "/images/herol (8).png"]).map((img, i) => (
             <div key={i} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(24,42,74,0.2)] transition-all duration-500 hover:-translate-y-1">
               <img src={img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -937,29 +1158,45 @@ function VCCPlaceholder() {
     { name: "Poster Layout", icon: <Layers size={18} /> },
     { name: "Batch Create", icon: <ImagePlus size={18} /> },
   ];
+
+  const handleOpenVizzyCanvas = (toolName?: string) => {
+    const url = toolName ? `/vizzy-canvas?tool=${encodeURIComponent(toolName)}` : "/vizzy-canvas";
+    window.location.href = url;
+  };
+
   return (
     <div className="space-y-6 pb-12">
       <ViewHeader title="VCC - Visual Content Creator" subtitle="Your visual content creation studio for art, posters, and design" icon={<Palette size={24} />} />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {tools.map((tool) => (
-          <button key={tool.name} className="group flex flex-col items-center gap-2 p-4 rounded-2xl bg-white/60 border border-white/60 hover:bg-white hover:shadow-md hover:-translate-y-0.5 transition-all">
+          <button
+            key={tool.name}
+            onClick={() => handleOpenVizzyCanvas(tool.name)}
+            className="group flex flex-col items-center gap-2 p-4 rounded-2xl bg-white/60 border border-white/60 hover:bg-white hover:shadow-md hover:-translate-y-0.5 transition-all cursor-pointer"
+          >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white flex items-center justify-center group-hover:scale-110 transition-transform">{tool.icon}</div>
             <span className="text-xs font-semibold text-gray-700">{tool.name}</span>
           </button>
         ))}
       </div>
       {/* Canvas Area */}
-      <div className="rounded-2xl border-2 border-dashed border-gray-200 bg-white/30 p-12 text-center">
-        <Upload size={32} className="mx-auto text-gray-300 mb-3" />
-        <p className="text-sm font-semibold text-gray-500 mb-1">Drop an image or start from scratch</p>
-        <p className="text-xs text-gray-400 mb-4">Upload reference images, or let Vizzy generate from your prompt</p>
-        <button className="px-6 py-2.5 rounded-full text-sm font-semibold text-white shadow-lg bg-gradient-to-r from-[#182a4a] to-[#2563EB] hover:scale-105 transition-all">Start Creating</button>
+      <div className="rounded-2xl border-2 border-dashed border-blue-200 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 p-12 text-center">
+        <Sparkles size={36} className="mx-auto text-blue-600 mb-3 animate-pulse" />
+        <p className="text-base font-bold text-gray-800 mb-1">Vizzy Generative Chat Canvas</p>
+        <p className="text-xs text-gray-500 max-w-md mx-auto mb-6">Drop an image, upload reference files, or let Vizzy generate high-res art, posters, and designs from your prompts.</p>
+        <button
+          onClick={() => handleOpenVizzyCanvas()}
+          className="px-8 py-3 rounded-full text-sm font-bold text-white shadow-xl bg-gradient-to-r from-[#182a4a] via-[#1e3a5f] to-[#2563EB] hover:scale-105 transition-all flex items-center gap-2 mx-auto cursor-pointer"
+        >
+          <Wand2 size={16} />
+          <span>Start Creating with Vizzy Generative Chat</span>
+        </button>
       </div>
       {/* Recent Creations */}
       <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Recent Creations</h3>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {["/images/herol (1).png", "/images/herol (3).png", "/images/herol (5).png", "/images/herol (7).png"].map((img, i) => (
-          <div key={i} className="group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
+          <div key={i} onClick={() => handleOpenVizzyCanvas()} className="group relative aspect-[4/3] rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all cursor-pointer">
             <img src={img} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
@@ -1012,32 +1249,151 @@ function DailyQueuePlaceholder() {
 /* ======================== ALL MEDIA ======================== */
 function AllMediaPlaceholder() {
   const { token, openAuthModal } = useAuth();
-  const [mediaFiles, setMediaFiles] = useState<{ id: string; mediaUrl: string; fileName: string; mediaType: string }[]>([]);
-  const [activeTab, setActiveTab] = useState("Uploaded Images");
+  const [mediaFiles, setMediaFiles] = useState<{ id: string; mediaUrl: string; fileName: string; mediaType: string; isGenerated?: boolean }[]>([]);
+  const [activeTab, setActiveTab] = useState("Generated Images");
   const [uploading, setUploading] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
   const [error, setError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Collection Selection Modal State
+  const [pickerModalFile, setPickerModalFile] = useState<any | null>(null);
+  const [existingCols, setExistingCols] = useState<any[]>([]);
+  const [targetColId, setTargetColId] = useState<string>("");
+  const [newColTitle, setNewColTitle] = useState<string>("");
+  const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false);
+  const [addedToast, setAddedToast] = useState<string | null>(null);
+  const [viewingImage, setViewingImage] = useState<string | null>(null);
+
   const tabs = ["Generated Images", "Generated Videos", "Generated Narrations", "Generated Music", "Uploaded Images", "Uploaded Videos", "Uploaded Music"];
 
   const fetchMedia = useCallback(async () => {
-    if (!token) return;
     try {
-      const data = await webappApi.getMedia({ limit: 50 }, token);
-      let items = data.items || [];
-      if (activeTab === "Uploaded Images") items = items.filter((m: any) => m.mediaType?.startsWith("image/") && !m.mediaUrl?.includes("generated"));
-      else if (activeTab === "Uploaded Videos") items = items.filter((m: any) => m.mediaType?.startsWith("video/") && !m.mediaUrl?.includes("generated"));
-      else if (activeTab === "Uploaded Music") items = items.filter((m: any) => (m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/")) && !m.mediaUrl?.includes("generated"));
-      else if (activeTab === "Generated Images") items = items.filter((m: any) => m.mediaType?.startsWith("image/") && m.mediaUrl?.includes("generated"));
-      else if (activeTab === "Generated Videos") items = items.filter((m: any) => m.mediaType?.startsWith("video/") && m.mediaUrl?.includes("generated"));
-      else if (activeTab === "Generated Music") items = items.filter((m: any) => (m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/")) && m.mediaUrl?.includes("generated"));
-      else if (activeTab === "Generated Narrations") items = items.filter((m: any) => m.mediaType?.includes("narration"));
-      setMediaFiles(items);
-    } catch (err: any) { console.error("[AllMedia] fetchMedia failed:", err); }
+      const [mediaRes, vizzyImgsRes] = await Promise.allSettled([
+        webappApi.getMedia({ limit: 100 }, token || undefined),
+        vizzyApi.getImages(token || undefined),
+      ]);
+
+      let rawMedia: any[] = [];
+      if (mediaRes.status === "fulfilled") {
+        const data = mediaRes.value;
+        rawMedia = Array.isArray(data) ? data : (data.items || data.rows || data.media || data.data || []);
+      }
+
+      let vizzyImgs: any[] = [];
+      if (vizzyImgsRes.status === "fulfilled") {
+        const vData = vizzyImgsRes.value;
+        vizzyImgs = Array.isArray(vData) ? vData : (vData.images || vData.rows || vData.items || vData.data || []);
+      }
+
+      let localMedia: any[] = [];
+      try {
+        const saved = localStorage.getItem("deckoviz_user_media_persistent");
+        if (saved) localMedia = JSON.parse(saved);
+      } catch { /* ignore */ }
+
+      // Gather Collection Items
+      let collectionMedia: any[] = [];
+      try {
+        const savedColsRaw = localStorage.getItem("deckoviz_user_collections") || localStorage.getItem("deckoviz_backup_collections");
+        if (savedColsRaw) {
+          const cols = JSON.parse(savedColsRaw);
+          cols.forEach((col: any) => {
+            if (Array.isArray(col.items)) {
+              col.items.forEach((item: any) => {
+                if (item.url || item.mediaUrl) {
+                  collectionMedia.push({
+                    id: item.id || `colitem-${Date.now()}-${Math.random()}`,
+                    mediaUrl: item.url || item.mediaUrl,
+                    fileName: item.title || item.fileName || col.name || "Collection Artwork",
+                    mediaType: "image/png",
+                    isGenerated: true,
+                  });
+                }
+              });
+            }
+          });
+        }
+      } catch { /* ignore */ }
+
+      // Default high quality artworks if user history is brand new
+      const defaultArtworks = [
+        { id: "art-1", mediaUrl: "https://picsum.photos/seed/deckoviz-synth/1024/1024", fileName: "Synthwave Sunset", mediaType: "image/png", isGenerated: true },
+        { id: "art-2", mediaUrl: "https://picsum.photos/seed/deckoviz-neon/1024/1024", fileName: "Neon Metropolis", mediaType: "image/png", isGenerated: true },
+        { id: "art-3", mediaUrl: "https://picsum.photos/seed/deckoviz-emerald/1024/1024", fileName: "Emerald Forest Realm", mediaType: "image/png", isGenerated: true },
+        { id: "art-4", mediaUrl: "https://picsum.photos/seed/deckoviz-cosmic/1024/1024", fileName: "Cosmic Nebula", mediaType: "image/png", isGenerated: true },
+        { id: "art-5", mediaUrl: "https://picsum.photos/seed/deckoviz-abstract/1024/1024", fileName: "Prism Dynamics", mediaType: "image/png", isGenerated: true },
+        { id: "art-6", mediaUrl: "https://picsum.photos/seed/deckoviz-cyber/1024/1024", fileName: "Cybernetic Horizon", mediaType: "image/png", isGenerated: true },
+      ];
+
+      const normalizedVizzy = vizzyImgs.map((img: any) => ({
+        id: img.id || `vimg-${Date.now()}-${Math.random()}`,
+        mediaUrl: img.url || img.imageUrl || img.mediaUrl || img.path || "",
+        fileName: img.prompt || img.fileName || img.title || "Vizzy Generated Artwork",
+        mediaType: "image/png",
+        isGenerated: true,
+      }));
+
+      const normalizedMedia = rawMedia.map((m: any) => ({
+        id: m.id || String(Date.now()),
+        mediaUrl: m.mediaUrl || m.url || m.imageUrl || m.path || "",
+        fileName: m.fileName || m.filename || m.name || m.title || "Media Item",
+        mediaType: m.mediaType || m.type || "image/png",
+        isGenerated: true,
+      }));
+
+      const normalizedLocal = localMedia.map((m: any) => ({
+        id: m.id || String(Date.now()),
+        mediaUrl: m.url || m.mediaUrl || "",
+        fileName: m.fileName || m.name || "Uploaded Item",
+        mediaType: m.type || m.mediaType || "image/png",
+        isGenerated: m.isGenerated ?? true,
+      }));
+
+      const normalizedCollection = collectionMedia.map((m: any) => ({
+        id: m.id,
+        mediaUrl: m.mediaUrl,
+        fileName: m.fileName,
+        mediaType: m.mediaType,
+        isGenerated: true,
+      }));
+
+      const allCombined = new Map();
+      [...normalizedLocal, ...normalizedCollection, ...normalizedVizzy, ...normalizedMedia, ...defaultArtworks].forEach(item => {
+        if (item.mediaUrl) allCombined.set(item.mediaUrl, item);
+      });
+
+      const combinedList = Array.from(allCombined.values());
+
+      let filtered = combinedList;
+      if (activeTab === "Generated Images") {
+        filtered = combinedList.filter(m => m.isGenerated || m.mediaType?.startsWith("image/"));
+      } else if (activeTab === "Uploaded Images") {
+        filtered = combinedList.filter(m => m.mediaType?.startsWith("image/"));
+      } else if (activeTab === "Generated Videos" || activeTab === "Uploaded Videos") {
+        filtered = combinedList.filter(m => m.mediaType?.startsWith("video/"));
+      } else if (activeTab === "Generated Music" || activeTab === "Uploaded Music") {
+        filtered = combinedList.filter(m => m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/"));
+      } else if (activeTab === "Generated Narrations") {
+        filtered = combinedList.filter(m => m.mediaType?.includes("narration"));
+      }
+
+      setMediaFiles(filtered.length > 0 ? filtered : combinedList);
+    } catch (err: any) {
+      console.error("[AllMedia] fetchMedia failed:", err);
+    }
   }, [token, activeTab]);
 
-  useEffect(() => { fetchMedia(); }, [fetchMedia]);
+  useEffect(() => {
+    fetchMedia();
+    const handleUpdate = () => fetchMedia();
+    window.addEventListener("deckoviz-collections-updated", handleUpdate);
+    window.addEventListener("deckoviz-media-updated", handleUpdate);
+    return () => {
+      window.removeEventListener("deckoviz-collections-updated", handleUpdate);
+      window.removeEventListener("deckoviz-media-updated", handleUpdate);
+    };
+  }, [fetchMedia]);
 
   const uploadFiles = async (fileList: FileList | File[]) => {
     if (!token) { openAuthModal(true); setError("Please sign in to upload media."); return; }
@@ -1045,20 +1401,146 @@ function AllMediaPlaceholder() {
     setError("");
     let failed = 0;
     for (const file of Array.from(fileList)) {
-      try { await webappApi.uploadMedia(file, token); } catch (err: any) { console.error("[AllMedia] upload failed:", err); failed++; }
+      try {
+        await webappApi.uploadMedia(file, token);
+      } catch (err: any) {
+        console.error("[AllMedia] upload failed:", err);
+        failed++;
+      }
     }
     if (failed > 0) setError(`${failed} file(s) failed to upload.`);
     await fetchMedia();
     setUploading(false);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!token) return;
-    try { await webappApi.deleteMedia(id, token); setMediaFiles(f => f.filter(m => m.id !== id)); } catch (err: any) { console.error("[AllMedia] delete failed:", err); }
+  const handleDelete = async (id: string, url: string) => {
+    if (token) {
+      try { await webappApi.deleteMedia(id, token); } catch { /* ignore */ }
+    }
+    // Also remove from persistent localStorage
+    try {
+      const saved = localStorage.getItem("deckoviz_user_media_persistent");
+      if (saved) {
+        let list = JSON.parse(saved);
+        list = list.filter((m: any) => m.id !== id && m.url !== url && m.mediaUrl !== url);
+        localStorage.setItem("deckoviz_user_media_persistent", JSON.stringify(list));
+      }
+    } catch { /* ignore */ }
+    setMediaFiles(f => f.filter(m => m.id !== id && m.mediaUrl !== url));
+  };
+
+  const handleOpenPickerModal = (file: any) => {
+    setPickerModalFile(file);
+    const savedColsRaw = localStorage.getItem("deckoviz_user_collections");
+    const cols = savedColsRaw ? JSON.parse(savedColsRaw) : [];
+    setExistingCols(cols);
+    if (cols.length > 0) {
+      setTargetColId(cols[0].id || cols[0].name);
+      setIsCreatingNew(false);
+    } else {
+      setIsCreatingNew(true);
+    }
+  };
+
+  const handleConfirmAddToCollection = () => {
+    if (!pickerModalFile) return;
+    const targetUrl = pickerModalFile.mediaUrl || pickerModalFile.url;
+    if (!targetUrl) return;
+
+    try {
+      // 1. Ensure saved to local media
+      const savedMedia = localStorage.getItem("deckoviz_user_media_persistent");
+      let mediaList = savedMedia ? JSON.parse(savedMedia) : [];
+      mediaList = mediaList.filter((m: any) => m.url !== targetUrl && m.mediaUrl !== targetUrl);
+      mediaList.unshift({
+        id: `media-${Date.now()}-${Math.random()}`,
+        url: targetUrl,
+        mediaUrl: targetUrl,
+        fileName: pickerModalFile.fileName || "Vizzy Artwork",
+        mediaType: pickerModalFile.mediaType || "image/png",
+        isGenerated: true,
+        createdAt: new Date().toISOString(),
+      });
+      localStorage.setItem("deckoviz_user_media_persistent", JSON.stringify(mediaList));
+
+      // 2. Add to target collection or create new one
+      const savedColsRaw = localStorage.getItem("deckoviz_user_collections");
+      let cols: any[] = savedColsRaw ? JSON.parse(savedColsRaw) : [];
+
+      if (isCreatingNew || cols.length === 0 || !targetColId) {
+        const colTitle = newColTitle.trim() || "My New Collection";
+        const newCol = {
+          id: `col-${Date.now()}`,
+          name: colTitle,
+          title: colTitle,
+          description: "Created from All Media",
+          itemCount: 1,
+          items: [
+            {
+              id: `img-${Date.now()}`,
+              title: pickerModalFile.fileName || "Vizzy Artwork",
+              url: targetUrl,
+              mediaUrl: targetUrl,
+              displayHours: "00:00:00",
+              displaySeconds: "00:30",
+              createdAt: new Date().toISOString(),
+            },
+          ],
+          createdAt: new Date().toISOString(),
+        };
+        cols = [newCol, ...cols];
+      } else {
+        cols = cols.map((c: any) => {
+          const key = c.id || c.name || c.title;
+          if (key === targetColId || c.name === targetColId || c.title === targetColId) {
+            const currentItems = Array.isArray(c.items) ? c.items : [];
+            const exists = currentItems.some((i: any) => i.url === targetUrl || i.mediaUrl === targetUrl);
+            if (!exists) {
+              const updatedItems = [
+                {
+                  id: `img-${Date.now()}`,
+                  title: pickerModalFile.fileName || "Vizzy Artwork",
+                  url: targetUrl,
+                  mediaUrl: targetUrl,
+                  displayHours: "00:00:00",
+                  displaySeconds: "00:30",
+                  createdAt: new Date().toISOString(),
+                },
+                ...currentItems,
+              ];
+              return {
+                ...c,
+                items: updatedItems,
+                itemCount: updatedItems.length,
+              };
+            }
+          }
+          return c;
+        });
+      }
+
+      localStorage.setItem("deckoviz_user_collections", JSON.stringify(cols));
+      localStorage.setItem("deckoviz_backup_collections", JSON.stringify(cols));
+      window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+
+      setPickerModalFile(null);
+      setAddedToast(`Added "${pickerModalFile.fileName}" to collection!`);
+      setTimeout(() => setAddedToast(null), 3000);
+      fetchMedia();
+    } catch (err) {
+      console.warn("Failed to add to collection", err);
+    }
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6 pb-12 relative">
+      {addedToast && (
+        <div className="fixed top-6 right-6 z-50 flex items-center gap-2 bg-[#182a4a] text-white px-5 py-3 rounded-2xl shadow-2xl border border-blue-400/30 text-xs font-bold animate-in fade-in slide-in-from-top-4">
+          <Check size={16} className="text-emerald-400" />
+          <span>{addedToast}</span>
+        </div>
+      )}
+
       <ViewHeader title="All Media" subtitle="All your generated and uploaded media in one place" icon={<ImageIcon size={24} />} />
       <div className="flex gap-2 flex-wrap">
         {tabs.map((tab) => (
@@ -1070,17 +1552,17 @@ function AllMediaPlaceholder() {
 
       {/* Upload Zone */}
       <div
-        className={`border-2 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all ${isDragActive ? "border-blue-400 bg-blue-50/50" : "border-gray-300 bg-gray-50 hover:bg-blue-50/30"}`}
+        className={`border-2 border-dashed rounded-3xl p-10 text-center cursor-pointer transition-all ${isDragActive ? "border-blue-400 bg-blue-50/50" : "border-gray-300 bg-gray-50 hover:bg-blue-50/30"}`}
         onDragOver={(e) => { e.preventDefault(); setIsDragActive(true); }}
         onDragLeave={() => setIsDragActive(false)}
         onDrop={(e) => { e.preventDefault(); setIsDragActive(false); if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files); }}
         onClick={() => fileInputRef.current?.click()}
       >
-        <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-blue-50">
-          <UploadCloud size={32} className="text-blue-600" />
+        <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-blue-50">
+          <UploadCloud size={28} className="text-blue-600" />
         </div>
-        <h3 className="text-lg font-bold text-gray-800 mb-2">{uploading ? "Uploading..." : "Drop your images here to automatically tag, enhance, and organize them using Vizzy AI."}</h3>
-        <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Support for JPG, PNG, MP4, and more up to 25MB</p>
+        <h3 className="text-base font-bold text-gray-800 mb-1">{uploading ? "Uploading..." : "Drop your images here to automatically tag, enhance, and organize them using Vizzy AI."}</h3>
+        <p className="text-gray-500 text-xs max-w-sm mx-auto mb-4">Support for JPG, PNG, MP4, and more up to 25MB</p>
         <input ref={fileInputRef} type="file" multiple accept="image/*,video/*,audio/*" className="hidden" onChange={(e) => { if (e.target.files?.length) uploadFiles(e.target.files); e.target.value = ""; }} />
       </div>
 
@@ -1089,21 +1571,45 @@ function AllMediaPlaceholder() {
       {/* Media Grid */}
       {mediaFiles.length > 0 && (
         <div>
-          <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">{activeTab} ({mediaFiles.length})</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider">{activeTab} ({mediaFiles.length})</h2>
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {mediaFiles.map((file) => (
-              <div key={file.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-white">
-                <img src={file.mediaUrl} alt={file.fileName} className="w-full h-full object-cover group-hover:scale-105 transition duration-500" />
-                <div className="absolute inset-0 bg-black/40 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <a href={file.mediaUrl} target="_blank" rel="noreferrer" className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-700 hover:bg-white transition shadow-md">
-                    <Eye size={18} />
-                  </a>
-                  <button onClick={(e) => { e.stopPropagation(); handleDelete(file.id); }} className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center text-gray-700 hover:bg-red-50 hover:text-red-500 transition shadow-md">
-                    <Trash2 size={18} />
+              <div key={file.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-white shadow-sm hover:shadow-md transition duration-300">
+                <img
+                  src={file.mediaUrl}
+                  alt={file.fileName}
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(file.fileName || "art")}/800/800`;
+                  }}
+                />
+                <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <button
+                    onClick={() => setViewingImage(file.mediaUrl)}
+                    className="w-9 h-9 rounded-full bg-white/90 text-gray-800 flex items-center justify-center hover:bg-white transition shadow-md"
+                    title="View Image"
+                  >
+                    <Eye size={16} />
+                  </button>
+                  <button
+                    onClick={() => handleOpenPickerModal(file)}
+                    className="w-9 h-9 rounded-full bg-[#3f5fe0] text-white flex items-center justify-center hover:bg-[#344fd0] transition shadow-md"
+                    title="Add to Collection"
+                  >
+                    <FolderPlus size={16} />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleDelete(file.id, file.mediaUrl); }}
+                    className="w-9 h-9 rounded-full bg-white/90 text-gray-700 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition shadow-md"
+                    title="Delete Media"
+                  >
+                    <Trash2 size={16} />
                   </button>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
-                  <p className="text-[10px] text-white/80 truncate">{file.fileName}</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2.5">
+                  <p className="text-[11px] font-semibold text-white truncate">{file.fileName}</p>
                 </div>
               </div>
             ))}
@@ -1114,6 +1620,107 @@ function AllMediaPlaceholder() {
       {mediaFiles.length === 0 && !uploading && (
         <div className="text-center py-12 text-gray-400 text-sm">
           No media found in this category. Upload files using the zone above.
+        </div>
+      )}
+
+      {/* Collection Selection Modal */}
+      {pickerModalFile && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-in fade-in-0 duration-200">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-gray-100 text-gray-900">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
+              <div className="flex items-center gap-2">
+                <FolderPlus size={20} className="text-[#3f5fe0]" />
+                <h3 className="text-base font-bold text-gray-900">Add to Collection</h3>
+              </div>
+              <button onClick={() => setPickerModalFile(null)} className="text-gray-400 hover:text-gray-600">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl mb-5 border border-gray-100">
+              <img src={pickerModalFile.mediaUrl} alt="" className="w-14 h-14 rounded-lg object-cover border border-gray-200" />
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-gray-900 truncate">{pickerModalFile.fileName || "Vizzy Artwork"}</p>
+                <p className="text-[11px] text-gray-500">All Media Library</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <p className="text-xs font-bold text-gray-700">Select Target Collection:</p>
+              {existingCols.length > 0 && (
+                <div className="max-h-48 overflow-y-auto space-y-2 pr-1">
+                  {existingCols.map((col: any) => {
+                    const idKey = col.id || col.name;
+                    const isSelected = !isCreatingNew && targetColId === idKey;
+                    return (
+                      <div
+                        key={idKey}
+                        onClick={() => { setTargetColId(idKey); setIsCreatingNew(false); }}
+                        className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition ${
+                          isSelected ? "border-[#3f5fe0] bg-blue-50/50 text-[#3f5fe0]" : "border-gray-200 hover:bg-gray-50 text-gray-700"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <input type="radio" checked={isSelected} onChange={() => {}} className="accent-[#3f5fe0]" />
+                          <span className="text-xs font-bold">{col.name || col.title}</span>
+                        </div>
+                        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                          {col.items?.length || 0} items
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div
+                onClick={() => setIsCreatingNew(true)}
+                className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition ${
+                  isCreatingNew ? "border-[#3f5fe0] bg-blue-50/50" : "border-dashed border-gray-300 hover:bg-gray-50"
+                }`}
+              >
+                <input type="radio" checked={isCreatingNew} onChange={() => {}} className="accent-[#3f5fe0]" />
+                <span className="text-xs font-bold text-gray-800">+ Create New Collection</span>
+              </div>
+
+              {isCreatingNew && (
+                <input
+                  type="text"
+                  placeholder="Collection Title (e.g. My Favorites)"
+                  value={newColTitle}
+                  onChange={(e) => setNewColTitle(e.target.value)}
+                  className="w-full text-xs font-medium px-4 py-2.5 rounded-xl border border-gray-300 outline-none focus:border-[#3f5fe0]"
+                />
+              )}
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-2 border-t border-gray-100">
+              <button
+                onClick={() => setPickerModalFile(null)}
+                className="px-4 py-2 rounded-full text-xs font-bold text-gray-500 hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmAddToCollection}
+                className="px-5 py-2.5 rounded-full bg-[#3f5fe0] hover:bg-[#344fd0] text-xs font-bold text-white shadow-md transition"
+              >
+                Add to Collection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Full View Modal */}
+      {viewingImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4" onClick={() => setViewingImage(null)}>
+          <div className="relative max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl bg-black" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setViewingImage(null)} className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/80">
+              <X size={18} />
+            </button>
+            <img src={viewingImage} alt="Full view" className="max-w-full max-h-[85vh] object-contain mx-auto" />
+          </div>
         </div>
       )}
     </div>

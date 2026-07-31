@@ -1,7 +1,7 @@
 import { Cloud, Plus, SlidersHorizontal, Loader2 } from "lucide-react";
 import { figmaAssets } from "../webappData";
 import { useState, useEffect } from "react";
-import { webappApi } from "../../../lib/webappApi";
+import { webappApi, vizzyApi } from "../../../lib/webappApi";
 
 const fallbackCollections = [
   { title: "Abstaract", count: "42 Images", image: figmaAssets.vibrantFace },
@@ -27,13 +27,38 @@ export default function AIPhotoManagerHomeView() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const extractList = (res: any) => {
+      if (!res) return [];
+      if (Array.isArray(res)) return res;
+      if (Array.isArray(res.items)) return res.items;
+      if (Array.isArray(res.images)) return res.images;
+      if (Array.isArray(res.rows)) return res.rows;
+      if (Array.isArray(res.data)) return res.data;
+      return [];
+    };
+
     Promise.all([
       webappApi.getMediaFolders().catch(() => []),
-      webappApi.getMedia({ limit: 8 }).catch(() => ({ items: [] })),
+      webappApi.getMedia({ limit: 20 }).catch(() => []),
+      vizzyApi.getImages().catch(() => []),
       webappApi.getStorage().catch(() => null)
-    ]).then(([foldersRes, photosRes, storageRes]) => {
-      setCollections(foldersRes.length ? foldersRes : fallbackCollections);
-      setPhotos(photosRes.items?.length ? photosRes.items.map((i: any) => i.url) : fallbackPhotos);
+    ]).then(([foldersRes, photosRes, vizzyImgsRes, storageRes]) => {
+      const realFolders = extractList(foldersRes);
+      const realPhotos = extractList(photosRes);
+      const vizzyImgs = extractList(vizzyImgsRes);
+
+      const savedMedia = JSON.parse(localStorage.getItem("deckoviz_user_media_persistent") || "[]");
+
+      const allUrls = [
+        ...vizzyImgs.map((i: any) => i.url || i.imageUrl || i.mediaUrl),
+        ...realPhotos.map((i: any) => i.mediaUrl || i.url || i.imageUrl),
+        ...savedMedia.map((i: any) => i.url || i.mediaUrl),
+      ].filter(Boolean);
+
+      const uniqueUrls = Array.from(new Set(allUrls));
+
+      setCollections(realFolders.length ? realFolders : fallbackCollections);
+      setPhotos(uniqueUrls.length ? uniqueUrls : fallbackPhotos);
       setStorage(storageRes || { used: 32.5, total: 100, unit: "Gb" });
     }).finally(() => setLoading(false));
   }, []);

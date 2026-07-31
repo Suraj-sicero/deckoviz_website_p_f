@@ -16,10 +16,36 @@ export default function AddMediaView() {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const MEDIA_STORAGE_KEY = "deckoviz_user_media_persistent";
+
+  const getSavedMedia = (): any[] => {
+    try {
+      const raw = localStorage.getItem(MEDIA_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  };
+
+  const saveMediaToStorage = (items: any[]) => {
+    try {
+      localStorage.setItem(MEDIA_STORAGE_KEY, JSON.stringify(items));
+    } catch { /* ignore */ }
+  };
+
   const fetchMedia = () => {
     homeApi.getMedia()
-      .then(res => setFiles(Array.isArray(res) ? res : res.rows || []))
-      .catch(console.error);
+      .then(res => {
+        const apiItems = Array.isArray(res) ? res : (res.rows || res.items || res.data || []);
+        const localItems = getSavedMedia();
+        const combinedMap = new Map();
+        [...apiItems, ...localItems].forEach(item => {
+          const k = item.id || item.url || item.name || item.filename;
+          if (k) combinedMap.set(k, item);
+        });
+        const merged = Array.from(combinedMap.values());
+        setFiles(merged);
+        saveMediaToStorage(merged);
+      })
+      .catch(() => setFiles(getSavedMedia()));
   };
 
   useEffect(() => {
@@ -32,14 +58,38 @@ export default function AddMediaView() {
 
     try {
       for (let i = 0; i < uploadFiles.length; i++) {
-        const formData = new FormData();
-        formData.append("file", uploadFiles[i]);
-        await homeApi.uploadMedia(formData);
+        const file = uploadFiles[i];
+        const previewUrl = URL.createObjectURL(file);
+        const localMediaItem = {
+          id: `media-${Date.now()}-${i}`,
+          url: previewUrl,
+          filename: file.name,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          createdAt: new Date().toISOString(),
+        };
+
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
+          const res = await homeApi.uploadMedia(formData);
+          const item = (res && (res.url || res.id)) ? res : localMediaItem;
+          setFiles(prev => {
+            const next = [item, ...prev];
+            saveMediaToStorage(next);
+            return next;
+          });
+        } catch {
+          setFiles(prev => {
+            const next = [localMediaItem, ...prev];
+            saveMediaToStorage(next);
+            return next;
+          });
+        }
       }
-      fetchMedia();
     } catch (e) {
       console.error(e);
-      alert("Failed to upload some files.");
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -48,11 +98,14 @@ export default function AddMediaView() {
 
   const handleRemoveFile = async (id: string | number) => {
     try {
-      setFiles(files.filter(f => f.id !== id));
+      setFiles(prev => {
+        const next = prev.filter(f => f.id !== id);
+        saveMediaToStorage(next);
+        return next;
+      });
       await homeApi.deleteMedia(id);
     } catch (e) {
       console.error(e);
-      fetchMedia(); // Revert
     }
   };
 

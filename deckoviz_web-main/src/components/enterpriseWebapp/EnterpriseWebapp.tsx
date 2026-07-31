@@ -98,7 +98,10 @@ const menuItems: { icon: React.ReactNode; label: string; view: ViewType }[] = [
   { icon: <PenTool size={15} />, label: "Create Collection", view: "create_collection" },
 ];
 
+import { useAuth } from "../../context/AuthContext";
+
 export default function EnterpriseWebapp() {
+  const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [showMenu, setShowMenu] = useState(false);
@@ -172,10 +175,25 @@ export default function EnterpriseWebapp() {
                 <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white shadow-sm border border-white">3</span>
               </button>
 
-              <button onClick={() => setActiveView("profile")} className="flex items-center gap-2 transition hover:scale-110 p-1" aria-label="Profile">
-                <div className="flex h-[32px] w-[32px] items-center justify-center rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-[0_2px_10px_rgba(37,99,235,0.3)]">
-                  <Building2 size={15} />
-                </div>
+              {/* User Display Picture / Initials Avatar */}
+              <button
+                onClick={() => setActiveView("profile")}
+                className="relative transition hover:scale-105 flex items-center justify-center rounded-full p-0.5 group focus:outline-none"
+                title={user ? `Logged in as ${user.name || user.email || 'User'}` : "Click to view profile"}
+                aria-label="User Profile"
+              >
+                {user?.avatar ? (
+                  <img
+                    src={user.avatar}
+                    alt={user.name || "User"}
+                    className="h-8 w-8 rounded-full object-cover ring-2 ring-[#182a4a]/40 shadow-sm"
+                  />
+                ) : (
+                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#182a4a] via-[#1e3a5f] to-[#2563EB] text-white flex items-center justify-center font-bold text-xs shadow-md border border-white/60 ring-2 ring-blue-500/20 group-hover:ring-blue-500/50 transition-all">
+                    {user?.name ? user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) : (user?.email ? user.email.slice(0, 2).toUpperCase() : "SP")}
+                  </div>
+                )}
+                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
               </button>
 
               {/* Dropdown Menu */}
@@ -191,8 +209,25 @@ export default function EnterpriseWebapp() {
                 {showMenu && (
                   <>
                     <button className="fixed inset-0 z-40 cursor-default" onClick={() => setShowMenu(false)} aria-label="Close menu" />
-                    <div className="absolute right-0 top-[44px] z-50 w-[260px] max-h-[75vh] overflow-y-auto rounded-xl border border-[#e5e7eb] bg-white py-2 shadow-2xl shadow-black/10">
-                      <div className="px-4 py-2 border-b border-[#f0f0f4] mb-1">
+                    <div className="absolute right-0 top-[44px] z-50 w-[270px] max-h-[75vh] overflow-y-auto rounded-xl border border-[#e5e7eb] bg-white py-2 shadow-2xl shadow-black/10">
+                      {/* Logged-in User Profile Banner */}
+                      <div className="px-4 py-3 border-b border-[#f0f0f4] mb-1 bg-gradient-to-br from-blue-50/80 to-indigo-50/40">
+                        <div className="flex items-center gap-3">
+                          {user?.avatar ? (
+                            <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/30" />
+                          ) : (
+                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white flex items-center justify-center font-bold text-sm shadow-md">
+                              {user?.name ? user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) : (user?.email ? user.email.slice(0, 2).toUpperCase() : "SP")}
+                            </div>
+                          )}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-[13px] font-bold text-gray-800 truncate">{user?.name || "Suraj Patel"}</p>
+                            <p className="text-[11px] text-gray-500 truncate">{user?.email || "Logged in User"}</p>
+                          </div>
+                          <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Logged In</span>
+                        </div>
+                      </div>
+                      <div className="px-4 py-1.5 border-b border-[#f0f0f4] mb-1">
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Navigation</p>
                       </div>
                       {menuItems.map((item, index) => (

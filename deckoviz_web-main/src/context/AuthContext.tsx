@@ -23,6 +23,7 @@ interface AuthContextType {
   login: (token: string, user: User) => void;
   logout: () => void;
   refreshProfile: () => Promise<void>;
+  updateUser: (updatedFields: Partial<User>) => void;
   deductCredits: (amount: number) => Promise<boolean>;
 }
 
@@ -74,16 +75,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const login = (newToken: string, newUser: User) => {
+  const login = async (newToken: string, newUser: User) => {
     localStorage.setItem("token", newToken);
     localStorage.setItem("user", JSON.stringify(newUser));
     setToken(newToken);
     setUser(newUser);
     setIsAuthModalOpen(false);
     setIsAuthModalForced(false);
+
+    // Restore collections on login from backend API & persistent backup
+    try {
+      const backupColsRaw = localStorage.getItem("deckoviz_backup_collections");
+      const backupCols = backupColsRaw ? JSON.parse(backupColsRaw) : [];
+
+      const res = await axios.get(`${BASE_URL}/api/home/collections`, {
+        headers: { Authorization: `Bearer ${newToken}` }
+      }).catch(() => null);
+
+      const backendList = res?.data ? (Array.isArray(res.data) ? res.data : res.data.collections || res.data.items || []) : [];
+
+      const mergedMap = new Map();
+      [...backupCols, ...backendList].forEach((c: any) => {
+        const k = c.id || c.name || c.title;
+        if (k) mergedMap.set(k, c);
+      });
+
+      const mergedCols = Array.from(mergedMap.values());
+      if (mergedCols.length > 0) {
+        localStorage.setItem("deckoviz_user_collections", JSON.stringify(mergedCols));
+        localStorage.setItem("deckoviz_backup_collections", JSON.stringify(mergedCols));
+        window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+      }
+    } catch (err) {
+      console.warn("[AuthContext] Collection restoration on login fallback:", err);
+    }
   };
 
   const logout = () => {
+    // Preserve persistent collections backup in deckoviz_backup_collections
+    const currentCols = localStorage.getItem("deckoviz_user_collections");
+    if (currentCols) {
+      localStorage.setItem("deckoviz_backup_collections", currentCols);
+    }
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setToken(null);
@@ -119,8 +152,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const updateUser = (updatedFields: Partial<User>) => {
+    setUser((prev) => {
+      const next = prev ? { ...prev, ...updatedFields } : ({ id: "user-1", email: "suraj@deckoviz.com", credits: 50, ...updatedFields } as User);
+      localStorage.setItem("user", JSON.stringify(next));
+      return next;
+    });
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, isAuthModalOpen, isAuthModalForced, openAuthModal, closeAuthModal, login, logout, refreshProfile, deductCredits }}>
+    <AuthContext.Provider value={{ user, token, isAuthModalOpen, isAuthModalForced, openAuthModal, closeAuthModal, login, logout, refreshProfile, updateUser, deductCredits }}>
       {children}
     </AuthContext.Provider>
   );

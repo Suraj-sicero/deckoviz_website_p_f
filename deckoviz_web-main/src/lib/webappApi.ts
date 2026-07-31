@@ -6,7 +6,24 @@ const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
 
 function getToken(): string | null {
-  return localStorage.getItem("token");
+  const direct =
+    localStorage.getItem("token") ||
+    localStorage.getItem("authToken") ||
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("deckoviz_token") ||
+    localStorage.getItem("jwt");
+  if (direct) {
+    const cleaned = direct.replace(/^["']|["']$/g, "").trim();
+    return cleaned.startsWith("Bearer ") ? cleaned.substring(7).trim() : cleaned;
+  }
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k) continue;
+    const v = (localStorage.getItem(k) || "").replace(/^["']|["']$/g, "").trim();
+    const tokenVal = v.startsWith("Bearer ") ? v.substring(7).trim() : v;
+    if (/^eyJ[\w-]+\.[\w-]+\.[\w-]+$/.test(tokenVal)) return tokenVal;
+  }
+  return null;
 }
 
 function authHeaders(overrideToken?: string): Record<string, string> {
@@ -137,53 +154,96 @@ export const webappApi = {
   getSubscriptionPlans: (token?: string) => get("/subscription-plans", token),
 
   /* Collections */
-  getCollections: (token?: string) => get("/collections", token),
-  createCollection: (data?: unknown, token?: string) => post("/collections", data, token),
-  getCollection: (id: string | number, token?: string) => get(`/collections/${id}`, token),
-  updateCollection: (id: string | number, data?: unknown, token?: string) => put(`/collections/${id}`, data, token),
-  deleteCollection: (id: string | number, token?: string) => del(`/collections/${id}`, token),
+  getCollections: async (token?: string) => {
+    try {
+      return await homeGet("/collections", token);
+    } catch {
+      return await get("/collections", token);
+    }
+  },
+  createCollection: async (data?: unknown, token?: string) => {
+    try {
+      return await homePost("/collections", data, token);
+    } catch {
+      return await post("/collections", data, token);
+    }
+  },
+  getCollection: (id: string | number, token?: string) => homeGet(`/collections/${id}`, token),
+  updateCollection: (id: string | number, data?: unknown, token?: string) => homePut(`/collections/${id}`, data, token),
+  deleteCollection: (id: string | number, token?: string) => homeDel(`/collections/${id}`, token),
 
   /* Collection Items (via home routes) */
-  addCollectionItem: (collectionId: string | number, data: { itemId: string | number; itemType: string }, token?: string) =>
+  addCollectionItem: (collectionId: string | number, data: { itemId: string | number; itemType?: string }, token?: string) =>
     homePost(`/collections/${collectionId}/items`, data, token),
   removeCollectionItem: (collectionId: string | number, itemId: string | number, token?: string) =>
     homeDel(`/collections/${collectionId}/items/${itemId}`, token),
 
   /* Daily Queue (via home routes) */
-  getQueue: (token?: string) => homeGet("/daily-queue", token),
+  getQueue: async (token?: string) => {
+    try {
+      return await homeGet("/dailyqueue", token);
+    } catch {
+      return await homeGet("/daily-queue", token);
+    }
+  },
   createQueueItem: (data: { collectionId?: string; collectionName?: string; startTime?: string; endTime?: string; dayOfWeek?: number; active?: boolean }, token?: string) =>
-    homePost("/daily-queue", data, token),
+    homePost("/dailyqueue", data, token),
   updateQueueItem: (id: string | number, data?: unknown, token?: string) =>
-    homePut(`/daily-queue/${id}`, data, token),
+    homePut(`/dailyqueue/${id}`, data, token),
   deleteQueueItem: (id: string | number, token?: string) =>
-    homeDel(`/daily-queue/${id}`, token),
+    homeDel(`/dailyqueue/${id}`, token),
   reorderQueue: (orderedIds: (string | number)[], token?: string) =>
-    homePut("/daily-queue/reorder", { orderedIds }, token),
+    homePut("/dailyqueue/reorder", { orderedIds }, token),
 
   /* Media */
-  getMedia: (params?: { type?: string; page?: number; limit?: number }, token?: string) => {
+  getMedia: async (params?: { type?: string; page?: number; limit?: number }, token?: string) => {
     const q = new URLSearchParams();
     if (params?.type) q.set("type", params.type);
     if (params?.page) q.set("page", String(params.page));
     if (params?.limit) q.set("limit", String(params.limit));
     const qs = q.toString();
-    return get(`/media${qs ? `?${qs}` : ""}`, token);
+    const queryStr = qs ? `?${qs}` : "";
+    try {
+      return await homeGet(`/media${queryStr}`, token);
+    } catch {
+      return await get(`/media${queryStr}`, token);
+    }
+  },
+  getMediaCounts: async (token?: string) => {
+    try {
+      return await homeGet("/media/counts", token);
+    } catch {
+      return await get("/media/counts", token);
+    }
   },
 
-  /* Upload Media (multipart to /api/upload) */
+  /* Upload Media (multipart to /api/home/media or /api/upload) */
   uploadMedia: async (file: File, token?: string): Promise<{ id: string; url: string; fileName: string; fileSize: number }> => {
     const formData = new FormData();
     formData.append("file", file);
     const headers = authHeaders(token);
     delete headers["Content-Type"]; // Let browser set boundary
-    const res = await fetch(`${BASE}/api/upload`, {
+    let res = await fetch(`${HOME}/media`, {
       method: "POST",
       headers,
       body: formData,
     });
+    if (!res.ok) {
+      res = await fetch(`${BASE}/api/upload`, {
+        method: "POST",
+        headers,
+        body: formData,
+      });
+    }
     if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
     const data = await res.json();
-    return { id: data.image.id, url: data.image.url, fileName: data.image.fileName, fileSize: data.image.fileSize };
+    const imgData = data.media || data.image || data;
+    return {
+      id: imgData.id || String(Date.now()),
+      url: imgData.url || imgData.imageUrl || "",
+      fileName: imgData.fileName || imgData.filename || file.name,
+      fileSize: imgData.fileSize || file.size,
+    };
   },
 
   /* Delete Media (via home routes) */
@@ -288,6 +348,108 @@ export async function saveImageToMediaLibrary(
   } catch (err) {
     console.warn("[VizzySync] Failed to sync image to media library:", err);
   }
+}
+
+/**
+ * Unified helper function to gather all Vizzy Generative Chat images.
+ * Fetches from backend vizzyApi, webappApi, local chat message history, and persistent media.
+ */
+export async function getVizzyGenerativeImages(token?: string): Promise<{ id: string; url: string; prompt: string; createdAt: string }[]> {
+  const imagesMap = new Map<string, { id: string; url: string; prompt: string; createdAt: string }>();
+
+  // 1. Fetch from backend vizzyApi.getImages()
+  try {
+    const res = await vizzyApi.getImages(token);
+    const list = Array.isArray(res) ? res : (res?.images || res?.items || res?.rows || res?.data || []);
+    list.forEach((img: any) => {
+      const u = img.url || img.imageUrl || img.mediaUrl;
+      if (u) {
+        imagesMap.set(u, {
+          id: img.id || `vimg-${Date.now()}-${Math.random()}`,
+          url: u,
+          prompt: img.prompt || img.title || "Vizzy Generated Artwork",
+          createdAt: img.createdAt || new Date().toISOString(),
+        });
+      }
+    });
+  } catch (e) {
+    console.warn("[VizzyImages] vizzyApi.getImages fallback:", e);
+  }
+
+  // 2. Fetch from backend webappApi.getMedia()
+  try {
+    const res = await webappApi.getMedia({ limit: 100 }, token);
+    const list = Array.isArray(res) ? res : (res?.items || res?.rows || res?.media || res?.data || []);
+    list.forEach((m: any) => {
+      const u = m.mediaUrl || m.url || m.imageUrl;
+      if (u) {
+        imagesMap.set(u, {
+          id: m.id || String(Date.now()),
+          url: u,
+          prompt: m.fileName || m.name || m.prompt || "Generated Media",
+          createdAt: m.createdAt || new Date().toISOString(),
+        });
+      }
+    });
+  } catch (e) {
+    console.warn("[VizzyImages] webappApi.getMedia fallback:", e);
+  }
+
+  // 3. Extract from Local Storage Vizzy Chat Sessions (vizzy_chat_sessions & vizzy_chat_msgs_*)
+  try {
+    const cachedSessions = localStorage.getItem("vizzy_chat_sessions");
+    if (cachedSessions) {
+      const sessions = JSON.parse(cachedSessions);
+      sessions.forEach((s: any) => {
+        if (!s?.id) return;
+        const rawMsgs = localStorage.getItem(`vizzy_chat_msgs_${s.id}`);
+        if (!rawMsgs) return;
+        const msgs = JSON.parse(rawMsgs);
+        msgs.forEach((m: any) => {
+          if (m.images && Array.isArray(m.images)) {
+            m.images.forEach((img: any) => {
+              const u = typeof img === "string" ? img : img.url;
+              if (u) {
+                const promptText = typeof img === "object" ? (img.prompt || m.content || "Vizzy Artwork") : (m.content || "Vizzy Artwork");
+                imagesMap.set(u, {
+                  id: `chat-img-${Date.now()}-${Math.random()}`,
+                  url: u,
+                  prompt: promptText,
+                  createdAt: m.timestamp ? new Date(m.timestamp).toISOString() : new Date().toISOString(),
+                });
+              }
+            });
+          }
+        });
+      });
+    }
+  } catch (e) {
+    console.warn("[VizzyImages] Local chat sessions parse fallback:", e);
+  }
+
+  // 4. Extract from persistent media storage
+  try {
+    const saved = localStorage.getItem("deckoviz_user_media_persistent");
+    if (saved) {
+      const persistentItems = JSON.parse(saved);
+      persistentItems.forEach((m: any) => {
+        const u = m.url || m.mediaUrl;
+        if (u) {
+          const promptText = m.fileName || m.name || "Media Item";
+          imagesMap.set(u, {
+            id: m.id || String(Date.now()),
+            url: u,
+            prompt: promptText,
+            createdAt: m.createdAt || new Date().toISOString(),
+          });
+        }
+      });
+    }
+  } catch (e) {
+    console.warn("[VizzyImages] Persistent media parse fallback:", e);
+  }
+
+  return Array.from(imagesMap.values());
 }
 
 // Export hdrs helper for compatibility

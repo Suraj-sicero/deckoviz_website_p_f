@@ -22,11 +22,16 @@ import {
   MessageSquareQuote,
   FileText,
   Video,
-  Paperclip
+  Paperclip,
+  FolderPlus,
+  Monitor,
+  X
 } from "lucide-react"
 import MusicPlayer from "./music-player"
 import VideoPlayer from "./video-player"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
+import { saveImageToMediaLibrary } from "../../lib/webappApi"
+import { setFrameImage } from "../../lib/frameStore"
 
 interface ChatMessageProps {
   message: ChatMessageType
@@ -404,17 +409,24 @@ function ImageCard({
   const [loaded, setLoaded] = useState(false)
   const [loadError, setLoadError] = useState(false)
   const [promptCopied, setPromptCopied] = useState(false)
-  // Final displayable src — may be a blob URL or the original URL
   const [displaySrc, setDisplaySrc] = useState<string | null>(null)
   const blobUrlRef = useRef<string | null>(null)
   const [retryCount, setRetryCount] = useState(0)
+
+  const [savedToMedia, setSavedToMedia] = useState(false)
+  const [sentToFrame, setSentToFrame] = useState(false)
+
+  // Collection picker modal state
+  const [showPickerModal, setShowPickerModal] = useState(false)
+  const [existingCols, setExistingCols] = useState<any[]>([])
+  const [targetColId, setTargetColId] = useState<string>("")
+  const [newColTitle, setNewColTitle] = useState<string>("")
+  const [isCreatingNew, setIsCreatingNew] = useState<boolean>(false)
 
   useEffect(() => {
     if (!url) return
 
     let cancelled = false
-
-    // Revoke any previous blob URL
     const revokePrev = () => {
       if (blobUrlRef.current) {
         URL.revokeObjectURL(blobUrlRef.current)
@@ -427,13 +439,11 @@ function ImageCard({
       setLoadError(false)
       revokePrev()
 
-      // Normalize URL: simplify Pollinations URLs to avoid 404 parameter errors
       let targetUrl = url
       if (targetUrl.startsWith('/pollinations-proxy')) {
         targetUrl = targetUrl.replace('/pollinations-proxy', 'https://image.pollinations.ai')
       }
 
-      // If it's a Pollinations URL, strip complex query params that cause 404s and use simple prompt path
       if (targetUrl.includes('image.pollinations.ai')) {
         const cleanPrompt = prompt ? encodeURIComponent(prompt) : 'art'
         targetUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?nologo=true`
@@ -451,6 +461,119 @@ function ImageCard({
       revokePrev()
     }
   }, [url, prompt, retryCount])
+
+  const handleOpenPicker = () => {
+    const savedColsRaw = localStorage.getItem("deckoviz_user_collections")
+    const cols = savedColsRaw ? JSON.parse(savedColsRaw) : []
+    setExistingCols(cols)
+    if (cols.length > 0) {
+      setTargetColId(cols[0].id || cols[0].name)
+      setIsCreatingNew(false)
+    } else {
+      setIsCreatingNew(true)
+    }
+    setShowPickerModal(true)
+  }
+
+  const handleConfirmAddToCollection = async () => {
+    const targetUrl = displaySrc || url
+    if (!targetUrl) return
+
+    try {
+      // 1. Save to local persistent media (All Media)
+      await saveImageToMediaLibrary(targetUrl, { prompt, source: "vizzy_chat" }).catch(() => null)
+      const savedMedia = localStorage.getItem("deckoviz_user_media_persistent")
+      let mediaList = savedMedia ? JSON.parse(savedMedia) : []
+      mediaList = mediaList.filter((m: any) => m.url !== targetUrl && m.mediaUrl !== targetUrl)
+      mediaList.unshift({
+        id: `vizzy-media-${Date.now()}-${Math.random()}`,
+        url: targetUrl,
+        mediaUrl: targetUrl,
+        fileName: prompt || "Vizzy Artwork",
+        mediaType: "image/png",
+        isGenerated: true,
+        createdAt: new Date().toISOString(),
+      })
+      localStorage.setItem("deckoviz_user_media_persistent", JSON.stringify(mediaList))
+
+      // 2. Resolve target collection or create new one
+      const savedColsRaw = localStorage.getItem("deckoviz_user_collections")
+      let cols: any[] = savedColsRaw ? JSON.parse(savedColsRaw) : []
+
+      if (isCreatingNew || cols.length === 0 || !targetColId) {
+        const colTitle = newColTitle.trim() || "Vizzy Generative Art"
+        const newCol = {
+          id: `col-${Date.now()}`,
+          name: colTitle,
+          title: colTitle,
+          description: "Created from Vizzy Generative Chat",
+          itemCount: 1,
+          items: [
+            {
+              id: `img-${Date.now()}`,
+              title: prompt || "Vizzy Artwork",
+              url: targetUrl,
+              mediaUrl: targetUrl,
+              displayHours: "00:00:00",
+              displaySeconds: "00:30",
+              createdAt: new Date().toISOString(),
+            },
+          ],
+          createdAt: new Date().toISOString(),
+        }
+        cols = [newCol, ...cols]
+      } else {
+        cols = cols.map((c: any) => {
+          const key = c.id || c.name || c.title
+          if (key === targetColId || c.name === targetColId || c.title === targetColId) {
+            const currentItems = Array.isArray(c.items) ? c.items : []
+            const exists = currentItems.some((i: any) => i.url === targetUrl || i.mediaUrl === targetUrl)
+            if (!exists) {
+              const updatedItems = [
+                {
+                  id: `img-${Date.now()}`,
+                  title: prompt || "Vizzy Artwork",
+                  url: targetUrl,
+                  mediaUrl: targetUrl,
+                  displayHours: "00:00:00",
+                  displaySeconds: "00:30",
+                  createdAt: new Date().toISOString(),
+                },
+                ...currentItems,
+              ]
+              return {
+                ...c,
+                items: updatedItems,
+                itemCount: updatedItems.length,
+              }
+            }
+          }
+          return c
+        })
+      }
+
+      localStorage.setItem("deckoviz_user_collections", JSON.stringify(cols))
+      localStorage.setItem("deckoviz_backup_collections", JSON.stringify(cols))
+      window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"))
+
+      setShowPickerModal(false)
+      setSavedToMedia(true)
+      setTimeout(() => setSavedToMedia(false), 2500)
+    } catch (err) {
+      console.warn("Save to collection failed", err)
+    }
+  }
+
+  const handleSendToFrame = () => {
+    const targetUrl = displaySrc || url
+    if (!targetUrl) return
+    setFrameImage(targetUrl)
+    setSentToFrame(true)
+    setTimeout(() => {
+      window.open("/webframe", "_blank")
+      setSentToFrame(false)
+    }, 800)
+  }
 
   const handleDownload = async () => {
     const downloadTargetUrl = displaySrc || url
@@ -478,7 +601,6 @@ function ImageCard({
 
   const handleImageError = () => {
     console.warn('[ImageCard] Initial src failed, switching to high quality artwork fallback for:', prompt)
-    // Fallback: If external Pollinations AI fails, switch displaySrc to reliable AI style art placeholder
     const seed = encodeURIComponent(prompt || 'artwork')
     const fallbackUrl = `https://picsum.photos/seed/${seed}/1024/1024`
     if (displaySrc !== fallbackUrl) {
@@ -494,7 +616,6 @@ function ImageCard({
     setLoaded(false)
     setRetryCount((c) => c + 1)
   }
-
 
   return (
     <div
@@ -571,6 +692,46 @@ function ImageCard({
           </Tooltip>
 
           <div className="flex items-center gap-1.5">
+            {/* Save to Collection / Media Library */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="bg-black/30 hover:bg-black/45 text-white backdrop-blur-xl shadow-sm border border-white/20"
+                  onClick={handleOpenPicker}
+                  aria-label="Save to Collection"
+                >
+                  {savedToMedia ? (
+                    <Check className="size-3.5 text-emerald-400" />
+                  ) : (
+                    <FolderPlus className="size-3.5 text-cyan-300" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="top">{savedToMedia ? "Added to Collection!" : "Add to Collection"}</TooltipContent>
+            </Tooltip>
+
+            {/* Send to Virtual Frame */}
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="bg-black/30 hover:bg-black/45 text-white backdrop-blur-xl shadow-sm border border-white/20"
+                  onClick={handleSendToFrame}
+                  aria-label="Send to Virtual Frame"
+                >
+                  {sentToFrame ? (
+                    <Check className="size-3.5 text-emerald-400" />
+                  ) : (
+                    <Monitor className="size-3.5 text-blue-300" />
+                  )}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side="top">{sentToFrame ? "Sent to Frame!" : "Send to Virtual Frame"}</TooltipContent>
+            </Tooltip>
+
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
@@ -594,7 +755,7 @@ function ImageCard({
                   onClick={handleDownload}
                   aria-label="Download image"
                 >
-                  <Download className="size-3.5" />
+                  <Download className="size-4" />
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="top">Download</TooltipContent>
@@ -602,6 +763,98 @@ function ImageCard({
           </div>
         </div>
       </div>
+
+      {/* Collection Selection Modal */}
+      {showPickerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-in fade-in-0 duration-200">
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-gray-100 text-gray-900">
+            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
+              <div className="flex items-center gap-2">
+                <FolderPlus size={20} className="text-[#3f5fe0]" />
+                <h3 className="text-base font-bold text-gray-900">Add to Collection</h3>
+              </div>
+              <button onClick={() => setShowPickerModal(false)} className="text-gray-400 hover:text-gray-600">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl mb-5">
+              <img src={displaySrc || url} alt="" className="w-14 h-14 rounded-lg object-cover border border-gray-200" />
+              <div className="min-w-0">
+                <p className="text-xs font-bold text-gray-900 truncate">{prompt || "Vizzy Artwork"}</p>
+                <p className="text-[11px] text-gray-500">Vizzy Generative Canvas</p>
+              </div>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              <p className="text-xs font-bold text-gray-700">Select Collection:</p>
+              {existingCols.length > 0 && (
+                <div className="max-h-48 overflow-y-auto space-y-2 pr-1">
+                  {existingCols.map((col: any) => {
+                    const idKey = col.id || col.name
+                    const isSelected = !isCreatingNew && targetColId === idKey
+                    return (
+                      <div
+                        key={idKey}
+                        onClick={() => { setTargetColId(idKey); setIsCreatingNew(false); }}
+                        className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition ${
+                          isSelected ? "border-[#3f5fe0] bg-blue-50/50 text-[#3f5fe0]" : "border-gray-200 hover:bg-gray-50 text-gray-700"
+                        }`}
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <input type="radio" checked={isSelected} onChange={() => {}} className="accent-[#3f5fe0]" />
+                          <span className="text-xs font-bold">{col.name || col.title}</span>
+                        </div>
+                        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                          {col.items?.length || 0} items
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+
+
+
+
+              <div
+                onClick={() => setIsCreatingNew(true)}
+                className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition ${
+                  isCreatingNew ? "border-[#3f5fe0] bg-blue-50/50" : "border-dashed border-gray-300 hover:bg-gray-50"
+                }`}
+              >
+                <input type="radio" checked={isCreatingNew} onChange={() => {}} className="accent-[#3f5fe0]" />
+                <span className="text-xs font-bold text-gray-800">+ Create New Collection</span>
+              </div>
+
+              {isCreatingNew && (
+                <input
+                  type="text"
+                  placeholder="Collection Title (e.g. My Favorites)"
+                  value={newColTitle}
+                  onChange={(e) => setNewColTitle(e.target.value)}
+                  className="w-full text-xs font-medium px-4 py-2.5 rounded-xl border border-gray-300 outline-none focus:border-[#3f5fe0]"
+                />
+              )}
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-2">
+              <button
+                onClick={() => setShowPickerModal(false)}
+                className="px-4 py-2 rounded-full text-xs font-bold text-gray-500 hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleConfirmAddToCollection}
+                className="px-5 py-2.5 rounded-full bg-[#3f5fe0] hover:bg-[#344fd0] text-xs font-bold text-white shadow-md transition"
+              >
+                Add to Collection
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

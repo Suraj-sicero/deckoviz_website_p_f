@@ -14,7 +14,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home, MessageSquare, ChevronRight, Image as ImageIcon, Upload } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home, MessageSquare, ChevronRight, Image as ImageIcon, Upload, ArrowLeft } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL } from "../../lib/constants"
@@ -171,6 +171,17 @@ export function VizzyChat() {
 
 function VizzyChatInner() {
   const router = useNavigate()
+
+  const handleGoBack = () => {
+    const ref = document.referrer
+    if (ref && (ref.includes('/webapp') || ref.includes('/enterprise-webapp'))) {
+      router(-1)
+    } else if (window.history.length > 2) {
+      router(-1)
+    } else {
+      router('/webapp')
+    }
+  }
   const [searchParams] = useSearchParams()
   const initialChatId = searchParams.get("chatId")
   const { user, token, logout: signOut } = useAuth()
@@ -936,59 +947,78 @@ function VizzyChatInner() {
         }}
       >
         <div className="flex items-center gap-3">
-          <div
-            className="relative size-9 rounded-xl flex items-center justify-center backdrop-blur-xl"
-            style={{
-              background:
-                "linear-gradient(135deg, var(--vc-glow-1) 0%, var(--vc-glow-3) 100%)",
-              border: "1px solid var(--vc-glass-border)",
-              boxShadow: "0 0 24px var(--vc-glow-1)",
-            }}
-          >
-            <Sparkles
-              className="size-[18px]"
-              style={{ color: "var(--vc-accent-text)" }}
-            />
-          </div>
-          <div className="flex flex-col">
-            <h1
-              className="text-base font-semibold tracking-tight leading-none"
-              style={{ fontFamily: "'Playfair Display', serif" }}
-            >
-              <span
-                className="bg-clip-text text-transparent italic"
-                style={{
-                  backgroundImage:
-                    "linear-gradient(110deg, #2563EB 0%, #22D3EE 100%)",
-                }}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                onClick={handleGoBack}
+                className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
+                aria-label="Back to Webapp"
               >
-                {chatMode === "onboarding" ? "Vizzy Onboarding" : "Vizzy"}
-              </span>
-            </h1>
-            <span
-              className="text-[10px] tracking-wide uppercase leading-none mt-0.5"
-              style={{ color: chatMode === "onboarding" ? "var(--vc-accent-text)" : "var(--vc-text-faint)" }}
+                <ArrowLeft className="size-4.5" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Back to Webapp</TooltipContent>
+          </Tooltip>
+
+          <div
+            onClick={handleGoBack}
+            className="flex items-center gap-3 cursor-pointer group"
+          >
+            <div
+              className="relative size-9 rounded-xl flex items-center justify-center backdrop-blur-xl group-hover:scale-105 transition duration-200"
+              style={{
+                background:
+                  "linear-gradient(135deg, var(--vc-glow-1) 0%, var(--vc-glow-3) 100%)",
+                border: "1px solid var(--vc-glass-border)",
+                boxShadow: "0 0 24px var(--vc-glow-1)",
+              }}
             >
-              {chatMode === "onboarding" ? "Deep Persona Setup" : "Creative Studio"}
-            </span>
+              <Sparkles
+                className="size-[18px]"
+                style={{ color: "var(--vc-accent-text)" }}
+              />
+            </div>
+            <div className="flex flex-col">
+              <h1
+                className="text-base font-semibold tracking-tight leading-none"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                <span
+                  className="bg-clip-text text-transparent italic"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(110deg, #2563EB 0%, #22D3EE 100%)",
+                  }}
+                >
+                  {chatMode === "onboarding" ? "Vizzy Onboarding" : "Vizzy"}
+                </span>
+              </h1>
+              <span
+                className="text-[10px] tracking-wide uppercase leading-none mt-0.5"
+                style={{ color: chatMode === "onboarding" ? "var(--vc-accent-text)" : "var(--vc-text-faint)" }}
+              >
+                {chatMode === "onboarding" ? "Deep Persona Setup" : "Creative Studio"}
+              </span>
+            </div>
           </div>
         </div>
 
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link to="/">
-                <Button
-                  variant="ghost"
-                  size="icon-sm"
-                  className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
-                  aria-label="Go to homepage"
-                >
-                  <Home className="size-4" />
-                </Button>
-              </Link>
+              <Button
+                variant="ghost"
+                size="icon-sm"
+                onClick={handleGoBack}
+                className="text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl"
+                aria-label="Back to Webapp"
+              >
+                <Home className="size-4" />
+              </Button>
             </TooltipTrigger>
-            <TooltipContent side="bottom">Home</TooltipContent>
+            <TooltipContent side="bottom">Back to Webapp</TooltipContent>
           </Tooltip>
 
           {hasMessages && (

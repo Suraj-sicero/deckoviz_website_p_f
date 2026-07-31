@@ -2,11 +2,28 @@ const BASE = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.co
 const API = `${BASE}/api/home`;
 
 function getToken(): string | null {
-  return localStorage.getItem("token");
+  const direct =
+    localStorage.getItem("token") ||
+    localStorage.getItem("authToken") ||
+    localStorage.getItem("accessToken") ||
+    localStorage.getItem("deckoviz_token") ||
+    localStorage.getItem("jwt");
+  if (direct) {
+    const cleaned = direct.replace(/^["']|["']$/g, "").trim();
+    return cleaned.startsWith("Bearer ") ? cleaned.substring(7).trim() : cleaned;
+  }
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (!k) continue;
+    const v = (localStorage.getItem(k) || "").replace(/^["']|["']$/g, "").trim();
+    const tokenVal = v.startsWith("Bearer ") ? v.substring(7).trim() : v;
+    if (/^eyJ[\w-]+\.[\w-]+\.[\w-]+$/.test(tokenVal)) return tokenVal;
+  }
+  return null;
 }
 
-function authHeaders(): Record<string, string> {
-  const token = getToken();
+function authHeaders(overrideToken?: string): Record<string, string> {
+  const token = overrideToken || getToken();
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;
@@ -50,10 +67,34 @@ async function del(path: string) {
 }
 
 export const homeApi = {
-  getDailyQueue: () => get("/daily-queue"),
-  addDailyQueueSlot: (data: unknown) => post("/daily-queue", data),
-  updateDailyQueueSlot: (id: string, data: unknown) => put(`/daily-queue/${id}`, data),
-  deleteDailyQueueSlot: (id: string) => del(`/daily-queue/${id}`),
+  getDailyQueue: async () => {
+    try {
+      return await get("/dailyqueue");
+    } catch {
+      return await get("/daily-queue");
+    }
+  },
+  addDailyQueueSlot: async (data: unknown) => {
+    try {
+      return await post("/dailyqueue", data);
+    } catch {
+      return await post("/daily-queue", data);
+    }
+  },
+  updateDailyQueueSlot: async (id: string, data: unknown) => {
+    try {
+      return await put(`/dailyqueue/${id}`, data);
+    } catch {
+      return await put(`/daily-queue/${id}`, data);
+    }
+  },
+  deleteDailyQueueSlot: async (id: string) => {
+    try {
+      return await del(`/dailyqueue/${id}`);
+    } catch {
+      return await del(`/daily-queue/${id}`);
+    }
+  },
 
   getEvents: () => get("/events"),
   createEvent: (data: unknown) => post("/events", data),
