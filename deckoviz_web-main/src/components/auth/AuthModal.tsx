@@ -67,7 +67,14 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
         const res = await axios.post(`${API_URL}${endpoint}`, { email, password });
         login(res.data.token, res.data.user);
       } catch (backendErr: any) {
-        setError(err.message || backendErr.response?.data?.detail || "Authentication failed");
+        const msg = backendErr.response?.data?.detail || err.message || "";
+        if (msg.includes("invalid-credential") || msg.includes("INVALID_LOGIN_CREDENTIALS") || backendErr.response?.status === 401) {
+          setError("Invalid email or password. Please check your credentials.");
+        } else if (msg.includes("unauthorized-domain")) {
+          setError("Domain deckoviz.com must be added to Authorized Domains in Firebase Console.");
+        } else {
+          setError(msg || "Authentication failed. Please try again.");
+        }
       }
     } finally {
       setLoading(false);
@@ -94,7 +101,11 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
       login(res.data.token || idToken, res.data.user);
     } catch (err: any) {
       console.error("Google OAuth error:", err);
-      setError(err.message || "Google sign in failed");
+      if (err?.code === "auth/unauthorized-domain" || err?.message?.includes("unauthorized-domain")) {
+        setError("deckoviz.com is not authorized for Google Sign-In yet. Please add deckoviz.com in Firebase Console -> Authentication -> Settings -> Authorized domains.");
+      } else {
+        setError(err?.message || "Google sign in failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
