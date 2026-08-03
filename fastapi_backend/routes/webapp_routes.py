@@ -1,9 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
-from database import get_db
-from models import User
-from schemas import ProfileUpdate, CollectionCreate, MediaCreate, DailyQueueSlotCreate
-from auth import get_current_user
+from auth import get_current_user, FirebaseUser
 from firebase_config import (
     fs_get_profile,
     fs_save_profile,
@@ -21,7 +17,7 @@ from firebase_config import (
 router = APIRouter(prefix="/webapp", tags=["Webapp - Firebase Firestore"])
 
 @router.get("/profile")
-def get_webapp_profile(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def get_webapp_profile(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     profile_data = fs_get_profile(uid)
     if not profile_data:
@@ -41,7 +37,7 @@ def get_webapp_profile(current_user: User = Depends(get_current_user), db: Sessi
     return profile_data
 
 @router.put("/profile")
-def update_webapp_profile(payload: dict, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+def update_webapp_profile(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     existing = fs_get_profile(uid) or {}
     
@@ -52,29 +48,22 @@ def update_webapp_profile(payload: dict, current_user: User = Depends(get_curren
     display_name = payload.get("displayName") or payload.get("display_name") or payload.get("name")
     if display_name:
         existing["displayName"] = display_name
-        current_user.display_name = display_name
-        current_user.name = display_name
 
     avatar = payload.get("avatar")
     if avatar:
         existing["avatar"] = avatar
-        current_user.avatar = avatar
 
     saved = fs_save_profile(uid, existing)
-    try:
-        db.commit()
-    except Exception:
-        db.rollback()
     return saved
 
 @router.get("/collections")
-def get_webapp_collections(current_user: User = Depends(get_current_user)):
+def get_webapp_collections(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     collections = fs_get_collections(uid)
     return collections
 
 @router.post("/collections")
-def create_webapp_collection(payload: dict, current_user: User = Depends(get_current_user)):
+def create_webapp_collection(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     col_name = payload.get("name") or payload.get("title") or "Untitled Collection"
 
@@ -113,19 +102,19 @@ def create_webapp_collection(payload: dict, current_user: User = Depends(get_cur
     return created
 
 @router.post("/collections/{col_id}/items")
-def add_webapp_collection_item(col_id: str, payload: dict, current_user: User = Depends(get_current_user)):
+def add_webapp_collection_item(col_id: str, payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     added = fs_add_collection_item(uid, col_id, payload)
     return added
 
 @router.put("/collections/{col_id}")
-def update_webapp_collection(col_id: str, payload: dict, current_user: User = Depends(get_current_user)):
+def update_webapp_collection(col_id: str, payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     updated = fs_update_collection(uid, col_id, payload)
     return updated
 
 @router.delete("/collections/{id}")
-def delete_webapp_collection(id: str, current_user: User = Depends(get_current_user)):
+def delete_webapp_collection(id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     success = fs_delete_collection(uid, id)
     if not success:
@@ -135,14 +124,14 @@ def delete_webapp_collection(id: str, current_user: User = Depends(get_current_u
 @router.get("/media")
 def get_webapp_media(
     type: str = Query(None),
-    current_user: User = Depends(get_current_user)
+    current_user: FirebaseUser = Depends(get_current_user)
 ):
     uid = current_user.firebase_uid or current_user.id
     media = fs_get_media(uid, media_type=type)
     return media
 
 @router.get("/dailyqueue")
-def get_webapp_daily_queue(current_user: User = Depends(get_current_user)):
+def get_webapp_daily_queue(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     queue = fs_get_daily_queue(uid)
     return queue

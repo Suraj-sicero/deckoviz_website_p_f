@@ -2,9 +2,7 @@ import uuid
 import base64
 from typing import Optional
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Request
-from database import get_db
-from models import User
-from auth import get_current_user
+from auth import get_current_user, FirebaseUser
 from firebase_config import fs_save_media
 
 router = APIRouter(tags=["Media Uploads - Firebase Firestore"])
@@ -18,7 +16,7 @@ async def upload_media(
     fileName: Optional[str] = Form(None),
     prompt: Optional[str] = Form(None),
     source: Optional[str] = Form(None),
-    current_user: User = Depends(get_current_user)
+    current_user: FirebaseUser = Depends(get_current_user)
 ):
     try:
         uid = current_user.firebase_uid or current_user.id

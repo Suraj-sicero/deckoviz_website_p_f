@@ -3,8 +3,7 @@ import uuid
 import urllib.parse
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
-from models import User
-from auth import get_current_user
+from auth import get_current_user, FirebaseUser
 from firebase_config import (
     fs_get_vizzy_chats,
     fs_get_vizzy_chat_detail,
@@ -28,7 +27,7 @@ def get_agents():
     ]
 
 @router.get("/chats")
-def get_chats(current_user: User = Depends(get_current_user)):
+def get_chats(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     chats = fs_get_vizzy_chats(uid)
     return [
@@ -42,7 +41,7 @@ def get_chats(current_user: User = Depends(get_current_user)):
     ]
 
 @router.get("/chats/{id}")
-def get_chat_detail(id: str, current_user: User = Depends(get_current_user)):
+def get_chat_detail(id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     chat = fs_get_vizzy_chat_detail(uid, id)
     if not chat:
@@ -55,7 +54,7 @@ def get_chat_detail(id: str, current_user: User = Depends(get_current_user)):
     }
 
 @router.post("/agent")
-def vizzy_master_agent(payload: dict, current_user: User = Depends(get_current_user)):
+def vizzy_master_agent(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     messages = payload.get("messages") or []
     chat_id = payload.get("chatId") or f"chat_{uuid.uuid4().hex[:10]}"
@@ -113,7 +112,7 @@ def vizzy_master_agent(payload: dict, current_user: User = Depends(get_current_u
     }
 
 @router.post("/generate")
-def generate_image_api(payload: dict, current_user: User = Depends(get_current_user)):
+def generate_image_api(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     prompt = payload.get("prompt") or "Stunning Artwork"
     encoded_prompt = urllib.parse.quote(prompt)
@@ -139,11 +138,11 @@ def generate_image_api(payload: dict, current_user: User = Depends(get_current_u
     }
 
 @router.post("/message")
-def send_message(payload: dict, current_user: User = Depends(get_current_user)):
+def send_message(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     return vizzy_master_agent(payload, current_user)
 
 @router.get("/images")
-def get_vizzy_images(current_user: User = Depends(get_current_user)):
+def get_vizzy_images(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     media = fs_get_media(uid)
     generated = [m for m in media if m.get("isGenerated") or m.get("is_generated")]

@@ -1,9 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session
-from database import get_db
-from models import User
-from schemas import CollectionCreate, DailyQueueSlotCreate
-from auth import get_current_user
+from auth import get_current_user, FirebaseUser
 from firebase_config import (
     fs_get_profile,
     fs_get_collections,
@@ -40,7 +36,7 @@ from firebase_config import (
 router = APIRouter(prefix="/home", tags=["Home Suite - Firebase Firestore"])
 
 @router.get("/drawing-room")
-def get_drawing_room_dashboard(current_user: User = Depends(get_current_user)):
+def get_drawing_room_dashboard(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     profile = fs_get_profile(uid)
     collections = fs_get_collections(uid)
@@ -56,13 +52,13 @@ def get_drawing_room_dashboard(current_user: User = Depends(get_current_user)):
     }
 
 @router.get("/collections")
-def get_home_collections(current_user: User = Depends(get_current_user)):
+def get_home_collections(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     collections = fs_get_collections(uid)
     return collections
 
 @router.post("/collections")
-def create_home_collection(payload: dict, current_user: User = Depends(get_current_user)):
+def create_home_collection(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     col_name = payload.get("name") or payload.get("title") or "Untitled Collection"
 
@@ -101,102 +97,102 @@ def create_home_collection(payload: dict, current_user: User = Depends(get_curre
     return created
 
 @router.post("/collections/{col_id}/items")
-def add_home_collection_item(col_id: str, payload: dict, current_user: User = Depends(get_current_user)):
+def add_home_collection_item(col_id: str, payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     added = fs_add_collection_item(uid, col_id, payload)
     return added
 
 @router.put("/collections/{col_id}")
-def update_home_collection(col_id: str, payload: dict, current_user: User = Depends(get_current_user)):
+def update_home_collection(col_id: str, payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     updated = fs_update_collection(uid, col_id, payload)
     return updated
 
 @router.delete("/collections/{col_id}")
-def delete_home_collection(col_id: str, current_user: User = Depends(get_current_user)):
+def delete_home_collection(col_id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     success = fs_delete_collection(uid, col_id)
     return {"success": success}
 
 @router.get("/dailyqueue")
 @router.get("/daily-queue")
-def get_home_daily_queue(current_user: User = Depends(get_current_user)):
+def get_home_daily_queue(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     queue = fs_get_daily_queue(uid)
     return queue
 
 @router.post("/dailyqueue")
 @router.post("/daily-queue")
-def create_home_daily_queue(payload: dict, current_user: User = Depends(get_current_user)):
+def create_home_daily_queue(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     created = fs_save_daily_queue_slot(uid, payload)
     return created
 
 @router.put("/dailyqueue/{slot_id}")
 @router.put("/daily-queue/{slot_id}")
-def update_home_daily_queue(slot_id: str, payload: dict, current_user: User = Depends(get_current_user)):
+def update_home_daily_queue(slot_id: str, payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     updated = fs_update_daily_queue_slot(uid, slot_id, payload)
     return updated
 
 @router.delete("/dailyqueue/{slot_id}")
 @router.delete("/daily-queue/{slot_id}")
-def delete_home_daily_queue(slot_id: str, current_user: User = Depends(get_current_user)):
+def delete_home_daily_queue(slot_id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     success = fs_delete_daily_queue_slot(uid, slot_id)
     return {"success": success}
 
 @router.get("/media")
-def get_home_media(current_user: User = Depends(get_current_user)):
+def get_home_media(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     media = fs_get_media(uid)
     return media
 
 @router.get("/events")
-def get_home_events(current_user: User = Depends(get_current_user)):
+def get_home_events(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_events(uid)
 
 @router.post("/events")
-def create_home_event(payload: dict, current_user: User = Depends(get_current_user)):
+def create_home_event(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_create_event(uid, payload)
 
 @router.put("/events/{event_id}")
-def update_home_event(event_id: str, payload: dict, current_user: User = Depends(get_current_user)):
+def update_home_event(event_id: str, payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_update_event(uid, event_id, payload)
 
 @router.delete("/events/{event_id}")
-def delete_home_event(event_id: str, current_user: User = Depends(get_current_user)):
+def delete_home_event(event_id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     success = fs_delete_event(uid, event_id)
     return {"success": success}
 
 @router.get("/members")
-def get_home_members(current_user: User = Depends(get_current_user)):
+def get_home_members(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_members(uid)
 
 @router.post("/members")
-def create_home_member(payload: dict, current_user: User = Depends(get_current_user)):
+def create_home_member(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_create_member(uid, payload)
 
 @router.delete("/members/{member_id}")
-def delete_home_member(member_id: str, current_user: User = Depends(get_current_user)):
+def delete_home_member(member_id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     success = fs_delete_member(uid, member_id)
     return {"success": success}
 
 # =========== SETTINGS ===========
 @router.get("/settings")
-def get_home_settings(current_user: User = Depends(get_current_user)):
+def get_home_settings(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_settings(uid)
 
 @router.put("/settings")
-def update_home_settings(payload: dict, current_user: User = Depends(get_current_user)):
+def update_home_settings(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     section = payload.get("section", "general")
     settings = payload.get("settings", {})
@@ -204,55 +200,55 @@ def update_home_settings(payload: dict, current_user: User = Depends(get_current
 
 # =========== CURATIONS ===========
 @router.get("/curations")
-def get_home_curations(type: str = "vizzy", current_user: User = Depends(get_current_user)):
+def get_home_curations(type: str = "vizzy", current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_curations(uid, type)
 
 # =========== MUSIC ===========
 @router.get("/music")
-def get_home_music(current_user: User = Depends(get_current_user)):
+def get_home_music(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_music(uid)
 
 @router.post("/music")
-def create_home_music(payload: dict, current_user: User = Depends(get_current_user)):
+def create_home_music(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_create_music(uid, payload)
 
 # =========== LIBRARY ===========
 @router.get("/library")
-def get_home_library(current_user: User = Depends(get_current_user)):
+def get_home_library(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_library(uid)
 
 # =========== JOURNAL ===========
 @router.get("/journal")
-def get_home_journal(current_user: User = Depends(get_current_user)):
+def get_home_journal(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_journal(uid)
 
 @router.post("/journal")
-def create_home_journal(payload: dict, current_user: User = Depends(get_current_user)):
+def create_home_journal(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_create_journal(uid, payload)
 
 @router.delete("/journal/{entry_id}")
-def delete_home_journal(entry_id: str, current_user: User = Depends(get_current_user)):
+def delete_home_journal(entry_id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return {"success": fs_delete_journal(uid, entry_id)}
 
 # =========== NOTES ===========
 @router.get("/notes")
-def get_home_notes(current_user: User = Depends(get_current_user)):
+def get_home_notes(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_get_notes(uid)
 
 @router.post("/notes")
-def create_home_note(payload: dict, current_user: User = Depends(get_current_user)):
+def create_home_note(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_create_note(uid, payload)
 
 @router.delete("/notes/{note_id}")
-def delete_home_note(note_id: str, current_user: User = Depends(get_current_user)):
+def delete_home_note(note_id: str, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return {"success": fs_delete_note(uid, note_id)}

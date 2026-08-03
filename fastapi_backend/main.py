@@ -2,7 +2,6 @@ import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
-from database import engine, Base
 from routes.auth_routes import router as auth_router
 from routes.webapp_routes import router as webapp_router
 from routes.home_routes import router as home_router
@@ -13,13 +12,7 @@ from routes.upload_routes import router as upload_router
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("deckoviz.main")
-
-# Initialize database tables
-try:
-    Base.metadata.create_all(bind=engine)
-    logger.info("Database tables verified/created successfully.")
-except Exception as e:
-    logger.error(f"Database table initialization notice: {e}")
+logger.info("FastAPI service starting using 100% Firebase Firestore backend.")
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
