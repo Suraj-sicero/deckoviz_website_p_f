@@ -1,3 +1,5 @@
+import { getDeviceId } from "./deviceStorage";
+
 /**
  * Deckoviz WebApp API Client module
  */
@@ -13,23 +15,19 @@ function getToken(): string | null {
     localStorage.getItem("accessToken") ||
     localStorage.getItem("deckoviz_token") ||
     localStorage.getItem("jwt");
-  if (direct) {
+  if (direct && direct !== "undefined" && direct !== "null") {
     const cleaned = direct.replace(/^["']|["']$/g, "").trim();
     return cleaned.startsWith("Bearer ") ? cleaned.substring(7).trim() : cleaned;
-  }
-  for (let i = 0; i < localStorage.length; i++) {
-    const k = localStorage.key(i);
-    if (!k) continue;
-    const v = (localStorage.getItem(k) || "").replace(/^["']|["']$/g, "").trim();
-    const tokenVal = v.startsWith("Bearer ") ? v.substring(7).trim() : v;
-    if (/^eyJ[\w-]+\.[\w-]+\.[\w-]+$/.test(tokenVal)) return tokenVal;
   }
   return null;
 }
 
 function authHeaders(overrideToken?: string): Record<string, string> {
-  const token = overrideToken || getToken() || "guest_user";
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  const token = overrideToken || getToken();
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "X-Device-ID": getDeviceId(),
+  };
   if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;
 }

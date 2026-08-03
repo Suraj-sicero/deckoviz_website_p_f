@@ -1,8 +1,15 @@
+import { getDeviceId } from "./deviceStorage";
+
 const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://deckoviz-website-p-f.onrender.com";
 const API = `${BASE}/api/home/vgc`;
 
 function hdrs(token: string): Record<string, string> {
-  return { Authorization: `Bearer ${token}`, "Content-Type": "application/json" };
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+    "X-Device-ID": getDeviceId(),
+  };
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  return headers;
 }
 
 export interface VGCAgent {

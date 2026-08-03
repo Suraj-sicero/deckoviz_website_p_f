@@ -133,6 +133,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("jwt");
+    localStorage.removeItem("deckoviz_token");
+    localStorage.removeItem("deckoviz_user_avatar");
+    localStorage.removeItem("deckoviz_user_banner");
     setToken(null);
     setUser(null);
     setIsAuthModalForced(false);
