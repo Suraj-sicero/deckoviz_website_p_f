@@ -1,7 +1,7 @@
 /**
  * Deckoviz WebApp API Client module
  */
-const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://deckoviz-website-p-f.onrender.com";
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
 import { getUserMedia } from "./userStorage";

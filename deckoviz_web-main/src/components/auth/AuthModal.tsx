@@ -21,7 +21,7 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
 
   if (!isAuthModalOpen) return null;
 
-  const BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+  const BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://deckoviz-website-p-f.onrender.com";
   const API_URL = `${BASE_URL}/api/auth`;
 
   const handleSubmit = async (e: React.FormEvent) => {
