@@ -1,4 +1,33 @@
-# Dependencies
+# Node modules
+node_modules/
+
+# Python virtual environments
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Build folders
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Firebase service account
+fastapi_backend/firebase-service-account.json
+
+# Generated jobs
+jobs/
+
+# OS files
+.DS_Store
+Thumbs.db# Dependencies
 node_modules/
 .pnp
 .pnp.js
