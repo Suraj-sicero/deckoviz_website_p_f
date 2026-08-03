@@ -1,9 +1,10 @@
 /**
  * Deckoviz WebApp API Client module
  */
-const BASE = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
+const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
+import { getUserMedia } from "./userStorage";
 
 function getToken(): string | null {
   const direct =
@@ -27,7 +28,7 @@ function getToken(): string | null {
 }
 
 function authHeaders(overrideToken?: string): Record<string, string> {
-  const token = overrideToken || getToken();
+  const token = overrideToken || getToken() || "guest_user";
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;
@@ -429,22 +430,19 @@ export async function getVizzyGenerativeImages(token?: string): Promise<{ id: st
 
   // 4. Extract from persistent media storage
   try {
-    const saved = localStorage.getItem("deckoviz_user_media_persistent");
-    if (saved) {
-      const persistentItems = JSON.parse(saved);
-      persistentItems.forEach((m: any) => {
-        const u = m.url || m.mediaUrl;
-        if (u) {
-          const promptText = m.fileName || m.name || "Media Item";
-          imagesMap.set(u, {
-            id: m.id || String(Date.now()),
-            url: u,
-            prompt: promptText,
-            createdAt: m.createdAt || new Date().toISOString(),
-          });
-        }
-      });
-    }
+    const persistentItems = getUserMedia();
+    persistentItems.forEach((m: any) => {
+      const u = m.url || m.mediaUrl;
+      if (u) {
+        const promptText = m.fileName || m.name || "Media Item";
+        imagesMap.set(u, {
+          id: m.id || String(Date.now()),
+          url: u,
+          prompt: promptText,
+          createdAt: m.createdAt || new Date().toISOString(),
+        });
+      }
+    });
   } catch (e) {
     console.warn("[VizzyImages] Persistent media parse fallback:", e);
   }

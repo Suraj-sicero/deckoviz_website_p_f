@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
+const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 const API = `${BASE}/api/home/vgc`;
 
 function hdrs(token: string): Record<string, string> {

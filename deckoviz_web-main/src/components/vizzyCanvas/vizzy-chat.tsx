@@ -17,7 +17,7 @@ import {
 import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home, MessageSquare, ChevronRight, Image as ImageIcon, Upload, ArrowLeft } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
-import { API_BASE_URL } from "../../lib/constants"
+import { API_BASE_URL, IMAGE_GEN_API_URL } from "../../lib/constants"
 import { vizzyApi, saveImageToMediaLibrary } from "../../lib/webappApi"
 import { CanvasThemeProvider, useCanvasTheme } from "./lib/canvas-theme"
 import {
@@ -244,19 +244,12 @@ function VizzyChatInner() {
         lastMessage: lastUserMsg?.content?.substring(0, 80),
         hasImages: hasImgs,
       }
-      const cached = localStorage.getItem("vizzy_chat_sessions")
-      let list: ChatHistoryItem[] = cached ? JSON.parse(cached) : []
-      list = list.filter((c) => c.id !== chatId)
-      list.unshift(item)
-      localStorage.setItem("vizzy_chat_sessions", JSON.stringify(list.slice(0, 50)))
-      localStorage.setItem(`vizzy_chat_msgs_${chatId}`, JSON.stringify(msgs))
-
       setChatHistory((prev) => {
         const filtered = prev.filter((c) => c.id !== chatId)
         return [item, ...filtered]
       })
     } catch (e) {
-      console.warn("Failed to cache local chat:", e)
+      console.warn("Failed to update chat history:", e)
     }
   }, [])
 
@@ -513,7 +506,7 @@ function VizzyChatInner() {
 
     try {
       if (isStyleTransferMode && uploadedImage) {
-        const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/style-transfer`, {
+        const response = await fetch(`${IMAGE_GEN_API_URL}/api/vizzy-canvas/style-transfer`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -575,7 +568,7 @@ function VizzyChatInner() {
       const hasUploadedImage = uploadedImage !== null
 
       if (hasUploadedImage && trimmedInput) {
-        const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/inpaint`, {
+        const response = await fetch(`${IMAGE_GEN_API_URL}/api/vizzy-canvas/inpaint`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ imageUrl: uploadedImage!.url, prompt: trimmedInput }),
@@ -684,7 +677,7 @@ function VizzyChatInner() {
           let response; let data; let retries = 3; let lastError
           while (retries > 0) {
             try {
-              response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/music/generate`, {
+              response = await fetch(`${IMAGE_GEN_API_URL}/api/vizzy-canvas/music/generate`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
                 body: JSON.stringify({ prompt: trimmedInput }),
@@ -726,7 +719,7 @@ function VizzyChatInner() {
           const lastImage = [...messages].reverse().find((m) => m.role === "assistant" && m.images && m.images.length > 0)
           const sourceImageUrl = lastImage?.images?.[0]?.url
 
-          const submitRes = await fetch(`${API_BASE_URL}/api/vizzy-canvas/video/generate`, {
+          const submitRes = await fetch(`${IMAGE_GEN_API_URL}/api/vizzy-canvas/video/generate`, {
             method: "POST",
             headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
             body: JSON.stringify({ prompt: trimmedInput, imageUrl: sourceImageUrl }),
@@ -774,11 +767,21 @@ function VizzyChatInner() {
           const refinedPrompt = buildRefinedPrompt(updatedMessages, trimmedInput)
           const numResults = parseNumImages(trimmedInput)
 
-          const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/generate`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
-            body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
-          })
+          let response: Response;
+          try {
+            response = await fetch(`${IMAGE_GEN_API_URL}/api/vizzy-canvas/generate`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
+              body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
+            })
+            if (!response.ok) throw new Error("Render gen failed")
+          } catch {
+            response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/generate`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
+              body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
+            })
+          }
           const data = await response.json()
           if (!response.ok) throw new Error(data.error || "Failed to generate image")
 

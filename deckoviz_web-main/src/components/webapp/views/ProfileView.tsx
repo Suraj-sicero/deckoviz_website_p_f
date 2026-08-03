@@ -23,6 +23,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { webappApi, getVizzyGenerativeImages } from "../../../lib/webappApi";
 import { figmaAssets } from "../webappData";
 import { setFrameImage } from "../../../lib/frameStore";
+import { getUserCollections, getUserProfile, saveUserProfile, getUserStorageKey, getUserFavouriteArtworks, saveUserFavouriteArtworks } from "../../../lib/userStorage";
 
 /* ───────── Types ───────── */
 
@@ -52,55 +53,25 @@ interface ArtworkData {
   isFav?: boolean;
 }
 
-const defaultProfile: ProfileData = {
-  displayName: "Suraj Pandya",
-  username: "suraj_pandya_123",
-  title: "AI Enthusiast",
-  bio: "Passionate about AI-generated art and creative exploration. Exploring the intersection of technology and creativity.",
-  location: "UK, London Metropolitan",
-  avatar: figmaAssets.surajAvatar,
-  banner: figmaAssets.profileBanner,
-  postCount: 548,
-  followerCount: 12700,
-  followingCount: 221,
-  favoriteArtStyles: ["Surrealism", "Abstract Expressionism", "Conceptual Portraits", "Minimalism"],
-};
+function createInitialProfile(user: any): ProfileData {
+  const name = user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "Creative Creator");
+  const username = user?.username || (user?.email ? user.email.split('@')[0] : "creator");
+  const avatar = user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3f5fe0&color=fff&size=500`;
 
-const fallbackArtworks: ArtworkData[] = [
-  {
-    id: "art-1",
-    title: "Boot in Pond",
-    subtitle: "Ux Pilot Monet, 1919",
-    rating: 4.5,
-    tags: ["Abstract Artcrafts", "Contemporary"],
-    quote: "I love the dreamy quality and use of light in this piece. The way light dances through it feels like quite magic.",
-    date: "Rated on March 15, 2025",
-    image: figmaAssets.boatPond,
-    isFav: true,
-  },
-  {
-    id: "art-2",
-    title: "Abstract Spectrum",
-    subtitle: "Vizzy Generative Canvas, 2026",
-    rating: 4.9,
-    tags: ["Digital Art", "Surrealism"],
-    quote: "Vibrant color palette generated with high frequency diffusion style.",
-    date: "Generated on July 31, 2026",
-    image: figmaAssets.vibrantFace,
-    isFav: true,
-  },
-  {
-    id: "art-3",
-    title: "Urban Fire",
-    subtitle: "Deckoviz AI Studio, 2026",
-    rating: 4.7,
-    tags: ["Modern Art", "Expressionism"],
-    quote: "Captivating atmospheric dynamics with rich lighting effects.",
-    date: "Rated on July 20, 2026",
-    image: figmaAssets.cityFire,
-    isFav: true,
-  },
-];
+  return {
+    displayName: name,
+    username: username,
+    title: "Lead AI Creator",
+    bio: "Passionate about AI-generated art and creative exploration on Deckoviz.",
+    location: "Global Creator",
+    avatar: avatar,
+    banner: "https://picsum.photos/seed/deckoviz-banner/1200/400",
+    postCount: 0,
+    followerCount: 0,
+    followingCount: 0,
+    favoriteArtStyles: ["Surrealism", "Abstract Expressionism", "Conceptual Portraits", "Minimalism"],
+  };
+}
 
 export default function ProfileView({
   onNavigate,
@@ -112,24 +83,22 @@ export default function ProfileView({
   const [activeRightTab, setActiveRightTab] = useState("Favourite Artworks");
   const [profile, setProfile] = useState<ProfileData>(() => {
     try {
-      const saved = localStorage.getItem("deckoviz_profile");
+      const saved = getUserProfile();
       if (saved) {
-        const parsed = JSON.parse(saved);
         return {
-          ...defaultProfile,
-          ...parsed,
-          favoriteArtStyles: Array.isArray(parsed.favoriteArtStyles)
-            ? parsed.favoriteArtStyles
-            : defaultProfile.favoriteArtStyles,
+          ...createInitialProfile(user),
+          ...saved,
         };
       }
     } catch { /* ignore */ }
-    return defaultProfile;
+    return createInitialProfile(user);
   });
   const [editing, setEditing] = useState(false);
   const [editForm, setEditForm] = useState<ProfileData>(profile);
   const [saving, setSaving] = useState(false);
   const [shareToast, setShareToast] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [nameInput, setNameInput] = useState("");
 
   const [favArtworks, setFavArtworks] = useState<ArtworkData[]>([]);
   const [favCollections, setFavCollections] = useState<any[]>([]);
@@ -171,39 +140,57 @@ export default function ProfileView({
   const bannerInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!token) return;
+    const baseInitial = createInitialProfile(user);
+    if (!token) {
+      setProfile(prev => ({ ...baseInitial, ...prev }));
+      return;
+    }
     webappApi.getProfile(token).then((data: any) => {
       if (!data) return;
       const styles = Array.isArray(data.favoriteArtStyles)
         ? data.favoriteArtStyles
         : typeof data.favoriteArtStyles === "string"
         ? data.favoriteArtStyles.split(",").map((s: string) => s.trim())
-        : defaultProfile.favoriteArtStyles;
+        : baseInitial.favoriteArtStyles;
 
       const p: ProfileData = {
-        displayName: data.displayName || data.display_name || profile.displayName || defaultProfile.displayName,
-        username: data.username || profile.username || defaultProfile.username,
-        title: data.title || profile.title || defaultProfile.title,
-        bio: data.bio || profile.bio || defaultProfile.bio,
-        location: data.location || profile.location || defaultProfile.location,
-        avatar: data.avatar || profile.avatar || defaultProfile.avatar,
-        banner: data.banner || profile.banner || defaultProfile.banner,
-        postCount: typeof data.postCount === "number" ? data.postCount : profile.postCount,
-        followerCount: typeof data.followerCount === "number" ? data.followerCount : profile.followerCount,
-        followingCount: typeof data.followingCount === "number" ? data.followingCount : profile.followingCount,
+        displayName: data.displayName || data.display_name || user?.name || user?.displayName || baseInitial.displayName,
+        username: data.username || user?.username || (user?.email ? user.email.split('@')[0] : baseInitial.username),
+        title: data.title || baseInitial.title,
+        bio: data.bio || baseInitial.bio,
+        location: data.location || baseInitial.location,
+        avatar: data.avatar || user?.avatar || baseInitial.avatar,
+        banner: data.banner || baseInitial.banner,
+        postCount: typeof data.postCount === "number" ? data.postCount : 0,
+        followerCount: typeof data.followerCount === "number" ? data.followerCount : 0,
+        followingCount: typeof data.followingCount === "number" ? data.followingCount : 0,
         favoriteArtStyles: styles,
       };
       setProfile(p);
       setEditForm(p);
-      localStorage.setItem("deckoviz_profile", JSON.stringify(p));
+      saveUserProfile(p);
       updateUser({ name: p.displayName, displayName: p.displayName, avatar: p.avatar });
-    }).catch((err) => console.warn("[ProfileView] getProfile fallback:", err));
-  }, [token]);
+    }).catch(() => {
+      setProfile(prev => ({ ...baseInitial, ...prev }));
+    });
+
+    const handleUserChanged = () => {
+      const freshInitial = createInitialProfile(user);
+      const savedP = getUserProfile();
+      setProfile(savedP || freshInitial);
+      setEditForm(savedP || freshInitial);
+    };
+    window.addEventListener("deckoviz-user-changed", handleUserChanged);
+    return () => {
+      window.removeEventListener("deckoviz-user-changed", handleUserChanged);
+    };
+  }, [token, user]);
 
   useEffect(() => {
-    // Load User Collections from local storage and backend API
-    const savedColsRaw = localStorage.getItem("deckoviz_user_collections");
-    const savedCols: any[] = savedColsRaw ? JSON.parse(savedColsRaw) : [];
+    // Load User Collections & User Favourites (isolated per authenticated user)
+    const savedCols = getUserCollections();
+    const savedFavs = getUserFavouriteArtworks();
+    setFavArtworks(savedFavs);
 
     webappApi.getCollections(token || undefined).then((res) => {
       const list = Array.isArray(res) ? res : (res?.collections || res?.items || []);
@@ -214,69 +201,21 @@ export default function ProfileView({
       });
       const allCollections = Array.from(combinedColsMap.values());
       setFavCollections(allCollections);
-
-      // Extract ONLY images that belong to the user's collections
-      const collectionArtworks: ArtworkData[] = [];
-      allCollections.forEach((col: any) => {
-        if (Array.isArray(col.items)) {
-          col.items.forEach((item: any, idx: number) => {
-            const imgUrl = item.url || item.mediaUrl || item.imageUrl || item.image;
-            if (imgUrl) {
-              collectionArtworks.push({
-                id: item.id || `col-art-${col.id}-${idx}`,
-                title: item.title || item.name || col.name || col.title || "Collection Artwork",
-                subtitle: col.name || col.title || "Collection Art",
-                rating: 4.8,
-                tags: col.tags && col.tags.length > 0 ? col.tags : ["Collection", "AI Art"],
-                quote: item.metaNotes || col.description || "Artwork from user collection",
-                date: item.createdAt ? new Date(item.createdAt).toLocaleDateString() : "Saved in Collection",
-                image: imgUrl,
-                isFav: true,
-              });
-            }
-          });
-        }
-      });
-
-      const uniqueArtMap = new Map();
-      collectionArtworks.forEach((a) => {
-        if (a.image) uniqueArtMap.set(a.image, a);
-      });
-
-      setFavArtworks(Array.from(uniqueArtMap.values()));
     }).catch(() => {
       setFavCollections(savedCols.map((c: any) => ({ ...c, isFav: true })));
-
-      const collectionArtworks: ArtworkData[] = [];
-      savedCols.forEach((col: any) => {
-        if (Array.isArray(col.items)) {
-          col.items.forEach((item: any, idx: number) => {
-            const imgUrl = item.url || item.mediaUrl || item.imageUrl || item.image;
-            if (imgUrl) {
-              collectionArtworks.push({
-                id: item.id || `col-art-${col.id}-${idx}`,
-                title: item.title || item.name || col.name || col.title || "Collection Artwork",
-                subtitle: col.name || col.title || "Collection Art",
-                rating: 4.8,
-                tags: col.tags && col.tags.length > 0 ? col.tags : ["Collection", "AI Art"],
-                quote: item.metaNotes || col.description || "Artwork from user collection",
-                date: "Saved in Collection",
-                image: imgUrl,
-                isFav: true,
-              });
-            }
-          });
-        }
-      });
-
-      const uniqueArtMap = new Map();
-      collectionArtworks.forEach((a) => {
-        if (a.image) uniqueArtMap.set(a.image, a);
-      });
-
-      setFavArtworks(Array.from(uniqueArtMap.values()));
     });
-  }, [token]);
+
+    const handleFavsUpdated = () => {
+      setFavArtworks(getUserFavouriteArtworks());
+    };
+    window.addEventListener("deckoviz-favourites-updated", handleFavsUpdated);
+    window.addEventListener("deckoviz-user-changed", handleFavsUpdated);
+
+    return () => {
+      window.removeEventListener("deckoviz-favourites-updated", handleFavsUpdated);
+      window.removeEventListener("deckoviz-user-changed", handleFavsUpdated);
+    };
+  }, [token, user]);
 
   const startEditing = () => {
     setEditForm(profile);
@@ -297,11 +236,11 @@ export default function ProfileView({
         const dataUrl = reader.result as string;
         setEditForm(prev => ({ ...prev, avatar: dataUrl }));
         setProfile(prev => ({ ...prev, avatar: dataUrl }));
+        localStorage.setItem(`deckoviz_user_avatar_${userKey}`, dataUrl);
         localStorage.setItem("deckoviz_user_avatar", dataUrl);
         try {
-          const saved = localStorage.getItem("deckoviz_profile");
-          const currentP = saved ? JSON.parse(saved) : {};
-          localStorage.setItem("deckoviz_profile", JSON.stringify({ ...currentP, avatar: dataUrl }));
+          const currentP = getUserProfile() || {};
+          saveUserProfile({ ...currentP, avatar: dataUrl });
         } catch { /* ignore */ }
         window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
 
@@ -310,6 +249,7 @@ export default function ProfileView({
           if (res?.url) {
             setEditForm(prev => ({ ...prev, avatar: res.url }));
             setProfile(prev => ({ ...prev, avatar: res.url }));
+            localStorage.setItem(`deckoviz_user_avatar_${userKey}`, res.url);
             localStorage.setItem("deckoviz_user_avatar", res.url);
             window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
           }
@@ -330,12 +270,14 @@ export default function ProfileView({
         const dataUrl = reader.result as string;
         setEditForm(prev => ({ ...prev, banner: dataUrl }));
         setProfile(prev => ({ ...prev, banner: dataUrl }));
+        localStorage.setItem(`deckoviz_user_banner_${userKey}`, dataUrl);
         localStorage.setItem("deckoviz_user_banner", dataUrl);
         try {
           const res = await webappApi.uploadMedia(file, token || undefined);
           if (res?.url) {
             setEditForm(prev => ({ ...prev, banner: res.url }));
             setProfile(prev => ({ ...prev, banner: res.url }));
+            localStorage.setItem(`deckoviz_user_banner_${userKey}`, res.url);
             localStorage.setItem("deckoviz_user_banner", res.url);
           }
         } catch { /* use base64 dataUrl */ }
@@ -361,9 +303,11 @@ export default function ProfileView({
       };
 
       if (editForm.avatar) {
+        localStorage.setItem(`deckoviz_user_avatar_${userKey}`, editForm.avatar);
         localStorage.setItem("deckoviz_user_avatar", editForm.avatar);
       }
       if (editForm.banner) {
+        localStorage.setItem(`deckoviz_user_banner_${userKey}`, editForm.banner);
         localStorage.setItem("deckoviz_user_banner", editForm.banner);
       }
 
@@ -388,9 +332,8 @@ export default function ProfileView({
       };
 
       setProfile(p);
-      localStorage.setItem("deckoviz_profile", JSON.stringify(p));
+      saveUserProfile(p);
       updateUser({ name: p.displayName, displayName: p.displayName, avatar: p.avatar });
-      window.dispatchEvent(new CustomEvent("deckoviz-profile-updated", { detail: p }));
       setEditing(false);
     } catch (err) {
       console.error("[ProfileView] Failed to save profile:", err);
@@ -420,8 +363,14 @@ export default function ProfileView({
 
   const toggleFavArtwork = (art: ArtworkData) => {
     setFavArtworks(prev => {
-      const next = prev.map(a => a.id === art.id ? { ...a, isFav: !a.isFav } : a);
-      localStorage.setItem("deckoviz_favourite_artworks", JSON.stringify(next.filter(a => a.isFav)));
+      const exists = prev.some(a => a.id === art.id || a.image === art.image);
+      let next: ArtworkData[];
+      if (exists) {
+        next = prev.filter(a => a.id !== art.id && a.image !== art.image);
+      } else {
+        next = [{ ...art, isFav: true }, ...prev];
+      }
+      saveUserFavouriteArtworks(next);
       return next;
     });
   };
@@ -433,12 +382,18 @@ export default function ProfileView({
     });
   };
 
-  const displayName = profile.displayName || user?.name || user?.email?.split("@")[0] || "Kishore M";
-  const savedUserAvatar = localStorage.getItem("deckoviz_user_avatar");
-  const savedUserBanner = localStorage.getItem("deckoviz_user_banner");
-  const defaultArtistAvatar = "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80";
-  const avatarSrc = savedUserAvatar || (profile.avatar && !profile.avatar.includes("ui-avatars") ? profile.avatar : null) || user?.avatar || figmaAssets.surajAvatar || defaultArtistAvatar;
-  const bannerSrc = savedUserBanner || profile.banner || figmaAssets.profileBanner;
+  const userKey = user?.id || user?.email || user?.name || "guest";
+  const rawName = user?.name || user?.displayName || (user?.email ? user.email.split("@")[0] : "");
+  const displayName = profile.displayName || rawName || "Creative Creator";
+  const usernameHandle = profile.username || (rawName ? rawName.toLowerCase().replace(/[^a-z0-9._]/g, "") : "creator");
+
+  const savedUserAvatar = localStorage.getItem(`deckoviz_user_avatar_${userKey}`);
+  const savedUserBanner = localStorage.getItem(`deckoviz_user_banner_${userKey}`);
+  
+  // Unique personalized photo per user based on user key/name so every user gets their own profile picture!
+  const uniqueSeedAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=3f5fe0&color=fff&size=500`;
+  const avatarSrc = savedUserAvatar || profile.avatar || user?.avatar || uniqueSeedAvatar;
+  const bannerSrc = savedUserBanner || profile.banner || "https://picsum.photos/seed/deckoviz-banner/1200/400";
 
   const formatCount = (n: number) => {
     if (n >= 1000) return (n / 1000).toFixed(1).replace(/\.0$/, "") + "k";
@@ -501,23 +456,79 @@ export default function ProfileView({
                 </div>
               </div>
               <div className="flex flex-col justify-center">
-                {editing ? (
-                  <input
-                    value={editForm.displayName}
-                    onChange={(e) => setEditForm({ ...editForm, displayName: e.target.value })}
-                    className="bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-0.5 text-[20px] font-bold leading-tight border-b border-[#3b82f6] outline-none bg-transparent"
-                    placeholder="Display Name"
-                  />
+                {isEditingName ? (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      autoFocus
+                      value={nameInput}
+                      onChange={(e) => setNameInput(e.target.value)}
+                      onKeyDown={async (e) => {
+                        if (e.key === "Enter") {
+                          const val = nameInput.trim() || displayName;
+                          setProfile(prev => ({ ...prev, displayName: val }));
+                          setEditForm(prev => ({ ...prev, displayName: val }));
+                          setIsEditingName(false);
+                          saveUserProfile({ ...profile, displayName: val });
+                          updateUser({ name: val, displayName: val, avatar: profile.avatar });
+                          await webappApi.updateProfile({ displayName: val }, token || undefined).catch(() => null);
+                          window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
+                          window.dispatchEvent(new CustomEvent("deckoviz-user-changed"));
+                        } else if (e.key === "Escape") {
+                          setIsEditingName(false);
+                        }
+                      }}
+                      onBlur={async () => {
+                        const val = nameInput.trim() || displayName;
+                        setProfile(prev => ({ ...prev, displayName: val }));
+                        setEditForm(prev => ({ ...prev, displayName: val }));
+                        setIsEditingName(false);
+                        saveUserProfile({ ...profile, displayName: val });
+                        updateUser({ name: val, displayName: val, avatar: profile.avatar });
+                        await webappApi.updateProfile({ displayName: val }, token || undefined).catch(() => null);
+                        window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
+                        window.dispatchEvent(new CustomEvent("deckoviz-user-changed"));
+                      }}
+                      className="text-[#182a4a] bg-white font-serif text-[20px] font-bold px-3 py-1 rounded-xl border-2 border-blue-500 shadow-lg outline-none max-w-[260px]"
+                      placeholder="Enter your name"
+                    />
+                    <button
+                      onMouseDown={async (e) => {
+                        e.preventDefault();
+                        const val = nameInput.trim() || displayName;
+                        setProfile(prev => ({ ...prev, displayName: val }));
+                        setEditForm(prev => ({ ...prev, displayName: val }));
+                        setIsEditingName(false);
+                        saveUserProfile({ ...profile, displayName: val });
+                        updateUser({ name: val, displayName: val, avatar: profile.avatar });
+                        await webappApi.updateProfile({ displayName: val }, token || undefined).catch(() => null);
+                        window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
+                        window.dispatchEvent(new CustomEvent("deckoviz-user-changed"));
+                      }}
+                      className="h-8 px-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow transition flex items-center gap-1 shrink-0"
+                    >
+                      <Check size={14} /> Save
+                    </button>
+                  </div>
                 ) : (
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[20px] font-bold leading-tight whitespace-nowrap">
-                      {displayName}
+                  <div className="flex items-center gap-2 flex-wrap group/name">
+                    <h1
+                      onClick={() => {
+                        setNameInput(profile.displayName || displayName);
+                        setIsEditingName(true);
+                      }}
+                      className="bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-[22px] font-bold leading-tight whitespace-nowrap cursor-pointer hover:opacity-80 flex items-center gap-2"
+                      title="Click to edit display name"
+                    >
+                      {profile.displayName || displayName}
+                      <Pencil size={15} className="text-blue-500 hover:scale-125 transition shrink-0" />
                     </h1>
                     <span className="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-100/80 whitespace-nowrap">
                       @{profile.username || displayName.toLowerCase().replace(/[^a-z0-9._]/g, "")}
                     </span>
                   </div>
                 )}
+
                 <p className="text-[13px] font-medium leading-tight text-[#70737b] mt-1 whitespace-nowrap">
                   {editing ? (
                     <input
@@ -527,7 +538,7 @@ export default function ProfileView({
                       className="bg-transparent border-b border-gray-300 outline-none text-[13px] font-medium leading-tight text-[#70737b]"
                     />
                   ) : (
-                    profile.title || "Lead AI Creator"
+                    <span className="cursor-pointer hover:text-blue-600" onClick={startEditing}>{profile.title || "Lead AI Creator"}</span>
                   )}
                 </p>
               </div>
@@ -535,6 +546,30 @@ export default function ProfileView({
 
             {/* Middle: Action Buttons */}
             <div className="flex items-center gap-2 flex-wrap justify-end">
+              {editing ? (
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={saveProfile}
+                    disabled={saving}
+                    className="h-[40px] px-5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-md transition flex items-center gap-1.5"
+                  >
+                    <Save size={15} /> {saving ? "Saving..." : "Save Profile"}
+                  </button>
+                  <button
+                    onClick={cancelEditing}
+                    className="h-[40px] px-4 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-bold transition flex items-center gap-1"
+                  >
+                    <X size={15} /> Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={startEditing}
+                  className="h-[40px] shrink-0 whitespace-nowrap rounded-full bg-blue-50 hover:bg-blue-100 px-4 text-[13px] font-bold text-blue-700 border border-blue-200 transition flex items-center gap-1.5 shadow-sm"
+                >
+                  <Pencil size={15} /> Edit Profile
+                </button>
+              )}
               <button
                 onClick={() => setShowUserSearchModal(true)}
                 className="h-[40px] shrink-0 whitespace-nowrap rounded-full bg-blue-50 hover:bg-blue-100 px-3.5 text-[13px] font-bold text-blue-700 transition flex items-center gap-1.5 border border-blue-200/80"
@@ -663,7 +698,7 @@ export default function ProfileView({
                     alt={displayName}
                     className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = defaultArtistAvatar;
+                      (e.target as HTMLImageElement).src = uniqueSeedAvatar;
                     }}
                   />
                   <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-200">

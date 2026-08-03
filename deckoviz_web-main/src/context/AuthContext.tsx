@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
+import { getUserCollections, saveUserCollections } from "../lib/userStorage";
 
-const BASE_URL = "https://deckoviz-web-f.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 const API_URL = `${BASE_URL}/api/auth`;
 
 interface User {
@@ -31,10 +32,24 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(() => {
-    const saved = localStorage.getItem("user");
-    return saved ? JSON.parse(saved) : null;
+    try {
+      const saved = localStorage.getItem("user");
+      if (saved && saved !== "undefined" && saved !== "null") {
+        return JSON.parse(saved);
+      }
+    } catch (e) {
+      console.warn("Invalid user object in localStorage:", e);
+      localStorage.removeItem("user");
+    }
+    return null;
   });
-  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [token, setToken] = useState<string | null>(() => {
+    const savedToken = localStorage.getItem("token");
+    if (savedToken && savedToken !== "undefined" && savedToken !== "null") {
+      return savedToken;
+    }
+    return null;
+  });
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isAuthModalForced, setIsAuthModalForced] = useState(false);
 
@@ -62,8 +77,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const res = await axios.get(`${API_URL}/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setUser(res.data.user);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      const userData = res.data?.user || (res.data?.email ? res.data : null);
+      if (userData) {
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
+      }
       setIsAuthModalOpen(false);
       setIsAuthModalForced(false);
     } catch (err: any) {
@@ -82,6 +100,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(newUser);
     setIsAuthModalOpen(false);
     setIsAuthModalForced(false);
+
+    window.dispatchEvent(new CustomEvent("deckoviz-user-changed", { detail: newUser }));
+    window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
 
     // Restore collections on login from backend API & persistent backup
     try {
@@ -102,9 +123,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const mergedCols = Array.from(mergedMap.values());
       if (mergedCols.length > 0) {
-        localStorage.setItem("deckoviz_user_collections", JSON.stringify(mergedCols));
-        localStorage.setItem("deckoviz_backup_collections", JSON.stringify(mergedCols));
-        window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+        saveUserCollections(mergedCols);
       }
     } catch (err) {
       console.warn("[AuthContext] Collection restoration on login fallback:", err);
@@ -112,16 +131,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = () => {
-    // Preserve persistent collections backup in deckoviz_backup_collections
-    const currentCols = localStorage.getItem("deckoviz_user_collections");
-    if (currentCols) {
-      localStorage.setItem("deckoviz_backup_collections", currentCols);
-    }
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setToken(null);
     setUser(null);
     setIsAuthModalForced(false);
+    window.dispatchEvent(new CustomEvent("deckoviz-user-changed", { detail: null }));
+    window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
   };
 
   const openAuthModal = useCallback((forced: boolean = false) => {

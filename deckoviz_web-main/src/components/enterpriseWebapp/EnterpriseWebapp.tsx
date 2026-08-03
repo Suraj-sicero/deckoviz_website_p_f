@@ -217,11 +217,11 @@ export default function EnterpriseWebapp() {
                             <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/30" />
                           ) : (
                             <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white flex items-center justify-center font-bold text-sm shadow-md">
-                              {user?.name ? user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) : (user?.email ? user.email.slice(0, 2).toUpperCase() : "SP")}
+                              {user?.name ? user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) : (user?.email ? user.email.slice(0, 2).toUpperCase() : "US")}
                             </div>
                           )}
                           <div className="flex-1 min-w-0">
-                            <p className="text-[13px] font-bold text-gray-800 truncate">{user?.name || "Suraj Patel"}</p>
+                            <p className="text-[13px] font-bold text-gray-800 truncate">{user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "Creator")}</p>
                             <p className="text-[11px] text-gray-500 truncate">{user?.email || "Logged in User"}</p>
                           </div>
                           <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Logged In</span>

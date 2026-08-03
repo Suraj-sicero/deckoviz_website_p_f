@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Search, Camera, CheckCircle2, ChevronDown } from "lucide-react";
 import { useAuth } from "../../../context/AuthContext";
 import { webappApi, getVizzyGenerativeImages } from "../../../lib/webappApi";
+import { getUserCollections, saveUserCollections } from "../../../lib/userStorage";
 
 const categories = [
   "Landscape", "Portrait", "Abstract", "Digital Art", "Minimalist", "Nature"
@@ -47,7 +48,7 @@ export default function AddImagesToCollectionView() {
     try {
       const data = await webappApi.getCollections(token || undefined);
       const list = Array.isArray(data) ? data : (data?.collections || data?.items || []);
-      const savedCols = JSON.parse(localStorage.getItem("deckoviz_user_collections") || "[]");
+      const savedCols = getUserCollections();
       const combinedMap = new Map();
       [...savedCols, ...list].forEach((c: any) => {
         const k = c.id || c.name;
@@ -79,43 +80,29 @@ export default function AddImagesToCollectionView() {
 
     const selectedItems = media.filter((m) => selectedMedia.has(m.id));
 
-    // Update local collections storage (deckoviz_user_collections & deckoviz_backup_collections)
-    const savedColsRaw = localStorage.getItem("deckoviz_user_collections");
-    const savedCols = savedColsRaw ? JSON.parse(savedColsRaw) : [];
-    
-    const updatedCols = savedCols.map((c: any) => {
-      if (c.id === selectedCollection || c.name === selectedCollection || c.title === selectedCollection) {
-        const existingItems = Array.isArray(c.items) ? c.items : [];
-        const newItems = selectedItems.map((m) => ({
-          id: m.id || `img-${Date.now()}-${Math.random()}`,
-          title: m.fileName || "Collection Artwork",
-          url: m.mediaUrl,
-          mediaUrl: m.mediaUrl,
-          displayHours: "00:00:00",
-          displaySeconds: "00:30",
-        }));
-        const mergedItems = [...newItems, ...existingItems];
-        return {
-          ...c,
-          items: mergedItems,
-          itemCount: mergedItems.length,
-        };
-      }
-      return c;
-    });
-
-    localStorage.setItem("deckoviz_user_collections", JSON.stringify(updatedCols));
-    localStorage.setItem("deckoviz_backup_collections", JSON.stringify(updatedCols));
-    window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
-
     let added = 0;
-    for (const mediaId of selectedMedia) {
+    for (const item of selectedItems) {
       try {
-        await webappApi.addCollectionItem(selectedCollection, { itemId: mediaId, itemType: "image" }, token || undefined);
+        await webappApi.addCollectionItem(
+          selectedCollection,
+          {
+            itemId: item.id,
+            url: item.mediaUrl,
+            mediaUrl: item.mediaUrl,
+            title: item.fileName || "Collection Artwork",
+            itemType: "image",
+          },
+          token || undefined
+        );
         added++;
-      } catch { /* skip */ }
+      } catch (e) {
+        console.error("[Collection] Error adding item to Firebase:", e);
+      }
     }
-    setMessage(`Added ${selectedMedia.size} item${selectedMedia.size !== 1 ? "s" : ""} to collection successfully!`);
+
+    await fetchCollections();
+    window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+    setMessage(`Added ${added} item${added !== 1 ? "s" : ""} to collection in Firebase successfully!`);
     setSelectedMedia(new Set());
     setAdding(false);
   };

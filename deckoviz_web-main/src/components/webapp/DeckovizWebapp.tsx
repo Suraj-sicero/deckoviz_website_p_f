@@ -68,6 +68,7 @@ import SearchView from "./views/SearchView";
 import { setFrameImage } from "../../lib/frameStore";
 import { webappApi } from "../../lib/webappApi";
 import { homeApi } from "../../lib/homeApi";
+import { getUserCollections, saveUserCollections, getUserMedia, saveUserMedia, getUserAvatar } from "../../lib/userStorage";
 import {
   HomeDailyQueueView,
   HomeEventsView,
@@ -168,7 +169,18 @@ export default function DeckovizWebapp() {
   const [activeView, setActiveView] = useState<ViewType>("drawing_room");
   const [showMenu, setShowMenu] = useState(false);
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
+  const [profileTick, setProfileTick] = useState(0);
   const ws = useWebSocket();
+
+  useEffect(() => {
+    const handleProfileUpdate = () => setProfileTick(t => t + 1);
+    window.addEventListener("deckoviz-profile-updated", handleProfileUpdate);
+    window.addEventListener("deckoviz-user-changed", handleProfileUpdate);
+    return () => {
+      window.removeEventListener("deckoviz-profile-updated", handleProfileUpdate);
+      window.removeEventListener("deckoviz-user-changed", handleProfileUpdate);
+    };
+  }, []);
 
   const getUserInitials = (u: any) => {
     const nameStr = u?.displayName || u?.name || u?.email;
@@ -228,31 +240,37 @@ export default function DeckovizWebapp() {
               </button>
 
               {/* User Display Picture Avatar Badge */}
-              <button
-                onClick={() => {
-                  if (user) {
-                    setActiveView("profile");
-                  } else {
-                    openAuthModal();
-                  }
-                }}
-                className="relative transition hover:scale-105 flex items-center justify-center rounded-full p-0.5 group focus:outline-none"
-                title={user ? `Logged in as ${user.name || user.email}` : "Click to log in"}
-                aria-label="User Profile"
-              >
-                {user?.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.name || "User Profile"}
-                    className="h-8 w-8 rounded-full object-cover ring-2 ring-[#182a4a]/40 shadow-sm"
-                  />
-                ) : (
-                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#182a4a] via-[#1e3a5f] to-[#2563EB] text-white flex items-center justify-center font-bold text-xs shadow-md border border-white/60 ring-2 ring-blue-500/20 group-hover:ring-blue-500/50 transition-all">
-                    {getUserInitials(user)}
-                  </div>
-                )}
-                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
-              </button>
+              {(() => {
+                const headerUserName = user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "Creator");
+                const savedAvatar = getUserAvatar();
+                const defaultInitialsAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(headerUserName)}&background=3f5fe0&color=fff&size=500`;
+                const avatarSrc = savedAvatar || user?.avatar || defaultInitialsAvatar;
+
+                return (
+                  <button
+                    onClick={() => {
+                      if (user) {
+                        setActiveView("profile");
+                      } else {
+                        openAuthModal();
+                      }
+                    }}
+                    className="relative transition hover:scale-105 flex items-center justify-center rounded-full p-0.5 group focus:outline-none"
+                    title={user ? `Logged in as ${headerUserName}` : "Click to log in"}
+                    aria-label="User Profile"
+                  >
+                    <img
+                      src={avatarSrc}
+                      alt={headerUserName}
+                      className="h-8 w-8 rounded-full object-cover ring-2 ring-[#182a4a]/40 shadow-sm"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = defaultInitialsAvatar;
+                      }}
+                    />
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                  </button>
+                );
+              })()}
 
               {/* Dropdown Menu (3 bars) */}
               <div className="relative">
@@ -270,20 +288,30 @@ export default function DeckovizWebapp() {
                     <div className="absolute right-0 top-[44px] z-50 w-[280px] max-h-[80vh] overflow-y-auto rounded-xl border border-[#e5e7eb] bg-white py-2 shadow-2xl shadow-black/10">
                       {/* Logged-in User Profile Banner */}
                       <div className="px-4 py-3 border-b border-[#f0f0f4] mb-1 bg-gradient-to-br from-blue-50/80 to-indigo-50/40">
-                        <div className="flex items-center gap-3">
-                          {user?.avatar ? (
-                            <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/30" />
-                          ) : (
-                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white flex items-center justify-center font-bold text-sm shadow-md">
-                              {getUserInitials(user)}
+                        {(() => {
+                          const headerUserName = user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "Creator");
+                          const savedAvatar = getUserAvatar();
+                          const defaultInitialsAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(headerUserName)}&background=3f5fe0&color=fff&size=500`;
+                          const avatarSrc = savedAvatar || user?.avatar || defaultInitialsAvatar;
+
+                          return (
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={avatarSrc}
+                                alt={headerUserName}
+                                className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/30"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = defaultInitialsAvatar;
+                                }}
+                              />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-[13px] font-bold text-gray-800 truncate">{headerUserName}</p>
+                                <p className="text-[11px] text-gray-500 truncate">{user?.email || "Logged in User"}</p>
+                              </div>
+                              <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Logged In</span>
                             </div>
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[13px] font-bold text-gray-800 truncate">{user?.name || "Suraj Patel"}</p>
-                            <p className="text-[11px] text-gray-500 truncate">{user?.email || "Logged in User"}</p>
-                          </div>
-                          <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Logged In</span>
-                        </div>
+                          );
+                        })()}
                       </div>
 
                       <div className="px-4 py-1.5 border-b border-[#f0f0f4] mb-1">
@@ -652,10 +680,12 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
           vizzyApi.getImages(),
         ]);
         if (isMounted) {
+          let backendCols: any[] = [];
           if (colData.status === "fulfilled") {
-            const list = extractList(colData.value);
-            if (list.length > 0) setUserCollections(list);
+            backendCols = extractList(colData.value);
           }
+          setUserCollections(backendCols);
+
           if (queueData.status === "fulfilled") {
             const list = extractList(queueData.value);
             if (list.length > 0) setDailyQueue(list);
@@ -677,13 +707,6 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
             });
           }
 
-          try {
-            const savedMedia = JSON.parse(localStorage.getItem("deckoviz_user_media_persistent") || "[]");
-            savedMedia.forEach((i: any) => {
-              if (i.url || i.mediaUrl) fetchedImgs.push(i.url || i.mediaUrl);
-            });
-          } catch { /* ignore */ }
-
           const uniqueImgs = Array.from(new Set(fetchedImgs));
           if (uniqueImgs.length > 0) setUserArtworks(uniqueImgs);
         }
@@ -694,7 +717,19 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
       }
     }
     loadData();
-    return () => { isMounted = false; };
+
+    const handleCollectionsUpdated = () => {
+      const updatedCols = getUserCollections();
+      if (isMounted) setUserCollections(updatedCols);
+    };
+    window.addEventListener("deckoviz-collections-updated", handleCollectionsUpdated);
+    window.addEventListener("deckoviz-user-changed", loadData);
+
+    return () => {
+      isMounted = false;
+      window.removeEventListener("deckoviz-collections-updated", handleCollectionsUpdated);
+      window.removeEventListener("deckoviz-user-changed", loadData);
+    };
   }, [user]);
 
   const activeCollectionName = userCollections.length > 0 ? (userCollections[0]?.name || "My Personal Collection") : "Morning Serenity";
@@ -823,43 +858,85 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
         {/* Current Collection */}
         <SectionCard
           title="Current Active Collection"
-          subtitle={activeCollectionName}
+          subtitle={userCollections.length > 0 ? (userCollections[0]?.name || userCollections[0]?.title || "My Personal Collection") : "No Active Collection Yet"}
           icon={<Layers size={18} />}
           accentColor="#182a4a"
           onClick={() => onNavigate("all_collections")}
         >
-          <div className="grid grid-cols-3 gap-3 mt-4">
-            {["/images/herol (3).png", "/images/herol (5).png", "/images/herol (7).png"].map((img, i) => (
-              <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden group">
-                <img src={img} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+          {userCollections.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-6 text-center rounded-xl bg-gray-50/70 border border-dashed border-gray-200 mt-4 gap-3">
+              <Layers className="size-8 text-blue-500/60" />
+              <div>
+                <p className="text-sm font-bold text-gray-800">No Collections Created</p>
+                <p className="text-xs text-gray-500">Create your first personalized collection to start scheduling & displaying art.</p>
               </div>
-            ))}
-          </div>
-          <p className="text-xs text-gray-500 mt-3">
-            {userCollections.length > 0 ? `${userCollections.length} custom collections connected` : "12 artworks - Connected to backend"}
-          </p>
+              <button
+                onClick={(e) => { e.stopPropagation(); onNavigate("create_collection"); }}
+                className="px-4 py-2 rounded-full text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition"
+              >
+                + Create Collection
+              </button>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-3 gap-3 mt-4">
+                {(() => {
+                  const activeCol = userCollections[0];
+                  const items: string[] = activeCol?.items?.map((i: any) => i.url || i.mediaUrl).filter(Boolean) || [];
+                  const displayImgs = items.length >= 3 ? items.slice(0, 3) : items;
+
+                  if (displayImgs.length === 0) {
+                    return (
+                      <div className="col-span-3 p-4 text-center text-xs text-gray-400 font-medium bg-gray-50 rounded-xl border border-gray-100">
+                        Collection is empty. Add artworks to this collection!
+                      </div>
+                    );
+                  }
+
+                  return displayImgs.map((img, i) => (
+                    <div key={i} className="relative aspect-[4/3] rounded-xl overflow-hidden group border border-gray-100 bg-gray-100">
+                      <img src={img} alt="" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                  ));
+                })()}
+              </div>
+              <p className="text-xs text-gray-500 mt-3 font-medium">
+                {userCollections[0]?.items?.length || userCollections[0]?.itemCount || 0} items in active collection • {userCollections.length} total collections
+              </p>
+            </>
+          )}
         </SectionCard>
 
         {/* Favourite Collections */}
         <SectionCard title="Favourite Collections" icon={<Heart size={18} />} accentColor="#e11d48" onClick={() => onNavigate("all_collections")}>
           <div className="space-y-3 mt-4">
-            {(userCollections.length > 0 ? userCollections.slice(0, 3) : [
-              { name: "Evening Ambiance", itemsCount: 8 },
-              { name: "Nature Escapes", itemsCount: 11 },
-              { name: "Abstract Dreams", itemsCount: 14 }
-            ]).map((col: any, i: number) => (
-              <div key={col.id || i} className="flex items-center gap-3 p-3 rounded-xl bg-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
-                <div className="h-10 w-10 rounded-xl overflow-hidden shrink-0">
-                  <img src={`/images/herol (${i + 10}).png`} alt="" className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-800 group-hover:text-[#182a4a] transition-colors truncate">{col.name}</p>
-                  <p className="text-[11px] text-gray-400">{col.itemsCount || (8 + i * 3)} artworks</p>
-                </div>
-                <Heart size={14} className="text-rose-400 fill-rose-400 shrink-0" />
+            {userCollections.length === 0 ? (
+              <div className="flex flex-col items-center justify-center p-6 text-center rounded-xl bg-gray-50/70 border border-dashed border-gray-200 gap-2">
+                <Heart className="size-6 text-rose-400/60" />
+                <p className="text-xs font-bold text-gray-700">No Favourite Collections</p>
+                <p className="text-[11px] text-gray-400">Collections you create will be listed here for quick access.</p>
               </div>
-            ))}
+            ) : (
+              userCollections.slice(0, 3).map((col: any, i: number) => {
+                const colName = col.name || col.title || "Untitled Collection";
+                const count = col.items?.length || col.itemCount || 0;
+                const thumbUrl = col.items?.[0]?.url || col.items?.[0]?.mediaUrl || "https://picsum.photos/seed/deckoviz-art/300/300";
+
+                return (
+                  <div key={col.id || i} className="flex items-center gap-3 p-3 rounded-xl bg-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
+                    <div className="h-10 w-10 rounded-xl overflow-hidden shrink-0 bg-gray-100 border border-gray-100">
+                      <img src={thumbUrl} alt="" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-800 group-hover:text-[#182a4a] transition-colors truncate">{colName}</p>
+                      <p className="text-[11px] text-gray-400 font-medium">{count} artwork{count !== 1 ? "s" : ""}</p>
+                    </div>
+                    <Heart size={14} className="text-rose-400 fill-rose-400 shrink-0" />
+                  </div>
+                );
+              })
+            )}
           </div>
         </SectionCard>
       </div>
@@ -1097,18 +1174,11 @@ function VGCPlaceholder() {
             <ChevronRight size={16} className="text-gray-300" />
           </div>
         )) : (
-          [{ title: "Generate a sunrise over calm ocean", agent: "Art Generator", time: "2 hours ago" },
-          { title: "Create ambient music for evening", agent: "Music Composer", time: "Yesterday" },
-          { title: "Design a motivational poster", agent: "Poster Studio", time: "2 days ago" }].map((chat, i) => (
-            <div key={i} className="flex items-center gap-4 p-4 rounded-xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#182a4a] to-[#2563EB] flex items-center justify-center text-white shrink-0"><MessageSquare size={14} /></div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-gray-800 truncate">{chat.title}</p>
-                <p className="text-[11px] text-gray-400">{chat.agent} - {chat.time}</p>
-              </div>
-              <ChevronRight size={16} className="text-gray-300" />
-            </div>
-          ))
+          <div className="flex flex-col items-center justify-center p-6 rounded-xl bg-white/50 border border-dashed border-gray-200 text-center gap-2">
+            <MessageSquare className="size-6 text-blue-500/60" />
+            <p className="text-xs font-bold text-gray-700">No Recent Generative Chats</p>
+            <p className="text-[11px] text-gray-400">Select an AI Sub-Agent above to start generating art & music.</p>
+          </div>
         )}
       </div>
 
@@ -1288,32 +1358,28 @@ function AllMediaPlaceholder() {
 
       let localMedia: any[] = [];
       try {
-        const saved = localStorage.getItem("deckoviz_user_media_persistent");
-        if (saved) localMedia = JSON.parse(saved);
+        localMedia = getUserMedia();
       } catch { /* ignore */ }
 
       // Gather Collection Items
       let collectionMedia: any[] = [];
       try {
-        const savedColsRaw = localStorage.getItem("deckoviz_user_collections") || localStorage.getItem("deckoviz_backup_collections");
-        if (savedColsRaw) {
-          const cols = JSON.parse(savedColsRaw);
-          cols.forEach((col: any) => {
-            if (Array.isArray(col.items)) {
-              col.items.forEach((item: any) => {
-                if (item.url || item.mediaUrl) {
-                  collectionMedia.push({
-                    id: item.id || `colitem-${Date.now()}-${Math.random()}`,
-                    mediaUrl: item.url || item.mediaUrl,
-                    fileName: item.title || item.fileName || col.name || "Collection Artwork",
-                    mediaType: "image/png",
-                    isGenerated: true,
-                  });
-                }
-              });
-            }
-          });
-        }
+        const cols = getUserCollections();
+        cols.forEach((col: any) => {
+          if (Array.isArray(col.items)) {
+            col.items.forEach((item: any) => {
+              if (item.url || item.mediaUrl) {
+                collectionMedia.push({
+                  id: item.id || `colitem-${Date.now()}-${Math.random()}`,
+                  mediaUrl: item.url || item.mediaUrl,
+                  fileName: item.title || item.fileName || col.name || "Collection Artwork",
+                  mediaType: "image/png",
+                  isGenerated: true,
+                });
+              }
+            });
+          }
+        });
       } catch { /* ignore */ }
 
       // Default high quality artworks if user history is brand new
@@ -1367,18 +1433,18 @@ function AllMediaPlaceholder() {
 
       let filtered = combinedList;
       if (activeTab === "Generated Images") {
-        filtered = combinedList.filter(m => m.isGenerated || m.mediaType?.startsWith("image/"));
+        filtered = combinedList.filter(m => (m.isGenerated || !m.mediaType || m.mediaType.startsWith("image/")) && !m.mediaType?.startsWith("video/") && !m.mediaType?.startsWith("audio/"));
       } else if (activeTab === "Uploaded Images") {
         filtered = combinedList.filter(m => m.mediaType?.startsWith("image/"));
       } else if (activeTab === "Generated Videos" || activeTab === "Uploaded Videos") {
-        filtered = combinedList.filter(m => m.mediaType?.startsWith("video/"));
+        filtered = combinedList.filter(m => m.mediaType?.startsWith("video/") || m.fileName?.toLowerCase().endsWith(".mp4") || m.fileName?.toLowerCase().endsWith(".webm"));
       } else if (activeTab === "Generated Music" || activeTab === "Uploaded Music") {
-        filtered = combinedList.filter(m => m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/"));
+        filtered = combinedList.filter(m => m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/") || m.fileName?.toLowerCase().endsWith(".mp3") || m.fileName?.toLowerCase().endsWith(".wav"));
       } else if (activeTab === "Generated Narrations") {
-        filtered = combinedList.filter(m => m.mediaType?.includes("narration"));
+        filtered = combinedList.filter(m => m.mediaType?.includes("narration") || m.fileName?.toLowerCase().includes("narration"));
       }
 
-      setMediaFiles(filtered.length > 0 ? filtered : combinedList);
+      setMediaFiles(filtered);
     } catch (err: any) {
       console.error("[AllMedia] fetchMedia failed:", err);
     }
@@ -1396,13 +1462,35 @@ function AllMediaPlaceholder() {
   }, [fetchMedia]);
 
   const uploadFiles = async (fileList: FileList | File[]) => {
-    if (!token) { openAuthModal(true); setError("Please sign in to upload media."); return; }
     setUploading(true);
     setError("");
     let failed = 0;
     for (const file of Array.from(fileList)) {
       try {
-        await webappApi.uploadMedia(file, token);
+        const previewUrl = URL.createObjectURL(file);
+        const fileType = file.type || (file.name.endsWith(".mp4") ? "video/mp4" : file.name.endsWith(".mp3") ? "audio/mp3" : "image/png");
+        
+        let uploadedItem: any = null;
+        try {
+          uploadedItem = await webappApi.uploadMedia(file, token || undefined);
+        } catch { /* fallback to previewUrl */ }
+
+        const finalUrl = uploadedItem?.url || uploadedItem?.mediaUrl || previewUrl;
+        const newMediaItem = {
+          id: `media-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          url: finalUrl,
+          mediaUrl: finalUrl,
+          fileName: file.name,
+          name: file.name,
+          mediaType: fileType,
+          type: fileType,
+          isGenerated: false,
+          createdAt: new Date().toISOString(),
+        };
+
+        let currentMedia = getUserMedia();
+        currentMedia.unshift(newMediaItem);
+        saveUserMedia(currentMedia);
       } catch (err: any) {
         console.error("[AllMedia] upload failed:", err);
         failed++;
@@ -1417,22 +1505,17 @@ function AllMediaPlaceholder() {
     if (token) {
       try { await webappApi.deleteMedia(id, token); } catch { /* ignore */ }
     }
-    // Also remove from persistent localStorage
     try {
-      const saved = localStorage.getItem("deckoviz_user_media_persistent");
-      if (saved) {
-        let list = JSON.parse(saved);
-        list = list.filter((m: any) => m.id !== id && m.url !== url && m.mediaUrl !== url);
-        localStorage.setItem("deckoviz_user_media_persistent", JSON.stringify(list));
-      }
+      let list = getUserMedia();
+      list = list.filter((m: any) => m.id !== id && m.url !== url && m.mediaUrl !== url);
+      saveUserMedia(list);
     } catch { /* ignore */ }
     setMediaFiles(f => f.filter(m => m.id !== id && m.mediaUrl !== url));
   };
 
   const handleOpenPickerModal = (file: any) => {
     setPickerModalFile(file);
-    const savedColsRaw = localStorage.getItem("deckoviz_user_collections");
-    const cols = savedColsRaw ? JSON.parse(savedColsRaw) : [];
+    const cols = getUserCollections();
     setExistingCols(cols);
     if (cols.length > 0) {
       setTargetColId(cols[0].id || cols[0].name);
@@ -1448,9 +1531,7 @@ function AllMediaPlaceholder() {
     if (!targetUrl) return;
 
     try {
-      // 1. Ensure saved to local media
-      const savedMedia = localStorage.getItem("deckoviz_user_media_persistent");
-      let mediaList = savedMedia ? JSON.parse(savedMedia) : [];
+      let mediaList = getUserMedia();
       mediaList = mediaList.filter((m: any) => m.url !== targetUrl && m.mediaUrl !== targetUrl);
       mediaList.unshift({
         id: `media-${Date.now()}-${Math.random()}`,
@@ -1461,11 +1542,9 @@ function AllMediaPlaceholder() {
         isGenerated: true,
         createdAt: new Date().toISOString(),
       });
-      localStorage.setItem("deckoviz_user_media_persistent", JSON.stringify(mediaList));
+      saveUserMedia(mediaList);
 
-      // 2. Add to target collection or create new one
-      const savedColsRaw = localStorage.getItem("deckoviz_user_collections");
-      let cols: any[] = savedColsRaw ? JSON.parse(savedColsRaw) : [];
+      let cols: any[] = getUserCollections();
 
       if (isCreatingNew || cols.length === 0 || !targetColId) {
         const colTitle = newColTitle.trim() || "My New Collection";
@@ -1519,9 +1598,7 @@ function AllMediaPlaceholder() {
         });
       }
 
-      localStorage.setItem("deckoviz_user_collections", JSON.stringify(cols));
-      localStorage.setItem("deckoviz_backup_collections", JSON.stringify(cols));
-      window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+      saveUserCollections(cols);
 
       setPickerModalFile(null);
       setAddedToast(`Added "${pickerModalFile.fileName}" to collection!`);
@@ -1575,51 +1652,71 @@ function AllMediaPlaceholder() {
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wider">{activeTab} ({mediaFiles.length})</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-            {mediaFiles.map((file) => (
-              <div key={file.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-white shadow-sm hover:shadow-md transition duration-300">
-                <img
-                  src={file.mediaUrl}
-                  alt={file.fileName}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(file.fileName || "art")}/800/800`;
-                  }}
-                />
-                <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                  <button
-                    onClick={() => setViewingImage(file.mediaUrl)}
-                    className="w-9 h-9 rounded-full bg-white/90 text-gray-800 flex items-center justify-center hover:bg-white transition shadow-md"
-                    title="View Image"
-                  >
-                    <Eye size={16} />
-                  </button>
-                  <button
-                    onClick={() => handleOpenPickerModal(file)}
-                    className="w-9 h-9 rounded-full bg-[#3f5fe0] text-white flex items-center justify-center hover:bg-[#344fd0] transition shadow-md"
-                    title="Add to Collection"
-                  >
-                    <FolderPlus size={16} />
-                  </button>
-                  <button
-                    onClick={(e) => { e.stopPropagation(); handleDelete(file.id, file.mediaUrl); }}
-                    className="w-9 h-9 rounded-full bg-white/90 text-gray-700 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition shadow-md"
-                    title="Delete Media"
-                  >
-                    <Trash2 size={16} />
-                  </button>
+            {mediaFiles.map((file) => {
+              const isVideo = file.mediaType?.startsWith("video/") || file.fileName?.toLowerCase().endsWith(".mp4");
+              const isAudio = file.mediaType?.startsWith("audio/") || file.mediaType?.startsWith("music/") || file.fileName?.toLowerCase().endsWith(".mp3");
+
+              return (
+                <div key={file.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-white shadow-sm hover:shadow-md transition duration-300">
+                  {isVideo ? (
+                    <video src={file.mediaUrl} controls className="w-full h-full object-cover" />
+                  ) : isAudio ? (
+                    <div className="w-full h-full bg-gradient-to-br from-indigo-900 to-[#182a4a] p-4 flex flex-col justify-between text-white">
+                      <div className="flex items-center justify-between">
+                        <Music size={24} className="text-cyan-400 animate-pulse" />
+                        <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full font-mono">Audio</span>
+                      </div>
+                      <p className="text-xs font-bold truncate">{file.fileName}</p>
+                      <audio src={file.mediaUrl} controls className="w-full h-8 mt-2" />
+                    </div>
+                  ) : (
+                    <img
+                      src={file.mediaUrl}
+                      alt={file.fileName}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(file.fileName || "art")}/800/800`;
+                      }}
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    {!isAudio && !isVideo && (
+                      <button
+                        onClick={() => setViewingImage(file.mediaUrl)}
+                        className="w-9 h-9 rounded-full bg-white/90 text-gray-800 flex items-center justify-center hover:bg-white transition shadow-md"
+                        title="View Image"
+                      >
+                        <Eye size={16} />
+                      </button>
+                    )}
+                    <button
+                      onClick={() => handleOpenPickerModal(file)}
+                      className="w-9 h-9 rounded-full bg-[#3f5fe0] text-white flex items-center justify-center hover:bg-[#344fd0] transition shadow-md"
+                      title="Add to Collection"
+                    >
+                      <FolderPlus size={16} />
+                    </button>
+                    <button
+                      onClick={(e) => { e.stopPropagation(); handleDelete(file.id, file.mediaUrl); }}
+                      className="w-9 h-9 rounded-full bg-white/90 text-gray-700 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition shadow-md"
+                      title="Delete Media"
+                    >
+                      <Trash2 size={16} />
+                    </button>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2.5">
+                    <p className="text-[11px] font-semibold text-white truncate">{file.fileName}</p>
+                  </div>
                 </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2.5">
-                  <p className="text-[11px] font-semibold text-white truncate">{file.fileName}</p>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
 
       {mediaFiles.length === 0 && !uploading && (
-        <div className="text-center py-12 text-gray-400 text-sm">
-          No media found in this category. Upload files using the zone above.
+        <div className="text-center py-12 text-gray-400 text-sm bg-white rounded-3xl border border-dashed border-gray-200">
+          No media found in <span className="font-bold text-gray-700">"{activeTab}"</span>. Drop files above to add new content.
         </div>
       )}
 

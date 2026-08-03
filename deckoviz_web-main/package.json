@@ -25,6 +25,7 @@
     "embla-carousel-auto-scroll": "^8.6.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "firebase": "^12.17.0",
     "framer-motion": "^11.18.2",
     "front-matter": "^4.0.2",
     "github-slugger": "^2.0.0",

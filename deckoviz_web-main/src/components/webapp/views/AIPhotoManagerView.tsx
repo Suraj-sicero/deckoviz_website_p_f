@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { artistAvatars, figmaAssets } from "../webappData";
 import { webappApi } from "../../../lib/webappApi";
-import { Loader2, Eye, Monitor, Check, X, FolderPlus } from "lucide-react";
+import { Loader2, Eye, Monitor, Check, X, FolderPlus, Trash2 } from "lucide-react";
 import { setFrameImage } from "../../../lib/frameStore";
+import { getUserCollections } from "../../../lib/userStorage";
 
 const fallbackCollections = [
   {
@@ -97,9 +98,8 @@ export default function AIPhotoManagerView() {
     ]).then(([colRes, artRes]) => {
       const realCols = extractList(colRes);
       const realArts = extractList(artRes);
-      const savedCols = JSON.parse(localStorage.getItem("deckoviz_user_collections") || "[]");
       const combinedColsMap = new Map();
-      [...savedCols, ...realCols].forEach(c => {
+      realCols.forEach(c => {
         const k = c.id || c.name || c.title;
         if (k) combinedColsMap.set(k, c);
       });
@@ -192,6 +192,26 @@ export default function AIPhotoManagerView() {
                                 title="Cast to Virtual Frame"
                               >
                                 <Monitor size={18} />
+                              </button>
+                              <button
+                                onClick={async (e) => {
+                                  e.stopPropagation();
+                                  const cId = col.id || col.name;
+                                  const cTitle = col.title || col.name || "Collection";
+                                  if (confirm(`Are you sure you want to delete collection "${cTitle}"?`)) {
+                                    try {
+                                      await webappApi.deleteCollection(cId);
+                                      setCollections(prev => prev.filter(c => (c.id || c.name) !== cId));
+                                      window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+                                    } catch (err) {
+                                      console.error("Failed to delete collection:", err);
+                                    }
+                                  }
+                                }}
+                                className="w-10 h-10 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg hover:scale-110 transition"
+                                title="Delete Collection"
+                              >
+                                <Trash2 size={18} />
                               </button>
                             </div>
                          </div>

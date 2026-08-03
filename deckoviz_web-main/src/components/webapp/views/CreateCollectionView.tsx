@@ -1,6 +1,7 @@
 import { CalendarDays, Music, Search, Trash2, X } from "lucide-react";
 import React, { useState, useRef } from "react";
 import { webappApi } from "../../../lib/webappApi";
+import { getUserCollections, saveUserCollections } from "../../../lib/userStorage";
 
 interface CollectionImage {
   id: string;
@@ -62,32 +63,24 @@ export default function CreateCollectionView() {
   const handleSave = async () => {
     if (!title.trim()) return;
     setSaving(true);
-    const newCol = {
-      id: `col-${Date.now()}`,
-      name: title.trim(),
-      title: title.trim(),
-      description,
-      tags,
-      itemCount: images.length,
-      items: images,
-      createdAt: new Date().toISOString(),
-    };
 
     try {
-      const existing = JSON.parse(localStorage.getItem("deckoviz_user_collections") || "[]");
-      const backup = JSON.parse(localStorage.getItem("deckoviz_backup_collections") || "[]");
-      const updatedUserCols = [newCol, ...existing];
-      const updatedBackupCols = [newCol, ...backup];
-
-      localStorage.setItem("deckoviz_user_collections", JSON.stringify(updatedUserCols));
-      localStorage.setItem("deckoviz_backup_collections", JSON.stringify(updatedBackupCols));
+      await webappApi.createCollection({
+        name: title.trim(),
+        title: title.trim(),
+        description,
+        displayMinutes,
+        displayHours,
+        musicUrl,
+        tags,
+        images,
+        items: images,
+      });
       window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
-
-      await webappApi.createCollection({ title, description, displayMinutes, displayHours, musicUrl, tags, images }).catch(() => null);
-      alert("Collection created successfully!");
+      alert("Collection created in Firebase successfully!");
     } catch (err) {
-      console.warn("Collection saved locally:", err);
-      alert("Collection created successfully!");
+      console.error("[CreateCollection] Failed to save in Firebase:", err);
+      alert("Failed to create collection in Firebase.");
     } finally {
       setSaving(false);
     }

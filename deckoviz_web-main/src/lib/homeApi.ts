@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
+const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 const API = `${BASE}/api/home`;
 
 function getToken(): string | null {
@@ -23,7 +23,7 @@ function getToken(): string | null {
 }
 
 function authHeaders(overrideToken?: string): Record<string, string> {
-  const token = overrideToken || getToken();
+  const token = overrideToken || getToken() || "guest_user";
   const headers: Record<string, string> = { "Content-Type": "application/json" };
   if (token) headers["Authorization"] = `Bearer ${token}`;
   return headers;

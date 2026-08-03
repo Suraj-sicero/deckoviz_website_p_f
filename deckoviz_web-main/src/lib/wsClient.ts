@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL || "https://deckoviz-web-f.onrender.com";
+const BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 
 export type ConnectionStatus = "connecting" | "connected" | "disconnected" | "reconnecting";
 
@@ -365,7 +365,7 @@ class DeckovizWS {
   // ── Reconnect logic ──────────────────────────────────────────────────────
 
   private async scheduleReconnect() {
-    if (this.intentionalClose) return;
+    if (this.intentionalClose || this.reconnectAttempts >= 3) return;
     this.setStatus("reconnecting");
 
     if (this.token && this.isTokenExpired(this.token)) {

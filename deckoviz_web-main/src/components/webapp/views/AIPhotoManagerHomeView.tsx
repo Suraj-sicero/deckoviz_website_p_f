@@ -2,6 +2,7 @@ import { Cloud, Plus, SlidersHorizontal, Loader2 } from "lucide-react";
 import { figmaAssets } from "../webappData";
 import { useState, useEffect } from "react";
 import { webappApi, vizzyApi } from "../../../lib/webappApi";
+import { getUserMedia } from "../../../lib/userStorage";
 
 const fallbackCollections = [
   { title: "Abstaract", count: "42 Images", image: figmaAssets.vibrantFace },
@@ -47,7 +48,7 @@ export default function AIPhotoManagerHomeView() {
       const realPhotos = extractList(photosRes);
       const vizzyImgs = extractList(vizzyImgsRes);
 
-      const savedMedia = JSON.parse(localStorage.getItem("deckoviz_user_media_persistent") || "[]");
+      const savedMedia = getUserMedia();
 
       const allUrls = [
         ...vizzyImgs.map((i: any) => i.url || i.imageUrl || i.mediaUrl),

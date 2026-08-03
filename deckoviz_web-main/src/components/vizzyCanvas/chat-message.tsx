@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect, useRef } from "react"
 import { cn } from "./lib/utils"
 import { Skeleton } from "./ui/skeleton"
@@ -25,13 +23,15 @@ import {
   Paperclip,
   FolderPlus,
   Monitor,
+  Trash2,
   X
 } from "lucide-react"
 import MusicPlayer from "./music-player"
 import VideoPlayer from "./video-player"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
-import { saveImageToMediaLibrary } from "../../lib/webappApi"
+import { webappApi, saveImageToMediaLibrary } from "../../lib/webappApi"
 import { setFrameImage } from "../../lib/frameStore"
+import { getUserCollections, saveUserCollections, getUserMedia, saveUserMedia } from "../../lib/userStorage"
 
 interface ChatMessageProps {
   message: ChatMessageType
@@ -462,14 +462,19 @@ function ImageCard({
     }
   }, [url, prompt, retryCount])
 
-  const handleOpenPicker = () => {
-    const savedColsRaw = localStorage.getItem("deckoviz_user_collections")
-    const cols = savedColsRaw ? JSON.parse(savedColsRaw) : []
-    setExistingCols(cols)
-    if (cols.length > 0) {
-      setTargetColId(cols[0].id || cols[0].name)
-      setIsCreatingNew(false)
-    } else {
+  const handleOpenPicker = async () => {
+    try {
+      const data = await webappApi.getCollections()
+      const list = Array.isArray(data) ? data : (data?.collections || data?.items || [])
+      setExistingCols(list)
+      if (list.length > 0) {
+        setTargetColId(list[0].id || list[0].name)
+        setIsCreatingNew(false)
+      } else {
+        setIsCreatingNew(true)
+      }
+    } catch {
+      setExistingCols([])
       setIsCreatingNew(true)
     }
     setShowPickerModal(true)
@@ -480,34 +485,16 @@ function ImageCard({
     if (!targetUrl) return
 
     try {
-      // 1. Save to local persistent media (All Media)
-      await saveImageToMediaLibrary(targetUrl, { prompt, source: "vizzy_chat" }).catch(() => null)
-      const savedMedia = localStorage.getItem("deckoviz_user_media_persistent")
-      let mediaList = savedMedia ? JSON.parse(savedMedia) : []
-      mediaList = mediaList.filter((m: any) => m.url !== targetUrl && m.mediaUrl !== targetUrl)
-      mediaList.unshift({
-        id: `vizzy-media-${Date.now()}-${Math.random()}`,
-        url: targetUrl,
-        mediaUrl: targetUrl,
-        fileName: prompt || "Vizzy Artwork",
-        mediaType: "image/png",
-        isGenerated: true,
-        createdAt: new Date().toISOString(),
-      })
-      localStorage.setItem("deckoviz_user_media_persistent", JSON.stringify(mediaList))
+      // 1. Save media item to Firebase Firestore
+      await saveImageToMediaLibrary(targetUrl, { prompt: prompt || "Vizzy Artwork", source: "vizzy_chat" }).catch(() => null)
 
-      // 2. Resolve target collection or create new one
-      const savedColsRaw = localStorage.getItem("deckoviz_user_collections")
-      let cols: any[] = savedColsRaw ? JSON.parse(savedColsRaw) : []
-
-      if (isCreatingNew || cols.length === 0 || !targetColId) {
+      // 2. Resolve target collection or create new collection in Firebase Firestore
+      if (isCreatingNew || existingCols.length === 0 || !targetColId) {
         const colTitle = newColTitle.trim() || "Vizzy Generative Art"
-        const newCol = {
-          id: `col-${Date.now()}`,
+        const newColPayload = {
           name: colTitle,
           title: colTitle,
           description: "Created from Vizzy Generative Chat",
-          itemCount: 1,
           items: [
             {
               id: `img-${Date.now()}`,
@@ -516,51 +503,28 @@ function ImageCard({
               mediaUrl: targetUrl,
               displayHours: "00:00:00",
               displaySeconds: "00:30",
-              createdAt: new Date().toISOString(),
-            },
-          ],
-          createdAt: new Date().toISOString(),
-        }
-        cols = [newCol, ...cols]
-      } else {
-        cols = cols.map((c: any) => {
-          const key = c.id || c.name || c.title
-          if (key === targetColId || c.name === targetColId || c.title === targetColId) {
-            const currentItems = Array.isArray(c.items) ? c.items : []
-            const exists = currentItems.some((i: any) => i.url === targetUrl || i.mediaUrl === targetUrl)
-            if (!exists) {
-              const updatedItems = [
-                {
-                  id: `img-${Date.now()}`,
-                  title: prompt || "Vizzy Artwork",
-                  url: targetUrl,
-                  mediaUrl: targetUrl,
-                  displayHours: "00:00:00",
-                  displaySeconds: "00:30",
-                  createdAt: new Date().toISOString(),
-                },
-                ...currentItems,
-              ]
-              return {
-                ...c,
-                items: updatedItems,
-                itemCount: updatedItems.length,
-              }
             }
-          }
-          return c
+          ]
+        }
+        await webappApi.createCollection(newColPayload)
+      } else {
+        // Add item to existing collection in Firebase Firestore
+        await webappApi.addCollectionItem(targetColId, {
+          itemId: `img-${Date.now()}`,
+          url: targetUrl,
+          mediaUrl: targetUrl,
+          title: prompt || "Vizzy Artwork",
+          itemType: "image"
         })
       }
 
-      localStorage.setItem("deckoviz_user_collections", JSON.stringify(cols))
-      localStorage.setItem("deckoviz_backup_collections", JSON.stringify(cols))
       window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"))
-
       setShowPickerModal(false)
       setSavedToMedia(true)
       setTimeout(() => setSavedToMedia(false), 2500)
     } catch (err) {
-      console.warn("Save to collection failed", err)
+      console.error("[VizzyChat] Save to collection in Firebase failed:", err)
+      alert("Failed to save collection to Firebase.")
     }
   }
 
@@ -805,17 +769,36 @@ function ImageCard({
                           <input type="radio" checked={isSelected} onChange={() => {}} className="accent-[#3f5fe0]" />
                           <span className="text-xs font-bold">{col.name || col.title}</span>
                         </div>
-                        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
-                          {col.items?.length || 0} items
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500">
+                            {col.items?.length || 0} items
+                          </span>
+                          <button
+                            type="button"
+                            onClick={async (e) => {
+                              e.stopPropagation();
+                              const colTitle = col.name || col.title || "Collection";
+                              if (confirm(`Delete collection "${colTitle}"?`)) {
+                                try {
+                                  await webappApi.deleteCollection(idKey);
+                                  setExistingCols(prev => prev.filter((c: any) => (c.id || c.name) !== idKey));
+                                  window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"));
+                                } catch (err) {
+                                  console.error("Delete collection error:", err);
+                                }
+                              }
+                            }}
+                            className="p-1 text-gray-400 hover:text-red-500 transition rounded-md hover:bg-red-50"
+                            title="Delete collection"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
                       </div>
                     )
                   })}
                 </div>
               )}
-
-
-
 
               <div
                 onClick={() => setIsCreatingNew(true)}

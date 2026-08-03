@@ -122,21 +122,6 @@ export function HomeDailyQueueView() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ startTime: "", collectionName: "" });
 
-  const QUEUE_STORAGE_KEY = "deckoviz_daily_queue_persistent";
-
-  const getSavedQueue = (): any[] => {
-    try {
-      const raw = localStorage.getItem(QUEUE_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch { return []; }
-  };
-
-  const saveQueueToStorage = (items: any[]) => {
-    try {
-      localStorage.setItem(QUEUE_STORAGE_KEY, JSON.stringify(items));
-    } catch { /* ignore */ }
-  };
-
   const extractList = (res: any) => {
     if (!res) return [];
     if (Array.isArray(res)) return res;
@@ -152,18 +137,11 @@ export function HomeDailyQueueView() {
     homeApi.getDailyQueue()
       .then((res) => {
         const apiItems = extractList(res);
-        const localItems = getSavedQueue();
-        const combinedMap = new Map();
-        [...apiItems, ...localItems].forEach((item) => {
-          const key = item.id || item.title || item.startTime;
-          if (key) combinedMap.set(key, item);
-        });
-        const merged = Array.from(combinedMap.values());
-        setData(merged);
-        saveQueueToStorage(merged);
+        setData(apiItems);
       })
-      .catch(() => {
-        setData(getSavedQueue());
+      .catch((err) => {
+        console.error("[DailyQueue] Error fetching from Firebase:", err);
+        setData([]);
       })
       .finally(() => setLoading(false));
   };
@@ -194,36 +172,22 @@ export function HomeDailyQueueView() {
     try {
       const res = await homeApi.addDailyQueueSlot(payload);
       const createdSlot = (res && res.id) ? res : payload;
-      setData(prev => {
-        const next = [...prev, createdSlot];
-        saveQueueToStorage(next);
-        return next;
-      });
+      setData(prev => [...prev, createdSlot]);
       setShowModal(false);
       setFormData({ startTime: "", collectionName: "" });
     } catch (e) {
-      console.warn("[DailyQueue] Backend add slot saved locally:", e);
-      setData(prev => {
-        const next = [...prev, payload];
-        saveQueueToStorage(next);
-        return next;
-      });
-      setShowModal(false);
-      setFormData({ startTime: "", collectionName: "" });
+      console.error("[DailyQueue] Error saving slot to Firebase:", e);
+      alert("Failed to save slot to Firebase.");
     }
   };
 
   const handleDeleteSlot = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      setData(prev => {
-        const next = prev.filter(d => d.id !== id);
-        saveQueueToStorage(next);
-        return next;
-      });
       await homeApi.deleteDailyQueueSlot(id);
+      setData(prev => prev.filter(d => d.id !== id));
     } catch (err) {
-      console.error(err);
+      console.error("[DailyQueue] Error deleting slot from Firebase:", err);
     }
   };
 
@@ -340,21 +304,31 @@ export function HomeEventsView() {
         />
       ) : (
         <div className="space-y-3">
-          {data.map((event, i) => (
-            <div key={i} className="flex items-center gap-4 p-5 rounded-2xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#182a4a]/10 to-blue-100 flex flex-col items-center justify-center shrink-0">
-                <span className="text-lg font-bold text-[#182a4a] leading-none">{event.date ? new Date(event.date).getDate() : "-"}</span>
-                <span className="text-[9px] font-bold text-blue-500 uppercase">{event.date ? new Date(event.date).toLocaleString('default', { month: 'short' }) : "TBD"}</span>
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-bold text-gray-800">{event.title || event.name || "Event"}</p>
-                <div className="flex items-center gap-3 mt-1">
-                  <span className="text-[11px] text-gray-400 flex items-center gap-1"><Clock size={10} /> {event.date ? new Date(event.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "Time not set"}</span>
+          {data.map((event, i) => {
+            const parsedDate = event.date ? new Date(event.date) : null;
+            const isValidDate = parsedDate && !isNaN(parsedDate.getTime());
+            return (
+              <div key={event.id || i} className="flex items-center gap-4 p-5 rounded-2xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#182a4a]/10 to-blue-100 flex flex-col items-center justify-center shrink-0">
+                  <span className="text-lg font-bold text-[#182a4a] leading-none">{isValidDate ? parsedDate.getDate() : "-"}</span>
+                  <span className="text-[9px] font-bold text-blue-500 uppercase">{isValidDate ? parsedDate.toLocaleString('default', { month: 'short' }) : "TBD"}</span>
                 </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-bold text-gray-800">{event.title || event.name || "Event"}</p>
+                  <div className="flex items-center gap-3 mt-1">
+                    <span className="text-[11px] text-gray-400 flex items-center gap-1"><Clock size={10} /> {isValidDate ? parsedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : event.date || "Time not set"}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={(e) => handleDeleteEvent(event.id, e)}
+                  className="p-2 rounded-full hover:bg-red-50 text-gray-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                  title="Delete Event"
+                >
+                  <Trash2 size={16} />
+                </button>
               </div>
-              <ChevronRight size={16} className="text-gray-300" />
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 

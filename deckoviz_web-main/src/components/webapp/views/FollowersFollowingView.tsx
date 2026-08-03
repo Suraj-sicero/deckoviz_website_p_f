@@ -3,6 +3,7 @@ import { figmaAssets } from "../webappData";
 import { useState, useEffect } from "react";
 import { webappApi } from "../../../lib/webappApi";
 import { useAuth } from "../../../context/AuthContext";
+import { getUserProfile, saveUserProfile, getUserAvatar, getUserBanner } from "../../../lib/userStorage";
 
 type ViewType =
   | "marketplace"
@@ -144,22 +145,25 @@ export default function FollowersFollowingView({
 function ProfileHero({ onNavigate }: { onNavigate?: (view: ViewType) => void }) {
   const { token, user } = useAuth();
   const [profile, setProfile] = useState<any>(() => {
-    const saved = localStorage.getItem("deckoviz_profile");
-    return saved ? JSON.parse(saved) : null;
+    return getUserProfile();
   });
 
   useEffect(() => {
     webappApi.getProfile(token || undefined).then((data) => {
       if (data) {
         setProfile(data);
-        localStorage.setItem("deckoviz_profile", JSON.stringify(data));
+        saveUserProfile(data);
       }
     }).catch(console.warn);
   }, [token]);
 
-  const displayName = profile?.displayName || user?.name || user?.displayName || user?.email?.split('@')[0] || "User";
-  const avatarSrc = profile?.avatar || user?.avatar || figmaAssets.surajAvatar;
-  const bannerSrc = profile?.banner || figmaAssets.profileBanner;
+  const userKey = user?.id || user?.email || user?.name || "guest";
+  const rawName = user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "");
+  const displayName = profile?.displayName || rawName || "Creative Creator";
+  const savedUserAvatar = getUserAvatar();
+  const savedUserBanner = getUserBanner();
+  const avatarSrc = savedUserAvatar || profile?.avatar || user?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=3f5fe0&color=fff&size=500`;
+  const bannerSrc = savedUserBanner || profile?.banner || "https://picsum.photos/seed/deckoviz-banner/1200/400";
 
   return (
     <div className="relative mb-[82px]">
