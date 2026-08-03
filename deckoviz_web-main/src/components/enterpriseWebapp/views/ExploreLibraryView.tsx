@@ -3,20 +3,38 @@ import { Search, BookOpen, Loader2 } from "lucide-react";
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { EmptyState } from "./ui/EmptyState";
 
+const DEFAULT_LIBRARY = {
+  art: [
+    { title: "Metropolitan Wave", count: "16 Artworks", cover: "/images/webapp/figma/abstract-wave-wide.jpg" },
+    { title: "Violin Solo Serenade", count: "12 Artworks", cover: "/images/webapp/figma/violin-art.jpg" },
+    { title: "Spiral Ocean Mist", count: "20 Artworks", cover: "/images/webapp/figma/spiral-ocean.jpg" },
+    { title: "Digital Botanical Garden", count: "15 Artworks", cover: "/images/webapp/nature_garden.png" }
+  ],
+  photos: [
+    { title: "Interior Tech Suite", count: "18 Photos", cover: "/images/webapp/figma/interior-tech.jpg" },
+    { title: "Aurora Lake Glow", count: "14 Photos", cover: "/images/webapp/figma/aurora-lake.jpg" },
+    { title: "Boat Pond Stillness", count: "10 Photos", cover: "/images/webapp/figma/boat-pond.jpg" },
+    { title: "Solo Rafting Journey", count: "22 Photos", cover: "/images/webapp/figma/solo-rafting-card.jpg" }
+  ],
+  posters: [
+    { title: "Vibrant Face Art", count: "8 Posters", cover: "/images/webapp/vibrant_face_art.png" },
+    { title: "City Fire Reflection", count: "12 Posters", cover: "/images/webapp/city_fire_reflection.png" },
+    { title: "Digital Plants Array", count: "16 Posters", cover: "/images/webapp/digital_plants.png" },
+    { title: "Minimalist Night", count: "10 Posters", cover: "/images/webapp/minimalistic_night.png" }
+  ]
+};
+
 export default function ExploreLibraryView() {
-  const [library, setLibrary] = useState<any>(null);
+  const [library, setLibrary] = useState<any>(DEFAULT_LIBRARY);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     enterpriseApi.getLibrary().then((res) => {
-      if (res && (res.art || res.photos || res.posters)) {
+      if (res && (res.art?.length > 0 || res.photos?.length > 0 || res.posters?.length > 0)) {
         setLibrary(res);
-      } else {
-        setLibrary(null);
       }
     }).catch((err) => {
       console.error("Library API error", err);
-      setLibrary(null);
     }).finally(() => setLoading(false));
   }, []);
 

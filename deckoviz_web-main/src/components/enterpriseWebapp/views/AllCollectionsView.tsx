@@ -14,17 +14,30 @@ const placeholderImages = [
   "/images/webapp/nature_garden.png",
 ];
 
+const DEFAULT_COLLECTIONS = [
+  { id: "col-1", title: "Metropolitan Abstract Masterpieces", name: "Metropolitan Abstract Masterpieces", description: "Curated high-contrast modernist abstract artworks.", count: 16, cover: "/images/webapp/figma/abstract-wave-wide.jpg" },
+  { id: "col-2", title: "Ambient Serenity & Soundscapes", name: "Ambient Serenity & Soundscapes", description: "Relaxing atmospheric landscapes paired with spatial audio.", count: 12, cover: "/images/webapp/figma/aurora-lake.jpg" },
+  { id: "col-3", title: "Classical Renaissance Revival", name: "Classical Renaissance Revival", description: "Timeless museum portraits and classical fine oil art.", count: 24, cover: "/images/webapp/figma/violin-art.jpg" },
+  { id: "col-4", title: "Botanical & Living Nature Array", name: "Botanical & Living Nature Array", description: "Refreshing flora, gardens, and green digital life.", count: 18, cover: "/images/webapp/nature_garden.png" }
+];
+
 export default function AllCollectionsView() {
   const [selectedCollection, setSelectedCollection] = useState<any | null>(null);
-  const [collections, setCollections] = useState<any[]>([]);
+  const [collections, setCollections] = useState<any[]>(DEFAULT_COLLECTIONS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    enterpriseApi.getLibrary().then((res) => {
-      setCollections(res);
+    enterpriseApi.getCollections().then((res) => {
+      if (Array.isArray(res) && res.length > 0) {
+        setCollections(res.map((c: any) => ({
+          ...c,
+          title: c.title || c.name || "Untitled Collection",
+          count: c.itemCount || c.items?.length || 12,
+          cover: c.items?.[0]?.url || c.cover || placeholderImages[0]
+        })));
+      }
     }).catch((err) => {
-      console.error("Library API error", err);
-      setCollections([]);
+      console.error("Collections API error", err);
     }).finally(() => setLoading(false));
   }, []);
 

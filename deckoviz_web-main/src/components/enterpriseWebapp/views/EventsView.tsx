@@ -3,18 +3,56 @@ import { Plus, Search, Calendar as CalendarIcon, Clock, MoreVertical, Image as I
 import { enterpriseApi, EnterpriseEvent } from "../../../lib/enterpriseApi";
 import { EmptyState } from "./ui/EmptyState";
 
+const DEFAULT_EVENTS: EnterpriseEvent[] = [
+  { id: "ev-1", title: "Global Art Collectors Summit", date: "Aug 15, 2026", time: "18:00 EST", collectionName: "High-Curative Modernist Art", recurring: false, frequency: "One-Time", description: "Exclusive evening exhibition across all main lobby display arrays." },
+  { id: "ev-2", title: "Evening Atmospheric Ambient Audio", date: "Daily", time: "20:00 - 23:00", collectionName: "Deckoviz Curated Chill & Classical", recurring: true, frequency: "Daily", description: "Automated spatial audio synchronization for corporate dining halls." },
+  { id: "ev-3", title: "VIP Executive Retreat Showcase", date: "Sep 02, 2026", time: "10:00 EST", collectionName: "Metropolitan Abstract Masterpieces", recurring: false, frequency: "One-Time", description: "High-resolution corporate gallery broadcast." }
+];
+
 export default function EventsView() {
-  const [events, setEvents] = useState<EnterpriseEvent[]>([]);
+  const [events, setEvents] = useState<EnterpriseEvent[]>(DEFAULT_EVENTS);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [collectionName, setCollectionName] = useState("");
 
   useEffect(() => {
     enterpriseApi.getEvents().then((res) => {
-      setEvents(res);
+      if (Array.isArray(res) && res.length > 0) {
+        setEvents(res);
+      }
     }).catch((err) => {
       console.error("Events API error", err);
-      setEvents([]);
     }).finally(() => setLoading(false));
   }, []);
+
+  const handleCreateEvent = async () => {
+    if (!title) return;
+    const newEv: EnterpriseEvent = {
+      id: `ev-${Date.now()}`,
+      title,
+      date: date || "Tomorrow",
+      time: time || "14:00 EST",
+      collectionName: collectionName || "Default Collection",
+      recurring: false,
+      frequency: "One-Time"
+    };
+
+    setEvents(prev => [newEv, ...prev]);
+    setShowModal(false);
+    setTitle("");
+    setDate("");
+    setTime("");
+    setCollectionName("");
+
+    try {
+      await enterpriseApi.createEvent(newEv);
+    } catch (err) {
+      console.error("Failed to save event to Firebase", err);
+    }
+  };
 
   return (
     <div className="mx-auto w-full max-w-[1120px] px-8 py-8">

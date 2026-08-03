@@ -2,11 +2,19 @@ import { useState, useEffect } from "react";
 import { Music, Play, Clock, Tag } from "lucide-react";
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 
+const DEFAULT_MUSIC = [
+  { id: "m-1", title: "Metropolitan Classical Symphony No. 5", duration: "03:45", genre: "Classical Revival", createdAt: "Today" },
+  { id: "m-2", title: "Ambient Ocean Spatial Soundscape", duration: "05:12", genre: "Spatial Audio", createdAt: "Yesterday" },
+  { id: "m-3", title: "Executive Chill & Modern Acoustic", duration: "04:30", genre: "Acoustic Ambient", createdAt: "3 days ago" }
+];
+
 export default function MusicDashboardView() {
-  const [music, setMusic] = useState<any[]>([]);
+  const [music, setMusic] = useState<any[]>(DEFAULT_MUSIC);
 
   useEffect(() => {
-    enterpriseApi.getMusic().then(setMusic).catch(console.error);
+    enterpriseApi.getMusic().then((res) => {
+      if (Array.isArray(res) && res.length > 0) setMusic(res);
+    }).catch(console.error);
   }, []);
 
   return (

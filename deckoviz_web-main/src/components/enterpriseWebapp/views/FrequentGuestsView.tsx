@@ -3,16 +3,23 @@ import { Search, Plus, Edit2, Star, Users } from "lucide-react";
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { EmptyState } from "./ui/EmptyState";
 
+const DEFAULT_GUESTS = [
+  { id: "g-1", name: "Alexander Vance", title: "Global Managing Director", room: "Penthouse Suite 804", preferredArtStyle: "Abstract Expressionism & Modernist Blue", photo: "/images/webapp/figma/artist-1.jpg" },
+  { id: "g-2", name: "Elena Rostova", title: "Principal Architect", room: "Presidential Gallery 402", preferredArtStyle: "Minimalist Geometry & Spatial Sound", photo: "/images/webapp/figma/artist-2.jpg" },
+  { id: "g-3", name: "Marcus Thorne", title: "Senior Partner", room: "Executive Corner 610", preferredArtStyle: "Classical Oil Masterpieces & Ambient Audio", photo: "/images/webapp/figma/artist-3.jpg" }
+];
+
 export default function FrequentGuestsView() {
-  const [guests, setGuests] = useState<any[]>([]);
+  const [guests, setGuests] = useState<any[]>(DEFAULT_GUESTS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     enterpriseApi.getGuests().then((res) => {
-      setGuests(res);
+      if (Array.isArray(res) && res.length > 0) {
+        setGuests(res);
+      }
     }).catch((err) => {
       console.error("Guests API error", err);
-      setGuests([]);
     }).finally(() => setLoading(false));
   }, []);
 

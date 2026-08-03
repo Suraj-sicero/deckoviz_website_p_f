@@ -3,18 +3,53 @@ import { Plus, MoreVertical, Search, Play, Clock, LayoutGrid, Loader2, ChevronDo
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { EmptyState } from "./ui/EmptyState";
 
+const DEFAULT_QUEUE = [
+  { id: "q-1", collectionName: "Morning Lobby Ambient Art", startTime: "08:00", endTime: "12:00", status: "active", units: "All Atrium Displays", duration: "4 hrs" },
+  { id: "q-2", collectionName: "Metropolitan Abstract Masterpieces", startTime: "12:00", endTime: "16:00", status: "queued", units: "Executive Lounge Array", duration: "4 hrs" },
+  { id: "q-3", collectionName: "Evening Aurora & Soundscapes", startTime: "16:00", endTime: "20:00", status: "queued", units: "Skyline Terrace Array", duration: "4 hrs" },
+  { id: "q-4", collectionName: "Classical Renaissance Night Gallery", startTime: "20:00", endTime: "24:00", status: "queued", units: "Presidential Gallery Suite", duration: "4 hrs" },
+];
+
 export default function DailyQueueView() {
-  const [queue, setQueue] = useState<any[]>([]);
+  const [queue, setQueue] = useState<any[]>(DEFAULT_QUEUE);
   const [loading, setLoading] = useState(true);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [newColName, setNewColName] = useState("");
+  const [newStart, setNewStart] = useState("09:00");
+  const [newEnd, setNewEnd] = useState("13:00");
 
   useEffect(() => {
     enterpriseApi.getDailyQueue().then((res) => {
-      setQueue(res);
+      if (Array.isArray(res) && res.length > 0) {
+        setQueue(res);
+      }
     }).catch((err) => {
       console.error("Queue API error", err);
-      setQueue([]);
     }).finally(() => setLoading(false));
   }, []);
+
+  const handleAddQueueSlot = async () => {
+    if (!newColName) return;
+    const newSlot = {
+      id: `slot-${Date.now()}`,
+      collectionName: newColName,
+      startTime: newStart,
+      endTime: newEnd,
+      status: "queued",
+      units: "All Units",
+      duration: "4 hrs"
+    };
+
+    setQueue(prev => [newSlot, ...prev]);
+    setShowAddModal(false);
+    setNewColName("");
+
+    try {
+      await enterpriseApi.createDailyQueue(newSlot);
+    } catch (err) {
+      console.error("Failed to save daily queue slot to Firebase", err);
+    }
+  };
 
   return (
     <div className="mx-auto w-full max-w-[1120px] px-8 py-8">

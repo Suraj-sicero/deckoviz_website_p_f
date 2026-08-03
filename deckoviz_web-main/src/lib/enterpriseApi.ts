@@ -1,6 +1,18 @@
 const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://deckoviz-website-p-f.onrender.com";
 const API = `${BASE}/api`;
 
+export interface EnterpriseEvent {
+  id: string;
+  title: string;
+  date: string;
+  time: string;
+  collectionName?: string;
+  recurring?: boolean;
+  frequency?: string;
+  description?: string;
+  userId?: string;
+}
+
 function getToken(): string | null {
   const direct =
     localStorage.getItem("token") ||
@@ -97,4 +109,17 @@ export const enterpriseApi = {
   getNarrations: () => get("/enterprise/narrations"),
   getLibrary: () => get("/enterprise/library"),
   getCurations: () => get("/enterprise/curations"),
+  createCuration: (data: unknown) => post("/enterprise/curations", data),
+
+  getCollections: () => get("/enterprise/collections"),
+  createCollection: (data: unknown) => post("/enterprise/collections", data),
+  updateCollection: (id: string, data: unknown) => put(`/enterprise/collections/${id}`, data),
+  deleteCollection: (id: string) => del(`/enterprise/collections/${id}`),
+  addCollectionItem: (colId: string, data: unknown) => post(`/enterprise/collections/${colId}/items`, data),
+
+  getMedia: () => get("/enterprise/media"),
+  saveMedia: (data: unknown) => post("/enterprise/media", data),
+
+  getFavorites: () => get("/enterprise/favorites"),
+  saveFavorites: (data: unknown) => post("/enterprise/favorites", data),
 };

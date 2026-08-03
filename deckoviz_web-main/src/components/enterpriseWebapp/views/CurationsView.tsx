@@ -3,21 +3,32 @@ import { Sparkles, Bookmark, ChevronRight, Loader2, Image as ImageIcon } from "l
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { EmptyState } from "./ui/EmptyState";
 
+const DEFAULT_CURATIONS = {
+  vizzy: [
+    { title: "Metropolitan Modernist Abstract", desc: "Handpicked by Vizzy AI for high-contrast enterprise lobby displays.", items: 16, cover: "/images/webapp/figma/abstract-wave-wide.jpg" },
+    { title: "Serene Atmospheric Landscapes", desc: "Curated for executive lounge serenity and ambient relaxation.", items: 12, cover: "/images/webapp/figma/aurora-lake.jpg" },
+    { title: "Urban Architectural Reflections", desc: "Sleek geometric photography tailored for corporate conference suites.", items: 20, cover: "/images/webapp/figma/interior-tech.jpg" },
+    { title: "Classical Renaissance Gallery", desc: "Timeless masterpiece portraits and oil paintings.", items: 24, cover: "/images/webapp/figma/violin-art.jpg" }
+  ],
+  deckoviz: [
+    { title: "Deckoviz Masterpiece Curations 2026", desc: "Curated by Deckoviz Space Labs curators for flagship displays.", items: 30, cover: "/images/webapp/figma/spiral-ocean.jpg" },
+    { title: "Deckoviz Spatial Music & Soundscapes", desc: "Ambient classical & spatial audio curated specifically for digital frames.", items: 18, cover: "/images/webapp/figma/solo-rafting-card.jpg" },
+    { title: "High-Definition Digital Botanical Art", desc: "Refreshing organic art and living flora.", items: 15, cover: "/images/webapp/nature_garden.png" }
+  ]
+};
+
 export default function CurationsView() {
   const [activeTab, setActiveTab] = useState<"vizzy" | "deckoviz">("vizzy");
-  const [curationsData, setCurationsData] = useState<any>(null);
+  const [curationsData, setCurationsData] = useState<any>(DEFAULT_CURATIONS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     enterpriseApi.getCurations().then((res) => {
-      if (res && res.vizzy && res.deckoviz) {
+      if (res && (res.vizzy?.length > 0 || res.deckoviz?.length > 0)) {
         setCurationsData(res);
-      } else {
-        setCurationsData({ vizzy: [], deckoviz: [] });
       }
     }).catch((err) => {
       console.error("Curations API error", err);
-      setCurationsData({ vizzy: [], deckoviz: [] });
     }).finally(() => setLoading(false));
   }, []);
 

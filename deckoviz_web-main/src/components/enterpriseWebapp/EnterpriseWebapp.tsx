@@ -1,248 +1,347 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type React from "react";
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { useWebSocket } from "../../hooks/useWebSocket";
 import {
   Bell,
-  Brush,
-  Building2,
+  BookOpen,
   Calendar,
+  ChevronRight,
   Clock,
+  Eye,
   Film,
   FolderOpen,
+  FolderPlus,
+  Check,
+  Heart,
   Headphones,
   Home,
   Image as ImageIcon,
+  ImagePlus,
+  Layers,
   Library,
   Menu,
   MessageSquare,
   Mic,
+  Monitor,
   Music,
   Palette,
   PenTool,
-  Search,
+  Play,
+  Plus,
+  Send,
   Settings,
+  Sparkles,
   Star,
+  Trash2,
+  Upload,
+  UploadCloud,
   Users,
   FileText,
+  Repeat,
+  Brush,
+  Volume2,
+  Wand2,
+  X,
+  CheckCircle2,
+  Building2,
+  Crown,
+  Shield,
+  Zap,
+  Activity,
 } from "lucide-react";
 
-import EnterpriseDashboardView from "./views/EnterpriseDashboardView";
-import VGCView from "./views/VGCView";
-import DailyQueueView from "./views/DailyQueueView";
-import AllMediaView from "./views/AllMediaView";
-import ExploreLibraryView from "./views/ExploreLibraryView";
-import AllCollectionsView from "./views/AllCollectionsView";
+import AddImagesToCollectionView from "../webapp/views/AddImagesToCollectionView";
+import AddMediaView from "../webapp/views/AddMediaView";
+import AIPhotoManagerHomeView from "../webapp/views/AIPhotoManagerHomeView";
+import AIPhotoManagerView from "../webapp/views/AIPhotoManagerView";
+import ArtDrawerView from "../webapp/views/ArtDrawerView";
+import CartView from "../webapp/views/CartView";
+import ChoosePlanView from "../webapp/views/ChoosePlanView";
+import CommentsView from "../webapp/views/CommentsView";
+import FollowersFollowingView from "../webapp/views/FollowersFollowingView";
+import MarketplaceView from "../webapp/views/MarketplaceView";
+import MediaView from "../webapp/views/MediaView";
+import PaymentDetailsView from "../webapp/views/PaymentDetailsView";
+import PricingPlanView from "../webapp/views/PricingPlanView";
+import ProductInfoView from "../webapp/views/ProductInfoView";
+import SearchView from "../webapp/views/SearchView";
+import { getUserAvatar } from "../../lib/userStorage";
+import {
+  HomeDailyQueueView,
+  HomeEventsView,
+  HomeRitualsView,
+  HomeMembersView,
+  HomeCurationsView,
+  HomeMusicDashboardView,
+  HomeMusicLibraryView,
+  HomeNarrationsView,
+  HomeSavedNotesView,
+  HomeShortFilmView,
+  HomeCreativeJournalView,
+  HomeSettingsView,
+} from "../webapp/HomeViews";
+
 import EnterpriseProfileView from "./views/EnterpriseProfileView";
-import SettingsPreferencesView from "./views/SettingsPreferencesView";
-import EventsView from "./views/EventsView";
-import FrequentGuestsView from "./views/FrequentGuestsView";
-import CMOCanvasView from "./views/CMOCanvasView";
-import MusicDashboardView from "./views/MusicDashboardView";
-import MusicLibraryView from "./views/MusicLibraryView";
-import NarrationsView from "./views/NarrationsView";
-import SavedNotesView from "./views/SavedNotesView";
-import CurationsView from "./views/CurationsView";
-import ShortFilmView from "./views/ShortFilmView";
-import EnterpriseCreateCollectionView from "./views/EnterpriseCreateCollectionView";
 import EnterpriseDeepProfileView from "./views/EnterpriseDeepProfileView";
+import EnterpriseCreateCollectionView from "./views/EnterpriseCreateCollectionView";
+import {
+  DrawingRoomView,
+  VGCPlaceholder,
+  VCCPlaceholder,
+  DailyQueuePlaceholder,
+  AllMediaPlaceholder,
+  ExploreLibraryPlaceholder,
+  VirtualFrameModal,
+  AddContentTabs,
+} from "../webapp/DeckovizWebapp";
 
 type ViewType =
-  | "dashboard"
+  | "drawing_room"
   | "vgc"
+  | "create_collection"
+  | "vcc"
   | "daily_queue"
   | "all_media"
   | "explore_library"
-  | "all_collections"
-  | "profile"
   | "settings"
+  | "all_collections"
+  | "deep_profile"
   | "events"
-  | "frequent_guests"
-  | "cmo_canvas"
+  | "rituals"
+  | "members"
+  | "curations"
   | "music_dashboard"
   | "music_library"
   | "narrations"
   | "saved_notes"
-  | "curations"
   | "short_film"
-  | "create_collection"
-  | "deep_profile";
+  | "creative_journal"
+  | "profile"
+  | "add"
+  | "cart"
+  | "pricing"
+  | "payment"
+  | "product_info"
+  | "art_drawer"
+  | "comments"
+  | "subscription"
+  | "marketplace"
+  | "followers"
+  | "following"
+  | "ai_manager"
+  | "collections"
+  | "social"
+  | "artists";
 
-/* ── Sidebar quick-access items (5 main + 2 bottom) ── */
+/* ── Sidebar items (7 main) ── */
 const sidebarMain: { icon: React.ReactNode; label: string; view: ViewType }[] = [
-  { icon: <Home size={20} />, label: "Dashboard", view: "dashboard" },
+  { icon: <Home size={20} />, label: "Enterprise Dashboard", view: "drawing_room" },
   { icon: <Brush size={20} />, label: "Vizzy Creation Canvas", view: "vgc" },
-  { icon: <Clock size={20} />, label: "Daily Queue", view: "daily_queue" },
-  { icon: <ImageIcon size={20} />, label: "All Media", view: "all_media" },
-  { icon: <Library size={20} />, label: "Explore Library", view: "explore_library" },
+  { icon: <PenTool size={20} />, label: "Create Enterprise Collection", view: "create_collection" },
+  { icon: <Palette size={20} />, label: "VCC Studio", view: "vcc" },
+  { icon: <Clock size={20} />, label: "Display Queue", view: "daily_queue" },
+  { icon: <ImageIcon size={20} />, label: "Enterprise Media", view: "all_media" },
+  { icon: <Library size={20} />, label: "Curated Library", view: "explore_library" },
 ];
 
-/* ── Dropdown menu items ── */
-const menuItems: { icon: React.ReactNode; label: string; view: ViewType }[] = [
-  { icon: <Home size={15} />, label: "Enterprise Dashboard", view: "dashboard" },
+/* ── Dropdown menu items (3 bars) ── */
+const menuItems: { icon: React.ReactNode; label: string; view: ViewType; section?: string }[] = [
+  { icon: <Home size={15} />, label: "Enterprise Suite", view: "drawing_room", section: "Core Platform" },
   { icon: <Brush size={15} />, label: "Vizzy Creation Canvas", view: "vgc" },
-  { icon: <Palette size={15} />, label: "CMO Canvas", view: "cmo_canvas" },
   { icon: <FolderOpen size={15} />, label: "All Collections", view: "all_collections" },
-  { icon: <ImageIcon size={15} />, label: "All Media", view: "all_media" },
-  { icon: <Building2 size={15} />, label: "Enterprise Profile", view: "profile" },
-  { icon: <Settings size={15} />, label: "Preferences & Settings", view: "settings" },
-  { icon: <Calendar size={15} />, label: "Events", view: "events" },
-  { icon: <Clock size={15} />, label: "Daily Queue", view: "daily_queue" },
-  { icon: <Users size={15} />, label: "Frequent Guests", view: "frequent_guests" },
-  { icon: <Library size={15} />, label: "Explore Deckoviz Library", view: "explore_library" },
+  { icon: <ImageIcon size={15} />, label: "Enterprise Media", view: "all_media" },
+  { icon: <Building2 size={15} />, label: "Company Profile & Identity", view: "profile" },
+  { icon: <Settings size={15} />, label: "System Preferences", view: "settings", section: "Admin & Settings" },
+  { icon: <Calendar size={15} />, label: "Scheduled Events", view: "events", section: "Displays & Automation" },
+  { icon: <Repeat size={15} />, label: "Rituals & Schedules", view: "rituals" },
+  { icon: <Clock size={15} />, label: "Display Queue (20 Max)", view: "daily_queue" },
+  { icon: <Users size={15} />, label: "Members & Access Control", view: "members", section: "Organization" },
+  { icon: <Library size={15} />, label: "Explore Deckoviz Library", view: "explore_library", section: "Content & Media" },
   { icon: <Star size={15} />, label: "Deckoviz Curations", view: "curations" },
-  { icon: <Music size={15} />, label: "Music Dashboard", view: "music_dashboard" },
+  { icon: <Music size={15} />, label: "Music Dashboard", view: "music_dashboard", section: "Spatial Audio" },
   { icon: <Headphones size={15} />, label: "Music Library", view: "music_library" },
-  { icon: <Mic size={15} />, label: "Narrations", view: "narrations" },
-  { icon: <FileText size={15} />, label: "Saved Notes & Templates", view: "saved_notes" },
+  { icon: <Mic size={15} />, label: "Voice Narrations", view: "narrations" },
+  { icon: <FileText size={15} />, label: "Saved Templates & Notes", view: "saved_notes", section: "Enterprise Tools" },
   { icon: <Film size={15} />, label: "Short Film Suite", view: "short_film" },
   { icon: <PenTool size={15} />, label: "Create Collection", view: "create_collection" },
+  { icon: <BookOpen size={15} />, label: "Creative Journal", view: "creative_journal" },
 ];
 
-import { useAuth } from "../../context/AuthContext";
-
 export default function EnterpriseWebapp() {
-  const { user } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { user, openAuthModal } = useAuth();
+  const [activeView, setActiveView] = useState<ViewType>("drawing_room");
   const [showMenu, setShowMenu] = useState(false);
+  const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
+  const [profileTick, setProfileTick] = useState(0);
+  const ws = useWebSocket();
 
-  const pathParts = location.pathname.split("/");
-  let currentSegment = pathParts[pathParts.length - 1];
-  if (currentSegment === "enterprise-webapp" || currentSegment === "") {
-    currentSegment = "dashboard";
-  }
-  const activeView = currentSegment as ViewType;
+  useEffect(() => {
+    const handleProfileUpdate = () => setProfileTick(t => t + 1);
+    window.addEventListener("deckoviz-profile-updated", handleProfileUpdate);
+    window.addEventListener("deckoviz-user-changed", handleProfileUpdate);
+    return () => {
+      window.removeEventListener("deckoviz-profile-updated", handleProfileUpdate);
+      window.removeEventListener("deckoviz-user-changed", handleProfileUpdate);
+    };
+  }, []);
 
-  const setActiveView = (view: ViewType) => {
-    if (view === "vgc") {
+  const handleMenuClick = (view: ViewType) => {
+    if (view === "vgc" || view === "vcc") {
       window.location.href = "/vizzy-canvas";
       return;
     }
-    navigate(`/enterprise-webapp/${view}`);
-  };
-
-  const handleMenuClick = (view: ViewType) => {
     setActiveView(view);
     setShowMenu(false);
   };
 
   return (
-    <div className="min-h-screen bg-[#f5f6f8] text-[#111827]">
-      {/* ── Floating Top Header (Uniform) ── */}
-      <div className="fixed top-4 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none">
+    <div className="min-h-screen bg-[#f3f5f9] text-[#0f172a] font-sans selection:bg-blue-600 selection:text-white relative overflow-x-hidden">
+      {/* Ambient Lighting Gradients */}
+      <div className="fixed top-0 left-1/4 w-[600px] h-[600px] bg-blue-400/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="fixed top-1/3 right-10 w-[500px] h-[500px] bg-indigo-400/15 rounded-full blur-[160px] pointer-events-none" />
+
+      {/* ── Spacious, Uncongested Glassmorphic Top Nav Header ── */}
+      <div className="fixed top-4 left-0 right-0 z-[100] flex justify-center px-4 md:px-8 pointer-events-none">
         <header
-          className="pointer-events-auto flex items-center justify-between w-full max-w-7xl h-14 rounded-full px-2 md:px-4 transition-all duration-700 relative"
+          className="pointer-events-auto flex items-center justify-between w-full max-w-7xl h-16 rounded-full px-5 md:px-8 transition-all duration-500 relative border border-white/90 shadow-[0_12px_40px_rgba(15,23,42,0.06),inset_0_1px_1px_rgba(255,255,255,0.9)]"
           style={{
-            background: "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.5) 100%)",
+            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 250, 252, 0.6) 50%, rgba(255, 255, 255, 0.8) 100%)",
             backdropFilter: "blur(32px) saturate(200%)",
             WebkitBackdropFilter: "blur(32px) saturate(200%)",
-            border: "1px solid rgba(255, 255, 255, 0.7)",
-            boxShadow: "0 8px 32px rgba(0,0,0,0.06), inset 0 1px 1px rgba(255,255,255,0.9)",
           }}
         >
-          {/* Glass specular highlight shine overlay */}
-          <div className="absolute inset-0 pointer-events-none rounded-full" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.5) 0%, transparent 40%)" }} />
+          {/* Glass specular curved highlight */}
+          <div className="absolute inset-0 pointer-events-none rounded-full" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, transparent 45%)" }} />
 
-          <div className="flex min-w-0 items-center gap-6 relative z-10 w-full justify-between">
-            <div className="flex items-center">
-              <a href="/" className="flex items-center gap-1.5 pl-2 hover:opacity-80 transition-opacity" aria-label="Go to main landing page">
-                <img src="/images/deckovizlogo.png" alt="Deckoviz Symbol" className="h-9 sm:h-10 md:h-11 w-auto object-contain" />
-                <img src="/images/bg_removed_logo.png" alt="Deckoviz Space Labs" className="h-9 sm:h-10 md:h-11 w-auto object-contain -ml-2" />
+          <div className="flex min-w-0 items-center justify-between relative z-10 w-full">
+            {/* Left: Logo + Enterprise Badge */}
+            <div className="flex items-center gap-4">
+              <a href="/" className="flex items-center gap-1.5 hover:opacity-90 transition-opacity" aria-label="Go to main landing page">
+                <img src="/images/deckovizlogo.png" alt="Deckoviz Symbol" className="h-9 sm:h-10 w-auto object-contain" />
+                <img src="/images/bg_removed_logo.png" alt="Deckoviz Space Labs" className="h-9 sm:h-10 w-auto object-contain -ml-2" />
               </a>
+
+              <div className="hidden sm:flex items-center pl-4 border-l border-slate-200/90 h-7">
+                <span className="px-3.5 py-1 rounded-full bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-md shadow-blue-500/20">
+                  <Crown size={13} className="text-amber-300" /> Enterprise Suite
+                </span>
+              </div>
+            </div>
+
+            {/* Right: Virtual Frame + Notifications + User Avatar DP + Menu */}
+            <div className="flex items-center gap-4 text-slate-700">
               <button 
-                onClick={() => setActiveView("dashboard")} 
-                className="hidden sm:flex items-center ml-2 border-l-[1.5px] border-gray-400 pl-3 h-6 hover:opacity-80 transition-opacity"
-                aria-label="Go to Enterprise Home"
+                onClick={() => setShowVirtualFrameModal(true)}
+                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50/90 border border-blue-200/80 text-blue-700 text-xs font-bold hover:bg-blue-100 transition shadow-sm"
               >
-                <span className="text-[12px] font-black uppercase tracking-widest mt-0.5 text-[#182a4a]">Enterprise Suite</span>
-              </button>
-            </div>
-
-            <div className="flex-1 flex justify-center hidden md:flex mx-4">
-              <label className="relative w-full max-w-md">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9ca3af]" size={14} />
-                <input
-                  type="search"
-                  placeholder="Search anything..."
-                  className="h-[34px] w-full rounded-full border border-white/60 bg-white/50 backdrop-blur-md pl-9 pr-4 text-[12px] font-medium outline-none transition focus:border-blue-300 focus:bg-white/80 focus:shadow-[0_0_15px_rgba(37,99,235,0.15)] placeholder-gray-500 shadow-inner"
-                />
-              </label>
-            </div>
-
-            <div className="flex items-center gap-3 pr-2 text-[#6b7280]">
-              <button className="relative transition hover:scale-110 p-2 rounded-full hover:bg-white/40" aria-label="Notifications">
-                <Bell size={19} strokeWidth={1.7} className="text-[#182a4a]" />
-                <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white shadow-sm border border-white">3</span>
+                <Monitor size={14} /> Virtual Frame
               </button>
 
-              {/* User Display Picture / Initials Avatar */}
-              <button
-                onClick={() => setActiveView("profile")}
-                className="relative transition hover:scale-105 flex items-center justify-center rounded-full p-0.5 group focus:outline-none"
-                title={user ? `Logged in as ${user.name || user.email || 'User'}` : "Click to view profile"}
-                aria-label="User Profile"
-              >
-                {user?.avatar ? (
-                  <img
-                    src={user.avatar}
-                    alt={user.name || "User"}
-                    className="h-8 w-8 rounded-full object-cover ring-2 ring-[#182a4a]/40 shadow-sm"
-                  />
-                ) : (
-                  <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#182a4a] via-[#1e3a5f] to-[#2563EB] text-white flex items-center justify-center font-bold text-xs shadow-md border border-white/60 ring-2 ring-blue-500/20 group-hover:ring-blue-500/50 transition-all">
-                    {user?.name ? user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) : (user?.email ? user.email.slice(0, 2).toUpperCase() : "SP")}
-                  </div>
-                )}
-                <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+              <button className="relative transition hover:scale-110 p-2.5 rounded-full bg-white/80 hover:bg-white border border-slate-200/80 shadow-sm" aria-label="Notifications">
+                <Bell size={18} strokeWidth={1.8} className="text-slate-700" />
+                <span className="absolute top-0.5 right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white shadow-sm ring-2 ring-white">2</span>
               </button>
 
-              {/* Dropdown Menu */}
+              {/* User Avatar Badge */}
+              {(() => {
+                const headerUserName = user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "Enterprise");
+                const savedAvatar = getUserAvatar();
+                const defaultInitialsAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(headerUserName)}&background=2563eb&color=fff&size=500`;
+                const avatarSrc = savedAvatar || user?.avatar || defaultInitialsAvatar;
+
+                return (
+                  <button
+                    onClick={() => {
+                      if (user) {
+                        setActiveView("profile");
+                      } else {
+                        openAuthModal();
+                      }
+                    }}
+                    className="relative transition hover:scale-105 flex items-center justify-center rounded-full p-0.5 group focus:outline-none ring-2 ring-blue-500/30 hover:ring-blue-600 shadow-md"
+                    title={user ? `Logged in as ${headerUserName}` : "Click to log in"}
+                    aria-label="User Profile"
+                  >
+                    <img
+                      src={avatarSrc}
+                      alt={headerUserName}
+                      className="h-9 w-9 rounded-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = defaultInitialsAvatar;
+                      }}
+                    />
+                    <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                  </button>
+                );
+              })()}
+
+              {/* Curvy Dropdown Menu Button */}
               <div className="relative">
                 <button
                   onClick={() => setShowMenu(!showMenu)}
-                  className="transition-all duration-300 p-2 rounded-xl border border-white/30 shadow-sm flex items-center justify-center bg-white/20 backdrop-blur-sm text-[#2563EB] hover:text-cyan-500 hover:bg-white/40 hover:border-white/50 ml-1"
+                  className="transition-all duration-300 p-2.5 rounded-full border border-slate-200 shadow-sm flex items-center justify-center bg-white text-slate-700 hover:text-blue-600 hover:bg-slate-50 ml-1"
                   aria-label="Open menu"
                 >
-                  <Menu size={18} />
+                  <Menu size={19} />
                 </button>
 
                 {showMenu && (
                   <>
                     <button className="fixed inset-0 z-40 cursor-default" onClick={() => setShowMenu(false)} aria-label="Close menu" />
-                    <div className="absolute right-0 top-[44px] z-50 w-[270px] max-h-[75vh] overflow-y-auto rounded-xl border border-[#e5e7eb] bg-white py-2 shadow-2xl shadow-black/10">
-                      {/* Logged-in User Profile Banner */}
-                      <div className="px-4 py-3 border-b border-[#f0f0f4] mb-1 bg-gradient-to-br from-blue-50/80 to-indigo-50/40">
-                        <div className="flex items-center gap-3">
-                          {user?.avatar ? (
-                            <img src={user.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/30" />
-                          ) : (
-                            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white flex items-center justify-center font-bold text-sm shadow-md">
-                              {user?.name ? user.name.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) : (user?.email ? user.email.slice(0, 2).toUpperCase() : "US")}
+                    <div className="absolute right-0 top-[54px] z-50 w-[300px] max-h-[82vh] overflow-y-auto rounded-3xl border border-slate-200 bg-white/95 py-2 shadow-2xl backdrop-blur-2xl">
+                      {/* Profile Banner */}
+                      <div className="px-4 py-3.5 border-b border-slate-100 mb-1 bg-gradient-to-r from-blue-50 to-indigo-50/60 rounded-t-3xl">
+                        {(() => {
+                          const headerUserName = user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "Enterprise User");
+                          const savedAvatar = getUserAvatar();
+                          const defaultInitialsAvatar = `https://ui-avatars.com/api/?name=${encodeURIComponent(headerUserName)}&background=2563eb&color=fff&size=500`;
+                          const avatarSrc = savedAvatar || user?.avatar || defaultInitialsAvatar;
+
+                          return (
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={avatarSrc}
+                                alt={headerUserName}
+                                className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/30"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = defaultInitialsAvatar;
+                                }}
+                              />
+                              <div className="flex-1 min-w-0">
+                                <p className="text-[13px] font-bold text-slate-800 truncate">{headerUserName}</p>
+                                <p className="text-[11px] text-slate-500 truncate">{user?.email || "concierge@deckoviz.com"}</p>
+                              </div>
+                              <span className="text-[9px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-bold border border-blue-200">Enterprise</span>
                             </div>
-                          )}
-                          <div className="flex-1 min-w-0">
-                            <p className="text-[13px] font-bold text-gray-800 truncate">{user?.name || user?.displayName || (user?.email ? user.email.split('@')[0] : "Creator")}</p>
-                            <p className="text-[11px] text-gray-500 truncate">{user?.email || "Logged in User"}</p>
-                          </div>
-                          <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold">Logged In</span>
-                        </div>
+                          );
+                        })()}
                       </div>
-                      <div className="px-4 py-1.5 border-b border-[#f0f0f4] mb-1">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Navigation</p>
+
+                      <div className="px-4 py-2 border-b border-slate-100 mb-1">
+                        <p className="text-[10px] font-bold text-blue-600 uppercase tracking-widest flex items-center gap-1">
+                          <Crown size={10} /> Deckoviz Enterprise Platform
+                        </p>
                       </div>
                       {menuItems.map((item, index) => (
-                        <button
-                          key={`${item.label}-${index}`}
-                          onClick={() => handleMenuClick(item.view)}
-                          className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-[13px] font-semibold transition ${
-                            item.view === activeView
-                              ? "bg-[#182a4a]/10 text-blue-600"
-                              : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
-                          }`}
-                        >
-                          <span className={item.view === activeView ? "text-[#182a4a]" : "text-gray-400"}>{item.icon}</span>
-                          <span>{item.label}</span>
-                        </button>
+                        <div key={`${item.label}-${index}`}>
+                          {item.section && index > 0 && (
+                            <div className="px-4 pt-3 pb-1 border-t border-slate-100 mt-1">
+                              <p className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{item.section}</p>
+                            </div>
+                          )}
+                          <button
+                            onClick={() => handleMenuClick(item.view)}
+                            className={`flex w-full items-center gap-3 px-4 py-2.5 text-left text-[13px] font-semibold transition-all duration-200 ${
+                              item.view === activeView
+                                ? "bg-blue-50 text-blue-700 border-l-2 border-blue-600"
+                                : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                            }`}
+                          >
+                            <span className={item.view === activeView ? "text-blue-600" : "text-slate-400"}>{item.icon}</span>
+                            <span>{item.label}</span>
+                          </button>
+                        </div>
                       ))}
                     </div>
                   </>
@@ -253,30 +352,33 @@ export default function EnterpriseWebapp() {
         </header>
       </div>
 
-      {/* ── Main Layout ── */}
-      <main className="relative flex min-h-screen pt-24 px-4 w-full max-w-[1400px] mx-auto gap-6 pb-12">
-        {/* Sidebar */}
-        <aside className="sticky top-24 z-20 flex h-[calc(100vh-120px)] w-[80px] shrink-0 flex-col items-center justify-center bg-transparent">
-          <div className="flex flex-col items-center gap-2.5 rounded-[32px] bg-white/70 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.06)] ring-1 ring-black/5 backdrop-blur-xl transition-all hover:shadow-[0_8px_30px_rgba(59,130,246,0.12)] border border-white/60">
-            {/* Logo placeholder if needed or just padding */}
-            <div className="h-2" />
-
-            {/* Main Nav — 5 items */}
+      {/* ── Main Layout (pt-[105px] ensures clear vertical separation below top header) ── */}
+      <main className="relative flex min-h-screen pt-[105px] px-4 w-full max-w-[1440px] mx-auto gap-6 pb-12">
+        {/* Curvy Floating Sidebar (Positioned explicitly below header with top-[105px]) */}
+        <aside className="sticky top-[105px] z-20 flex h-[calc(100vh-130px)] w-[78px] shrink-0 flex-col items-center justify-start pt-2">
+          <div className="flex flex-col items-center gap-3 rounded-[32px] bg-white/80 p-3 shadow-[0_8px_30px_rgba(15,23,42,0.06)] border border-white/90 backdrop-blur-2xl ring-1 ring-black/5">
+            {/* Main Nav — 7 items */}
             {sidebarMain.map((item) => {
               const isActive = item.view === activeView;
               return (
                 <button
                   key={item.view}
-                  onClick={() => setActiveView(item.view)}
+                  onClick={() => {
+                    if (item.view === "vgc") {
+                      window.location.href = "/vizzy-canvas";
+                    } else {
+                      setActiveView(item.view);
+                    }
+                  }}
                   className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${
                     isActive
-                      ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"
-                      : "bg-transparent text-[#9ca3af] hover:bg-white hover:text-[#182a4a] hover:shadow-md"
+                      ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-blue-500/30 scale-105 ring-4 ring-blue-500/10"
+                      : "bg-transparent text-slate-400 hover:bg-white hover:text-[#182a4a] hover:shadow-md"
                   }`}
                   aria-label={item.label}
                 >
                   {item.icon}
-                  <span className="pointer-events-none absolute left-[60px] top-1/2 z-50 -translate-y-1/2 whitespace-nowrap rounded-xl bg-[#0f172a] px-3.5 py-2 text-[12px] font-bold text-white opacity-0 shadow-xl transition-all group-hover:opacity-100 group-hover:translate-x-1">
+                  <span className="pointer-events-none absolute left-[60px] top-1/2 z-50 -translate-y-1/2 whitespace-nowrap rounded-2xl bg-[#0f172a] px-3.5 py-2 text-[12px] font-bold text-white opacity-0 shadow-2xl transition-all group-hover:opacity-100 group-hover:translate-x-1">
                     {item.label}
                   </span>
                 </button>
@@ -284,69 +386,71 @@ export default function EnterpriseWebapp() {
             })}
 
             {/* Divider */}
-            <div className="my-1.5 h-[2px] w-[20px] rounded-full bg-[#e2e4ea]" />
+            <div className="my-1 h-[2px] w-[22px] rounded-full bg-slate-200" />
 
-            {/* Bottom — Profile & Settings */}
-            <button
-              onClick={() => setActiveView("profile")}
-              className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${
-                activeView === "profile"
-                  ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"
-                  : "bg-transparent text-[#9ca3af] hover:bg-white hover:text-[#182a4a] hover:shadow-md"
-              }`}
-              aria-label="Enterprise Profile"
-            >
-              <Building2 size={18} />
-              <span className="pointer-events-none absolute left-[60px] top-1/2 z-50 -translate-y-1/2 whitespace-nowrap rounded-xl bg-[#0f172a] px-3.5 py-2 text-[12px] font-bold text-white opacity-0 shadow-xl transition-all group-hover:opacity-100 group-hover:translate-x-1">
-                Enterprise Profile
-              </span>
-            </button>
+            {/* Bottom — Settings */}
             <button
               onClick={() => setActiveView("settings")}
               className={`group relative flex h-[44px] w-[44px] items-center justify-center rounded-[20px] transition-all duration-300 ${
                 activeView === "settings"
-                  ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-[#182a4a]/30 scale-105 ring-4 ring-[#182a4a]/10"
-                  : "bg-transparent text-[#9ca3af] hover:bg-white hover:text-[#182a4a] hover:shadow-md"
+                  ? "bg-gradient-to-br from-[#182a4a] to-[#2563EB] text-white shadow-lg shadow-blue-500/30 scale-105 ring-4 ring-blue-500/10"
+                  : "bg-transparent text-slate-400 hover:bg-white hover:text-[#182a4a] hover:shadow-md"
               }`}
               aria-label="Settings & Preferences"
             >
               <Settings size={18} />
-              <span className="pointer-events-none absolute left-[60px] top-1/2 z-50 -translate-y-1/2 whitespace-nowrap rounded-xl bg-[#0f172a] px-3.5 py-2 text-[12px] font-bold text-white opacity-0 shadow-xl transition-all group-hover:opacity-100 group-hover:translate-x-1">
-                Settings & Preferences
+              <span className="pointer-events-none absolute left-[60px] top-1/2 z-50 -translate-y-1/2 whitespace-nowrap rounded-2xl bg-[#0f172a] px-3.5 py-2 text-[12px] font-bold text-white opacity-0 shadow-2xl transition-all group-hover:opacity-100 group-hover:translate-x-1">
+                System Settings
               </span>
             </button>
           </div>
         </aside>
 
-        {/* Content Area */}
+        {/* Content Area Container */}
         <section className="min-w-0 flex-1">
-          <div className="min-h-full">
-            <Routes>
-              <Route path="/" element={<Navigate to="dashboard" replace />} />
-              <Route path="dashboard" element={<EnterpriseDashboardView />} />
-              <Route path="vgc" element={<VGCView />} />
-              <Route path="daily_queue" element={<DailyQueueView />} />
-              <Route path="all_media" element={<AllMediaView />} />
-              <Route path="explore_library" element={<ExploreLibraryView />} />
-              <Route path="all_collections" element={<AllCollectionsView />} />
-              <Route path="profile" element={<EnterpriseProfileView onEditProfile={() => setActiveView("deep_profile")} />} />
-              <Route path="settings" element={<SettingsPreferencesView />} />
-              <Route path="events" element={<EventsView />} />
-              <Route path="frequent_guests" element={<FrequentGuestsView />} />
-              <Route path="cmo_canvas" element={<CMOCanvasView />} />
-              <Route path="music_dashboard" element={<MusicDashboardView />} />
-              <Route path="music_library" element={<MusicLibraryView />} />
-              <Route path="narrations" element={<NarrationsView />} />
-              <Route path="saved_notes" element={<SavedNotesView />} />
-              <Route path="curations" element={<CurationsView />} />
-              <Route path="short_film" element={<ShortFilmView />} />
-              <Route path="create_collection" element={<EnterpriseCreateCollectionView />} />
-              <Route path="deep_profile" element={<EnterpriseDeepProfileView onBack={() => setActiveView("profile")} />} />
-              <Route path="*" element={<Navigate to="dashboard" replace />} />
-            </Routes>
+          <div className="min-h-full rounded-[2.5rem] border border-slate-200/80 bg-white/75 p-2 backdrop-blur-2xl shadow-[0_8px_30px_rgba(15,23,42,0.04)]">
+            {activeView === "drawing_room" && <DrawingRoomView onNavigate={setActiveView} onSendToFrame={() => setShowVirtualFrameModal(true)} />}
+            {activeView === "vgc" && <VGCPlaceholder />}
+            {activeView === "create_collection" && <EnterpriseCreateCollectionView />}
+            {activeView === "vcc" && <VCCPlaceholder />}
+            {activeView === "daily_queue" && <HomeDailyQueueView />}
+            {activeView === "all_media" && <AllMediaPlaceholder />}
+            {activeView === "explore_library" && <ExploreLibraryPlaceholder />}
+            {activeView === "settings" && <HomeSettingsView />}
+            {activeView === "all_collections" && <AIPhotoManagerView />}
+            {activeView === "deep_profile" && <EnterpriseDeepProfileView onBack={() => setActiveView("profile")} />}
+            {activeView === "events" && <HomeEventsView />}
+            {activeView === "rituals" && <HomeRitualsView />}
+            {activeView === "members" && <HomeMembersView />}
+            {activeView === "curations" && <HomeCurationsView />}
+            {activeView === "music_dashboard" && <HomeMusicDashboardView />}
+            {activeView === "music_library" && <HomeMusicLibraryView />}
+            {activeView === "narrations" && <HomeNarrationsView />}
+            {activeView === "saved_notes" && <HomeSavedNotesView />}
+            {activeView === "short_film" && <HomeShortFilmView />}
+            {activeView === "creative_journal" && <HomeCreativeJournalView />}
+            {activeView === "profile" && <EnterpriseProfileView onEditProfile={() => setActiveView("deep_profile")} />}
+            {activeView === "marketplace" && <MarketplaceView mode="home" />}
+            {activeView === "add" && <AddContentTabs />}
+            {activeView === "cart" && <CartView />}
+            {activeView === "pricing" && <ChoosePlanView />}
+            {activeView === "payment" && <PaymentDetailsView />}
+            {activeView === "product_info" && <ProductInfoView />}
+            {activeView === "art_drawer" && <ArtDrawerView />}
+            {activeView === "comments" && <CommentsView />}
+            {activeView === "subscription" && <PricingPlanView onNavigate={setActiveView} />}
+            {activeView === "ai_manager" && <AIPhotoManagerHomeView />}
+            {activeView === "collections" && <AIPhotoManagerView />}
+            {activeView === "followers" && <FollowersFollowingView mode="followers" onNavigate={setActiveView} />}
+            {activeView === "following" && <FollowersFollowingView mode="following" onNavigate={setActiveView} />}
           </div>
         </section>
       </main>
+
+      {/* Virtual Frame Modal */}
+      {showVirtualFrameModal && (
+        <VirtualFrameModal onClose={() => setShowVirtualFrameModal(false)} />
+      )}
     </div>
   );
 }

@@ -258,6 +258,8 @@ export default function ProfileView({
       reader.readAsDataURL(file);
     } catch (err) {
       console.error("[ProfileView] Avatar upload error:", err);
+    } finally {
+      e.target.value = "";
     }
   };
 
@@ -285,6 +287,8 @@ export default function ProfileView({
       reader.readAsDataURL(file);
     } catch (err) {
       console.error("[ProfileView] Banner upload error:", err);
+    } finally {
+      e.target.value = "";
     }
   };
 

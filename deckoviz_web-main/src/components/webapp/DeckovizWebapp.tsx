@@ -449,7 +449,7 @@ export default function DeckovizWebapp() {
 }
 
 /* ======================== VIRTUAL FRAME MODAL ======================== */
-const MEDIA_SAMPLES = [
+export const MEDIA_SAMPLES = [
   "/images/herol (1).png",
   "/images/herol (2).png",
   "/images/herol (3).png",
@@ -464,7 +464,7 @@ const MEDIA_SAMPLES = [
   "/images/herol (13).png",
 ];
 
-function VirtualFrameModal({ onClose }: { onClose: () => void }) {
+export function VirtualFrameModal({ onClose }: { onClose: () => void }) {
   const [tab, setTab] = useState<"library" | "upload">("library");
   const [selected, setSelected] = useState<string | null>(null);
   const [uploadPreview, setUploadPreview] = useState<string | null>(null);
@@ -648,7 +648,7 @@ function VirtualFrameModal({ onClose }: { onClose: () => void }) {
 }
 
 /* ======================== DRAWING ROOM VIEW ======================== */
-function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewType) => void; onSendToFrame: () => void }) {
+export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewType) => void; onSendToFrame: () => void }) {
   const { user } = useAuth();
   const [userCollections, setUserCollections] = useState<any[]>([]);
   const [dailyQueue, setDailyQueue] = useState<any[]>([]);
@@ -1003,7 +1003,7 @@ function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewTy
 }
 
 /* ======================== SECTION CARD COMPONENT ======================== */
-function SectionCard({
+export function SectionCard({
   title, subtitle, icon, accentColor, children, fullWidth, onClick,
 }: {
   title: string; subtitle?: string; icon: React.ReactNode; accentColor: string;
@@ -1035,7 +1035,7 @@ function SectionCard({
 }
 
 /* ======================== VIEW HEADER ======================== */
-function ViewHeader({ title, subtitle, icon }: { title: string; subtitle: string; icon: React.ReactNode }) {
+export function ViewHeader({ title, subtitle, icon }: { title: string; subtitle: string; icon: React.ReactNode }) {
   return (
     <div className="relative overflow-hidden rounded-2xl p-6 md:p-8 mb-6" style={{ background: "linear-gradient(135deg, #182a4a 0%, #1e3a5f 50%, #2563EB 100%)", boxShadow: "0 12px 40px rgba(24,42,74,0.3)" }}>
       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, transparent 50%)" }} />
@@ -1062,7 +1062,7 @@ const VGC_AGENT_ICONS: Record<string, React.ReactNode> = {
   vizzy_muse: <Wand2 size={20} />,
 };
 
-function VGCPlaceholder() {
+export function VGCPlaceholder() {
   const { token, openAuthModal } = useAuth();
   const [agents, setAgents] = useState<VGCAgent[]>([]);
   const [chats, setChats] = useState<VGCChatSummary[]>([]);
@@ -1219,7 +1219,7 @@ function VGCPlaceholder() {
 }
 
 /* ======================== VCC - VISUAL CONTENT CREATOR ======================== */
-function VCCPlaceholder() {
+export function VCCPlaceholder() {
   const tools = [
     { name: "Text to Art", icon: <Wand2 size={18} /> },
     { name: "Style Transfer", icon: <Palette size={18} /> },
@@ -1277,7 +1277,7 @@ function VCCPlaceholder() {
 }
 
 /* ======================== DAILY QUEUE ======================== */
-function DailyQueuePlaceholder() {
+export function DailyQueuePlaceholder() {
   const schedule = [
     { time: "6:00 AM - 9:00 AM", collection: "Morning Serenity", artworks: 12, status: "active" },
     { time: "9:00 AM - 12:00 PM", collection: "Nature Escapes", artworks: 8, status: "upcoming" },
@@ -1317,7 +1317,7 @@ function DailyQueuePlaceholder() {
 }
 
 /* ======================== ALL MEDIA ======================== */
-function AllMediaPlaceholder() {
+export function AllMediaPlaceholder() {
   const { token, openAuthModal } = useAuth();
   const [mediaFiles, setMediaFiles] = useState<{ id: string; mediaUrl: string; fileName: string; mediaType: string; isGenerated?: boolean }[]>([]);
   const [activeTab, setActiveTab] = useState("Generated Images");
@@ -1825,7 +1825,7 @@ function AllMediaPlaceholder() {
 }
 
 /* ======================== EXPLORE LIBRARY ======================== */
-function ExploreLibraryPlaceholder() {
+export function ExploreLibraryPlaceholder() {
   const categories = ["Art", "Photos", "Posters", "Prompts", "Templates"];
   const items = [
     { title: "Renaissance Masters", type: "Art", count: "48 pieces", img: "/images/herol (2).png" },
@@ -2266,7 +2266,7 @@ function CreativeJournalPlaceholder() {
 }
 
 /* ======================== ADD CONTENT TABS ======================== */
-function AddContentTabs() {
+export function AddContentTabs() {
   const [subTab, setSubTab] = useState<"images" | "media" | "collection">("images");
 
   return (

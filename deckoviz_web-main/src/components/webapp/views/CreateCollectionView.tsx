@@ -1,20 +1,39 @@
-import { CalendarDays, Music, Search, Trash2, X } from "lucide-react";
-import React, { useState, useRef } from "react";
-import { webappApi } from "../../../lib/webappApi";
-import { getUserCollections, saveUserCollections } from "../../../lib/userStorage";
+import { CalendarDays, Camera, Check, Image as ImageIcon, Loader2, Music, RefreshCw, Search, Sparkles, Trash2, Upload, X } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
+import { webappApi, getVizzyGenerativeImages } from "../../../lib/webappApi";
 
 interface CollectionImage {
   id: string;
+  url?: string;
   title: string;
   displayHours: string;
   displaySeconds: string;
   metaNotes: string;
 }
 
+// Fallback images if no user media exists
+const FALLBACK_IMAGES = [
+  "/images/webapp/figma/spiral-ocean.jpg",
+  "/images/webapp/figma/solo-rafting-card.jpg",
+  "/images/webapp/figma/violin-art.jpg",
+  "/images/webapp/figma/abstract-wave-wide.jpg",
+  "/images/webapp/figma/interior-tech.jpg",
+  "/images/webapp/figma/aurora-lake.jpg",
+];
+
+interface MediaItem {
+  id: string;
+  url: string;
+  prompt?: string;
+  title?: string;
+  createdAt?: string;
+  source?: "generated" | "uploaded" | "static";
+}
+
 export default function CreateCollectionView() {
   const [title, setTitle] = useState("Summer Memories 2025");
   const [description, setDescription] = useState(
-    "A celebration of warmth, freedom, and vibrant energy, the Summer Collection captures the essence of sun-drenched days and golden horizons. Each piece is infused with the lightness of the season--bold colors, flowing forms, and textures that mimic the breeze, sand, and sea."
+    "A celebration of warmth, freedom, and vibrant energy, the Summer Collection captures the essence of sun-drenched days and golden horizons."
   );
   const [displayMinutes, setDisplayMinutes] = useState(30);
   const [displayHours, setDisplayHours] = useState(1);
@@ -26,6 +45,116 @@ export default function CreateCollectionView() {
   ]);
   const [saving, setSaving] = useState(false);
   const musicFileRef = useRef<HTMLInputElement>(null);
+
+  // --- Media gallery state ---
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>([]);
+  const [loadingMedia, setLoadingMedia] = useState(true);
+  const [selectedMediaIds, setSelectedMediaIds] = useState<Set<string>>(new Set());
+  const [activeMediaTab, setActiveMediaTab] = useState<"all" | "generated" | "uploaded">("all");
+
+  // Load user's real media from Firebase + VGC
+  const loadUserMedia = async () => {
+    setLoadingMedia(true);
+    const allMedia: MediaItem[] = [];
+    const seenUrls = new Set<string>();
+
+    // 1. Fetch Vizzy Generative Canvas images
+    try {
+      const vizzyImages = await getVizzyGenerativeImages();
+      vizzyImages.forEach((img) => {
+        if (img.url && !seenUrls.has(img.url)) {
+          seenUrls.add(img.url);
+          allMedia.push({
+            id: img.id,
+            url: img.url,
+            prompt: img.prompt,
+            title: img.prompt || "Generated Artwork",
+            createdAt: img.createdAt,
+            source: "generated",
+          });
+        }
+      });
+    } catch (err) {
+      console.warn("[CreateCollection] Vizzy images fallback:", err);
+    }
+
+    // 2. Fetch home media from Firebase
+    try {
+      const homeMedia = await webappApi.getMedia({ limit: 100 });
+      const list = Array.isArray(homeMedia) ? homeMedia : (homeMedia?.items || homeMedia?.data || homeMedia?.media || []);
+      list.forEach((m: any) => {
+        const url = m.url || m.mediaUrl || m.media_url;
+        if (url && !seenUrls.has(url)) {
+          seenUrls.add(url);
+          allMedia.push({
+            id: m.id || `home-${Date.now()}-${Math.random()}`,
+            url,
+            title: m.fileName || m.title || m.prompt || "Media",
+            prompt: m.prompt,
+            createdAt: m.createdAt,
+            source: m.isGenerated ? "generated" : "uploaded",
+          });
+        }
+      });
+    } catch (err) {
+      console.warn("[CreateCollection] Home media fallback:", err);
+    }
+
+    // 3. Add fallback static images if nothing loaded
+    if (allMedia.length === 0) {
+      FALLBACK_IMAGES.forEach((url, idx) => {
+        allMedia.push({
+          id: `static-${idx}`,
+          url,
+          title: `Sample Artwork ${idx + 1}`,
+          source: "static",
+        });
+      });
+    }
+
+    setMediaItems(allMedia);
+    setLoadingMedia(false);
+  };
+
+  useEffect(() => {
+    loadUserMedia();
+  }, []);
+
+  const filteredMedia = mediaItems.filter((m) => {
+    if (activeMediaTab === "all") return true;
+    if (activeMediaTab === "generated") return m.source === "generated";
+    if (activeMediaTab === "uploaded") return m.source === "uploaded" || m.source === "static";
+    return true;
+  });
+
+  const toggleMediaSelect = (item: MediaItem) => {
+    setSelectedMediaIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(item.id)) {
+        next.delete(item.id);
+        // Remove from images list
+        setImages((imgs) => imgs.filter((i) => i.id !== item.id));
+      } else {
+        next.add(item.id);
+        // Add to images list
+        setImages((imgs) => [
+          ...imgs,
+          {
+            id: item.id,
+            url: item.url,
+            title: item.title || item.prompt || "Artwork",
+            displayHours: "00:00:00",
+            displaySeconds: "00:30",
+            metaNotes: item.prompt || "",
+          },
+        ]);
+      }
+      return next;
+    });
+  };
+
+  const genCount = mediaItems.filter((m) => m.source === "generated").length;
+  const uploadCount = mediaItems.filter((m) => m.source === "uploaded" || m.source === "static").length;
 
   const removeTag = (tagToRemove: string) => {
     setTags((prev) => prev.filter((t) => t !== tagToRemove));
@@ -52,12 +181,20 @@ export default function CreateCollectionView() {
     ]);
   };
 
-  const updateImage = (idx: number, field: keyof CollectionImage, value: string) => {
+  const updateImage = (idx: number, field: keyof CollectionImage | "url", value: string) => {
     setImages((prev) => prev.map((img, i) => (i === idx ? { ...img, [field]: value } : img)));
   };
 
   const removeImage = (idx: number) => {
+    const img = images[idx];
     setImages((prev) => prev.filter((_, i) => i !== idx));
+    if (img) {
+      setSelectedMediaIds((prev) => {
+        const next = new Set(prev);
+        next.delete(img.id);
+        return next;
+      });
+    }
   };
 
   const handleSave = async () => {
@@ -89,6 +226,97 @@ export default function CreateCollectionView() {
   return (
     <div className="mx-auto w-full max-w-[1090px] px-3 py-9">
       <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-5 text-[27px] font-semibold tracking-[0.02em] ">Collection Media</h1>
+
+      {/* ═══ Media Gallery from Firebase + VGC ═══ */}
+      <section className="mb-10 rounded-xl border border-[#e8eaef] bg-white p-6">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="font-serif text-[17px] font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">Your Media Gallery</h2>
+            <p className="text-[11px] text-gray-400 mt-0.5">Select artworks from your generated &amp; uploaded media to add to this collection</p>
+          </div>
+          <button
+            onClick={loadUserMedia}
+            disabled={loadingMedia}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold text-gray-500 hover:bg-gray-100 transition"
+          >
+            <RefreshCw size={12} className={loadingMedia ? "animate-spin" : ""} /> Refresh
+          </button>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex items-center gap-2 mb-5">
+          {[
+            { key: "all" as const, label: `All (${mediaItems.length})`, icon: ImageIcon },
+            { key: "generated" as const, label: `VGC Generated (${genCount})`, icon: Sparkles },
+            { key: "uploaded" as const, label: `Uploaded (${uploadCount})`, icon: Upload },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveMediaTab(tab.key)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold transition ${
+                activeMediaTab === tab.key
+                  ? "bg-[#182a4a] text-white shadow-md"
+                  : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+              }`}
+            >
+              <tab.icon size={12} /> {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {loadingMedia ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 size={20} className="animate-spin text-blue-500" />
+            <span className="ml-3 text-sm text-gray-400">Loading your media from Firebase...</span>
+          </div>
+        ) : filteredMedia.length === 0 ? (
+          <div className="text-center py-12">
+            <ImageIcon size={36} className="mx-auto text-gray-300 mb-3" />
+            <p className="text-sm font-semibold text-gray-400">No media found</p>
+            <p className="text-xs text-gray-300 mt-1">Generate images in Vizzy Canvas or upload media to see them here</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-4 gap-3 md:grid-cols-6 lg:grid-cols-8">
+            {filteredMedia.map((item) => {
+              const selected = selectedMediaIds.has(item.id);
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => toggleMediaSelect(item)}
+                  className={`group relative aspect-square overflow-hidden rounded-xl border-2 transition-all ${
+                    selected ? "border-[#182a4a] shadow-lg shadow-[#182a4a]/20 ring-2 ring-blue-400" : "border-transparent hover:border-blue-200"
+                  }`}
+                >
+                  <img
+                    src={item.url}
+                    alt={item.title || ""}
+                    className="h-full w-full object-cover transition-transform group-hover:scale-105"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(item.title || "Art")}&background=3f5fe0&color=fff&size=256`;
+                    }}
+                  />
+                  {item.source === "generated" && (
+                    <div className="absolute top-1 left-1 bg-purple-600/80 backdrop-blur-sm text-white text-[7px] font-bold px-1 py-0.5 rounded flex items-center gap-0.5">
+                      <Sparkles size={7} /> VGC
+                    </div>
+                  )}
+                  {selected && (
+                    <div className="absolute inset-0 bg-[#182a4a]/40 flex items-center justify-center">
+                      <Check size={18} className="text-white" />
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {selectedMediaIds.size > 0 && (
+          <div className="mt-4 rounded-lg bg-blue-50 border border-blue-200 px-4 py-2.5 flex items-center justify-between">
+            <p className="text-xs font-bold text-blue-700">{selectedMediaIds.size} artworks selected from gallery — they'll be added to the collection</p>
+          </div>
+        )}
+      </section>
 
       <section className="rounded-[4px] px-6 py-7">
         <Field label="Collection Title*">
@@ -205,6 +433,7 @@ function CollectionImageCard({ image, index, onUpdate, onRemove }: { image: Coll
       };
       reader.readAsDataURL(file);
     }
+    e.target.value = "";
   };
 
   return (

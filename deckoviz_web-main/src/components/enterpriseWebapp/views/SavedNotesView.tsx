@@ -3,17 +3,24 @@ import { Plus, Search, FileText, Edit2, Trash2, Tag, Loader2 } from "lucide-reac
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { EmptyState } from "./ui/EmptyState";
 
+const DEFAULT_TEMPLATES = [
+  { id: "t-1", title: "Lobby Display Morning Orientation", category: "Displays", content: "Set atrium displays to Metropolitan Abstract Masterpieces with 30s display intervals and ambient spatial audio.", updated: "2 hours ago" },
+  { id: "t-2", title: "VIP Executive Evening Welcome", category: "VIP Lounge", content: "Activate classical oil masterpieces and soft lighting for evening corporate guests.", updated: "Yesterday" },
+  { id: "t-3", title: "Weekend Art Rotation Protocol", category: "Scheduling", content: "Automated rotation between botanical living nature and modernist photography.", updated: "3 days ago" }
+];
+
 export default function SavedNotesView() {
-  const [templates, setTemplates] = useState<any[]>([]);
+  const [templates, setTemplates] = useState<any[]>(DEFAULT_TEMPLATES);
   const [activeTab, setActiveTab] = useState("All");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     enterpriseApi.getTemplates().then((res) => {
-      setTemplates(res);
+      if (Array.isArray(res) && res.length > 0) {
+        setTemplates(res);
+      }
     }).catch((err) => {
       console.error("Templates API error", err);
-      setTemplates([]);
     }).finally(() => setLoading(false));
   }, []);
 

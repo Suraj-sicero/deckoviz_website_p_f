@@ -659,3 +659,144 @@ def fs_delete_note(uid: str, n_id: str) -> bool:
         except Exception:
             pass
     return False
+
+# =========== ENTERPRISE UNITS ===========
+def fs_get_enterprise_units(uid: str) -> list[dict]:
+    db = get_firestore_db()
+    if not db: return []
+    try:
+        docs = db.collection("enterprise_units").where("userId", "==", uid).get()
+        return [d.to_dict() for d in docs]
+    except Exception: return []
+
+def fs_create_enterprise_unit(uid: str, unit: dict) -> dict:
+    db = get_firestore_db()
+    u_id = unit.get("id") or f"unit_{uuid.uuid4().hex[:12]}"
+    unit["id"] = u_id
+    unit["userId"] = uid
+    unit["createdAt"] = datetime.utcnow().isoformat()
+    if db:
+        try: db.collection("enterprise_units").document(u_id).set(unit)
+        except Exception: pass
+    return unit
+
+def fs_update_enterprise_unit(uid: str, u_id: str, payload: dict) -> dict:
+    db = get_firestore_db()
+    if db:
+        try: db.collection("enterprise_units").document(u_id).set(payload, merge=True)
+        except Exception: pass
+    payload["id"] = u_id
+    return payload
+
+def fs_delete_enterprise_unit(uid: str, u_id: str) -> bool:
+    db = get_firestore_db()
+    if db:
+        try:
+            db.collection("enterprise_units").document(u_id).delete()
+            return True
+        except Exception: pass
+    return False
+
+# =========== ENTERPRISE GUESTS ===========
+def fs_get_enterprise_guests(uid: str) -> list[dict]:
+    db = get_firestore_db()
+    if not db: return []
+    try:
+        docs = db.collection("enterprise_guests").where("userId", "==", uid).get()
+        return [d.to_dict() for d in docs]
+    except Exception: return []
+
+def fs_create_enterprise_guest(uid: str, guest: dict) -> dict:
+    db = get_firestore_db()
+    g_id = guest.get("id") or f"gst_{uuid.uuid4().hex[:12]}"
+    guest["id"] = g_id
+    guest["userId"] = uid
+    guest["createdAt"] = datetime.utcnow().isoformat()
+    if db:
+        try: db.collection("enterprise_guests").document(g_id).set(guest)
+        except Exception: pass
+    return guest
+
+def fs_update_enterprise_guest(uid: str, g_id: str, payload: dict) -> dict:
+    db = get_firestore_db()
+    if db:
+        try: db.collection("enterprise_guests").document(g_id).set(payload, merge=True)
+        except Exception: pass
+    payload["id"] = g_id
+    return payload
+
+def fs_delete_enterprise_guest(uid: str, g_id: str) -> bool:
+    db = get_firestore_db()
+    if db:
+        try:
+            db.collection("enterprise_guests").document(g_id).delete()
+            return True
+        except Exception: pass
+    return False
+
+# =========== ENTERPRISE TEMPLATES ===========
+def fs_get_enterprise_templates(uid: str) -> list[dict]:
+    db = get_firestore_db()
+    if not db: return []
+    try:
+        docs = db.collection("enterprise_templates").where("userId", "==", uid).get()
+        return [d.to_dict() for d in docs]
+    except Exception: return []
+
+def fs_create_enterprise_template(uid: str, template: dict) -> dict:
+    db = get_firestore_db()
+    t_id = template.get("id") or f"tmpl_{uuid.uuid4().hex[:12]}"
+    template["id"] = t_id
+    template["userId"] = uid
+    template["createdAt"] = datetime.utcnow().isoformat()
+    if db:
+        try: db.collection("enterprise_templates").document(t_id).set(template)
+        except Exception: pass
+    return template
+
+def fs_update_enterprise_template(uid: str, t_id: str, payload: dict) -> dict:
+    db = get_firestore_db()
+    if db:
+        try: db.collection("enterprise_templates").document(t_id).set(payload, merge=True)
+        except Exception: pass
+    payload["id"] = t_id
+    return payload
+
+def fs_delete_enterprise_template(uid: str, t_id: str) -> bool:
+    db = get_firestore_db()
+    if db:
+        try:
+            db.collection("enterprise_templates").document(t_id).delete()
+            return True
+        except Exception: pass
+    return False
+
+# =========== ENTERPRISE NARRATIONS ===========
+def fs_get_enterprise_narrations(uid: str) -> list[dict]:
+    db = get_firestore_db()
+    if not db: return []
+    try:
+        docs = db.collection("enterprise_narrations").where("userId", "==", uid).get()
+        return [d.to_dict() for d in docs]
+    except Exception: return []
+
+def fs_create_enterprise_narration(uid: str, narration: dict) -> dict:
+    db = get_firestore_db()
+    n_id = narration.get("id") or f"narr_{uuid.uuid4().hex[:12]}"
+    narration["id"] = n_id
+    narration["userId"] = uid
+    narration["createdAt"] = datetime.utcnow().isoformat()
+    if db:
+        try: db.collection("enterprise_narrations").document(n_id).set(narration)
+        except Exception: pass
+    return narration
+
+def fs_delete_enterprise_narration(uid: str, n_id: str) -> bool:
+    db = get_firestore_db()
+    if db:
+        try:
+            db.collection("enterprise_narrations").document(n_id).delete()
+            return True
+        except Exception: pass
+    return False
+

@@ -3,17 +3,25 @@ import { Mic, Search, Play, Pause, Download, Volume2, SearchIcon, Loader2, Star 
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { EmptyState } from "./ui/EmptyState";
 
+const DEFAULT_VOICES = [
+  "Rachel — Luxury British Accent",
+  "Marcus — Deep Executive Tone",
+  "Sophia — Ambient Storyteller",
+  "David — Clear Corporate Announcement",
+  "Aria — Smooth Gallery Curator",
+  "Ethan — Energetic Broadcast"
+];
+
 export default function NarrationsView() {
-  const [voices, setVoices] = useState<any[]>([]);
+  const [voices, setVoices] = useState<any[]>(DEFAULT_VOICES);
   const [loading, setLoading] = useState(true);
   const [playing, setPlaying] = useState<string | null>(null);
 
   useEffect(() => {
     enterpriseApi.getNarrations().then((res) => {
-      setVoices(res);
+      if (Array.isArray(res) && res.length > 0) setVoices(res);
     }).catch((err) => {
       console.error("Narrations API error", err);
-      setVoices([]);
     }).finally(() => setLoading(false));
   }, []);
 
