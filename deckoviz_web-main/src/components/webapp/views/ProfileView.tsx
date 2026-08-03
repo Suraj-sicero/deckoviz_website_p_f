@@ -111,14 +111,27 @@ export default function ProfileView({
   // User Search & WhatsApp state
   const [showUserSearchModal, setShowUserSearchModal] = useState(false);
   const [userSearchQuery, setUserSearchQuery] = useState("");
+  const [searchedUsers, setSearchedUsers] = useState<any[]>([]);
 
-  const sampleUsersList = [
-    { id: "u-1", name: "Kishore M", username: "kishore.mlhk", title: "Lead AI Creator", followers: "12.4k", phone: "919876543210", avatar: "https://ui-avatars.com/api/?name=Kishore+M&background=3f5fe0&color=fff" },
-    { id: "u-2", name: "Suraj Pandya", username: "suraj.pandya", title: "Principal Generative Artist", followers: "48.2k", phone: "919876543211", avatar: "https://ui-avatars.com/api/?name=Suraj+Pandya&background=2563eb&color=fff" },
-    { id: "u-3", name: "Emma Watson", username: "emma_art", title: "3D Visual Sculptor", followers: "31.9k", phone: "919876543212", avatar: "https://ui-avatars.com/api/?name=Emma+Watson&background=ec4899&color=fff" },
-    { id: "u-4", name: "Alex Rivers", username: "alex.rivers", title: "Cyberpunk Designer", followers: "19.5k", phone: "919876543213", avatar: "https://ui-avatars.com/api/?name=Alex+Rivers&background=10b981&color=fff" },
-    { id: "u-5", name: "Sophia Chen", username: "sophiachen", title: "Prompt Engineer & Curator", followers: "27.8k", phone: "919876543214", avatar: "https://ui-avatars.com/api/?name=Sophia+Chen&background=8b5cf6&color=fff" },
-  ];
+  useEffect(() => {
+    if (!userSearchQuery.trim()) {
+      setSearchedUsers([]);
+      return;
+    }
+    const q = userSearchQuery.trim().toLowerCase();
+    webappApi.getMembers?.()
+      .then((res: any) => {
+        const list = Array.isArray(res) ? res : res?.items || res?.members || [];
+        const filtered = list.filter((u: any) =>
+          (u.name && u.name.toLowerCase().includes(q)) ||
+          (u.displayName && u.displayName.toLowerCase().includes(q)) ||
+          (u.username && u.username.toLowerCase().includes(q)) ||
+          (u.role && u.role.toLowerCase().includes(q))
+        );
+        setSearchedUsers(filtered);
+      })
+      .catch(() => setSearchedUsers([]));
+  }, [userSearchQuery]);
 
   const handleSendToFrame = (imgUrl: string, title?: string) => {
     if (!imgUrl) return;
@@ -1157,34 +1170,36 @@ export default function ProfileView({
               </div>
 
               <div className="max-h-80 overflow-y-auto space-y-3 pr-1 custom-scrollbar">
-                {sampleUsersList
-                  .filter(u => 
-                    !userSearchQuery.trim() ||
-                    u.name.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
-                    u.username.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
-                    u.title.toLowerCase().includes(userSearchQuery.toLowerCase())
-                  )
-                  .map((u) => (
-                    <div key={u.id} className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition">
+                {searchedUsers.length === 0 ? (
+                  <div className="text-center py-8 border border-dashed border-gray-200 rounded-2xl">
+                    <User size={24} className="mx-auto text-gray-300 mb-2" />
+                    <p className="text-xs font-semibold text-gray-500">
+                      {userSearchQuery.trim() ? "No users found" : "Type a name or username to search"}
+                    </p>
+                  </div>
+                ) : (
+                  searchedUsers.map((u: any) => (
+                    <div key={u.id || u.email} className="flex items-center justify-between p-3.5 rounded-2xl border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition">
                       <div className="flex items-center gap-3 min-w-0">
-                        <img src={u.avatar} alt={u.name} className="w-11 h-11 rounded-full object-cover border border-gray-200 shadow-sm" />
+                        <img src={u.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(u.name || "User")}&background=2563eb&color=fff`} alt="" className="w-11 h-11 rounded-full object-cover border border-gray-200 shadow-sm" />
                         <div className="min-w-0">
                           <div className="flex items-center gap-2">
-                            <h4 className="text-xs font-bold text-gray-900 truncate">{u.name}</h4>
-                            <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">@{u.username}</span>
+                            <h4 className="text-xs font-bold text-gray-900 truncate">{u.name || u.displayName}</h4>
+                            <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">@{u.username || "user"}</span>
                           </div>
-                          <p className="text-[11px] text-gray-500 font-medium truncate">{u.title} • {u.followers} followers</p>
+                          <p className="text-[11px] text-gray-500 font-medium truncate">{u.title || u.role || "Creator"}</p>
                         </div>
                       </div>
                       <button
-                        onClick={() => handleConnectWhatsApp(u.name, u.phone)}
+                        onClick={() => handleConnectWhatsApp(u.name || u.displayName, u.phone)}
                         className="px-3.5 py-2 rounded-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition shrink-0 ml-2"
-                        title={`Connect with ${u.name} on WhatsApp`}
+                        title={`Connect on WhatsApp`}
                       >
                         <MessageCircle size={14} /> WhatsApp
                       </button>
                     </div>
-                  ))}
+                  ))
+                )}
               </div>
             </div>
           </div>

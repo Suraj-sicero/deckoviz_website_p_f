@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 from typing import Optional
-from auth import get_current_user, FirebaseUser
+from auth import get_current_user, FirebaseUser, create_access_token
 from firebase_config import (
     create_firebase_auth_user,
     fs_get_profile,
@@ -25,47 +25,56 @@ class SigninPayload(BaseModel):
 @router.post("/signup")
 def signup(payload: SignupPayload):
     if not payload.email or not payload.password:
-        raise HTTPException(status_code=400, detail="Email and password are required")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email and password are required for signup")
+    
+    clean_email = payload.email.strip().lower()
     
     # 1. Create User in Firebase Authentication Console & Firestore Database
     user_dict = create_firebase_auth_user(
-        email=payload.email,
+        email=clean_email,
         password=payload.password,
         name=payload.name
     )
     uid = user_dict["firebase_uid"]
 
+    # 2. Generate secure cryptographically signed JWT token for this user
+    access_token = create_access_token({"uid": uid, "sub": uid, "email": clean_email, "name": user_dict["name"]})
+
     return {
-        "token": uid,
+        "token": access_token,
         "user": user_dict
     }
 
 @router.post("/signin")
 def signin(payload: SigninPayload):
-    email = payload.email
-    password = payload.password
-
+    # If Firebase ID token is provided
     if payload.id_token:
         decoded = verify_token(payload.id_token)
         if decoded:
             uid = decoded.get("uid")
-            email = decoded.get("email") or email
+            email = decoded.get("email") or payload.email or f"{uid[:8]}@deckoviz.app"
             name = decoded.get("name") or email.split('@')[0] if email else "User"
             user_dict = create_firebase_auth_user(email=email, name=name)
-            return {"token": user_dict["firebase_uid"], "user": user_dict}
+            access_token = create_access_token({"uid": uid, "sub": uid, "email": email, "name": name})
+            return {"token": access_token, "user": user_dict}
 
-    if not email:
-        email = "guest@deckoviz.app"
+    if not payload.email or not payload.password:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email and password are required for signin")
+    
+    clean_email = payload.email.strip().lower()
 
     # Fetch/Create User in Firebase Auth & Firestore
     user_dict = create_firebase_auth_user(
-        email=email,
-        password=password,
-        name=payload.email.split('@')[0] if payload.email else "Guest User"
+        email=clean_email,
+        password=payload.password,
+        name=clean_email.split('@')[0]
     )
 
+    uid = user_dict["firebase_uid"]
+    access_token = create_access_token({"uid": uid, "sub": uid, "email": clean_email, "name": user_dict["name"]})
+
     return {
-        "token": user_dict["firebase_uid"],
+        "token": access_token,
         "user": user_dict
     }
 

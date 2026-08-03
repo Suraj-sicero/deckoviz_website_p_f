@@ -1,9 +1,12 @@
 import logging
 from typing import Optional
+from datetime import datetime, timedelta
+import jwt
 from pydantic import BaseModel
 from fastapi import Depends, HTTPException, Header, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from firebase_config import verify_token, get_firestore_db
+from firebase_config import verify_token as verify_firebase_token, get_firestore_db
+from config import settings
 
 logger = logging.getLogger("deckoviz.auth")
 security = HTTPBearer(auto_error=False)
@@ -16,6 +19,14 @@ class FirebaseUser(BaseModel):
     display_name: Optional[str] = "User"
     avatar: Optional[str] = ""
     role: str = "creator"
+
+def create_access_token(data: dict) -> str:
+    """Generates a secure, cryptographically signed JWT access token for a user."""
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+    return encoded_jwt
 
 def get_or_create_firestore_user(uid: str, email: str, name: Optional[str] = None) -> dict:
     """Finds or creates a User document in Firebase Firestore ('users' collection)."""
@@ -63,8 +74,20 @@ async def get_current_user(
     if credentials and credentials.credentials:
         token = credentials.credentials
         
-        # 1. Verify ID token with Firebase Admin SDK
-        decoded = verify_token(token)
+        # 1. Verify signed internal JWT
+        try:
+            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+            uid = payload.get("uid") or payload.get("sub")
+            if uid:
+                email = payload.get("email") or f"{uid[:8]}@deckoviz.app"
+                name = payload.get("name") or payload.get("display_name") or email.split('@')[0]
+                user_dict = get_or_create_firestore_user(uid, email, name)
+                return FirebaseUser(**user_dict)
+        except Exception:
+            pass
+
+        # 2. Verify ID token with Firebase Admin SDK
+        decoded = verify_firebase_token(token)
         if decoded:
             uid = decoded.get("uid") or decoded.get("sub")
             if uid:
@@ -72,19 +95,6 @@ async def get_current_user(
                 name = decoded.get("name") or decoded.get("display_name") or email.split('@')[0]
                 user_dict = get_or_create_firestore_user(uid, email, name)
                 return FirebaseUser(**user_dict)
-
-        # 2. Unverified JWT payload fallback (when signature is verified by external proxy)
-        try:
-            import jwt
-            unverified = jwt.decode(token, options={"verify_signature": False})
-            uid = unverified.get("uid") or unverified.get("sub") or unverified.get("user_id")
-            if uid:
-                email = unverified.get("email") or f"{uid[:8]}@deckoviz.app"
-                name = unverified.get("name") or unverified.get("display_name") or email.split('@')[0]
-                user_dict = get_or_create_firestore_user(uid, email, name)
-                return FirebaseUser(**user_dict)
-        except Exception:
-            pass
 
         # 3. Direct explicit UID string passed as token
         if len(token) > 5 and not token.startswith("ey"):

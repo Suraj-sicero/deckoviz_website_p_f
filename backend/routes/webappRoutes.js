@@ -26,18 +26,20 @@ router.get("/profile", async (req, res) => {
   try {
     let profile = await WebappProfile.findOne({ where: { userId: req.user.id } });
     if (!profile) {
+      const uName = req.user.name || (req.user.email ? req.user.email.split('@')[0] : "Global Creator");
+      const uUsername = req.user.email ? req.user.email.split('@')[0] : `creator_${req.user.id.substring(0, 6)}`;
       profile = await WebappProfile.create({
         userId: req.user.id,
-        displayName: "Suraj Pandya",
-        username: "suraj_pandya_123",
+        displayName: uName,
+        username: uUsername,
         title: "AI Enthusiast",
-        bio: "Passionate about AI-generated art and creative exploration. Exploring the intersection of technology and creativity.",
-        location: "UK, London Metropolitan",
-        avatar: "/images/webapp/figma/suraj-avatar.jpg",
+        bio: "Passionate about AI-generated art and creative exploration on Deckoviz.",
+        location: "Global Creator",
+        avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(uName)}&background=2563eb&color=fff`,
         banner: "/images/webapp/figma/profile-banner.jpg",
-        postCount: 548,
-        followerCount: 12700,
-        followingCount: 221,
+        postCount: 0,
+        followerCount: 0,
+        followingCount: 0,
         favoriteArtStyles: "Surrealism, Abstract Expressionism, Conceptual Portraits, Minimalism",
       });
     }
