@@ -3,7 +3,7 @@ from typing import Optional
 from datetime import datetime, timedelta
 import jwt
 from pydantic import BaseModel
-from fastapi import Depends, HTTPException, Header, status
+from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from firebase_config import verify_token as verify_firebase_token, get_firestore_db
 from config import settings
@@ -63,13 +63,12 @@ def get_or_create_firestore_user(uid: str, email: str, name: Optional[str] = Non
     return user_data
 
 async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
-    x_device_id: Optional[str] = Header(None, alias="X-Device-ID")
+    credentials: HTTPAuthorizationCredentials = Depends(security)
 ) -> FirebaseUser:
     """
     Dependency that extracts and verifies authenticated user.
     If authenticated, returns the user's isolated Firebase UID.
-    If unauthenticated, isolates session per device/browser (x_device_id) to prevent cross-user data leakage.
+    If unauthenticated, raises HTTP 401 Unauthorized requiring the user to log in.
     """
     if credentials and credentials.credentials:
         token = credentials.credentials
@@ -101,13 +100,10 @@ async def get_current_user(
             user_dict = get_or_create_firestore_user(token, f"user_{token[:8]}@deckoviz.app", f"User {token[:6]}")
             return FirebaseUser(**user_dict)
 
-    # 4. Unauthenticated Session: Isolate PER DEVICE / BROWSER instance using X-Device-ID
-    if x_device_id and len(x_device_id.strip()) > 3:
-        clean_dev_id = f"device_{x_device_id.strip()[:32]}"
-        guest_data = get_or_create_firestore_user(clean_dev_id, f"{clean_dev_id}@deckoviz.app", "Guest Session")
-        return FirebaseUser(**guest_data)
+    # 4. Unauthenticated: raise 401 Unauthorized to prompt user login
+    raise HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Authentication required. Please log in.",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
-    # 5. Default isolated fallback if no device header
-    anon_id = f"anon_temp_session"
-    guest_data = get_or_create_firestore_user(anon_id, "guest@deckoviz.app", "Guest Session")
-    return FirebaseUser(**guest_data)
