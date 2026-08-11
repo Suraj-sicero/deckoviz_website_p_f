@@ -4,6 +4,8 @@ import { Html5Qrcode } from "html5-qrcode";
 import { CheckCircle2, Loader2, MonitorSmartphone, QrCode, ArrowLeft } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { claimPairingCode, extractPairingCode } from "../lib/pairingApi";
+import { useWebSocket } from "../hooks/useWebSocket";
+
 
 export default function PairDevicePage() {
   const { token, user } = useAuth();
@@ -15,6 +17,11 @@ export default function PairDevicePage() {
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const autoSubmittedRef = useRef(false);
   const digitRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [pairedAppInstanceId, setPairedAppInstanceId] = useState<string | null>(null);
+  const { devices } = useWebSocket();
+  const pairedDevice = devices.find((d) => d.app_instance_id === pairedAppInstanceId);
+  const isOnline = pairedDevice?.status === "online";
+
 
   const clearStatusOnEdit = () => {
     if (status !== "idle" && status !== "loading") {
@@ -52,6 +59,7 @@ export default function PairDevicePage() {
       try {
         const result = await claimPairingCode(token, resolved);
         setStatus("success");
+        setPairedAppInstanceId(result.device.app_instance_id);
         setMessage(
           `Connected to ${result.device.device_name}. Your frame is linked to this account.`
         );
@@ -332,12 +340,26 @@ export default function PairDevicePage() {
           )}
 
           {status === "success" && (
-            <Link
-              to="/webapp"
-              className="mt-4 flex w-full items-center justify-center rounded-xl bg-[#182a4a] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110"
-            >
-              Continue to webapp
-            </Link>
+            <>
+              <div className="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-[#182a4a]">Device Status</span>
+                  <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                    isOnline ? "bg-emerald-50 text-emerald-700 animate-pulse" : "bg-slate-100 text-slate-600"
+                  }`}>
+                    <span className={`h-1.5 w-1.5 rounded-full ${isOnline ? "bg-emerald-500" : "bg-slate-400"}`} />
+                    {isOnline ? "Online" : "Waiting for TV connection…"}
+                  </span>
+                </div>
+              </div>
+
+              <Link
+                to="/webapp"
+                className="mt-4 flex w-full items-center justify-center rounded-xl bg-[#182a4a] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110"
+              >
+                Continue to webapp
+              </Link>
+            </>
           )}
         </div>
 

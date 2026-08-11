@@ -5,7 +5,7 @@ import { wsClient, type ConnectionStatus, type WSDevice } from "../lib/wsClient"
 export interface UseWebSocketReturn {
   status: ConnectionStatus;
   devices: WSDevice[];
-  sendCommand: (action: string, payload?: Record<string, unknown>, targetAppInstanceId?: string) => boolean;
+  sendCommand: (action: string, payload?: Record<string, unknown>, targetAppInstanceId?: string) => string | false;
   displayArtwork: (cdnUrl: string, target?: string) => boolean;
   displayCollection: (collectionId: string, target?: string) => boolean;
   queueCollection: (collectionId: string, target?: string) => boolean;

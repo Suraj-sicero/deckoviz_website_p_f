@@ -217,7 +217,7 @@ class DeckovizWS {
     this.setStatus("disconnected");
   }
 
-  send(action: string, payload: Record<string, unknown> = {}, targetAppInstanceId?: string): boolean {
+  send(action: string, payload: Record<string, unknown> = {}, targetAppInstanceId?: string): string | false {
     if (!this.ws || this.ws.readyState !== WebSocket.OPEN) {
       return false;
     }
@@ -239,7 +239,7 @@ class DeckovizWS {
     const pending = this.createPendingMessage(msg);
     this.pendingMessages.set(msg.message_id, pending);
 
-    return true;
+    return msg.message_id;
   }
 
   sendQueued(action: string, payload: Record<string, unknown> = {}, targetAppInstanceId?: string): boolean {
@@ -308,65 +308,65 @@ class DeckovizWS {
   // ── Convenience methods ──────────────────────────────────────────────────
 
   displayArtwork(cdnUrl: string, target?: string, transition = "fade", duration = 5000) {
-    return this.send("display_artwork", { cdn_url: cdnUrl, transition, duration }, target);
+    return !!this.send("display_artwork", { cdn_url: cdnUrl, transition, duration }, target);
   }
 
   displayCollection(collectionId: string, target?: string, transition = "fade", duration = 5000) {
-    return this.send("display_collection", { collection_id: collectionId, transition, duration }, target);
+    return !!this.send("display_collection", { collection_id: collectionId, transition, duration }, target);
   }
 
   queueCollection(collectionId: string, target?: string, position = "end") {
-    return this.send("queue_collection", { collection_id: collectionId, position }, target);
+    return !!this.send("queue_collection", { collection_id: collectionId, position }, target);
   }
 
   replaceQueue(collections: string[], target?: string) {
-    return this.send("replace_queue", { collections }, target);
+    return !!this.send("replace_queue", { collections }, target);
   }
 
   removeCollection(collectionId: string, target?: string) {
-    return this.send("remove_collection", { collection_id: collectionId }, target);
+    return !!this.send("remove_collection", { collection_id: collectionId }, target);
   }
 
   displayImage(url: string, target?: string, transition = "fade", duration = 5000) {
-    return this.send("display_image", { url, transition, duration }, target);
+    return !!this.send("display_image", { url, transition, duration }, target);
   }
 
   changeMood(mood: string, target?: string) {
-    return this.send("change_mood", { mood }, target);
+    return !!this.send("change_mood", { mood }, target);
   }
 
   changeTheme(theme: string, target?: string) {
-    return this.send("change_theme", { theme }, target);
+    return !!this.send("change_theme", { theme }, target);
   }
 
   startSlideshow(collectionId: string, target?: string, interval = 10000, transition = "fade") {
-    return this.send("start_slideshow", { collection_id: collectionId, interval, transition }, target);
+    return !!this.send("start_slideshow", { collection_id: collectionId, interval, transition }, target);
   }
 
   pause(target?: string) {
-    return this.send("pause", {}, target);
+    return !!this.send("pause", {}, target);
   }
 
   resume(target?: string) {
-    return this.send("resume", {}, target);
+    return !!this.send("resume", {}, target);
   }
 
   skip(target?: string) {
-    return this.send("skip", {}, target);
+    return !!this.send("skip", {}, target);
   }
 
   refreshConfig(target?: string) {
-    return this.send("refresh_config", {}, target);
+    return !!this.send("refresh_config", {}, target);
   }
 
   synchronizeDevice(target?: string) {
-    return this.send("synchronize_device", {}, target);
+    return !!this.send("synchronize_device", {}, target);
   }
 
   // ── Reconnect logic ──────────────────────────────────────────────────────
 
   private async scheduleReconnect() {
-    if (this.intentionalClose || this.reconnectAttempts >= 3) return;
+    if (this.intentionalClose) return;
     this.setStatus("reconnecting");
 
     if (this.token && this.isTokenExpired(this.token)) {

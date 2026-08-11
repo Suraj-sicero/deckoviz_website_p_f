@@ -1,15 +1,21 @@
 import logging
-from typing import Optional
+import asyncio
+from concurrent.futures import ThreadPoolExecutor
+from typing import Optional, Any
 from datetime import datetime, timedelta
 import jwt
 from pydantic import BaseModel
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from firebase_config import verify_token as verify_firebase_token, get_firestore_db
+from firebase_config import verify_token as _verify_firebase_token_sync, get_firestore_db
 from config import settings
 
 logger = logging.getLogger("deckoviz.auth")
 security = HTTPBearer(auto_error=False)
+
+# Thread pool for running blocking I/O (Firebase, Firestore) off the event loop
+_executor = ThreadPoolExecutor(max_workers=4)
+
 
 class FirebaseUser(BaseModel):
     id: str
@@ -28,8 +34,8 @@ def create_access_token(data: dict) -> str:
     encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
-def get_or_create_firestore_user(uid: str, email: str, name: Optional[str] = None) -> dict:
-    """Finds or creates a User document in Firebase Firestore ('users' collection)."""
+def _get_or_create_firestore_user_sync(uid: str, email: str, name: Optional[str] = None) -> dict:
+    """Sync version: Finds or creates a User document in Firebase Firestore ('users' collection)."""
     db = get_firestore_db()
     clean_email = email or f"user_{uid[:8]}@deckoviz.app"
     user_name = name or clean_email.split('@')[0]
@@ -62,48 +68,101 @@ def get_or_create_firestore_user(uid: str, email: str, name: Optional[str] = Non
     user_data["avatar"] = user_data.get("avatar") or avatar_url
     return user_data
 
+# Keep sync alias for non-async call sites
+get_or_create_firestore_user = _get_or_create_firestore_user_sync
+
+
+def verify_token_to_user_dict(token: str) -> dict[str, Any] | None:
+    """Verifies internal signed JWT, Firebase ID token, or direct UID string.
+    Returns a dict with user ID, email, name and app_instance_id.
+    This is a SYNC function — call it via run_in_executor from async contexts."""
+    if not token:
+        return None
+
+    # 1. Verify signed internal JWT — no network call, safe to do inline
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        uid = payload.get("uid") or payload.get("sub") or payload.get("id")
+        if uid:
+            email = payload.get("email") or f"{str(uid)[:8]}@deckoviz.app"
+            name = payload.get("name") or payload.get("display_name") or email.split('@')[0]
+            return {
+                "id": str(uid),
+                "email": email,
+                "name": name,
+                "app_instance_id": payload.get("app_instance_id"),
+            }
+    except Exception:
+        pass
+
+    # 2. Verify Firebase ID token — makes a network call; must run in executor
+    try:
+        decoded = _verify_firebase_token_sync(token)
+        if decoded:
+            uid = decoded.get("uid") or decoded.get("sub")
+            if uid:
+                email = decoded.get("email") or f"{str(uid)[:8]}@deckoviz.app"
+                name = decoded.get("name") or decoded.get("display_name") or email.split('@')[0]
+                return {
+                    "id": str(uid),
+                    "email": email,
+                    "name": name,
+                    "app_instance_id": None,
+                }
+    except Exception:
+        pass
+
+    # 3. Direct explicit UID string passed as token
+    if len(token) > 5 and not token.startswith("ey"):
+        email = f"user_{token[:8]}@deckoviz.app"
+        name = f"User {token[:6]}"
+        return {
+            "id": token,
+            "email": email,
+            "name": name,
+            "app_instance_id": None,
+        }
+
+    return None
+
+
+async def verify_token_to_user_dict_async(token: str) -> dict[str, Any] | None:
+    """Async-safe wrapper: runs verify_token_to_user_dict in a thread pool executor
+    so blocking Firebase/Firestore network calls don't stall the event loop."""
+    loop = asyncio.get_event_loop()
+    return await loop.run_in_executor(_executor, verify_token_to_user_dict, token)
+
+
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ) -> FirebaseUser:
     """
     Dependency that extracts and verifies authenticated user.
-    If authenticated, returns the user's isolated Firebase UID.
-    If unauthenticated, raises HTTP 401 Unauthorized requiring the user to log in.
+    Runs all blocking calls in a thread pool to avoid stalling the event loop.
     """
     if credentials and credentials.credentials:
         token = credentials.credentials
-        
-        # 1. Verify signed internal JWT
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-            uid = payload.get("uid") or payload.get("sub")
-            if uid:
-                email = payload.get("email") or f"{uid[:8]}@deckoviz.app"
-                name = payload.get("name") or payload.get("display_name") or email.split('@')[0]
-                user_dict = get_or_create_firestore_user(uid, email, name)
-                return FirebaseUser(**user_dict)
-        except Exception:
-            pass
+        loop = asyncio.get_event_loop()
 
-        # 2. Verify ID token with Firebase Admin SDK
-        decoded = verify_firebase_token(token)
-        if decoded:
-            uid = decoded.get("uid") or decoded.get("sub")
-            if uid:
-                email = decoded.get("email") or f"{uid[:8]}@deckoviz.app"
-                name = decoded.get("name") or decoded.get("display_name") or email.split('@')[0]
-                user_dict = get_or_create_firestore_user(uid, email, name)
-                return FirebaseUser(**user_dict)
-
-        # 3. Direct explicit UID string passed as token
-        if len(token) > 5 and not token.startswith("ey"):
-            user_dict = get_or_create_firestore_user(token, f"user_{token[:8]}@deckoviz.app", f"User {token[:6]}")
+        # Run token verification in thread pool (may do Firebase network call)
+        user_info = await loop.run_in_executor(_executor, verify_token_to_user_dict, token)
+        if user_info:
+            # Run Firestore lookup in thread pool
+            user_dict = await loop.run_in_executor(
+                _executor,
+                _get_or_create_firestore_user_sync,
+                user_info["id"],
+                user_info["email"],
+                user_info.get("name"),
+            )
             return FirebaseUser(**user_dict)
 
-    # 4. Unauthenticated: raise 401 Unauthorized to prompt user login
+    # Unauthenticated: raise 401 Unauthorized to prompt user login
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Authentication required. Please log in.",
         headers={"WWW-Authenticate": "Bearer"},
     )
+
+
 

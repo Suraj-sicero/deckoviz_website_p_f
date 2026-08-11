@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from typing import Optional
 
 from auth import FirebaseUser, create_access_token, get_current_user
-from services import device_registry
+from services import device_registry, ws_hub
 from services.pairing_store import (
     build_poll_response,
     claim_session,
@@ -54,7 +54,7 @@ def poll_pairing_session(session_id: str):
 
 
 @router.post("/claim")
-def claim_pairing_code(
+async def claim_pairing_code(
     body: ClaimBody,
     user: FirebaseUser = Depends(get_current_user),
 ):
@@ -95,6 +95,13 @@ def claim_pairing_code(
         platform=session.get("platform") or "google_tv",
         status="offline",
     )
+
+    # Immediately broadcast updated device list to any connected browser WebSocket sessions
+    # so the /pair page and /display page reflect the new device without waiting for TV to connect.
+    try:
+        await ws_hub.refresh_browser_device_lists(user.id)
+    except Exception:
+        pass  # Non-critical: device will appear when TV connects
 
     return {
         "success": True,

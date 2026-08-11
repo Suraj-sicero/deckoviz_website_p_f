@@ -6,6 +6,7 @@ from typing import Any
 import jwt
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
 
+from auth import verify_token_to_user_dict, verify_token_to_user_dict_async
 from config import settings
 from services import device_registry, ws_hub
 
@@ -15,19 +16,9 @@ router = APIRouter(tags=["RTCSP WebSocket"])
 MAX_MESSAGE_SIZE = 1024 * 1024
 
 
-def _verify_token(token: str) -> dict[str, Any] | None:
-    try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        uid = payload.get("uid") or payload.get("sub") or payload.get("id")
-        if not uid:
-            return None
-        return {
-            "id": str(uid),
-            "email": payload.get("email"),
-            "app_instance_id": payload.get("app_instance_id"),
-        }
-    except Exception:
-        return None
+async def _verify_token(token: str) -> dict[str, Any] | None:
+    """Async-safe token verification — runs blocking Firebase calls in a thread pool."""
+    return await verify_token_to_user_dict_async(token)
 
 
 async def _handle_display_image(
@@ -76,7 +67,7 @@ async def _run_socket(websocket: WebSocket, client_type: str, app_instance_id: s
         await websocket.close(code=4401)
         return
 
-    user = _verify_token(token)
+    user = await _verify_token(token)
     if not user:
         await websocket.close(code=4401)
         return
