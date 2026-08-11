@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Html5Qrcode } from "html5-qrcode";
 import { CheckCircle2, Loader2, MonitorSmartphone, QrCode, ArrowLeft } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
@@ -8,6 +8,7 @@ import { useWebSocket } from "../hooks/useWebSocket";
 
 
 export default function PairDevicePage() {
+  const navigate = useNavigate();
   const { token, user } = useAuth();
   const [searchParams] = useSearchParams();
   const [code, setCode] = useState(() => searchParams.get("code") || "");
@@ -63,12 +64,13 @@ export default function PairDevicePage() {
         setMessage(
           `Connected to ${result.device.device_name}. Your frame is linked to this account.`
         );
+        navigate("/display");
       } catch (err) {
         setStatus("error");
         setMessage(err instanceof Error ? err.message : "Pairing failed");
       }
     },
-    [token]
+    [token, navigate]
   );
 
   useEffect(() => {
@@ -354,10 +356,10 @@ export default function PairDevicePage() {
               </div>
 
               <Link
-                to="/webapp"
+                to="/display"
                 className="mt-4 flex w-full items-center justify-center rounded-xl bg-[#182a4a] px-5 py-3 text-sm font-semibold text-white transition hover:brightness-110"
               >
-                Continue to webapp
+                Go to Display on TV
               </Link>
             </>
           )}

@@ -9,6 +9,7 @@ from routes.enterprise_routes import router as enterprise_router
 from routes.vizzy_routes import router as vizzy_router
 from routes.upload_routes import router as upload_router
 from routes.pairing_routes import router as pairing_router
+from routes.queue_routes import router as queue_router
 from routes.ws_routes import router as ws_router
 
 # Configure logging
@@ -41,6 +42,7 @@ app.include_router(enterprise_router, prefix=settings.API_V1_STR)
 app.include_router(vizzy_router, prefix=settings.API_V1_STR)
 app.include_router(upload_router, prefix=settings.API_V1_STR)
 app.include_router(pairing_router, prefix=settings.API_V1_STR)
+app.include_router(queue_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
 
 @app.get("/")

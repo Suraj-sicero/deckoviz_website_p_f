@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, MonitorSmartphone, Tv } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
+import { CollectionQueuePanel } from "../components/CollectionQueuePanel";
+import { LiveStreamButton } from "../components/LiveStreamButton";
 import { useWebSocket } from "../hooks/useWebSocket";
 import { wsClient } from "../lib/wsClient";
 import { SAMPLE_DISPLAY_IMAGES, absoluteSampleUrl } from "../lib/sampleDisplayImages";
@@ -275,17 +277,30 @@ export default function DisplayOnTvPage() {
             {SAMPLE_DISPLAY_IMAGES.map((img) => {
               const active = img.id === selectedId;
               return (
-                <button
+                <div
                   key={img.id}
-                  type="button"
-                  onClick={() => setSelectedId(img.id)}
-                  className={`overflow-hidden rounded-xl border text-left transition ${
+                  className={`overflow-hidden rounded-xl border p-1 text-left transition ${
                     active ? "border-[#2563EB] ring-2 ring-[#2563EB]/30" : "border-slate-200 hover:border-slate-300"
                   }`}
                 >
-                  <img src={img.path} alt={img.name} className="h-28 w-full object-cover" />
-                  <div className="px-2 py-1.5 text-xs font-medium text-slate-700">{img.name}</div>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedId(img.id)}
+                    className="w-full text-left"
+                  >
+                    <img src={img.path} alt={img.name} className="h-24 w-full rounded-lg object-cover" />
+                    <div className="px-1 py-1 text-xs font-medium text-slate-700">{img.name}</div>
+                  </button>
+
+                  <div className="px-1 pb-1 pt-0.5">
+                    <LiveStreamButton
+                      appInstanceId={targetId}
+                      artworkId={img.id}
+                      url={absoluteSampleUrl(img.path)}
+                      name={img.name}
+                    />
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -300,6 +315,12 @@ export default function DisplayOnTvPage() {
             Display on TV
           </button>
         </section>
+
+        {targetId && (
+          <section className="mb-6">
+            <CollectionQueuePanel appInstanceId={targetId} />
+          </section>
+        )}
 
         {delivery && (
           <section className="rounded-2xl border border-slate-200 bg-white p-4 text-sm">
