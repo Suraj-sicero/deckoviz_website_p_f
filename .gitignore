@@ -20,7 +20,11 @@ build/
 .env
 
 # Firebase service account
-fastapi_backend/firebase-service-account.json
+deckoviz_web-main/fastapi_backend/firebase-service-account.json
+*.json
+!package.json
+!tsconfig.json
+!package-lock.json
 
 # Generated jobs
 jobs/
