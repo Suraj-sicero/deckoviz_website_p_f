@@ -29,6 +29,7 @@
     "framer-motion": "^11.18.2",
     "front-matter": "^4.0.2",
     "github-slugger": "^2.0.0",
+    "html5-qrcode": "^2.3.8",
     "jspdf": "^4.2.1",
     "lucide-react": "^0.344.0",
     "pdf-lib": "^1.17.1",

@@ -131,6 +131,8 @@ const sidebarMain: { icon: React.ReactNode; label: string; view: ViewType }[] = 
   { icon: <Clock size={20} />, label: "Daily Queue", view: "daily_queue" },
   { icon: <ImageIcon size={20} />, label: "All Media", view: "all_media" },
   { icon: <Library size={20} />, label: "Explore Library", view: "explore_library" },
+  { icon: <Monitor size={20} />, label: "Device Pairing", view: "pair" as ViewType },
+  { icon: <Play size={20} />, label: "Display", view: "display" as ViewType },
 ];
 
 /* ── Dropdown menu items (3 bars) ── */
@@ -361,6 +363,10 @@ export default function DeckovizWebapp() {
                   onClick={() => {
                     if (item.view === "vgc") {
                       window.location.href = "/vizzy-canvas";
+                    } else if (item.view === ("pair" as any)) {
+                      window.location.href = "/pair";
+                    } else if (item.view === ("display" as any)) {
+                      window.location.href = "/display";
                     } else {
                       setActiveView(item.view);
                     }

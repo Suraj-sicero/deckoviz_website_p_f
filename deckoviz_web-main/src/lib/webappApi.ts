@@ -3,7 +3,8 @@ import { getDeviceId } from "./deviceStorage";
 /**
  * Deckoviz WebApp API Client module
  */
-const BASE = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://deckoviz-website-p-f.onrender.com";
+import { API_BASE_URL } from "./constants";
+const BASE = API_BASE_URL;
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
 import { getUserMedia } from "./userStorage";

@@ -3,9 +3,8 @@
 // from localStorage (falls back to scanning for a JWT-shaped value so it works
 // regardless of which key AuthContext uses).
 
-const API_BASE =
-  (import.meta.env.VITE_API_URL as string) ||
-  "https://deckoviz-web-f.onrender.com";
+import { API_BASE_URL } from "./constants";
+const API_BASE = API_BASE_URL;
 
 export function getAuthToken(): string | null {
   const direct =

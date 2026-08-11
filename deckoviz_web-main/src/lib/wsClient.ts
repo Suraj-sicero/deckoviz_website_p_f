@@ -1,4 +1,5 @@
-const BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://deckoviz-website-p-f.onrender.com";
+import { API_BASE_URL } from "./constants";
+const BASE_URL = API_BASE_URL;
 
 export type ConnectionStatus = "connecting" | "connected" | "disconnected" | "reconnecting";
 
