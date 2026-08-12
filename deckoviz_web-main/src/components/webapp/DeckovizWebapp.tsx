@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useWebSocket } from "../../hooks/useWebSocket";
 import { getAgents, getChats, sendMessage, createChat, getChat } from "../../lib/vgcApi";
 import type { VGCAgent, VGCChatSummary, VGCMessage } from "../../lib/vgcApi";
+import { ArtworkContextMenu, CollectionContextMenu } from "../CardContextMenu";
 import {
   Bell,
   BookOpen,
@@ -930,7 +931,7 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
                 const thumbUrl = col.items?.[0]?.url || col.items?.[0]?.mediaUrl || "https://picsum.photos/seed/deckoviz-art/300/300";
 
                 return (
-                  <div key={col.id || i} className="flex items-center gap-3 p-3 rounded-xl bg-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
+                  <div key={col.id || i} className="flex items-center gap-3 p-3 rounded-xl bg-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group relative">
                     <div className="h-10 w-10 rounded-xl overflow-hidden shrink-0 bg-gray-100 border border-gray-100">
                       <img src={thumbUrl} alt="" className="w-full h-full object-cover" />
                     </div>
@@ -938,7 +939,7 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
                       <p className="text-sm font-semibold text-gray-800 group-hover:text-[#182a4a] transition-colors truncate">{colName}</p>
                       <p className="text-[11px] text-gray-400 font-medium">{count} artwork{count !== 1 ? "s" : ""}</p>
                     </div>
-                    <Heart size={14} className="text-rose-400 fill-rose-400 shrink-0" />
+                    <CollectionContextMenu collection={col} className="shrink-0" />
                   </div>
                 );
               })
@@ -950,15 +951,16 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
       {/* Favourite Artworks */}
       <SectionCard title="Favourite Artworks" icon={<Star size={18} />} accentColor="#f59e0b" fullWidth>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-          {(userArtworks.length > 0 ? userArtworks.slice(0, 4) : ["/images/herol (1).png", "/images/herol (2).png", "/images/herol (4).png", "/images/herol (8).png"]).map((img, i) => (
-            <div key={i} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(24,42,74,0.2)] transition-all duration-500 hover:-translate-y-1">
-              <img src={img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg">
-                <Heart size={14} className="text-rose-500 fill-rose-500" />
-              </button>
-            </div>
-          ))}
+          {(userArtworks.length > 0 ? userArtworks.slice(0, 4) : ["/images/herol (1).png", "/images/herol (2).png", "/images/herol (4).png", "/images/herol (8).png"]).map((img, i) => {
+            const artworkObj = typeof img === "string" ? { url: img, title: `Favourite Artwork #${i + 1}` } : img;
+            return (
+              <div key={i} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(24,42,74,0.2)] transition-all duration-500 hover:-translate-y-1">
+                <ArtworkContextMenu artwork={artworkObj} className="absolute top-3 right-3 z-20" />
+                <img src={artworkObj.url || img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+            );
+          })}
         </div>
       </SectionCard>
 

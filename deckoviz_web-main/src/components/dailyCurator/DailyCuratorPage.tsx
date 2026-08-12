@@ -15,6 +15,7 @@ import {
   toggleLike,
 } from "../../lib/curatorApi";
 import MusicPicker from "./MusicPicker";
+import { ArtworkContextMenu, CollectionContextMenu } from "../CardContextMenu";
 
 function formatDate(d: string) {
   try {
@@ -234,7 +235,8 @@ function ArtworkCard({
   const art = item.data as Curation | null;
   if (!art) return null;
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
+    <div className="overflow-hidden rounded-2xl bg-white shadow relative group">
+      <ArtworkContextMenu artwork={art} className="absolute right-3 top-3 z-20" />
       <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
         {art.imageUrl && (
           <img
@@ -244,7 +246,7 @@ function ArtworkCard({
           />
         )}
         {item.saved && (
-          <span className="absolute right-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-xs font-medium text-white">
+          <span className="absolute left-2 top-2 rounded-full bg-black/60 px-2 py-0.5 text-xs font-medium text-white">
             ★ Saved
           </span>
         )}
@@ -275,8 +277,9 @@ function CollectionCard({ item }: { item: DailyItem }) {
   const col = item.data as CollectionRow | null;
   if (!col) return null;
   return (
-    <div className="rounded-2xl bg-white p-5 shadow">
-      <h3 className="text-lg font-bold text-gray-900">{col.name}</h3>
+    <div className="rounded-2xl bg-white p-5 shadow relative group">
+      <CollectionContextMenu collection={col} className="absolute right-3 top-3 z-20" />
+      <h3 className="text-lg font-bold text-gray-900 pr-8">{col.name}</h3>
       {col.description && (
         <p className="mt-1 text-sm text-gray-500">{col.description}</p>
       )}
@@ -306,7 +309,8 @@ function SavedArtworkCard({
   const art = item.data as Curation | null;
   if (!art) return null;
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow">
+    <div className="overflow-hidden rounded-2xl bg-white shadow relative group">
+      <ArtworkContextMenu artwork={art} className="absolute right-3 top-3 z-20" />
       <div className="aspect-video w-full overflow-hidden bg-gray-100">
         {art.imageUrl && (
           <img

@@ -987,3 +987,26 @@ components:
         order_index:
           type: integer
           description: Zero-based position index in queue
+
+    CardContextMenus:
+      description: >
+        Universal 3-dot (kebab) context menus rendered on every Artwork card and Collection card across the web app.
+        Reuses existing API endpoints and WebSocket protocol actions without duplicating logic.
+      artwork_context_menu:
+        options:
+          - name: "Add to Collection"
+            endpoint: "POST /collections/{collection_id}/items"
+            payload: { itemId: string, url: string, itemType: "image" }
+          - name: "Send to Live Streaming"
+            endpoint: "POST /api/livestream/{app_instance_id}"
+            action: "display_artwork"
+            behavior: 2-click flow, direct dispatch to online TV device.
+      collection_context_menu:
+        options:
+          - name: "Send to Queue"
+            endpoint: "POST /api/queue/{app_instance_id}"
+            action: "queue_collection"
+          - name: "Send to Live Streaming"
+            endpoint: "WS action display_collection"
+            action: "display_collection"
+

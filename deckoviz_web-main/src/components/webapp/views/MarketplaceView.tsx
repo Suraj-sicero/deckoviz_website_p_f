@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import type React from "react";
 import { webappApi } from "../../../lib/webappApi";
 import { artworkCard as fallbackArtworkCard, figmaAssets, topArtists as fallbackTopArtists } from "../webappData";
+import { ArtworkContextMenu } from "../../CardContextMenu";
 
 const filterTabs = ["Filters", "Price", "Medium", "Style", "More..."];
 
@@ -132,7 +133,8 @@ function SectionTitle({ title, className = "" }: { title: string; className?: st
 function ArtworkCard({ artwork }: { artwork?: any }) {
   const data = artwork || fallbackArtworkCard;
   return (
-    <article className="overflow-hidden rounded-[7px] ring-1 ring-[#ded9f8]">
+    <article className="overflow-hidden rounded-[7px] ring-1 ring-[#ded9f8] relative">
+      <ArtworkContextMenu artwork={data} className="absolute top-2.5 right-2.5 z-20" />
       <img src={data.image || fallbackArtworkCard.image} alt={data.title} className="h-[193px] w-full object-cover" />
       <div className="px-4 pb-3 pt-3">
         <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif mb-2 text-[15px] font-bold ">{data.title}</h3>
@@ -157,8 +159,9 @@ function ArtworkCard({ artwork }: { artwork?: any }) {
 function WideArtwork({ image }: { image: string }) {
   return (
     <div className="group relative h-[213px] overflow-hidden rounded-[7px] bg-[#e5e7eb]">
+      <ArtworkContextMenu artwork={{ url: image, title: "Top Artwork Wide" }} className="absolute right-3 top-3 z-20" />
       <img src={image} alt="" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
-      <button className="absolute right-5 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-[#ffffff99] text-[#ef4462] shadow">
+      <button className="absolute right-14 top-3 flex h-7 w-7 items-center justify-center rounded-full bg-[#ffffff99] text-[#ef4462] shadow">
         <Heart size={15} fill="currentColor" />
       </button>
     </div>
@@ -168,8 +171,9 @@ function WideArtwork({ image }: { image: string }) {
 function SmallArtwork({ image }: { image: string }) {
   return (
     <div className="group relative h-[170px] overflow-hidden rounded-[7px] bg-[#e5e7eb]">
+      <ArtworkContextMenu artwork={{ url: image, title: "Top Artwork" }} className="absolute right-2.5 top-2.5 z-20" />
       <img src={image} alt="" className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]" />
-      <button className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded-full bg-[#ffffffb8] text-[#ef4462] shadow">
+      <button className="absolute right-12 top-2.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#ffffffb8] text-[#ef4462] shadow">
         <Heart size={13} fill="currentColor" />
       </button>
     </div>

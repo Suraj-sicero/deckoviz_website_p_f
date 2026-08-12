@@ -4,6 +4,7 @@ import { webappApi } from "../../../lib/webappApi";
 import { Loader2, Eye, Monitor, Check, X, FolderPlus, Trash2 } from "lucide-react";
 import { setFrameImage } from "../../../lib/frameStore";
 import { getUserCollections } from "../../../lib/userStorage";
+import { ArtworkContextMenu, CollectionContextMenu } from "../../CardContextMenu";
 
 const fallbackCollections = [
   {
@@ -162,7 +163,10 @@ export default function AIPhotoManagerView() {
                     const count = Array.isArray(col.items) ? col.items.length : (typeof col.items === "number" ? col.items : col.itemCount || 0);
 
                     return (
-                      <div key={idx} className="rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition group cursor-pointer" onClick={() => setSelectedColModal(col)}>
+                      <div key={idx} className="rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition group cursor-pointer relative" onClick={() => setSelectedColModal(col)}>
+                         {/* Top-Right 3-Dot Context Menu */}
+                         <CollectionContextMenu collection={col} className="absolute top-3 right-3 z-20" />
+
                          {/* Image Collage with Hover Actions */}
                          <div className="h-[211px] overflow-hidden relative">
                             <img
@@ -245,7 +249,10 @@ export default function AIPhotoManagerView() {
                  {artworks.map((art, idx) => {
                     const artImg = art.image || art.imageUrl || art.url || figmaAssets.soloRafting;
                     return (
-                      <div key={idx} className="rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition group">
+                      <div key={idx} className="rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition group relative">
+                         {/* Top-Right 3-Dot Context Menu */}
+                         <ArtworkContextMenu artwork={art} className="absolute top-3 right-3 z-20" />
+
                          <div className="h-[220px] w-full relative">
                             <img
                               src={artImg}

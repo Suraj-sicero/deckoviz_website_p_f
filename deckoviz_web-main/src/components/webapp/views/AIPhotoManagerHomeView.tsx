@@ -3,6 +3,7 @@ import { figmaAssets } from "../webappData";
 import { useState, useEffect } from "react";
 import { webappApi, vizzyApi } from "../../../lib/webappApi";
 import { getUserMedia } from "../../../lib/userStorage";
+import { ArtworkContextMenu, CollectionContextMenu } from "../../CardContextMenu";
 
 const fallbackCollections = [
   { title: "Abstaract", count: "42 Images", image: figmaAssets.vibrantFace },
@@ -91,7 +92,8 @@ export default function AIPhotoManagerHomeView() {
           <SectionTitle title="Recent Collections" />
           <div className="mb-9 grid grid-cols-1 gap-6 md:grid-cols-4">
             {collections.map((collection, index) => (
-              <div key={`${collection.title || collection.name}-${index}`} className="relative h-[187px] overflow-hidden rounded-[7px]">
+              <div key={`${collection.title || collection.name}-${index}`} className="relative h-[187px] overflow-hidden rounded-[7px] group">
+                <CollectionContextMenu collection={collection} className="absolute top-2.5 right-2.5 z-20" />
                 <img src={collection.image || collection.coverUrl || figmaAssets.vibrantFace} alt="" className="h-full w-full object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                 <div className="absolute bottom-5 left-5 text-white">
@@ -110,9 +112,15 @@ export default function AIPhotoManagerHomeView() {
 
           <SectionTitle title="Recent Photos" />
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-            {photos.map((photo, index) => (
-              <img key={`${photo}-${index}`} src={photo} alt="" className="h-[187px] w-full rounded-[7px] object-cover" />
-            ))}
+            {photos.map((photo, index) => {
+              const photoObj = typeof photo === "string" ? { url: photo, title: `Photo #${index + 1}` } : photo;
+              return (
+                <div key={`${photoObj.url || photo}-${index}`} className="relative h-[187px] w-full overflow-hidden rounded-[7px] group">
+                  <ArtworkContextMenu artwork={photoObj} className="absolute top-2.5 right-2.5 z-20" />
+                  <img src={photoObj.url || photo} alt="" className="h-full w-full object-cover" />
+                </div>
+              );
+            })}
           </div>
 
           <div className="mx-auto mt-10 flex w-full max-w-[710px] items-center justify-between rounded-[16px] border border-[#dedfe3] px-8 py-4">
