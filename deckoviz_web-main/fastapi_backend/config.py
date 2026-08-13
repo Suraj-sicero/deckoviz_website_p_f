@@ -4,6 +4,7 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Deckoviz FastAPI Backend"
     API_V1_STR: str = "/api"
+    DATABASE_URL: str = os.getenv("DATABASE_URL", "sqlite:///deckoviz.db")
     
     # Firebase Configuration
     FIREBASE_CREDENTIALS_JSON: str = os.getenv("FIREBASE_CREDENTIALS_JSON", "")

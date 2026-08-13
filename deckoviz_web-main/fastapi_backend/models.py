@@ -107,6 +107,11 @@ class DailyQueueSlot(Base):
     start_time = Column(String, nullable=True)
     end_time = Column(String, nullable=True)
     day_of_week = Column(Integer, default=0)
+    timezone = Column(String, default="UTC")
+    target_app_instance_id = Column(String, nullable=True)
+    mode = Column(String, default="scheduled")
+    transition = Column(String, default="fade")
+    duration = Column(Integer, default=5000)
     active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
@@ -119,8 +124,14 @@ class EventItem(Base):
     user_id = Column(String, nullable=False, index=True)
     name = Column(String, nullable=False)
     date = Column(String, nullable=True)
+    time = Column(String, nullable=True)
     collection_name = Column(String, nullable=True)
     collection_id = Column(String, nullable=True)
+    timezone = Column(String, default="UTC")
+    target_app_instance_id = Column(String, nullable=True)
+    mode = Column(String, default="scheduled")
+    transition = Column(String, default="fade")
+    duration = Column(Integer, default=5000)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class VizzyChatSession(Base):

@@ -6,6 +6,7 @@ from pydantic import BaseModel
 
 from auth import FirebaseUser, get_current_user
 from services import device_registry, queue_store, ws_hub
+from services.scheduler import set_live_mode
 
 router = APIRouter(tags=["Collection Queue & Live Streaming"])
 
@@ -154,7 +155,13 @@ async def stream_artwork_live(
     )
 
     sent = await ws_hub.route_to_tv(current_user.id, app_instance_id, msg)
+    if not sent:
+        device_registry.push_pending_command(current_user.id, app_instance_id, msg)
     await ws_hub.broadcast_to_browsers(current_user.id, msg)
+
+    # Inform scheduler of live mode so it defers lower priority schedules
+    duration_sec = (body.duration or 5000) / 1000
+    set_live_mode(current_user.id, app_instance_id, int(duration_sec))
 
     return {
         "success": True,

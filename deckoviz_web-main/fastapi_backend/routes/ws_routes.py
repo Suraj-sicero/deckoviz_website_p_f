@@ -99,6 +99,11 @@ async def _run_socket(websocket: WebSocket, client_type: str, app_instance_id: s
             else:
                 device_registry.set_status(user_id, app_instance_id, "online")
             await ws_hub.refresh_browser_device_lists(user_id)
+            
+            # Flush any offline pending commands
+            pending_commands = device_registry.pop_pending_commands(user_id, app_instance_id)
+            for cmd in pending_commands:
+                await ws_hub.route_to_tv(user_id, app_instance_id, cmd)
 
         while True:
             raw = await websocket.receive_text()

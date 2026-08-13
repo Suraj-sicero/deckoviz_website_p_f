@@ -263,7 +263,15 @@ export function HomeEventsView() {
 
   const handleCreateEvent = async () => {
     try {
-      await homeApi.createEvent(formData);
+      const parts = formData.date.split("T");
+      const eventDate = parts[0];
+      const eventTime = parts[1] ? parts[1].slice(0, 5) : "12:00";
+      await homeApi.createEvent({
+        name: formData.title || "Special Event",
+        date: eventDate,
+        time: eventTime,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"
+      });
       setShowModal(false);
       setFormData({ title: "", date: "" });
       fetchEvents();
@@ -305,7 +313,8 @@ export function HomeEventsView() {
       ) : (
         <div className="space-y-3">
           {data.map((event, i) => {
-            const parsedDate = event.date ? new Date(event.date) : null;
+            const fullDateStr = event.date ? (event.time ? `${event.date}T${event.time}` : event.date) : null;
+            const parsedDate = fullDateStr ? new Date(fullDateStr) : null;
             const isValidDate = parsedDate && !isNaN(parsedDate.getTime());
             return (
               <div key={event.id || i} className="flex items-center gap-4 p-5 rounded-2xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
@@ -316,7 +325,7 @@ export function HomeEventsView() {
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-bold text-gray-800">{event.title || event.name || "Event"}</p>
                   <div className="flex items-center gap-3 mt-1">
-                    <span className="text-[11px] text-gray-400 flex items-center gap-1"><Clock size={10} /> {isValidDate ? parsedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : event.date || "Time not set"}</span>
+                    <span className="text-[11px] text-gray-400 flex items-center gap-1"><Clock size={10} /> {isValidDate ? parsedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : event.time || event.date || "Time not set"}</span>
                   </div>
                 </div>
                 <button
@@ -348,19 +357,127 @@ export function HomeEventsView() {
 
 /* ======================== RITUALS (No Backend API yet) ======================== */
 export function HomeRitualsView() {
+  const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [formData, setFormData] = useState({ title: "", startTime: "08:00", dayOfWeek: 0, mode: "ambient", collectionName: "" });
+
+  const fetchRituals = () => {
+    setLoading(true);
+    homeApi.getRituals()
+      .then((res: any) => setData(Array.isArray(res) ? res : []))
+      .catch(() => setData([]))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => fetchRituals(), []);
+
+  const handleCreateRitual = async () => {
+    try {
+      await homeApi.createRitual({
+        title: formData.title,
+        startTime: formData.startTime,
+        dayOfWeek: Number(formData.dayOfWeek),
+        mode: formData.mode,
+        collectionName: formData.collectionName || "Default Collection",
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"
+      });
+      setShowModal(false);
+      setFormData({ title: "", startTime: "08:00", dayOfWeek: 0, mode: "ambient", collectionName: "" });
+      fetchRituals();
+    } catch (e) {
+      console.error(e);
+      alert("Failed to create ritual");
+    }
+  };
+
+  const handleDeleteRitual = async (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      setData(data.filter(d => d.id !== id));
+      await homeApi.deleteRitual(id);
+    } catch (err) {
+      console.error(err);
+      fetchRituals();
+    }
+  };
+
+  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
   return (
     <div className="space-y-6 pb-12">
       <ViewHeader title="Rituals" subtitle="Set recurring daily and weekly scheduled events" icon={<Repeat size={24} />} />
-      <EmptyState 
-        icon={<Repeat size={32} />} 
-        title="No active rituals" 
-        description="Rituals allow you to set recurring collections (e.g. Morning Zen every Monday at 7am). Start building your weekly ambiance!" 
-        actionLabel="Create a Ritual" 
-        onAction={() => setShowModal(true)}
-      />
-      <Modal title="Create Ritual" isOpen={showModal} onClose={() => setShowModal(false)} onSubmit={() => { alert("Rituals feature coming soon!"); setShowModal(false); }}>
-        <p className="text-sm text-gray-600 text-center py-4">The Rituals automation engine is currently in development. Check back soon!</p>
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Active Daily Rituals</h2>
+        <button onClick={() => setShowModal(true)} className="px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-md flex items-center gap-1 hover:opacity-90 transition-opacity"><Plus size={12} /> New Ritual</button>
+      </div>
+
+      {loading ? (
+        <SkeletonLoader />
+      ) : data.length === 0 ? (
+        <EmptyState 
+          icon={<Repeat size={32} />} 
+          title="No active rituals" 
+          description="Rituals allow you to set recurring collections (e.g. Morning Zen every Monday at 7am). Start building your weekly ambiance!" 
+          actionLabel="Create a Ritual" 
+          onAction={() => setShowModal(true)}
+        />
+      ) : (
+        <div className="space-y-3">
+          {data.map((ritual, i) => (
+            <div key={ritual.id || i} className="flex items-center gap-4 p-5 rounded-2xl bg-white/50 border border-white/60 hover:bg-white hover:shadow-md transition-all cursor-pointer group">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#182a4a]/10 to-indigo-100 flex flex-col items-center justify-center shrink-0">
+                <Repeat size={20} className="text-[#182a4a]" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-bold text-gray-800">{ritual.title || ritual.collectionName || "Daily Ritual"}</p>
+                <div className="flex items-center gap-3 mt-1 text-xs text-gray-500">
+                  <span className="flex items-center gap-1 font-semibold text-blue-600"><Clock size={12} /> {ritual.startTime || "08:00"}</span>
+                  <span>•</span>
+                  <span>{days[ritual.dayOfWeek % 7] || "Everyday"}</span>
+                  <span>•</span>
+                  <span className="capitalize px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-bold">{ritual.mode || "Scheduled"}</span>
+                </div>
+              </div>
+              <button
+                onClick={(e) => handleDeleteRitual(ritual.id, e)}
+                className="p-2 rounded-full hover:bg-red-50 text-gray-300 hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                title="Delete Ritual"
+              >
+                <Trash2 size={16} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <Modal title="Create New Ritual" isOpen={showModal} onClose={() => setShowModal(false)} onSubmit={handleCreateRitual}>
+        <div>
+          <label className="block text-xs font-bold text-gray-600 mb-1">Ritual Title</label>
+          <input type="text" required placeholder="e.g. Morning Zen" value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} className="w-full px-4 py-2 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+        </div>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-xs font-bold text-gray-600 mb-1">Start Time</label>
+            <input type="time" required value={formData.startTime} onChange={e => setFormData({...formData, startTime: e.target.value})} className="w-full px-4 py-2 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50" />
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-gray-600 mb-1">Day of Week</label>
+            <select value={formData.dayOfWeek} onChange={e => setFormData({...formData, dayOfWeek: Number(e.target.value)})} className="w-full px-4 py-2 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50">
+              {days.map((d, idx) => (
+                <option key={d} value={idx}>{d}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div>
+          <label className="block text-xs font-bold text-gray-600 mb-1">Mode / Experience</label>
+          <select value={formData.mode} onChange={e => setFormData({...formData, mode: e.target.value})} className="w-full px-4 py-2 rounded-xl bg-gray-50 border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50">
+            <option value="ambient">Ambient Mode</option>
+            <option value="scheduled">Scheduled Content</option>
+            <option value="collection">Collection Playback</option>
+          </select>
+        </div>
       </Modal>
     </div>
   );

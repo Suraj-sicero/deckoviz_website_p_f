@@ -42,12 +42,7 @@ def init_firebase():
     except Exception as e:
         logger.warning(f"Firebase Admin initialization notice: {e}")
 
-    try:
-        _firestore_db = firestore.client()
-        logger.info("Firebase Firestore client initialized successfully")
-    except Exception as e:
-        logger.warning(f"Firestore Client notice: {e}")
-
+    # Note: firestore.client() is lazy-loaded in get_firestore_db() to prevent blocking on import if GCP metadata service is unreachable
     return _firebase_app
 
 # Initialize on import

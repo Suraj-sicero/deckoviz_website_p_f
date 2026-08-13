@@ -73,6 +73,11 @@ export const homeApi = {
       return await get("/daily-queue");
     }
   },
+  getRituals: () => get("/rituals"),
+  createRitual: (data: unknown) => post("/rituals", data),
+  updateRitual: (id: string, data: unknown) => patch(`/rituals/${id}`, data),
+  deleteRitual: (id: string) => del(`/rituals/${id}`),
+
   addDailyQueueSlot: async (data: unknown) => {
     try {
       return await post("/dailyqueue", data);

@@ -136,6 +136,11 @@ class DailyQueueSlotCreate(BaseModel):
     start_time: Optional[str] = Field(default=None, alias="startTime")
     end_time: Optional[str] = Field(default=None, alias="endTime")
     day_of_week: Optional[int] = Field(default=0, alias="dayOfWeek")
+    timezone: Optional[str] = "UTC"
+    target_app_instance_id: Optional[str] = Field(default=None, alias="targetAppInstanceId")
+    mode: Optional[str] = "scheduled"
+    transition: Optional[str] = "fade"
+    duration: Optional[int] = 5000
     active: Optional[bool] = True
 
 class DailyQueueSlotResponse(DailyQueueSlotCreate):
@@ -146,3 +151,26 @@ class DailyQueueSlotResponse(DailyQueueSlotCreate):
     class Config:
         from_attributes = True
         populate_by_name = True
+
+# --- Event Item Schemas ---
+class EventItemCreate(BaseModel):
+    name: str
+    date: Optional[str] = None
+    time: Optional[str] = None
+    collection_name: Optional[str] = Field(default=None, alias="collectionName")
+    collection_id: Optional[str] = Field(default=None, alias="collectionId")
+    timezone: Optional[str] = "UTC"
+    target_app_instance_id: Optional[str] = Field(default=None, alias="targetAppInstanceId")
+    mode: Optional[str] = "scheduled"
+    transition: Optional[str] = "fade"
+    duration: Optional[int] = 5000
+
+class EventItemResponse(EventItemCreate):
+    id: str
+    user_id: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+        populate_by_name = True
+

@@ -10,7 +10,10 @@ from routes.vizzy_routes import router as vizzy_router
 from routes.upload_routes import router as upload_router
 from routes.pairing_routes import router as pairing_router
 from routes.queue_routes import router as queue_router
+from routes.schedule_routes import router as schedule_router
 from routes.ws_routes import router as ws_router
+
+from services.scheduler import start_scheduler, stop_scheduler
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,6 +27,14 @@ app = FastAPI(
     docs_url="/docs",
     redoc_url="/redoc"
 )
+
+@app.on_event("startup")
+async def startup_event():
+    start_scheduler()
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    stop_scheduler()
 
 # CORS Configuration
 app.add_middleware(
@@ -43,6 +54,7 @@ app.include_router(vizzy_router, prefix=settings.API_V1_STR)
 app.include_router(upload_router, prefix=settings.API_V1_STR)
 app.include_router(pairing_router, prefix=settings.API_V1_STR)
 app.include_router(queue_router, prefix=settings.API_V1_STR)
+app.include_router(schedule_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
 
 @app.get("/")
