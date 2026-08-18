@@ -19,12 +19,10 @@ build/
 # Environment variables
 .env
 
-# Firebase service account
+# Firebase service account and local DB dumps
 deckoviz_web-main/fastapi_backend/firebase-service-account.json
-*.json
-!package.json
-!tsconfig.json
-!package-lock.json
+deckoviz_web-main/fastapi_backend/local_firestore_db.json
+**/firebase-service-account.json
 
 # Generated jobs
 jobs/
