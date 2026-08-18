@@ -443,7 +443,7 @@ const MOODSCAPES: Record<string, MoodscapeConfig> = {
   }
 };
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://deckoviz-web-f.onrender.com";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "https://ckoviz-backend.onrender.com";
 
 const SoundscapesTool: React.FC = () => {
   const { token, user } = useAuth();

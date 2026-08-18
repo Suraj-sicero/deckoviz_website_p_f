@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../context/AuthContext";
+import { API_BASE_URL } from "../../lib/constants";
 import { 
   auth, 
   googleProvider, 
@@ -21,8 +22,7 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
 
   if (!isAuthModalOpen) return null;
 
-  const BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || "https://deckoviz-website-p-f.onrender.com";
-  const API_URL = `${BASE_URL}/api/auth`;
+  const API_URL = `${API_BASE_URL}/api/auth`;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

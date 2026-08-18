@@ -1,5 +1,4 @@
-import { API_BASE_URL } from "./constants";
-const BASE_URL = API_BASE_URL;
+import { WS_BROWSER_URL } from "./constants";
 
 export type ConnectionStatus = "connecting" | "connected" | "disconnected" | "reconnecting";
 
@@ -113,7 +112,7 @@ class DeckovizWS {
     this.intentionalClose = false;
     this.setStatus("connecting");
 
-    const wsUrl = BASE_URL.replace(/^http/, "ws") + `/ws/browser?token=${encodeURIComponent(token)}`;
+    const wsUrl = `${WS_BROWSER_URL}?token=${encodeURIComponent(token)}`;
 
     try {
       this.ws = new WebSocket(wsUrl);
