@@ -23,7 +23,7 @@ import {
   push, 
   set 
 } from "firebase/database";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4A_Irxqi3_L57u5_Rzav4QEne6ElX1LE",
@@ -52,7 +52,7 @@ export async function fetchFirebaseUsers() {
 
   try {
     const [rtdbSnapResult, firestoreSnapResult] = await Promise.allSettled([
-      get(child(ref(rtdb), "users")),
+      get(child(rtdbRef(rtdb), "users")),
       getDocs(collection(db, "users"))
     ]);
 
@@ -80,7 +80,7 @@ export async function fetchFirebaseUsers() {
 /** HIGH-SPEED PARALLEL FETCH for ALL media & artwork images across Firebase RTDB & Firestore */
 export async function fetchFirebaseMedia() {
   const mediaList: any[] = [];
-  const rtdbRef = ref(rtdb);
+  const rtdbRefInstance = rtdbRef(rtdb);
 
   const addMediaUnique = (item: any) => {
     const url = item.url || item.mediaUrl || item.imageUrl || item.coverUrl;
@@ -116,9 +116,9 @@ export async function fetchFirebaseMedia() {
   // 2. Run all 7 Firestore & RTDB queries simultaneously in PARALLEL via Promise.allSettled
   try {
     const results = await Promise.allSettled([
-      get(child(rtdbRef, "media")),
-      get(child(rtdbRef, "artworks")),
-      get(child(rtdbRef, "collections")),
+      get(child(rtdbRefInstance, "media")),
+      get(child(rtdbRefInstance, "artworks")),
+      get(child(rtdbRefInstance, "collections")),
       getDocs(collection(db, "media")),
       getDocs(collection(db, "artworks")),
       getDocs(collection(db, "collections")),
@@ -224,18 +224,23 @@ export async function fetchFirebaseMedia() {
   return mediaList;
 }
 
-/** FAST 0-MS INSTANT IMAGE / AUDIO FILE LINK CONVERSION */
+/** NATIVE FIREBASE STORAGE UPLOAD */
 export async function uploadFirebaseFile(file: File): Promise<string> {
-  return new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      resolve(reader.result as string);
-    };
-    reader.onerror = () => {
-      resolve(`https://picsum.photos/seed/art-${Date.now()}/800/800`);
-    };
-    reader.readAsDataURL(file);
-  });
+  try {
+    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
+    const fileRef = storageRef(storage, `uploads/${Date.now()}_${safeName}`);
+    await uploadBytes(fileRef, file);
+    return await getDownloadURL(fileRef);
+  } catch (error) {
+    console.error("Firebase Storage Upload failed:", error);
+    // Fallback to Base64 data URL if storage upload fails
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => resolve(`https://picsum.photos/seed/art-${Date.now()}/800/800`);
+      reader.readAsDataURL(file);
+    });
+  }
 }
 
 /** Add new artwork image directly into Firebase Realtime DB & Firestore & Persistent Local Cache */
@@ -264,7 +269,7 @@ export async function addFirebaseMedia(mediaData: {
 
   // 2. Persist in Firebase Realtime Database & Firestore
   try {
-    const mediaRef = ref(rtdb, "media");
+    const mediaRef = rtdbRef(rtdb, "media");
     const newRef = push(mediaRef);
     await set(newRef, payload);
 
@@ -309,7 +314,7 @@ export async function addFirebaseMusic(musicData: {
 
   // 2. Write to Firebase Realtime Database & Firestore
   try {
-    const musicRef = ref(rtdb, "music");
+    const musicRef = rtdbRef(rtdb, "music");
     const newRef = push(musicRef);
     await set(newRef, payload);
 
@@ -327,7 +332,7 @@ export async function addFirebaseMusic(musicData: {
 /** Fetch all music tracks across Firebase Realtime DB & Firestore */
 export async function fetchFirebaseMusic() {
   const musicList: any[] = [];
-  const rtdbRef = ref(rtdb);
+  const rtdbRefInstance = rtdbRef(rtdb);
 
   const addMusicUnique = (track: any) => {
     const url = track.audioUrl || track.url || track.soundUrl;
@@ -370,7 +375,7 @@ export async function fetchFirebaseMusic() {
   // Read Firebase Realtime DB & Firestore music nodes
   try {
     const [rtdbSnapResult, firestoreSnapResult] = await Promise.allSettled([
-      get(child(rtdbRef, "music")),
+      get(child(rtdbRefInstance, "music")),
       getDocs(collection(db, "music"))
     ]);
 
