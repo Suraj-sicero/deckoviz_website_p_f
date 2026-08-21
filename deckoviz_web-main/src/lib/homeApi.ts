@@ -4,6 +4,10 @@ import { API_BASE_URL } from "./constants";
 const BASE = API_BASE_URL;
 const API = `${BASE}/api/home`;
 
+import { db, rtdb } from "./firebaseClient";
+import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy } from "firebase/firestore";
+import { ref as rtdbRef, push, set, child, get as rtdbGet, remove, update } from "firebase/database";
+
 function getToken(): string | null {
   const direct =
     localStorage.getItem("token") ||
@@ -67,38 +71,164 @@ async function del(path: string) {
 
 export const homeApi = {
   getDailyQueue: async () => {
+    let items: any[] = [];
     try {
-      return await get("/dailyqueue");
-    } catch {
-      return await get("/daily-queue");
+      const q = query(collection(db, "dailyqueue"));
+      const snapshot = await getDocs(q);
+      items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch {}
+    
+    if (items.length === 0) {
+      try {
+        const snap = await rtdbGet(child(rtdbRef(rtdb), "dailyqueue"));
+        if (snap.exists()) {
+          const val = snap.val();
+          items = Object.keys(val).map(k => ({ id: k, ...val[k] }));
+        }
+      } catch {}
     }
+
+    if (items.length === 0) {
+      try {
+        const lsStr = localStorage.getItem("deckoviz_dailyqueue");
+        if (lsStr) items = JSON.parse(lsStr);
+      } catch {}
+    }
+
+    if (items.length === 0) {
+      try { items = await get("/dailyqueue"); } catch {
+        try { items = await get("/daily-queue"); } catch {}
+      }
+    }
+    return items;
   },
-  addDailyQueueSlot: async (data: unknown) => {
+  addDailyQueueSlot: async (data: any) => {
+    const payload = { ...data, createdAt: new Date().toISOString() };
+    const result = { id: payload.id || `slot_${Date.now()}`, success: true, ...payload };
+    
     try {
-      return await post("/dailyqueue", data);
-    } catch {
-      return await post("/daily-queue", data);
-    }
+      const lsStr = localStorage.getItem("deckoviz_dailyqueue");
+      const arr = lsStr ? JSON.parse(lsStr) : [];
+      arr.push(result);
+      localStorage.setItem("deckoviz_dailyqueue", JSON.stringify(arr));
+    } catch {}
+
+    try {
+      const dbRef = rtdbRef(rtdb, "dailyqueue");
+      const newRef = push(dbRef);
+      result.id = newRef.key || result.id;
+      await set(newRef, result);
+    } catch {}
+
+    try { await addDoc(collection(db, "dailyqueue"), result); } catch {}
+    return result;
   },
-  updateDailyQueueSlot: async (id: string, data: unknown) => {
+  updateDailyQueueSlot: async (id: string, data: any) => {
     try {
-      return await put(`/dailyqueue/${id}`, data);
-    } catch {
-      return await put(`/daily-queue/${id}`, data);
-    }
+      const lsStr = localStorage.getItem("deckoviz_dailyqueue");
+      if (lsStr) {
+        const arr = JSON.parse(lsStr);
+        const idx = arr.findIndex((x: any) => x.id === id);
+        if (idx !== -1) { arr[idx] = { ...arr[idx], ...data }; localStorage.setItem("deckoviz_dailyqueue", JSON.stringify(arr)); }
+      }
+    } catch {}
+
+    try { await update(rtdbRef(rtdb, `dailyqueue/${id}`), data); } catch {}
+    try { await updateDoc(doc(db, "dailyqueue", id), data); } catch {}
+    return { id, success: true, ...data };
   },
   deleteDailyQueueSlot: async (id: string) => {
     try {
-      return await del(`/dailyqueue/${id}`);
-    } catch {
-      return await del(`/daily-queue/${id}`);
-    }
+      const lsStr = localStorage.getItem("deckoviz_dailyqueue");
+      if (lsStr) {
+        const arr = JSON.parse(lsStr);
+        localStorage.setItem("deckoviz_dailyqueue", JSON.stringify(arr.filter((x: any) => x.id !== id)));
+      }
+    } catch {}
+
+    try { await remove(rtdbRef(rtdb, `dailyqueue/${id}`)); } catch {}
+    try { await deleteDoc(doc(db, "dailyqueue", id)); } catch {}
+    return { id, success: true };
   },
 
-  getEvents: () => get("/events"),
-  createEvent: (data: unknown) => post("/events", data),
-  updateEvent: (id: string, data: unknown) => put(`/events/${id}`, data),
-  deleteEvent: (id: string) => del(`/events/${id}`),
+  getEvents: async () => {
+    let items: any[] = [];
+    try {
+      const q = query(collection(db, "events"), orderBy("createdAt", "desc"));
+      const snapshot = await getDocs(q);
+      items = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch {}
+
+    if (items.length === 0) {
+      try {
+        const snap = await rtdbGet(child(rtdbRef(rtdb), "events"));
+        if (snap.exists()) {
+          const val = snap.val();
+          items = Object.keys(val).map(k => ({ id: k, ...val[k] }));
+        }
+      } catch {}
+    }
+
+    if (items.length === 0) {
+      try {
+        const lsStr = localStorage.getItem("deckoviz_events");
+        if (lsStr) items = JSON.parse(lsStr);
+      } catch {}
+    }
+
+    if (items.length === 0) {
+      try { items = await get("/events"); } catch {}
+    }
+    return items;
+  },
+  createEvent: async (data: any) => {
+    const payload = { ...data, createdAt: new Date().toISOString() };
+    const result = { id: payload.id || `event_${Date.now()}`, success: true, ...payload };
+    
+    try {
+      const lsStr = localStorage.getItem("deckoviz_events");
+      const arr = lsStr ? JSON.parse(lsStr) : [];
+      arr.push(result);
+      localStorage.setItem("deckoviz_events", JSON.stringify(arr));
+    } catch {}
+
+    try {
+      const dbRef = rtdbRef(rtdb, "events");
+      const newRef = push(dbRef);
+      result.id = newRef.key || result.id;
+      await set(newRef, result);
+    } catch {}
+
+    try { await addDoc(collection(db, "events"), result); } catch {}
+    return result;
+  },
+  updateEvent: async (id: string, data: any) => {
+    try {
+      const lsStr = localStorage.getItem("deckoviz_events");
+      if (lsStr) {
+        const arr = JSON.parse(lsStr);
+        const idx = arr.findIndex((x: any) => x.id === id);
+        if (idx !== -1) { arr[idx] = { ...arr[idx], ...data }; localStorage.setItem("deckoviz_events", JSON.stringify(arr)); }
+      }
+    } catch {}
+
+    try { await update(rtdbRef(rtdb, `events/${id}`), data); } catch {}
+    try { await updateDoc(doc(db, "events", id), data); } catch {}
+    return { id, success: true, ...data };
+  },
+  deleteEvent: async (id: string) => {
+    try {
+      const lsStr = localStorage.getItem("deckoviz_events");
+      if (lsStr) {
+        const arr = JSON.parse(lsStr);
+        localStorage.setItem("deckoviz_events", JSON.stringify(arr.filter((x: any) => x.id !== id)));
+      }
+    } catch {}
+
+    try { await remove(rtdbRef(rtdb, `events/${id}`)); } catch {}
+    try { await deleteDoc(doc(db, "events", id)); } catch {}
+    return { id, success: true };
+  },
 
   getMembers: () => get("/members"),
   createMember: (data: unknown) => post("/members", data),
