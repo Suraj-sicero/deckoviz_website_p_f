@@ -19,7 +19,7 @@ import {
   Flame,
   Shield
 } from "lucide-react";
-import { API_BASE_URL } from "../../lib/constants";
+
 
 export interface SmartFrameDevice {
   id: string;
@@ -90,7 +90,7 @@ export const MasterAdminDevices: React.FC = () => {
   const loadConnectedDevices = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/pairing/devices`).then((r) => r.json()).catch(() => null);
+      const res = await fetch(`https://deckoviz-web-f.onrender.com/api/pairing/devices`).then((r) => r.json()).catch(() => null);
       if (res && res.devices && Array.isArray(res.devices)) {
         const fetched: SmartFrameDevice[] = res.devices.map((d: any, idx: number) => ({
           id: d.id || d.app_instance_id || `dev_${idx}`,
