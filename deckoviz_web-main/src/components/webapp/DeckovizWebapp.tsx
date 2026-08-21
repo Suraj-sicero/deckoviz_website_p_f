@@ -47,6 +47,7 @@ import {
   Wand2,
   X,
   CheckCircle2,
+  Shield,
 } from "lucide-react";
 
 import AddImagesToCollectionView from "./views/AddImagesToCollectionView";
@@ -157,6 +158,7 @@ const menuItems: { icon: React.ReactNode; label: string; view: ViewType; section
   { icon: <Film size={15} />, label: "Short Film Suite", view: "short_film" },
   { icon: <PenTool size={15} />, label: "Create Collection", view: "create_collection" },
   { icon: <BookOpen size={15} />, label: "Creative Journal", view: "creative_journal" },
+  { icon: <Shield size={15} />, label: "Master Admin Suite", view: "admin" as ViewType, section: "Admin" },
 ];
 
 /* ── Drawing Room Quick Actions ── */
@@ -194,6 +196,10 @@ export default function DeckovizWebapp() {
   };
 
   const handleMenuClick = (view: ViewType) => {
+    if (view === ("admin" as any)) {
+      window.location.href = "/admin";
+      return;
+    }
     if (view === "vgc" || view === "vcc") {
       window.location.href = "/vizzy-canvas";
       return;
@@ -207,7 +213,7 @@ export default function DeckovizWebapp() {
       {/* ── Floating Top Header ── */}
       <div className="fixed top-4 left-0 right-0 z-[100] flex justify-center px-4 pointer-events-none">
         <header
-          className="pointer-events-auto flex items-center justify-between w-full max-w-7xl h-14 rounded-full px-2 md:px-4 transition-all duration-700 relative"
+          className="pointer-events-auto flex items-center justify-between w-full max-w-[1400px] h-14 rounded-full px-3 md:px-5 transition-all duration-700 relative"
           style={{
             background: "linear-gradient(135deg, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.5) 100%)",
             backdropFilter: "blur(32px) saturate(200%)",
@@ -351,7 +357,7 @@ export default function DeckovizWebapp() {
       {/* ── Main Layout ── */}
       <main className="relative flex min-h-screen pt-24 px-4 w-full max-w-[1400px] mx-auto gap-6 pb-12">
         {/* Sidebar */}
-        <aside className="sticky top-24 z-20 flex h-[calc(100vh-120px)] w-[80px] shrink-0 flex-col items-center justify-center bg-transparent">
+        <aside className="sticky top-24 z-20 flex h-[calc(100vh-120px)] w-[80px] shrink-0 flex-col items-center justify-start pt-1 bg-transparent">
           <div className="flex flex-col items-center gap-2.5 rounded-[32px] bg-white/70 p-3 shadow-[0_8px_30px_rgb(0,0,0,0.06)] ring-1 ring-black/5 backdrop-blur-xl transition-all hover:shadow-[0_8px_30px_rgba(24,42,74,0.12)] border border-white/60">
             <div className="h-2" />
 
@@ -687,11 +693,14 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
           vizzyApi.getImages(),
         ]);
         if (isMounted) {
-          let backendCols: any[] = [];
-          if (colData.status === "fulfilled") {
-            backendCols = extractList(colData.value);
-          }
-          setUserCollections(backendCols);
+          const savedCols = getUserCollections();
+          const mergedMap = new Map();
+          [...savedCols, ...backendCols].forEach((c: any) => {
+            const k = c.id || c.name || c.title;
+            if (k) mergedMap.set(k, c);
+          });
+          const mergedCols = Array.from(mergedMap.values());
+          setUserCollections(mergedCols);
 
           if (queueData.status === "fulfilled") {
             const list = extractList(queueData.value);

@@ -99,8 +99,10 @@ export default function AIPhotoManagerView() {
     ]).then(([colRes, artRes]) => {
       const realCols = extractList(colRes);
       const realArts = extractList(artRes);
+      const savedCols = getUserCollections();
+
       const combinedColsMap = new Map();
-      realCols.forEach(c => {
+      [...savedCols, ...realCols].forEach(c => {
         const k = c.id || c.name || c.title;
         if (k) combinedColsMap.set(k, c);
       });

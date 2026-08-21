@@ -8,6 +8,8 @@ const BASE = API_BASE_URL;
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
 import { getUserMedia } from "./userStorage";
+import { db, fetchFirebaseMedia, addFirebaseMedia, uploadFirebaseFile } from "./firebaseClient";
+import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
 
 function getToken(): string | null {
   const direct =
@@ -156,14 +158,23 @@ export const webappApi = {
   /* Collections */
   getCollections: async (token?: string) => {
     try {
+      const q = query(collection(db, "collections"), orderBy("createdAt", "desc"));
+      const snapshot = await getDocs(q);
+      const cols = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      if (cols.length > 0) return cols;
       return await homeGet("/collections", token);
     } catch {
       return await get("/collections", token);
     }
   },
-  createCollection: async (data?: unknown, token?: string) => {
+  createCollection: async (data: any, token?: string) => {
     try {
-      return await homePost("/collections", data, token);
+      const colRef = collection(db, "collections");
+      const docRef = await addDoc(colRef, {
+        ...data,
+        createdAt: new Date().toISOString()
+      });
+      return { id: docRef.id, success: true, ...data };
     } catch {
       return await post("/collections", data, token);
     }
@@ -204,6 +215,8 @@ export const webappApi = {
     const qs = q.toString();
     const queryStr = qs ? `?${qs}` : "";
     try {
+      const fbMedia = await fetchFirebaseMedia();
+      if (fbMedia && fbMedia.length > 0) return fbMedia;
       return await homeGet(`/media${queryStr}`, token);
     } catch {
       return await get(`/media${queryStr}`, token);
@@ -219,31 +232,53 @@ export const webappApi = {
 
   /* Upload Media (multipart to /api/home/media or /api/upload) */
   uploadMedia: async (file: File, token?: string): Promise<{ id: string; url: string; fileName: string; fileSize: number }> => {
-    const formData = new FormData();
-    formData.append("file", file);
-    const headers = authHeaders(token);
-    delete headers["Content-Type"]; // Let browser set boundary
-    let res = await fetch(`${HOME}/media`, {
-      method: "POST",
-      headers,
-      body: formData,
-    });
-    if (!res.ok) {
-      res = await fetch(`${BASE}/api/upload`, {
+    try {
+      // Direct Firebase Storage Upload
+      const publicUrl = await uploadFirebaseFile(file);
+      // Save metadata to Firestore
+      const metadata = {
+        title: file.name,
+        fileName: file.name,
+        url: publicUrl,
+        mediaUrl: publicUrl,
+        fileSize: file.size,
+        type: file.type,
+      };
+      const res = await addFirebaseMedia(metadata);
+      return {
+        id: res.id,
+        url: publicUrl,
+        fileName: file.name,
+        fileSize: file.size,
+      };
+    } catch (e) {
+      console.warn("Direct Firebase upload failed, falling back to backend:", e);
+      const formData = new FormData();
+      formData.append("file", file);
+      const headers = authHeaders(token);
+      delete headers["Content-Type"]; // Let browser set boundary
+      let res = await fetch(`${HOME}/media`, {
         method: "POST",
         headers,
         body: formData,
       });
+      if (!res.ok) {
+        res = await fetch(`${BASE}/api/upload`, {
+          method: "POST",
+          headers,
+          body: formData,
+        });
+      }
+      if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+      const data = await res.json();
+      const imgData = data.media || data.image || data;
+      return {
+        id: imgData.id || String(Date.now()),
+        url: imgData.url || imgData.imageUrl || "",
+        fileName: imgData.fileName || imgData.filename || file.name,
+        fileSize: imgData.fileSize || file.size,
+      };
     }
-    if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
-    const data = await res.json();
-    const imgData = data.media || data.image || data;
-    return {
-      id: imgData.id || String(Date.now()),
-      url: imgData.url || imgData.imageUrl || "",
-      fileName: imgData.fileName || imgData.filename || file.name,
-      fileSize: imgData.fileSize || file.size,
-    };
   },
 
   /* Delete Media (via home routes) */
@@ -315,36 +350,17 @@ export async function saveImageToMediaLibrary(
   token?: string,
 ): Promise<void> {
   try {
-    const tkn = token || getToken();
-    if (!tkn) return; // No auth, skip
-
-    // Fetch image as blob
-    const imgRes = await fetch(imageUrl);
-    if (!imgRes.ok) return;
-    const blob = await imgRes.blob();
-
-    // Determine file name
-    const ext = blob.type.includes("png") ? "png" : blob.type.includes("webp") ? "webp" : "jpg";
-    const fileName = metadata.fileName || `vizzy-${Date.now()}.${ext}`;
-
-    // Build FormData
-    const formData = new FormData();
-    formData.append("file", blob, fileName);
-    if (metadata.prompt) formData.append("prompt", metadata.prompt);
-    if (metadata.source) formData.append("source", metadata.source);
-
-    // Upload to home media
-    const headers: Record<string, string> = {};
-    headers["Authorization"] = `Bearer ${tkn}`;
-    // Do NOT set Content-Type — let browser set boundary
-
-    await fetch(`${HOME}/media`, {
-      method: "POST",
-      headers,
-      body: formData,
+    // Save directly to Firebase Database via addFirebaseMedia
+    const fileName = metadata.fileName || `vizzy-${Date.now()}.jpg`;
+    await addFirebaseMedia({
+      title: metadata.prompt || "Vizzy Artwork",
+      url: imageUrl,
+      category: "Generated",
+      style: "Generative Art",
+      tags: metadata.source || "vizzy_chat",
+      ...metadata
     });
-
-    console.log("[VizzySync] Image saved to media library:", fileName);
+    console.log("[VizzySync] Image saved to Firebase Media Library:", fileName);
   } catch (err) {
     console.warn("[VizzySync] Failed to sync image to media library:", err);
   }

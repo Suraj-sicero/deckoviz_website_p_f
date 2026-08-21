@@ -166,6 +166,7 @@ const menuItems: { icon: React.ReactNode; label: string; view: ViewType; section
   { icon: <Film size={15} />, label: "Short Film Suite", view: "short_film" },
   { icon: <PenTool size={15} />, label: "Create Collection", view: "create_collection" },
   { icon: <BookOpen size={15} />, label: "Creative Journal", view: "creative_journal" },
+  { icon: <Shield size={15} />, label: "Master Admin Suite", view: "admin" as ViewType, section: "Admin" },
 ];
 
 export default function EnterpriseWebapp() {
@@ -187,6 +188,10 @@ export default function EnterpriseWebapp() {
   }, []);
 
   const handleMenuClick = (view: ViewType) => {
+    if (view === ("admin" as any)) {
+      window.location.href = "/admin";
+      return;
+    }
     if (view === "vgc" || view === "vcc") {
       window.location.href = "/vizzy-canvas";
       return;
@@ -204,7 +209,7 @@ export default function EnterpriseWebapp() {
       {/* ── Spacious, Uncongested Glassmorphic Top Nav Header ── */}
       <div className="fixed top-4 left-0 right-0 z-[100] flex justify-center px-4 md:px-8 pointer-events-none">
         <header
-          className="pointer-events-auto flex items-center justify-between w-full max-w-7xl h-16 rounded-full px-5 md:px-8 transition-all duration-500 relative border border-white/90 shadow-[0_12px_40px_rgba(15,23,42,0.06),inset_0_1px_1px_rgba(255,255,255,0.9)]"
+          className="pointer-events-auto flex items-center justify-between w-full max-w-[1440px] h-16 rounded-full px-5 md:px-8 transition-all duration-500 relative border border-white/90 shadow-[0_12px_40px_rgba(15,23,42,0.06),inset_0_1px_1px_rgba(255,255,255,0.9)]"
           style={{
             background: "linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(248, 250, 252, 0.6) 50%, rgba(255, 255, 255, 0.8) 100%)",
             backdropFilter: "blur(32px) saturate(200%)",

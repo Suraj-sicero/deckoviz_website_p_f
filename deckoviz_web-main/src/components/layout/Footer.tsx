@@ -12,7 +12,8 @@ import {
   Gamepad2,
   Notebook,
   Sparkles,
-  Grid
+  Grid,
+  Shield
 } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -40,6 +41,7 @@ const companyLinks = [
   { name: "Sitemap", path: "/sitemap" },
   { name: "Support", path: "/support" },
   { name: "Partnerships", path: "/partnership" },
+  { name: "Master Admin Suite", path: "/admin" },
 ]
 
 const legalLinks = [
@@ -126,7 +128,6 @@ const Footer = () => {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-6">
-
           {/* Top Section: Logo + Description + Social Links in one compact row */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -135,28 +136,30 @@ const Footer = () => {
             viewport={{ once: true }}
             className="flex flex-col md:flex-row items-center justify-between gap-4 mb-5 pb-3 border-b border-white/10"
           >
-            <motion.div
-              className="flex items-center gap-4"
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300 }}
-            >
-              <div
-                className="rounded-xl md:rounded-2xl p-2 md:p-2.5 shadow-[0_0_20px_rgba(167,139,250,0.3)] flex items-center space-x-1 md:space-x-2 border border-white/50"
-                style={{
-                  background: "linear-gradient(135deg, #e0e7ff, #ccfbf1, #c7d2fe, #ccfbf1)",
-                  backgroundSize: "300% 300%",
-                  animation: "footerGradientFlow 6s ease infinite",
-                }}
+            <div className="flex flex-col items-start gap-2">
+              <motion.div
+                className="flex items-center gap-4"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
-                <img src="/images/deckovizlogo.png" className="h-8 sm:h-10 md:h-12 object-contain" alt="Deckoviz Symbol" />
-                <img src="/images/new_logoo.jpeg" className="h-8 sm:h-10 md:h-12 object-contain mix-blend-multiply" alt="Deckoviz" />
-              </div>
-              <div className="hidden md:flex flex-col gap-3">
-                <p className="text-white text-sm leading-tight max-w-xs">
-                  Bring your space to life with AI-powered ambiance, dynamic art and visually stunning stories
-                </p>
-              </div>
-            </motion.div>
+                <div
+                  className="rounded-xl md:rounded-2xl p-2 md:p-2.5 shadow-[0_0_20px_rgba(167,139,250,0.3)] flex items-center space-x-1 md:space-x-2 border border-white/50"
+                  style={{
+                    background: "linear-gradient(135deg, #e0e7ff, #ccfbf1, #c7d2fe, #ccfbf1)",
+                    backgroundSize: "300% 300%",
+                    animation: "footerGradientFlow 6s ease infinite",
+                  }}
+                >
+                  <img src="/images/deckovizlogo.png" className="h-8 sm:h-10 md:h-12 object-contain" alt="Deckoviz Symbol" />
+                  <img src="/images/new_logoo.jpeg" className="h-8 sm:h-10 md:h-12 object-contain mix-blend-multiply" alt="Deckoviz" />
+                </div>
+                <div className="hidden md:flex flex-col gap-3">
+                  <p className="text-white text-sm leading-tight max-w-xs">
+                    Bring your space to life with AI-powered ambiance, dynamic art and visually stunning stories
+                  </p>
+                </div>
+              </motion.div>
+            </div>
 
             {/* Social Links inline */}
             <div className="flex items-center gap-3">
@@ -195,11 +198,12 @@ const Footer = () => {
                 }
               `}} />
 
-            {/* Top 2 Horizon Buttons */}
+            {/* Top 3 Primary Horizon Buttons (Home Webapp, Enterprise Webapp, Master Admin Suite) */}
             <div className="flex justify-center items-center gap-6 w-full flex-wrap">
               {[
                 { label: "Home Webapp", href: "/webapp", icon: Grid, gradient: "linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7, #0ea5e9, #38bdf8)", shadow: "rgba(14,165,233,0.4)", hoverShadow: "rgba(14,165,233,0.7)" },
                 { label: "Enterprise Webapp", href: "/enterprise-webapp", icon: Grid, gradient: "linear-gradient(135deg, #1e40af, #1e3a5f, #3b82f6, #1e3a5f, #1e40af)", shadow: "rgba(30,64,175,0.4)", hoverShadow: "rgba(59,130,246,0.7)" },
+                { label: "Master Admin Suite", href: "/admin", icon: Shield, gradient: "linear-gradient(135deg, #182A4A, #1e3a6e, #2563EB, #1e3a6e, #182A4A)", shadow: "rgba(37,99,235,0.4)", hoverShadow: "rgba(37,99,235,0.7)" },
               ].map((btn) => (
                 <a
                   key={btn.label}
@@ -370,18 +374,26 @@ const Footer = () => {
 
           </motion.div>
 
-          {/* Copyright - Moved to bottom center to avoid fixed chat button on right */}
+          {/* Copyright & Admin Suite Button */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex justify-center border-t border-white/10 mt-8 pt-6 pb-6 md:pb-8"
+            className="flex flex-col md:flex-row items-center justify-between border-t border-white/10 mt-8 pt-6 pb-6 md:pb-8 gap-4 px-4"
           >
-            <p className="text-[12px] text-white/50 leading-relaxed text-center">
+            <p className="text-[12px] text-white/50 leading-relaxed text-center md:text-left">
               © {year} Deckoviz. All rights reserved.<br className="md:hidden" />
               <span className="hidden md:inline"> • </span>
               Deckoviz Space Labs Division
             </p>
+
+            <a
+              href="/admin"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-cyan-300 bg-cyan-950/40 border border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-900/60 hover:text-white transition-all duration-200 shadow-lg shadow-cyan-500/10"
+            >
+              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
+              Master Admin Suite
+            </a>
           </motion.div>
 
         </div>

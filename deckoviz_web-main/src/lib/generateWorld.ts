@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { API_BASE_URL } from './constants';
 
 export interface MarbleWorldResult {
   /** Thumbnail image URL (used as the concept art preview) */
@@ -17,7 +18,7 @@ export interface MarbleWorldResult {
   worldId: string;
 }
 
-const BACKEND = `${import.meta.env.VITE_API_URL || "https://ckoviz-backend.onrender.com"}/api`;
+const BACKEND = `${API_BASE_URL}/api`;
 
 /**
  * Step 1 - Generate concept art image for preview.

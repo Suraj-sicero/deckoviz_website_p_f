@@ -445,8 +445,10 @@ function ImageCard({
       }
 
       if (targetUrl.includes('image.pollinations.ai')) {
-        const cleanPrompt = prompt ? encodeURIComponent(prompt) : 'art'
-        targetUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?nologo=true`
+        if (!targetUrl.includes('seed=')) {
+          const cleanPrompt = prompt ? encodeURIComponent(prompt) : 'art'
+          targetUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?nologo=true`
+        }
       }
 
       if (!cancelled) {
@@ -463,59 +465,120 @@ function ImageCard({
   }, [url, prompt, retryCount])
 
   const handleOpenPicker = async () => {
+    // 1. Immediately set collections from saved (synchronous, instant)
+    const savedCols = getUserCollections()
+    const combinedMap = new Map()
+    ;[...savedCols].forEach((c: any) => {
+      const k = c.id || c.name || c.title
+      if (k) combinedMap.set(k, c)
+    })
+    const initialCols = Array.from(combinedMap.values())
+    setExistingCols(initialCols)
+    setTargetColId(initialCols[0]?.id || initialCols[0]?.name || "")
+    setIsCreatingNew(initialCols.length === 0)
+    setShowPickerModal(true)
+
+    // 2. Then try to enrich from API (async, non-blocking)
     try {
       const data = await webappApi.getCollections()
       const list = Array.isArray(data) ? data : (data?.collections || data?.items || [])
-      setExistingCols(list)
       if (list.length > 0) {
-        setTargetColId(list[0].id || list[0].name)
-        setIsCreatingNew(false)
-      } else {
-        setIsCreatingNew(true)
+        list.forEach((c: any) => {
+          const k = c.id || c.name || c.title
+          if (k) combinedMap.set(k, c)
+        })
+        const enrichedCols = Array.from(combinedMap.values())
+        setExistingCols(enrichedCols)
+        setIsCreatingNew((prev: boolean) => {
+          if (prev && enrichedCols.length > 0) {
+            setTargetColId(enrichedCols[0]?.id || enrichedCols[0]?.name || "")
+            return false
+          }
+          return prev
+        })
       }
     } catch {
-      setExistingCols([])
-      setIsCreatingNew(true)
+      // API failed
     }
-    setShowPickerModal(true)
   }
 
   const handleConfirmAddToCollection = async () => {
     const targetUrl = displaySrc || url
     if (!targetUrl) return
 
+    const colTitle = newColTitle.trim() || "Vizzy Generative Art"
+    const itemData = {
+      id: `img-${Date.now()}`,
+      title: prompt || "Vizzy Artwork",
+      url: targetUrl,
+      mediaUrl: targetUrl,
+      displayHours: "00:00:00",
+      displaySeconds: "00:30",
+    }
+
     try {
-      // 1. Save media item to Firebase Firestore
+      // 1. Save media item
       await saveImageToMediaLibrary(targetUrl, { prompt: prompt || "Vizzy Artwork", source: "vizzy_chat" }).catch(() => null)
 
-      // 2. Resolve target collection or create new collection in Firebase Firestore
+      // Save to media storage locally as well
+      const currentMedia = getUserMedia()
+      if (!currentMedia.some((m: any) => m.url === targetUrl || m.mediaUrl === targetUrl)) {
+        saveUserMedia([{ id: `media-${Date.now()}`, url: targetUrl, mediaUrl: targetUrl, title: prompt || "Vizzy Artwork", createdAt: new Date().toISOString() }, ...currentMedia])
+      }
+
       if (isCreatingNew || existingCols.length === 0 || !targetColId) {
-        const colTitle = newColTitle.trim() || "Vizzy Generative Art"
         const newColPayload = {
           name: colTitle,
           title: colTitle,
           description: "Created from Vizzy Generative Chat",
-          items: [
-            {
-              id: `img-${Date.now()}`,
-              title: prompt || "Vizzy Artwork",
-              url: targetUrl,
-              mediaUrl: targetUrl,
-              displayHours: "00:00:00",
-              displaySeconds: "00:30",
-            }
-          ]
+          items: [itemData]
         }
-        await webappApi.createCollection(newColPayload)
+        try {
+          await webappApi.createCollection(newColPayload)
+        } catch (e) {
+          console.warn("[VizzyChat] Backend collection creation failed, saving locally:", e)
+        }
+
+        // Always sync locally
+        const localCols = getUserCollections()
+        const newCol = {
+          id: `col-${Date.now()}`,
+          name: colTitle,
+          title: colTitle,
+          itemCount: 1,
+          coverUrl: targetUrl,
+          images: [targetUrl],
+          items: [itemData]
+        }
+        saveUserCollections([newCol, ...localCols.filter((c: any) => c.name !== colTitle)])
       } else {
-        // Add item to existing collection in Firebase Firestore
-        await webappApi.addCollectionItem(targetColId, {
-          itemId: `img-${Date.now()}`,
-          url: targetUrl,
-          mediaUrl: targetUrl,
-          title: prompt || "Vizzy Artwork",
-          itemType: "image"
+        try {
+          await webappApi.addCollectionItem(targetColId, {
+            itemId: itemData.id,
+            url: targetUrl,
+            mediaUrl: targetUrl,
+            title: prompt || "Vizzy Artwork",
+            itemType: "image"
+          })
+        } catch (e) {
+          console.warn("[VizzyChat] Backend addCollectionItem failed, saving locally:", e)
+        }
+
+        // Always sync locally
+        const localCols = getUserCollections()
+        const updatedCols = localCols.map((c: any) => {
+          if (c.id === targetColId || c.name === targetColId) {
+            const existingItems = c.items || []
+            return {
+              ...c,
+              itemCount: (c.itemCount || existingItems.length) + 1,
+              images: [...(c.images || []), targetUrl],
+              items: [...existingItems, itemData]
+            }
+          }
+          return c
         })
+        saveUserCollections(updatedCols)
       }
 
       window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"))
@@ -523,8 +586,22 @@ function ImageCard({
       setSavedToMedia(true)
       setTimeout(() => setSavedToMedia(false), 2500)
     } catch (err) {
-      console.error("[VizzyChat] Save to collection in Firebase failed:", err)
-      alert("Failed to save collection to Firebase.")
+      console.error("[VizzyChat] Collection save error:", err)
+      const localCols = getUserCollections()
+      const newCol = {
+        id: `col-${Date.now()}`,
+        name: colTitle,
+        title: colTitle,
+        itemCount: 1,
+        coverUrl: targetUrl,
+        images: [targetUrl],
+        items: [itemData]
+      }
+      saveUserCollections([newCol, ...localCols])
+      window.dispatchEvent(new CustomEvent("deckoviz-collections-updated"))
+      setShowPickerModal(false)
+      setSavedToMedia(true)
+      setTimeout(() => setSavedToMedia(false), 2500)
     }
   }
 
@@ -731,8 +808,9 @@ function ImageCard({
       {/* Collection Selection Modal */}
       {showPickerModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-in fade-in-0 duration-200">
-          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-gray-100 text-gray-900">
-            <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
+          <div className="w-full max-w-md max-h-[90vh] flex flex-col rounded-2xl bg-white shadow-2xl border border-gray-100 text-gray-900 overflow-hidden">
+            {/* Sticky Header */}
+            <div className="flex items-center justify-between border-b border-gray-100 p-6 pb-4 shrink-0 bg-white">
               <div className="flex items-center gap-2">
                 <FolderPlus size={20} className="text-[#3f5fe0]" />
                 <h3 className="text-base font-bold text-gray-900">Add to Collection</h3>
@@ -742,18 +820,20 @@ function ImageCard({
               </button>
             </div>
 
-            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl mb-5">
-              <img src={displaySrc || url} alt="" className="w-14 h-14 rounded-lg object-cover border border-gray-200" />
-              <div className="min-w-0">
-                <p className="text-xs font-bold text-gray-900 truncate">{prompt || "Vizzy Artwork"}</p>
-                <p className="text-[11px] text-gray-500">Vizzy Generative Canvas</p>
+            {/* Scrollable Body */}
+            <div className="p-6 overflow-y-auto flex-1">
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl mb-5">
+                <img src={displaySrc || url} alt="" className="w-14 h-14 rounded-lg object-cover border border-gray-200 shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-gray-900 truncate">{prompt || "Vizzy Artwork"}</p>
+                  <p className="text-[11px] text-gray-500">Vizzy Generative Canvas</p>
+                </div>
               </div>
-            </div>
 
             <div className="space-y-4 mb-6">
               <p className="text-xs font-bold text-gray-700">Select Collection:</p>
               {existingCols.length > 0 && (
-                <div className="max-h-48 overflow-y-auto space-y-2 pr-1">
+                <div className="max-h-[40vh] overflow-y-auto space-y-2 pr-1">
                   {existingCols.map((col: any) => {
                     const idKey = col.id || col.name
                     const isSelected = !isCreatingNew && targetColId === idKey
@@ -821,7 +901,10 @@ function ImageCard({
               )}
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-2">
+            </div>
+
+            {/* Sticky Footer */}
+            <div className="flex items-center justify-end gap-3 p-6 pt-4 border-t border-gray-100 shrink-0 bg-gray-50/50">
               <button
                 onClick={() => setShowPickerModal(false)}
                 className="px-4 py-2 rounded-full text-xs font-bold text-gray-500 hover:bg-gray-100"

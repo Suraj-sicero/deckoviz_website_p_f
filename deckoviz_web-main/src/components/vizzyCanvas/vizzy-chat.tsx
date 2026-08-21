@@ -48,6 +48,24 @@ function generateId() {
 // ─────────────────────────────────────────────────────────────────────────────
 
 function buildRefinedPrompt(messages: ChatMessageType[], newInput: string): string {
+  const trimmed = newInput.trim();
+  const lower = trimmed.toLowerCase();
+
+  // Generic triggers like "image", "draw", "make image"
+  const genericTriggers = ["image", "photo", "picture", "draw", "paint", "generate", "create", "make image", "generate image", "create image", "draw image"];
+  const isGenericTrigger = genericTriggers.includes(lower);
+
+  // Extract last descriptive user message
+  const userMessages = messages.filter((m) => m.role === "user" && !genericTriggers.includes(m.content.toLowerCase().trim()));
+  const lastUserMsg = userMessages[userMessages.length - 1]?.content;
+
+  if (isGenericTrigger) {
+    if (lastUserMsg) return lastUserMsg;
+    const lastAssistantMsg = messages.filter((m) => m.role === "assistant" && m.content).slice(-1)[0]?.content;
+    if (lastAssistantMsg && lastAssistantMsg.length < 200) return lastAssistantMsg;
+    return "A breathtaking masterpiece digital artwork of a serene cosmic landscape with vibrant glowing light and rich colors";
+  }
+
   const previousImages = messages
     .filter((m) => m.role === "assistant" && m.images && m.images.length > 0)
     .slice(-1)
@@ -57,15 +75,15 @@ function buildRefinedPrompt(messages: ChatMessageType[], newInput: string): stri
     .slice(-1)
 
   const positiveResponsePatterns = [
-    /^(yup|yeah|yes|ok|okay|good|great|perfect|excellent|love it|nice|cool|rad|awesome)$/i,
+    /^(yup|yeah|yes|ok|okay|good|great|perfect|excellent|love it|nice|cool|rad|awesome|image|photo|picture)$/i,
     /^(ok|okay|alright|sure)\s+(let|lets|let's).*generate/i,
-    /^(let|lets|let's).*generate/i,
-    /generate\s+that/i,
-    /make\s+that/i,
-    /create\s+that/i,
+    /^(let|lets|let's).*(generate|make|draw|create)/i,
+    /generate(\s+that|\s+image)?/i,
+    /make(\s+that|\s+image)?/i,
+    /create(\s+that|\s+image)?/i,
   ]
 
-  const isPositiveResponse = positiveResponsePatterns.some(pattern => pattern.test(newInput.trim()))
+  const isPositiveResponse = positiveResponsePatterns.some(pattern => pattern.test(trimmed))
 
   if (isPositiveResponse) {
     const lastMessage = messages.slice(-1)[0]
@@ -73,6 +91,7 @@ function buildRefinedPrompt(messages: ChatMessageType[], newInput: string): stri
       const lastImagePrompt = lastMessage.images[0]?.prompt
       if (lastImagePrompt) return lastImagePrompt
     }
+    if (lastUserMsg) return lastUserMsg;
     if (lastAssistantMessages.length > 0) {
       return lastAssistantMessages[0].content
     }
@@ -87,17 +106,17 @@ function buildRefinedPrompt(messages: ChatMessageType[], newInput: string): stri
   ]
 
   const isRefinement = refinementWords.some((word) =>
-    newInput.toLowerCase().includes(word)
+    lower.includes(word)
   )
 
   if (isRefinement && previousImages.length > 0) {
     const lastImagePrompt = previousImages[0].images?.[0]?.prompt
     if (lastImagePrompt) {
-      return `${lastImagePrompt}. User modification: ${newInput}`
+      return `${lastImagePrompt}. User modification: ${trimmed}`
     }
   }
 
-  return newInput
+  return trimmed
 }
 
 function parseNumImages(input: string): number {
@@ -669,8 +688,9 @@ function VizzyChatInner() {
       // The master agent doesn't handle media - it delegates back to the
       // existing specialized endpoints (unchanged from v1).
       // ─────────────────────────────────────────────────────────────────────
-      if (agentData.delegateToMedia) {
-        const intent = agentData.intent
+      const isClientImageReq = /\b(image|photo|picture|draw|paint|generate|render|artwork|illustration)\b/i.test(trimmedInput) && !/\b(video|music|song|audio)\b/i.test(trimmedInput);
+      if (agentData.delegateToMedia || isClientImageReq) {
+        const intent = isClientImageReq ? "image_generation" : agentData.intent;
 
         if (intent === "music_generation") {
           // Music pipeline
@@ -776,14 +796,29 @@ function VizzyChatInner() {
             })
             if (!response.ok) throw new Error("Render gen failed")
           } catch {
-            response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/generate`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
-              body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
-            })
+            try {
+              response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/generate`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
+                body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
+              })
+            } catch {
+              const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
+              const seed = Math.floor(Math.random() * 1000000)
+              const fallbackUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&nologo=true`
+              response = new Response(JSON.stringify({ images: [{ url: fallbackUrl }] }), { status: 200, headers: { "Content-Type": "application/json" } })
+            }
           }
-          const data = await response.json()
-          if (!response.ok) throw new Error(data.error || "Failed to generate image")
+          const data = await response.json().catch(() => {
+            const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
+            const seed = Math.floor(Math.random() * 1000000)
+            return { images: [{ url: `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&nologo=true` }] }
+          })
+          if (!data.images || data.images.length === 0) {
+            const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
+            const seed = Math.floor(Math.random() * 1000000)
+            data.images = [{ url: `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&nologo=true` }]
+          }
 
           console.log('[Vizzy2.0] Image generation response:', JSON.stringify(data, null, 2).substring(0, 500))
           console.log('[Vizzy2.0] First image URL (first 200 chars):', data.images?.[0]?.url?.substring(0, 200))
@@ -791,13 +826,7 @@ function VizzyChatInner() {
           // Helper: ensure image URL is usable
           const normalizeImageUrl = (url: string): string => {
             if (!url) return url
-            if (url.includes('image.pollinations.ai')) {
-              const cleanPrompt = refinedPrompt ? encodeURIComponent(refinedPrompt) : 'art'
-              return `https://image.pollinations.ai/prompt/${cleanPrompt}?nologo=true`
-            }
-            // Already a valid URL or data URI
             if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) return url
-            // Looks like raw base64 data (no URL prefix)
             if (/^[A-Za-z0-9+/=]/.test(url) && url.length > 100) {
               return `data:image/png;base64,${url}`
             }

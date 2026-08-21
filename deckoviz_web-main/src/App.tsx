@@ -248,6 +248,7 @@ import ElinityContact from "./components/elinity/ElinityContact";
 import ElinityJoinUs from "./components/elinity/ElinityJoinUs";
 import DailyCuratorPage from "./components/dailyCurator/DailyCuratorPage";
 import AdminDailyCuratorPage from "./components/dailyCurator/AdminDailyCuratorPage";
+import MasterAdminSuite from "./components/admin/MasterAdminSuite";
 import ElinityDeckovizGuide from "./components/homepage/ElinityDeckovizGuide";
 import VizzyFunZone from "./pages/VizzyFunZone";
 import DeckovizWebapp from "./components/webapp/DeckovizWebapp";
@@ -325,7 +326,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/vizzy-generative-chat",
     "/pair",
     "/display",
-  ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp");
+  ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp") || location.pathname.startsWith("/admin");
 
   return (
     <>
@@ -516,6 +517,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/tools/gratitude-card" element={<ProtectedRoute><GratitudeCardTool /></ProtectedRoute>} />
           <Route path="/tools/quote-poster" element={<ProtectedRoute><QuotePosterTool /></ProtectedRoute>} />
           <Route path="/wizzy" element={<ProtectedRoute><WizzyPage /></ProtectedRoute>} />
+          <Route path="/admin" element={<MasterAdminSuite />} />
+          <Route path="/admin/*" element={<MasterAdminSuite />} />
           <Route path="/vizzy-canvas" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/vizzy-generative-chat" element={<ProtectedRoute><CanvasErrorBoundary><VizzyCreationCanvas /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/gallery" element={<ProtectedRoute><VizzyLibrary /></ProtectedRoute>} />

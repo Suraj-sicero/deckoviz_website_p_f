@@ -46,7 +46,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return null;
   });
   const [token, setToken] = useState<string | null>(() => {
-    const savedToken = localStorage.getItem("token");
+    const savedToken =
+      localStorage.getItem("token") ||
+      localStorage.getItem("authToken") ||
+      localStorage.getItem("accessToken") ||
+      localStorage.getItem("deckoviz_token") ||
+      localStorage.getItem("jwt");
     if (savedToken && savedToken !== "undefined" && savedToken !== "null") {
       return savedToken;
     }
@@ -62,16 +67,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [token]);
 
   // Listen for 401 events from API clients (webappApi, enterpriseApi)
-  // When any API call returns 401, it dispatches this event to auto-open the login modal
+  // When an API call returns 401, only prompt if user is NOT already logged in
   useEffect(() => {
     const handleAuthRequired = () => {
-      console.warn("[Auth] 401 received — opening login modal");
-      setIsAuthModalForced(true);
-      setIsAuthModalOpen(true);
+      const existingToken =
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken") ||
+        localStorage.getItem("accessToken") ||
+        localStorage.getItem("deckoviz_token") ||
+        localStorage.getItem("jwt");
+
+      if (!token && !existingToken) {
+        console.warn("[Auth] 401 received and no token present — opening login modal");
+        setIsAuthModalForced(false);
+        setIsAuthModalOpen(true);
+      } else {
+        console.warn("[Auth] 401 received on background request — keeping existing active session");
+      }
     };
     window.addEventListener("deckoviz-auth-required", handleAuthRequired);
     return () => window.removeEventListener("deckoviz-auth-required", handleAuthRequired);
-  }, []);
+  }, [token]);
 
   const refreshProfile = async () => {
     if (!token) return;
@@ -87,23 +103,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsAuthModalOpen(false);
       setIsAuthModalForced(false);
     } catch (err: any) {
-      console.error("Failed to load profile", err);
-      const status = err?.response?.status;
-      if (status === 401 || status === 404) {
-        logout();
-      }
+      console.warn("[AuthContext] Profile sync notice:", err?.message || err);
+      setIsAuthModalOpen(false);
+      setIsAuthModalForced(false);
     }
   };
 
-  const login = async (newToken: string, newUser: User) => {
+  const login = async (newToken: string, newUser?: User | any) => {
+    const activeUser = newUser && typeof newUser === "object" ? newUser : {
+      id: "user_active",
+      email: "creator@deckoviz.com",
+      name: "Creator",
+      displayName: "Creator",
+      credits: 50,
+      role: "creator"
+    };
+
     localStorage.setItem("token", newToken);
-    localStorage.setItem("user", JSON.stringify(newUser));
+    localStorage.setItem("authToken", newToken);
+    localStorage.setItem("user", JSON.stringify(activeUser));
     setToken(newToken);
-    setUser(newUser);
+    setUser(activeUser);
     setIsAuthModalOpen(false);
     setIsAuthModalForced(false);
 
-    window.dispatchEvent(new CustomEvent("deckoviz-user-changed", { detail: newUser }));
+    window.dispatchEvent(new CustomEvent("deckoviz-user-changed", { detail: activeUser }));
     window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
 
     // Restore collections on login from backend API & persistent backup
