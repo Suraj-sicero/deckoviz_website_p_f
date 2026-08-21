@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { adminListUsers } from "../../lib/curatorApi";
 import { fetchFirebaseUsers } from "../../lib/firebaseClient";
+import { API_BASE_URL } from "../../lib/constants";
 
 
 export interface UserRecord {
@@ -247,7 +248,7 @@ export const MasterAdminUsers: React.FC<UsersProps> = ({ selectedUserId, onSelec
     try {
       let apiUsers: any[] = [];
       try {
-        const res = await fetch(`https://deckoviz-web-f.onrender.com/api/auth/admin/users`).then(r => r.json()).catch(() => null);
+        const res = await fetch(`${API_BASE_URL}/api/auth/admin/users`).then(r => r.json()).catch(() => null);
         if (res && res.users && Array.isArray(res.users)) {
           apiUsers = res.users;
         }
