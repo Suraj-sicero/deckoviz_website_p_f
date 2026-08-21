@@ -131,39 +131,52 @@ ${JSON.stringify(history)}`;
   }
 });
 
-// Image Generation Route (using Replicate)
+// Image Generation Route (using Replicate with Pollinations fallback)
 router.post("/generate-image", async (req, res) => {
   try {
     const { characterDescription, style, sceneDescription } = req.body;
-    if (!process.env.REPLICATE_API_TOKEN) throw new Error("Replicate API Token not configured");
+    const prompt = `Highly detailed ${style || 'cinematic'} art. Character: ${characterDescription || ''}. Scene: ${sceneDescription || ''}. Consistent features, high resolution, cinematic lighting. Masterpiece.`;
 
-    const prompt = `Highly detailed ${style} art. Character: ${characterDescription}. Scene: ${sceneDescription}. Consistent features, high resolution, cinematic lighting. Masterpiece.`;
+    let imageUrl = null;
 
-    const replicate = new Replicate({
-      auth: process.env.REPLICATE_API_TOKEN,
-    });
+    if (process.env.REPLICATE_API_TOKEN) {
+      try {
+        const replicate = new Replicate({
+          auth: process.env.REPLICATE_API_TOKEN,
+        });
 
-    const output = await replicate.run(
-      "bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
-      {
-        input: {
-          prompt: prompt,
-          negative_prompt: "deformed, blurry, ugly, low quality",
+        const output = await replicate.run(
+          "bytedance/sdxl-lightning-4step:5599ed30703defd1d160a25a63321b4dec97101d98b4674bcc56e41f62f35637",
+          {
+            input: {
+              prompt: prompt,
+              negative_prompt: "deformed, blurry, ugly, low quality",
+            }
+          }
+        );
+
+        if (output) {
+          imageUrl = Array.isArray(output) ? String(output[output.length - 1]) : String(output);
         }
+      } catch (repErr) {
+        console.warn("⚠️ Replicate image generation failed in wizzyRoutes, using Pollinations fallback:", repErr.message);
       }
-    );
+    }
 
-    let imageUrl = String(output);
-    if (Array.isArray(output)) {
-      imageUrl = String(output[output.length - 1]); // typically it returns an array of urls/streams
+    if (!imageUrl) {
+      const cleanPrompt = encodeURIComponent(prompt);
+      const seed = Math.floor(Math.random() * 1000000);
+      imageUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&nologo=true`;
     }
 
     res.setHeader('Content-Type', 'application/json');
     res.status(200).send(JSON.stringify({ url: imageUrl }));
   } catch (error) {
     console.error("Image Generation Error:", error);
+    const cleanPrompt = encodeURIComponent(req.body?.sceneDescription || "artwork");
+    const fallbackUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${Date.now()}&nologo=true`;
     res.setHeader('Content-Type', 'application/json');
-    res.status(500).send(JSON.stringify({ error: "Failed to generate image: " + error.message }));
+    res.status(200).send(JSON.stringify({ url: fallbackUrl }));
   }
 });
 

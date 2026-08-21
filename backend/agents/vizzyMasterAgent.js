@@ -43,7 +43,34 @@ const RESPONSE_MODEL = "llama-3.3-70b-versatile"; // main response
 
 const VALID_INTENTS = Object.keys(INTENT_AGENT_MAP);
 
+function quickKeywordClassifier(userInput) {
+  const text = (userInput || "").toLowerCase().trim();
+  if (!text) return null;
+
+  // Direct image intent keywords
+  if (
+    /^(image|photo|picture|draw|paint|generate|create|render|art|artwork|wallpaper|poster|illustration|portrait|landscape)\b/.test(text) ||
+    /\b(image|photo|picture|draw|paint|generate|render|illustration|portrait|landscape)\b/.test(text)
+  ) {
+    if (/\b(video|animation|movie|clip|motion)\b/.test(text)) return "video_generation";
+    if (/\b(music|song|audio|track|beat|sound)\b/.test(text)) return "music_generation";
+    return "image_generation";
+  }
+
+  if (/\b(video|animation|animating|clip|gif)\b/.test(text)) return "video_generation";
+  if (/\b(music|song|audio|melody|tune|track|beat)\b/.test(text)) return "music_generation";
+
+  return null;
+}
+
 async function classifyIntent(userInput, conversationHistory = []) {
+  // 1. Instant keyword check
+  const quickIntent = quickKeywordClassifier(userInput);
+  if (quickIntent) {
+    console.log(`[VizzyMaster] Quick keyword classified: ${quickIntent}`);
+    return quickIntent;
+  }
+
   if (!GROQ_KEY) return "chat";
 
   // Use the last 2 turns as context for classification
