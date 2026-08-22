@@ -8,6 +8,7 @@ from postgres_store import (
     fs_add_collection_item,
     fs_delete_collection,
     fs_get_media,
+    fs_delete_media,
     fs_get_daily_queue,
     fs_save_daily_queue_slot,
     fs_update_daily_queue_slot,
@@ -147,6 +148,13 @@ def get_home_media(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     media = fs_get_media(uid)
     return media
+
+@router.delete("/media/{media_id}")
+def delete_home_media(media_id: str, current_user: FirebaseUser = Depends(get_current_user)):
+    uid = current_user.firebase_uid or current_user.id
+    if not fs_delete_media(uid, media_id):
+        raise HTTPException(status_code=404, detail="Media not found")
+    return {"success": True}
 
 @router.get("/events")
 def get_home_events(current_user: FirebaseUser = Depends(get_current_user)):
@@ -313,4 +321,3 @@ def get_collection_queue(current_user: FirebaseUser = Depends(get_current_user))
     uid = current_user.firebase_uid or current_user.id
     queue = fs_get_daily_queue(uid)
     return {"queue": queue, "total": len(queue), "maxQueueLimit": 20}
-

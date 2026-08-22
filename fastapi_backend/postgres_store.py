@@ -11,7 +11,8 @@ from typing import Any
 from sqlalchemy import delete, select
 
 from database import AsyncSessionLocal
-from models import User, UserDocument
+from models import MediaObject, User, UserDocument
+from services.s3_storage import get_media_storage
 
 
 def _now() -> str:
@@ -94,10 +95,69 @@ def fs_add_collection_item(uid, col_id, item):
     return item
 def fs_get_collections_by_id(uid, col_id): return _run(_get(uid, "collection", col_id))
 
-def fs_get_media(uid, media_type=None):
-    result = _run(_list(uid, "media"))
-    return [x for x in result if not media_type or media_type in x.get("mediaType", "")]
-def fs_save_media(uid, data): return _run(_save(uid, "media", data, "media"))
+def _media_payload(media: MediaObject) -> dict:
+    url = media.external_url or get_media_storage().presigned_url(media.object_key)
+    return {
+        "id": media.id, "userId": media.user_id, "url": url, "mediaUrl": url,
+        "fileName": media.filename, "mediaType": media.mime_type,
+        "fileSize": media.size_bytes, "checksum": media.checksum_sha256,
+        "isGenerated": media.is_generated, "prompt": media.prompt,
+        "createdAt": media.created_at.isoformat(),
+    }
+
+async def create_s3_media(uid: str, *, object_key: str, bucket: str, mime_type: str, size_bytes: int, checksum_sha256: str, filename: str, prompt: str | None = None, is_generated: bool = False) -> dict:
+    async with AsyncSessionLocal() as session:
+        await _ensure_user(session, uid)
+        media = MediaObject(id=f"media_{uuid.uuid4().hex[:12]}", user_id=uid, object_key=object_key, bucket=bucket, mime_type=mime_type, size_bytes=size_bytes, checksum_sha256=checksum_sha256, filename=filename, prompt=prompt, is_generated=is_generated)
+        session.add(media)
+        await session.commit()
+        await session.refresh(media)
+        return _media_payload(media)
+
+async def _list_media(uid: str, media_type: str | None = None) -> list[dict]:
+    async with AsyncSessionLocal() as session:
+        rows = (await session.scalars(select(MediaObject).where(MediaObject.user_id == uid).order_by(MediaObject.created_at.desc()))).all()
+        return [_media_payload(row) for row in rows if not media_type or media_type in row.mime_type]
+
+async def _save_external_media(uid: str, data: dict) -> dict:
+    data = dict(data)
+    media_id = data.get("id") or f"media_{uuid.uuid4().hex[:12]}"
+    url = data.get("url") or data.get("mediaUrl") or data.get("imageUrl")
+    if not url or str(url).startswith("data:"):
+        raise ValueError("Media URLs must be an S3 upload or a non-data external URL")
+    async with AsyncSessionLocal() as session:
+        await _ensure_user(session, uid)
+        media = await session.get(MediaObject, media_id)
+        if media and media.user_id != uid:
+            raise ValueError("Media not found")
+        if not media:
+            media = MediaObject(id=media_id, user_id=uid, mime_type=data.get("mediaType") or data.get("type") or "application/octet-stream")
+            session.add(media)
+        media.external_url = url
+        media.filename = data.get("fileName") or data.get("title") or media.filename
+        media.size_bytes = int(data.get("fileSize") or 0)
+        media.is_generated = bool(data.get("isGenerated"))
+        media.prompt = data.get("prompt")
+        await session.commit()
+        await session.refresh(media)
+        return _media_payload(media)
+
+async def _delete_media(uid: str, media_id: str) -> bool:
+    async with AsyncSessionLocal() as session:
+        media = await session.scalar(select(MediaObject).where(MediaObject.id == media_id, MediaObject.user_id == uid))
+        if not media:
+            return False
+        object_key = media.object_key
+    if object_key:
+        await asyncio.to_thread(get_media_storage().delete, object_key)
+    async with AsyncSessionLocal() as session:
+        result = await session.execute(delete(MediaObject).where(MediaObject.id == media_id, MediaObject.user_id == uid))
+        await session.commit()
+        return bool(result.rowcount)
+
+def fs_get_media(uid, media_type=None): return _run(_list_media(uid, media_type))
+def fs_save_media(uid, data): return _run(_save_external_media(uid, data))
+def fs_delete_media(uid, media_id): return _run(_delete_media(uid, media_id))
 
 def fs_get_daily_queue(uid): return _run(_list(uid, "daily_queue"))
 def fs_save_daily_queue_slot(uid, data): return _run(_save(uid, "daily_queue", data, "slot"))

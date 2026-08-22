@@ -8,7 +8,7 @@ const BASE = API_BASE_URL;
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
 import { getUserMedia } from "./userStorage";
-import { db, fetchFirebaseMedia, addFirebaseMedia, uploadFileToBackend } from "./firebaseClient";
+import { db } from "./firebaseClient";
 import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
 
 function getToken(): string | null {
@@ -214,13 +214,8 @@ export const webappApi = {
     if (params?.limit) q.set("limit", String(params.limit));
     const qs = q.toString();
     const queryStr = qs ? `?${qs}` : "";
-    try {
-      const fbMedia = await fetchFirebaseMedia();
-      if (fbMedia && fbMedia.length > 0) return fbMedia;
-      return await homeGet(`/media${queryStr}`, token);
-    } catch {
-      return await get(`/media${queryStr}`, token);
-    }
+    try { return await homeGet(`/media${queryStr}`, token); }
+    catch { return await get(`/media${queryStr}`, token); }
   },
   getMediaCounts: async (token?: string) => {
     try {
@@ -230,55 +225,17 @@ export const webappApi = {
     }
   },
 
-  /* Upload Media — uploads file to backend server, stores link in Firebase */
+  /* Upload Media (multipart to /api/home/media or /api/upload) */
   uploadMedia: async (file: File, token?: string): Promise<{ id: string; url: string; fileName: string; fileSize: number }> => {
-    // Step 1: Upload file to backend server (Cloudinary/disk) for persistent hosting
-    let publicUrl: string;
-    try {
-      publicUrl = await uploadFileToBackend(file);
-    } catch (backendErr) {
-      // Fallback: try backend endpoints with auth headers
-      console.warn("uploadFileToBackend failed, trying with auth headers:", backendErr);
-      const formData = new FormData();
-      formData.append("file", file);
-      const headers = authHeaders(token);
-      delete headers["Content-Type"]; // Let browser set boundary
-      let res = await fetch(`${HOME}/media`, {
-        method: "POST",
-        headers,
-        body: formData,
-      });
-      if (!res.ok) {
-        res = await fetch(`${BASE}/api/upload`, {
-          method: "POST",
-          headers,
-          body: formData,
-        });
-      }
-      if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
-      const data = await res.json();
-      const imgData = data.media || data.image || data;
-      publicUrl = imgData.url || imgData.imageUrl || imgData.mediaUrl || "";
-      if (!publicUrl) throw new Error("Backend returned no URL");
-    }
-
-    // Step 2: Store the URL link in Firebase RTDB + Firestore
-    const metadata = {
-      title: file.name,
-      fileName: file.name,
-      url: publicUrl,
-      mediaUrl: publicUrl,
-      fileSize: file.size,
-      type: file.type,
-    };
-    const fbResult = await addFirebaseMedia(metadata);
-
-    return {
-      id: fbResult.id,
-      url: publicUrl,
-      fileName: file.name,
-      fileSize: file.size,
-    };
+    const formData = new FormData();
+    formData.append("file", file);
+    const headers = authHeaders(token);
+    delete headers["Content-Type"];
+    const res = await fetch(`${BASE}/api/upload`, { method: "POST", headers, body: formData });
+    if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+    const data = await res.json();
+    const imgData = data.media || data.image || data;
+    return { id: imgData.id || String(Date.now()), url: imgData.url || imgData.imageUrl || "", fileName: imgData.fileName || imgData.filename || file.name, fileSize: imgData.fileSize || file.size };
   },
 
   /* Delete Media (via home routes) */
@@ -350,17 +307,14 @@ export async function saveImageToMediaLibrary(
   token?: string,
 ): Promise<void> {
   try {
-    // Save directly to Firebase Database via addFirebaseMedia
     const fileName = metadata.fileName || `vizzy-${Date.now()}.jpg`;
-    await addFirebaseMedia({
-      title: metadata.prompt || "Vizzy Artwork",
-      url: imageUrl,
-      category: "Generated",
-      style: "Generative Art",
-      tags: metadata.source || "vizzy_chat",
-      ...metadata
+    const res = await fetch(`${BASE}/api/upload`, {
+      method: "POST",
+      headers: authHeaders(token),
+      body: JSON.stringify({ url: imageUrl, fileName, prompt: metadata.prompt, source: metadata.source || "vizzy_chat", isGenerated: true }),
     });
-    console.log("[VizzySync] Image saved to Firebase Media Library:", fileName);
+    if (!res.ok) throw new Error(`Media registration failed: ${res.status}`);
+    console.log("[VizzySync] Image saved to PostgreSQL media library:", fileName);
   } catch (err) {
     console.warn("[VizzySync] Failed to sync image to media library:", err);
   }
@@ -467,4 +421,3 @@ export async function getVizzyGenerativeImages(token?: string): Promise<{ id: st
 
 // Export hdrs helper for compatibility
 export { authHeaders, hdrs };
-

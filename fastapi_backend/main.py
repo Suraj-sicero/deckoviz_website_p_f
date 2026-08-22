@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="FastAPI Backend for Home Webapp & Enterprise Webapp with Firebase Auth & Firebase Storage",
+    description="FastAPI Backend for Home Webapp & Enterprise Webapp with Firebase Auth and private S3 media storage",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",

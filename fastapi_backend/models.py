@@ -97,6 +97,23 @@ class UploadedMedia(Base):
 
     user = relationship("User", back_populates="media")
 
+class MediaObject(Base):
+    """Private S3 object metadata. File bytes never enter PostgreSQL."""
+    __tablename__ = "media_objects"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    object_key = Column(String(1024), nullable=True, unique=True)
+    bucket = Column(String(255), nullable=True)
+    mime_type = Column(String(255), nullable=False)
+    size_bytes = Column(Integer, nullable=False, default=0)
+    checksum_sha256 = Column(String(64), nullable=True)
+    filename = Column(String(512), nullable=True)
+    external_url = Column(Text, nullable=True)
+    is_generated = Column(Boolean, default=False, nullable=False)
+    prompt = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
 class DailyQueueSlot(Base):
     __tablename__ = "daily_queue_slots"
 
