@@ -226,7 +226,7 @@ export const webappApi = {
   },
 
   /* Upload Media (multipart to /api/home/media or /api/upload) */
-  uploadMedia: async (file: File, token?: string): Promise<{ id: string; url: string; fileName: string; fileSize: number }> => {
+  uploadMedia: async (file: File, token?: string): Promise<{ id: string; url: string; mediaUrl: string; fileName: string; fileSize: number }> => {
     const formData = new FormData();
     formData.append("file", file);
     const headers = authHeaders(token);
@@ -235,8 +235,18 @@ export const webappApi = {
     if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
     const data = await res.json();
     const imgData = data.media || data.image || data;
-    return { id: imgData.id || String(Date.now()), url: imgData.url || imgData.imageUrl || "", fileName: imgData.fileName || imgData.filename || file.name, fileSize: imgData.fileSize || file.size };
+    const url = imgData.url || imgData.mediaUrl || imgData.imageUrl || "";
+    return {
+      id: imgData.id || String(Date.now()),
+      url,
+      mediaUrl: url,
+      fileName: imgData.fileName || imgData.filename || file.name,
+      fileSize: imgData.fileSize || file.size,
+    };
   },
+
+  getMusic: (token?: string) => homeGet("/music", token),
+  createMusic: (data: unknown, token?: string) => homePost("/music", data, token),
 
   /* Delete Media (via home routes) */
   deleteMedia: (id: string | number, token?: string) => homeDel(`/media/${id}`, token),

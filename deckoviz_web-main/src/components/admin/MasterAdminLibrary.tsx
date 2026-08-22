@@ -27,10 +27,6 @@ import {
 } from "lucide-react";
 import { webappApi } from "../../lib/webappApi";
 import { adminGetLibrary } from "../../lib/curatorApi";
-import { 
-  addFirebaseMusic,
-  fetchFirebaseMusic
-} from "../../lib/firebaseClient";
 
 export interface LibraryItem {
   id: string;
@@ -98,7 +94,7 @@ export const MasterAdminLibrary: React.FC = () => {
       const [mediaResult, apiResult, musicResult] = await Promise.allSettled([
         webappApi.getMedia(),
         adminGetLibrary(),
-        fetchFirebaseMusic()
+        webappApi.getMusic()
       ]);
 
       const media = mediaResult.status === "fulfilled" ? mediaResult.value : [];
@@ -120,13 +116,13 @@ export const MasterAdminLibrary: React.FC = () => {
       const formattedApi: LibraryItem[] = apiMedia.map((m: any, i: number) => ({
         id: m.id || `api_media_${i}`,
         title: m.title || `Masterpiece #${i + 1}`,
-        url: m.url || m.imageUrl || `https://picsum.photos/seed/api-art-${i}/800/800`,
+        url: m.url || m.imageUrl || m.mediaUrl || "",
         category: m.category || "Classical Masterpiece",
         style: m.style || "Fine Art",
         tags: m.tags ? (Array.isArray(m.tags) ? m.tags.join(", ") : m.tags) : "masterpiece, 4k",
         uploadedAt: m.createdAt ? new Date(m.createdAt).toISOString().split("T")[0] : "2025-03-15",
         source: "Master Art Vault"
-      }));
+      })).filter((item) => Boolean(item.url));
 
       const combinedMap = new Map<string, LibraryItem>();
       [...formattedMedia, ...formattedApi, ...DEFAULT_LIBRARY].forEach((item) => {
@@ -244,16 +240,16 @@ export const MasterAdminLibrary: React.FC = () => {
         duration: "03:45"
       };
 
-      const res = await addFirebaseMusic(trackPayload);
-      if (res.track) {
-        setMusicTracks((prev) => [res.track, ...prev]);
+      const res = await webappApi.createMusic(trackPayload);
+      if (res) {
+        setMusicTracks((prev) => [{ ...trackPayload, id: res.id || trackPayload.title }, ...prev]);
       }
 
       setMusicTitle("");
       setMusicArtist("");
       setMusicFile(null);
       setMusicUrlInput("");
-      alert("Music track uploaded and stored as link in Firebase successfully!");
+      alert("Music track uploaded to private media storage successfully!");
     } catch (e) {
       console.error("Music upload notice:", e);
     } finally {

@@ -56,17 +56,33 @@ class _HashingReader:
         return chunk
 
 
+def _build_s3_client():
+    """Use explicit env credentials when set; otherwise the standard IAM provider chain."""
+    client_kwargs: dict = {
+        "region_name": settings.AWS_REGION,
+        "config": Config(connect_timeout=5, read_timeout=60, retries={"max_attempts": 3, "mode": "standard"}),
+    }
+    access_key = os.environ.get("AWS_ACCESS_KEY_ID")
+    secret_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
+    if access_key and secret_key:
+        client_kwargs["aws_access_key_id"] = access_key
+        client_kwargs["aws_secret_access_key"] = secret_key
+    return boto3.client("s3", **client_kwargs)
+
+
 class S3MediaStorage:
     def __init__(self) -> None:
         self.bucket = settings.S3_MEDIA_BUCKET
         self.prefix = settings.S3_MEDIA_PREFIX.strip("/")
-        self.client = boto3.client("s3", region_name=settings.AWS_REGION, config=Config(retries={"max_attempts": 3, "mode": "standard"}))
+        self.client = _build_s3_client()
 
     def upload(self, *, user_id: str, source: BinaryIO, filename: str, content_type: str, size: int | None) -> tuple[str, str, int]:
         mime_type = validate_media(content_type, size)
         clean_name = sanitize_filename(filename)
         extension = os.path.splitext(clean_name)[1].lower()
-        object_key = "/".join(part for part in (self.prefix, user_id, f"{uuid.uuid4().hex}{extension}") if part)
+        # Never use an identity value directly as a path segment.
+        user_segment = hashlib.sha256(user_id.encode("utf-8")).hexdigest()[:32]
+        object_key = "/".join(part for part in (self.prefix, user_segment, f"{uuid.uuid4().hex}{extension}") if part)
         reader = _HashingReader(source)
         self.client.upload_fileobj(reader, self.bucket, object_key, ExtraArgs={
             "ContentType": mime_type,

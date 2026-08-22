@@ -20,7 +20,12 @@ const stripWsPath = (url: string): string =>
 
 /* ── REST API base ─────────────────────────────────────────────────────────── */
 export const getApiBaseUrl = (): string => {
-  return "https://deckoviz-web-f.onrender.com";
+  const fromEnv =
+    import.meta.env.VITE_API_URL ||
+    import.meta.env.VITE_API_BASE_URL ||
+    import.meta.env.VITE_BACKEND_URL;
+  if (fromEnv) return trimSlash(String(fromEnv));
+  return PRODUCTION_API_URL;
 };
 
 /* ── WebSocket base (separate server) ──────────────────────────────────────── */

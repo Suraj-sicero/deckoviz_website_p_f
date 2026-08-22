@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     # standard AWS provider chain. Do not add access keys to application config.
     AWS_REGION: str = "eu-west-2"
     S3_MEDIA_BUCKET: str = Field(..., min_length=3)
-    S3_MEDIA_PREFIX: str = "media"
+    S3_MEDIA_PREFIX: str = "media/"
     S3_PRESIGNED_URL_EXPIRES_SECONDS: int = 3600
     S3_MAX_UPLOAD_BYTES: int = 25 * 1024 * 1024
     
