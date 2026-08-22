@@ -4,14 +4,12 @@ import { useAuth } from "../../context/AuthContext";
 import { API_BASE_URL } from "../../lib/constants";
 import { 
   auth, 
-  googleProvider, 
   signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signInWithPopup 
+  createUserWithEmailAndPassword
 } from "../../lib/firebaseClient";
 
 const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
-  const { isAuthModalOpen, isAuthModalForced, closeAuthModal, login } = useAuth();
+  const { isAuthModalOpen, isAuthModalForced, closeAuthModal, login, signInWithGoogle } = useAuth();
 
   const effectiveAllowClose = allowClose !== undefined ? allowClose : !isAuthModalForced;
   const [isLogin, setIsLogin] = useState(true);
@@ -122,47 +120,14 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
     setLoading(true);
 
     try {
-      let userCred: any = null;
-      let idToken = "";
-
-      try {
-        userCred = await signInWithPopup(auth, googleProvider);
-        if (userCred && userCred.user) {
-          idToken = await userCred.user.getIdToken();
-        }
-      } catch (popupErr: any) {
-        console.warn("[AuthModal] Google Popup notice:", popupErr);
-        if (popupErr?.code === "auth/unauthorized-domain" || popupErr?.message?.includes("unauthorized-domain")) {
-          setError("Domain not authorized for Google Sign-In popup yet. Please use Email Sign In below!");
-          return;
-        }
-      }
-
-      const userEmail = userCred?.user?.email || "creator@deckoviz.app";
-      const userName = userCred?.user?.displayName || userEmail.split("@")[0];
-      const fallbackUser = {
-        id: userCred?.user?.uid || `user_google_${Date.now()}`,
-        email: userEmail,
-        name: userName,
-        displayName: userName,
-        avatar: userCred?.user?.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=3f5fe0&color=fff`,
-        credits: 50,
-      };
-
-      try {
-        const res = await axios.post(
-          `${API_URL}/signin`,
-          { id_token: idToken, email: userEmail, name: userName },
-          { timeout: 8000 }
-        );
-        login(res.data?.token || idToken || `token_${Date.now()}`, res.data?.user || fallbackUser);
-      } catch (apiErr) {
-        console.warn("[AuthModal] Backend sync notice for Google OAuth, using session:", apiErr);
-        login(idToken || `token_${Date.now()}`, fallbackUser);
-      }
+      await signInWithGoogle();
     } catch (err: any) {
       console.error("Google OAuth error:", err);
-      setError("Google Sign-In popup notice. Please sign in with Email & Password below!");
+      if (err?.code === "auth/unauthorized-domain" || err?.message?.includes("unauthorized-domain")) {
+        setError("This domain is not authorized for Google Sign-In.");
+      } else {
+        setError("Google Sign-In could not create a Deckoviz session. Please try again.");
+      }
     } finally {
       setLoading(false);
     }

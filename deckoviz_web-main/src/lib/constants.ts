@@ -1,8 +1,8 @@
 /* ─────────────────────────────────────────────────────────────────────────────
  * Deckoviz URL Configuration
  *
- * REST API  → https://ckoviz-backend.onrender.com   (FastAPI: auth, media/S3, collections)
- * WebSocket → wss://ckoviz-backend.onrender.com     (TV pairing, live control)
+ * REST API  → https://api.deckoviz.com               (FastAPI: auth, media/S3, collections)
+ * WebSocket → wss://api.deckoviz.com                 (TV pairing, live control)
  * Image gen → https://deckoviz-web-f.onrender.com   (Node creative tools; VITE_RENDER_URL)
  *
  * Environment variables can override these defaults:
@@ -11,9 +11,9 @@
  *   VITE_RENDER_URL                                      → Image generation
  * ───────────────────────────────────────────────────────────────────────────── */
 
-const PRODUCTION_API_URL = "https://ckoviz-backend.onrender.com";
+const PRODUCTION_API_URL = "https://api.deckoviz.com";
 const PRODUCTION_NODE_URL = "https://deckoviz-web-f.onrender.com";
-const PRODUCTION_WS_URL = "wss://ckoviz-backend.onrender.com";
+const PRODUCTION_WS_URL = "wss://api.deckoviz.com";
 
 const trimSlash = (url: string): string => url.replace(/\/+$/, "");
 
