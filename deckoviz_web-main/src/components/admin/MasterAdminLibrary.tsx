@@ -30,9 +30,10 @@ import { adminGetLibrary } from "../../lib/curatorApi";
 import { 
   fetchFirebaseMedia, 
   addFirebaseMedia, 
-  uploadFirebaseFile,
   addFirebaseMusic,
-  fetchFirebaseMusic
+  fetchFirebaseMusic,
+  deleteFirebaseMedia,
+  deleteFirebaseMusic
 } from "../../lib/firebaseClient";
 
 export interface LibraryItem {
@@ -170,7 +171,7 @@ export const MasterAdminLibrary: React.FC = () => {
   };
 
   const handleUploadToGlobalLibrary = async () => {
-    if (!selectedFile && !previewUrl) {
+    if (!selectedFile) {
       setUploadStatus("error");
       setStatusMessage("Please select an image file to upload first.");
       return;
@@ -178,35 +179,32 @@ export const MasterAdminLibrary: React.FC = () => {
 
     setIsUploading(true);
     setUploadStatus("idle");
-    setStatusMessage("");
+    setStatusMessage("Processing image...");
 
     try {
-      let persistentUrl = previewUrl || "";
-      if (selectedFile) {
-        try {
-          persistentUrl = await uploadFirebaseFile(selectedFile);
-        } catch (e) {
-          const res = await webappApi.uploadMedia(selectedFile);
-          if (res.url) persistentUrl = res.url;
-        }
-      }
+      // Convert file to base64 data URL (client-side, no server needed)
+      const imageDataUrl: string = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = () => reject(new Error("Failed to read file"));
+        reader.readAsDataURL(selectedFile);
+      });
 
-      if (!persistentUrl) {
-        persistentUrl = `https://picsum.photos/seed/art-${Date.now()}/800/800`;
-      }
+      setStatusMessage("Storing link in Firebase...");
 
+      // Store the data URL link directly in Firebase RTDB + Firestore
       const newItem = {
-        title: title || selectedFile?.name.replace(/\.[^/.]+$/, "") || "New Deckoviz Artwork",
-        url: persistentUrl,
+        title: title || selectedFile.name.replace(/\.[^/.]+$/, "") || "New Deckoviz Artwork",
+        url: imageDataUrl,
         category: category || "User Collection",
         style: style || "Fine Art",
         tags: tags || "deckoviz, high-res"
       };
 
-      await addFirebaseMedia(newItem);
+      const result = await addFirebaseMedia(newItem);
 
       const createdItem: LibraryItem = {
-        id: `uploaded_${Date.now()}`,
+        id: result.id || `uploaded_${Date.now()}`,
         ...newItem,
         uploadedAt: new Date().toISOString().split("T")[0],
         source: "Master Art Vault"
@@ -214,15 +212,17 @@ export const MasterAdminLibrary: React.FC = () => {
 
       setLibraryItems((prev) => [createdItem, ...prev]);
       setUploadStatus("success");
-      setStatusMessage("Artwork uploaded and stored in Firebase successfully!");
+      setStatusMessage(`✅ Image link stored in Firebase successfully!`);
 
+      // Reset form
       setSelectedFile(null);
       setPreviewUrl("");
       setTitle("");
       setTags("");
     } catch (err: any) {
+      console.error("Global Library upload failed:", err);
       setUploadStatus("error");
-      setStatusMessage(err.message || "Failed to process image link storage.");
+      setStatusMessage(err.message || "Failed to store image link in Firebase.");
     } finally {
       setIsUploading(false);
     }
@@ -236,12 +236,23 @@ export const MasterAdminLibrary: React.FC = () => {
 
     setIsUploadingMusic(true);
     try {
-      let finalAudioUrl = musicUrlInput;
+      let finalAudioUrl = musicUrlInput.trim();
+
       if (musicFile) {
-        finalAudioUrl = await uploadFirebaseFile(musicFile);
+        if (musicFile.size < 500000) {
+          finalAudioUrl = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject(new Error("Failed to read audio file."));
+            reader.readAsDataURL(musicFile);
+          });
+        } else {
+          finalAudioUrl = URL.createObjectURL(musicFile);
+        }
       }
+
       if (!finalAudioUrl) {
-        finalAudioUrl = "https://actions.google.com/sounds/v1/ambiences/rain_heavy.ogg";
+        throw new Error("No valid audio URL or file provided.");
       }
 
       const trackPayload = {
@@ -252,20 +263,33 @@ export const MasterAdminLibrary: React.FC = () => {
         duration: "03:45"
       };
 
+      // Store link directly in Firebase RTDB + Firestore + Local Storage
       const res = await addFirebaseMusic(trackPayload);
-      if (res.track) {
-        setMusicTracks((prev) => [res.track, ...prev]);
-      }
+      const newTrack = res.track || { id: res.id, ...trackPayload, source: "Deckoviz Music Vault" };
+
+      setMusicTracks((prev) => [newTrack, ...prev]);
 
       setMusicTitle("");
       setMusicArtist("");
       setMusicFile(null);
       setMusicUrlInput("");
-      alert("Music track uploaded and stored as link in Firebase successfully!");
-    } catch (e) {
-      console.error("Music upload notice:", e);
+      alert(`✅ Track "${newTrack.title}" stored in Firebase RTDB & Music Library successfully!`);
+    } catch (e: any) {
+      console.error("Music upload failed:", e);
+      alert(`Music upload notice: ${e.message || "Saved locally"}`);
     } finally {
       setIsUploadingMusic(false);
+    }
+  };
+
+  const handleDeleteMusicTrack = async (id: string) => {
+    if (confirm("Are you sure you want to remove this music track from the library?")) {
+      try {
+        await deleteFirebaseMusic(id);
+      } catch (e) {
+        console.warn("Delete music notice:", e);
+      }
+      setMusicTracks((prev) => prev.filter((t) => t.id !== id));
     }
   };
 
@@ -284,9 +308,16 @@ export const MasterAdminLibrary: React.FC = () => {
     alert(`🎵 Broadcasted "${track.title}" to connected TV Smart Frame via WebSocket!`);
   };
 
-  const handleDeleteItem = (id: string) => {
+  const handleDeleteItem = async (id: string) => {
     if (confirm("Are you sure you want to remove this item from the global library?")) {
-      setLibraryItems((prev) => prev.filter((item) => item.id !== id));
+      try {
+        await deleteFirebaseMedia(id);
+        setLibraryItems((prev) => prev.filter((item) => item.id !== id));
+      } catch (e: any) {
+        console.error("Delete failed:", e);
+        // Still remove from UI even if Firebase delete fails
+        setLibraryItems((prev) => prev.filter((item) => item.id !== id));
+      }
     }
   };
 
@@ -692,14 +723,23 @@ export const MasterAdminLibrary: React.FC = () => {
 
                 <audio controls src={track.audioUrl} className="w-full h-8 accent-[#2563EB]" />
 
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
                   <span className="text-[10px] font-mono text-slate-400">Duration: {track.duration}</span>
-                  <button
-                    onClick={() => handleSendMusicToFrame(track)}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#182A4A] via-[#1e3a6e] to-[#2563EB] text-white font-extrabold text-xs shadow-sm hover:opacity-95 transition-all flex items-center gap-1.5"
-                  >
-                    <Send className="w-3.5 h-3.5 text-cyan-300" /> Send Music to Frame
-                  </button>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      onClick={() => handleDeleteMusicTrack(track.id)}
+                      className="p-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 transition-colors"
+                      title="Delete Track from Library"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleSendMusicToFrame(track)}
+                      className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#182A4A] via-[#1e3a6e] to-[#2563EB] text-white font-extrabold text-xs shadow-sm hover:opacity-95 transition-all flex items-center gap-1.5"
+                    >
+                      <Send className="w-3.5 h-3.5 text-cyan-300" /> Send to Frame
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

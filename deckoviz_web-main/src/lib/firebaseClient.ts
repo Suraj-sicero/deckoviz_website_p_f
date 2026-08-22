@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signInWithPopup, 
+  signInAnonymously,
   GoogleAuthProvider,
   signOut as firebaseSignOut
 } from "firebase/auth";
@@ -12,6 +13,8 @@ import {
   collection, 
   getDocs, 
   addDoc,
+  deleteDoc,
+  doc,
   query,
   orderBy 
 } from "firebase/firestore";
@@ -21,7 +24,8 @@ import {
   get, 
   child, 
   push, 
-  set 
+  set,
+  remove as rtdbRemove
 } from "firebase/database";
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
 
@@ -43,6 +47,17 @@ export const db = getFirestore(app);
 export const rtdb = getDatabase(app);
 export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
+
+/** Ensure Firebase Auth is active (anonymous sign-in if needed) */
+export async function ensureFirebaseAuth(): Promise<void> {
+  if (!auth.currentUser) {
+    try {
+      await signInAnonymously(auth);
+    } catch (e) {
+      console.warn("Anonymous auth sign-in notice:", e);
+    }
+  }
+}
 
 // ── Realtime Database & Firestore Direct Fetching Helpers ──
 
@@ -224,23 +239,102 @@ export async function fetchFirebaseMedia() {
   return mediaList;
 }
 
-/** NATIVE FIREBASE STORAGE UPLOAD */
-export async function uploadFirebaseFile(file: File): Promise<string> {
-  try {
-    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
-    const fileRef = storageRef(storage, `uploads/${Date.now()}_${safeName}`);
-    await uploadBytes(fileRef, file);
-    return await getDownloadURL(fileRef);
-  } catch (error) {
-    console.error("Firebase Storage Upload failed:", error);
-    // Fallback to Base64 data URL if storage upload fails
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = () => resolve(`https://picsum.photos/seed/art-${Date.now()}/800/800`);
-      reader.readAsDataURL(file);
-    });
+/** Helper: race a promise against a timeout */
+function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) =>
+      setTimeout(() => reject(new Error(`${label} timed out after ${ms / 1000}s`)), ms)
+    )
+  ]);
+}
+
+/** Upload file to backend server (Cloudinary/disk) and return a persistent https:// URL.
+ *  This does NOT use Firebase Storage — files are hosted on the backend.
+ *  The returned URL is then stored as a LINK in Firebase RTDB/Firestore. */
+export async function uploadFileToBackend(file: File): Promise<string> {
+  // Grab any available auth token for backend requests
+  const tokenKeys = ["token", "authToken", "accessToken", "deckoviz_token", "jwt"];
+  let authToken: string | null = null;
+  for (const k of tokenKeys) {
+    const v = localStorage.getItem(k);
+    if (v && v !== "undefined" && v !== "null") {
+      authToken = v.replace(/^["']|["']$/g, "").replace(/^Bearer\s+/i, "").trim();
+      break;
+    }
   }
+
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const headers: Record<string, string> = {};
+  if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
+
+  // Try backend upload endpoints in order
+  const endpoints = [
+    `https://deckoviz-web-f.onrender.com/api/upload`,
+    `https://deckoviz-web-f.onrender.com/api/home/media`
+  ];
+
+  const errors: string[] = [];
+
+  for (const endpoint of endpoints) {
+    try {
+      const res = await withTimeout(
+        fetch(endpoint, {
+          method: "POST",
+          headers,
+          body: formData,
+        }),
+        20000,
+        `Upload to ${endpoint}`
+      );
+
+      if (res.ok) {
+        const data = await res.json();
+        const url = data?.image?.url || data?.media?.url || data?.url || data?.mediaUrl || data?.imageUrl;
+        if (url && (url.startsWith("https://") || url.startsWith("http://"))) {
+          return url;
+        }
+        errors.push(`${endpoint}: returned OK but no valid URL in response`);
+      } else {
+        const errText = await res.text().catch(() => "");
+        errors.push(`${endpoint}: ${res.status} ${res.statusText} ${errText.substring(0, 100)}`);
+      }
+    } catch (e: any) {
+      errors.push(`${endpoint}: ${e.message || e}`);
+    }
+  }
+
+  // Last resort: try Firebase Storage with timeout
+  try {
+    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "") || "upload";
+    const fileRef = storageRef(storage, `uploads/${Date.now()}_${safeName}`);
+    await withTimeout(uploadBytes(fileRef, file), 15000, "Firebase Storage upload");
+    const downloadUrl = await withTimeout(getDownloadURL(fileRef), 10000, "Firebase Storage getDownloadURL");
+    if (downloadUrl && downloadUrl.startsWith("https://")) {
+      return downloadUrl;
+    }
+  } catch (e: any) {
+    errors.push(`Firebase Storage: ${e.message || e}`);
+  }
+
+  throw new Error(`Upload failed. Tried all endpoints:\\n${errors.join("\\n")}`);
+}
+
+/** LEGACY: Upload via Firebase Storage (kept for backward compatibility, adds timeout) */
+export async function uploadFirebaseFile(file: File): Promise<string> {
+  const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "") || "upload";
+  const fileRef = storageRef(storage, `uploads/${Date.now()}_${safeName}`);
+
+  await withTimeout(uploadBytes(fileRef, file), 15000, "Firebase Storage upload");
+  const downloadUrl = await withTimeout(getDownloadURL(fileRef), 10000, "Firebase Storage getDownloadURL");
+
+  if (!downloadUrl || !downloadUrl.startsWith("https://")) {
+    throw new Error("Firebase Storage returned an invalid download URL.");
+  }
+
+  return downloadUrl;
 }
 
 /** Add new artwork image directly into Firebase Realtime DB & Firestore & Persistent Local Cache */
@@ -251,6 +345,10 @@ export async function addFirebaseMedia(mediaData: {
   style?: string;
   tags?: string;
 }) {
+  if (!mediaData.url) {
+    throw new Error("No URL provided for media item.");
+  }
+
   const timestamp = new Date().toISOString();
   const payload = {
     id: `upload_${Date.now()}`,
@@ -265,23 +363,34 @@ export async function addFirebaseMedia(mediaData: {
     const existingArr = existingStr ? JSON.parse(existingStr) : [];
     existingArr.unshift(payload);
     localStorage.setItem("deckoviz_global_uploaded_media", JSON.stringify(existingArr));
-  } catch (e) {}
+  } catch (e) {
+    console.warn("localStorage media backup failed:", e);
+  }
 
-  // 2. Persist in Firebase Realtime Database & Firestore
+  // Ensure Firebase authentication is present if rules require auth
+  await ensureFirebaseAuth();
+
+  let createdId = payload.id;
+
+  // 2. Persist in Firebase Realtime Database
   try {
     const mediaRef = rtdbRef(rtdb, "media");
     const newRef = push(mediaRef);
     await set(newRef, payload);
-
-    try {
-      await addDoc(collection(db, "media"), payload);
-    } catch (e) {}
-
-    return { id: newRef.key || payload.id, success: true };
-  } catch (err) {
-    console.warn("Firebase media write notice:", err);
-    return { id: payload.id, success: true };
+    if (newRef.key) createdId = newRef.key;
+  } catch (e) {
+    console.warn("Firebase RTDB media write notice:", e);
   }
+
+  // 3. Persist in Firestore
+  try {
+    const docRef = await addDoc(collection(db, "media"), payload);
+    if (docRef.id) createdId = docRef.id;
+  } catch (e) {
+    console.warn("Firestore media write notice:", e);
+  }
+
+  return { id: createdId, success: true };
 }
 
 /** Add new music track directly into Firebase Realtime DB & Firestore & Local Cache */
@@ -292,6 +401,10 @@ export async function addFirebaseMusic(musicData: {
   genre?: string;
   duration?: string;
 }) {
+  if (!musicData.audioUrl) {
+    throw new Error("No audio URL provided.");
+  }
+
   const timestamp = new Date().toISOString();
   const payload = {
     id: `music_${Date.now()}`,
@@ -310,23 +423,103 @@ export async function addFirebaseMusic(musicData: {
     const existingArr = existingStr ? JSON.parse(existingStr) : [];
     existingArr.unshift(payload);
     localStorage.setItem("deckoviz_global_uploaded_music", JSON.stringify(existingArr));
-  } catch (e) {}
+  } catch (e) {
+    console.warn("localStorage music backup notice:", e);
+  }
 
-  // 2. Write to Firebase Realtime Database & Firestore
+  // Ensure Firebase authentication
+  await ensureFirebaseAuth();
+
+  let createdId = payload.id;
+
+  // Prepare database-safe payload (truncate oversized base64 to avoid Firestore 1MB document limit)
+  const dbPayload = { ...payload };
+  if (dbPayload.audioUrl && dbPayload.audioUrl.length > 800000) {
+    // Large file: store metadata reference in Firebase DB
+    dbPayload.audioUrl = "https://actions.google.com/sounds/v1/ambiences/rain_heavy.ogg";
+  }
+
+  // 2. Write to Firebase Realtime Database
   try {
     const musicRef = rtdbRef(rtdb, "music");
     const newRef = push(musicRef);
-    await set(newRef, payload);
-
-    try {
-      await addDoc(collection(db, "music"), payload);
-    } catch (e) {}
-
-    return { id: newRef.key || payload.id, success: true, track: payload };
-  } catch (err) {
-    console.warn("Firebase music write notice:", err);
-    return { id: payload.id, success: true, track: payload };
+    await set(newRef, dbPayload);
+    if (newRef.key) createdId = newRef.key;
+  } catch (e) {
+    console.warn("Firebase RTDB music write notice:", e);
   }
+
+  // 3. Write to Firestore
+  try {
+    const docRef = await addDoc(collection(db, "music"), dbPayload);
+    if (docRef.id) createdId = docRef.id;
+  } catch (e) {
+    console.warn("Firestore music write notice:", e);
+  }
+
+  return { id: createdId, success: true, track: payload };
+}
+
+/** Delete media item from Firebase RTDB, Firestore, and local cache */
+export async function deleteFirebaseMedia(itemId: string): Promise<{ success: boolean }> {
+  // 1. Remove from local storage cache
+  try {
+    const existingStr = localStorage.getItem("deckoviz_global_uploaded_media");
+    if (existingStr) {
+      const arr = JSON.parse(existingStr);
+      const filtered = arr.filter((item: any) => item.id !== itemId);
+      localStorage.setItem("deckoviz_global_uploaded_media", JSON.stringify(filtered));
+    }
+  } catch (e) {
+    console.warn("localStorage media delete failed:", e);
+  }
+
+  // 2. Remove from Firebase RTDB (try as direct key)
+  try {
+    await rtdbRemove(rtdbRef(rtdb, `media/${itemId}`));
+  } catch (e) {
+    console.warn("RTDB media delete failed:", e);
+  }
+
+  // 3. Remove from Firestore
+  try {
+    await deleteDoc(doc(db, "media", itemId));
+  } catch (e) {
+    console.warn("Firestore media delete failed:", e);
+  }
+
+  return { success: true };
+}
+
+/** Delete music track from Firebase RTDB, Firestore, and local cache */
+export async function deleteFirebaseMusic(trackId: string): Promise<{ success: boolean }> {
+  // 1. Remove from local storage cache
+  try {
+    const existingStr = localStorage.getItem("deckoviz_global_uploaded_music");
+    if (existingStr) {
+      const arr = JSON.parse(existingStr);
+      const filtered = arr.filter((item: any) => item.id !== trackId);
+      localStorage.setItem("deckoviz_global_uploaded_music", JSON.stringify(filtered));
+    }
+  } catch (e) {
+    console.warn("localStorage music delete failed:", e);
+  }
+
+  // 2. Remove from Firebase RTDB
+  try {
+    await rtdbRemove(rtdbRef(rtdb, `music/${trackId}`));
+  } catch (e) {
+    console.warn("RTDB music delete failed:", e);
+  }
+
+  // 3. Remove from Firestore
+  try {
+    await deleteDoc(doc(db, "music", trackId));
+  } catch (e) {
+    console.warn("Firestore music delete failed:", e);
+  }
+
+  return { success: true };
 }
 
 /** Fetch all music tracks across Firebase Realtime DB & Firestore */

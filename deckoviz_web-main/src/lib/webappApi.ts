@@ -8,7 +8,7 @@ const BASE = API_BASE_URL;
 const API = `${BASE}/api/webapp`;
 const HOME = `${BASE}/api/home`;
 import { getUserMedia } from "./userStorage";
-import { db, fetchFirebaseMedia, addFirebaseMedia, uploadFirebaseFile } from "./firebaseClient";
+import { db, fetchFirebaseMedia, addFirebaseMedia, uploadFileToBackend } from "./firebaseClient";
 import { collection, addDoc, getDocs, query, orderBy } from "firebase/firestore";
 
 function getToken(): string | null {
@@ -230,29 +230,15 @@ export const webappApi = {
     }
   },
 
-  /* Upload Media (multipart to /api/home/media or /api/upload) */
+  /* Upload Media — uploads file to backend server, stores link in Firebase */
   uploadMedia: async (file: File, token?: string): Promise<{ id: string; url: string; fileName: string; fileSize: number }> => {
+    // Step 1: Upload file to backend server (Cloudinary/disk) for persistent hosting
+    let publicUrl: string;
     try {
-      // Direct Firebase Storage Upload
-      const publicUrl = await uploadFirebaseFile(file);
-      // Save metadata to Firestore
-      const metadata = {
-        title: file.name,
-        fileName: file.name,
-        url: publicUrl,
-        mediaUrl: publicUrl,
-        fileSize: file.size,
-        type: file.type,
-      };
-      const res = await addFirebaseMedia(metadata);
-      return {
-        id: res.id,
-        url: publicUrl,
-        fileName: file.name,
-        fileSize: file.size,
-      };
-    } catch (e) {
-      console.warn("Direct Firebase upload failed, falling back to backend:", e);
+      publicUrl = await uploadFileToBackend(file);
+    } catch (backendErr) {
+      // Fallback: try backend endpoints with auth headers
+      console.warn("uploadFileToBackend failed, trying with auth headers:", backendErr);
       const formData = new FormData();
       formData.append("file", file);
       const headers = authHeaders(token);
@@ -272,13 +258,27 @@ export const webappApi = {
       if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
       const data = await res.json();
       const imgData = data.media || data.image || data;
-      return {
-        id: imgData.id || String(Date.now()),
-        url: imgData.url || imgData.imageUrl || "",
-        fileName: imgData.fileName || imgData.filename || file.name,
-        fileSize: imgData.fileSize || file.size,
-      };
+      publicUrl = imgData.url || imgData.imageUrl || imgData.mediaUrl || "";
+      if (!publicUrl) throw new Error("Backend returned no URL");
     }
+
+    // Step 2: Store the URL link in Firebase RTDB + Firestore
+    const metadata = {
+      title: file.name,
+      fileName: file.name,
+      url: publicUrl,
+      mediaUrl: publicUrl,
+      fileSize: file.size,
+      type: file.type,
+    };
+    const fbResult = await addFirebaseMedia(metadata);
+
+    return {
+      id: fbResult.id,
+      url: publicUrl,
+      fileName: file.name,
+      fileSize: file.size,
+    };
   },
 
   /* Delete Media (via home routes) */

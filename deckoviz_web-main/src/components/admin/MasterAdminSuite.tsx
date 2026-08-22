@@ -62,8 +62,8 @@ export const MasterAdminSuite: React.FC = () => {
 
   const handlePasscodeSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const validCodes = ["admin", "deckoviz", "deckoviz2026", "master"];
-    if (validCodes.includes(passcode.trim().toLowerCase())) {
+    const validCodes = ["deckovizadmin123"];
+    if (validCodes.includes(passcode.trim())) {
       setIsAuthenticated(true);
       localStorage.setItem("deckoviz_admin_auth", "true");
       setAuthError("");
@@ -131,17 +131,7 @@ export const MasterAdminSuite: React.FC = () => {
             </button>
           </form>
 
-          <div className="pt-4 border-t border-slate-100 text-center">
-            <button
-              onClick={() => {
-                setIsAuthenticated(true);
-                localStorage.setItem("deckoviz_admin_auth", "true");
-              }}
-              className="text-xs font-bold text-[#2563EB] hover:underline transition-colors"
-            >
-              Click here for Demo Bypass
-            </button>
-          </div>
+
         </div>
       </div>
     );
