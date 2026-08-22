@@ -1,4 +1,5 @@
 import logging
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
@@ -12,18 +13,28 @@ from routes.pairing_routes import router as pairing_router
 from routes.queue_routes import router as queue_router
 from routes.curator_routes import router as curator_router
 from routes.ws_routes import router as ws_router
+from routes.promptLibraryRoutes import router as prompt_library_router
+from database import close_database, database_is_healthy
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("deckoviz.main")
-logger.info("FastAPI service starting using 100% Firebase Firestore backend.")
+logger.info("FastAPI service starting with PostgreSQL persistence and Firebase Auth.")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    if settings.DATABASE_CONNECT_ON_STARTUP and not await database_is_healthy():
+        raise RuntimeError("Database connectivity check failed")
+    yield
+    await close_database()
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="FastAPI Backend for Home Webapp & Enterprise Webapp with Firebase Auth & Firebase Storage",
     version="1.0.0",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
+    lifespan=lifespan,
 )
 
 # CORS Configuration
@@ -46,6 +57,7 @@ app.include_router(pairing_router, prefix=settings.API_V1_STR)
 app.include_router(queue_router, prefix=settings.API_V1_STR)
 app.include_router(curator_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
+app.include_router(prompt_library_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 def root():
@@ -57,10 +69,11 @@ def root():
     }
 
 @app.get("/api/health")
-def health_check():
+async def health_check():
+    connected = await database_is_healthy()
     return {
-        "status": "healthy",
-        "database": "connected"
+        "status": "healthy" if connected else "degraded",
+        "database": "connected" if connected else "unavailable"
     }
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, String, Integer, Boolean, Text, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, String, Integer, Boolean, Text, DateTime, ForeignKey, JSON, UniqueConstraint
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -155,3 +156,22 @@ class SavedNoteItem(Base):
     content = Column(Text, nullable=True)
     tags = Column(JSON, default=list)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class UserDocument(Base):
+    """Ownership-scoped flexible payloads migrated from Firestore collections.
+
+    Core collection/media models remain normalized above; this table preserves the
+    deliberately variable payloads (enterprise units, templates, settings, etc.)
+    without changing established API response shapes.
+    """
+    __tablename__ = "user_documents"
+    __table_args__ = (UniqueConstraint("user_id", "kind", "document_id", name="uq_user_document"),)
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    kind = Column(String(64), nullable=False, index=True)
+    document_id = Column(String(128), nullable=False, index=True)
+    payload = Column(JSONB, nullable=False, default=dict)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)

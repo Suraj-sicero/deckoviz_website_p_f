@@ -7,7 +7,8 @@ import jwt
 from pydantic import BaseModel
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from firebase_config import verify_token as _verify_firebase_token_sync, get_firestore_db
+from firebase_config import verify_token as _verify_firebase_token_sync
+from postgres_store import ensure_application_user
 from config import settings
 
 logger = logging.getLogger("deckoviz.auth")
@@ -147,14 +148,7 @@ async def get_current_user(
         # Run token verification in thread pool (may do Firebase network call)
         user_info = await loop.run_in_executor(_executor, verify_token_to_user_dict, token)
         if user_info:
-            # Run Firestore lookup in thread pool
-            user_dict = await loop.run_in_executor(
-                _executor,
-                _get_or_create_firestore_user_sync,
-                user_info["id"],
-                user_info["email"],
-                user_info.get("name"),
-            )
+            user_dict = await ensure_application_user(user_info["id"], user_info["email"], user_info.get("name"))
             return FirebaseUser(**user_dict)
 
     # Unauthenticated: raise 401 Unauthorized to prompt user login
@@ -163,6 +157,5 @@ async def get_current_user(
         detail="Authentication required. Please log in.",
         headers={"WWW-Authenticate": "Bearer"},
     )
-
 
 

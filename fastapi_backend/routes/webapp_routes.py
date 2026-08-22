@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from auth import get_current_user, FirebaseUser
-from firebase_config import (
+from postgres_store import (
     fs_get_profile,
     fs_save_profile,
     fs_get_collections,

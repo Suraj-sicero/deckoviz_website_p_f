@@ -4,7 +4,7 @@ import urllib.parse
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from auth import get_current_user, FirebaseUser
-from firebase_config import (
+from postgres_store import (
     fs_get_vizzy_chats,
     fs_get_vizzy_chat_detail,
     fs_save_vizzy_chat,

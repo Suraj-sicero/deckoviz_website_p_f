@@ -3,7 +3,7 @@ import base64
 from typing import Optional
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Request
 from auth import get_current_user, FirebaseUser
-from firebase_config import fs_save_media
+from postgres_store import fs_save_media
 
 router = APIRouter(tags=["Media Uploads - Firebase Firestore"])
 

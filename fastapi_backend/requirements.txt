@@ -9,3 +9,6 @@ requests>=2.28.0
 gunicorn>=21.0.0
 PyJWT>=2.0.0
 websocket-client>=1.6.0
+SQLAlchemy>=2.0.0
+asyncpg>=0.29.0
+alembic>=1.13.0

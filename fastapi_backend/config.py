@@ -1,9 +1,15 @@
 import os
-from pydantic_settings import BaseSettings
+from pydantic import Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
+    # Local development reads fastapi_backend/.env; deployment uses environment variables.
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
     PROJECT_NAME: str = "Deckoviz FastAPI Backend"
     API_V1_STR: str = "/api"
+    # Required: prevents accidental fallback to local SQLite/PostgreSQL.
+    DATABASE_URL: str = Field(..., min_length=1)
+    DATABASE_CONNECT_ON_STARTUP: bool = True
     
     # Firebase Configuration
     FIREBASE_CREDENTIALS_JSON: str = os.getenv("FIREBASE_CREDENTIALS_JSON", "")

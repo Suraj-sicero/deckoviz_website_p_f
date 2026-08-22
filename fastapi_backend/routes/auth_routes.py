@@ -4,10 +4,9 @@ from typing import Optional
 from auth import get_current_user, FirebaseUser, create_access_token
 from firebase_config import (
     create_firebase_auth_user,
-    fs_get_profile,
-    fs_save_profile,
     verify_token
 )
+from postgres_store import ensure_application_user, fs_get_profile, fs_save_profile
 
 router = APIRouter(prefix="/auth", tags=["Authentication - Firebase Auth & Firestore"])
 
@@ -23,7 +22,7 @@ class SigninPayload(BaseModel):
     password: Optional[str] = None
 
 @router.post("/signup")
-def signup(payload: SignupPayload):
+async def signup(payload: SignupPayload):
     if not payload.email or not payload.password:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email and password are required for signup")
     
@@ -36,6 +35,7 @@ def signup(payload: SignupPayload):
         name=payload.name
     )
     uid = user_dict["firebase_uid"]
+    user_dict = await ensure_application_user(uid, clean_email, user_dict["name"])
 
     # 2. Generate secure cryptographically signed JWT token for this user
     access_token = create_access_token({"uid": uid, "sub": uid, "email": clean_email, "name": user_dict["name"]})
@@ -46,7 +46,7 @@ def signup(payload: SignupPayload):
     }
 
 @router.post("/signin")
-def signin(payload: SigninPayload):
+async def signin(payload: SigninPayload):
     # If Firebase ID token is provided
     if payload.id_token:
         decoded = verify_token(payload.id_token)
@@ -55,6 +55,7 @@ def signin(payload: SigninPayload):
             email = decoded.get("email") or payload.email or f"{uid[:8]}@deckoviz.app"
             name = decoded.get("name") or email.split('@')[0] if email else "User"
             user_dict = create_firebase_auth_user(email=email, name=name)
+            user_dict = await ensure_application_user(uid, email, name)
             access_token = create_access_token({"uid": uid, "sub": uid, "email": email, "name": name})
             return {"token": access_token, "user": user_dict}
 
@@ -71,6 +72,7 @@ def signin(payload: SigninPayload):
     )
 
     uid = user_dict["firebase_uid"]
+    user_dict = await ensure_application_user(uid, clean_email, user_dict["name"])
     access_token = create_access_token({"uid": uid, "sub": uid, "email": clean_email, "name": user_dict["name"]})
 
     return {

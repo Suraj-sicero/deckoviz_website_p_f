@@ -101,8 +101,7 @@ def verify_token(token: str) -> dict | None:
         return None
 
 def create_firebase_auth_user(email: str, password: str = None, name: str = None) -> dict:
-    """Creates user directly in Firebase Auth service and Firestore 'users' collection."""
-    db = get_firestore_db()
+    """Creates or retrieves a Firebase Auth identity (no Firestore writes)."""
     user_record = None
     try:
         user_record = auth.get_user_by_email(email)
@@ -133,20 +132,6 @@ def create_firebase_auth_user(email: str, password: str = None, name: str = None
         "avatar": avatar_url,
         "role": "creator"
     }
-
-    if db:
-        try:
-            db.collection("users").document(uid).set(user_dict, merge=True)
-            db.collection("profiles").document(uid).set({
-                "userId": uid,
-                "displayName": user_name,
-                "username": email.split('@')[0],
-                "avatar": avatar_url,
-                "title": "Global Creator",
-                "bio": "Creating visual media with Deckoviz"
-            }, merge=True)
-        except Exception as e:
-            logger.warning(f"Firestore set user document notice: {e}")
 
     return user_dict
 
@@ -826,7 +811,6 @@ def fs_delete_enterprise_narration(uid: str, n_id: str) -> bool:
             return True
         except Exception: pass
     return False
-
 # =========== MASTER ADMIN HELPERS ===========
 def fs_list_all_users() -> list[dict]:
     """Lists all registered users from Firebase Auth and Firestore profiles."""
@@ -902,5 +886,4 @@ def fs_list_all_media() -> list[dict]:
     except Exception as e:
         logger.warning(f"Firestore list media notice: {e}")
         return []
-
 
