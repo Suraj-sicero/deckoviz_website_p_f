@@ -1,4 +1,5 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -71,7 +72,10 @@ async def health_check():
     connected = await database_is_healthy()
     return {
         "status": "healthy" if connected else "degraded",
-        "database": "connected" if connected else "unavailable"
+        "database": "connected" if connected else "unavailable",
+        "mediaStorage": "s3",
+        "s3Bucket": settings.S3_MEDIA_BUCKET,
+        "deployCommit": os.getenv("RENDER_GIT_COMMIT") or os.getenv("GIT_COMMIT") or "unknown",
     }
 
 if __name__ == "__main__":
