@@ -25,9 +25,10 @@ def _has_default_credentials() -> bool:
 def _find_firebase_credential_file() -> str | None:
     base_dir = os.path.dirname(__file__) or "."
     candidates = [
+        "/etc/deckoviz/firebase-service-account.json",
+        settings.FIREBASE_CREDENTIALS_FILE,
         "deckoviz-3ad39-firebase-adminsdk-fbsvc-5d6973e5b8.json",
         "serviceAccountKey.json",
-        settings.FIREBASE_CREDENTIALS_FILE,
     ]
 
     try:

@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     
     # Firebase Configuration
     FIREBASE_CREDENTIALS_JSON: str = os.getenv("FIREBASE_CREDENTIALS_JSON", "")
-    FIREBASE_CREDENTIALS_FILE: str = os.getenv("FIREBASE_CREDENTIALS_FILE", "firebase-service-account.json")
+    FIREBASE_CREDENTIALS_FILE: str = os.getenv("FIREBASE_CREDENTIALS_FILE", "/etc/deckoviz/firebase-service-account.json")
     FIREBASE_STORAGE_BUCKET: str = os.getenv("FIREBASE_STORAGE_BUCKET", "deckoviz-app.appspot.com")
     
     # Security
