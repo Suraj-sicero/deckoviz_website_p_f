@@ -20,6 +20,7 @@ class SigninPayload(BaseModel):
     email: Optional[str] = None
     id_token: Optional[str] = None
     password: Optional[str] = None
+    firebase_uid: Optional[str] = None
 
 @router.post("/signup")
 async def signup(payload: SignupPayload):

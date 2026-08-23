@@ -106,14 +106,32 @@ def get_firestore_db():
     return _firestore_db
 
 def verify_token(token: str) -> dict | None:
-    """Verifies Firebase ID token."""
+    """Verifies Firebase ID token.
+
+    Performs a lazy re-initialization of the Firebase Admin SDK if it was not
+    ready at import time (e.g. the credential file or env variable was mounted
+    after process start, which is common on AWS/Docker deployments).
+    """
     if not token:
         return None
 
-    if not _firebase_app and not _has_default_credentials() and not _find_firebase_credential_file() and not settings.FIREBASE_CREDENTIALS_JSON:
-        raise RuntimeError(
-            "Firebase Admin is not configured. Set FIREBASE_CREDENTIALS_JSON or mount FIREBASE_CREDENTIALS_FILE before Google Sign-In."
-        )
+    global _firebase_app
+
+    # Lazy re-init: credential file or env var may have appeared after startup.
+    if not _firebase_app:
+        logger.info("Firebase Admin not initialized yet — attempting lazy init.")
+        init_firebase()
+
+    if not _firebase_app:
+        # Still not initialized after retry — check all sources before raising.
+        if not _has_default_credentials() and not _find_firebase_credential_file() and not settings.FIREBASE_CREDENTIALS_JSON:
+            raise RuntimeError(
+                "Firebase Admin is not configured. "
+                "Place the service-account JSON at /etc/deckoviz/firebase-service-account.json "
+                "or set the FIREBASE_CREDENTIALS_JSON environment variable."
+            )
+        # Credential source exists but init still failed (e.g. bad JSON); let
+        # auth.verify_id_token produce the precise error below.
 
     try:
         decoded_token = auth.verify_id_token(token)
@@ -122,7 +140,9 @@ def verify_token(token: str) -> dict | None:
         logger.debug(f"Firebase ID token verification notice: {e}")
         if "Could not find default credentials" in str(e) or "Project ID is required" in str(e):
             raise RuntimeError(
-                "Firebase Admin is not configured. Set FIREBASE_CREDENTIALS_JSON or mount FIREBASE_CREDENTIALS_FILE before Google Sign-In."
+                "Firebase Admin is not configured. "
+                "Place the service-account JSON at /etc/deckoviz/firebase-service-account.json "
+                "or set the FIREBASE_CREDENTIALS_JSON environment variable."
             ) from e
         return None
 
