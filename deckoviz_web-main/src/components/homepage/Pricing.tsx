@@ -2,6 +2,7 @@
 
 import React, { useState, ReactNode } from "react"
 import { Check, Sparkles, Gift, Star, Zap, Leaf } from "lucide-react"
+import WhatYouGetSection from "./WhatYouGetSection"
 
 // Custom Button component
 interface ButtonProps {
@@ -565,6 +566,9 @@ export default function Pricing() {
               </span>
             </Button>
           </div>
+
+          {/* What You Get Section */}
+          <WhatYouGetSection />
         </div>
 
         {/* Features Modal */}

@@ -2,7 +2,8 @@
 
 import type React from "react"
 import { useState, useEffect, useRef } from "react"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, GraduationCap, Hotel } from "lucide-react"
+import { Link } from "react-router-dom"
 import * as THREE from 'three'
 
 /* ---------------- Three.js Background Component ---------------- */
@@ -426,6 +427,33 @@ const Hero: React.FC = () => {
             {rotatingTexts[rotatingIndex]}
           </span>.
         </p>
+
+        {/* Business Hero Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-5 sm:mb-6 max-w-4xl px-2 z-10 relative">
+          <Link
+            to="/deckoviz-for-schools"
+            className="group inline-flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/70 backdrop-blur-md border border-indigo-200/80 hover:border-indigo-500/80 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          >
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 group-hover:scale-105 transition-all flex-shrink-0">
+              <GraduationCap className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-xs sm:text-sm font-medium text-slate-700 group-hover:text-indigo-600 transition-colors">
+              For Deckoviz for Schools and Learning, click here.
+            </span>
+          </Link>
+
+          <Link
+            to="/deckoviz-for-restaurants"
+            className="group inline-flex items-center gap-2.5 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full bg-white/70 backdrop-blur-md border border-indigo-200/80 hover:border-indigo-500/80 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+          >
+            <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 group-hover:scale-105 transition-all flex-shrink-0">
+              <Hotel className="w-3.5 h-3.5" />
+            </span>
+            <span className="text-xs sm:text-sm font-medium text-slate-700 group-hover:text-indigo-600 transition-colors">
+              For Deckoviz for Restaurants and Hotels, click here.
+            </span>
+          </Link>
+        </div>
 
         {/* Layout Container */}
         <div className="w-full max-w-[1600px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-4 lg:gap-6 xl:gap-8 px-4 lg:px-8">

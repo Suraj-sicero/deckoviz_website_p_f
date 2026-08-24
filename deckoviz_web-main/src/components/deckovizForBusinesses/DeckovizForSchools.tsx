@@ -1,5 +1,6 @@
 import { DynamicImageGrid } from "../other/DynamicImageGrid";
 import { motion } from "framer-motion";
+import PartnerProgramSection from "./PartnerProgramSection";
 
 const schoolImages = [
   { src: '/images/school/ChatGPT Image Jul 11, 2026, 07_21_06 PM.png', tag: 'A Wall That Teaches' },
@@ -317,6 +318,9 @@ const DeckovizSchoolsLanding = () => {
           ))}
         </div>
       </section>
+
+      {/* ── 5.5. Education Partner Program Section ── */}
+      <PartnerProgramSection />
 
       {/* ── 6. The Bottom Line (CTA) ── */}
       <section className="py-32 relative text-center overflow-hidden">

@@ -82,6 +82,7 @@ import DeckovizManifesto from "./components/homepage/DeckovizManifesto";
 import VizzyRearchitectingDoc from "./components/homepage/VizzyRearchitectingDoc";
 import DASPBusinessGuide from "./components/deckovizForBusinesses/DASPBusinessGuide";
 import PragmaticBuyerGuide from "./components/deckovizForBusinesses/PragmaticBuyerGuide";
+import EnterpriseCoreReading from "./components/deckovizForBusinesses/EnterpriseCoreReading";
 import ToggleGallerySection from "./components/homepage/ToggleGallerySection";
 import AILayerExpandedPage from "./components/homepage/AILayerExpandedPage";
 import AILayerBusinessExpandedPage from "./components/homepage/AILayerBusinessExpandedPage";
@@ -421,6 +422,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/rearchitecting-hell" element={<VizzyRearchitectingDoc />} />
           <Route path="/dasp-business-guide" element={<DASPBusinessGuide />} />
           <Route path="/pragmatic-buyer-guide" element={<PragmaticBuyerGuide />} />
+          <Route path="/enterprise-core-reading" element={<EnterpriseCoreReading />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/place-order" element={<PlaceOrder />} />
@@ -470,6 +472,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           />
           <Route
             path="/deckoviz-for-schools"
+            element={<DeckovizSchoolsLanding />}
+          />
+          <Route
+            path="/partner-program"
             element={<DeckovizSchoolsLanding />}
           />
           <Route
