@@ -71,7 +71,7 @@ export const Vizzy: React.FC = () => {
     fetch('http://localhost:3001/api/chat/session', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessionId })
+      body: JSON.stringify({ sessionId, userName: user?.name })
     })
       .then(res => res.json())
       .then(data => {

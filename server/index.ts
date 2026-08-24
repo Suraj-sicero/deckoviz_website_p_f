@@ -149,9 +149,10 @@ app.get('/api/chat/session', async (req, res) => {
 
 app.delete('/api/chat/session', async (req, res) => {
   try {
-    const { sessionId } = req.body;
+    const { sessionId, userName } = req.body;
+    const greetingName = userName ? userName.split(' ')[0] : 'there';
     const initialContent = JSON.stringify([
-      { id: Date.now().toString(), sender: 'vizzy', text: "Chat cleared! How can I help you start fresh?" }
+      { id: Date.now().toString(), sender: 'vizzy', text: `Hey ${greetingName}, how can I help you?` }
     ]);
     
     const session = await prisma.session.update({
