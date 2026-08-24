@@ -1,0 +1,30 @@
+.card {
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 1.5rem;
+  padding: var(--space-6);
+  box-shadow: 0 12px 40px rgba(24, 42, 74, 0.08);
+  overflow: hidden;
+  position: relative;
+}
+
+.variant-highlight {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.variant-dark {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.interactive {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.interactive:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: var(--surface-glass-hover);
+}
