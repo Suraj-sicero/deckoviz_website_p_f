@@ -5,6 +5,8 @@ import { Button } from '../components/ui/Button';
 import { Send, Image as ImageIcon, Map, Activity, Sparkles, BookOpen } from 'lucide-react';
 import styles from './Vizzy.module.css';
 
+import { useAppStore } from '../store/useAppStore';
+
 interface Message {
   id: string;
   sender: 'student' | 'vizzy';
@@ -13,35 +15,54 @@ interface Message {
 }
 
 export const Vizzy: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      sender: 'vizzy',
-      text: "Hi Alex! I noticed you were looking at polynomial functions earlier. Would you like to visualize how changing the coefficients affects the curve?",
-    }
-  ]);
+  const user = useAppStore(state => state.user);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
+  React.useEffect(() => {
+    if (user?.id) {
+      fetch(`http://localhost:3001/api/chat/session?userId=${user.id}`)
+        .then(res => res.json())
+        .then(data => {
+          setSessionId(data.id);
+          try {
+            setMessages(JSON.parse(data.content));
+          } catch (e) {
+            console.error("Failed to parse chat history");
+          }
+        });
+    }
+  }, [user]);
 
   const handleSend = () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || !sessionId || isLoading) return;
 
-    const newMessage: Message = { id: Date.now().toString(), sender: 'student', text: inputValue };
+    const messageText = inputValue;
+    const newMessage: Message = { id: Date.now().toString(), sender: 'student', text: messageText };
     setMessages(prev => [...prev, newMessage]);
     setInputValue('');
+    setIsLoading(true);
 
-    // Simulate Vizzy thinking and returning a visual answer
-    setTimeout(() => {
-      setMessages(prev => [
-        ...prev, 
-        { 
-          id: (Date.now() + 1).toString(), 
-          sender: 'vizzy', 
-          text: "Here is a visualization of the trajectory. Notice how gravity curves the path. What do you think happens if we double the initial velocity?",
-          visualContext: 'physics-trajectory' 
-        }
-      ]);
-    }, 1500);
+    fetch('http://localhost:3001/api/chat/message', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId,
+        message: messageText,
+        history: messages
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        setMessages(prev => [...prev, data]);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -89,6 +110,17 @@ export const Vizzy: React.FC = () => {
                   )}
                 </motion.div>
               ))}
+              {isLoading && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={styles.messageVizzy}
+                >
+                  <div className={styles.messageBubble}>
+                    <span style={{ fontStyle: 'italic', opacity: 0.7 }}>Vizzy is thinking...</span>
+                  </div>
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
 

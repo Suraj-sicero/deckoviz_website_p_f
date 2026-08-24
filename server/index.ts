@@ -116,6 +116,89 @@ app.post('/api/journals', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// Chat Endpoints
+app.get('/api/chat/session', async (req, res) => {
+  try {
+    const userId = req.query.userId as string;
+    // Find or create a session for this user
+    let session = await prisma.session.findFirst({
+      where: { userId, type: 'vizzy_chat' },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    if (!session) {
+      // Initialize with a welcome message
+      const initialContent = JSON.stringify([
+        { id: '1', sender: 'vizzy', text: "Hi! I'm Vizzy, your AI companion. I'm connected to the live backend now! What would you like to explore today?" }
+      ]);
+      session = await prisma.session.create({
+        data: {
+          title: 'General Chat',
+          type: 'vizzy_chat',
+          content: initialContent,
+          userId: userId
+        }
+      });
+    }
+
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/api/chat/message', async (req, res) => {
+  try {
+    const { sessionId, message, history } = req.body;
+    const apiKey = process.env.GEMINI_API_KEY;
+    
+    if (!apiKey || apiKey === "your-key-here") {
+      // Fallback mock mode if no API key is provided
+      const mockResponse = { id: Date.now().toString(), sender: 'vizzy', text: "I'm in mock mode because no GEMINI_API_KEY was found in server/.env! Add one to chat with the real me." };
+      const newHistory = [...history, { id: Date.now().toString(), sender: 'student', text: message }, mockResponse];
+      
+      await prisma.session.update({
+        where: { id: sessionId },
+        data: { content: JSON.stringify(newHistory) }
+      });
+      
+      return res.json(mockResponse);
+    }
+
+    // Call Real Gemini API
+    const { GoogleGenAI } = await import('@google/genai');
+    const ai = new GoogleGenAI({ apiKey });
+    
+    // Format history for Gemini
+    const systemInstruction = "You are Vizzy, an encouraging, Socratic AI tutor for a student. Guide them to answers using questions rather than just giving the direct answer. Keep responses concise. Focus on the user's latest message but use history for context.";
+    
+    const formattedHistory = history.map((msg: any) => `${msg.sender === 'vizzy' ? 'Vizzy' : 'Student'}: ${msg.text}`).join('\n');
+    const promptWithHistory = `Past Conversation:\n${formattedHistory}\n\nStudent's New Message: ${message}`;
+    
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: promptWithHistory,
+      config: {
+        systemInstruction: systemInstruction,
+      }
+    });
+
+    const aiText = response.text || "I'm not sure how to respond to that.";
+    const aiMessage = { id: Date.now().toString(), sender: 'vizzy', text: aiText };
+    const newHistory = [...history, { id: Date.now().toString(), sender: 'student', text: message }, aiMessage];
+    
+    // Save to DB
+    await prisma.session.update({
+      where: { id: sessionId },
+      data: { content: JSON.stringify(newHistory) }
+    });
+    
+    res.json(aiMessage);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error processing AI response.' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
