@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useAppStore } from '../../store/useAppStore';
 import { GlassCard } from '../ui/GlassCard';
 import { 
   Sparkles, FileText, Target, FileCheck2, Filter, 
@@ -270,8 +272,26 @@ const itemVariants = {
 };
 
 export const TeacherDashboard: React.FC = () => {
+  const navigate = useNavigate();
+  const user = useAppStore(state => state.user);
+  const [stats, setStats] = useState({ activeClasses: 0, studentsNeedingAttention: 0 });
+
+  React.useEffect(() => {
+    if (user?.id) {
+      fetch(`http://localhost:3001/api/teacher/dashboard?teacherId=${user.id}`)
+        .then(res => res.json())
+        .then(data => setStats(data))
+        .catch(console.error);
+    }
+  }, [user]);
+
   return (
     <div className={styles.dashboardContainer}>
+      <header className={styles.header}>
+        <h2><BookOpen size={24} /> Teacher Tools</h2>
+        <p>Your classes are ready. {stats.studentsNeedingAttention} students might need attention today.</p>
+      </header>
+
       {/* Teacher Tools Section */}
       <section className={styles.dashboardSection} style={{ marginBottom: '3rem' }}>
         <header className={styles.header}>

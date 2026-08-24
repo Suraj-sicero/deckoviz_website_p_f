@@ -86,6 +86,36 @@ app.get('/api/collections', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// Journals endpoints
+app.get('/api/journals', async (req, res) => {
+  try {
+    const studentId = req.query.studentId as string;
+    const journals = await prisma.journalEntry.findMany({
+      where: { studentId: studentId },
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json(journals);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/api/journals', async (req, res) => {
+  try {
+    const { studentId, content, sentiment, tags } = req.body;
+    const newJournal = await prisma.journalEntry.create({
+      data: {
+        studentId,
+        content,
+        sentiment: sentiment || 'neutral',
+        tags: JSON.stringify(tags || [])
+      }
+    });
+    res.json(newJournal);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

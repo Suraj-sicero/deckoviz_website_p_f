@@ -4,22 +4,60 @@ import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
 import { BookOpen, Mic, Send, Sparkles, Smile, BatteryMedium } from 'lucide-react';
 import styles from './Journal.module.css';
+import { useAppStore } from '../store/useAppStore';
+
+interface JournalEntry {
+  id: string;
+  createdAt: string;
+  content: string;
+  sentiment: string;
+  tags: string;
+}
 
 export const Journal: React.FC = () => {
-  const [messages, setMessages] = useState([
-    { role: 'vizzy', text: "Hey! You mentioned struggling with those quadratic equations yesterday. How did today's practice go?" }
-  ]);
-  const [input, setInput] = useState('');
+  const [entries, setEntries] = useState<JournalEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+  const user = useAppStore(state => state.user);
+  const [newEntry, setNewEntry] = useState('');
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-    setMessages(prev => [...prev, { role: 'user', text: input }]);
-    setInput('');
+  React.useEffect(() => {
+    if (user?.id) {
+      fetchJournals();
+    }
+  }, [user]);
+
+  const fetchJournals = () => {
+    setLoading(true);
+    fetch(`http://localhost:3001/api/journals?studentId=${user?.id}`)
+      .then(res => res.json())
+      .then(data => {
+        setEntries(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
+  };
+
+  const handleSaveEntry = () => {
+    if (!newEntry.trim() || !user) return;
     
-    // Adaptive response logic
-    setTimeout(() => {
-      setMessages(prev => [...prev, { role: 'vizzy', text: "That makes sense. It's totally okay to feel stuck. I've adjusted tomorrow's math review to be a bit gentler so we can build up your confidence. Anything else on your mind today?" }]);
-    }, 1500);
+    fetch('http://localhost:3001/api/journals', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        studentId: user.id,
+        content: newEntry,
+        sentiment: 'positive',
+        tags: ['focus', 'learning']
+      })
+    })
+    .then(res => res.json())
+    .then(() => {
+      setNewEntry('');
+      fetchJournals();
+    });
   };
 
   return (
@@ -41,15 +79,21 @@ export const Journal: React.FC = () => {
 
       <GlassCard className={styles.chatArea}>
         <div className={styles.messages}>
-          {messages.map((msg, i) => (
+          {loading ? (
+            <div style={{ color: 'white', textAlign: 'center', padding: '1rem' }}>Loading journals...</div>
+          ) : entries.length === 0 ? (
+            <div style={{ color: 'white', textAlign: 'center', padding: '1rem' }}>No journal entries yet.</div>
+          ) : entries.map((entry) => (
             <motion.div 
-              key={i}
+              key={entry.id}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`${styles.messageBubble} ${msg.role === 'vizzy' ? styles.vizzyBubble : styles.userBubble}`}
+              className={`${styles.messageBubble} ${styles.userBubble}`}
             >
-              {msg.role === 'vizzy' && <Sparkles size={16} className={styles.bubbleIcon} />}
-              <p>{msg.text}</p>
+              <div style={{ fontSize: '0.8rem', opacity: 0.6, marginBottom: '4px' }}>
+                {new Date(entry.createdAt).toLocaleString()}
+              </div>
+              <p>{entry.content}</p>
             </motion.div>
           ))}
         </div>
@@ -62,11 +106,11 @@ export const Journal: React.FC = () => {
             type="text" 
             placeholder="Type your reflection here..." 
             className={styles.textInput}
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && handleSend()}
+            value={newEntry}
+            onChange={e => setNewEntry(e.target.value)}
+            onKeyDown={e => e.key === 'Enter' && handleSaveEntry()}
           />
-          <Button variant="primary" onClick={handleSend}>
+          <Button variant="primary" onClick={handleSaveEntry}>
             <Send size={18} />
           </Button>
         </div>

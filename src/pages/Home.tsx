@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useAppStore } from '../store/useAppStore';
 import { Button } from '../components/ui/Button';
@@ -8,7 +8,17 @@ import { StudentCompanions } from '../components/home/StudentCompanions';
 import styles from './Home.module.css';
 
 export const Home: React.FC = () => {
-  const role = useAppStore(state => state.role);
+  const { role, user } = useAppStore();
+  const [studentStats, setStudentStats] = useState({ streak: 0, currentFocus: 'Loading...', recentJournals: [] });
+
+  React.useEffect(() => {
+    if (role === 'student' && user?.id) {
+      fetch(`http://localhost:3001/api/student/dashboard?studentId=${user.id}`)
+        .then(res => res.json())
+        .then(data => setStudentStats(data))
+        .catch(console.error);
+    }
+  }, [role, user]);
 
   return (
     <motion.div 
@@ -21,12 +31,12 @@ export const Home: React.FC = () => {
         <div>
           <div className={styles.greetingRow}>
             <h1 className={styles.greeting}>
-              Good morning, {role === 'student' ? 'Alex' : role === 'teacher' ? 'Mr. Smith' : 'Admin'}
+              Good morning, {user ? user.name.split(' ')[0] : '...'}
             </h1>
             {role === 'student' && (
               <div className={styles.streakBadge}>
                 <Flame size={16} className={styles.flameIcon} />
-                <span>5 Days</span>
+                <span>{studentStats.streak} Days</span>
               </div>
             )}
           </div>
@@ -70,7 +80,7 @@ export const Home: React.FC = () => {
           </div>
           <div className={styles.envContent}>
             <div className={styles.focusPill}>Module 4 &bull; In Progress</div>
-            <h2>Current Focus: Quantum Physics</h2>
+            <h2>Current Focus: {studentStats.currentFocus}</h2>
             <p>You left off exploring subatomic particles. Vizzy has been tracking your interest in this since 8th grade! Ready to see the simulation?</p>
             <Button variant="primary" className={styles.envButton}>Resume Simulation</Button>
           </div>
