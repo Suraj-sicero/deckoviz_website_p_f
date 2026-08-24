@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
-import { Send, Image as ImageIcon, Map, Activity, Sparkles, BookOpen } from 'lucide-react';
+import { Send, Image as ImageIcon, Map, Activity, Sparkles, BookOpen, Trash2 } from 'lucide-react';
 import styles from './Vizzy.module.css';
 
 import { useAppStore } from '../store/useAppStore';
@@ -65,6 +65,29 @@ export const Vizzy: React.FC = () => {
       });
   };
 
+  const handleClearChat = () => {
+    if (!sessionId) return;
+    setIsLoading(true);
+    fetch('http://localhost:3001/api/chat/session', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionId })
+    })
+      .then(res => res.json())
+      .then(data => {
+        try {
+          setMessages(JSON.parse(data.content));
+        } catch (e) {
+          console.error("Failed to parse chat history");
+        }
+        setIsLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setIsLoading(false);
+      });
+  };
+
   return (
     <div className={styles.vizzyContainer}>
       <header className={styles.header}>
@@ -72,9 +95,14 @@ export const Vizzy: React.FC = () => {
           <Sparkles className={styles.icon} />
           <h1>Vizzy AI Companion</h1>
         </div>
-        <div className={styles.contextBadge}>
-          <BookOpen size={16} />
-          Current Context: Physics (Kinematics)
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div className={styles.contextBadge}>
+            <BookOpen size={16} />
+            Current Context: Physics (Kinematics)
+          </div>
+          <Button variant="ghost" size="sm" onClick={handleClearChat} style={{ color: 'var(--text-secondary)' }}>
+            <Trash2 size={16} />
+          </Button>
         </div>
       </header>
 

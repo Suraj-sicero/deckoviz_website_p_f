@@ -147,6 +147,24 @@ app.get('/api/chat/session', async (req, res) => {
   }
 });
 
+app.delete('/api/chat/session', async (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    const initialContent = JSON.stringify([
+      { id: Date.now().toString(), sender: 'vizzy', text: "Chat cleared! How can I help you start fresh?" }
+    ]);
+    
+    const session = await prisma.session.update({
+      where: { id: sessionId },
+      data: { content: initialContent }
+    });
+    
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error clearing chat' });
+  }
+});
+
 app.post('/api/chat/message', async (req, res) => {
   try {
     const { sessionId, message, history } = req.body;
