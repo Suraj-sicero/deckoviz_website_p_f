@@ -12,62 +12,78 @@ logger = logging.getLogger("deckoviz.firebase")
 _firebase_app = None
 _firestore_db = None
 
+
+def _has_default_credentials() -> bool:
+    try:
+        from google.auth import default as google_default
+        credentials, project_id = google_default()
+        return bool(credentials and project_id)
+    except Exception:
+        return False
+
+
+def _find_firebase_credential_file() -> str | None:
+    base_dir = os.path.dirname(__file__) or "."
+    candidates = [
+        "/etc/deckoviz/firebase-service-account.json",
+        settings.FIREBASE_CREDENTIALS_FILE,
+        "deckoviz-3ad39-firebase-adminsdk-fbsvc-5d6973e5b8.json",
+        "serviceAccountKey.json",
+    ]
+
+    try:
+        for fname in os.listdir(base_dir):
+            if fname.endswith(".json") and ("firebase" in fname.lower() or "adminsdk" in fname.lower()):
+                candidates.insert(0, fname)
+    except Exception:
+        pass
+
+    for cand in candidates:
+        if not cand:
+            continue
+        full_path = os.path.join(base_dir, cand) if not os.path.isabs(cand) else cand
+        if os.path.exists(full_path):
+            return full_path
+    return None
+
+
 def init_firebase():
     global _firebase_app, _firestore_db
     if _firebase_app:
         return _firebase_app
-    
-    try:
-        # Search for explicit service account JSON files in directory
-        base_dir = os.path.dirname(__file__) or "."
-        found_cred_file = None
-        
-        candidates = [
-            "deckoviz-3ad39-firebase-adminsdk-fbsvc-5d6973e5b8.json",
-            "serviceAccountKey.json",
-            settings.FIREBASE_CREDENTIALS_FILE
-        ]
-        
-        # Scan directory for any matching firebase json key
-        try:
-            for fname in os.listdir(base_dir):
-                if fname.endswith(".json") and ("firebase" in fname.lower() or "adminsdk" in fname.lower()):
-                    candidates.insert(0, fname)
-        except Exception:
-            pass
 
-        for cand in candidates:
-            full_path = os.path.join(base_dir, cand) if not os.path.isabs(cand) else cand
-            if os.path.exists(full_path):
-                found_cred_file = full_path
-                break
+    try:
+        found_cred_file = _find_firebase_credential_file()
 
         if settings.FIREBASE_CREDENTIALS_JSON:
             cred_dict = json.loads(settings.FIREBASE_CREDENTIALS_JSON)
             cred = credentials.Certificate(cred_dict)
             _firebase_app = firebase_admin.initialize_app(cred, {
-                'storageBucket': "deckoviz-3ad39.firebasestorage.app",
+                'storageBucket': settings.FIREBASE_STORAGE_BUCKET,
                 'databaseURL': "https://deckoviz-3ad39-default-rtdb.firebaseio.com"
             })
             logger.info("Firebase Admin initialized from JSON env variable")
         elif found_cred_file:
             cred = credentials.Certificate(found_cred_file)
             _firebase_app = firebase_admin.initialize_app(cred, {
-                'storageBucket': "deckoviz-3ad39.firebasestorage.app",
+                'storageBucket': settings.FIREBASE_STORAGE_BUCKET,
                 'databaseURL': "https://deckoviz-3ad39-default-rtdb.firebaseio.com"
             })
             logger.info(f"Firebase Admin initialized from service key file: {found_cred_file}")
+        elif _has_default_credentials():
+            _firebase_app = firebase_admin.initialize_app(options={
+                'storageBucket': settings.FIREBASE_STORAGE_BUCKET,
+                'databaseURL': "https://deckoviz-3ad39-default-rtdb.firebaseio.com"
+            })
+            logger.info("Firebase Admin initialized with default application credentials")
         else:
-            try:
-                _firebase_app = firebase_admin.get_app()
-            except ValueError:
-                _firebase_app = firebase_admin.initialize_app(options={
-                    'storageBucket': "deckoviz-3ad39.firebasestorage.app",
-                    'databaseURL': "https://deckoviz-3ad39-default-rtdb.firebaseio.com"
-                })
-                logger.info("Firebase Admin initialized with default application options")
+            logger.warning(
+                "Firebase Admin is not configured. Set FIREBASE_CREDENTIALS_JSON or mount FIREBASE_CREDENTIALS_FILE before Google Sign-In."
+            )
+            return None
     except Exception as e:
         logger.warning(f"Firebase Admin initialization notice: {e}")
+        return None
 
     try:
         _firestore_db = firestore.client()
@@ -90,14 +106,44 @@ def get_firestore_db():
     return _firestore_db
 
 def verify_token(token: str) -> dict | None:
-    """Verifies Firebase ID token."""
+    """Verifies Firebase ID token.
+
+    Performs a lazy re-initialization of the Firebase Admin SDK if it was not
+    ready at import time (e.g. the credential file or env variable was mounted
+    after process start, which is common on AWS/Docker deployments).
+    """
     if not token:
         return None
+
+    global _firebase_app
+
+    # Lazy re-init: credential file or env var may have appeared after startup.
+    if not _firebase_app:
+        logger.info("Firebase Admin not initialized yet — attempting lazy init.")
+        init_firebase()
+
+    if not _firebase_app:
+        # Still not initialized after retry — check all sources before raising.
+        if not _has_default_credentials() and not _find_firebase_credential_file() and not settings.FIREBASE_CREDENTIALS_JSON:
+            raise RuntimeError(
+                "Firebase Admin is not configured. "
+                "Place the service-account JSON at /etc/deckoviz/firebase-service-account.json "
+                "or set the FIREBASE_CREDENTIALS_JSON environment variable."
+            )
+        # Credential source exists but init still failed (e.g. bad JSON); let
+        # auth.verify_id_token produce the precise error below.
+
     try:
         decoded_token = auth.verify_id_token(token)
         return decoded_token
     except Exception as e:
         logger.debug(f"Firebase ID token verification notice: {e}")
+        if "Could not find default credentials" in str(e) or "Project ID is required" in str(e):
+            raise RuntimeError(
+                "Firebase Admin is not configured. "
+                "Place the service-account JSON at /etc/deckoviz/firebase-service-account.json "
+                "or set the FIREBASE_CREDENTIALS_JSON environment variable."
+            ) from e
         return None
 
 def create_firebase_auth_user(email: str, password: str = None, name: str = None) -> dict:

@@ -27,7 +27,7 @@ import {
   set,
   remove as rtdbRemove
 } from "firebase/database";
-import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import { API_BASE_URL } from "./constants";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4A_Irxqi3_L57u5_Rzav4QEne6ElX1LE",
@@ -45,7 +45,6 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const rtdb = getDatabase(app);
-export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 
 /** Ensure Firebase Auth is active (anonymous sign-in if needed) */
@@ -249,11 +248,8 @@ function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise
   ]);
 }
 
-/** Upload file to backend server (Cloudinary/disk) and return a persistent https:// URL.
- *  This does NOT use Firebase Storage — files are hosted on the backend.
- *  The returned URL is then stored as a LINK in Firebase RTDB/Firestore. */
+/** Upload file to FastAPI private S3 storage and return a presigned https URL. */
 export async function uploadFileToBackend(file: File): Promise<string> {
-  // Grab any available auth token for backend requests
   const tokenKeys = ["token", "authToken", "accessToken", "deckoviz_token", "jwt"];
   let authToken: string | null = null;
   for (const k of tokenKeys) {
@@ -270,22 +266,13 @@ export async function uploadFileToBackend(file: File): Promise<string> {
   const headers: Record<string, string> = {};
   if (authToken) headers["Authorization"] = `Bearer ${authToken}`;
 
-  // Try backend upload endpoints in order
-  const endpoints = [
-    `https://deckoviz-web-f.onrender.com/api/upload`,
-    `https://deckoviz-web-f.onrender.com/api/home/media`
-  ];
-
+  const endpoints = [`${API_BASE_URL}/api/upload`, `${API_BASE_URL}/api/home/media`];
   const errors: string[] = [];
 
   for (const endpoint of endpoints) {
     try {
       const res = await withTimeout(
-        fetch(endpoint, {
-          method: "POST",
-          headers,
-          body: formData,
-        }),
+        fetch(endpoint, { method: "POST", headers, body: formData }),
         20000,
         `Upload to ${endpoint}`
       );
@@ -306,38 +293,31 @@ export async function uploadFileToBackend(file: File): Promise<string> {
     }
   }
 
-  // Last resort: try Firebase Storage with timeout
-  try {
-    const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "") || "upload";
-    const fileRef = storageRef(storage, `uploads/${Date.now()}_${safeName}`);
-    await withTimeout(uploadBytes(fileRef, file), 15000, "Firebase Storage upload");
-    const downloadUrl = await withTimeout(getDownloadURL(fileRef), 10000, "Firebase Storage getDownloadURL");
-    if (downloadUrl && downloadUrl.startsWith("https://")) {
-      return downloadUrl;
-    }
-  } catch (e: any) {
-    errors.push(`Firebase Storage: ${e.message || e}`);
-  }
-
-  throw new Error(`Upload failed. Tried all endpoints:\\n${errors.join("\\n")}`);
+  throw new Error(`Upload failed. Tried all endpoints:\n${errors.join("\n")}`);
 }
 
-/** LEGACY: Upload via Firebase Storage (kept for backward compatibility, adds timeout) */
+/** @deprecated Use uploadFileToBackend — Firebase Storage is no longer used. */
 export async function uploadFirebaseFile(file: File): Promise<string> {
-  const safeName = file.name.replace(/[^a-zA-Z0-9.\-_]/g, "") || "upload";
-  const fileRef = storageRef(storage, `uploads/${Date.now()}_${safeName}`);
-
-  await withTimeout(uploadBytes(fileRef, file), 15000, "Firebase Storage upload");
-  const downloadUrl = await withTimeout(getDownloadURL(fileRef), 10000, "Firebase Storage getDownloadURL");
-
-  if (!downloadUrl || !downloadUrl.startsWith("https://")) {
-    throw new Error("Firebase Storage returned an invalid download URL.");
-  }
-
-  return downloadUrl;
+  return uploadFileToBackend(file);
 }
 
-/** Add new artwork image directly into Firebase Realtime DB & Firestore & Persistent Local Cache */
+async function backendAuthHeaders(): Promise<Record<string, string>> {
+  const tokenKeys = ["token", "authToken", "accessToken", "deckoviz_token", "jwt"];
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  for (const k of tokenKeys) {
+    const v = localStorage.getItem(k);
+    if (v && v !== "undefined" && v !== "null") {
+      const cleaned = v.replace(/^["']|["']$/g, "").replace(/^Bearer\s+/i, "").trim();
+      if (cleaned) {
+        headers["Authorization"] = `Bearer ${cleaned}`;
+        break;
+      }
+    }
+  }
+  return headers;
+}
+
+/** Register media metadata via FastAPI (PostgreSQL). File bytes must already be in S3. */
 export async function addFirebaseMedia(mediaData: {
   title: string;
   url: string;
@@ -353,11 +333,12 @@ export async function addFirebaseMedia(mediaData: {
   const payload = {
     id: `upload_${Date.now()}`,
     ...mediaData,
+    fileName: mediaData.title,
+    mediaUrl: mediaData.url,
     createdAt: timestamp,
     source: "Master Art Vault"
   };
 
-  // 1. Always save in persistent local storage backup so item NEVER disappears on page refresh
   try {
     const existingStr = localStorage.getItem("deckoviz_global_uploaded_media");
     const existingArr = existingStr ? JSON.parse(existingStr) : [];
@@ -367,33 +348,25 @@ export async function addFirebaseMedia(mediaData: {
     console.warn("localStorage media backup failed:", e);
   }
 
-  // Ensure Firebase authentication is present if rules require auth
-  await ensureFirebaseAuth();
-
-  let createdId = payload.id;
-
-  // 2. Persist in Firebase Realtime Database
-  try {
-    const mediaRef = rtdbRef(rtdb, "media");
-    const newRef = push(mediaRef);
-    await set(newRef, payload);
-    if (newRef.key) createdId = newRef.key;
-  } catch (e) {
-    console.warn("Firebase RTDB media write notice:", e);
+  const headers = await backendAuthHeaders();
+  const res = await fetch(`${API_BASE_URL}/api/enterprise/media`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      url: mediaData.url,
+      mediaUrl: mediaData.url,
+      fileName: mediaData.title,
+      title: mediaData.title,
+    }),
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to register media metadata: ${res.status}`);
   }
-
-  // 3. Persist in Firestore
-  try {
-    const docRef = await addDoc(collection(db, "media"), payload);
-    if (docRef.id) createdId = docRef.id;
-  } catch (e) {
-    console.warn("Firestore media write notice:", e);
-  }
-
-  return { id: createdId, success: true };
+  const saved = await res.json();
+  return { id: saved.id || payload.id, success: true };
 }
 
-/** Add new music track directly into Firebase Realtime DB & Firestore & Local Cache */
+/** Persist music track metadata via FastAPI (PostgreSQL). Audio file must already be in S3. */
 export async function addFirebaseMusic(musicData: {
   title: string;
   artist?: string;
@@ -417,7 +390,6 @@ export async function addFirebaseMusic(musicData: {
     source: "Deckoviz Music Vault"
   };
 
-  // 1. Persistent Local Storage Backup
   try {
     const existingStr = localStorage.getItem("deckoviz_global_uploaded_music");
     const existingArr = existingStr ? JSON.parse(existingStr) : [];
@@ -427,37 +399,18 @@ export async function addFirebaseMusic(musicData: {
     console.warn("localStorage music backup notice:", e);
   }
 
-  // Ensure Firebase authentication
-  await ensureFirebaseAuth();
-
-  let createdId = payload.id;
-
-  // Prepare database-safe payload (truncate oversized base64 to avoid Firestore 1MB document limit)
-  const dbPayload = { ...payload };
-  if (dbPayload.audioUrl && dbPayload.audioUrl.length > 800000) {
-    // Large file: store metadata reference in Firebase DB
-    dbPayload.audioUrl = "https://actions.google.com/sounds/v1/ambiences/rain_heavy.ogg";
+  const headers = await backendAuthHeaders();
+  const res = await fetch(`${API_BASE_URL}/api/home/music`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    throw new Error(`Failed to save music metadata: ${res.status}`);
   }
-
-  // 2. Write to Firebase Realtime Database
-  try {
-    const musicRef = rtdbRef(rtdb, "music");
-    const newRef = push(musicRef);
-    await set(newRef, dbPayload);
-    if (newRef.key) createdId = newRef.key;
-  } catch (e) {
-    console.warn("Firebase RTDB music write notice:", e);
-  }
-
-  // 3. Write to Firestore
-  try {
-    const docRef = await addDoc(collection(db, "music"), dbPayload);
-    if (docRef.id) createdId = docRef.id;
-  } catch (e) {
-    console.warn("Firestore music write notice:", e);
-  }
-
-  return { id: createdId, success: true, track: payload };
+  const saved = await res.json();
+  const track = { ...payload, ...(saved || {}) };
+  return { id: track.id || payload.id, success: true, track };
 }
 
 /** Delete media item from Firebase RTDB, Firestore, and local cache */
@@ -522,10 +475,9 @@ export async function deleteFirebaseMusic(trackId: string): Promise<{ success: b
   return { success: true };
 }
 
-/** Fetch all music tracks across Firebase Realtime DB & Firestore */
+/** Fetch music tracks from FastAPI (PostgreSQL), with local cache fallback. */
 export async function fetchFirebaseMusic() {
   const musicList: any[] = [];
-  const rtdbRefInstance = rtdbRef(rtdb);
 
   const addMusicUnique = (track: any) => {
     const url = track.audioUrl || track.url || track.soundUrl;
@@ -546,7 +498,6 @@ export async function fetchFirebaseMusic() {
     }
   };
 
-  // Read persistent local storage backup
   try {
     const localMusicStr = localStorage.getItem("deckoviz_global_uploaded_music");
     if (localMusicStr) {
@@ -557,30 +508,18 @@ export async function fetchFirebaseMusic() {
     }
   } catch (e) {}
 
-  // Default curated tracks fallback
-  const defaultTracks = [
-    { id: "mus_101", title: "Midnight Piano Concerto No. 2", artist: "Deckoviz Symphony", audioUrl: "https://actions.google.com/sounds/v1/ambiences/rain_heavy.ogg", genre: "Classical", duration: "04:12" },
-    { id: "mus_102", title: "Ambient Cosmic Waves", artist: "Suraj Art Ensemble", audioUrl: "https://actions.google.com/sounds/v1/ambiences/fireplace.ogg", genre: "Ambient", duration: "03:50" },
-    { id: "mus_103", title: "Grand Hotel Lounge Jazz", artist: "Deckoviz Curations", audioUrl: "https://actions.google.com/sounds/v1/ambiences/coffee_shop.ogg", genre: "Smooth Jazz", duration: "05:15" }
-  ];
-  defaultTracks.forEach((t) => addMusicUnique(t));
-
-  // Read Firebase Realtime DB & Firestore music nodes
   try {
-    const [rtdbSnapResult, firestoreSnapResult] = await Promise.allSettled([
-      get(child(rtdbRefInstance, "music")),
-      getDocs(collection(db, "music"))
-    ]);
-
-    if (rtdbSnapResult.status === "fulfilled" && rtdbSnapResult.value.exists()) {
-      const val = rtdbSnapResult.value.val();
-      Object.keys(val).forEach((k) => addMusicUnique({ id: k, ...val[k] }));
+    const headers = await backendAuthHeaders();
+    const res = await fetch(`${API_BASE_URL}/api/home/music`, { headers });
+    if (res.ok) {
+      const tracks = await res.json();
+      if (Array.isArray(tracks)) {
+        tracks.forEach((track) => addMusicUnique(track));
+      }
     }
-
-    if (firestoreSnapResult.status === "fulfilled") {
-      firestoreSnapResult.value.docs.forEach((docSnap) => addMusicUnique({ id: docSnap.id, ...docSnap.data() }));
-    }
-  } catch (e) {}
+  } catch (e) {
+    console.warn("Music fetch notice:", e);
+  }
 
   return musicList;
 }

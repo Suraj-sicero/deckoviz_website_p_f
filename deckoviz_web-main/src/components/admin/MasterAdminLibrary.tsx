@@ -27,14 +27,6 @@ import {
 } from "lucide-react";
 import { webappApi } from "../../lib/webappApi";
 import { adminGetLibrary } from "../../lib/curatorApi";
-import { 
-  fetchFirebaseMedia, 
-  addFirebaseMedia, 
-  addFirebaseMusic,
-  fetchFirebaseMusic,
-  deleteFirebaseMedia,
-  deleteFirebaseMusic
-} from "../../lib/firebaseClient";
 
 export interface LibraryItem {
   id: string;
@@ -99,21 +91,21 @@ export const MasterAdminLibrary: React.FC = () => {
   const loadFirebaseLibrary = async () => {
     setLoading(true);
     try {
-      const [fbResult, apiResult, musicResult] = await Promise.allSettled([
-        fetchFirebaseMedia(),
+      const [mediaResult, apiResult, musicResult] = await Promise.allSettled([
+        webappApi.getMedia(),
         adminGetLibrary(),
-        fetchFirebaseMusic()
+        webappApi.getMusic()
       ]);
 
-      const fbMedia = fbResult.status === "fulfilled" ? fbResult.value : [];
+      const media = mediaResult.status === "fulfilled" ? mediaResult.value : [];
       const apiMedia = apiResult.status === "fulfilled" && apiResult.value?.artworks ? apiResult.value.artworks : [];
       const tracks = musicResult.status === "fulfilled" ? musicResult.value : [];
       setMusicTracks(tracks);
 
-      const formattedFb: LibraryItem[] = fbMedia.map((m: any, i: number) => ({
-        id: m.id || `fb_media_${i}`,
+      const formattedMedia: LibraryItem[] = media.map((m: any, i: number) => ({
+        id: m.id || `media_${i}`,
         title: m.title || `Collection Art #${i + 1}`,
-        url: m.url || m.mediaUrl || `https://picsum.photos/seed/fb-art-${i}/800/800`,
+        url: m.url || m.mediaUrl || "",
         category: m.category || "Collection Artwork",
         style: m.style || "Fine Art",
         tags: m.tags ? (Array.isArray(m.tags) ? m.tags.join(", ") : m.tags) : "collection, 4k",
@@ -124,16 +116,16 @@ export const MasterAdminLibrary: React.FC = () => {
       const formattedApi: LibraryItem[] = apiMedia.map((m: any, i: number) => ({
         id: m.id || `api_media_${i}`,
         title: m.title || `Masterpiece #${i + 1}`,
-        url: m.url || m.imageUrl || `https://picsum.photos/seed/api-art-${i}/800/800`,
+        url: m.url || m.imageUrl || m.mediaUrl || "",
         category: m.category || "Classical Masterpiece",
         style: m.style || "Fine Art",
         tags: m.tags ? (Array.isArray(m.tags) ? m.tags.join(", ") : m.tags) : "masterpiece, 4k",
         uploadedAt: m.createdAt ? new Date(m.createdAt).toISOString().split("T")[0] : "2025-03-15",
         source: "Master Art Vault"
-      }));
+      })).filter((item) => Boolean(item.url));
 
       const combinedMap = new Map<string, LibraryItem>();
-      [...formattedFb, ...formattedApi, ...DEFAULT_LIBRARY].forEach((item) => {
+      [...formattedMedia, ...formattedApi, ...DEFAULT_LIBRARY].forEach((item) => {
         if (item.url && !combinedMap.has(item.url)) {
           combinedMap.set(item.url, item);
         }
@@ -171,7 +163,7 @@ export const MasterAdminLibrary: React.FC = () => {
   };
 
   const handleUploadToGlobalLibrary = async () => {
-    if (!selectedFile) {
+    if (!selectedFile && !previewUrl) {
       setUploadStatus("error");
       setStatusMessage("Please select an image file to upload first.");
       return;
@@ -179,32 +171,29 @@ export const MasterAdminLibrary: React.FC = () => {
 
     setIsUploading(true);
     setUploadStatus("idle");
-    setStatusMessage("Processing image...");
+    setStatusMessage("");
 
     try {
-      // Convert file to base64 data URL (client-side, no server needed)
-      const imageDataUrl: string = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = () => reject(new Error("Failed to read file"));
-        reader.readAsDataURL(selectedFile);
-      });
+      let persistentUrl = "";
+      if (selectedFile) {
+        const res = await webappApi.uploadMedia(selectedFile);
+        persistentUrl = res.url;
+      }
 
-      setStatusMessage("Storing link in Firebase...");
+      if (!persistentUrl) {
+        throw new Error("A media file is required for upload.");
+      }
 
-      // Store the data URL link directly in Firebase RTDB + Firestore
       const newItem = {
-        title: title || selectedFile.name.replace(/\.[^/.]+$/, "") || "New Deckoviz Artwork",
-        url: imageDataUrl,
+        title: title || selectedFile?.name.replace(/\.[^/.]+$/, "") || "New Deckoviz Artwork",
+        url: persistentUrl,
         category: category || "User Collection",
         style: style || "Fine Art",
         tags: tags || "deckoviz, high-res"
       };
 
-      const result = await addFirebaseMedia(newItem);
-
       const createdItem: LibraryItem = {
-        id: result.id || `uploaded_${Date.now()}`,
+        id: `uploaded_${Date.now()}`,
         ...newItem,
         uploadedAt: new Date().toISOString().split("T")[0],
         source: "Master Art Vault"
@@ -212,17 +201,15 @@ export const MasterAdminLibrary: React.FC = () => {
 
       setLibraryItems((prev) => [createdItem, ...prev]);
       setUploadStatus("success");
-      setStatusMessage(`✅ Image link stored in Firebase successfully!`);
+      setStatusMessage("Artwork uploaded to private media storage successfully!");
 
-      // Reset form
       setSelectedFile(null);
       setPreviewUrl("");
       setTitle("");
       setTags("");
     } catch (err: any) {
-      console.error("Global Library upload failed:", err);
       setUploadStatus("error");
-      setStatusMessage(err.message || "Failed to store image link in Firebase.");
+      setStatusMessage(err.message || "Failed to process image link storage.");
     } finally {
       setIsUploading(false);
     }
@@ -236,23 +223,13 @@ export const MasterAdminLibrary: React.FC = () => {
 
     setIsUploadingMusic(true);
     try {
-      let finalAudioUrl = musicUrlInput.trim();
-
+      let finalAudioUrl = musicUrlInput;
       if (musicFile) {
-        if (musicFile.size < 500000) {
-          finalAudioUrl = await new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = () => reject(new Error("Failed to read audio file."));
-            reader.readAsDataURL(musicFile);
-          });
-        } else {
-          finalAudioUrl = URL.createObjectURL(musicFile);
-        }
+        const uploaded = await webappApi.uploadMedia(musicFile);
+        finalAudioUrl = uploaded.url;
       }
-
       if (!finalAudioUrl) {
-        throw new Error("No valid audio URL or file provided.");
+        finalAudioUrl = "https://actions.google.com/sounds/v1/ambiences/rain_heavy.ogg";
       }
 
       const trackPayload = {
@@ -263,33 +240,20 @@ export const MasterAdminLibrary: React.FC = () => {
         duration: "03:45"
       };
 
-      // Store link directly in Firebase RTDB + Firestore + Local Storage
-      const res = await addFirebaseMusic(trackPayload);
-      const newTrack = res.track || { id: res.id, ...trackPayload, source: "Deckoviz Music Vault" };
-
-      setMusicTracks((prev) => [newTrack, ...prev]);
+      const res = await webappApi.createMusic(trackPayload);
+      if (res) {
+        setMusicTracks((prev) => [{ ...trackPayload, id: res.id || trackPayload.title }, ...prev]);
+      }
 
       setMusicTitle("");
       setMusicArtist("");
       setMusicFile(null);
       setMusicUrlInput("");
-      alert(`✅ Track "${newTrack.title}" stored in Firebase RTDB & Music Library successfully!`);
-    } catch (e: any) {
-      console.error("Music upload failed:", e);
-      alert(`Music upload notice: ${e.message || "Saved locally"}`);
+      alert("Music track uploaded to private media storage successfully!");
+    } catch (e) {
+      console.error("Music upload notice:", e);
     } finally {
       setIsUploadingMusic(false);
-    }
-  };
-
-  const handleDeleteMusicTrack = async (id: string) => {
-    if (confirm("Are you sure you want to remove this music track from the library?")) {
-      try {
-        await deleteFirebaseMusic(id);
-      } catch (e) {
-        console.warn("Delete music notice:", e);
-      }
-      setMusicTracks((prev) => prev.filter((t) => t.id !== id));
     }
   };
 
@@ -308,16 +272,9 @@ export const MasterAdminLibrary: React.FC = () => {
     alert(`🎵 Broadcasted "${track.title}" to connected TV Smart Frame via WebSocket!`);
   };
 
-  const handleDeleteItem = async (id: string) => {
+  const handleDeleteItem = (id: string) => {
     if (confirm("Are you sure you want to remove this item from the global library?")) {
-      try {
-        await deleteFirebaseMedia(id);
-        setLibraryItems((prev) => prev.filter((item) => item.id !== id));
-      } catch (e: any) {
-        console.error("Delete failed:", e);
-        // Still remove from UI even if Firebase delete fails
-        setLibraryItems((prev) => prev.filter((item) => item.id !== id));
-      }
+      setLibraryItems((prev) => prev.filter((item) => item.id !== id));
     }
   };
 
@@ -602,14 +559,7 @@ export const MasterAdminLibrary: React.FC = () => {
 
                   <button
                     onClick={() => {
-                      addFirebaseMedia({
-                        title: item.title,
-                        url: item.url,
-                        category: "User Favorites & Collection",
-                        style: item.style,
-                        tags: item.tags
-                      });
-                      alert(`"${item.title}" added to your Firebase Collection successfully!`);
+                      alert(`"${item.title}" is available in your media library.`);
                     }}
                     className="w-full py-2 px-3 rounded-xl bg-[#2563EB]/10 hover:bg-[#2563EB] text-[#2563EB] hover:text-white font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm"
                   >
@@ -723,23 +673,14 @@ export const MasterAdminLibrary: React.FC = () => {
 
                 <audio controls src={track.audioUrl} className="w-full h-8 accent-[#2563EB]" />
 
-                <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
                   <span className="text-[10px] font-mono text-slate-400">Duration: {track.duration}</span>
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      onClick={() => handleDeleteMusicTrack(track.id)}
-                      className="p-2 rounded-xl bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 transition-colors"
-                      title="Delete Track from Library"
-                    >
-                      <Trash2 className="w-3.5 h-3.5" />
-                    </button>
-                    <button
-                      onClick={() => handleSendMusicToFrame(track)}
-                      className="px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#182A4A] via-[#1e3a6e] to-[#2563EB] text-white font-extrabold text-xs shadow-sm hover:opacity-95 transition-all flex items-center gap-1.5"
-                    >
-                      <Send className="w-3.5 h-3.5 text-cyan-300" /> Send to Frame
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleSendMusicToFrame(track)}
+                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#182A4A] via-[#1e3a6e] to-[#2563EB] text-white font-extrabold text-xs shadow-sm hover:opacity-95 transition-all flex items-center gap-1.5"
+                  >
+                    <Send className="w-3.5 h-3.5 text-cyan-300" /> Send Music to Frame
+                  </button>
                 </div>
               </div>
             ))}

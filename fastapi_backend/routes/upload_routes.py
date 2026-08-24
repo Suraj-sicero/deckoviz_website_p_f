@@ -1,11 +1,11 @@
-import uuid
-import base64
+import asyncio
 from typing import Optional
-from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Request
+from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Request, status
 from auth import get_current_user, FirebaseUser
-from postgres_store import fs_save_media
+from postgres_store import create_s3_media, fs_save_media
+from services.s3_storage import MediaValidationError, get_media_storage, sanitize_filename, validate_media
 
-router = APIRouter(tags=["Media Uploads - Firebase Firestore"])
+router = APIRouter(tags=["Media Uploads - private S3"])
 
 @router.post("/upload")
 @router.post("/home/media")
@@ -18,58 +18,43 @@ async def upload_media(
     source: Optional[str] = Form(None),
     current_user: FirebaseUser = Depends(get_current_user)
 ):
+    uid = current_user.firebase_uid or current_user.id
     try:
-        uid = current_user.firebase_uid or current_user.id
-        media_url = None
-        file_title = fileName or "Artwork"
-        file_size = 0
-        content_type = "image/png"
-
-        # 1. JSON Payload containing direct image URL
+        # Existing clients can still register a trusted external URL. File uploads
+        # always go to private S3; data URLs and placeholder fallbacks are rejected.
         if request.headers.get("content-type", "").startswith("application/json"):
-            json_body = await request.json()
-            url_val = json_body.get("url") or json_body.get("mediaUrl") or json_body.get("imageUrl")
-            if url_val:
-                media_url = url_val
-                file_title = json_body.get("fileName") or json_body.get("title") or "Saved Image URL"
-                prompt = json_body.get("prompt") or prompt
-                source = json_body.get("source") or source
+            payload = await request.json()
+            payload["prompt"] = payload.get("prompt") or prompt
+            payload["isGenerated"] = bool(payload.get("isGenerated") or source == "vizzy_chat")
+            return fs_save_media(uid, payload)
+        if url:
+            return fs_save_media(uid, {"url": url, "fileName": fileName, "prompt": prompt, "isGenerated": source == "vizzy_chat"})
+        if not file:
+            raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="A media file or URL is required")
 
-        # 2. Form payload containing direct image URL
-        if not media_url and url:
-            media_url = url
-
-        # 3. File upload -> convert to base64 Data URL or persistent public URL
-        if not media_url and file:
-            contents = await file.read()
-            file_title = file.filename or "Uploaded Media"
-            content_type = file.content_type or "image/png"
-            file_size = len(contents)
-
-            if "image" in content_type:
-                b64 = base64.b64encode(contents).decode("utf-8")
-                media_url = f"data:{content_type};base64,{b64}"
-            else:
-                media_url = f"https://picsum.photos/seed/{uuid.uuid4()}/800/800"
-
-        if not media_url:
-            media_url = f"https://picsum.photos/seed/{uuid.uuid4()}/800/800"
-
-        media_doc = {
-            "id": f"media_{uuid.uuid4().hex[:12]}",
-            "userId": uid,
-            "url": media_url,
-            "mediaUrl": media_url,
-            "fileName": file_title,
-            "mediaType": content_type,
-            "fileSize": file_size,
-            "isGenerated": bool(prompt or source == "vizzy_chat"),
-            "prompt": prompt
-        }
-
-        # Save document in Firebase Firestore
-        saved = fs_save_media(uid, media_doc)
-
-        return saved
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to process media storage: {str(e)}")
+        content_type = validate_media(file.content_type, file.size)
+        filename = sanitize_filename(fileName or file.filename)
+        storage = get_media_storage()
+        object_key, checksum, size_bytes = await asyncio.to_thread(
+            storage.upload, user_id=uid, source=file.file, filename=filename,
+            content_type=content_type, size=file.size,
+        )
+        try:
+            return await create_s3_media(
+                uid, object_key=object_key, bucket=storage.bucket, mime_type=content_type,
+                size_bytes=size_bytes, checksum_sha256=checksum, filename=filename,
+                prompt=prompt, is_generated=bool(prompt or source == "vizzy_chat"),
+            )
+        except Exception:
+            await asyncio.to_thread(storage.delete, object_key)
+            raise
+    except MediaValidationError as exc:
+        status_code = status.HTTP_413_REQUEST_ENTITY_TOO_LARGE if "size" in str(exc).lower() else status.HTTP_415_UNSUPPORTED_MEDIA_TYPE
+        raise HTTPException(status_code=status_code, detail=str(exc)) from exc
+    except HTTPException:
+        raise
+    except Exception:
+        raise HTTPException(status_code=500, detail="Failed to store media")
+    finally:
+        if file:
+            await file.close()

@@ -10,6 +10,7 @@ from postgres_store import (
     fs_delete_collection,
     fs_get_media,
     fs_save_media,
+    fs_delete_media,
     fs_get_curations,
     fs_create_curation,
     fs_get_events,
@@ -356,6 +357,13 @@ def get_enterprise_media(current_user: FirebaseUser = Depends(get_current_user))
 def save_enterprise_media(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     return fs_save_media(uid, payload)
+
+@router.delete("/media/{media_id}")
+def delete_enterprise_media(media_id: str, current_user: FirebaseUser = Depends(get_current_user)):
+    uid = current_user.firebase_uid or current_user.id
+    if not fs_delete_media(uid, media_id):
+        raise HTTPException(status_code=404, detail="Media not found")
+    return {"success": True}
 
 @router.get("/favorites")
 def get_enterprise_favorites(current_user: FirebaseUser = Depends(get_current_user)):

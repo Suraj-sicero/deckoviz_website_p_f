@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { getUserCollections, saveUserCollections } from "../lib/userStorage";
+import { auth, firebaseSignOut, googleProvider, signInWithPopup } from "../lib/firebaseClient";
 
 import { API_BASE_URL } from "../lib/constants";
 
@@ -24,6 +25,7 @@ interface AuthContextType {
   openAuthModal: (forced?: boolean) => void;
   closeAuthModal: () => void;
   login: (token: string, user: User) => void;
+  signInWithGoogle: () => Promise<void>;
   logout: () => void;
   refreshProfile: () => Promise<void>;
   updateUser: (updatedFields: Partial<User>) => void;
@@ -156,6 +158,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  /**
+   * Firebase proves the Google identity; FastAPI then exchanges that proof for
+   * the Deckoviz JWT used by every authenticated API request.
+   */
+  const signInWithGoogle = async () => {
+    const credential = await signInWithPopup(auth, googleProvider);
+    const firebaseUser = credential.user;
+    const idToken = await firebaseUser.getIdToken();
+
+    try {
+      const response = await axios.post(
+        `${API_URL}/signin`,
+        { id_token: idToken },
+        { timeout: 8000 }
+      );
+      const backendToken = response.data?.token;
+      const backendUser = response.data?.user;
+      if (!backendToken || !backendUser) {
+        throw new Error("The authentication service did not return a session.");
+      }
+      await login(backendToken, backendUser);
+    } catch (error) {
+      // Do not leave Firebase authenticated when the app session was not made.
+      await firebaseSignOut(auth).catch(() => undefined);
+      throw error;
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -168,6 +198,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setToken(null);
     setUser(null);
     setIsAuthModalForced(false);
+    void firebaseSignOut(auth).catch(() => undefined);
     window.dispatchEvent(new CustomEvent("deckoviz-user-changed", { detail: null }));
     window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
   };
@@ -209,7 +240,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, isAuthModalOpen, isAuthModalForced, openAuthModal, closeAuthModal, login, logout, refreshProfile, updateUser, deductCredits }}>
+    <AuthContext.Provider value={{ user, token, isAuthModalOpen, isAuthModalForced, openAuthModal, closeAuthModal, login, signInWithGoogle, logout, refreshProfile, updateUser, deductCredits }}>
       {children}
     </AuthContext.Provider>
   );

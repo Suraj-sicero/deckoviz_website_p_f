@@ -20,6 +20,7 @@ class SigninPayload(BaseModel):
     email: Optional[str] = None
     id_token: Optional[str] = None
     password: Optional[str] = None
+    firebase_uid: Optional[str] = None
 
 @router.post("/signup")
 async def signup(payload: SignupPayload):
@@ -49,7 +50,14 @@ async def signup(payload: SignupPayload):
 async def signin(payload: SigninPayload):
     # If Firebase ID token is provided
     if payload.id_token:
-        decoded = verify_token(payload.id_token)
+        try:
+            decoded = verify_token(payload.id_token)
+        except RuntimeError as exc:
+            raise HTTPException(
+                status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+                detail=str(exc),
+            ) from exc
+
         if decoded:
             uid = decoded.get("uid")
             email = decoded.get("email") or payload.email or f"{uid[:8]}@deckoviz.app"
@@ -58,6 +66,11 @@ async def signin(payload: SigninPayload):
             user_dict = await ensure_application_user(uid, email, name)
             access_token = create_access_token({"uid": uid, "sub": uid, "email": email, "name": name})
             return {"token": access_token, "user": user_dict}
+
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid or expired Google sign-in token.",
+        )
 
     if not payload.email or not payload.password:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email and password are required for signin")

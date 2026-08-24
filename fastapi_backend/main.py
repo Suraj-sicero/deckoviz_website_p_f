@@ -1,4 +1,5 @@
 import logging
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,7 +14,6 @@ from routes.pairing_routes import router as pairing_router
 from routes.queue_routes import router as queue_router
 from routes.curator_routes import router as curator_router
 from routes.ws_routes import router as ws_router
-from routes.promptLibraryRoutes import router as prompt_library_router
 from database import close_database, database_is_healthy
 
 # Configure logging
@@ -30,7 +30,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
-    description="FastAPI Backend for Home Webapp & Enterprise Webapp with Firebase Auth & Firebase Storage",
+    description="FastAPI Backend for Home Webapp & Enterprise Webapp with Firebase Auth and private S3 media storage",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
@@ -57,7 +57,6 @@ app.include_router(pairing_router, prefix=settings.API_V1_STR)
 app.include_router(queue_router, prefix=settings.API_V1_STR)
 app.include_router(curator_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
-app.include_router(prompt_library_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 def root():
@@ -73,7 +72,10 @@ async def health_check():
     connected = await database_is_healthy()
     return {
         "status": "healthy" if connected else "degraded",
-        "database": "connected" if connected else "unavailable"
+        "database": "connected" if connected else "unavailable",
+        "mediaStorage": "s3",
+        "s3Bucket": settings.S3_MEDIA_BUCKET,
+        "deployCommit": os.getenv("RENDER_GIT_COMMIT") or os.getenv("GIT_COMMIT") or "unknown",
     }
 
 if __name__ == "__main__":
