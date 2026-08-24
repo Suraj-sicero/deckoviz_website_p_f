@@ -123,10 +123,20 @@ const AuthModal: React.FC<{ allowClose?: boolean }> = ({ allowClose }) => {
       await signInWithGoogle();
     } catch (err: any) {
       console.error("Google OAuth error:", err);
-      if (err?.code === "auth/unauthorized-domain" || err?.message?.includes("unauthorized-domain")) {
+      if (
+        err?.code === "auth/popup-closed-by-user" ||
+        err?.code === "auth/cancelled-popup-request" ||
+        err?.message?.includes("popup-closed-by-user")
+      ) {
+        setError("");
+      } else if (err?.code === "auth/unauthorized-domain" || err?.message?.includes("unauthorized-domain")) {
         setError("This domain is not authorized for Google Sign-In.");
+      } else if (err?.code === "auth/popup-blocked" || err?.message?.includes("popup-blocked")) {
+        setError("Pop-up blocked. Please allow pop-ups for this site and try again.");
+      } else if (err?.code === "auth/network-request-failed" || err?.message?.includes("network")) {
+        setError("Network error. Please check your internet connection.");
       } else {
-        setError("Google Sign-In could not create a Deckoviz session. Please try again.");
+        setError(`Google Sign-In could not create a session (${err?.code || "Unknown Error"}). Please try again.`);
       }
     } finally {
       setLoading(false);
