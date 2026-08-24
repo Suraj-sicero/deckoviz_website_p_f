@@ -36,13 +36,13 @@ export const Vizzy: React.FC = () => {
     }
   }, [user]);
 
-  const handleSend = () => {
-    if (!inputValue.trim() || !sessionId || isLoading) return;
+  const handleSend = (textParam?: string) => {
+    const messageText = typeof textParam === 'string' ? textParam : inputValue;
+    if (!messageText.trim() || !sessionId || isLoading) return;
 
-    const messageText = inputValue;
     const newMessage: Message = { id: Date.now().toString(), sender: 'student', text: messageText };
     setMessages(prev => [...prev, newMessage]);
-    setInputValue('');
+    if (typeof textParam !== 'string') setInputValue('');
     setIsLoading(true);
 
     fetch('http://localhost:3001/api/chat/message', {
@@ -90,7 +90,16 @@ export const Vizzy: React.FC = () => {
                   className={msg.sender === 'vizzy' ? styles.messageVizzy : styles.messageStudent}
                 >
                   <div className={styles.messageBubble}>
-                    {msg.text}
+                    {msg.text.split(/(?:!\[(.*?)\]\((.*?)\))/g).map((part, i, arr) => {
+                      if (i % 3 === 0) return <span key={i}>{part}</span>;
+                      if (i % 3 === 1) return null;
+                      const alt = arr[i - 1];
+                      return (
+                        <div key={i} style={{ marginTop: '1rem', marginBottom: '1rem', borderRadius: '8px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)' }}>
+                          <img src={part} alt={alt} style={{ width: '100%', height: 'auto', display: 'block' }} />
+                        </div>
+                      );
+                    })}
                   </div>
                   
                   {msg.visualContext === 'physics-trajectory' && (
@@ -126,9 +135,9 @@ export const Vizzy: React.FC = () => {
 
           <div className={styles.inputArea}>
             <div className={styles.suggestedActions}>
-              <Button variant="ghost" size="sm"><ImageIcon size={14} /> Show visually</Button>
-              <Button variant="ghost" size="sm"><Activity size={14} /> Practice with me</Button>
-              <Button variant="ghost" size="sm"><Map size={14} /> Explain differently</Button>
+              <Button variant="ghost" size="sm" onClick={() => handleSend("Can you show this to me visually?")}><ImageIcon size={14} /> Show visually</Button>
+              <Button variant="ghost" size="sm" onClick={() => handleSend("Let's practice this with some questions.")}><Activity size={14} /> Practice with me</Button>
+              <Button variant="ghost" size="sm" onClick={() => handleSend("Can you explain this differently?")}><Map size={14} /> Explain differently</Button>
             </div>
             
             <div className={styles.inputBox}>

@@ -170,13 +170,18 @@ app.post('/api/chat/message', async (req, res) => {
     const ai = new GoogleGenAI({ apiKey });
     
     // Format history for Gemini
-    const systemInstruction = "You are Vizzy, an encouraging, Socratic AI tutor for a student. Guide them to answers using questions rather than just giving the direct answer. Keep responses concise. Focus on the user's latest message but use history for context.";
+    const systemInstruction = `You are Vizzy, an encouraging, Socratic AI tutor for a student. Guide them to answers using questions rather than just giving the direct answer. Keep responses concise. Focus on the user's latest message but use history for context.
+    
+IMPORTANT VISUAL RULE: If the student asks to "show visually", "generate an image", or requests visual context, you MUST return a Markdown image using the Pollinations AI service.
+Format: ![description](https://image.pollinations.ai/prompt/detailed-visual-description?width=800&height=400&nologo=true)
+Example: ![A futuristic cyber city with neon lights](https://image.pollinations.ai/prompt/A%20futuristic%20cyber%20city%20with%20neon%20lights?width=800&height=400&nologo=true)
+Always URL-encode the prompt in the URL. Keep the image description highly detailed for the best result.`;
     
     const formattedHistory = history.map((msg: any) => `${msg.sender === 'vizzy' ? 'Vizzy' : 'Student'}: ${msg.text}`).join('\n');
     const promptWithHistory = `Past Conversation:\n${formattedHistory}\n\nStudent's New Message: ${message}`;
     
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3.6-flash',
       contents: promptWithHistory,
       config: {
         systemInstruction: systemInstruction,
