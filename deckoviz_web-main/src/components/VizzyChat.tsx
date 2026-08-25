@@ -385,6 +385,7 @@ const VizzyChat: React.FC = () => {
                 </div>
               </div>
 
+              {/* Note: If icons appear doubled/overlapping during local development, this is a known Vite HMR refresh glitch. A simple browser page reload (F5) resolves it. */}
               <div className="relative flex items-center gap-1">
                 <button
                   onClick={() => setIsPromptLibraryOpen(!isPromptLibraryOpen)}
