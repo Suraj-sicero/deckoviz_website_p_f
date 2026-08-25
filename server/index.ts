@@ -129,7 +129,7 @@ app.get('/api/chat/session', async (req, res) => {
     if (!session) {
       // Initialize with a welcome message
       const initialContent = JSON.stringify([
-        { id: '1', sender: 'vizzy', text: "Hi! I'm Vizzy, your AI companion. I'm connected to the live backend now! What would you like to explore today?" }
+        { id: '1', sender: 'vizzy', text: "Hi Alex! I noticed you were looking at polynomial functions earlier. Would you like to visualize how changing the coefficients affects the curve?" }
       ]);
       session = await prisma.session.create({
         data: {
@@ -150,9 +150,9 @@ app.get('/api/chat/session', async (req, res) => {
 app.delete('/api/chat/session', async (req, res) => {
   try {
     const { sessionId, userName } = req.body;
-    const greetingName = userName ? userName.split(' ')[0] : 'there';
+    const greetingName = userName ? userName.split(' ')[0] : 'Alex';
     const initialContent = JSON.stringify([
-      { id: Date.now().toString(), sender: 'vizzy', text: `Hey ${greetingName}, how can I help you?` }
+      { id: Date.now().toString(), sender: 'vizzy', text: `Hi ${greetingName}! I noticed you were looking at polynomial functions earlier. Would you like to visualize how changing the coefficients affects the curve?` }
     ]);
     
     const session = await prisma.session.update({
@@ -189,8 +189,14 @@ app.post('/api/chat/message', async (req, res) => {
     const ai = new GoogleGenAI({ apiKey });
     
     // Format history for Gemini
-    const systemInstruction = `You are Vizzy, an encouraging, Socratic AI tutor for a student. Guide them to answers using questions rather than just giving the direct answer. Keep responses concise. Focus on the user's latest message but use history for context.
-    
+    const systemInstruction = `You are Vizzy, an encouraging, Socratic AI tutor for a student. 
+
+CORE RULES (AS PER BUILD NOTES):
+1. NEVER just give the direct answer or explain the concept yourself immediately. You must make the user do the work.
+2. Guide the student to answers using strategic, Socratic questions. Break down complex problems into smaller, manageable questions.
+3. If the user is completely stuck or asks for the answer directly, you may provide a gentle hint or help them solve it step-by-step, but always encourage them to keep trying.
+4. Keep your responses concise and focused on the user's latest message, but use chat history for context.
+
 IMPORTANT VISUAL RULE: If the student asks to "show visually", "generate an image", or requests visual context, you MUST return a Markdown image using the Pollinations AI service.
 Format: ![description](https://image.pollinations.ai/prompt/detailed-visual-description?width=800&height=400&nologo=true)
 Example: ![A futuristic cyber city with neon lights](https://image.pollinations.ai/prompt/A%20futuristic%20cyber%20city%20with%20neon%20lights?width=800&height=400&nologo=true)
