@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
 import { API_BASE_URL } from "../lib/constants"
 import { Loader2, AlertCircle, Search } from "lucide-react"
 
@@ -36,7 +35,7 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const navigate = useNavigate()
+  const [retryCount, setRetryCount] = useState(0)
 
   useEffect(() => {
     async function fetchPromptLibrary() {
@@ -62,14 +61,14 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
         }
       } catch (err: any) {
         console.error("Error fetching prompt library:", err)
-        setError(err.message || "Failed to load prompt library")
+        setError(`Error fetching from ${API_BASE_URL}/api/prompt-library: ${err.message || String(err)}`)
       } finally {
         setIsLoading(false)
       }
     }
 
     fetchPromptLibrary()
-  }, [API_BASE_URL])
+  }, [API_BASE_URL, retryCount])
 
   // Compute filtered prompts for the selected vertical
   const selectedData = verticalsData.find((v) => v.vertical === selectedVertical)
@@ -90,18 +89,18 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
 
 
   return (
-    <div className="min-h-screen bg-[var(--vc-bg-base)] text-[var(--vc-text)]">
+    <div className="w-full h-full flex flex-col bg-[#1a1f3c] text-white">
       {/* Search Bar at top */}
-      <div className="p-6 border-b border-[var(--vc-divider)] bg-[var(--vc-glass-bg)] backdrop-blur-xl">
+      <div className="p-4 border-b border-white/5 bg-[#1a1f3c]">
         <div className="max-w-2xl mx-auto">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--vc-text-muted)] size-4" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8a91be] size-4" />
             <input
               type="text"
               placeholder="Search prompts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--vc-glass-border)] bg-transparent text-[var(--vc-text)] placeholder-[var(--vc-text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--vc-accent-text)] focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 rounded-xl border border-white/10 bg-white/5 text-white placeholder-[#5e6691] focus:outline-none focus:ring-2 focus:ring-[#4F75FF]/20 focus:border-[#4F75FF]/50 transition-all duration-200"
               style={{ fontFamily: "'Inter', sans-serif" }}
             />
           </div>
@@ -109,17 +108,17 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
       </div>
 
       {/* Vertical Tabs */}
-      <div className="p-6 bg-[var(--vc-glass-bg)] backdrop-blur-xl border-b border-[var(--vc-divider)]">
+      <div className="p-4 bg-[#1a1f3c] border-b border-white/5">
         <div className="max-w-2xl mx-auto">
           <div className="flex flex-wrap gap-2">
             {VERTICAL_TABS.map((tab) => (
               <button
                 key={tab.value}
                 onClick={() => setSelectedVertical(tab.value)}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors border ${
                   selectedVertical === tab.value
-                    ? "bg-[var(--vc-glass-hover)] text-[var(--vc-accent-text)]"
-                    : "text-[var(--vc-text-muted)] hover:text-[var(--vc-text)]"
+                    ? "bg-[#4F75FF]/20 text-[#4F75FF] border-[#4F75FF]/30"
+                    : "text-[#8a91be] hover:text-white hover:bg-white/5 border-transparent"
                 }`}
                 aria-selected={selectedVertical === tab.value}
               >
@@ -131,32 +130,32 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
       </div>
 
       {/* Prompt Cards Section */}
-      <div className="p-6 bg-[var(--vc-glass-bg)] backdrop-blur-xl min-h-[300px]">
+      <div className="p-4 bg-[#1a1f3c] flex-1 overflow-y-auto min-h-[300px]">
         {isLoading ? (
           <div className="flex items-center justify-center py-24">
-            <Loader2 className="size-6 animate-spin text-[var(--vc-accent-text)]" />
-            <span className="ml-3 text-[var(--vc-text-muted)]">Loading prompts...</span>
+            <Loader2 className="size-6 animate-spin text-[#4F75FF]" />
+            <span className="ml-3 text-[#8a91be]">Loading prompts...</span>
           </div>
         ) : error ? (
-          <div className="p-8 text-center text-[var(--vc-text-muted)]">
-            <AlertCircle className="size-6 mx-auto mb-3" />
-            <p>{error}</p>
+          <div className="p-8 text-center text-[#8a91be] bg-[#252a50]/40 rounded-2xl border border-white/5">
+            <AlertCircle className="size-6 mx-auto mb-3 text-[#8a91be]" />
+            <p className="text-sm font-medium leading-relaxed max-w-md mx-auto">{error}</p>
             <button
-              onClick={() => navigate(-1)} // fallback - would need proper back navigation
-              className="mt-3 inline-block text-[var(--vc-accent-text)] hover:underline"
+              onClick={() => setRetryCount((prev) => prev + 1)}
+              className="mt-4 px-4 py-2 rounded-lg bg-gradient-to-br from-[#4F75FF] to-[#9B51E0] text-white text-xs font-bold hover:shadow-[0_0_15px_rgba(79,117,255,0.4)] transition-all duration-200"
             >
               Try again
             </button>
           </div>
         ) : selectedVertical === null ? (
-          <div className="flex min-h-[200px] items-center justify-center text-[var(--vc-text-muted)]">
+          <div className="flex min-h-[200px] items-center justify-center text-[#8a91be]">
             Select a vertical to begin
           </div>
         ) : filteredPrompts.length === 0 ? (
-          <div className="p-8 text-center text-[var(--vc-text-muted)]">
+          <div className="p-8 text-center text-[#8a91be]">
             <Search className="size-6 mx-auto mb-3" />
             <p>No prompts found matching "{searchQuery}".</p>
-            <p className="mt-2 text-sm">Try adjusting your search term.</p>
+            <p className="mt-2 text-sm text-[#5e6691]">Try adjusting your search term.</p>
           </div>
         ) : (
           <>
@@ -164,17 +163,17 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
               const categories = getCategories()
               if (categories.length <= 1) {
                 return (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 gap-3">
                     {filteredPrompts.map((prompt) => (
                       <div
                         key={prompt.id}
-                        className="group rounded-2xl overflow-hidden border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-xl shadow-sm hover:border-cyan-400/30 transition-all cursor-pointer p-4 flex flex-col gap-2"
+                        className="group rounded-xl border border-white/5 bg-[#252a50]/70 hover:bg-[#252a50] hover:border-[#4F75FF]/30 transition-all cursor-pointer p-4 flex flex-col gap-2 shadow-sm"
                         onClick={() => onSelectPrompt(prompt)}
                       >
-                        <h3 className="font-semibold text-[var(--vc-text)] truncate line-clamp-1">
+                        <h3 className="font-semibold text-white truncate line-clamp-1">
                           {prompt.title}
                         </h3>
-                        <p className="text-xs text-[var(--vc-text-faint)] line-clamp-3">
+                        <p className="text-xs text-[#8a91be] line-clamp-3 leading-relaxed">
                           {prompt.prompt_text}
                         </p>
                       </div>
@@ -203,24 +202,24 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
               return orderedCategories.map((category) => {
                 const promptsInCat = grouped[category]
                 return (
-                  <div key={category} className="mb-8">
-                    <h3 className="text-sm font-semibold uppercase tracking-wider text-[var(--vc-text-muted)] mb-4 flex items-center gap-2">
+                  <div key={category} className="mb-6">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#5e6691] mb-3 mt-4 flex items-center gap-2">
                       <span>{category}</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--vc-glass-border)]/50 text-[var(--vc-text-faint)] font-normal">
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-[#8a91be] font-normal">
                         {promptsInCat.length}
                       </span>
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-3">
                       {promptsInCat.map((prompt) => (
                         <div
                           key={prompt.id}
-                          className="group rounded-2xl overflow-hidden border border-[var(--vc-glass-border)] bg-[var(--vc-glass-bg)] backdrop-blur-xl shadow-sm hover:border-cyan-400/30 transition-all cursor-pointer p-4 flex flex-col gap-2"
+                          className="group rounded-xl border border-white/5 bg-[#252a50]/70 hover:bg-[#252a50] hover:border-[#4F75FF]/30 transition-all cursor-pointer p-4 flex flex-col gap-2 shadow-sm"
                           onClick={() => onSelectPrompt(prompt)}
                         >
-                          <h4 className="font-semibold text-[var(--vc-text)] truncate line-clamp-1">
+                          <h4 className="font-semibold text-white truncate line-clamp-1">
                             {prompt.title}
                           </h4>
-                          <p className="text-xs text-[var(--vc-text-faint)] line-clamp-3">
+                          <p className="text-xs text-[#8a91be] line-clamp-3 leading-relaxed">
                             {prompt.prompt_text}
                           </p>
                         </div>
