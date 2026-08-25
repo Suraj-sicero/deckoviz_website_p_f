@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List, Any
 from datetime import datetime
+import re
 
 # --- Auth & User Schemas ---
 class UserBase(BaseModel):
@@ -146,3 +147,17 @@ class DailyQueueSlotResponse(DailyQueueSlotCreate):
     class Config:
         from_attributes = True
         populate_by_name = True
+
+# --- Prompt Library Schemas ---
+class PromptTemplate(BaseModel):
+    id: str
+    vertical: str
+    category: str
+    title: str
+    prompt_text: str
+    placeholders: List[str] = []
+
+def extract_placeholders(text: str) -> List[str]:
+    """Helper to extract [placeholders] from a prompt template string."""
+    return re.findall(r'\[(.*?)\]', text)
+
