@@ -348,8 +348,6 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
             element={
               <>
                 <Hero />
-
-
                 <TransformWalls />
                 <Features />
                 <Benefits />

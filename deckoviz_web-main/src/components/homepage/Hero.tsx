@@ -49,13 +49,49 @@ const ThreeBackground: React.FC = () => {
     const posArray = new Float32Array(particlesCount * 3)
     const colorArray = new Float32Array(particlesCount * 3)
 
-    // Violet to cyan gradient colors
-    const colors = [
-      new THREE.Color(0x8B5CF6), // Violet
-      new THREE.Color(0xA78BFA), // Light violet
-      new THREE.Color(0x06B6D4), // Cyan
+    // Create circle texture for round particles instead of squares
+    const createCircleTexture = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = 64
+      canvas.height = 64
+      const ctx = canvas.getContext('2d')
+      if (ctx) {
+        const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32)
+        gradient.addColorStop(0, 'rgba(255, 255, 255, 1)')
+        gradient.addColorStop(0.7, 'rgba(255, 255, 255, 0.95)')
+        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)')
+        ctx.fillStyle = gradient
+        ctx.beginPath()
+        ctx.arc(32, 32, 32, 0, Math.PI * 2)
+        ctx.fill()
+      }
+      const texture = new THREE.CanvasTexture(canvas)
+      texture.needsUpdate = true
+      return texture
+    }
+
+    const circleTexture = createCircleTexture()
+
+    // Color distribution: 45% Navy Blue, 45% Teal, 10% Royal/Dark Purple (as in logo)
+    const navyBlueColors = [
+      new THREE.Color(0x0F2C59), // Deep Navy
+      new THREE.Color(0x1E3A8A), // Navy Blue
+      new THREE.Color(0x172554), // Dark Navy
+      new THREE.Color(0x1D4ED8), // Royal Navy Blue
+    ]
+
+    const tealColors = [
       new THREE.Color(0x14B8A6), // Teal
-      new THREE.Color(0x6366F1), // Indigo
+      new THREE.Color(0x06B6D4), // Cyan / Teal
+      new THREE.Color(0x0D9488), // Medium Teal
+      new THREE.Color(0x0F766E), // Deep Teal
+    ]
+
+    const royalPurpleColors = [
+      new THREE.Color(0x4C1D95), // Royal Dark Purple
+      new THREE.Color(0x581C87), // Deep Purple
+      new THREE.Color(0x6B21A8), // Logo Dark Purple
+      new THREE.Color(0x7E22CE), // Vivid Dark Purple
     ]
 
     for (let i = 0; i < particlesCount * 3; i += 3) {
@@ -64,8 +100,17 @@ const ThreeBackground: React.FC = () => {
       posArray[i + 1] = (Math.random() - 0.5) * 15
       posArray[i + 2] = (Math.random() - 0.5) * 10
 
-      // Color
-      const color = colors[Math.floor(Math.random() * colors.length)]
+      // Color mix based on ratio: 45% Navy, 45% Teal, 10% Royal Dark Purple
+      const rand = Math.random()
+      let color: THREE.Color
+      if (rand < 0.45) {
+        color = navyBlueColors[Math.floor(Math.random() * navyBlueColors.length)]
+      } else if (rand < 0.90) {
+        color = tealColors[Math.floor(Math.random() * tealColors.length)]
+      } else {
+        color = royalPurpleColors[Math.floor(Math.random() * royalPurpleColors.length)]
+      }
+
       colorArray[i] = color.r
       colorArray[i + 1] = color.g
       colorArray[i + 2] = color.b
@@ -80,13 +125,15 @@ const ThreeBackground: React.FC = () => {
       new THREE.BufferAttribute(colorArray, 3)
     )
 
-    // Particle material
+    // Particle material with circle map
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.03,
+      size: 0.06,
+      map: circleTexture,
       vertexColors: true,
       transparent: true,
-      opacity: 0.8,
-      blending: THREE.AdditiveBlending,
+      opacity: 0.85,
+      depthWrite: false,
+      blending: THREE.NormalBlending,
       sizeAttenuation: true
     })
 
@@ -161,6 +208,7 @@ const ThreeBackground: React.FC = () => {
         containerRef.current.removeChild(rendererRef.current.domElement)
       }
       
+      circleTexture.dispose()
       particlesGeometry.dispose()
       particlesMaterial.dispose()
       rendererRef.current?.dispose()
@@ -284,7 +332,9 @@ const Hero: React.FC = () => {
   const [leftImageIndex, setLeftImageIndex] = useState(0)
   const [rightImageIndex, setRightImageIndex] = useState(0)
 
-  const frameImages = Array.from({ length: 22 }, (_, i) => `/images/herol (${i + 1}).png`)
+  const frameImages = Array.from({ length: 22 }, (_, i) => i + 1)
+    .filter((num) => num !== 16 && num !== 18)
+    .map((num) => `/images/herol (${num}).png`)
 
   const rightImages = [
     "/images/righthero1.png",
@@ -417,9 +467,11 @@ const Hero: React.FC = () => {
         {/* Subheading */}
         <p className="text-center text-gray-600 text-base sm:text-lg mb-4 sm:mb-5 max-w-3xl leading-relaxed px-2">
           Deckoviz DAS Portal is an{" "}
-          <span className="text-blue-600 font-semibold">AI-powered art frame</span>{" "}
+          <span className="inline-block font-semibold bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
+            AI-powered art frame
+          </span>{" "}
           that learns your taste and evolves with you, to paint your{" "}
-          <span className="text-indigo-600 font-semibold">
+          <span className="inline-block font-semibold bg-gradient-to-r from-indigo-950 to-blue-600 bg-clip-text text-transparent">
             inner world, memories, and imagination
           </span>{" "}
           on your walls as your evolving{" "}
@@ -437,7 +489,7 @@ const Hero: React.FC = () => {
             <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 group-hover:scale-105 transition-all flex-shrink-0">
               <GraduationCap className="w-3.5 h-3.5" />
             </span>
-            <span className="text-xs sm:text-sm font-medium text-slate-700 group-hover:text-indigo-600 transition-colors">
+            <span className="text-xs sm:text-sm font-medium text-indigo-900 group-hover:text-indigo-600 transition-colors">
               For Deckoviz for Schools and Learning, click here.
             </span>
           </Link>
@@ -449,7 +501,7 @@ const Hero: React.FC = () => {
             <span className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 group-hover:scale-105 transition-all flex-shrink-0">
               <Hotel className="w-3.5 h-3.5" />
             </span>
-            <span className="text-xs sm:text-sm font-medium text-slate-700 group-hover:text-indigo-600 transition-colors">
+            <span className="text-xs sm:text-sm font-medium text-indigo-900 group-hover:text-indigo-600 transition-colors">
               For Deckoviz for Restaurants and Hotels, click here.
             </span>
           </Link>

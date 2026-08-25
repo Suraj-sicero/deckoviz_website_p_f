@@ -381,7 +381,9 @@ const FAQ: React.FC = () => {
                 return (
                   <div
                     key={index}
-                    className={`group relative rounded-2xl border transition-all duration-500 ${
+                    onMouseEnter={() => setActiveIndex(index)}
+                    onMouseLeave={() => setActiveIndex(null)}
+                    className={`group relative rounded-2xl border transition-all duration-500 cursor-pointer ${
                       isOpen
                         ? "bg-white/35 border-white/60 shadow-[0_20px_60px_rgba(37,99,235,0.2),inset_0_1px_0_rgba(255,255,255,0.8)]"
                         : "bg-white/22 border-white/40 shadow-[0_8px_32px_rgba(31,38,135,0.1),inset_0_1px_0_rgba(255,255,255,0.6)] hover:bg-white/30 hover:shadow-[0_16px_40px_rgba(37,99,235,0.15)] hover:border-white/55"
