@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
@@ -20,8 +20,17 @@ export const Vizzy: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isLoading]);
+
+  useEffect(() => {
     if (user?.id) {
       fetch(`http://localhost:3001/api/chat/session?userId=${user.id}`)
         .then(res => res.json())
@@ -118,7 +127,7 @@ export const Vizzy: React.FC = () => {
                   className={msg.sender === 'vizzy' ? styles.messageVizzy : styles.messageStudent}
                 >
                   <div className={styles.messageBubble}>
-                    {msg.text.split(/(?:!\[(.*?)\]\((.*?)\))/g).map((part, i, arr) => {
+                    {(msg.text || '').split(/(?:!\[(.*?)\]\((.*?)\))/g).map((part, i, arr) => {
                       if (i % 3 === 0) return <span key={i}>{part}</span>;
                       if (i % 3 === 1) return null;
                       const alt = arr[i - 1];
@@ -159,6 +168,7 @@ export const Vizzy: React.FC = () => {
                 </motion.div>
               )}
             </AnimatePresence>
+            <div ref={messagesEndRef} />
           </div>
 
           <div className={styles.inputArea}>

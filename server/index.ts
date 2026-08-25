@@ -127,9 +127,8 @@ app.get('/api/chat/session', async (req, res) => {
     });
 
     if (!session) {
-      // Initialize with a welcome message
       const initialContent = JSON.stringify([
-        { id: '1', sender: 'vizzy', text: "Hi Alex! I noticed you were looking at polynomial functions earlier. Would you like to visualize how changing the coefficients affects the curve?" }
+        { id: '1', sender: 'vizzy', text: "Hi! I noticed you were looking at Physics (Kinematics) earlier. Would you like to visualize how a cannonball's trajectory works?" }
       ]);
       session = await prisma.session.create({
         data: {
@@ -150,9 +149,8 @@ app.get('/api/chat/session', async (req, res) => {
 app.delete('/api/chat/session', async (req, res) => {
   try {
     const { sessionId, userName } = req.body;
-    const greetingName = userName ? userName.split(' ')[0] : 'Alex';
     const initialContent = JSON.stringify([
-      { id: Date.now().toString(), sender: 'vizzy', text: `Hi ${greetingName}! I noticed you were looking at polynomial functions earlier. Would you like to visualize how changing the coefficients affects the curve?` }
+      { id: Date.now().toString(), sender: 'vizzy', text: "Hi! I noticed you were looking at Physics (Kinematics) earlier. Would you like to visualize how a cannonball's trajectory works?" }
     ]);
     
     const session = await prisma.session.update({
@@ -197,7 +195,8 @@ CORE RULES (AS PER BUILD NOTES):
 3. If the user is completely stuck or asks for the answer directly, you may provide a gentle hint or help them solve it step-by-step, but always encourage them to keep trying.
 4. Keep your responses concise and focused on the user's latest message, but use chat history for context.
 
-IMPORTANT VISUAL RULE: If the student asks to "show visually", "generate an image", or requests visual context, you MUST return a Markdown image using the Pollinations AI service.
+IMPORTANT VISUAL RULE: If the student asks to "show visually", "generate an image", or requests visual context, YOU MUST GENERATE A VISUAL. This OVERRIDES the Socratic rules. 
+You MUST return a Markdown image using the Pollinations AI service.
 Format: ![description](https://image.pollinations.ai/prompt/detailed-visual-description?width=800&height=400&nologo=true)
 Example: ![A futuristic cyber city with neon lights](https://image.pollinations.ai/prompt/A%20futuristic%20cyber%20city%20with%20neon%20lights?width=800&height=400&nologo=true)
 Always URL-encode the prompt in the URL. Keep the image description highly detailed for the best result.`;
@@ -206,15 +205,31 @@ Always URL-encode the prompt in the URL. Keep the image description highly detai
     const promptWithHistory = `Past Conversation:\n${formattedHistory}\n\nStudent's New Message: ${message}`;
     
     const response = await ai.models.generateContent({
-      model: 'gemini-3.6-flash',
+      model: 'gemini-flash-lite-latest',
       contents: promptWithHistory,
       config: {
         systemInstruction: systemInstruction,
       }
     });
 
-    const aiText = response.text || "I'm not sure how to respond to that.";
-    const aiMessage = { id: Date.now().toString(), sender: 'vizzy', text: aiText };
+    let aiText = response.text || "I'm not sure how to respond to that.";
+    
+    // Restore the mock CSS animation if requested, but only if the topic is actually physics
+    const historyText = history.map((msg: any) => msg.text).join(' ').toLowerCase() + ' ' + message.toLowerCase();
+    const isPhysicsContext = historyText.includes('trajectory') || historyText.includes('gravity') || historyText.includes('cannonball') || historyText.includes('projectile') || historyText.includes('physics');
+    const isVisualRequest = message.toLowerCase().includes('visually') || message.toLowerCase().includes('animation') || message.toLowerCase().includes('image') || message.toLowerCase().includes('show');
+    
+    // If it is a visual request but the AI forgot the image, gently append a generic one, but prefer AI's
+    if (isVisualRequest && !aiText.includes('![') && !aiText.includes('pollinations.ai')) {
+       // Just append an image based on the LAST AI MESSAGE context
+       const topicMatch = historyText.match(/physics|biology|math|history|science/i);
+       const topic = topicMatch ? topicMatch[0] : 'educational topic';
+       aiText += `\n\n![Generated Visual](https://image.pollinations.ai/prompt/${encodeURIComponent(topic + ' detailed diagram educational')}?width=800&height=400&nologo=true)`;
+    }
+
+    const visualContext = (isVisualRequest && isPhysicsContext) ? 'physics-trajectory' : undefined;
+    
+    const aiMessage = { id: Date.now().toString(), sender: 'vizzy', text: aiText, visualContext };
     const newHistory = [...history, { id: Date.now().toString(), sender: 'student', text: message }, aiMessage];
     
     // Save to DB
@@ -226,7 +241,8 @@ Always URL-encode the prompt in the URL. Keep the image description highly detai
     res.json(aiMessage);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error processing AI response.' });
+    const fallbackMessage = { id: Date.now().toString(), sender: 'vizzy', text: "I'm sorry, I'm having trouble connecting right now. Please try again later!" };
+    res.json(fallbackMessage);
   }
 });
 
