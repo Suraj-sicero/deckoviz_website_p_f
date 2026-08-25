@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Shape of Your Life — Elinity</title>
+  <meta name="description"
+    content="A personal life story visualization tool. Build a visual emotional landscape of your milestone moves, relationships, turning points, losses, and quiet years.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #EEE6F8;
+      --bg2: #D5E6F7;
+      --navy: #2B1E70;
+      --navy-muted: rgba(43, 30, 112, 0.68);
+      --brand-blue: #2B54EA;
+      --brand-blue-hover: #1D44D8;
+      --cyan: #06B6D4;
+      --purple: #8B5CF6;
+      --rose: #F43F5E;
+      --amber: #F59E0B;
+      --emerald: #10B981;
+      --glass: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.92);
+      --glass-shadow: 0 20px 48px rgba(43, 30, 112, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      color: var(--navy);
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    canvas#bgCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px;
+      width: min(92%, 1040px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 9999px;
+      box-shadow: 0 12px 36px rgba(43, 30, 112, 0.08);
+      transition: opacity 0.4s;
+    }
+
+    header.hide-element {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+
+    .elinity-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .elinity-brand img {
+      height: 28px;
+      width: auto;
+    }
+
+    .elinity-brand .title {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy);
+    }
+
+    .elinity-brand .title span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--brand-blue);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-action {
+      font-size: 0.75rem;
+      color: var(--brand-blue);
+      cursor: pointer;
+      background: rgba(43, 84, 234, 0.06);
+      border: 1px solid rgba(43, 84, 234, 0.18);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all .25s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none;
+    }
+
+    .btn-action:hover,
+    .btn-action.active {
+      color: #fff;
+      background: var(--brand-blue);
+      border-color: var(--brand-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43, 84, 234, 0.3);
+    }
+
+    .exit-frame-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100000;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(43, 84, 234, 0.25);
+      color: var(--navy);
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s, transform 0.2s, background 0.2s;
+      box-shadow: 0 8px 24px rgba(43, 84, 234, 0.18);
+    }
+
+    .exit-frame-btn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .exit-frame-btn:hover {
+      background: var(--brand-blue);
+      color: #fff;
+      border-color: var(--brand-blue);
+      transform: scale(1.05);
+    }
+
+    .frame-title-overlay {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 100000;
+      background: rgba(15, 20, 30, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 14px 22px;
+      border-radius: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      color: #FFF;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform: translateY(-8px);
+    }
+
+    .frame-title-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .frame-title-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #FFF;
+    }
+
+    .frame-subtitle-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+    }
+
+    .frame-legend-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 100000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .frame-legend-toggle.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .legend-btn {
+      background: rgba(15, 20, 30, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #FFF;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transition: all 0.22s ease;
+    }
+
+    .legend-btn:hover {
+      background: rgba(30, 40, 60, 0.95);
+      transform: translateY(-2px);
+    }
+
+    .legend-popover {
+      position: absolute;
+      bottom: 46px;
+      right: 0;
+      width: 280px;
+      background: rgba(15, 20, 30, 0.85);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 16px;
+      color: #FFF;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px) scale(0.95);
+      transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .frame-legend-toggle:hover .legend-popover,
+    .legend-popover.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .legend-popover-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .legend-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 96px 20px 60px;
+      max-width: 1080px;
+      margin: 0 auto;
+      transition: opacity 0.4s ease;
+    }
+
+    .page.hide-element {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+      max-width: 720px;
+    }
+
+    .eyebrow {
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brand-blue);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4.2vw, 2.7rem);
+      line-height: 1.15;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+
+    h1 span.accent,
+    h1 span.accent-serif {
+      font-style: italic;
+      font-weight: 700;
+      background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 0.94rem;
+      color: var(--navy-muted);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .life-card {
+      background: var(--glass);
+      backdrop-filter: blur(28px) saturate(140%);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--glass-shadow);
+      width: 100%;
+      max-width: 980px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .life-card.frame-active {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+      padding: 20px !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      z-index: 99999 !important;
+      background: #06031a !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      margin: 0 !important;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 1.8 / 1;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(43, 30, 112, 0.12);
+      box-shadow: inset 0 0 40px rgba(43, 30, 112, 0.03);
+      overflow: hidden;
+    }
+
+    .life-card.frame-active .canvas-wrapper {
+      max-width: min(90vw, 1100px) !important;
+      aspect-ratio: 2 / 1 !important;
+      background: rgba(15, 11, 42, 0.95) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    canvas#lifeCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    /* Prompt Form Controls */
+    .form-box {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 8px 24px rgba(43, 30, 112, 0.06);
+    }
+
+    .life-card.frame-active .form-box {
+      display: none !important;
+    }
+
+    .form-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .inputs-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .input-field {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      padding: 8px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(43, 84, 234, 0.2);
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--navy);
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--brand-blue);
+    }
+
+    .btn-add {
+      font-size: 0.78rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      background: var(--brand-blue);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-add:hover {
+      background: var(--brand-blue-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Share & Export Modal Overlay */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100010;
+      background: rgba(10, 6, 28, 0.7);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 28px;
+      width: min(90%, 460px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(16px);
+      transition: transform 0.3s ease;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--navy);
+    }
+
+    .modal-backdrop.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--navy-muted);
+    }
+
+    .modal-body {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--navy-muted);
+      margin-bottom: 20px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-primary {
+      background: var(--brand-blue);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: #1a42cc;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(43, 30, 112, 0.08);
+      color: var(--navy);
+      border: 1px solid rgba(43, 30, 112, 0.15);
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(43, 30, 112, 0.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="frame-title-overlay" id="frameTitleOverlay">
+    <div class="frame-title-text">The Shape of Your Life</div>
+    <div class="frame-subtitle-text">Personal Life Story Topography · Milestones, Transitions & Emotional Terrain</div>
+  </div>
+
+  <div class="frame-legend-toggle" id="frameLegendToggle">
+    <button class="legend-btn" id="legendToggleBtn">📖 Category Key</button>
+    <div class="legend-popover" id="legendPopover">
+      <div class="legend-popover-title">Life Categories</div>
+      <div class="legend-item"><span class="legend-color" style="background:#2B54EA;"></span> 🗺️ <strong>Moves &
+          Beginnings</strong></div>
+      <div class="legend-item"><span class="legend-color" style="background:#F43F5E;"></span> 💖 <strong>Relationships &
+          Connections</strong></div>
+      <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> 🏆 <strong>Turning Points
+          & Feats</strong></div>
+      <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> 🌧️ <strong>Hardships &
+          Losses</strong></div>
+      <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> 🌿 <strong>Quiet
+          In-Between Years</strong></div>
+    </div>
+  </div>
+
+  <header id="header">
+    <div class="elinity-brand">
+      <img src="elinity-logo.png" alt="Elinity Logo">
+      <div class="title"> <span></span></div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-action" id="soundBtn">🔊 Audio On</button>
+      <button class="btn-action" id="shareBtn">✉️ Share</button>
+      <button class="btn-action" id="exportBtn">🎨 Export Art</button>
+      <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+    </div>
+  </header>
+
+  <button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+  <!-- Share Modal -->
+  <div class="modal-backdrop" id="shareModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">✉️ Share Life Landscape</div>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="sharePreviewText">Share your emotional life landscape and milestones with loved ones.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="copyShareLinkBtn">📋 Copy Link</button>
+        <button class="btn-primary" id="emailShareBtn">✉️ Send Email</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Dynamic Art Modal -->
+  <div class="modal-backdrop" id="exportModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">🎨 Export Dynamic Art</div>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        Export your personal emotional life story landscape for display on a Deckoviz digital frame.
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="exportPngBtn">📷 Still Art (PNG)</button>
+        <button class="btn-primary" id="exportWebmBtn">🎬 Dynamic Video (WebM)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="mainUi">
+    <div class="hero">
+      <div class="eyebrow">Elinity · Personal Life Story</div>
+      <h1>The Shape of <span class="accent">Your Life</span></h1>
+      <p class="subtitle">Render your life story not as a flat corporate resume, but as a living emotional landscape.
+        Guided prompts help you capture moves, bonds, triumphs, losses, and quiet peaceful years.</p>
+    </div>
+
+    <div class="life-card" id="lifeCard">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <canvas id="lifeCanvas"></canvas>
+      </div>
+
+      <div class="form-box">
+        <div class="form-title">
+          <span>📍 Add a Life Milestone or Era:</span>
+        </div>
+        <div class="inputs-row">
+          <input type="number" class="input-field" id="inAge" placeholder="Age (e.g. 24)" style="width: 100px;">
+          <select class="input-field" id="inCat">
+            <option value="move">🗺️ Beginnings & Moves</option>
+            <option value="love">💖 Relationships & Bonds</option>
+            <option value="peak">🏆 Turning Points & Feats</option>
+            <option value="grief">🌧️ Hardships & Losses</option>
+            <option value="quiet">🌿 Quiet In-Between Years</option>
+          </select>
+          <input type="text" class="input-field" id="inLabel" placeholder="Title (e.g. Moved to San Francisco)"
+            style="flex: 1; min-width: 220px;">
+          <button class="btn-add" id="btnAddMilestone">Add Milestone</button>
+        </div>
+      </div>
+
+      <div class="dasport-cta">
+        🖼️ <strong>DASPort Memory Preview:</strong> Your personal visual timeline can be rendered into a high-res
+        digital art print or stored in your private DASPort memory vault.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Sample Initial Personal Milestones
+    let milestones = [
+      { age: 0, cat: 'move', label: 'Birthplace & Beginnings', val: 5, color: '#2B54EA' },
+      { age: 7, cat: 'quiet', label: 'First Favorite Book & Childhood Summers', val: 7, color: '#10B981' },
+      { age: 18, cat: 'peak', label: 'Leaving for University', val: 8, color: '#F59E0B' },
+      { age: 22, cat: 'move', label: 'First Apartment & Career Start', val: 6, color: '#2B54EA' },
+      { age: 26, cat: 'love', label: 'Met Maya & Deep Friendship', val: 9, color: '#F43F5E' },
+      { age: 29, cat: 'grief', label: 'Loss of Grandmother', val: 3, color: '#8B5CF6' },
+      { age: 32, cat: 'peak', label: 'Founded Creative Studio', val: 9.5, color: '#F59E0B' }
+    ];
+
+    let maxAge = 35;
+    let hoverIndex = -1;
+    let isFrameMode = false;
+
+    const canvas = document.getElementById('lifeCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      drawLandscape();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawLandscape() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const paddingTop = 50;
+      const paddingBottom = 60;
+      const paddingLeft = 50;
+      const paddingRight = 50;
+      const chartW = w - paddingLeft - paddingRight;
+      const chartH = h - paddingTop - paddingBottom;
+
+      // Sort milestones by age
+      milestones.sort((a, b) => a.age - b.age);
+
+      // Points
+      const pts = milestones.map(m => {
+        const x = paddingLeft + (m.age / maxAge) * chartW;
+        const y = paddingTop + chartH - (m.val / 10) * chartH;
+        return { x, y, m };
+      });
+
+      // Draw Topographic Contours / Gradient Fill under Curve
+      const grad = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + chartH);
+      if (isFrameMode) {
+        grad.addColorStop(0, 'rgba(139, 92, 246, 0.35)');
+        grad.addColorStop(1, 'rgba(43, 84, 234, 0.0)');
+      } else {
+        grad.addColorStop(0, 'rgba(43, 84, 234, 0.25)');
+        grad.addColorStop(1, 'rgba(244, 63, 94, 0.02)');
+      }
+
+      if (pts.length > 1) {
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 0; i < pts.length - 1; i++) {
+          const xc = (pts[i].x + pts[i + 1].x) / 2;
+          const yc = (pts[i].y + pts[i + 1].y) / 2;
+          ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+        }
+        ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+        ctx.lineTo(pts[pts.length - 1].x, paddingTop + chartH);
+        ctx.lineTo(pts[0].x, paddingTop + chartH);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Terrain Stroke Line
+        ctx.beginPath();
+        ctx.moveTo(pts[0].x, pts[0].y);
+        for (let i = 0; i < pts.length - 1; i++) {
+          const xc = (pts[i].x + pts[i + 1].x) / 2;
+          const yc = (pts[i].y + pts[i + 1].y) / 2;
+          ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+        }
+        ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+        ctx.strokeStyle = '#2B54EA';
+        ctx.lineWidth = 3.5 * window.devicePixelRatio;
+        ctx.stroke();
+      }
+
+      // Draw Milestone Pin Dots & Labels
+      pts.forEach((pt, i) => {
+        const isHover = i === hoverIndex;
+
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, (isHover ? 9 : 6) * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.fillStyle = pt.m.color;
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 2 * window.devicePixelRatio;
+        ctx.fill();
+        ctx.stroke();
+
+        // Age Label
+        ctx.fillStyle = isFrameMode ? 'rgba(255,255,255,0.7)' : 'rgba(43,30,112,0.8)';
+        ctx.font = `${Math.round(11 * window.devicePixelRatio)}px 'JetBrains Mono', monospace`;
+        ctx.textAlign = 'center';
+        ctx.fillText(`Age ${pt.m.age}`, pt.x, paddingTop + chartH + 28);
+
+        // Title Label
+        ctx.fillStyle = isFrameMode ? '#FFFFFF' : 'rgba(43,30,112,0.95)';
+        ctx.font = `${Math.round(11 * window.devicePixelRatio)}px 'DM Sans', sans-serif`;
+        ctx.fillText(pt.m.label, pt.x, pt.y - 14 * window.devicePixelRatio);
+      });
+    }
+
+    // Add Milestone
+    document.getElementById('btnAddMilestone').addEventListener('click', () => {
+      const age = parseInt(document.getElementById('inAge').value);
+      const cat = document.getElementById('inCat').value;
+      const label = document.getElementById('inLabel').value.trim();
+
+      if (isNaN(age) || !label) {
+        alert('Please enter a valid age and milestone title.');
+        return;
+      }
+
+      let val = 7;
+      let color = '#2B54EA';
+      if (cat === 'love') { val = 9; color = '#F43F5E'; }
+      else if (cat === 'peak') { val = 9.5; color = '#F59E0B'; }
+      else if (cat === 'grief') { val = 3; color = '#8B5CF6'; }
+      else if (cat === 'quiet') { val = 6.5; color = '#10B981'; }
+
+      milestones.push({ age, cat, label, val, color });
+      if (age > maxAge) maxAge = age + 5;
+      drawLandscape();
+
+      document.getElementById('inAge').value = '';
+      document.getElementById('inLabel').value = '';
+    });
+
+    // Canvas Mousemove Hover
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = (e.clientX - rect.left) * window.devicePixelRatio;
+      const paddingLeft = 50;
+      const paddingRight = 50;
+      const chartW = canvas.width - paddingLeft - paddingRight;
+
+      let closestIndex = -1;
+      let minDiff = Infinity;
+
+      milestones.forEach((m, i) => {
+        const x = paddingLeft + (m.age / maxAge) * chartW;
+        const diff = Math.abs(mouseX - x);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestIndex = i;
+        }
+      });
+
+      if (closestIndex !== hoverIndex) {
+        hoverIndex = closestIndex;
+        drawLandscape();
+      }
+    });
+
+    // Audio Engine & Controls
+    let soundEnabled = true;
+    let audioCtx = null;
+    let masterGainNode = null;
+    let soundOsc = null;
+
+    function initAudioEngine() {
+      if (masterGainNode) return;
+      try {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        masterGainNode = audioCtx.createGain();
+        masterGainNode.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        masterGainNode.connect(audioCtx.destination);
+
+        // Continuous frequency drone removed as per user request
+      } catch (e) { }
+    }
+
+    function updateAudioState() {
+      if (!soundEnabled) {
+        if (masterGainNode && audioCtx) masterGainNode.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 1.0);
+        return;
+      }
+      initAudioEngine();
+      if (audioCtx && masterGainNode) {
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        masterGainNode.gain.linearRampToValueAtTime(isFrameMode ? 0.22 : 0.12, audioCtx.currentTime + 1.0);
+      }
+    }
+
+    const soundBtn = document.getElementById('soundBtn');
+    soundBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundBtn.textContent = soundEnabled ? '🔊 Audio On' : '🔇 Audio Off';
+      soundBtn.classList.toggle('active', soundEnabled);
+      updateAudioState();
+    });
+
+    // Share & Export Modals
+    const shareModal = document.getElementById('shareModal');
+    const exportModal = document.getElementById('exportModal');
+
+    function closeModals() {
+      shareModal.classList.remove('active');
+      exportModal.classList.remove('active');
+    }
+
+    document.getElementById('shareBtn').addEventListener('click', () => {
+      document.getElementById('sharePreviewText').innerHTML = `
+    <strong>Task 31:</strong> The Shape of Your Life (Elinity)<br>
+    <strong>Milestones Count:</strong> ${milestones.length}<br><br>
+    Sharing will prefill an email with personal life story landscape details and interactive link.
+  `;
+      shareModal.classList.add('active');
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      exportModal.classList.add('active');
+    });
+
+    document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('✨ Interactive link copied to clipboard!');
+        closeModals();
+      });
+    });
+
+    document.getElementById('emailShareBtn').addEventListener('click', () => {
+      const subject = encodeURIComponent('The Shape of Your Life — Elinity');
+      const body = encodeURIComponent(`Explore my personal emotional life landscape on Elinity: ${window.location.href}`);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      closeModals();
+    });
+
+    document.getElementById('exportPngBtn').addEventListener('click', () => {
+      closeModals();
+      const canvas = document.getElementById('lifeCanvas');
+      const link = document.createElement('a');
+      link.download = `elinity-life-landscape.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    document.getElementById('exportWebmBtn').addEventListener('click', () => {
+      closeModals();
+      try {
+        const canvas = document.getElementById('lifeCanvas');
+        const stream = canvas.captureStream(30);
+        const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(chunks, { type: 'video/webm' });
+          const link = document.createElement('a');
+          link.download = `elinity-life-landscape-art.webm`;
+          link.href = URL.createObjectURL(blob);
+          link.click();
+        };
+        alert('🎬 Recording 4-second life landscape animation loop...');
+        mediaRecorder.start();
+        setTimeout(() => mediaRecorder.stop(), 4000);
+      } catch (e) {
+        alert('WebM recording not supported in this browser window. Exporting PNG still art.');
+      }
+    });
+
+    // Frame Mode
+    const frameBtn = document.getElementById('frameBtn');
+    const exitFrameBtn = document.getElementById('exitFrameBtn');
+    const lifeCard = document.getElementById('lifeCard');
+    const frameTitleOverlay = document.getElementById('frameTitleOverlay');
+    const frameLegendToggle = document.getElementById('frameLegendToggle');
+    const header = document.getElementById('header');
+    const mainUi = document.getElementById('mainUi');
+
+    function toggleFrameMode(on) {
+      isFrameMode = on;
+      lifeCard.classList.toggle('frame-active', on);
+      frameTitleOverlay.classList.toggle('show', on);
+      frameLegendToggle.classList.toggle('show', on);
+      exitFrameBtn.classList.toggle('show', on);
+      header.classList.toggle('hide-element', on);
+      // mainUi.classList.toggle('hide-element', on);
+      updateAudioState();
+      setTimeout(resizeCanvas, 100);
+    }
+
+    frameBtn.addEventListener('click', () => toggleFrameMode(true));
+    exitFrameBtn.addEventListener('click', () => toggleFrameMode(false));
+
+    document.addEventListener('keydown', (e) => {
+      const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+      if (e.key === 'Escape' && isFrameMode) {
+        toggleFrameMode(false);
+      } else if ((e.key === 'f' || e.key === 'F') && !isInput) {
+        toggleFrameMode(!isFrameMode);
+      }
+    });
+
+    // Init
+    resizeCanvas();
+    drawLandscape();
+  </script>
+</body>
+
+</html>

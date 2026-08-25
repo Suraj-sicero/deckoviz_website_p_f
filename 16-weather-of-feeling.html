@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Weather of Feeling — Elinity</title>
+<meta name="description" content="An interactive map of human emotion built on Russell's circumplex model of affect. Explore 50+ emotions across valence and arousal axes with weather metaphors and mood tracking.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.68);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6; --rose: #F43F5E; --amber: #F59E0B;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,30,112,0.12), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#ambientCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1040px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,30,112,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  .elinity-brand { display: flex; align-items: center; gap: 10px; }
+  .elinity-brand img { height: 28px; width: auto; }
+  .elinity-brand .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  .elinity-brand .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-action:hover, .btn-action.active {
+    color: #fff; background: var(--brand-blue); border-color: var(--brand-blue);
+    transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3);
+  }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(10, 6, 28, 0.88) !important; border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #FFFFFF !important; padding: 10px 22px; border-radius: 9999px;
+    font-size: 0.8rem; font-family: 'DM Sans', sans-serif; font-weight: 700;
+    cursor: pointer; backdrop-filter: blur(20px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue) !important; color: #fff !important; border-color: var(--brand-blue) !important; transform: scale(1.05); }
+
+  .frame-legend-toggle {
+    position: fixed; bottom: 28px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(10, 6, 28, 0.88) !important; border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #FFFFFF !important; padding: 9px 20px; border-radius: 9999px; font-size: 0.78rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue) !important; color: #fff !important; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 46px; right: 0; width: 290px;
+    background: rgba(10, 6, 28, 0.94) !important; backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.25) !important; border-radius: 20px; padding: 18px;
+    color: #FFFFFF !important; box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .legend-popover .legend-item { color: rgba(255, 255, 255, 0.9) !important; }
+  .frame-legend-toggle:hover .legend-popover, .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--cyan); margin-bottom: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--navy); margin-bottom: 8px; line-height: 1.3; }
+  .legend-color { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 20px 60px; max-width: 1080px; margin: 0 auto; transition: opacity 0.4s ease;
+  }
+  .page.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 22px; max-width: 720px; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 8px; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.2vw, 2.7rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy); }
+  h1 span.accent, h1 span.accent-serif { font-style: italic; font-weight: 700; background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .subtitle { font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; font-weight: 400; }
+  .citation-tag { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; font-size: 0.72rem; color: var(--brand-blue); background: rgba(43,84,234,0.08); padding: 4px 12px; border-radius: 9999px; font-weight: 600; }
+
+  .mode-tabs { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; justify-content: center; }
+  .mode-btn {
+    background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 14px rgba(43,30,112,0.06);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .mode-btn:hover, .mode-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(43,30,112,0.25); }
+
+  .map-container {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(140%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 24px; box-shadow: var(--glass-shadow); width: 100%; max-width: 980px;
+    position: relative; display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease;
+  }
+
+  .map-container.frame-active {
+    position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important;
+    max-width: 100vw !important; max-height: 100vh !important; padding: 0 !important; border-radius: 0 !important;
+    border: none !important; box-shadow: none !important; z-index: 99999 !important; background: transparent !important;
+    display: flex !important; justify-content: center !important; align-items: center !important; margin: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .map-container.frame-active .plane-wrapper,
+  .map-container.frame-active .detail-panel,
+  .map-container.frame-active .trail-bar {
+    display: none !important; opacity: 0 !important; pointer-events: none !important;
+  }
+
+  /* Share & Export Modal Overlay */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 100010; background: rgba(10, 6, 28, 0.7);
+    backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-backdrop.active { opacity: 1; pointer-events: auto; }
+  .modal-card {
+    background: rgba(255, 255, 255, 0.95); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 28px; width: min(90%, 460px); box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    transform: translateY(16px); transition: transform 0.3s ease; font-family: 'DM Sans', sans-serif; color: var(--navy);
+  }
+  .modal-backdrop.active .modal-card { transform: translateY(0); }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .modal-title { font-family: 'Comfortaa', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+  .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--navy-muted); }
+  .modal-body { font-size: 0.88rem; line-height: 1.5; color: var(--navy-muted); margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  .btn-primary { background: var(--brand-blue); color: #fff; border: none; padding: 10px 22px; border-radius: 9999px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+  .btn-primary:hover { background: var(--brand-blue-hover); transform: translateY(-1px); }
+  .btn-secondary { background: rgba(43,30,112,0.08); color: var(--navy); border: 1px solid rgba(43,30,112,0.15); padding: 10px 20px; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+  .btn-secondary:hover { background: rgba(43,30,112,0.15); }
+
+  .map-container {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(140%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 24px; box-shadow: var(--glass-shadow); width: 100%; max-width: 980px;
+    position: relative; display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease;
+  }
+
+  .map-container.frame-active {
+    position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important;
+    max-width: 100vw !important; max-height: 100vh !important; padding: 0 !important; border-radius: 0 !important;
+    border: none !important; box-shadow: none !important; z-index: 99999 !important; background: transparent !important;
+    display: flex !important; justify-content: center !important; align-items: center !important; margin: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .map-container.frame-active .plane-wrapper,
+  .map-container.frame-active .detail-panel,
+  .map-container.frame-active .trail-bar {
+    display: none !important; opacity: 0 !important; pointer-events: none !important;
+  }
+
+  .plane-wrapper {
+    position: relative; width: 100%; max-width: 820px; aspect-ratio: 1.1 / 1; border-radius: 20px;
+    overflow: hidden; background: rgba(255,255,255,0.4); border: 1px solid rgba(43,30,112,0.1);
+    box-shadow: inset 0 0 40px rgba(43,30,112,0.04); cursor: crosshair; transition: background 0.4s ease;
+  }
+  .map-container.frame-active .plane-wrapper {
+    max-width: min(85vw, 85vh) !important; aspect-ratio: 1/1 !important; border-radius: 16px !important;
+    background: rgba(15, 11, 42, 0.95) !important; border: 1px solid rgba(255,255,255,0.15) !important;
+  }
+
+  /* Weather Quadrant Background Gradients */
+  .quadrant-bg {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.65; transition: opacity 0.5s ease;
+  }
+  .quad-tl { position: absolute; top:0; left:0; width:50%; height:50%; background: radial-gradient(circle at 20% 20%, rgba(244,63,94,0.18), transparent 70%); }
+  .quad-tr { position: absolute; top:0; right:0; width:50%; height:50%; background: radial-gradient(circle at 80% 20%, rgba(245,158,11,0.2), transparent 70%); }
+  .quad-bl { position: absolute; bottom:0; left:0; width:50%; height:50%; background: radial-gradient(circle at 20% 80%, rgba(6,182,212,0.18), transparent 70%); }
+  .quad-br { position: absolute; bottom:0; right:0; width:50%; height:50%; background: radial-gradient(circle at 80% 80%, rgba(139,92,246,0.18), transparent 70%); }
+
+  svg#planeSvg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+  .emotion-word {
+    position: absolute; transform: translate(-50%, -50%); z-index: 3; font-weight: 600;
+    font-size: clamp(0.68rem, 1.2vw, 0.85rem); color: var(--navy); cursor: pointer;
+    padding: 3px 8px; border-radius: 12px; transition: all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap; backdrop-filter: blur(4px); background: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.6);
+  }
+  .map-container.frame-active .emotion-word {
+    color: rgba(255,255,255,0.85); background: rgba(30,22,65,0.6); border-color: rgba(255,255,255,0.15);
+  }
+  .emotion-word:hover, .emotion-word.active {
+    transform: translate(-50%, -50%) scale(1.18); z-index: 10;
+    background: var(--navy); color: #fff !important; border-color: var(--navy);
+    box-shadow: 0 8px 24px rgba(43,30,112,0.3);
+  }
+  .emotion-word.highlighted {
+    background: var(--brand-blue); color: #fff !important; border-color: var(--brand-blue);
+    transform: translate(-50%, -50%) scale(1.1); z-index: 8; box-shadow: 0 4px 16px rgba(43,84,234,0.3);
+  }
+  .emotion-word.user-pin {
+    background: var(--rose) !important; color: #fff !important; border-color: var(--rose) !important;
+    font-weight: 700; transform: translate(-50%, -50%) scale(1.25) !important; z-index: 12;
+    box-shadow: 0 0 20px rgba(244,63,94,0.6);
+  }
+
+  /* User Tap Pin Marker */
+  .tap-marker {
+    position: absolute; transform: translate(-50%, -50%); width: 22px; height: 22px;
+    border-radius: 50%; background: var(--rose); border: 3px solid #fff;
+    box-shadow: 0 0 0 4px rgba(244,63,94,0.35), 0 8px 20px rgba(244,63,94,0.5);
+    z-index: 11; pointer-events: none; animation: pinPulse 2s infinite ease-in-out; display: none;
+  }
+  @keyframes pinPulse {
+    0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(244,63,94,0.5); }
+    70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 0 12px rgba(244,63,94,0); }
+    100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(244,63,94,0); }
+  }
+
+  /* Axis Labels */
+  .axis-label {
+    position: absolute; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: var(--navy-muted); z-index: 2; pointer-events: none;
+  }
+  .map-container.frame-active .axis-label { color: rgba(255,255,255,0.5); }
+  .axis-top { top: 12px; left: 50%; transform: translateX(-50%); }
+  .axis-bottom { bottom: 12px; left: 50%; transform: translateX(-50%); }
+  .axis-left { left: 12px; top: 50%; transform: translateY(-50%) rotate(-90deg); transform-origin: left center; }
+  .axis-right { right: 12px; top: 50%; transform: translateY(-50%) rotate(90deg); transform-origin: right center; }
+
+  /* Quadrant Weather Labels */
+  .quadrant-tag {
+    position: absolute; font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 0.85rem; color: rgba(43,30,112,0.4); pointer-events: none; z-index: 2; font-weight: 600;
+  }
+  .map-container.frame-active .quadrant-tag { color: rgba(255,255,255,0.25); }
+  .tag-tl { top: 32px; left: 32px; }
+  .tag-tr { top: 32px; right: 32px; }
+  .tag-bl { bottom: 32px; left: 32px; }
+  .tag-br { bottom: 32px; right: 32px; }
+
+  /* Detail Card / Reflection Panel */
+  .detail-panel {
+    margin-top: 20px; width: 100%; max-width: 820px; background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px;
+    padding: 20px 24px; box-shadow: 0 10px 30px rgba(43,30,112,0.08); transition: all 0.3s ease;
+  }
+  .map-container.frame-active .detail-panel { display: none !important; }
+
+  .detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .detail-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 10px; }
+  .detail-weather-pill { font-size: 0.72rem; font-weight: 700; font-family: 'DM Sans', sans-serif; padding: 4px 12px; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .weather-storm { background: rgba(244,63,94,0.12); color: var(--rose); border: 1px solid rgba(244,63,94,0.3); }
+  .weather-sun { background: rgba(245,158,11,0.15); color: #B45309; border: 1px solid rgba(245,158,11,0.35); }
+  .weather-rain { background: rgba(6,182,212,0.12); color: #0891B2; border: 1px solid rgba(6,182,212,0.3); }
+  .weather-calm { background: rgba(139,92,246,0.12); color: var(--purple); border: 1px solid rgba(139,92,246,0.3); }
+
+  .detail-coords { font-size: 0.75rem; color: var(--navy-muted); font-weight: 600; }
+  .detail-body { font-size: 0.92rem; color: var(--navy); line-height: 1.6; margin-bottom: 14px; }
+  .detail-reflection { font-size: 0.85rem; color: var(--brand-blue); background: rgba(43,84,234,0.06); padding: 12px 16px; border-radius: 14px; border-left: 3px solid var(--brand-blue); line-height: 1.5; }
+
+  /* Nearby Granularity Chips */
+  .granularity-section { margin-top: 14px; }
+  .granularity-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--navy-muted); margin-bottom: 8px; }
+  .granularity-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { font-size: 0.76rem; font-weight: 600; padding: 5px 12px; border-radius: 9999px; background: rgba(43,30,112,0.06); border: 1px solid rgba(43,30,112,0.12); cursor: pointer; transition: all 0.2s ease; }
+  .chip:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); }
+
+  /* History / Trail Bar */
+  .trail-bar { margin-top: 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 0.78rem; color: var(--navy-muted); width: 100%; max-width: 820px; }
+  .trail-actions { display: flex; gap: 8px; }
+  .btn-sm { font-size: 0.72rem; font-family: 'DM Sans', sans-serif; font-weight: 600; padding: 6px 14px; border-radius: 9999px; border: 1px solid rgba(43,84,234,0.2); background: rgba(43,84,234,0.06); color: var(--brand-blue); cursor: pointer; transition: all 0.2s ease; }
+  .btn-sm:hover { background: var(--brand-blue); color: #fff; }
+</style>
+</head>
+<body>
+
+<canvas id="ambientCanvas"></canvas>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Emotional Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Weather Quadrants & Axes</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F43F5E;"></span> ⚡ <strong>Stormy Weather</strong> &nbsp;— High Arousal, Unpleasant</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> ☀️ <strong>Golden Sun</strong> &nbsp;— High Arousal, Pleasant</div>
+    <div class="legend-item"><span class="legend-color" style="background:#06B6D4;"></span> 🌧️ <strong>Heavy Rain</strong> &nbsp;— Low Arousal, Unpleasant</div>
+    <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> 🌿 <strong>Clear Breeze</strong> &nbsp;— Low Arousal, Pleasant</div>
+  </div>
+</div>
+
+<header id="header">
+  <div class="elinity-brand">
+    <img src="elinity-logo.png" alt="Elinity Logo" id="brandLogo">
+    <div class="title"><span>Feeling Science</span></div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🔊 Audio On</button>
+    <button class="btn-action" id="checkinBtn">📍 Mark My Mood</button>
+    <button class="btn-action" id="shareBtn">✉️ Share</button>
+    <button class="btn-action" id="exportBtn">🎨 Export Art</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<!-- Share Modal -->
+<div class="modal-backdrop" id="shareModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">✉️ Share Your Weather of Feeling</div>
+      <button class="modal-close" onclick="closeModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="sharePreviewText">Send your current emotional landscape state to a friend or colleague via email or direct link.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="copyShareLinkBtn">📋 Copy Link</button>
+      <button class="btn-primary" id="emailShareBtn">✉️ Send Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export Dynamic Art Modal -->
+<div class="modal-backdrop" id="exportModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">🎨 Export Dynamic Art</div>
+      <button class="modal-close" onclick="closeModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      Export your current mood landscape as digital artwork for your Deckoviz display frame or digital art collection.
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="exportPngBtn">📷 Still Art (PNG)</button>
+      <button class="btn-primary" id="exportWebmBtn">🎬 Dynamic Video (WebM)</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="mainUi">
+  <div class="hero">
+    <div class="eyebrow">Elinity · Moods & Emotions</div>
+    <h1>The Weather of <span class="accent">Feeling</span></h1>
+    <p class="subtitle">An interactive cartography of human emotion. Explore how feelings relate to and border one another across energy and pleasantness, and pinpoint your own internal climate.</p>
+    <div class="citation-tag">🔬 Grounded in James A. Russell’s Circumplex Model of Affect (1980) & Affective Neuroscience</div>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="mode-btn active" id="tabExplore" data-mode="explore">🗺️ Explore Emotional Territory</button>
+    <button class="mode-btn" id="tabCheckin" data-mode="checkin">📍 Where Are You Right Now?</button>
+    <button class="mode-btn" id="tabHistory" data-mode="history">📈 Personal Weather Trail</button>
+  </div>
+
+  <div class="map-container" id="mapContainer">
+    <div class="plane-wrapper" id="planeWrapper">
+      <div class="quadrant-bg">
+        <div class="quad-tl"></div>
+        <div class="quad-tr"></div>
+        <div class="quad-bl"></div>
+        <div class="quad-br"></div>
+      </div>
+
+      <svg id="planeSvg">
+        <!-- Grid & Axes rendered by JS -->
+      </svg>
+
+      <!-- Quadrant Weather Names -->
+      <div class="quadrant-tag tag-tl">⚡ Stormy & Volatile</div>
+      <div class="quadrant-tag tag-tr">☀️ Radiant & Exhilarating</div>
+      <div class="quadrant-tag tag-bl">🌧️ Heavy & Somber</div>
+      <div class="quadrant-tag tag-br">🌿 Quiet & Restorative</div>
+
+      <!-- Axis Titles -->
+      <div class="axis-label axis-top">High Energy (Arousal) ▲</div>
+      <div class="axis-label axis-bottom">▼ Low Energy (Calm)</div>
+      <div class="axis-label axis-left">◄ Unpleasant</div>
+      <div class="axis-label axis-right">Pleasant ►</div>
+
+      <!-- Tap Pin -->
+      <div class="tap-marker" id="tapMarker"></div>
+
+      <!-- Emotion Words rendered by JS -->
+    </div>
+
+    <div class="detail-panel" id="detailPanel">
+      <div class="detail-header">
+        <div class="detail-title" id="detailTitle">Select any emotion word or tap the plane</div>
+        <div class="detail-weather-pill weather-calm" id="detailPill">Circumplex View</div>
+      </div>
+      <div class="detail-coords" id="detailCoords">Valence: 0.00 | Arousal: 0.00</div>
+      <div class="detail-body" id="detailBody">Click anywhere on the two-axis map to reveal nearby emotional landscapes, or tap "Mark My Mood" to reflect on your current state with precision.</div>
+      <div class="detail-reflection" id="detailReflection">💡 <em>"Naming an emotion with granularity—distinguishing worry from helplessness, or warmth from ecstasy—activates prefrontal emotion regulation circuits."</em></div>
+      <div class="granularity-section">
+        <div class="granularity-label">Nearby Related Feelings (Emotional Granularity)</div>
+        <div class="granularity-chips" id="granularityChips">
+          <span class="chip">Tap the map to discover</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="trail-bar" id="trailBar" style="display:none;">
+      <span id="trailSummary">Showing 0 check-ins this week.</span>
+      <div class="trail-actions">
+        <button class="btn-sm" id="clearTrailBtn">Clear Trail</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Researched Circumplex Model of Affect Dataset (52 Emotion Words)
+// X = Valence (-1.0 unpleasant to +1.0 pleasant), Y = Arousal (-1.0 calm/sleepy to +1.0 energized)
+const EMOTIONS = [
+  // Quadrant 1: High Arousal + Unpleasant (Top-Left: Stormy)
+  { id:'panic', name:'Panic', x:-0.85, y:0.85, quad:'storm', desc:'A sudden surge of overwhelming alarm when danger or loss of control feels imminent.', ref:'Notice your breathing. Panic peaks like a wave and subsides as your body recognizes immediate safety.' },
+  { id:'rage', name:'Rage', x:-0.90, y:0.75, quad:'storm', desc:'Fiery, intense anger asserting a deep violation of boundaries or sense of fairness.', ref:'Rage holds immense vital energy. Channeling it into clean boundary assertion brings relief.' },
+  { id:'terror', name:'Terror', x:-0.95, y:0.90, quad:'storm', desc:'Extreme visceral fear freezing or launching the mind into hyper-alertness.', ref:'Ground yourself through physical senses: 5 things you see, 4 things you touch.' },
+  { id:'anxiety', name:'Anxiety', x:-0.65, y:0.65, quad:'storm', desc:'Unsettled vigilance about uncertain future outcomes.', ref:'Anxiety is your mind attempting to solve tomorrow before today has finished.' },
+  { id:'frustration', name:'Frustration', x:-0.60, y:0.45, quad:'storm', desc:'Friction felt when effort meets an unexpected barrier.', ref:'Pause and ask: Is this barrier asking for a change of strategy or simple patience?' },
+  { id:'agitation', name:'Agitation', x:-0.50, y:0.70, quad:'storm', desc:'Restless, electric irritation waiting for release.', ref:'Physical movement—a brisk walk or stretching—helps disperse body tension.' },
+  { id:'stress', name:'Stress', x:-0.55, y:0.55, quad:'storm', desc:'The sense that external demands exceed current internal capacity.', ref:'Prioritize just the next single step. You do not need to solve the entire mountain right now.' },
+  { id:'jealousy', name:'Jealousy', x:-0.75, y:0.50, quad:'storm', desc:'A protective ache guarding a valued bond or desire from perceived threat.', ref:'Jealousy often points clearly to what you treasure most deeply.' },
+  { id:'overwhelm', name:'Overwhelm', x:-0.70, y:0.78, quad:'storm', desc:'Too many stimuli or feelings flooding conscious capacity at once.', ref:'Step back. Drop all non-essential inputs for five minutes.' },
+  { id:'hostility', name:'Hostility', x:-0.82, y:0.60, quad:'storm', desc:'Defensive coldness braced against perceived harm or antagonism.', ref:'Notice the vulnerability sitting beneath the armor of hostility.' },
+  { id:'disgust', name:'Disgust', x:-0.70, y:0.35, quad:'storm', desc:'Visceral rejection of something toxic, dishonest, or unnatural.', ref:'Disgust acts as a psychological immune system keeping harm at distance.' },
+
+  // Quadrant 2: High Arousal + Pleasant (Top-Right: Golden Sun)
+  { id:'ecstasy', name:'Ecstasy', x:0.90, y:0.90, quad:'sun', desc:'A breathtaking, boundless state of intense joy and elevation.', ref:'Savor the rare radiance of total presence and uninhibited delight.' },
+  { id:'elation', name:'Elation', x:0.80, y:0.80, quad:'sun', desc:'High-spirited happiness following a triumph or joyful realization.', ref:'Share your joy with someone who loves seeing you shine.' },
+  { id:'excitement', name:'Excitement', x:0.70, y:0.75, quad:'sun', desc:'Eager anticipation of good things unfolding just ahead.', ref:'Ride this buoyant momentum to take creative or courageous leaps.' },
+  { id:'euphoria', name:'Euphoria', x:0.85, y:0.70, quad:'sun', desc:'A glowing, weightless feeling of utter wellbeing.', ref:'Store this warmth in memory—it becomes a reservoir for leaner times.' },
+  { id:'passion', name:'Passion', x:0.65, y:0.85, quad:'sun', desc:'Deeply focused, energetic devotion toward a person, craft, or purpose.', ref:'Passion illuminates what brings your unique spirit alive.' },
+  { id:'enthusiasm', name:'Enthusiasm', x:0.60, y:0.60, quad:'sun', desc:'Vibrant curiosity and willing engagement with the world.', ref:'Enthusiasm is contagious; it sparks energy in everyone nearby.' },
+  { id:'delight', name:'Delight', x:0.75, y:0.55, quad:'sun', desc:'A charming, spontaneous spark of pleasure in small surprises.', ref:'Look closely at the details around you to catch delight in wild bloom.' },
+  { id:'pride', name:'Pride', x:0.55, y:0.50, quad:'sun', desc:'Satisfied recognition of your own growth, effort, or integrity.', ref:'Honor the persistence that brought you to this milestone.' },
+  { id:'wonder', name:'Wonder', x:0.65, y:0.65, quad:'sun', desc:'Awe-filled curiosity when witnessing something vastly beautiful or novel.', ref:'Allow yourself to feel small in the presence of magnificent beauty.' },
+  { id:'inspiration', name:'Inspiration', x:0.70, y:0.60, quad:'sun', desc:'A sudden clarity of vision calling you to create or connect.', ref:'Capture the spark immediately before daily routine dims it.' },
+  { id:'playfulness', name:'Playfulness', x:0.58, y:0.68, quad:'sun', desc:'Lighthearted freedom unburdened by serious outcome.', ref:'Play restores cognitive flexibility and brings lightness to adult living.' },
+
+  // Quadrant 3: Low Arousal + Unpleasant (Bottom-Left: Rain)
+  { id:'sadness', name:'Sadness', x:-0.60, y:-0.45, quad:'rain', desc:'A quiet, tender sorrow acknowledging a loss or unfulfilled longing.', ref:'Sadness honors what mattered to you. Allow it room without judgment.' },
+  { id:'gloom', name:'Gloom', x:-0.50, y:-0.60, quad:'rain', desc:'A heavy, overcast mood where colors feel slightly muted.', ref:'Gloom is winter for the soul. Treat yourself with gentle patience.' },
+  { id:'melancholy', name:'Melancholy', x:-0.40, y:-0.35, quad:'rain', desc:'A pensive, sweet-sour sadness rich with nostalgia and reflection.', ref:'Melancholy often births profound poetry, art, and self-understanding.' },
+  { id:'despair', name:'Despair', x:-0.90, y:-0.70, quad:'rain', desc:'A profound feeling of powerlessness or loss of hope.', ref:'Even in deep darkness, focus only on the next single hour.' },
+  { id:'loneliness', name:'Loneliness', x:-0.65, y:-0.55, quad:'rain', desc:'The aching distance between your current state and meaningful connection.', ref:'Reach out, even in a small way. Someone else is waiting to listen.' },
+  { id:'boredom', name:'Boredom', x:-0.35, y:-0.65, quad:'rain', desc:'Low energy disengagement waiting for meaningful stimulation.', ref:'Boredom is the doorway to imagination if you let your mind wander.' },
+  { id:'lethargy', name:'Lethargy', x:-0.45, y:-0.80, quad:'rain', desc:'Physical and emotional heaviness seeking deep rest.', ref:'Listen to your body. True rest is productive healing work.' },
+  { id:'grief', name:'Grief', x:-0.80, y:-0.60, quad:'rain', desc:'Love with nowhere to go after a major, irreversible loss.', ref:'Grief has no timetable. Carry it gently alongside your daily steps.' },
+  { id:'hopelessness', name:'Hopelessness', x:-0.85, y:-0.80, quad:'rain', desc:'The illusion that things can never shift or lighten.', ref:'Remember that feelings are weather patterns, not permanent climate.' },
+  { id:'fatigue', name:'Fatigue', x:-0.30, y:-0.85, quad:'rain', desc:'Depleted reserves after prolonged output or strain.', ref:'Step away from demand. Rest is a prerequisite for vitality.' },
+  { id:'guilt', name:'Guilt', x:-0.55, y:-0.30, quad:'rain', desc:'A moral compass nudge indicating your actions strayed from values.', ref:'Use guilt as information to make amends and realign your steps.' },
+
+  // Quadrant 4: Low Arousal + Pleasant (Bottom-Right: Clear Breeze)
+  { id:'serenity', name:'Serenity', x:0.85, y:-0.75, quad:'calm', desc:'Untroubled stillness and complete harmony with the present moment.', ref:'Sink into this quiet sanctuary; let your nervous system rest.' },
+  { id:'contentment', name:'Contentment', x:0.75, y:-0.50, quad:'calm', desc:'A peaceful fullness that asks for nothing more than what is right here.', ref:'Gratitude transforms what you have into enough.' },
+  { id:'tranquility', name:'Tranquility', x:0.80, y:-0.65, quad:'calm', desc:'Clear, unruffled calm like smooth water at dawn.', ref:'Notice how spacious your thoughts become when hurry disappears.' },
+  { id:'relief', name:'Relief', x:0.60, y:-0.35, quad:'calm', desc:'The sweet release of tension when a threat or pressure subsides.', ref:'Take a long exhale. The storm has passed.' },
+  { id:'peace', name:'Peace', x:0.90, y:-0.60, quad:'calm', desc:'A profound inner stillness untouched by external turmoil.', ref:'Peace is not the absence of trouble, but presence of inner anchor.' },
+  { id:'coziness', name:'Coziness', x:0.65, y:-0.55, quad:'calm', desc:'Warm, protected comfort in a safe, familiar space.', ref:'Wrap yourself in simple sensory warmth and quiet ease.' },
+  { id:'tenderness', name:'Tenderness', x:0.70, y:-0.30, quad:'calm', desc:'Gentle, protective affection for someone or something soft.', ref:'Tenderness softens rigid defenses and opens true intimacy.' },
+  { id:'gratitude', name:'Gratitude', x:0.75, y:-0.40, quad:'calm', desc:'Warm appreciation for kindness, life, or beauty received.', ref:'Expressing gratitude doubles its resonance for both giver and receiver.' },
+  { id:'calm', name:'Calm', x:0.50, y:-0.60, quad:'calm', desc:'Steady, balanced composure without agitation or demand.', ref:'Your calm presence is a gift to those around you.' },
+  { id:'acceptance', name:'Acceptance', x:0.55, y:-0.45, quad:'calm', desc:'Peaceful surrender to reality as it is, without struggle.', ref:'Acceptance is the fertile soil from which wise action grows.' },
+  { id:'nostalgia', name:'Nostalgia', x:0.35, y:-0.35, quad:'calm', desc:'A warm, affectionate recollection of cherished past times.', ref:'Honoring past beauty enriches your appreciation of the present.' },
+
+  // Center / Transitions
+  { id:'neutrality', name:'Neutrality', x:0.00, y:0.00, quad:'calm', desc:'Balanced, quiet equilibrium waiting for direction.', ref:'A clean, open slate from which any new feeling can emerge.' },
+  { id:'curiosity', name:'Curiosity', x:0.25, y:0.40, quad:'sun', desc:'Open interest calling your awareness outward to learn.', ref:'Curiosity turns potential anxiety into an engaging adventure.' },
+  { id:'hope', name:'Hope', x:0.40, y:0.25, quad:'sun', desc:'A quiet belief that good remains possible despite difficulty.', ref:'Hope is the quiet anchor that keeps courage steady.' },
+  { id:'worry', name:'Worry', x:-0.35, y:0.30, quad:'storm', desc:'Repetitive mental scanning for potential threats.', ref:'Notice if your worry is actionable or just noisy background chatter.' },
+  { id:'apathy', name:'Apathy', x:-0.15, y:-0.50, quad:'rain', desc:'Protective emotional numbness when feeling has become tiring.', ref:'Apathy often shields a tired heart. Treat it as a request for rest.' },
+  { id:'reassurance', name:'Reassurance', x:0.45, y:-0.20, quad:'calm', desc:'Comforting certainty that you are safe and supported.', ref:'You are far more capable than your anxious thoughts suggest.' },
+  { id:'awe', name:'Awe', x:0.50, y:0.75, quad:'sun', desc:'Profound reverence when encountering immense mystery or beauty.', ref:'Awe shrinks petty worries and expands empathy.' },
+  { id:'yearning', name:'Yearning', x:-0.25, y:0.20, quad:'storm', desc:'A deep, pulling desire for what is distant or missing.', ref:'Yearning reveals the deep values your spirit longs to embody.' }
+];
+
+// App State
+let activeMode = 'explore'; // 'explore', 'checkin', 'history'
+let selectedEmotion = null;
+let soundEnabled = false;
+let userPin = null;
+let historyLog = JSON.parse(localStorage.getItem('elinity_feeling_history') || '[]');
+let isFrameMode = false;
+let particles = [];
+let animTime = 0;
+let lightningFlash = 0;
+
+// Audio Synth
+let audioCtx = null;
+function playTone(freq = 440, type = 'sine', duration = 0.6) {
+  if (!soundEnabled) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch (e) {}
+}
+
+// DOM Elements
+const planeWrapper = document.getElementById('planeWrapper');
+const planeSvg = document.getElementById('planeSvg');
+const tapMarker = document.getElementById('tapMarker');
+const detailTitle = document.getElementById('detailTitle');
+const detailPill = document.getElementById('detailPill');
+const detailCoords = document.getElementById('detailCoords');
+const detailBody = document.getElementById('detailBody');
+const detailReflection = document.getElementById('detailReflection');
+const granularityChips = document.getElementById('granularityChips');
+const trailBar = document.getElementById('trailBar');
+const trailSummary = document.getElementById('trailSummary');
+
+// Render Grid Lines
+function renderGrid() {
+  const w = planeWrapper.clientWidth || 800;
+  const h = planeWrapper.clientHeight || 700;
+  planeSvg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  
+  let html = `
+    <!-- Concentric Circumplex Circles -->
+    <circle cx="${w/2}" cy="${h/2}" r="${w*0.42}" fill="none" stroke="rgba(43,30,112,0.08)" stroke-width="1.5" stroke-dasharray="4 4" />
+    <circle cx="${w/2}" cy="${h/2}" r="${w*0.28}" fill="none" stroke="rgba(43,30,112,0.06)" stroke-width="1" />
+    <circle cx="${w/2}" cy="${h/2}" r="${w*0.14}" fill="none" stroke="rgba(43,30,112,0.05)" stroke-width="1" />
+    <!-- Axes -->
+    <line x1="${w/2}" y1="20" x2="${w/2}" y2="${h-20}" stroke="rgba(43,30,112,0.15)" stroke-width="1.5" />
+    <line x1="20" y1="${h/2}" x2="${w-20}" y2="${h/2}" stroke="rgba(43,30,112,0.15)" stroke-width="1.5" />
+  `;
+
+  // Draw history trail if in history mode
+  if (activeMode === 'history' && historyLog.length > 1) {
+    let pts = historyLog.map(item => {
+      const px = ((item.x + 1) / 2) * w;
+      const py = ((1 - item.y) / 2) * h;
+      return `${px},${py}`;
+    }).join(' ');
+    html += `<polyline points="${pts}" fill="none" stroke="rgba(244,63,94,0.6)" stroke-width="2.5" stroke-dasharray="6 4" />`;
+    historyLog.forEach(item => {
+      const px = ((item.x + 1) / 2) * w;
+      const py = ((1 - item.y) / 2) * h;
+      html += `<circle cx="${px}" cy="${py}" r="5" fill="#F43F5E" stroke="#fff" stroke-width="2" />`;
+    });
+  }
+
+  planeSvg.innerHTML = html;
+}
+
+// Map Coordinates (-1..+1) to Pixel %
+function coordToPct(x, y) {
+  const left = ((x + 1) / 2) * 100;
+  const top = ((1 - y) / 2) * 100; // Invert Y for screen coords
+  return { left, top };
+}
+
+// Render Emotion Word Nodes
+function renderEmotionNodes() {
+  // Remove existing nodes
+  document.querySelectorAll('.emotion-word').forEach(el => el.remove());
+
+  EMOTIONS.forEach(emo => {
+    const { left, top } = coordToPct(emo.x, emo.y);
+    const node = document.createElement('div');
+    node.className = 'emotion-word';
+    node.id = `emo-${emo.id}`;
+    node.style.left = `${left}%`;
+    node.style.top = `${top}%`;
+    node.textContent = emo.name;
+    node.dataset.id = emo.id;
+
+    node.addEventListener('click', (e) => {
+      e.stopPropagation();
+      selectEmotion(emo);
+      if (activeMode === 'checkin') {
+        setUserPin(emo.x, emo.y, emo.name);
+      }
+    });
+
+    planeWrapper.appendChild(node);
+  });
+}
+
+// Find K Nearest Emotions
+function getNearestEmotions(x, y, k = 4) {
+  return [...EMOTIONS]
+    .map(e => ({ ...e, dist: Math.hypot(e.x - x, e.y - y) }))
+    .sort((a, b) => a.dist - b.dist)
+    .slice(0, k);
+}
+
+// Select Emotion & Update Panel
+function selectEmotion(emo, customCoords = null) {
+  selectedEmotion = emo;
+  document.querySelectorAll('.emotion-word').forEach(el => el.classList.remove('active', 'highlighted'));
+  
+  const targetNode = document.getElementById(`emo-${emo.id}`);
+  if (targetNode) targetNode.classList.add('active');
+
+  const nx = customCoords ? customCoords.x : emo.x;
+  const ny = customCoords ? customCoords.y : emo.y;
+
+  // Highlight 3 nearest emotions
+  const nearest = getNearestEmotions(nx, ny, 4);
+  nearest.forEach(near => {
+    const node = document.getElementById(`emo-${near.id}`);
+    if (node && near.id !== emo.id) node.classList.add('highlighted');
+  });
+
+  // Update Detail Card
+  detailTitle.textContent = emo.name;
+  detailCoords.textContent = `Valence (Pleasantness): ${nx > 0 ? '+' : ''}${nx.toFixed(2)} | Arousal (Energy): ${ny > 0 ? '+' : ''}${ny.toFixed(2)}`;
+  detailBody.textContent = emo.desc;
+  detailReflection.innerHTML = `💡 <em>"${emo.ref}"</em>`;
+
+  // Pill styling
+  detailPill.className = 'detail-weather-pill';
+  if (emo.quad === 'storm') {
+    detailPill.classList.add('weather-storm');
+    detailPill.textContent = '⚡ Stormy Weather';
+    playTone(280, 'sawtooth', 0.4);
+  } else if (emo.quad === 'sun') {
+    detailPill.classList.add('weather-sun');
+    detailPill.textContent = '☀️ Golden Sun';
+    playTone(520, 'sine', 0.5);
+  } else if (emo.quad === 'rain') {
+    detailPill.classList.add('weather-rain');
+    detailPill.textContent = '🌧️ Heavy Rain';
+    playTone(220, 'triangle', 0.6);
+  } else {
+    detailPill.classList.add('weather-calm');
+    detailPill.textContent = '🌿 Clear Breeze';
+    playTone(440, 'sine', 0.6);
+  }
+
+  // Update Granularity Chips
+  granularityChips.innerHTML = nearest.map(n => `<span class="chip" onclick="selectEmotionById('${n.id}')">${n.name} (${Math.round((1 - n.dist/2)*100)}% match)</span>`).join('');
+
+  if (isFrameMode) {
+    initParticles();
+  }
+}
+
+function selectEmotionById(id) {
+  const emo = EMOTIONS.find(e => e.id === id);
+  if (emo) selectEmotion(emo);
+}
+
+// User Check-In Pin
+function setUserPin(x, y, label = '') {
+  userPin = { x, y, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }), label };
+  const { left, top } = coordToPct(x, y);
+  tapMarker.style.left = `${left}%`;
+  tapMarker.style.top = `${top}%`;
+  tapMarker.style.display = 'block';
+
+  // Save to history
+  historyLog.push({ x, y, label: label || 'Check-in', date: new Date().toISOString() });
+  if (historyLog.length > 20) historyLog.shift();
+  localStorage.setItem('elinity_feeling_history', JSON.stringify(historyLog));
+  updateHistoryUI();
+}
+
+// Plane Click Handler
+planeWrapper.addEventListener('click', (e) => {
+  const rect = planeWrapper.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  const clickY = e.clientY - rect.top;
+
+  // Convert pixel to -1..+1 coordinates
+  const normX = (clickX / rect.width) * 2 - 1;
+  const normY = 1 - (clickY / rect.height) * 2;
+
+  const nearest = getNearestEmotions(normX, normY, 1)[0];
+  selectEmotion(nearest, { x: normX, y: normY });
+
+  if (activeMode === 'checkin') {
+    setUserPin(normX, normY, nearest.name);
+  }
+});
+
+// Mode Tab Switching
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeMode = btn.dataset.mode;
+
+    if (activeMode === 'checkin') {
+      detailTitle.textContent = 'Tap anywhere to mark your current state';
+      detailBody.textContent = 'Click on the map right where your mood sits today. Elinity will help you articulate the nuanced emotions surrounding that point.';
+    } else if (activeMode === 'history') {
+      trailBar.style.display = 'flex';
+      renderGrid();
+    } else {
+      trailBar.style.display = 'none';
+      renderGrid();
+    }
+  });
+});
+
+function updateHistoryUI() {
+  trailSummary.textContent = `Recorded ${historyLog.length} check-in${historyLog.length === 1 ? '' : 's'} in your personal weather trail.`;
+  if (activeMode === 'history') renderGrid();
+}
+
+document.getElementById('clearTrailBtn').addEventListener('click', () => {
+  historyLog = [];
+  localStorage.removeItem('elinity_feeling_history');
+  updateHistoryUI();
+  renderGrid();
+});
+
+// Sound Toggle & Master Control
+const soundBtn = document.getElementById('soundBtn');
+soundBtn.addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  soundBtn.textContent = soundEnabled ? '🔊 Audio On' : '🔇 Audio Off';
+  soundBtn.classList.toggle('active', soundEnabled);
+  updateFrameAudioState();
+});
+
+// Check-in Header Button
+document.getElementById('checkinBtn').addEventListener('click', () => {
+  document.getElementById('tabCheckin').click();
+});
+
+// Frame Mode Logic
+const frameBtn = document.getElementById('frameBtn');
+const exitFrameBtn = document.getElementById('exitFrameBtn');
+const mapContainer = document.getElementById('mapContainer');
+const frameLegendToggle = document.getElementById('frameLegendToggle');
+const header = document.getElementById('header');
+const mainUi = document.getElementById('mainUi');
+
+function getCurrentQuad() {
+  if (selectedEmotion) return selectedEmotion.quad;
+  if (userPin) {
+    if (userPin.x < 0 && userPin.y >= 0) return 'storm';
+    if (userPin.x >= 0 && userPin.y >= 0) return 'sun';
+    if (userPin.x < 0 && userPin.y < 0) return 'rain';
+    return 'calm';
+  }
+  return 'calm'; // Default
+}
+
+function toggleFrameMode(on) {
+  isFrameMode = on;
+  mapContainer.classList.toggle('frame-active', on);
+  frameLegendToggle.classList.toggle('show', on);
+  exitFrameBtn.classList.toggle('show', on);
+  header.classList.toggle('hide-element', on);
+  mainUi.classList.toggle('hide-element', on);
+
+  const canvasEl = document.getElementById('ambientCanvas');
+  if (canvasEl) {
+    canvasEl.style.zIndex = on ? '99998' : '0';
+  }
+
+  updateFrameAudioState();
+  initParticles();
+  setTimeout(renderGrid, 100);
+}
+
+frameBtn.addEventListener('click', () => toggleFrameMode(true));
+exitFrameBtn.addEventListener('click', () => toggleFrameMode(false));
+
+document.addEventListener('keydown', (e) => {
+  const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+  if (e.key === 'Escape' && isFrameMode) {
+    toggleFrameMode(false);
+  } else if ((e.key === 'f' || e.key === 'F') && !isInput) {
+    toggleFrameMode(!isFrameMode);
+  }
+});
+
+// ----------------------------------------------------
+// Share & Export Modals Engine
+// ----------------------------------------------------
+const shareModal = document.getElementById('shareModal');
+const exportModal = document.getElementById('exportModal');
+
+function closeModals() {
+  shareModal.classList.remove('active');
+  exportModal.classList.remove('active');
+}
+
+document.getElementById('shareBtn').addEventListener('click', () => {
+  const emoName = selectedEmotion ? selectedEmotion.name : 'Calm Sky';
+  const vx = selectedEmotion ? selectedEmotion.x : 0;
+  const vy = selectedEmotion ? selectedEmotion.y : 0;
+  document.getElementById('sharePreviewText').innerHTML = `
+    <strong>Active Feeling:</strong> ${emoName} (Valence: ${vx > 0 ? '+' : ''}${vx.toFixed(2)}, Arousal: ${vy > 0 ? '+' : ''}${vy.toFixed(2)})<br>
+    <strong>Weather Region:</strong> ${getCurrentQuad().toUpperCase()}<br><br>
+    Sharing will prefill an email with your exact emotional coordinates and interactive map link.
+  `;
+  shareModal.classList.add('active');
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  exportModal.classList.add('active');
+});
+
+document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+  const url = window.location.href;
+  navigator.clipboard.writeText(url).then(() => {
+    alert('✨ Interactive map link copied to clipboard!');
+    closeModals();
+  });
+});
+
+document.getElementById('emailShareBtn').addEventListener('click', () => {
+  const emoName = selectedEmotion ? selectedEmotion.name : 'Calm Sky';
+  const vx = selectedEmotion ? selectedEmotion.x : 0;
+  const vy = selectedEmotion ? selectedEmotion.y : 0;
+  const subject = encodeURIComponent(`My Current Weather of Feeling: ${emoName} — Elinity`);
+  const body = encodeURIComponent(
+    `I just explored my current mood state on Elinity's Weather of Feeling:\n\n` +
+    `• Emotion: ${emoName}\n` +
+    `• Valence (Pleasantness): ${vx > 0 ? '+' : ''}${vx.toFixed(2)}\n` +
+    `• Arousal (Energy): ${vy > 0 ? '+' : ''}${vy.toFixed(2)}\n` +
+    `• Weather Atmosphere: ${getCurrentQuad().toUpperCase()}\n\n` +
+    `Explore your weather of feeling here: ${window.location.href}`
+  );
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  closeModals();
+});
+
+// Export Still PNG Art
+document.getElementById('exportPngBtn').addEventListener('click', () => {
+  closeModals();
+  const exportCanvas = document.createElement('canvas');
+  exportCanvas.width = 1920;
+  exportCanvas.height = 1080;
+  const eCtx = exportCanvas.getContext('2d');
+
+  // Draw background sky
+  const quad = getCurrentQuad();
+  const skyGrad = eCtx.createLinearGradient(0, 0, 0, 1080);
+  if (quad === 'storm') { skyGrad.addColorStop(0, '#060314'); skyGrad.addColorStop(1, '#1A0B2C'); }
+  else if (quad === 'sun') { skyGrad.addColorStop(0, '#1A0A26'); skyGrad.addColorStop(0.5, '#3D152E'); skyGrad.addColorStop(1, '#6B2538'); }
+  else if (quad === 'rain') { skyGrad.addColorStop(0, '#040B1A'); skyGrad.addColorStop(1, '#142036'); }
+  else { skyGrad.addColorStop(0, '#041224'); skyGrad.addColorStop(0.6, '#140E33'); skyGrad.addColorStop(1, '#251545'); }
+  eCtx.fillStyle = skyGrad;
+  eCtx.fillRect(0, 0, 1920, 1080);
+
+  // Draw main scene from live canvas
+  eCtx.drawImage(canvas, 0, 0, 1920, 1080);
+
+  // Add Elinity Watermark
+  eCtx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+  eCtx.font = 'bold 28px Comfortaa, sans-serif';
+  eCtx.fillText('Elinity · The Weather of Feeling', 60, 1020);
+  eCtx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+  eCtx.font = '18px DM Sans, sans-serif';
+  eCtx.fillText(`Mood: ${selectedEmotion ? selectedEmotion.name : 'Calm Sky'} | Deckoviz Dynamic Art Edition`, 60, 1050);
+
+  const link = document.createElement('a');
+  link.download = `elinity-weather-art-${(selectedEmotion ? selectedEmotion.name : 'calm').toLowerCase()}.png`;
+  link.href = exportCanvas.toDataURL('image/png');
+  link.click();
+});
+
+// Export Dynamic WebM Video Art
+document.getElementById('exportWebmBtn').addEventListener('click', () => {
+  closeModals();
+  try {
+    const stream = canvas.captureStream(30);
+    const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+    const chunks = [];
+
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = `elinity-dynamic-art-${(selectedEmotion ? selectedEmotion.name : 'calm').toLowerCase()}.webm`;
+      link.href = url;
+      link.click();
+    };
+
+    alert('🎬 Recording 4-second dynamic video loop for Deckoviz frame...');
+    mediaRecorder.start();
+    setTimeout(() => mediaRecorder.stop(), 4000);
+  } catch (err) {
+    alert('WebM video recording is not supported in this browser window. Please use PNG export.');
+  }
+});
+
+// ----------------------------------------------------
+// Frame Mode Audio Engine (Synthesized Stems + 1.2s Crossfade)
+// ----------------------------------------------------
+let masterGainNode = null;
+let activeStemName = null;
+let stemGainNodes = { sun: null, storm: null, rain: null, calm: null };
+let noiseBuffer = null;
+let thunderInterval = null;
+let chimeInterval = null;
+
+function initAudioEngine() {
+  if (masterGainNode) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    masterGainNode = audioCtx.createGain();
+    masterGainNode.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    masterGainNode.connect(audioCtx.destination);
+
+    const bufferSize = audioCtx.sampleRate * 2;
+    noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+    for (let i = 0; i < bufferSize; i++) {
+      let white = Math.random() * 2 - 1;
+      b0 = 0.99886 * b0 + white * 0.0555179;
+      b1 = 0.99332 * b1 + white * 0.0750759;
+      b2 = 0.96900 * b2 + white * 0.1538520;
+      b3 = 0.86650 * b3 + white * 0.3104856;
+      b4 = 0.55000 * b4 + white * 0.5329522;
+      b5 = -0.7616 * b5 - white * 0.0168980;
+      output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+      output[i] *= 0.11;
+      b6 = white * 0.115926;
+    }
+  } catch (e) {}
+}
+
+function updateFrameAudioState() {
+  if (!soundEnabled || !isFrameMode) {
+    if (masterGainNode && audioCtx) {
+      masterGainNode.gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 1.0);
+    }
+    return;
+  }
+
+  initAudioEngine();
+  if (!audioCtx || !masterGainNode) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+
+  masterGainNode.gain.linearRampToValueAtTime(0.20, audioCtx.currentTime + 1.0);
+
+  const quad = getCurrentQuad();
+  if (quad === activeStemName) return;
+
+  Object.keys(stemGainNodes).forEach(key => {
+    if (stemGainNodes[key]) {
+      stemGainNodes[key].gain.linearRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+    }
+  });
+
+  activeStemName = quad;
+
+  if (quad === 'sun') playSunStem();
+  else if (quad === 'storm') playStormStem();
+  else if (quad === 'rain') playRainStem();
+  else playCalmStem();
+}
+
+function playSunStem() {
+  if (!stemGainNodes.sun) {
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    gain.connect(masterGainNode);
+
+    const freqs = [261.63, 329.63, 392.00, 493.88, 587.33];
+    freqs.forEach((f, idx) => {
+      const osc = audioCtx.createOscillator();
+      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+      const oscGain = audioCtx.createGain();
+      oscGain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+      osc.connect(oscGain);
+      oscGain.connect(gain);
+      osc.start();
+    });
+
+    stemGainNodes.sun = gain;
+  }
+  stemGainNodes.sun.gain.linearRampToValueAtTime(0.15, audioCtx.currentTime + 1.2);
+}
+
+function playStormStem() {
+  if (!stemGainNodes.storm) {
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    gain.connect(masterGainNode);
+
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+    noiseSource.loop = true;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(1200, audioCtx.currentTime);
+    noiseSource.connect(filter);
+    filter.connect(gain);
+    noiseSource.start();
+
+    stemGainNodes.storm = gain;
+  }
+  stemGainNodes.storm.gain.linearRampToValueAtTime(0.18, audioCtx.currentTime + 1.2);
+
+  clearInterval(thunderInterval);
+  thunderInterval = setInterval(() => {
+    if (isFrameMode && soundEnabled && activeStemName === 'storm') {
+      triggerThunderClap();
+    }
+  }, Math.random() * 4000 + 4000);
+}
+
+function triggerThunderClap() {
+  if (!audioCtx || !masterGainNode) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(60, audioCtx.currentTime);
+  osc.frequency.exponentialRampToValueAtTime(25, audioCtx.currentTime + 1.6);
+
+  gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.6);
+
+  osc.connect(gain);
+  gain.connect(masterGainNode);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 1.6);
+}
+
+function playRainStem() {
+  if (!stemGainNodes.rain) {
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    gain.connect(masterGainNode);
+
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+    noiseSource.loop = true;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(650, audioCtx.currentTime);
+    noiseSource.connect(filter);
+    filter.connect(gain);
+    noiseSource.start();
+
+    [110.00, 164.81, 261.63].forEach(f => {
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+      const oscGain = audioCtx.createGain();
+      oscGain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+      osc.connect(oscGain);
+      oscGain.connect(gain);
+      osc.start();
+    });
+
+    stemGainNodes.rain = gain;
+  }
+  stemGainNodes.rain.gain.linearRampToValueAtTime(0.14, audioCtx.currentTime + 1.2);
+}
+
+function playCalmStem() {
+  if (!stemGainNodes.calm) {
+    const gain = audioCtx.createGain();
+    gain.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+    gain.connect(masterGainNode);
+
+    const noiseSource = audioCtx.createBufferSource();
+    noiseSource.buffer = noiseBuffer;
+    noiseSource.loop = true;
+    const filter = audioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(300, audioCtx.currentTime);
+    noiseSource.connect(filter);
+    filter.connect(gain);
+    noiseSource.start();
+
+    [220.00, 330.00, 440.00].forEach(f => {
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(f, audioCtx.currentTime);
+      const oscGain = audioCtx.createGain();
+      oscGain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+      osc.connect(oscGain);
+      oscGain.connect(gain);
+      osc.start();
+    });
+
+    stemGainNodes.calm = gain;
+  }
+  stemGainNodes.calm.gain.linearRampToValueAtTime(0.14, audioCtx.currentTime + 1.2);
+
+  clearInterval(chimeInterval);
+  chimeInterval = setInterval(() => {
+    if (isFrameMode && soundEnabled && activeStemName === 'calm') {
+      const pentatonic = [659.25, 783.99, 880.00, 987.77, 1174.66];
+      const f = pentatonic[Math.floor(Math.random() * pentatonic.length)];
+      triggerChime(f);
+    }
+  }, Math.random() * 3000 + 2500);
+}
+
+function triggerChime(freq) {
+  if (!audioCtx || !masterGainNode) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+  gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.5);
+
+  osc.connect(gain);
+  gain.connect(masterGainNode);
+  osc.start();
+  osc.stop(audioCtx.currentTime + 2.5);
+}
+
+// Ambient Weather Canvas Animation Engine
+let canvas = document.getElementById('ambientCanvas');
+if (!canvas) {
+  canvas = document.createElement('canvas');
+  canvas.id = 'ambientCanvas';
+  document.body.insertBefore(canvas, document.body.firstChild);
+}
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  renderGrid();
+}
+window.addEventListener('resize', resizeCanvas);
+
+function initParticles() {
+  particles = [];
+  const quad = getCurrentQuad();
+  const count = isFrameMode ? 90 : 40;
+
+  for (let i = 0; i < count; i++) {
+    if (quad === 'storm') {
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        len: Math.random() * 20 + 10,
+        speed: Math.random() * 12 + 10,
+        angle: 0.25,
+        alpha: Math.random() * 0.5 + 0.3
+      });
+    } else if (quad === 'sun') {
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 3 + 1.5,
+        dy: - (Math.random() * 1.2 + 0.3),
+        dx: (Math.random() - 0.5) * 0.6,
+        alpha: Math.random() * 0.6 + 0.2
+      });
+    } else if (quad === 'rain') {
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        len: Math.random() * 15 + 8,
+        speed: Math.random() * 6 + 4,
+        alpha: Math.random() * 0.4 + 0.2
+      });
+    } else { // calm / night
+      particles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 2.5 + 1,
+        dx: (Math.random() - 0.5) * 0.4,
+        dy: (Math.random() - 0.5) * 0.4,
+        alpha: Math.random() * 0.5 + 0.2
+      });
+    }
+  }
+}
+
+// Render High-Contrast Avatar Silhouette
+function drawAvatarSilhouette(w, h, quad) {
+  const cx = w * 0.5;
+  const cy = h * 0.85;
+  ctx.save();
+
+  // Draw Ground Baseline Hill
+  ctx.beginPath();
+  ctx.ellipse(cx, cy + 28, 160, 24, 0, 0, Math.PI * 2);
+  ctx.fillStyle = '#05030D';
+  ctx.fill();
+
+  // Baseline Rim Glow
+  ctx.beginPath();
+  ctx.ellipse(cx, cy + 28, 160, 24, 0, Math.PI, Math.PI * 2);
+  ctx.strokeStyle = quad === 'sun' ? 'rgba(245, 158, 11, 0.4)' : quad === 'storm' ? 'rgba(6, 182, 212, 0.4)' : 'rgba(139, 92, 246, 0.4)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.fillStyle = '#05030D';
+
+  if (quad === 'storm' || quad === 'rain') {
+    // Crisp Standing Avatar Holding Umbrella Overhead
+    const rimColor = quad === 'storm' ? '#06B6D4' : '#60A5FA';
+    ctx.strokeStyle = rimColor;
+    ctx.lineWidth = 1.5;
+
+    // Umbrella Canopy
+    ctx.beginPath();
+    ctx.arc(cx - 12, cy - 62, 34, Math.PI * 1.1, Math.PI * 1.9);
+    ctx.lineTo(cx - 12, cy - 62);
+    ctx.fillStyle = '#05030D';
+    ctx.fill(); ctx.stroke();
+
+    // Umbrella Stick
+    ctx.beginPath();
+    ctx.moveTo(cx - 4, cy - 35);
+    ctx.lineTo(cx - 12, cy - 62);
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Head & Body
+    ctx.beginPath();
+    ctx.arc(cx - 4, cy - 48, 8, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cx - 4, cy - 40);
+    ctx.lineTo(cx - 14, cy - 10);
+    ctx.lineTo(cx + 4, cy - 10);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    // Legs
+    ctx.beginPath();
+    ctx.moveTo(cx - 8, cy - 10); ctx.lineTo(cx - 10, cy + 18);
+    ctx.moveTo(cx + 1, cy - 10); ctx.lineTo(cx + 3, cy + 18);
+    ctx.lineWidth = 3.5; ctx.stroke();
+
+    // Feet Rain Splashes
+    ctx.beginPath();
+    ctx.ellipse(cx - 10, cy + 18, 6, 2, 0, 0, Math.PI * 2);
+    ctx.ellipse(cx + 3, cy + 18, 6, 2, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(6, 182, 212, 0.5)';
+    ctx.fill();
+
+  } else if (quad === 'sun') {
+    // Crisp Standing Avatar with Arms Raised Wide in Sunlight
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 1.8;
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(cx, cy - 54, 9, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    // Body
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - 45);
+    ctx.lineTo(cx - 9, cy - 10);
+    ctx.lineTo(cx + 9, cy - 10);
+    ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    // Arms Raised Wide
+    ctx.beginPath();
+    ctx.moveTo(cx - 26, cy - 58); ctx.lineTo(cx, cy - 38); ctx.lineTo(cx + 26, cy - 58);
+    ctx.lineWidth = 3.5; ctx.stroke();
+
+    // Legs
+    ctx.beginPath();
+    ctx.moveTo(cx - 5, cy - 10); ctx.lineTo(cx - 8, cy + 20);
+    ctx.moveTo(cx + 5, cy - 10); ctx.lineTo(cx + 8, cy + 20);
+    ctx.lineWidth = 4; ctx.stroke();
+
+  } else {
+    // Crisp Relaxed Standing Avatar in Quiet Night Sky
+    ctx.strokeStyle = '#8B5CF6';
+    ctx.lineWidth = 1.5;
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(cx, cy - 48, 8.5, 0, Math.PI * 2);
+    ctx.fill(); ctx.stroke();
+
+    // Body
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - 39); ctx.lineTo(cx - 8, cy - 10); ctx.lineTo(cx + 8, cy - 10); ctx.closePath();
+    ctx.fill(); ctx.stroke();
+
+    // Legs
+    ctx.beginPath();
+    ctx.moveTo(cx - 4, cy - 10); ctx.lineTo(cx - 5, cy + 18);
+    ctx.moveTo(cx + 4, cy - 10); ctx.lineTo(cx + 5, cy + 18);
+    ctx.lineWidth = 3.5; ctx.stroke();
+  }
+
+  ctx.restore();
+}
+
+function animateParticles() {
+  const w = canvas.width;
+  const h = canvas.height;
+  animTime += 0.02;
+
+  ctx.clearRect(0, 0, w, h);
+
+  if (isFrameMode) {
+    const quad = getCurrentQuad();
+
+    // Render Atmospheric Sky Background Gradient
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, h);
+    if (quad === 'storm') {
+      skyGrad.addColorStop(0, '#060314');
+      skyGrad.addColorStop(1, '#1A0B2C');
+    } else if (quad === 'sun') {
+      skyGrad.addColorStop(0, '#1A0A26');
+      skyGrad.addColorStop(0.5, '#3D152E');
+      skyGrad.addColorStop(1, '#6B2538');
+    } else if (quad === 'rain') {
+      skyGrad.addColorStop(0, '#040B1A');
+      skyGrad.addColorStop(1, '#142036');
+    } else { // calm / night
+      skyGrad.addColorStop(0, '#041224');
+      skyGrad.addColorStop(0.6, '#140E33');
+      skyGrad.addColorStop(1, '#251545');
+    }
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, w, h);
+
+    // Weather Effects
+    if (quad === 'storm') {
+      // Lightning Flash logic
+      if (Math.random() < 0.008) lightningFlash = 0.85;
+      if (lightningFlash > 0) {
+        ctx.fillStyle = `rgba(255, 255, 255, ${lightningFlash})`;
+        ctx.fillRect(0, 0, w, h);
+        lightningFlash *= 0.82;
+      }
+      // Diagonal Rain
+      ctx.strokeStyle = 'rgba(180, 210, 255, 0.55)';
+      ctx.lineWidth = 1.8;
+      particles.forEach(p => {
+        p.x += p.speed * p.angle;
+        p.y += p.speed;
+        if (p.y > h) { p.y = -20; p.x = Math.random() * w; }
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.len * p.angle, p.y + p.len);
+        ctx.stroke();
+      });
+
+    } else if (quad === 'sun') {
+      // Sun Rays
+      const sunX = w * 0.8;
+      const sunY = h * 0.2;
+      ctx.save();
+      ctx.translate(sunX, sunY);
+      for (let i = 0; i < 8; i++) {
+        const ang = (i / 8) * Math.PI * 2 + animTime * 0.1;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.arc(0, 0, w * 0.6, ang - 0.1, ang + 0.1);
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(245, 158, 11, 0.06)';
+        ctx.fill();
+      }
+      ctx.restore();
+
+      // Rising Golden Embers
+      particles.forEach(p => {
+        p.y += p.dy;
+        p.x += p.dx;
+        if (p.y < 0) { p.y = h + 10; p.x = Math.random() * w; }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(245, 158, 11, ${p.alpha})`;
+        ctx.shadowColor = '#F59E0B'; ctx.shadowBlur = 10;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+
+    } else if (quad === 'rain') {
+      // Gentle Vertical Rain & Fog
+      ctx.strokeStyle = 'rgba(6, 182, 212, 0.45)';
+      ctx.lineWidth = 1.2;
+      particles.forEach(p => {
+        p.y += p.speed;
+        if (p.y > h) { p.y = -15; p.x = Math.random() * w; }
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x, p.y + p.len);
+        ctx.stroke();
+      });
+
+    } else { // calm / night
+      // Aurora Ribbons
+      ctx.beginPath();
+      for (let x = 0; x <= w; x += 20) {
+        const y = h * 0.35 + Math.sin(x * 0.005 + animTime) * 40 + Math.cos(x * 0.01) * 20;
+        if (x === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(139, 92, 246, 0.25)';
+      ctx.lineWidth = 30;
+      ctx.stroke();
+
+      particles.forEach(p => {
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > w) p.dx *= -1;
+        if (p.y < 0 || p.y > h) p.dy *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(139, 92, 246, ${p.alpha})`;
+        ctx.shadowColor = '#8B5CF6'; ctx.shadowBlur = 12;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      });
+    }
+
+    // Render Silhouette Avatar
+    drawAvatarSilhouette(w, h, quad);
+
+  } else {
+    // Normal View Background Motes
+    particles.forEach(p => {
+      p.x += p.dx || 0.2;
+      p.y += p.dy || 0.3;
+      if (p.y > h) p.y = 0;
+      if (p.x > w) p.x = 0;
+      if (p.x < 0) p.x = w;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r || 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(139, 92, 246, ${p.alpha || 0.2})`;
+      ctx.fill();
+    });
+  }
+
+  requestAnimationFrame(animateParticles);
+}
+
+// Init
+resizeCanvas();
+initParticles();
+animateParticles();
+renderEmotionNodes();
+updateHistoryUI();
+selectEmotion(EMOTIONS.find(e => e.id === 'contentment'));
+</script>
+</body>
+</html>

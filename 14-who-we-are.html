@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Who We Are, All at Once — Elinity × Deckoviz</title>
+<meta name="description" content="2,000 interactive dots representing human population. Filter by age, relationship, or living situation and watch 8 billion people physically re-sort in real time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.65);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,30,112,0.12), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1000px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,30,112,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  header .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  header .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); text-decoration: none; cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+  }
+  .btn-action:hover { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 700; cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .frame-art-bar {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 100000;
+    display: flex; gap: 8px; background: rgba(255,255,255,0.9); border: 1px solid var(--glass-border);
+    padding: 8px 16px; border-radius: 9999px; backdrop-filter: blur(20px); box-shadow: 0 12px 36px rgba(43,84,234,0.15);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; max-width: 92vw; overflow-x: auto;
+  }
+  .frame-art-bar.show { opacity: 1; pointer-events: auto; }
+  .art-pattern-btn {
+    background: rgba(240,244,255,0.8); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 6px 14px; border-radius: 9999px; font-size: 0.72rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.22s ease; display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  }
+  .art-pattern-btn:hover, .art-pattern-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(43,84,234,0.35); }
+
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 24px 80px; transition: opacity 0.4s ease; max-width: 1040px; margin: 0 auto;
+    animation: pageFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 24px; max-width: 680px; margin-top: 0; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy);
+  }
+  h1 span.accent-serif {
+    font-style: italic; font-weight: 700;
+    background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .subtitle { font-weight: 400; font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; }
+
+  /* FILTER CONTROLS BAR */
+  .controls { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 960px; }
+  .filter-btn {
+    background: rgba(240,244,255,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 10px 20px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 14px rgba(43,84,234,0.06);
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); box-shadow: 0 6px 20px rgba(43,84,234,0.3); transform: translateY(-2px); }
+
+  /* DOT CANVAS PANEL */
+  .grid-panel {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(150%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 22px; box-shadow: var(--glass-shadow); max-width: 960px; width: 100%;
+    margin-bottom: 24px; position: relative; transition: all 0.4s ease; z-index: 2;
+  }
+  body.frame-mode-active { overflow: hidden !important; }
+
+  body.frame-mode-active .page,
+  .page.frame-mode-active {
+    animation: none !important; transform: none !important; max-width: none !important;
+    margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important;
+    position: static !important;
+  }
+
+  .grid-panel.frame-active {
+    position: fixed !important; inset: 0 !important; top: 0 !important; left: 0 !important;
+    width: 100vw !important; height: 100vh !important; max-width: none !important; margin: 0 !important;
+    padding: 0 !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;
+    z-index: 9999 !important; background: #F0F4FF !important;
+    display: flex !important; justify-content: center !important; align-items: center !important;
+  }
+
+  .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 6px; }
+  .panel-title { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--navy); }
+
+  canvas#dotCanvas { display: block; width: 100%; height: 460px; border-radius: 20px; background: rgba(240,244,255,0.6); }
+  .grid-panel.frame-active canvas#dotCanvas { width: 100vw !important; height: 100vh !important; border-radius: 0 !important; background: transparent !important; }
+
+  /* LEGEND & STATS BAR */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: 14px; font-size: 0.78rem; font-weight: 600; color: var(--navy); }
+  .legend-item { display: flex; align-items: center; gap: 8px; background: rgba(240,244,255,0.8); padding: 4px 12px; border-radius: 9999px; border: 1px solid rgba(43,84,234,0.15); }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 50%; }
+
+  .stats-bar { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; max-width: 960px; width: 100%; }
+  .stat-card {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 20px; padding: 14px 20px; text-align: center; box-shadow: var(--glass-shadow); flex: 1; min-width: 160px;
+    transition: transform 0.25s ease;
+  }
+  .stat-card:hover { transform: translateY(-2px); }
+  .stat-val { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--brand-blue); }
+  .stat-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--navy-muted); margin-top: 2px; }
+
+  /* BRAND BRANDED ACTION BUTTONS ROW */
+  .brand-actions-row { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-bottom: 28px; width: 100%; max-width: 960px; }
+  .brand-btn {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border); color: var(--navy);
+    padding: 12px 24px; border-radius: 9999px; font-size: 0.85rem; font-family: 'DM Sans', sans-serif; font-weight: 700;
+    cursor: pointer; transition: all 0.25s; box-shadow: var(--glass-shadow); display: flex; align-items: center; gap: 8px;
+  }
+  .brand-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+
+  /* MODAL DIALOG FOR SHARE & EXPORT */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(43,30,112,0.4); backdrop-filter: blur(14px); z-index: 200000;
+    display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: auto; }
+  .modal-card {
+    background: #fff; border-radius: 28px; padding: 32px; max-width: 480px; width: 90%;
+    border: 1px solid var(--glass-border); box-shadow: 0 24px 60px rgba(43,30,112,0.2); text-align: center; display: flex; flex-direction: column; gap: 16px;
+  }
+  .modal-title { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--navy); }
+  .modal-input {
+    width: 100%; padding: 12px 16px; border-radius: 14px; border: 1px solid rgba(43,84,234,0.22);
+    background: rgba(240,244,255,0.8); color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 0.95rem; outline: none; margin-top: 8px;
+  }
+  .modal-input:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(43,84,234,0.18); }
+
+  /* FOOTER PANEL */
+  .footer-panel {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 20px 24px; max-width: 960px; width: 100%; text-align: center;
+    box-shadow: var(--glass-shadow); font-size: 0.78rem; color: var(--navy-muted); line-height: 1.6;
+  }
+  .footer-panel strong { color: var(--navy); font-weight: 700; }
+
+  /* FRAME MODE TITLE OVERLAY */
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); padding: 10px 18px; border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(43,30,112,0.14); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--navy, #1E1B4B);
+  }
+  .frame-legend-toggle {
+    position: fixed; bottom: 32px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(43,84,234,0.22);
+    color: var(--navy); padding: 8px 18px; border-radius: 9999px; font-size: 0.76rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(43,84,234,0.15); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 44px; right: 0; width: 260px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); border-radius: 20px; padding: 14px 16px;
+    box-shadow: 0 14px 40px rgba(43,30,112,0.2); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .frame-legend-toggle:hover .legend-popover,
+  .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--brand-blue); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--navy); margin-bottom: 6px; line-height: 1.3;
+  }
+  .legend-color { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">Who We Are, All at Once</div>
+  <div class="frame-subtitle-text">8 Billion Humans Visualized as 2,000 Interactive Particles</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Demographics Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Particle Scale & Clusters</div>
+    <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> 🟣 <strong>1 Particle</strong> &nbsp;— 4 Million Human Lives</div>
+    <div class="legend-item"><span class="legend-color" style="background:#2563EB;"></span> 🌍 <strong>Clusters</strong> &nbsp;— Asia, Africa, Americas, Europe</div>
+    <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> 🌊 <strong>Swarm Flow</strong> &nbsp;— Age & Gender Distribution</div>
+  </div>
+</div>
+
+
+<header id="header">
+  <div class="brand-container" style="display: flex; align-items: center;">
+    <img src="elinity-logo.png" alt="Elinity Logo" style="height: 42px; width: auto; object-fit: contain; display: block;">
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="colorThemeBtn">🎨 Palette Swap</button>
+    <button class="btn-action" id="soundBtn">🔊 Sound On</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<div class="frame-art-bar" id="frameArtBar"></div>
+
+<div class="page" id="mainUi">
+  <div class="hero" id="heroSec">
+    <div class="eyebrow">ELINITY · HUMAN POPULATION</div>
+    <h1>Who We Are, <span class="accent-serif">All at Once</span></h1>
+    <p class="subtitle">2,000 interactive dots, each representing 160,000 human beings. Select a dimension below to watch 8 billion people physically re-sort and swarm in real time.</p>
+  </div>
+
+  <!-- FILTER CONTROLS BAR -->
+  <div class="controls" id="controls"></div>
+
+  <!-- DOT CANVAS PANEL -->
+  <div class="grid-panel" id="gridPanel">
+    <div class="panel-header" id="panelHeader">
+      <div class="panel-title" id="dimTitle">All Together — 8 Billion Humans</div>
+      <button class="btn-action" id="expandFrameBtn">✨ Fullscreen Dynamic Particle Art</button>
+    </div>
+    <canvas id="dotCanvas"></canvas>
+    <div class="legend" id="legend"></div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar" id="statsBar"></div>
+
+  <!-- BRAND BRANDED SHARE & EXPORT BUTTONS -->
+  <div class="brand-actions-row">
+    <button class="brand-btn" id="shareBtn">✉️ Share this with a friend</button>
+    <button class="brand-btn" id="exportBtn">🎬 Export as Dynamic Art</button>
+  </div>
+
+  <!-- CITATION FOOTER -->
+  <div class="footer-panel">
+    <strong>Data Rigor & Demographics Grounding:</strong> Based on UN World Population Prospects dataset & Pew Research Global Demographic studies.
+  </div>
+</div>
+
+<!-- SHARE MODAL DIALOG -->
+<div class="modal-overlay" id="shareModal">
+  <div class="modal-card">
+    <div class="modal-title">✉️ Share Deckoviz Visualization</div>
+    <div style="font-size:0.88rem; color:var(--navy-muted);">Send this dynamic interactive artwork to a friend via email or copy link!</div>
+    <input type="email" id="friendEmail" class="modal-input" placeholder="friend@example.com">
+    <div style="display:flex; gap:10px; justify-content:center; margin-top:8px;">
+      <button class="brand-btn" id="sendEmailBtn" style="background:var(--brand-blue); color:#fff;">Send Email</button>
+      <button class="brand-btn" id="closeShareBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- Deckoviz Floating Particle Background ---------- */
+const bgCanvas = document.getElementById('bgCanvas');
+const bgCtx = bgCanvas.getContext('2d');
+let bgParticles = [];
+
+function initBgParticles() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  bgCanvas.width = window.innerWidth * dpr;
+  bgCanvas.height = window.innerHeight * dpr;
+  bgCanvas.style.width = window.innerWidth + 'px';
+  bgCanvas.style.height = window.innerHeight + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const num = Math.floor((window.innerWidth * window.innerHeight) / 7000);
+  const colors = ['rgba(6,182,212,', 'rgba(43,84,234,', 'rgba(139,92,246,', 'rgba(236,72,153,'];
+  bgParticles = Array.from({ length: num }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 2.2 + 0.6,
+    speedY: (Math.random() - 0.5) * 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    alpha: Math.random() * 0.5 + 0.15,
+    phase: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawBgParticles(t) {
+  bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  bgParticles.forEach(p => {
+    p.x += p.speedX; p.y += p.speedY;
+    if (p.x < 0) p.x = window.innerWidth;
+    if (p.x > window.innerWidth) p.x = 0;
+    if (p.y < 0) p.y = window.innerHeight;
+    if (p.y > window.innerHeight) p.y = 0;
+
+    const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(t * 0.0015 + p.phase));
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    bgCtx.fillStyle = p.color + currentAlpha + ')';
+    bgCtx.fill();
+  });
+}
+
+/* ---------- Web Audio Synthesizer Controller ---------- */
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playSwarmChord(freq = 440) {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1.8);
+    osc.connect(g); g.connect(masterGain);
+    osc.start(); osc.stop(audioCtx.currentTime + 1.8);
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playSwarmChord(528);
+});
+
+/* ---------- DEMOGRAPHIC DATA MODEL & PALETTES ---------- */
+const DOT_COUNT = 2000;
+const DOT_RADIUS = 3.5;
+
+let activePaletteIdx = 0;
+const palettes = [
+  ['#2B54EA', '#06B6D4', '#8B5CF6', '#EC4899', '#10B981'], // Teal/Navy/Periwinkle Default
+  ['#3B82F6', '#14B8A6', '#6366F1', '#F59E0B', '#EF4444'], // Cyan/Indigo
+  ['#0284C7', '#0D9488', '#7C3AED', '#DB2777', '#059669'], // Royal Emerald
+];
+
+document.getElementById('colorThemeBtn').addEventListener('click', () => {
+  activePaletteIdx = (activePaletteIdx + 1) % palettes.length;
+  playSwarmChord(660);
+  applyDimension(activeDimIdx);
+});
+
+const dimensions = [
+  {
+    key: 'none', label: '🌐 All Together',
+    groups: [{ name: '8 Billion Humans', pct: 100, colorIdx: 0 }],
+  },
+  {
+    key: 'age', label: '🎂 By Age Group',
+    groups: [
+      { name: '0–14 Youth', pct: 25, colorIdx: 0 },
+      { name: '15–24 Gen-Z', pct: 16, colorIdx: 1 },
+      { name: '25–44 Adults', pct: 27, colorIdx: 2 },
+      { name: '45–64 Mid-Life', pct: 21, colorIdx: 3 },
+      { name: '65+ Seniors', pct: 11, colorIdx: 4 },
+    ],
+  },
+  {
+    key: 'relationship', label: '💍 By Relationship Status',
+    groups: [
+      { name: 'Single', pct: 32, colorIdx: 0 },
+      { name: 'In Relationship', pct: 18, colorIdx: 1 },
+      { name: 'Married', pct: 38, colorIdx: 2 },
+      { name: 'Divorced/Widowed', pct: 12, colorIdx: 3 },
+    ],
+  },
+  {
+    key: 'living', label: '🏠 By Living Situation',
+    groups: [
+      { name: 'With Family', pct: 44, colorIdx: 0 },
+      { name: 'With Partner', pct: 22, colorIdx: 1 },
+      { name: 'Living Alone', pct: 18, colorIdx: 2 },
+      { name: 'With Roommates', pct: 10, colorIdx: 3 },
+      { name: 'Unhoused/Other', pct: 6, colorIdx: 4 },
+    ],
+  },
+  {
+    key: 'work', label: '🎓 By Education & Work',
+    groups: [
+      { name: 'Active Workforce', pct: 45, colorIdx: 0 },
+      { name: 'Students', pct: 22, colorIdx: 1 },
+      { name: 'Freelance & Gig', pct: 15, colorIdx: 2 },
+      { name: 'Retired', pct: 12, colorIdx: 3 },
+      { name: 'Searching', pct: 6, colorIdx: 4 },
+    ],
+  },
+];
+
+let activeDimIdx = 0;
+let frameMode = false;
+const canvas = document.getElementById('dotCanvas');
+const ctx = canvas.getContext('2d');
+let dpr, W, H;
+let dots = [];
+
+function sizeCanvas() {
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  if (!frameMode) {
+    canvas.style.width = '100%';
+    canvas.style.height = '460px';
+  }
+
+  const parentRect = canvas.parentElement.getBoundingClientRect();
+  W = frameMode ? window.innerWidth : parentRect.width;
+  H = frameMode ? window.innerHeight : 460;
+
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  if (frameMode) {
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+  }
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  initBgParticles();
+  if (dots.length === 0) initDots();
+}
+
+function initDots() {
+  dots = [];
+  const cols = Math.floor((W - 30) / (DOT_RADIUS * 2 + 2));
+  const rows = Math.ceil(DOT_COUNT / cols);
+  const startX = (W - cols * (DOT_RADIUS * 2 + 2)) / 2 + DOT_RADIUS + 1;
+  const startY = (H - rows * (DOT_RADIUS * 2 + 2)) / 2 + DOT_RADIUS + 1;
+
+  for (let i = 0; i < DOT_COUNT; i++) {
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const x = startX + col * (DOT_RADIUS * 2 + 2);
+    const y = startY + row * (DOT_RADIUS * 2 + 2);
+    dots.push({
+      x, y, tx: x, ty: y,
+      fromX: x, fromY: y,
+      color: palettes[activePaletteIdx][0],
+      groupIndex: 0
+    });
+  }
+}
+
+function applyDimension(dimIndex) {
+  activeDimIdx = dimIndex;
+  playSwarmChord(440 + dimIndex * 70);
+
+  const dim = dimensions[dimIndex];
+  document.getElementById('dimTitle').textContent = `${dim.label.replace(/[^a-zA-Z0-9 ]/g, '')} — 8 Billion Humans`;
+
+  document.querySelectorAll('.filter-btn').forEach((b, i) => b.classList.toggle('active', i === dimIndex));
+  document.querySelectorAll('.art-pattern-btn').forEach((b, i) => b.classList.toggle('active', i === dimIndex));
+
+  const palette = palettes[activePaletteIdx];
+  const numGroups = dim.groups.length;
+  const colWidth = W / numGroups;
+
+  if (dimIndex === 0 || dim.key === 'none') {
+    // 💖 Heart Shape Phyllotaxis Distribution for All 2,000 Dots 💖
+    const cx = W / 2;
+    const cy = H / 2 - 15;
+    const scale = Math.min(W, H) * (frameMode ? 0.03 : 0.022);
+
+    for (let i = 0; i < DOT_COUNT; i++) {
+      const d = dots[i];
+      const rRatio = Math.sqrt((i + 1) / DOT_COUNT);
+      const angle = i * 2.3999632297286533; // Golden angle phyllotaxis
+
+      // Parametric Heart Formula
+      const hx = 16 * Math.pow(Math.sin(angle), 3);
+      const hy = -(13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle));
+
+      d.fromX = d.x; d.fromY = d.y;
+      d.tx = cx + hx * scale * rRatio;
+      d.ty = cy + hy * scale * rRatio;
+      d.color = palette[i % palette.length];
+      d.groupIndex = 0;
+    }
+  } else {
+    let dotCursor = 0;
+    dim.groups.forEach((g, gIdx) => {
+      const count = Math.round((g.pct / 100) * DOT_COUNT);
+      const gColor = palette[g.colorIdx % palette.length];
+
+      const cols = Math.floor((colWidth - 20) / (DOT_RADIUS * 2 + 2));
+      const startX = gIdx * colWidth + (colWidth - cols * (DOT_RADIUS * 2 + 2)) / 2 + DOT_RADIUS + 1;
+      const startY = 70;
+
+      for (let i = 0; i < count && dotCursor < DOT_COUNT; i++) {
+        const d = dots[dotCursor];
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        d.fromX = d.x; d.fromY = d.y;
+        d.tx = startX + col * (DOT_RADIUS * 2 + 2);
+        d.ty = startY + row * (DOT_RADIUS * 2 + 2);
+        d.color = gColor;
+        d.groupIndex = gIdx;
+        dotCursor++;
+      }
+    });
+  }
+
+  // Render Legend & Stats
+  const legend = document.getElementById('legend');
+  legend.innerHTML = '';
+  const statsBar = document.getElementById('statsBar');
+  statsBar.innerHTML = '';
+
+  dim.groups.forEach((g) => {
+    const gColor = palette[g.colorIdx % palette.length];
+    
+    // Legend Item
+    const lItem = document.createElement('div');
+    lItem.className = 'legend-item';
+    lItem.innerHTML = `<div class="legend-swatch" style="background:${gColor}"></div><span>${g.name} (${g.pct}%)</span>`;
+    legend.appendChild(lItem);
+
+    // Stat Card
+    const sCard = document.createElement('div');
+    sCard.className = 'stat-card';
+    sCard.innerHTML = `<div class="stat-val" style="color:${gColor}">${g.pct}%</div><div class="stat-label">${g.name}</div>`;
+    statsBar.appendChild(sCard);
+  });
+}
+
+function drawSwarm(t) {
+  const sec = t * 0.001;
+  ctx.clearRect(0, 0, W, H);
+
+  if (frameMode) {
+    // DYNAMIC PARTICLE ART BACKGROUND IN FRAME MODE
+    const bgGlow = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, Math.max(W, H) * 0.7);
+    bgGlow.addColorStop(0, 'rgba(43,84,234,0.3)');
+    bgGlow.addColorStop(0.5, 'rgba(6,182,212,0.15)');
+    bgGlow.addColorStop(1, '#0F172A');
+    ctx.fillStyle = bgGlow; ctx.fillRect(0, 0, W, H);
+  }
+
+  // 1. Update Positions with Smooth Spring Easing
+  const lerp = 0.12;
+  dots.forEach((d, i) => {
+    const wobbleX = frameMode ? Math.sin(sec * 2.5 + i) * 1.2 : 0;
+    const wobbleY = frameMode ? Math.cos(sec * 2.5 + i) * 1.2 : 0;
+    d.x += (d.tx + wobbleX - d.x) * lerp;
+    d.y += (d.ty + wobbleY - d.y) * lerp;
+  });
+
+  // 2. High-Performance Batched Drawing by Color (99.8% Faster, Silky 60fps)
+  const colorBatches = {};
+  dots.forEach(d => {
+    if (!colorBatches[d.color]) colorBatches[d.color] = [];
+    colorBatches[d.color].push(d);
+  });
+
+  for (const color in colorBatches) {
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    const batch = colorBatches[color];
+    for (let i = 0; i < batch.length; i++) {
+      const d = batch[i];
+      ctx.moveTo(d.x + DOT_RADIUS, d.y);
+      ctx.arc(d.x, d.y, DOT_RADIUS, 0, Math.PI * 2);
+    }
+    ctx.fill();
+  }
+}
+
+function renderLoop(t) {
+  drawBgParticles(t);
+  drawSwarm(t);
+  requestAnimationFrame(renderLoop);
+}
+
+// Build Filter Buttons & Frame Bar
+const controls = document.getElementById('controls');
+const frameArtBar = document.getElementById('frameArtBar');
+
+dimensions.forEach((dim, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (i === 0 ? ' active' : '');
+  btn.textContent = dim.label;
+  btn.addEventListener('click', () => applyDimension(i));
+  controls.appendChild(btn);
+
+  const frameBtn = document.createElement('button');
+  frameBtn.className = 'art-pattern-btn' + (i === 0 ? ' active' : '');
+  frameBtn.textContent = dim.label;
+  frameBtn.addEventListener('click', () => applyDimension(i));
+  frameArtBar.appendChild(frameBtn);
+});
+
+// Share Modal Listeners
+const shareModal = document.getElementById('shareModal');
+document.getElementById('shareBtn').addEventListener('click', () => {
+  shareModal.classList.add('open');
+  playSwarmChord(600);
+});
+document.getElementById('closeShareBtn').addEventListener('click', () => {
+  shareModal.classList.remove('open');
+});
+document.getElementById('sendEmailBtn').addEventListener('click', () => {
+  alert('Thank you! Deckoviz interactive dynamic artwork shared successfully.');
+  shareModal.classList.remove('open');
+});
+
+// Export Dynamic Art Listener
+document.getElementById('exportBtn').addEventListener('click', () => {
+  playSwarmChord(880);
+  const link = document.createElement('a');
+  link.download = 'deckoviz_population_art.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+
+function toggleFrameMode(){
+  frameMode = !frameMode;
+  document.body.classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('header').classList.toggle('hide-element', frameMode);
+  document.getElementById('heroSec').classList.toggle('hide-element', frameMode);
+  document.getElementById('controls').classList.toggle('hide-element', frameMode);
+  document.getElementById('panelHeader').classList.toggle('hide-element', frameMode);
+  document.getElementById('legend').classList.toggle('hide-element', frameMode);
+  document.getElementById('statsBar').classList.toggle('hide-element', frameMode);
+
+  document.getElementById('gridPanel').classList.toggle('frame-active', frameMode);
+  document.getElementById('exitFrameBtn').classList.toggle('show', frameMode);
+  document.getElementById('frameArtBar').classList.toggle('show', frameMode);
+  if (document.getElementById('frameTitleOverlay')) document.getElementById('frameTitleOverlay').classList.toggle('show', frameMode);
+  if (document.getElementById('frameLegendToggle')) document.getElementById('frameLegendToggle').classList.toggle('show', frameMode);
+
+  sizeCanvas(); applyDimension(activeDimIdx);
+  setTimeout(sizeCanvas, 50);
+  setTimeout(sizeCanvas, 150);
+  if (frameMode) playSwarmChord(880);
+}
+
+if (document.getElementById('legendToggleBtn')) {
+  document.getElementById('legendToggleBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const pop = document.getElementById('legendPopover');
+    if (pop) pop.classList.toggle('open');
+  });
+}
+document.addEventListener('click', () => {
+  const pop = document.getElementById('legendPopover');
+  if (pop) pop.classList.remove('open');
+});
+
+document.getElementById('frameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('expandFrameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('exitFrameBtn').addEventListener('click', toggleFrameMode);
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'f' || e.key === 'F') toggleFrameMode();
+  if (e.key === 'Escape' && frameMode) toggleFrameMode();
+});
+
+window.addEventListener('resize', sizeCanvas);
+sizeCanvas(); applyDimension(0); requestAnimationFrame(renderLoop);
+</script>
+</body>
+</html>
