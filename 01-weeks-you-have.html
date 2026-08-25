@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Weeks You Have — Elinity × Deckoviz</title>
+<meta name="description" content="A quiet, cosmic reckoning with time. Every week of your life rendered on a glowing golden-angle galaxy spiral.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.65);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,30,112,0.12), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas { position: fixed; inset: 0; display: block; }
+  #bg { z-index: 0; }
+  #viz { z-index: 1; }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1000px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,30,112,0.08); opacity: 0; transition: opacity 0.6s ease; pointer-events: none;
+  }
+  header.show { opacity: 1; pointer-events: auto; }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  header .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  header .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  body.frame-mode-active {
+    background: #06031A !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); text-decoration: none; cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+  }
+  .btn-action:hover { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+  .btn-action:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 10000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 700; cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  /* FRAME MODE PATTERN CONTROLS BAR */
+  .pattern-bar {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 10000;
+    display: flex; gap: 8px; background: rgba(255,255,255,0.9); backdrop-filter: blur(20px);
+    padding: 8px 16px; border-radius: 9999px; border: 1px solid var(--glass-border);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s; box-shadow: 0 12px 36px rgba(43,84,234,0.15);
+  }
+  .pattern-bar.show { opacity: 1; pointer-events: auto; }
+  .pattern-btn {
+    background: rgba(240,244,255,0.8); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 7px 16px; border-radius: 9999px; font-size: 0.72rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.22s ease;
+  }
+  .pattern-btn.active, .pattern-btn:hover { background: var(--brand-blue); border-color: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 4px 14px rgba(43,84,234,0.35); }
+
+  #ritual {
+    position: fixed; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center;
+    padding: 24px; transition: opacity 1s cubic-bezier(0.22,1,0.36,1), visibility 1s;
+  }
+  #ritual.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+  @keyframes cardReveal {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .card {
+    background: var(--glass); backdrop-filter: blur(32px) saturate(160%);
+    border: 1px solid var(--glass-border); border-radius: 28px; padding: 48px 42px; max-width: 440px; width: 100%;
+    text-align: center; box-shadow: var(--glass-shadow);
+    animation: cardReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @media (max-width: 480px) {
+    .card { padding: 32px 22px; border-radius: 22px; }
+  }
+  .eyebrow { font-family: 'DM Sans', sans-serif; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); font-weight: 700; margin-bottom: 16px; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 2rem; line-height: 1.2; margin-bottom: 16px; color: var(--navy);
+  }
+  h1 span.accent-serif {
+    font-style: italic; font-weight: 700;
+    background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .lede { font-size: 0.94rem; line-height: 1.65; color: var(--navy-muted); margin-bottom: 30px; font-weight: 400; }
+  .field { text-align: left; margin-bottom: 18px; }
+  .field label { display: block; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--brand-blue); margin-bottom: 8px; font-weight: 700; }
+  .field input {
+    width: 100%; background: rgba(255,255,255,0.9); border: 1px solid rgba(43,84,234,0.22);
+    border-radius: 14px; color: var(--navy); padding: 13px 16px; font-family: inherit; font-size: 0.94rem; font-weight: 500;
+    transition: all 0.25s ease;
+  }
+  .field input:focus { outline: none; border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(43,84,234,0.18); transform: translateY(-1px); }
+
+  #reveal {
+    width: 100%; margin-top: 10px; background: var(--brand-blue);
+    border: none; color: #fff; padding: 15px; border-radius: 9999px; font-family: 'DM Sans', sans-serif; font-weight: 700;
+    font-size: 0.92rem; cursor: pointer; transition: transform .22s ease, box-shadow .25s ease;
+    box-shadow: 0 8px 24px rgba(43,84,234,0.3);
+  }
+  #reveal:hover { transform: translateY(-2px) scale(1.01); box-shadow: 0 12px 28px rgba(43,84,234,0.4); }
+  #reveal:focus-visible { outline: 2px solid var(--brand-blue); outline-offset: 2px; }
+
+  #tooltip {
+    position: fixed; z-index: 6; pointer-events: none; opacity: 0; transition: opacity .18s;
+    background: rgba(255,255,255,0.95); border: 1px solid var(--glass-border); border-radius: 14px;
+    padding: 10px 16px; font-size: 0.78rem; backdrop-filter: blur(16px); color: var(--navy);
+    box-shadow: 0 12px 32px rgba(43,30,112,0.14);
+  }
+  #tooltip.show { opacity: 1; }
+  #tooltip .season { color: var(--navy-muted); margin-top: 2px; }
+  #tooltip .age { color: var(--brand-blue); font-weight: 700; font-family: 'Comfortaa', sans-serif; }
+
+  #closing {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 4; text-align: center; padding: 32px 24px 38px;
+    opacity: 0; transition: opacity 1.4s ease 0.6s; pointer-events: none;
+  }
+  #closing.show { opacity: 1; }
+  #closing.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  #closing p { font-family: 'Playfair Display', serif; font-size: 1.15rem; max-width: 520px; margin: 0 auto; line-height: 1.6; color: var(--navy); }
+  #closing b { color: var(--brand-blue); font-weight: 700; font-style: italic; font-family: 'Playfair Display', serif; }
+
+  .frame-hint {
+    position: fixed; bottom: 14px; right: 20px; z-index: 4; font-size: 0.62rem; color: rgba(43,30,112,0.4);
+    letter-spacing: 0.08em; pointer-events: none; transition: opacity 0.4s; font-weight: 600;
+  }
+  .frame-hint.hide-element { opacity: 0 !important; display: none !important; }
+
+  /* FRAME MODE TITLE OVERLAY */
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); padding: 10px 18px; border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(43,30,112,0.14); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--navy, #1E1B4B);
+  }
+  .frame-legend-toggle {
+    position: fixed; bottom: 32px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(43,84,234,0.22);
+    color: var(--navy); padding: 8px 18px; border-radius: 9999px; font-size: 0.76rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(43,84,234,0.15); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 44px; right: 0; width: 260px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); border-radius: 20px; padding: 14px 16px;
+    box-shadow: 0 14px 40px rgba(43,30,112,0.2); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .frame-legend-toggle:hover .legend-popover,
+  .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--brand-blue); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--navy); margin-bottom: 6px; line-height: 1.3;
+  }
+  .legend-color { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">The Weeks You Have</div>
+  <div class="frame-subtitle-text">Every Point Represents 1 Week in an 80-Year Life (4,160 Weeks Total)</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Life Grid Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Visualization Legend</div>
+    <div class="legend-item"><span class="legend-color" style="background:#06B6D4;"></span> <strong>Lived Weeks</strong> &nbsp;— Past time spent</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> <strong>Remaining Weeks</strong> &nbsp;— Future ahead</div>
+    <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> <strong>Life Stages</strong> &nbsp;— Youth, Career & Age</div>
+  </div>
+</div>
+
+
+<canvas id="bg"></canvas>
+<canvas id="viz"></canvas>
+
+<header id="header">
+  <div class="brand-co-container" style="display: flex; align-items: center; gap: 14px;">
+    <div class="deckoviz-brand-mark" style="display: flex; align-items: center; gap: 8px;">
+      <img src="deckoviz-logo.png" alt="Deckoviz Logo" style="height: 30px; width: auto; object-fit: contain; display: block;">
+      <div class="title" style="font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.02rem; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+        Deckoviz <span style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue);">Space Labs</span>
+      </div>
+    </div>
+    <div style="width: 1px; height: 22px; background: rgba(43,30,112,0.22); margin: 0 4px;"></div>
+    <div class="elinity-brand-mark" style="display: flex; align-items: center; gap: 6px;">
+      <img src="elinity-logo.png" alt="Elinity Logo" style="height: 38px; width: auto; object-fit: contain; display: block;">
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🔊 Sound On</button>
+    <button class="btn-action" id="bandsBtn">📊 Life Bands</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+    <button class="btn-action" id="resetBtn">Start over</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<div class="pattern-bar" id="patternBar">
+  <button class="pattern-btn active" data-pattern="spiral">🌌 Galaxy Spiral</button>
+  <button class="pattern-btn" data-pattern="milkyway">🌀 Milky Way</button>
+  <button class="pattern-btn" data-pattern="heart">💖 Sacred Heart</button>
+  <button class="pattern-btn" data-pattern="infinity">♾️ Infinity</button>
+  <button class="pattern-btn" data-pattern="saturn">🪐 Saturn Orbit</button>
+</div>
+
+<div id="ritual">
+  <div class="card">
+    <div class="eyebrow">ELINITY × DECKOVIZ · LIFE RECKONING</div>
+    <h1>The Weeks <span class="accent-serif">You Have</span></h1>
+    <p class="lede">Somewhere in your life is a week you won't recognize as ordinary until years from now. Enter the date you began, and watch how many you've already spent.</p>
+    <div class="field">
+      <label for="dob">Your birth date</label>
+      <input type="date" id="dob">
+    </div>
+    <div class="field">
+      <label for="life">Expected years, roughly</label>
+      <input type="number" id="life" value="83" min="1" max="110">
+    </div>
+    <button id="reveal">Reveal my weeks</button>
+  </div>
+</div>
+
+<div id="tooltip"></div>
+<div id="closing"><p id="closingText"></p></div>
+<div class="frame-hint" id="frameHint">Press 'F' for Frame Mode</div>
+
+<script>
+/* ---------- Foolproof Web Audio Autoplay Unlocker ---------- */
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+
+    [108, 216, 432].forEach((f, i) => {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = 'sine'; osc.frequency.value = f;
+      g.gain.value = 0.04 / (i + 1);
+      osc.connect(g); g.connect(masterGain);
+      osc.start();
+    });
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playSoundChime(freq = 432) {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 2.5);
+    osc.connect(g); g.connect(masterGain);
+    osc.start(); osc.stop(audioCtx.currentTime + 2.5);
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playSoundChime(432);
+});
+
+const bg = document.getElementById('bg');
+const bgCtx = bg.getContext('2d');
+let stars = [];
+let mousePos = { x: -1000, y: -1000 };
+
+function sizeCanvases(){
+  const dpr = Math.min(window.devicePixelRatio||1, 2);
+  [bg, viz].forEach(c=>{
+    c.width = window.innerWidth*dpr; c.height = window.innerHeight*dpr;
+    c.style.width = window.innerWidth+'px'; c.style.height = window.innerHeight+'px';
+    c.getContext('2d').setTransform(dpr,0,0,dpr,0,0);
+  });
+  buildStars();
+}
+
+function buildStars(){
+  const n = Math.floor((window.innerWidth*window.innerHeight)/6500);
+  const colors = ['rgba(6,182,212,', 'rgba(43,84,234,', 'rgba(139,92,246,', 'rgba(217,70,239,'];
+  stars = Array.from({length:n}, ()=>({
+    x: Math.random()*window.innerWidth, y: Math.random()*window.innerHeight,
+    r: Math.random()*2.2+0.6, phase: Math.random()*Math.PI*2,
+    speedX: (Math.random()-0.5)*0.3, speedY: (Math.random()-0.5)*0.3,
+    color: colors[Math.floor(Math.random()*colors.length)],
+    alpha: Math.random()*0.5 + 0.15
+  }));
+}
+
+function drawStars(t){
+  bgCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
+  const cx = window.innerWidth/2, cy = window.innerHeight/2;
+  const neb1 = bgCtx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(cx,cy));
+  neb1.addColorStop(0, 'rgba(43,84,234,0.14)');
+  neb1.addColorStop(0.5, 'rgba(6,182,212,0.08)');
+  neb1.addColorStop(1, 'rgba(240,244,255,0)');
+  bgCtx.fillStyle = neb1; bgCtx.fillRect(0,0,window.innerWidth,window.innerHeight);
+
+  stars.forEach(s=>{
+    s.x += s.speedX; s.y += s.speedY;
+    if (s.x < 0) s.x = window.innerWidth;
+    if (s.x > window.innerWidth) s.x = 0;
+    if (s.y < 0) s.y = window.innerHeight;
+    if (s.y > window.innerHeight) s.y = 0;
+
+    const tw = s.alpha * (0.65 + 0.35 * Math.sin(t*0.0015 + s.phase));
+    bgCtx.beginPath(); bgCtx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    bgCtx.fillStyle = s.color + tw + ')'; bgCtx.fill();
+  });
+}
+
+const viz = document.getElementById('viz');
+const vizCtx = viz.getContext('2d');
+let points = [];
+let livedCount = 0;
+let revealProgress = 0;
+let animating = false;
+let center = {x:0,y:0};
+let hoverIdx = -1;
+let lastHoverIdx = -1;
+let frameMode = false;
+let showBands = false;
+let currentPattern = 'spiral';
+const tooltip = document.getElementById('tooltip');
+
+const GOLDEN_ANGLE = 2.399963229728653;
+
+/* ---------- Morphing Pattern Position Generators ---------- */
+function getPatternCoordinates(i, total, pattern, maxR) {
+  if (pattern === 'spiral') {
+    const angle = i * GOLDEN_ANGLE;
+    const c = maxR / Math.sqrt(total);
+    const r = c * Math.sqrt(i);
+    return { x: Math.cos(angle) * r, y: Math.sin(angle) * r };
+  } else if (pattern === 'milkyway') {
+    const arm = i % 4;
+    const norm = i / total;
+    const angle = norm * Math.PI * 8 + (arm * Math.PI / 2);
+    const r = norm * maxR * 0.95;
+    return { x: Math.cos(angle) * r, y: Math.sin(angle) * r };
+  } else if (pattern === 'heart') {
+    const t = (i / total) * Math.PI * 2;
+    const scale = maxR * 0.055;
+    const x = 16 * Math.pow(Math.sin(t), 3) * scale;
+    const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t)) * scale;
+    return { x, y };
+  } else if (pattern === 'infinity') {
+    const t = (i / total) * Math.PI * 2;
+    const scale = maxR * 0.8;
+    const denom = 1 + Math.sin(t) * Math.sin(t);
+    const x = (scale * Math.cos(t)) / denom;
+    const y = (scale * Math.sin(t) * Math.cos(t)) / denom;
+    return { x, y };
+  } else if (pattern === 'saturn') {
+    if (i < total * 0.35) {
+      // Central sphere
+      const angle = i * GOLDEN_ANGLE;
+      const r = (Math.sqrt(i) / Math.sqrt(total * 0.35)) * maxR * 0.35;
+      return { x: Math.cos(angle) * r, y: Math.sin(angle) * r };
+    } else {
+      // Tilted rings
+      const t = (i / total) * Math.PI * 2;
+      const ringR = maxR * (0.55 + 0.35 * Math.sin(i));
+      const x = Math.cos(t) * ringR;
+      const y = Math.sin(t) * ringR * 0.38;
+      return { x, y };
+    }
+  }
+  return { x: 0, y: 0 };
+}
+
+function buildSpiral(totalWeeks, birth){
+  points = [];
+  const maxRadius = Math.min(window.innerWidth, window.innerHeight)*0.44;
+  for(let i=0;i<totalWeeks;i++){
+    const coords = getPatternCoordinates(i, totalWeeks, 'spiral', maxRadius);
+    const weekDate = new Date(birth.getTime()+i*7*24*60*60*1000);
+    const age = i/52.1775;
+    points.push({
+      x: coords.x, y: coords.y,
+      targetX: coords.x, targetY: coords.y,
+      r: Math.hypot(coords.x, coords.y), age, date: weekDate, lived: i < livedCount,
+      twinklePhase: Math.random()*Math.PI*2
+    });
+  }
+}
+
+function updatePatternPositions(patternKey) {
+  const totalWeeks = points.length;
+  const maxRadius = Math.min(window.innerWidth, window.innerHeight)*0.44;
+  points.forEach((p, i) => {
+    const coords = getPatternCoordinates(i, totalWeeks, patternKey, maxRadius);
+    p.targetX = coords.x;
+    p.targetY = coords.y;
+  });
+}
+
+function drawViz(t){
+  vizCtx.clearRect(0,0,window.innerWidth,window.innerHeight);
+  center.x = window.innerWidth/2; center.y = window.innerHeight/2;
+
+  const visibleCount = Math.floor(points.length*revealProgress);
+  const totalWeeks = points.length;
+
+  // Frame Mode continuous rotation speed
+  const rotationAngle = frameMode ? t * 0.0003 : 0;
+
+  if (showBands && visibleCount > 100 && !frameMode) {
+    const maxR = Math.min(window.innerWidth, window.innerHeight)*0.44;
+    const bands = [
+      { startAge: 0, endAge: 18, color: 'rgba(43,84,234,0.12)' },
+      { startAge: 18, endAge: 65, color: 'rgba(6,182,212,0.1)' },
+      { startAge: 65, endAge: 110, color: 'rgba(139,92,246,0.08)' }
+    ];
+    bands.forEach(b => {
+      const startW = Math.floor(b.startAge * 52.1775);
+      const endW = Math.floor(b.endAge * 52.1775);
+      if (startW >= totalWeeks) return;
+      const r1 = points[startW]?.r || 0;
+      const r2 = points[Math.min(endW, totalWeeks-1)]?.r || maxR;
+
+      vizCtx.beginPath();
+      vizCtx.arc(center.x, center.y, r2, 0, Math.PI*2);
+      vizCtx.arc(center.x, center.y, r1, 0, Math.PI*2, true);
+      vizCtx.fillStyle = b.color; vizCtx.fill();
+    });
+  }
+
+  const breathe = 0.86+0.14*Math.sin(t*0.0014);
+  const livedR = points.length ? (points[Math.min(livedCount, points.length-1)]?.r || 100) : 100;
+  const glowR = Math.max(80, livedR * 1.35) * breathe;
+
+  const coreGrad = vizCtx.createRadialGradient(center.x, center.y, 0, center.x, center.y, glowR);
+  coreGrad.addColorStop(0, 'rgba(43,84,234,0.18)'); coreGrad.addColorStop(0.5, 'rgba(6,182,212,0.09)');
+  coreGrad.addColorStop(1, 'transparent');
+  vizCtx.fillStyle = coreGrad; vizCtx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+  // Smooth 60fps particle position physics interpolation
+  for(let i=0; i<visibleCount; i++){
+    const p = points[i];
+    p.x += (p.targetX - p.x) * 0.06;
+    p.y += (p.targetY - p.y) * 0.06;
+
+    // Apply smooth rotation angle
+    const cosA = Math.cos(rotationAngle), sinA = Math.sin(rotationAngle);
+    const rx = p.x * cosA - p.y * sinA;
+    const ry = p.x * sinA + p.y * cosA;
+
+    const x = center.x + rx, y = center.y + ry;
+    const dx = x - mousePos.x, dy = y - mousePos.y;
+    const isNearMouse = (dx*dx + dy*dy) < 3600;
+
+    vizCtx.beginPath();
+    if(p.lived){
+      const twinkle = 0.75 + 0.25*Math.sin(t*0.003 + p.twinklePhase);
+      const r = isNearMouse ? 3.4 : 2.3;
+      vizCtx.arc(x, y, r*2.8, 0, Math.PI*2);
+      const g = vizCtx.createRadialGradient(x, y, 0, x, y, r*3.0);
+      g.addColorStop(0, `rgba(6,182,212,${0.75 * twinkle})`);
+      g.addColorStop(1, 'rgba(43,84,234,0)');
+      vizCtx.fillStyle = g; vizCtx.fill();
+
+      vizCtx.beginPath(); vizCtx.arc(x, y, r, 0, Math.PI*2);
+      vizCtx.fillStyle = `rgba(43,84,234,${0.95 * twinkle})`; vizCtx.fill();
+    } else {
+      const r = isNearMouse ? 2.1 : 1.4;
+      vizCtx.arc(x, y, r, 0, Math.PI*2);
+      vizCtx.fillStyle = isNearMouse ? 'rgba(43,84,234,0.75)' : 'rgba(99,102,241,0.28)';
+      vizCtx.fill();
+    }
+  }
+
+  if(hoverIdx>=0 && hoverIdx<visibleCount && !frameMode){
+    const p = points[hoverIdx];
+    const x = center.x+p.x, y = center.y+p.y;
+    vizCtx.save();
+    vizCtx.beginPath(); vizCtx.arc(x, y, 7.5, 0, Math.PI*2);
+    vizCtx.strokeStyle = 'rgba(6,182,212,0.95)'; vizCtx.lineWidth = 1.6; vizCtx.stroke();
+    vizCtx.restore();
+  }
+}
+
+function loop(t){
+  drawStars(t);
+  if(points.length){
+    if(animating){
+      revealProgress = Math.min(1, revealProgress + 0.012);
+      if(revealProgress>=1){
+        animating = false;
+        document.getElementById('closing').classList.add('show');
+        playSoundChime(432);
+      }
+    }
+    drawViz(t);
+  } else if (frameMode) {
+    buildSpiral(83 * 52.1775, new Date(1997, 0, 1));
+    revealProgress = 1;
+    drawViz(t);
+  }
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+
+viz.addEventListener('mousemove', e=>{
+  mousePos.x = e.clientX; mousePos.y = e.clientY;
+  if(!points.length || animating || frameMode){ tooltip.classList.remove('show'); return; }
+
+  const mx = e.clientX-center.x, my = e.clientY-center.y;
+  let nearest=-1, nearestD=Infinity;
+  const visibleCount = Math.floor(points.length*revealProgress);
+  for(let i=0; i<visibleCount; i+=1){
+    const p = points[i];
+    const d = (p.x-mx)*(p.x-mx)+(p.y-my)*(p.y-my);
+    if(d<nearestD){ nearestD=d; nearest=i; }
+  }
+
+  if(nearestD < 900){
+    hoverIdx = nearest;
+    if (hoverIdx !== lastHoverIdx) {
+      playSoundChime(540 + (hoverIdx % 5) * 50);
+      lastHoverIdx = hoverIdx;
+    }
+    const p = points[nearest];
+    const dateStr = p.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    tooltip.innerHTML = `
+      <div>Week ${nearest+1} &nbsp;·&nbsp; <span class="age">age ~${p.age.toFixed(1)}</span></div>
+      <div class="season">${p.date.getFullYear()} &nbsp;·&nbsp; ${dateStr} ${p.lived?'':'(ahead)'}</div>
+    `;
+    tooltip.style.left = e.clientX+16+'px';
+    tooltip.style.top = e.clientY+14+'px';
+    tooltip.classList.add('show');
+  } else {
+    hoverIdx = -1; lastHoverIdx = -1;
+    tooltip.classList.remove('show');
+  }
+});
+
+function startReveal(){
+  playSoundChime(432);
+
+  const dobVal = document.getElementById('dob').value;
+  const lifeVal = parseFloat(document.getElementById('life').value)||83;
+  if(!dobVal) return;
+  const birth = new Date(dobVal);
+  const now = new Date();
+  const totalWeeks = Math.floor(lifeVal*52.1775);
+  livedCount = Math.max(0, Math.min(totalWeeks, Math.floor((now-birth)/(1000*60*60*24*7))));
+
+  buildSpiral(totalWeeks, birth);
+  revealProgress = 0;
+  animating = true;
+
+  document.getElementById('ritual').classList.add('hidden');
+  document.getElementById('header').classList.add('show');
+
+  const remaining = totalWeeks-livedCount;
+  document.getElementById('closingText').innerHTML = remaining>0
+    ? `You have roughly <b>${remaining.toLocaleString()}</b> weeks left. What deserves one of them?`
+    : `You have passed the actuarial estimate — every week from here writes itself.`;
+}
+
+function toggleFrameMode(){
+  frameMode = !frameMode;
+  if (document.getElementById('frameTitleOverlay')) document.getElementById('frameTitleOverlay').classList.toggle('show', frameMode);
+  if (document.getElementById('frameLegendToggle')) document.getElementById('frameLegendToggle').classList.toggle('show', frameMode);
+  document.body.classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('header').classList.toggle('hide-element', frameMode);
+  document.getElementById('ritual').classList.toggle('hide-element', frameMode);
+  document.getElementById('closing').classList.toggle('hide-element', frameMode);
+  document.getElementById('frameHint').classList.toggle('hide-element', frameMode);
+  document.getElementById('exitFrameBtn').classList.toggle('show', frameMode);
+  document.getElementById('patternBar').classList.toggle('show', frameMode);
+  if (frameMode) playSoundChime(432);
+}
+
+if (document.getElementById('legendToggleBtn')) {
+  document.getElementById('legendToggleBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const pop = document.getElementById('legendPopover');
+    if (pop) pop.classList.toggle('open');
+  });
+}
+document.addEventListener('click', () => {
+  const pop = document.getElementById('legendPopover');
+  if (pop) pop.classList.remove('open');
+});
+
+document.querySelectorAll('.pattern-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    playSoundChime(528);
+    document.querySelectorAll('.pattern-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentPattern = btn.dataset.pattern;
+    updatePatternPositions(currentPattern);
+  });
+});
+
+document.getElementById('reveal').addEventListener('click', startReveal);
+document.getElementById('frameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('exitFrameBtn').addEventListener('click', toggleFrameMode);
+
+document.getElementById('bandsBtn').addEventListener('click', () => {
+  showBands = !showBands;
+  document.getElementById('bandsBtn').textContent = showBands ? '📊 Bands: On' : '📊 Life Bands';
+  playSoundChime(540);
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  points = []; revealProgress = 0; animating = false; frameMode = false;
+  document.getElementById('ritual').classList.remove('hidden');
+  document.getElementById('ritual').classList.remove('hide-element');
+  document.getElementById('header').classList.remove('show');
+  document.getElementById('header').classList.remove('hide-element');
+  document.getElementById('closing').classList.remove('show');
+  document.getElementById('closing').classList.remove('hide-element');
+  document.getElementById('frameHint').classList.remove('hide-element');
+  document.getElementById('exitFrameBtn').classList.remove('show');
+  document.getElementById('patternBar').classList.remove('show');
+});
+
+window.addEventListener('keydown', e=>{
+  if (e.key === 'f' || e.key === 'F') toggleFrameMode();
+  if (e.key === 'Escape' && frameMode) toggleFrameMode();
+});
+
+window.addEventListener('resize', sizeCanvases);
+sizeCanvases();
+
+(function(){
+  const d = new Date(); d.setFullYear(d.getFullYear()-27);
+  document.getElementById('dob').value = d.toISOString().slice(0,10);
+})();
+</script>
+</body>
+</html>

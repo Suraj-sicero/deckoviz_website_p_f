@@ -1,0 +1,1545 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Powers of Ten — The Dance of Scale — Deckoviz</title>
+  <meta name="description"
+    content="A continuous interactive zoom journey across 44 orders of magnitude from subatomic quarks to the observable edge of the universe. Eames-inspired cosmic zoom.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #EEE6F8;
+      --bg2: #D5E6F7;
+      --navy: #2B1E70;
+      --navy-muted: rgba(43, 30, 112, 0.68);
+      --brand-blue: #2B54EA;
+      --brand-blue-hover: #1D44D8;
+      --cyan: #06B6D4;
+      --purple: #8B5CF6;
+      --amber: #F59E0B;
+      --emerald: #10B981;
+      --glass: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.92);
+      --glass-shadow: 0 20px 48px rgba(43, 84, 234, 0.1), 0 4px 16px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      color: var(--navy);
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    canvas#bgSpaceCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px;
+      width: min(92%, 1040px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 9999px;
+      box-shadow: 0 12px 36px rgba(43, 84, 234, 0.08);
+      transition: opacity 0.4s;
+    }
+
+    header.hide-element {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+
+    .deckoviz-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .deckoviz-brand img {
+      height: 28px;
+      width: auto;
+    }
+
+    .deckoviz-brand .title {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy);
+    }
+
+    .deckoviz-brand .title span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--brand-blue);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-action {
+      font-size: 0.75rem;
+      color: var(--brand-blue);
+      cursor: pointer;
+      background: rgba(43, 84, 234, 0.06);
+      border: 1px solid rgba(43, 84, 234, 0.18);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all .25s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-action:hover,
+    .btn-action.active {
+      color: #fff;
+      background: var(--brand-blue);
+      border-color: var(--brand-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43, 84, 234, 0.3);
+    }
+
+    .exit-frame-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100000;
+      background: rgba(15, 20, 30, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s, transform 0.2s, background 0.2s;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .exit-frame-btn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .exit-frame-btn:hover {
+      background: var(--brand-blue);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    .frame-title-overlay {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 100000;
+      background: rgba(15, 20, 30, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 12px 20px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(-8px);
+    }
+
+    .frame-title-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .frame-title-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .frame-subtitle-text {
+      font-size: 0.72rem;
+      color: rgba(226, 232, 240, 0.75);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .frame-legend-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 100000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .frame-legend-toggle.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .legend-btn {
+      background: rgba(15, 20, 30, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      transition: all 0.22s ease;
+    }
+
+    .legend-btn:hover {
+      background: var(--brand-blue);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(43, 84, 234, 0.4);
+    }
+
+    .legend-popover {
+      position: absolute;
+      bottom: 46px;
+      right: 0;
+      width: 280px;
+      background: rgba(15, 20, 30, 0.92);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: all 0.25s ease;
+    }
+
+    .frame-legend-toggle:hover .legend-popover,
+    .legend-popover.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .legend-popover-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38BDF8;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: rgba(241, 245, 249, 0.9);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+
+
+    .picture-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .picture-overlay.show {
+      opacity: 1;
+    }
+
+    .picture-mode-vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10; /* Above images, below UI text */
+      background: radial-gradient(circle, transparent 40%, rgba(15, 20, 30, 1) 90%);
+    }
+
+    .canvas-wrapper.fade-out-canvas canvas {
+      opacity: 0;
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    canvas#zoomCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+    }
+
+
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 96px 20px 60px;
+      max-width: 1080px;
+      margin: 0 auto;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .page.hide-element {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+
+    .page.frame-active-page {
+      padding: 0 !important;
+      max-width: 100vw !important;
+    }
+
+    .fade-out {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      max-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 20px;
+      max-width: 720px;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 500px;
+    }
+
+    .eyebrow {
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brand-blue);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4.2vw, 2.7rem);
+      line-height: 1.15;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+
+    h1 span.accent,
+    h1 span.accent-serif {
+      font-style: italic;
+      font-weight: 700;
+      background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 0.94rem;
+      color: var(--navy-muted);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .viewer-card {
+      background: var(--glass);
+      backdrop-filter: blur(28px) saturate(140%);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--glass-shadow);
+      width: 100%;
+      max-width: 980px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .viewer-card.frame-active {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+      padding: 0 !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: #06031A !important;
+      margin: 0 !important;
+      display: block !important;
+      z-index: 99999 !important;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 860px;
+      aspect-ratio: 1.3 / 1;
+      border-radius: 24px;
+      overflow: hidden;
+      background: #06031A;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .viewer-card.frame-active .canvas-wrapper {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+      border-radius: 0 !important;
+      border: none !important;
+      aspect-ratio: auto !important;
+      box-shadow: none !important;
+    }
+
+    /* Persistent Scale Overlay (HUD) */
+    .scale-hud {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      background: rgba(15, 20, 30, 0.75);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 12px 18px;
+      border-radius: 16px;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      transition: all 0.4s ease;
+    }
+
+    .scale-hud-exponent {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--cyan);
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .scale-hud-meters {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.76rem;
+    }
+
+    .scale-hud-rel {
+      font-size: 0.74rem;
+      color: var(--amber);
+      margin-top: 4px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* Ruler Gauge */
+    .ruler-gauge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: auto;
+    }
+
+    .ruler-track {
+      position: relative;
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 9999px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .ruler-fill {
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(90deg, var(--cyan), var(--brand-blue));
+      border-radius: 9999px;
+      transition: width 0.1s linear;
+    }
+
+    .ruler-ticks {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Controls & Context Panel */
+    .controls-row {
+      display: flex;
+      gap: 14px;
+      width: 100%;
+      align-items: center;
+      justify-content: center;
+      margin-top: 24px;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 500px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .btn-zoom {
+      background: rgba(43, 84, 234, 0.08);
+      border: 1px solid rgba(43, 84, 234, 0.2);
+      color: var(--navy);
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .btn-zoom:hover,
+    .btn-zoom.active {
+      background: var(--brand-blue);
+      color: #fff;
+      border-color: var(--brand-blue);
+      transform: translateY(-1px);
+    }
+
+    .context-panel {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 860px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 20px 24px;
+      box-shadow: 0 10px 30px rgba(43, 30, 112, 0.06);
+      text-align: left;
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 500px;
+    }
+
+    .viewer-card.frame-active .context-panel {
+      display: none !important;
+    }
+
+    .context-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+
+    .context-desc {
+      font-size: 0.92rem;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    /* Share & Export Modal Overlay */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100010;
+      background: rgba(10, 6, 28, 0.7);
+      backdrop-filter: blur(14px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      display: flex !important;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 28px;
+      width: min(90%, 460px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(16px);
+      transition: transform 0.3s ease;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--navy);
+    }
+
+    .modal-backdrop.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--navy-muted);
+    }
+
+    .modal-body {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--navy-muted);
+      margin-bottom: 20px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-primary {
+      background: var(--brand-blue);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: #1a42cc;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(43, 30, 112, 0.08);
+      color: var(--navy);
+      border: 1px solid rgba(43, 30, 112, 0.15);
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(43, 30, 112, 0.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bgSpaceCanvas"></canvas>
+
+  <!-- Hidden YouTube Background Audio Container -->
+  <div id="ytAudioContainer"
+    style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; overflow: hidden; left: -9999px; top: -9999px;">
+    <div id="ytAudioPlayer"></div>
+  </div>
+
+  <div class="frame-title-overlay" id="frameTitleOverlay">
+    <div class="frame-title-text">Powers of Ten</div>
+    <div class="frame-subtitle-text">The Dance of Scale · 10⁻¹⁸ m Subatomic Quarks to 10²⁶ m Observable Universe</div>
+  </div>
+
+  <div class="frame-legend-toggle" id="frameLegendToggle">
+    <button class="legend-btn" id="legendToggleBtn">📖 Scale Key</button>
+    <div class="legend-popover" id="legendPopover">
+      <div class="legend-popover-title">Orders of Magnitude</div>
+      <div class="legend-item"><span class="legend-color" style="background:#06B6D4;"></span> 🔬 <strong>10⁻¹⁸ to 10⁻⁹
+          m</strong> &nbsp;— Subatomic to Nanometer</div>
+      <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> 🧬 <strong>10⁻⁶ to 10⁰
+          m</strong> &nbsp;— Cellular to Human Scale</div>
+      <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> 🌍 <strong>10³ to 10¹²
+          m</strong> &nbsp;— Planetary to Solar System</div>
+      <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> 🌌 <strong>10¹⁵ to 10²⁶
+          m</strong> &nbsp;— Galactic to Cosmic Web</div>
+    </div>
+  </div>
+
+  <header id="header">
+    <div class="deckoviz-brand">
+      <img src="deckoviz-logo.png" alt="Deckoviz Logo">
+      <div class="title">Deckoviz <span>Space Labs</span></div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-action" id="soundBtn">🔊 Audio On</button>
+      <button class="btn-action" id="autoPlayBtn">▶️ Auto Zoom</button>
+      <button class="btn-action" id="shareBtn">✉️ Share</button>
+      <button class="btn-action" id="exportBtn">🎨 Export Art</button>
+      <button class="btn-action" id="pictureModeBtn">🖼️ Picture Mode</button>
+      <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+    </div>
+  </header>
+
+  <button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+  <!-- Share Modal -->
+  <div class="modal-backdrop" id="shareModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">✉️ Share Cosmic Scale</div>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="sharePreviewText">Share your current zoom level across the 44 orders of magnitude with friends.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="copyShareLinkBtn">📋 Copy Link</button>
+        <button class="btn-primary" id="emailShareBtn">✉️ Send Email</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Dynamic Art Modal -->
+  <div class="modal-backdrop" id="exportModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">🎨 Export Dynamic Art</div>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        Export your current cosmic magnitude scene for display on a Deckoviz digital frame.
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="exportPngBtn">📷 Still Art (PNG)</button>
+        <button class="btn-primary" id="exportWebmBtn">🎬 Dynamic Video (WebM)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="mainUi">
+    <div class="hero">
+      <div class="eyebrow">Deckoviz · Physics & Scale</div>
+      <h1>Powers of <span class="accent">Ten</span></h1>
+      <p class="subtitle">A continuous journey across 44 orders of magnitude. Scroll, drag, or slider-zoom from
+        subatomic quarks out to the edge of the observable cosmos.</p>
+    </div>
+
+    <div class="viewer-card" id="viewerCard">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <div class="picture-overlay" id="pictureOverlay">
+          <div class="picture-mode-vignette"></div>
+        </div>
+        <canvas id="zoomCanvas"></canvas>
+
+        <!-- Real-time Zoom Indicator -->
+        <div class="scale-hud">
+          <div class="scale-hud-exponent" id="hudExponent">10⁰</div>
+          <div class="scale-hud-meters" id="hudMetric">1.0 meter</div>
+          <div class="scale-hud-rel" id="hudRel">Human Scale</div>
+        </div>
+
+
+        <!-- Interactive Ruler Gauge -->
+        <div class="ruler-gauge">
+          <div class="ruler-ticks">
+            <span>10⁻¹⁸ m</span>
+            <span>10⁻⁹ m</span>
+            <span>10⁰ m</span>
+            <span>10⁹ m</span>
+            <span>10¹⁸ m</span>
+            <span>10²⁶ m</span>
+          </div>
+          <div class="ruler-track" id="rulerTrack">
+            <div class="ruler-fill" id="rulerFill"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <button class="btn-zoom" id="btnZoomOut">🔍 Zoom Out (-)</button>
+        <input type="range" id="zoomSlider" min="-18" max="26" step="0.1" value="0"
+          style="width: 280px; accent-color: var(--brand-blue);">
+        <button class="btn-zoom" id="btnZoomIn">🔎 Zoom In (+)</button>
+      </div>
+
+      <div class="context-panel" id="contextPanel">
+        <div class="context-title" id="ctxTitle">10⁰ meters — The Human Scale</div>
+        <div class="context-desc" id="ctxDesc">At one meter, we inhabit the everyday macroscopic human world. Here,
+          classical physics governs our sensations, motion, and immediate environment.</div>
+        <div class="context-comparison" id="ctxComp">📏 Roughly the height of a child or length of a guitar.</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 45 Discrete Orders of Magnitude Data (-18 to +26)
+    const STOPS = [
+      { exp: -18, title: '10⁻¹⁸ m — Quarks & Gluons', desc: 'At the smallest probed distance scale, fundamental point-like quarks interact via gluon exchanges inside protons and neutrons.', comp: 'Quarks have no measurable internal structure at current LHC resolutions.' },
+      { exp: -15, title: '10⁻¹⁵ m — Atomic Nucleus', desc: 'The dense core of an atom containing protons and neutrons bound tightly by the residual strong nuclear force.', comp: 'If an atom were the size of a sports stadium, its nucleus would be a marble at the center.' },
+      { exp: -12, title: '10⁻¹² m — Gamma Ray Wavelength', desc: 'High-energy electromagnetic radiation with wavelengths smaller than an individual atom.', comp: 'Emitted by nuclear reactions and cosmic supernovae collapses.' },
+      { exp: -10, title: '10⁻¹⁰ m — Hydrogen Atom', desc: 'The simplest element in the universe. Electrons exist as probability wave clouds orbiting the central proton.', comp: 'Roughly 0.1 nanometers across; 10 million atoms lined up span 1 millimeter.' },
+      { exp: -9, title: '10⁻⁹ m — DNA Double Helix', desc: 'The chemical blueprint of life. Two polynucleotide chains twisted into a iconic right-handed spiral.', comp: 'The width of a DNA strand is 2 nanometers.' },
+      { exp: -8, title: '10⁻⁸ m — Virus Particle', desc: 'A tiny package of genetic code enclosed in a protein capsid. Cannot replicate without host machinery.', comp: 'Roughly 20–100 nanometers; thousands fit on a pinhead.' },
+      { exp: -6, title: '10⁻⁶ m — Human Red Blood Cell', desc: 'Biconcave disk loaded with hemoglobin carrying oxygen through capillaries throughout your body.', comp: 'Roughly 7–8 micrometers across; 5 million exist in every drop of blood.' },
+      { exp: -4, title: '10⁻⁴ m — Width of a Human Hair', desc: 'The threshold of human visual resolution with the naked eye.', comp: 'A strand of human hair ranges from 50 to 100 micrometers thick.' },
+      { exp: -2, title: '10⁻² m — An Ant / Coffee Bean', desc: 'Macroscopic small organisms navigating intricate physical terrain.', comp: '1 centimeter across.' },
+      { exp: 0, title: '10⁰ m — Human Being', desc: 'The familiar middle scale of human experience. Organic complexity built from 37 trillion cooperating cells.', comp: 'Roughly 1.7 meters tall.' },
+      { exp: 2, title: '10² m — Skyscraper / Football Field', desc: 'Human architectural endeavors reshaping urban landscapes.', comp: '100 meters long.' },
+      { exp: 4, title: '10⁴ m — Island of Manhattan / Mt. Everest', desc: 'Geological features and large cities visible from low orbit.', comp: 'Mount Everest stands 8.8 kilometers above sea level.' },
+      { exp: 6, title: '10⁶ m — Planet Earth Diameter', desc: 'Our blue marble planet harboring liquid oceans, atmosphere, and life in a cosmos of void.', comp: 'Earth diameter is roughly 12,742 kilometers.' },
+      { exp: 8, title: '10⁸ m — Earth-Moon Distance', desc: 'The distance separating Earth from its solitary natural satellite.', comp: 'Light takes 1.3 seconds to travel this distance (384,400 km).' },
+      { exp: 11, title: '10¹¹ m — Distance to the Sun (1 AU)', desc: 'One Astronomical Unit. Earth circles our G-type star at this radius, receiving life-sustaining photons.', comp: 'Light takes 8 minutes 20 seconds to reach Earth from the Sun.' },
+      { exp: 13, title: '10¹³ m — Outer Solar System / Kuiper Belt', desc: 'The realm of icy comets and dwarf planets beyond Neptune.', comp: 'Roughly 80 Astronomical Units from the Sun.' },
+      { exp: 16, title: '10¹⁶ m — Distance to Proxima Centauri', desc: 'The nearest stellar neighbor to our Solar System.', comp: '4.24 light-years away (approx. 40 trillion kilometers).' },
+      { exp: 18, title: '10¹⁸ m — Orion Nebula Stellar Nursery', desc: 'Vast interstellar clouds of hydrogen gas condensing into newborn suns and protoplanetary disks.', comp: 'Spans 24 light-years across.' },
+      { exp: 21, title: '10²¹ m — Milky Way Galaxy', desc: 'Our home barred spiral galaxy containing 100–400 billion stars spinning around a central supermassive black hole.', comp: '100,000 light-years from edge to edge.' },
+      { exp: 23, title: '10²³ m — Local Galactic Group', desc: 'Gravitationally bound cluster of galaxies including Milky Way, Andromeda (M31), and Triangulum.', comp: 'Spans 10 million light-years across.' },
+      { exp: 26, title: '10²⁶ m — Observable Universe', desc: 'The cosmic horizon containing an estimated 2 trillion galaxies linked in a vast cosmic web of dark matter filaments.', comp: 'Spans 93 billion light-years in diameter.' }
+    ];
+
+    // App State
+    let currentExponent = 0; // -18 to +26
+    let isAutoPlaying = false;
+    let autoPlayDirection = 1;
+    let isFrameMode = false;
+
+    // DOM Elements
+    const canvas = document.getElementById('zoomCanvas');
+    const ctx = canvas.getContext('2d');
+    const zoomSlider = document.getElementById('zoomSlider');
+    const hudExponent = document.getElementById('hudExponent');
+    const hudMetric = document.getElementById('hudMetric');
+    const hudRel = document.getElementById('hudRel');
+    const rulerFill = document.getElementById('rulerFill');
+    const ctxTitle = document.getElementById('ctxTitle');
+    const ctxDesc = document.getElementById('ctxDesc');
+    const ctxComp = document.getElementById('ctxComp');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      renderVisual();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    // Find Nearest Stop Data
+    function getStopData(exp) {
+      let closest = STOPS[0];
+      let minDiff = Infinity;
+      STOPS.forEach(s => {
+        const diff = Math.abs(s.exp - exp);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closest = s;
+        }
+      });
+      return closest;
+    }
+
+    // Convert Exponent to Metric Readable String
+    function formatMetric(exp) {
+      if (exp === 0) return '1.0 meter';
+      if (exp > 0) {
+        if (exp >= 26) return '10²⁶ meters (93 billion light-years)';
+        if (exp >= 21) return `10²¹ meters (${Math.round(Math.pow(10, exp - 21) * 105000)} light-years)`;
+        if (exp >= 16) return `10¹⁶ meters (${(Math.pow(10, exp - 16) * 1.05).toFixed(1)} light-years)`;
+        if (exp >= 11) return `10¹¹ meters (${(Math.pow(10, exp - 11) * 0.66).toFixed(1)} AU)`;
+        if (exp >= 3) return `10${Math.round(exp)} meters (${Math.round(Math.pow(10, exp - 3))} km)`;
+        return `${Math.pow(10, exp).toFixed(1)} meters`;
+      } else {
+        const abs = Math.abs(exp);
+        if (abs <= 3) return `${Math.pow(10, exp).toFixed(3)} meters`;
+        if (abs <= 6) return `10⁻⁶ meters (${(Math.pow(10, -exp - 6) * 1000).toFixed(0)} μm)`;
+        if (abs <= 9) return `10⁻⁹ meters (${(Math.pow(10, -exp - 9) * 1000).toFixed(0)} nm)`;
+        if (abs <= 12) return `10⁻¹² m (picometers)`;
+        return `10⁻${Math.round(abs)} meters (subatomic)`;
+      }
+    }
+
+    // Render Visual Canvas based on exponent scale
+    function renderVisual() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const cx = w / 2;
+      const cy = h / 2;
+      const t = (currentExponent + 18) / 44; // 0..1 norm
+
+      // Background Cosmic/Subatomic Gradient
+      const bgGrad = ctx.createRadialGradient(cx, cy, 20, cx, cy, Math.max(w, h));
+      if (currentExponent < -5) { // Subatomic
+        bgGrad.addColorStop(0, '#1E1B4B');
+        bgGrad.addColorStop(1, '#06031A');
+      } else if (currentExponent <= 3) { // Terrestrial
+        bgGrad.addColorStop(0, '#1E293B');
+        bgGrad.addColorStop(1, '#0F172A');
+      } else { // Cosmic
+        bgGrad.addColorStop(0, '#0B0726');
+        bgGrad.addColorStop(1, '#03010D');
+      }
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, w, h);
+
+      // Concentric Scale Circles with Parallax Depth
+      const baseRadius = (Math.sin(currentExponent * Math.PI) * 0.2 + 0.5) * (w * 0.25);
+      ctx.strokeStyle = `rgba(6, 182, 212, ${0.4 + Math.sin(t * Math.PI) * 0.4})`;
+      ctx.lineWidth = 2 * window.devicePixelRatio;
+
+      for (let r = 50; r < Math.max(w, h); r += 90) {
+        const depthParallax = 1 + (r / Math.max(w, h)) * 0.5; // Outer rings scale slightly faster
+        const scaleR = (r * (1 + (currentExponent * depthParallax % 1 + 1) % 1)) * window.devicePixelRatio * 0.4;
+        ctx.beginPath();
+        ctx.arc(cx, cy, scaleR, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      // Generative Centerpiece Icon / Illustration according to Scale Realm
+      ctx.save();
+      ctx.translate(cx, cy);
+
+      if (currentExponent <= -12) {
+        // Quarks & Nucleus: Glowing pulsing particles
+        for (let i = 0; i < 3; i++) {
+          const angle = (Date.now() * 0.002 + (i * Math.PI * 2) / 3);
+          const qx = Math.cos(angle) * 45 * window.devicePixelRatio;
+          const qy = Math.sin(angle) * 45 * window.devicePixelRatio;
+
+          ctx.beginPath();
+          ctx.arc(qx, qy, 16 * window.devicePixelRatio, 0, Math.PI * 2);
+          ctx.fillStyle = i === 0 ? '#F43F5E' : i === 1 ? '#06B6D4' : '#F59E0B';
+          ctx.shadowColor = ctx.fillStyle;
+          ctx.shadowBlur = 20;
+          ctx.fill();
+        }
+      } else if (currentExponent <= -7) {
+        // DNA Helix / Virus
+        ctx.strokeStyle = '#06B6D4';
+        ctx.lineWidth = 4 * window.devicePixelRatio;
+        ctx.beginPath();
+        for (let x = -150; x <= 150; x += 10) {
+          const y1 = Math.sin(x * 0.05 + Date.now() * 0.003) * 50;
+          const y2 = -y1;
+          ctx.fillStyle = '#8B5CF6';
+          ctx.fillRect(x * window.devicePixelRatio, y1 * window.devicePixelRatio, 4, 4);
+          ctx.fillRect(x * window.devicePixelRatio, y2 * window.devicePixelRatio, 4, 4);
+        }
+      } else if (currentExponent <= -4) {
+        // Cells
+        ctx.beginPath();
+        ctx.arc(0, 0, 50 * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.strokeStyle = '#10B981';
+        ctx.lineWidth = 3 * window.devicePixelRatio;
+        ctx.stroke();
+
+        const nucleusPulsate = Math.sin(Date.now() * 0.002) * 4;
+        ctx.beginPath();
+        ctx.arc(0, 0, (15 + nucleusPulsate) * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.fillStyle = '#06B6D4';
+        ctx.fill();
+
+        // Organelles
+        ctx.beginPath();
+        ctx.arc(20 * window.devicePixelRatio, 15 * window.devicePixelRatio, 5 * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.arc(-15 * window.devicePixelRatio, -20 * window.devicePixelRatio, 6 * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.fillStyle = '#8B5CF6';
+        ctx.fill();
+      } else if (currentExponent <= 1) {
+        // Human / Terrestrial scale icon
+        ctx.strokeStyle = '#2B54EA';
+        ctx.lineWidth = 3 * window.devicePixelRatio;
+        ctx.beginPath();
+        ctx.arc(0, -30 * window.devicePixelRatio, 20 * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.moveTo(0, -10 * window.devicePixelRatio);
+        ctx.lineTo(0, 50 * window.devicePixelRatio);
+        ctx.lineTo(-25 * window.devicePixelRatio, 90 * window.devicePixelRatio);
+        ctx.moveTo(0, 50 * window.devicePixelRatio);
+        ctx.lineTo(25 * window.devicePixelRatio, 90 * window.devicePixelRatio);
+        ctx.stroke();
+      } else if (currentExponent <= 6) {
+        // Cities / Urban Grid
+        ctx.strokeStyle = '#F59E0B';
+        ctx.lineWidth = 2 * window.devicePixelRatio;
+        ctx.beginPath();
+        for (let x = -60; x <= 60; x += 30) {
+          for (let y = -60; y <= 60; y += 30) {
+            ctx.rect(x * window.devicePixelRatio, y * window.devicePixelRatio, 20 * window.devicePixelRatio, 20 * window.devicePixelRatio);
+          }
+        }
+        ctx.stroke();
+      } else if (currentExponent <= 14) {
+        // Solar System: Central Sun & Orbiting Planets
+        ctx.beginPath();
+        ctx.arc(0, 0, 35 * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.fillStyle = '#F59E0B';
+        ctx.shadowColor = '#F59E0B';
+        ctx.shadowBlur = 30;
+        ctx.fill();
+
+        [70, 110, 160].forEach((orbR, idx) => {
+          ctx.beginPath();
+          ctx.arc(0, 0, orbR * window.devicePixelRatio, 0, Math.PI * 2);
+          ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          const pAngle = Date.now() * (0.001 / (idx + 1));
+          const px = Math.cos(pAngle) * orbR * window.devicePixelRatio;
+          const py = Math.sin(pAngle) * orbR * window.devicePixelRatio;
+          ctx.beginPath();
+          ctx.arc(px, py, 6 * window.devicePixelRatio, 0, Math.PI * 2);
+          ctx.fillStyle = idx === 1 ? '#06B6D4' : '#2B54EA';
+          ctx.fill();
+        });
+      } else {
+        // Galaxy / Cosmic Web Spiral
+        ctx.rotate(Date.now() * 0.0003);
+        for (let arm = 0; arm < 2; arm++) {
+          ctx.beginPath();
+          for (let theta = 0; theta < Math.PI * 4; theta += 0.1) {
+            const r = theta * 18 * window.devicePixelRatio;
+            const x = Math.cos(theta + arm * Math.PI) * r;
+            const y = Math.sin(theta + arm * Math.PI) * r;
+            ctx.fillStyle = `rgba(139, 92, 246, ${1 - theta / (Math.PI * 4)})`;
+            ctx.fillRect(x, y, 3, 3);
+          }
+        }
+      }
+
+      ctx.restore();
+
+      // Update HUD & UI
+      const stop = getStopData(currentExponent);
+      rulerFill.style.width = `${((currentExponent + 18) / 44) * 100}%`;
+
+      ctxTitle.textContent = stop.title;
+      ctxDesc.textContent = stop.desc;
+      ctxComp.textContent = `📏 ${stop.comp}`;
+
+      if (hudExponent && hudMetric && hudRel) {
+        const expInt = Math.round(currentExponent);
+        const sign = expInt < 0 ? '⁻' : '';
+        const num = Math.abs(expInt).toString().split('').map(d => '⁰¹²³⁴⁵⁶⁷⁸⁹'[d]).join('');
+        hudExponent.textContent = `10${sign}${num}`;
+        hudMetric.textContent = formatMetric(currentExponent);
+        hudRel.textContent = stop.title.split('—')[1]?.trim() || '';
+      }
+
+      updatePictureModeImage();
+    }
+
+    let isPictureMode = false;
+    const pictureModeBtn = document.getElementById('pictureModeBtn');
+    const pictureOverlay = document.getElementById('pictureOverlay');
+    const canvasWrapper = document.querySelector('.canvas-wrapper');
+
+    const PICTURE_ASSETS = {
+      "-18": "assets/powers-of-ten/scale_-18.png",
+      "-15": "assets/powers-of-ten/scale_-15.png",
+      "-12": "assets/powers-of-ten/scale_-12.png",
+      "-10": "assets/powers-of-ten/scale_-10.png",
+      "-9": "assets/powers-of-ten/scale_-9.png",
+      "-8": "assets/powers-of-ten/scale_-7.png",
+      "-6": "assets/powers-of-ten/scale_-6.png",
+      "-4": "assets/powers-of-ten/scale_-4.png",
+      "-2": "assets/powers-of-ten/scale_-2.png",
+      "0": "assets/powers-of-ten/scale_0.png",
+      "2": "assets/powers-of-ten/scale_3.png",
+      "4": "assets/powers-of-ten/scale_4.png",
+      "6": "assets/powers-of-ten/scale_6.png",
+      "8": "assets/powers-of-ten/scale_9.png",
+      "11": "assets/powers-of-ten/scale_11.png",
+      "13": "assets/powers-of-ten/scale_13.png",
+      "16": "assets/powers-of-ten/scale_15.png",
+      "18": "assets/powers-of-ten/scale_18.png",
+      "21": "assets/powers-of-ten/scale_21.png",
+      "23": "assets/powers-of-ten/scale_23.png",
+      "26": "assets/powers-of-ten/scale_26.png"
+    };
+
+    const preloadedLayers = {};
+
+    function initPictureMode() {
+      const exps = Object.keys(PICTURE_ASSETS).map(Number).sort((a, b) => a - b);
+      exps.forEach(exp => {
+        const layer = document.createElement('div');
+        layer.style.position = 'absolute';
+        layer.style.inset = '0';
+        layer.style.backgroundSize = 'cover';
+        layer.style.backgroundPosition = 'center';
+        layer.style.backgroundImage = `url('${PICTURE_ASSETS[exp]}')`;
+        layer.style.opacity = '0';
+        layer.style.pointerEvents = 'none';
+        layer.style.willChange = 'transform, opacity';
+        
+        // Removed CSS transition to prevent stuttering against JS rAF updates
+        pictureOverlay.appendChild(layer);
+        preloadedLayers[exp] = layer;
+      });
+    }
+    initPictureMode();
+
+    if (pictureModeBtn) {
+      pictureModeBtn.addEventListener('click', () => {
+        isPictureMode = !isPictureMode;
+        pictureModeBtn.classList.toggle('active', isPictureMode);
+        if (isPictureMode) {
+          pictureOverlay.classList.add('show');
+          canvasWrapper.classList.add('fade-out-canvas');
+          updatePictureModeImage();
+        } else {
+          pictureOverlay.classList.remove('show');
+          canvasWrapper.classList.remove('fade-out-canvas');
+        }
+      });
+    }
+
+    let lastPictureModeExp = null;
+    let pictureUpdateFrame = null;
+    function updatePictureModeImage() {
+      if (!isPictureMode || !pictureOverlay) return;
+      if (lastPictureModeExp === currentExponent) return;
+      lastPictureModeExp = currentExponent;
+
+      if (pictureUpdateFrame) cancelAnimationFrame(pictureUpdateFrame);
+      pictureUpdateFrame = requestAnimationFrame(() => {
+        const exps = Object.keys(PICTURE_ASSETS).map(Number).sort((a, b) => a - b);
+  
+        let lower = exps[0], upper = exps[exps.length - 1];
+        for (let i = 0; i < exps.length - 1; i++) {
+          if (currentExponent >= exps[i] && currentExponent <= exps[i + 1]) {
+            lower = exps[i];
+            upper = exps[i + 1];
+            break;
+          }
+        }
+  
+        let factor = 0;
+        if (upper !== lower) {
+          factor = (currentExponent - lower) / (upper - lower);
+        }
+  
+        for (const exp of exps) {
+          if (exp === lower) {
+            preloadedLayers[exp].style.zIndex = 1;
+            preloadedLayers[exp].style.opacity = 1;
+            const scale = Math.pow(2.5, exp - currentExponent);
+            preloadedLayers[exp].style.transform = `scale3d(${scale}, ${scale}, 1) translate3d(0,0,0)`;
+          } else if (exp === upper) {
+            preloadedLayers[exp].style.zIndex = 2;
+            preloadedLayers[exp].style.opacity = factor;
+            const scale = Math.pow(2.5, exp - currentExponent);
+            preloadedLayers[exp].style.transform = `scale3d(${scale}, ${scale}, 1) translate3d(0,0,0)`;
+          } else {
+            preloadedLayers[exp].style.opacity = 0;
+            preloadedLayers[exp].style.zIndex = 0;
+          }
+        }
+      });
+    }
+
+    // Sound Effect Logic
+    let audioCtx = null;
+    function playStarsSound() {
+      if (!soundEnabled) return;
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const freqs = [880, 1108, 1318]; // A Major sparkling chord
+      freqs.forEach((freq, i) => {
+        setTimeout(() => {
+          if (!soundEnabled) return;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq + (Math.random() * 10 - 5);
+
+          gain.gain.setValueAtTime(0, audioCtx.currentTime);
+          gain.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start();
+          osc.stop(audioCtx.currentTime + 1.3);
+        }, i * 100);
+      });
+    }
+
+    // Update Zoom
+    function setZoom(val) {
+      currentExponent = Math.max(-18, Math.min(26, parseFloat(val)));
+      zoomSlider.value = currentExponent;
+      renderVisual();
+    }
+
+    zoomSlider.addEventListener('input', (e) => setZoom(e.target.value));
+    document.getElementById('btnZoomIn').addEventListener('click', () => {
+      setZoom(currentExponent + 1);
+      playStarsSound();
+    });
+    document.getElementById('btnZoomOut').addEventListener('click', () => {
+      setZoom(currentExponent - 1);
+      playStarsSound();
+    });
+
+    // Wheel / Scroll Zooming
+    window.addEventListener('wheel', (e) => {
+      if (isFrameMode || document.activeElement === canvas) {
+        e.preventDefault();
+        const delta = e.deltaY > 0 ? -0.4 : 0.4;
+        setZoom(currentExponent + delta);
+      }
+    }, { passive: false });
+
+    // Auto Play Loop
+    let autoPlayInterval = null;
+    const autoPlayBtn = document.getElementById('autoPlayBtn');
+
+    autoPlayBtn.addEventListener('click', () => {
+      isAutoPlaying = !isAutoPlaying;
+      autoPlayBtn.textContent = isAutoPlaying ? '⏸️ Pause Zoom' : '▶️ Auto Zoom';
+      autoPlayBtn.classList.toggle('active', isAutoPlaying);
+
+      if (isAutoPlaying) {
+        playStarsSound();
+        autoPlayInterval = setInterval(() => {
+          let next = currentExponent + 0.05 * autoPlayDirection;
+          if (next >= 26) autoPlayDirection = -1;
+          if (next <= -18) autoPlayDirection = 1;
+          setZoom(next);
+        }, 40);
+      } else {
+        clearInterval(autoPlayInterval);
+      }
+    });
+
+    // Frame Mode Logic
+    const frameBtn = document.getElementById('frameBtn');
+    const exitFrameBtn = document.getElementById('exitFrameBtn');
+    const viewerCard = document.getElementById('viewerCard');
+    const frameTitleOverlay = document.getElementById('frameTitleOverlay');
+    const frameLegendToggle = document.getElementById('frameLegendToggle');
+    const header = document.getElementById('header');
+    const mainUi = document.getElementById('mainUi');
+
+    // YouTube Background Audio Player Integration (Video ID: 17lotd0HYCw)
+    let soundEnabled = true;
+    let ytPlayer = null;
+    let isYtReady = false;
+
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('ytAudioPlayer', {
+        height: '1',
+        width: '1',
+        videoId: '17lotd0HYCw',
+        playerVars: {
+          'autoplay': 1,
+          'controls': 0,
+          'loop': 1,
+          'playlist': '17lotd0HYCw',
+          'playsinline': 1,
+          'enablejsapi': 1
+        },
+        events: {
+          'onReady': (event) => {
+            isYtReady = true;
+            event.target.setVolume(35);
+            if (soundEnabled) {
+              try { event.target.playVideo(); } catch (e) { }
+            }
+          },
+          'onStateChange': (event) => {
+            if (event.data === YT.PlayerState.ENDED) {
+              event.target.playVideo();
+            }
+          }
+        }
+      });
+    }
+
+    function updateAudioState() {
+      if (isYtReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        if (soundEnabled) {
+          try {
+            ytPlayer.setVolume(isFrameMode ? 50 : 35);
+            ytPlayer.playVideo();
+          } catch (e) { }
+        } else {
+          try { ytPlayer.pauseVideo(); } catch (e) { }
+        }
+      }
+    }
+
+    function tryPlayAudio() {
+      if (soundEnabled && isYtReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        try { ytPlayer.playVideo(); } catch (e) { }
+      }
+    }
+    window.addEventListener('click', tryPlayAudio, { once: true });
+
+    const soundBtn = document.getElementById('soundBtn');
+    soundBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundBtn.textContent = soundEnabled ? '🔊 Audio On' : '🔇 Audio Off';
+      soundBtn.classList.toggle('active', soundEnabled);
+      updateAudioState();
+    });
+
+    // Share & Export Modals
+    const shareModal = document.getElementById('shareModal');
+    const exportModal = document.getElementById('exportModal');
+
+    function closeModals() {
+      shareModal.classList.remove('active');
+      exportModal.classList.remove('active');
+    }
+
+    document.getElementById('shareBtn').addEventListener('click', () => {
+      document.getElementById('sharePreviewText').innerHTML = `
+    <strong>Task 18:</strong> Powers of Ten (Deckoviz Space Labs)<br>
+    <strong>Current Scale:</strong> ${getStopData(currentExponent).title}<br><br>
+    Sharing will prefill an email with cosmic scale coordinates and interactive visualization link.
+  `;
+      document.getElementById('shareModal').classList.add('active');
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      document.getElementById('exportModal').classList.add('active');
+    });
+
+    document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('✨ Interactive link copied to clipboard!');
+        closeModals();
+      });
+    });
+
+    document.getElementById('emailShareBtn').addEventListener('click', () => {
+      const current = STOPS.find(s => s.exp === currentExponent) || STOPS[0];
+      const subject = encodeURIComponent(`Powers of Ten: ${current.exp} exponent — Deckoviz Space Labs`);
+      const body = encodeURIComponent(`Explore cosmic magnitudes from quarks to the observable universe on Deckoviz Space Labs: ${window.location.href}`);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      closeModals();
+    });
+
+    document.getElementById('exportPngBtn').addEventListener('click', () => {
+      closeModals();
+      const cvs = document.getElementById('zoomCanvas');
+      const link = document.createElement('a');
+      link.download = `deckoviz-powers-of-ten-10exp${currentExponent}.png`;
+      link.href = cvs.toDataURL('image/png');
+      link.click();
+    });
+
+    document.getElementById('exportWebmBtn').addEventListener('click', () => {
+      closeModals();
+      try {
+        const cvs = document.getElementById('zoomCanvas');
+        const stream = cvs.captureStream(30);
+        const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(chunks, { type: 'video/webm' });
+          const link = document.createElement('a');
+          link.download = `deckoviz-powers-of-ten-art.webm`;
+          link.href = URL.createObjectURL(blob);
+          link.click();
+        };
+        alert('🎬 Recording 4-second cosmic zoom loop...');
+        mediaRecorder.start();
+        setTimeout(() => mediaRecorder.stop(), 4000);
+      } catch (e) {
+        alert('WebM recording not supported in this browser window. Exporting PNG still art.');
+      }
+    });
+
+    function smoothResizeCanvas() {
+      const start = performance.now();
+      function step(time) {
+        resizeCanvas();
+        if (time - start < 1250) {
+          requestAnimationFrame(step);
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function toggleFrameMode(on) {
+      isFrameMode = on;
+      document.querySelector('.page').classList.toggle('frame-active-page', on);
+      document.getElementById('viewerCard').classList.toggle('frame-active', on);
+      document.getElementById('frameTitleOverlay').classList.remove('show');
+      document.getElementById('frameLegendToggle').classList.toggle('show', on);
+      document.getElementById('exitFrameBtn').classList.toggle('show', on);
+      document.getElementById('header').classList.toggle('hide-element', on);
+
+      // Fade out other UI smoothly
+      document.querySelector('.hero').classList.toggle('fade-out', on);
+      document.querySelector('.controls-row').classList.toggle('fade-out', on);
+      document.querySelector('.context-panel').classList.toggle('fade-out', on);
+
+      // Removed block that forces Picture Mode off when exiting Frame Mode
+      // Now Picture Mode seamlessly persists in the Default Page view canvas!
+
+      updateAudioState();
+      smoothResizeCanvas();
+    }
+
+    document.getElementById('frameBtn').addEventListener('click', () => toggleFrameMode(true));
+    document.getElementById('exitFrameBtn').addEventListener('click', () => toggleFrameMode(false));
+
+    document.addEventListener('keydown', (e) => {
+      const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+      if (e.key === 'Escape' && isFrameMode) {
+        toggleFrameMode(false);
+      } else if ((e.key === 'f' || e.key === 'F') && !isInput) {
+        toggleFrameMode(!isFrameMode);
+      }
+    });
+
+    // Particle background
+    const bgCanvas = document.getElementById('bgSpaceCanvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    let bgStars = [];
+
+    function resizeBg() {
+      bgCanvas.width = window.innerWidth;
+      bgCanvas.height = window.innerHeight;
+      bgStars = [];
+      for (let i = 0; i < 60; i++) {
+        bgStars.push({
+          x: Math.random() * bgCanvas.width,
+          y: Math.random() * bgCanvas.height,
+          r: Math.random() * 1.5,
+          alpha: Math.random() * 0.5 + 0.2
+        });
+      }
+    }
+    window.addEventListener('resize', resizeBg);
+
+    function animateBg() {
+      bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+      bgStars.forEach(s => {
+        bgCtx.beginPath();
+        bgCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        bgCtx.fillStyle = `rgba(255,255,255,${s.alpha})`;
+        bgCtx.fill();
+      });
+      renderVisual();
+      requestAnimationFrame(animateBg);
+    }
+
+    // Init
+    resizeCanvas();
+    resizeBg();
+    animateBg();
+    setZoom(0);
+  </script>
+</body>
+
+</html>
