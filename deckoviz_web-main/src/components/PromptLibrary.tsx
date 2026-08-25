@@ -91,46 +91,42 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
   return (
     <div className="w-full h-full flex flex-col bg-[#1a1f3c] text-white">
       {/* Search Bar at top */}
-      <div className="p-4 border-b border-white/5 bg-[#1a1f3c]">
-        <div className="max-w-2xl mx-auto">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#8a91be] size-4" />
-            <input
-              type="text"
-              placeholder="Search prompts..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-xl border border-white/10 bg-white/5 text-white placeholder-[#5e6691] focus:outline-none focus:ring-2 focus:ring-[#4F75FF]/20 focus:border-[#4F75FF]/50 transition-all duration-200"
-              style={{ fontFamily: "'Inter', sans-serif" }}
-            />
-          </div>
+      <div className="px-5 pt-5 pb-4 border-b border-white/5 bg-[#1a1f3c]">
+        <div className="relative">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#8a91be] size-4" />
+          <input
+            type="text"
+            placeholder="Search prompts..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full pl-11 pr-4 py-2.5 rounded-xl border border-white/10 bg-white/5 text-sm text-white placeholder-[#5e6691] focus:outline-none focus:ring-2 focus:ring-[#4F75FF]/20 focus:border-[#4F75FF]/50 transition-all duration-200"
+            style={{ fontFamily: "'Inter', sans-serif" }}
+          />
         </div>
       </div>
 
       {/* Vertical Tabs */}
-      <div className="p-4 bg-[#1a1f3c] border-b border-white/5">
-        <div className="max-w-2xl mx-auto">
-          <div className="flex flex-wrap gap-2">
-            {VERTICAL_TABS.map((tab) => (
-              <button
-                key={tab.value}
-                onClick={() => setSelectedVertical(tab.value)}
-                className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-colors border ${
-                  selectedVertical === tab.value
-                    ? "bg-[#4F75FF]/20 text-[#4F75FF] border-[#4F75FF]/30"
-                    : "text-[#8a91be] hover:text-white hover:bg-white/5 border-transparent"
-                }`}
-                aria-selected={selectedVertical === tab.value}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+      <div className="px-5 pb-4 pt-3 bg-[#1a1f3c] border-b border-white/5">
+        <div className="flex flex-wrap gap-2">
+          {VERTICAL_TABS.map((tab) => (
+            <button
+              key={tab.value}
+              onClick={() => setSelectedVertical(tab.value)}
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition-all duration-150 border ${
+                selectedVertical === tab.value
+                  ? "bg-[#4F75FF]/20 text-[#4F75FF] border-[#4F75FF]/30 shadow-sm"
+                  : "text-[#8a91be] hover:text-white hover:bg-white/5 border-transparent"
+              }`}
+              aria-selected={selectedVertical === tab.value}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Prompt Cards Section */}
-      <div className="p-4 bg-[#1a1f3c] flex-1 overflow-y-auto min-h-[300px]">
+      <div className="p-5 bg-[#1a1f3c] flex-1 overflow-y-auto min-h-[300px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:transparent [&::-webkit-scrollbar-thumb]:bg-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full">
         {isLoading ? (
           <div className="flex items-center justify-center py-24">
             <Loader2 className="size-6 animate-spin text-[#4F75FF]" />
@@ -163,14 +159,14 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
               const categories = getCategories()
               if (categories.length <= 1) {
                 return (
-                  <div className="grid grid-cols-1 gap-3">
+                  <div className="grid grid-cols-1 gap-4">
                     {filteredPrompts.map((prompt) => (
                       <div
                         key={prompt.id}
-                        className="group rounded-xl border border-white/5 bg-[#252a50]/70 hover:bg-[#252a50] hover:border-[#4F75FF]/30 transition-all cursor-pointer p-4 flex flex-col gap-2 shadow-sm"
+                        className="group rounded-xl border border-white/5 bg-[#252a50]/70 hover:bg-[#252a50] hover:border-[#4F75FF]/30 transition-all cursor-pointer p-5 flex flex-col gap-3 shadow-sm"
                         onClick={() => onSelectPrompt(prompt)}
                       >
-                        <h3 className="font-semibold text-white truncate line-clamp-1">
+                        <h3 className="font-semibold text-white text-sm">
                           {prompt.title}
                         </h3>
                         <p className="text-xs text-[#8a91be] line-clamp-3 leading-relaxed">
@@ -202,21 +198,21 @@ export function PromptLibrary({ onSelectPrompt }: PromptLibraryProps) {
               return orderedCategories.map((category) => {
                 const promptsInCat = grouped[category]
                 return (
-                  <div key={category} className="mb-6">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#5e6691] mb-3 mt-4 flex items-center gap-2">
+                  <div key={category} className="mb-8">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-[#5e6691] mb-4 mt-6 flex items-center gap-2">
                       <span>{category}</span>
                       <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-[#8a91be] font-normal">
                         {promptsInCat.length}
                       </span>
                     </h3>
-                    <div className="grid grid-cols-1 gap-3">
+                    <div className="grid grid-cols-1 gap-4">
                       {promptsInCat.map((prompt) => (
                         <div
                           key={prompt.id}
-                          className="group rounded-xl border border-white/5 bg-[#252a50]/70 hover:bg-[#252a50] hover:border-[#4F75FF]/30 transition-all cursor-pointer p-4 flex flex-col gap-2 shadow-sm"
+                          className="group rounded-xl border border-white/5 bg-[#252a50]/70 hover:bg-[#252a50] hover:border-[#4F75FF]/30 transition-all cursor-pointer p-5 flex flex-col gap-3 shadow-sm"
                           onClick={() => onSelectPrompt(prompt)}
                         >
-                          <h4 className="font-semibold text-white truncate line-clamp-1">
+                          <h4 className="font-semibold text-white text-sm">
                             {prompt.title}
                           </h4>
                           <p className="text-xs text-[#8a91be] line-clamp-3 leading-relaxed">

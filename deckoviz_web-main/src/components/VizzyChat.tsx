@@ -388,7 +388,12 @@ const VizzyChat: React.FC = () => {
               {/* Note: If icons appear doubled/overlapping during local development, this is a known Vite HMR refresh glitch. A simple browser page reload (F5) resolves it. */}
               <div className="relative flex items-center gap-1">
                 <button
-                  onClick={() => setIsPromptLibraryOpen(!isPromptLibraryOpen)}
+                  onClick={() => {
+                    const opening = !isPromptLibraryOpen;
+                    setIsPromptLibraryOpen(opening);
+                    // Auto-expand the window when the library opens; restore compact mode when it closes
+                    setIsExpanded(opening);
+                  }}
                   className={`p-1.5 rounded-lg hover:bg-white/5 transition-colors ${
                     isPromptLibraryOpen ? "text-[#4F75FF]" : "text-[#7c84b1] hover:text-white"
                   }`}
@@ -434,6 +439,7 @@ const VizzyChat: React.FC = () => {
                     onSelectPrompt={(promptTemplate) => {
                       setInput(promptTemplate.prompt_text);
                       setIsPromptLibraryOpen(false);
+                      setIsExpanded(false); // collapse back to normal chat size after picking a prompt
                       setTimeout(() => inputRef.current?.focus(), 100);
                     }}
                   />
