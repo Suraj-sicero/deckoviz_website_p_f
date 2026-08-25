@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Beautiful Infinities — Deckoviz Math Labs</title>
+<meta name="description" content="Explore recurring mathematical patterns in nature: generative golden spirals, adjustable fractal branching angles, and golden ratio artwork overlays.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.68);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6; --amber: #F59E0B; --emerald: #10B981;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,84,234,0.1), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1040px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,84,234,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  .deckoviz-brand { display: flex; align-items: center; gap: 10px; }
+  .deckoviz-brand img { height: 28px; width: auto; }
+  .deckoviz-brand .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  .deckoviz-brand .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+    font-family: 'DM Sans', sans-serif; text-decoration: none;
+  }
+  .btn-action:hover, .btn-action.active {
+    color: #fff; background: var(--brand-blue); border-color: var(--brand-blue);
+    transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3);
+  }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px;
+    font-size: 0.8rem; font-family: 'DM Sans', sans-serif; font-weight: 700;
+    cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .frame-title-overlay {
+    position: absolute; top: 20px; left: 24px; z-index: 105;
+    background: rgba(15,20,30,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1);
+    padding: 14px 22px; border-radius: 16px; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    color: #FFF; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; }
+  .frame-title-text { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; color: #FFF; }
+  .frame-subtitle-text { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+
+  .frame-legend-toggle { position: absolute; bottom: 24px; right: 24px; z-index: 105; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(15,20,30,0.85); border: 1px solid rgba(255,255,255,0.1);
+    color: #FFF; padding: 9px 20px; border-radius: 9999px; font-size: 0.78rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: rgba(30,40,60,0.95); transform: translateY(-2px); }
+  .legend-popover {
+    position: absolute; bottom: 46px; right: 0; width: 280px;
+    background: rgba(15,20,30,0.85); backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 16px; color: #FFF;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.5); opacity: 0; pointer-events: none;
+    transform: translateY(12px) scale(0.95); transition: all 0.3s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .frame-legend-toggle:hover .legend-popover, .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+  .legend-popover-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 700; }
+  .legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; margin-bottom: 8px; color: rgba(255,255,255,0.85); }
+  .legend-item:last-child { margin-bottom: 0; }
+  .legend-color { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 20px 60px; max-width: 1080px; margin: 0 auto; transition: opacity 0.4s ease;
+  }
+  .page.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 20px; max-width: 720px; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 8px; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.2vw, 2.7rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy); }
+  h1 span.accent, h1 span.accent-serif { font-style: italic; font-weight: 700; background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .subtitle { font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; font-weight: 400; }
+
+  .mod-tabs { display: flex; gap: 10px; margin-bottom: 22px; flex-wrap: wrap; justify-content: center; }
+  .tab-btn {
+    background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 14px rgba(43,84,234,0.06);
+  }
+  .tab-btn:hover, .tab-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); transform: translateY(-1px); }
+
+  .main-card {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(140%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 24px; box-shadow: var(--glass-shadow); width: 100%; max-width: 980px;
+    position: relative; display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease;
+  }
+
+  .main-card.frame-active {
+    position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important;
+    max-width: 100vw !important; max-height: 100vh !important; padding: 20px !important; border-radius: 0 !important;
+    border: none !important; box-shadow: none !important; z-index: 99999 !important; background: #0b0726 !important;
+    display: flex !important; justify-content: center !important; align-items: center !important; margin: 0 !important;
+  }
+
+  .canvas-wrapper {
+    position: relative; width: 100%; max-width: 880px; aspect-ratio: 1.4 / 1; border-radius: 20px;
+    background: #06031A; border: 1px solid rgba(255,255,255,0.15); box-shadow: inset 0 0 40px rgba(0,0,0,0.5);
+    overflow: hidden; display: flex; align-items: center; justify-content: center;
+  }
+  .main-card.frame-active .canvas-wrapper {
+    max-width: min(85vw, 85vh) !important; aspect-ratio: 1 / 1 !important; border-radius: 16px !important;
+  }
+
+  canvas#mathCanvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  .controls-box {
+    margin-top: 18px; width: 100%; max-width: 880px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+    background: rgba(255,255,255,0.7); padding: 14px 20px; border-radius: 20px; border: 1px solid rgba(43,84,234,0.15);
+  }
+  .main-card.frame-active .controls-box { display: none !important; }
+
+  .control-item { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; font-weight: 700; color: var(--navy); min-width: 200px; }
+  .control-item label { display: flex; justify-content: space-between; }
+  .control-item label span { color: var(--brand-blue); font-family: 'JetBrains Mono', monospace; }
+  .control-item input { accent-color: var(--brand-blue); cursor: pointer; }
+
+  .info-panel {
+    margin-top: 18px; width: 100%; max-width: 880px; background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px;
+    padding: 20px 24px; box-shadow: 0 10px 30px rgba(43,30,112,0.08); transition: all 0.3s ease;
+  }
+  .main-card.frame-active .info-panel { display: none !important; }
+
+  .info-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .info-body { font-size: 0.92rem; color: var(--navy); line-height: 1.6; }
+  /* Share & Export Modal Overlay */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 100010; background: rgba(10, 6, 28, 0.7);
+    backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-backdrop.active { opacity: 1; pointer-events: auto; }
+  .modal-card {
+    background: rgba(255, 255, 255, 0.95); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 28px; width: min(90%, 460px); box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    transform: translateY(16px); transition: transform 0.3s ease; font-family: 'DM Sans', sans-serif; color: var(--navy);
+  }
+  .modal-backdrop.active .modal-card { transform: translateY(0); }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .modal-title { font-family: 'Comfortaa', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+  .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--navy-muted); }
+  .modal-body { font-size: 0.88rem; line-height: 1.5; color: var(--navy-muted); margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  .btn-primary { background: var(--brand-blue); color: #fff; border: none; padding: 10px 22px; border-radius: 9999px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+  .btn-primary:hover { background: #1a42cc; transform: translateY(-1px); }
+  .btn-secondary { background: rgba(43,30,112,0.08); color: var(--navy); border: 1px solid rgba(43,30,112,0.15); padding: 10px 20px; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+  .btn-secondary:hover { background: rgba(43,30,112,0.15); }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">Beautiful Infinities</div>
+  <div class="frame-subtitle-text">Generative Golden Spirals · L-System Fractal Branching · Golden Ratio Architecture</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Geometry Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Mathematical Patterns</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> 🌀 <strong>Golden Spiral</strong> &nbsp;— $r = a \cdot e^{b\theta}$</div>
+    <div class="legend-item"><span class="legend-color" style="background:#06B6D4;"></span> 🌿 <strong>Fractal Branching</strong> &nbsp;— L-System Recursion</div>
+    <div class="legend-item"><span class="legend-color" style="background:#2B54EA;"></span> 📐 <strong>Golden Ratio ($\phi$)</strong> &nbsp;— $1.618033...$</div>
+  </div>
+</div>
+
+<header id="header">
+  <div class="deckoviz-brand">
+    <img src="deckoviz-logo.png" alt="Deckoviz Logo">
+    <div class="title">Deckoviz <span>Space Labs</span></div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🔊 Audio On</button>
+    <button class="btn-action" id="shareBtn">✉️ Share</button>
+    <button class="btn-action" id="exportBtn">🎨 Export Art</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<!-- Share Modal -->
+<div class="modal-backdrop" id="shareModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">✉️ Share Generative Geometry</div>
+      <button class="modal-close" onclick="closeModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="sharePreviewText">Share your generative golden ratio and fractal geometry artwork with friends.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="copyShareLinkBtn">📋 Copy Link</button>
+      <button class="btn-primary" id="emailShareBtn">✉️ Send Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export Dynamic Art Modal -->
+<div class="modal-backdrop" id="exportModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">🎨 Export Dynamic Art</div>
+      <button class="modal-close" onclick="closeModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      Export your generative mathematical artwork for display on a Deckoviz digital frame.
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="exportPngBtn">📷 Still Art (PNG)</button>
+      <button class="btn-primary" id="exportWebmBtn">🎬 Dynamic Video (WebM)</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="mainUi">
+  <div class="hero">
+    <div class="eyebrow">Deckoviz · Mathematics & Nature</div>
+    <h1>Beautiful <span class="accent">Infinities</span></h1>
+    <p class="subtitle">An interactive generator of the repeating geometry woven into nature. Watch a single branching algorithm shift from trees to lungs to lightning by adjusting an angle.</p>
+  </div>
+
+  <div class="mod-tabs">
+    <button class="tab-btn active" data-mod="spiral">🌀 Golden Spiral & Fibonacci</button>
+    <button class="tab-btn" data-mod="branch">🌿 Fractal Branching Angle</button>
+    <button class="tab-btn" data-mod="overlay">🏛️ Golden Ratio Overlay</button>
+  </div>
+
+  <div class="main-card" id="mainCard">
+    <div class="canvas-wrapper" id="canvasWrapper">
+      <canvas id="mathCanvas"></canvas>
+    </div>
+
+    <div class="controls-box" id="controlsBox">
+      <!-- Controls injected by JS -->
+    </div>
+
+    <div class="info-panel" id="infoPanel">
+      <div class="info-title" id="infoTitle">Golden Spiral ($r = a \cdot e^{b\theta}$)</div>
+      <div class="info-body" id="infoBody">The logarithmic spiral preserves its shape at every scale. Found in nautilus shells, sunflower seed packing (golden angle 137.5°), and hurricane formations.</div>
+      <div class="info-highlight" id="infoHighlight">💡 <em>Ratio between consecutive Fibonacci numbers converges precisely on the Golden Ratio $\phi \approx 1.6180339887$.</em></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let activeModule = 'spiral';
+let isFrameMode = false;
+
+// Parameters
+const params = {
+  spiral: { growth: 0.306, rects: true }, // b = ln(phi)/(pi/2) approx 0.3063
+  branch: { angle: 25, depth: 5 },
+  overlay: { art: 'parthenon' }
+};
+
+const canvas = document.getElementById('mathCanvas');
+const ctx = canvas.getContext('2d');
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * window.devicePixelRatio;
+  canvas.height = rect.height * window.devicePixelRatio;
+  renderModule();
+}
+window.addEventListener('resize', resizeCanvas);
+
+function renderControls() {
+  const box = document.getElementById('controlsBox');
+  const infoTitle = document.getElementById('infoTitle');
+  const infoBody = document.getElementById('infoBody');
+  const infoHighlight = document.getElementById('infoHighlight');
+
+  if (activeModule === 'spiral') {
+    infoTitle.textContent = 'Golden Spiral & Fibonacci Geometry';
+    infoBody.textContent = 'The golden spiral expands outward by a factor of φ (1.618) every quarter turn. Because of this self-similarity, nature uses it to pack seeds densely without crowding.';
+    infoHighlight.innerHTML = '💡 <em>Adjust the logarithmic growth rate b to see how closely nautilus shells, sunflowers, and galaxies follow this rule.</em>';
+    box.innerHTML = `
+      <div class="control-item">
+        <label>Spiral Growth Rate (b): <span id="lbl_b">${params.spiral.growth.toFixed(3)}</span></label>
+        <input type="range" id="sl_b" min="0.150" max="0.450" step="0.005" value="${params.spiral.growth}">
+      </div>
+    `;
+    document.getElementById('sl_b').addEventListener('input', (e) => {
+      params.spiral.growth = parseFloat(e.target.value);
+      document.getElementById('lbl_b').textContent = params.spiral.growth.toFixed(3);
+      renderModule();
+    });
+
+  } else if (activeModule === 'branch') {
+    infoTitle.textContent = 'Fractal Branching Angle Generator';
+    infoBody.textContent = 'A simple recursive rule (branch → split into 2 sub-branches) creates radically different natural forms just by changing the branching angle θ.';
+    infoHighlight.innerHTML = '💡 <em>25° = Oak Tree | 35° = Fern Leaf | 45° = Lung Alveoli | 60° = Vascular Blood Network | 75° = Lightning Discharge</em>';
+    box.innerHTML = `
+      <div class="control-item">
+        <label>Branching Angle (θ): <span id="lbl_ang">${params.branch.angle}°</span></label>
+        <input type="range" id="sl_ang" min="10" max="85" step="1" value="${params.branch.angle}">
+      </div>
+      <div class="control-item">
+        <label>Recursion Depth (N): <span id="lbl_dep">${params.branch.depth}</span></label>
+        <input type="range" id="sl_dep" min="2" max="7" step="1" value="${params.branch.depth}">
+      </div>
+    `;
+    document.getElementById('sl_ang').addEventListener('input', (e) => {
+      params.branch.angle = parseInt(e.target.value);
+      document.getElementById('lbl_ang').textContent = `${params.branch.angle}°`;
+      renderModule();
+    });
+    document.getElementById('sl_dep').addEventListener('input', (e) => {
+      params.branch.depth = parseInt(e.target.value);
+      document.getElementById('lbl_dep').textContent = params.branch.depth;
+      renderModule();
+    });
+
+  } else if (activeModule === 'overlay') {
+    infoTitle.textContent = 'Golden Ratio in Art & Architecture';
+    infoBody.textContent = 'Designers across millennia have used the golden rectangle (1 : 1.618) to craft pleasing architectural facades and balanced masterwork compositions.';
+    infoHighlight.innerHTML = '💡 <em>Notice how the Parthenon facade and Mona Lisa alignment map perfectly to the golden section grid.</em>';
+    box.innerHTML = `
+      <div class="control-item">
+        <label>Artwork Reference: <span id="lbl_art">Parthenon</span></label>
+        <select id="sel_art" style="padding: 6px 12px; border-radius: 10px; border: 1px solid #ccc; font-family: 'DM Sans', sans-serif;">
+          <option value="parthenon">The Parthenon, Athens</option>
+          <option value="monalisa">Mona Lisa (Da Vinci)</option>
+          <option value="greatwave">The Great Wave off Kanagawa</option>
+        </select>
+      </div>
+    `;
+    document.getElementById('sel_art').addEventListener('change', (e) => {
+      params.overlay.art = e.target.value;
+      document.getElementById('lbl_art').textContent = e.target.options[e.target.selectedIndex].text;
+      renderModule();
+    });
+  }
+}
+
+function renderModule() {
+  const w = canvas.width;
+  const h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+
+  const cx = w / 2;
+  const cy = h / 2;
+
+  if (activeModule === 'spiral') {
+    const b = params.spiral.growth;
+
+    // Draw Golden Rectangles & Spiral
+    ctx.strokeStyle = 'rgba(6, 182, 212, 0.4)';
+    ctx.lineWidth = 1.5 * window.devicePixelRatio;
+
+    // Draw Logarithmic Spiral
+    ctx.beginPath();
+    let first = true;
+    for (let theta = 0; theta < Math.PI * 8; theta += 0.05) {
+      const r = 4 * Math.exp(b * theta) * window.devicePixelRatio;
+      const x = cx + r * Math.cos(theta);
+      const y = cy + r * Math.sin(theta);
+      if (x > 0 && x < w && y > 0 && y < h) {
+        if (first) { ctx.moveTo(x, y); first = false; }
+        else ctx.lineTo(x, y);
+      }
+    }
+    ctx.strokeStyle = '#F59E0B';
+    ctx.lineWidth = 3 * window.devicePixelRatio;
+    ctx.shadowColor = '#F59E0B';
+    ctx.shadowBlur = 20;
+    ctx.stroke();
+
+  } else if (activeModule === 'branch') {
+    const angRad = (params.branch.angle * Math.PI) / 180;
+    const maxDepth = params.branch.depth;
+
+    function drawBranch(x, y, len, angle, depth) {
+      if (depth === 0) return;
+      const x2 = x + Math.cos(angle) * len;
+      const y2 = y + Math.sin(angle) * len;
+
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = depth > maxDepth - 2 ? '#2B54EA' : depth > 2 ? '#06B6D4' : '#10B981';
+      ctx.lineWidth = depth * 1.5 * window.devicePixelRatio;
+      ctx.stroke();
+
+      drawBranch(x2, y2, len * 0.72, angle - angRad, depth - 1);
+      drawBranch(x2, y2, len * 0.72, angle + angRad, depth - 1);
+    }
+
+    drawBranch(cx, h - 30 * window.devicePixelRatio, 110 * window.devicePixelRatio, -Math.PI / 2, maxDepth);
+
+  } else if (activeModule === 'overlay') {
+    // Golden Section Rectangles Grid Overlay
+    const rectW = w * 0.7;
+    const rectH = rectW / 1.618;
+    const rx = (w - rectW) / 2;
+    const ry = (h - rectH) / 2;
+
+    if (!window.imageCache) window.imageCache = {};
+    const imgName = params.overlay.art;
+    
+    if (!window.imageCache[imgName]) {
+      const img = new Image();
+      img.src = imgName === 'parthenon' ? 'parthenon.jpg' : imgName === 'monalisa' ? 'mona_lisa.png' : 'great_wave.png';
+      img.onload = () => { window.imageCache[imgName] = img; renderModule(); };
+      window.imageCache[imgName] = 'loading'; // prevent multiple loads
+    } else if (window.imageCache[imgName] instanceof HTMLImageElement) {
+      const img = window.imageCache[imgName];
+      ctx.globalAlpha = isFrameMode ? 0.65 : 0.9;
+      
+      const imgRatio = img.width / img.height;
+      const rectRatio = rectW / rectH;
+      let sWidth = img.width, sHeight = img.height, sx = 0, sy = 0;
+
+      ctx.drawImage(img, rx, ry, rectW, rectH);
+      ctx.globalAlpha = 1.0;
+    }
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+    ctx.lineWidth = 1.5 * window.devicePixelRatio;
+    ctx.strokeRect(rx, ry, rectW, rectH);
+
+    // Golden Cut Lines
+    const cutX = rx + rectW / 1.618;
+    ctx.strokeStyle = '#2B54EA';
+    ctx.lineWidth = 2 * window.devicePixelRatio;
+    ctx.beginPath();
+    ctx.moveTo(cutX, ry);
+    ctx.lineTo(cutX, ry + rectH);
+    ctx.stroke();
+
+    ctx.fillStyle = '#06B6D4';
+    ctx.font = `${Math.round(14 * window.devicePixelRatio)}px 'JetBrains Mono', monospace`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Golden Section φ = 1.618033...', cx, ry + rectH + 30 * window.devicePixelRatio);
+  }
+}
+
+// Tab Switching
+document.querySelectorAll('.tab-btn').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    activeModule = tab.dataset.mod;
+    renderControls();
+    renderModule();
+  });
+});
+
+// Audio Engine & Controls (Task 6 Golden Harp Technique)
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playGoldenHarp(freq = 432) {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    [1, 1.618, 2.618].forEach((phi, i) => {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq * phi;
+      g.gain.setValueAtTime(0.08 / (i + 1), audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 2.5);
+      osc.connect(g); g.connect(masterGain);
+      osc.start(); osc.stop(audioCtx.currentTime + 2.5);
+    });
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊 Audio On' : '🔇 Audio Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playGoldenHarp(432);
+});
+
+document.addEventListener('input', (e) => {
+  if (e.target.tagName === 'INPUT' && e.target.type === 'range') {
+    playGoldenHarp(432 + (Math.random() * 50));
+  }
+});
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('button') || e.target.closest('.tab-btn')) {
+    playGoldenHarp(528);
+  }
+});
+
+// Share & Export Modals
+const shareModal = document.getElementById('shareModal');
+const exportModal = document.getElementById('exportModal');
+
+function closeModals() {
+  shareModal.classList.remove('active');
+  exportModal.classList.remove('active');
+}
+
+document.getElementById('shareBtn').addEventListener('click', () => {
+  document.getElementById('sharePreviewText').innerHTML = `
+    <strong>Task 22:</strong> Beautiful Infinities (Deckoviz Space Labs)<br>
+    <strong>Active Module:</strong> ${activeModule.toUpperCase()}<br><br>
+    Sharing will prefill an email with generative geometry parameters and interactive link.
+  `;
+  shareModal.classList.add('active');
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  exportModal.classList.add('active');
+});
+
+document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('✨ Interactive link copied to clipboard!');
+    closeModals();
+  });
+});
+
+document.getElementById('emailShareBtn').addEventListener('click', () => {
+  const subject = encodeURIComponent('Beautiful Infinities — Deckoviz Space Labs');
+  const body = encodeURIComponent(`Explore generative golden ratio and fractal geometry on Deckoviz Space Labs: ${window.location.href}`);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  closeModals();
+});
+
+document.getElementById('exportPngBtn').addEventListener('click', () => {
+  closeModals();
+  const canvas = document.getElementById('mathCanvas');
+  const link = document.createElement('a');
+  link.download = `deckoviz-generative-art-${activeModule}.png`;
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+});
+
+document.getElementById('exportWebmBtn').addEventListener('click', () => {
+  closeModals();
+  try {
+    const canvas = document.getElementById('mathCanvas');
+    const stream = canvas.captureStream(30);
+    const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+    const chunks = [];
+    mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(chunks, { type: 'video/webm' });
+      const link = document.createElement('a');
+      link.download = `deckoviz-generative-art-${activeModule}.webm`;
+      link.href = URL.createObjectURL(blob);
+      link.click();
+    };
+    alert('🎬 Recording 4-second generative geometry loop...');
+    mediaRecorder.start();
+    setTimeout(() => mediaRecorder.stop(), 4000);
+  } catch (e) {
+    alert('WebM recording not supported in this browser window. Exporting PNG still art.');
+  }
+});
+
+function toggleFrameMode(on) {
+  isFrameMode = on;
+  mainCard.classList.toggle('frame-active', on);
+  frameTitleOverlay.classList.toggle('show', on);
+  frameLegendToggle.classList.toggle('show', on);
+  exitFrameBtn.classList.toggle('show', on);
+  header.classList.toggle('hide-element', on);
+  // mainUi.classList.toggle('hide-element', on);
+  if (on) playGoldenHarp(528);
+  setTimeout(resizeCanvas, 100);
+}
+
+frameBtn.addEventListener('click', () => toggleFrameMode(true));
+exitFrameBtn.addEventListener('click', () => toggleFrameMode(false));
+
+document.addEventListener('keydown', (e) => {
+  const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+  if (e.key === 'Escape' && isFrameMode) {
+    toggleFrameMode(false);
+  } else if ((e.key === 'f' || e.key === 'F') && !isInput) {
+    toggleFrameMode(!isFrameMode);
+  }
+});
+
+// Init
+resizeCanvas();
+renderControls();
+renderModule();
+</script>
+</body>
+</html>

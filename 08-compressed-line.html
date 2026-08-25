@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Compressed Line — Deckoviz</title>
+<meta name="description" content="Poetic forms visualized as interactive digital geometry — syllable bars and glowing rhyme arcs reveal the hidden structure of verse.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.65);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,30,112,0.12), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1000px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,30,112,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  header .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  header .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); text-decoration: none; cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+  }
+  .btn-action:hover { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 700; cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .frame-art-bar {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 100000;
+    display: flex; gap: 8px; background: rgba(255,255,255,0.92); border: 1px solid var(--glass-border);
+    padding: 8px 16px; border-radius: 9999px; backdrop-filter: blur(20px); box-shadow: 0 12px 36px rgba(43,84,234,0.15);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; max-width: 92vw; overflow-x: auto;
+  }
+  .frame-art-bar.show { opacity: 1; pointer-events: auto; }
+  .art-pattern-btn {
+    background: rgba(240,244,255,0.8); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 6px 14px; border-radius: 9999px; font-size: 0.72rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.22s ease; display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  }
+  .art-pattern-btn:hover, .art-pattern-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(43,84,234,0.35); }
+
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 24px 80px; transition: opacity 0.4s ease; max-width: 1040px; margin: 0 auto;
+    animation: pageFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 24px; max-width: 680px; margin-top: 0; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy);
+  }
+  h1 span.accent-serif {
+    font-style: italic; font-weight: 700;
+    background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .subtitle { font-weight: 400; font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; }
+
+  /* FORM SELECTOR CARDS ROW */
+  .form-selector {
+    display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 960px;
+  }
+  .form-btn {
+    background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); color: var(--navy);
+    padding: 10px 20px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 14px rgba(43,84,234,0.06);
+  }
+  .form-btn:hover, .form-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); box-shadow: 0 6px 20px rgba(43,84,234,0.3); transform: translateY(-2px); }
+
+  /* MAIN LAYOUT GRID */
+  .main-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 960px; width: 100%; margin-bottom: 28px; }
+  
+  .panel {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(150%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 24px; box-shadow: var(--glass-shadow); transition: all 0.4s ease;
+    display: flex; flex-direction: column; gap: 12px; position: relative;
+  }
+
+  body.frame-mode-active { overflow: hidden !important; }
+
+  body.frame-mode-active .page,
+  .page.frame-mode-active {
+    animation: none !important; transform: none !important; max-width: none !important;
+    margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important;
+    position: static !important;
+  }
+
+  /* FULLSCREEN FRAME MODE FIX FOR TASK 8 */
+  .panel.frame-active {
+    position: fixed !important; inset: 0 !important; top: 0 !important; left: 0 !important;
+    max-width: none !important; width: 100vw !important; height: 100vh !important;
+    padding: 60px 40px !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;
+    z-index: 9999 !important; background: #F0F4FF !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin: 0 !important;
+  }
+
+  .viz-container { width: 100%; height: 380px; display: flex; align-items: center; justify-content: center; position: relative; }
+  .panel.frame-active .viz-container { height: calc(100vh - 160px) !important; width: 90vw !important; }
+
+  svg#vizSvg { display: block; width: 100%; height: 100%; max-height: 100%; }
+
+  .info-name { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; color: var(--navy); margin-bottom: 4px; }
+  .info-origin { font-size: 0.76rem; color: var(--brand-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .info-text { font-size: 0.88rem; line-height: 1.65; color: var(--navy-muted); font-weight: 400; }
+  .info-example {
+    font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.95rem; line-height: 1.7;
+    color: var(--navy); border-left: 3px solid var(--brand-blue); padding-left: 16px; margin-top: 10px; background: rgba(43,84,234,0.04); padding: 12px 16px; border-radius: 0 14px 14px 0;
+  }
+
+  /* WRITE YOUR OWN POEM INTERACTIVE BOX */
+  .poem-builder-panel {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 24px 28px; max-width: 960px; width: 100%; box-shadow: var(--glass-shadow);
+    margin-bottom: 28px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .builder-title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.25rem; color: var(--navy); }
+  textarea#customPoemInput {
+    width: 100%; height: 110px; padding: 14px; border-radius: 16px; border: 1px solid rgba(43,84,234,0.2);
+    background: rgba(255,255,255,0.9); font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.95rem; color: var(--navy);
+    outline: none; resize: vertical; user-select: auto; -webkit-user-select: auto; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  textarea#customPoemInput:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgba(43,84,234,0.15); }
+
+  @media (max-width: 768px) {
+    .main-layout { grid-template-columns: 1fr; }
+  }
+
+  /* FRAME MODE TITLE OVERLAY */
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); padding: 10px 18px; border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(43,30,112,0.14); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--navy, #1E1B4B);
+  }
+  .frame-legend-toggle {
+    position: fixed; bottom: 32px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(43,84,234,0.22);
+    color: var(--navy); padding: 8px 18px; border-radius: 9999px; font-size: 0.76rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(43,84,234,0.15); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 44px; right: 0; width: 260px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); border-radius: 20px; padding: 14px 16px;
+    box-shadow: 0 14px 40px rgba(43,30,112,0.2); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .frame-legend-toggle:hover .legend-popover,
+  .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--brand-blue); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--navy); margin-bottom: 6px; line-height: 1.3;
+  }
+  .legend-color { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">The Compressed Line</div>
+  <div class="frame-subtitle-text">Poetic Metrical Geometry & Syllable Stress Architecture</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Meter Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Syllable Meter & Cadence</div>
+    <div class="legend-item"><span class="legend-color" style="background:#EF4444;"></span> ⚡ <strong>Stressed Syllable</strong> &nbsp;— Heavy Accent</div>
+    <div class="legend-item"><span class="legend-color" style="background:#2563EB;"></span> 💧 <strong>Unstressed Syllable</strong> &nbsp;— Soft Flow</div>
+    <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> 📏 <strong>Iambic Pentameter</strong> &nbsp;— 5 Stress Feet</div>
+    <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> 🌊 <strong>Cadence Wave</strong> &nbsp;— Dynamic Metrical Line</div>
+  </div>
+</div>
+
+
+<header id="header">
+  <div class="deckoviz-brand-mark" style="display: flex; align-items: center; gap: 8px;">
+    <img src="deckoviz-logo.png" alt="Deckoviz Logo" style="height: 30px; width: auto; object-fit: contain; display: block;">
+    <div class="title" style="font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.02rem; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+      Deckoviz <span style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue);">Space Labs</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🔊 Sound On</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<div class="frame-art-bar" id="frameArtBar"></div>
+
+<div class="page" id="mainUi">
+  <div class="hero" id="heroSec">
+    <div class="eyebrow">Deckoviz Poetry DAS</div>
+    <h1>The Compressed <span class="accent-serif">Line</span></h1>
+    <p class="subtitle">Every poetic form is a set of constraints made visible. Explore syllable counts, metrical rhythm, and rhyme connectors rendered as live generative art geometry.</p>
+  </div>
+
+  <!-- POETIC FORM SELECTOR ROW -->
+  <div class="form-selector" id="formSelector"></div>
+
+  <!-- MAIN VISUALIZATION & INFO GRID -->
+  <div class="main-layout">
+    <div class="panel" id="vizPanel">
+      <div style="font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--brand-blue);">Syllable Bar Geometry & Rhyme Connectors</div>
+      <div class="viz-container">
+        <svg id="vizSvg" viewBox="0 0 540 500" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+    </div>
+
+    <div class="panel" id="infoPanel"></div>
+  </div>
+
+  <!-- WRITE YOUR OWN POEM INTERACTIVE BOX -->
+  <div class="poem-builder-panel" id="builderPanel">
+    <div class="builder-title">✨ Syllable Geometry Live Playground</div>
+    <div style="font-size:0.84rem; color:var(--navy-muted);">Type or paste a poem below to measure syllable counts and watch live rhythm geometry draw in real time!</div>
+    <textarea id="customPoemInput" placeholder="An old silent pond...&#10;A frog jumps into the pond,&#10;splash! Silence again."></textarea>
+  </div>
+</div>
+
+<script>
+/* ---------- Deckoviz Floating Particle Background ---------- */
+const bgCanvas = document.getElementById('bgCanvas');
+const bgCtx = bgCanvas.getContext('2d');
+let bgParticles = [];
+
+function initBgParticles() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  bgCanvas.width = window.innerWidth * dpr;
+  bgCanvas.height = window.innerHeight * dpr;
+  bgCanvas.style.width = window.innerWidth + 'px';
+  bgCanvas.style.height = window.innerHeight + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const num = Math.floor((window.innerWidth * window.innerHeight) / 7000);
+  const colors = ['rgba(6,182,212,', 'rgba(43,84,234,', 'rgba(139,92,246,', 'rgba(236,72,153,'];
+  bgParticles = Array.from({ length: num }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 2.2 + 0.6,
+    speedY: (Math.random() - 0.5) * 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    alpha: Math.random() * 0.5 + 0.15,
+    phase: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawBgParticles(t) {
+  bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  bgParticles.forEach(p => {
+    p.x += p.speedX; p.y += p.speedY;
+    if (p.x < 0) p.x = window.innerWidth;
+    if (p.x > window.innerWidth) p.x = 0;
+    if (p.y < 0) p.y = window.innerHeight;
+    if (p.y > window.innerHeight) p.y = 0;
+
+    const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(t * 0.0015 + p.phase));
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    bgCtx.fillStyle = p.color + currentAlpha + ')';
+    bgCtx.fill();
+  });
+}
+
+/* ---------- Web Audio Controller ---------- */
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playLyreChord(freq = 528) {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 2.2);
+    osc.connect(g); g.connect(masterGain);
+    osc.start(); osc.stop(audioCtx.currentTime + 2.2);
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playLyreChord(528);
+});
+
+/* ---------- POETIC FORMS DEFINITION ---------- */
+const forms = [
+  {
+    name: 'Shakespearean Sonnet', origin: 'England, 16th century · 14 lines',
+    lines: [10,10,10,10, 10,10,10,10, 10,10,10,10, 10,10],
+    rhyme: [[0,2],[1,3],[4,6],[5,7],[8,10],[9,11],[12,13]],
+    desc: 'The most structured form in English poetry. Three quatrains build an argument; the closing couplet delivers the volta.',
+    example: 'Shall I compare thee to a summer\'s day?\nThou art more lovely and more temperate:\nRough winds do shake the darling buds of May,\nAnd summer\'s lease hath all too short a date...',
+    barColor: '#2B54EA', arcColor: '#EC4899',
+  },
+  {
+    name: 'Haiku', origin: 'Japan, 17th century · 3 lines',
+    lines: [5, 7, 5], rhyme: [],
+    desc: 'The art of compression. A haiku captures a single fleeting moment with crystalline brevity in 17 syllables.',
+    example: 'An old silent pond...\nA frog jumps into the pond,\nSplash! Silence again.',
+    barColor: '#06B6D4', arcColor: '#10B981',
+  },
+  {
+    name: 'Limerick', origin: 'Ireland/England, 18th century · 5 lines',
+    lines: [8, 8, 5, 5, 8], rhyme: [[0,1],[0,4],[1,4],[2,3]],
+    desc: 'The bouncy anapestic meter and tight AABBA rhyme scheme create an irresistible comedic rhythm.',
+    example: 'There once was a man from Nantucket\nWho kept all his cash in a bucket.\nHis daughter named Nan\nRan away with a man,\nAnd as for the bucket, Nantucket.',
+    barColor: '#F59E0B', arcColor: '#F43F5E',
+  },
+  {
+    name: 'Free Verse', origin: 'Global, 20th century',
+    lines: [12, 6, 15, 9, 3, 11, 7], rhyme: [],
+    desc: 'Freedom from meter isn\'t formlessness — line breaks determine how the reader breathes and experiences pause.',
+    example: 'So much depends\nupon\na red wheel\nbarrow\nglazed with rain\nwater\nbeside the white\nchickens.',
+    barColor: '#8B5CF6', arcColor: '#06B6D4',
+  },
+  {
+    name: 'Spoken Word', origin: 'Global, 1980s–present',
+    lines: [14, 8, 18, 5, 22, 10, 3], rhyme: [[0,3],[1,5]],
+    desc: 'Written for the mouth, not the page. Spoken word uses internal rhythm, syncopation, and repetition to hit hard.',
+    example: 'I come from a place where\nthe only thing louder than silence\nis someone saying what they mean.',
+    barColor: '#EC4899', arcColor: '#2B54EA',
+  },
+];
+
+const formSelector = document.getElementById('formSelector');
+const frameArtBar = document.getElementById('frameArtBar');
+const vizSvg = document.getElementById('vizSvg');
+const infoPanel = document.getElementById('infoPanel');
+let activeForm = 0;
+let frameMode = false;
+let animFrame = 0;
+
+forms.forEach((f, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'form-btn' + (i === 0 ? ' active' : '');
+  btn.textContent = f.name;
+  btn.addEventListener('click', () => selectForm(i));
+  formSelector.appendChild(btn);
+
+  const frameBtn = document.createElement('button');
+  frameBtn.className = 'art-pattern-btn' + (i === 0 ? ' active' : '');
+  frameBtn.textContent = f.name;
+  frameBtn.addEventListener('click', () => selectForm(i));
+  frameArtBar.appendChild(frameBtn);
+});
+
+function selectForm(index) {
+  playLyreChord(440 + index * 60);
+  activeForm = index;
+  document.querySelectorAll('.form-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+  document.querySelectorAll('.art-pattern-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+  renderInfo();
+}
+
+function renderVizLoop() {
+  const f = forms[activeForm];
+  const maxS = Math.max(...f.lines);
+  let svg = '';
+
+  const lineCount = f.lines.length;
+  const lineSpacing = Math.min(30, 420 / (lineCount + 1));
+  const maxBarW = 210;
+
+  f.lines.forEach((syl, i) => {
+    const y = 35 + i * lineSpacing;
+    const w = (syl / maxS) * maxBarW + (frameMode ? Math.sin(animFrame * 0.04 + i) * 10 : 0);
+    svg += `<rect x="35" y="${y}" width="${w}" height="14" rx="7" fill="${f.barColor}" opacity="0.88"/>`;
+    svg += `<text x="${48 + w}" y="${y + 11}" font-size="11" fill="#1E1B4B" font-family="DM Sans, sans-serif" font-weight="700">${syl}</text>`;
+  });
+
+  f.rhyme.forEach(([a, b], idx) => {
+    const ya = 42 + a * lineSpacing, yb = 42 + b * lineSpacing;
+    const wa = (f.lines[a] / maxS) * maxBarW + 35;
+    const wb = (f.lines[b] / maxS) * maxBarW + 35;
+    const arcX = Math.max(wa, wb) + 20 + idx * 12 + (frameMode ? Math.sin(animFrame * 0.05 + idx) * 8 : 0);
+    svg += `<path d="M ${wa} ${ya} C ${arcX} ${ya}, ${arcX} ${yb}, ${wb} ${yb}" fill="none" stroke="${f.arcColor}" stroke-width="2.8" stroke-linecap="round" opacity="0.95"/>`;
+  });
+
+  vizSvg.innerHTML = svg;
+  animFrame++;
+  requestAnimationFrame(renderVizLoop);
+}
+
+function renderInfo() {
+  const f = forms[activeForm];
+  infoPanel.innerHTML = `
+    <div class="info-name">${f.name}</div>
+    <div class="info-origin">${f.origin}</div>
+    <div class="info-text">${f.desc}</div>
+    <div class="info-example">${f.example.replace(/\n/g, '<br>')}</div>
+  `;
+}
+
+// Custom Poem Interactive Builder
+const poemInput = document.getElementById('customPoemInput');
+poemInput.addEventListener('input', () => {
+  const text = poemInput.value.trim();
+  if (!text) return;
+  const lines = text.split(/\n+/).filter(l => l.trim().length > 0);
+  const sylCounts = lines.map(l => {
+    const words = l.trim().split(/\s+/);
+    return words.reduce((acc, w) => acc + Math.max(1, Math.floor(w.length / 3.2)), 0);
+  });
+  if (sylCounts.length > 0) {
+    forms[activeForm].lines = sylCounts;
+    playLyreChord(600);
+  }
+});
+
+function toggleFrameMode(){
+  frameMode = !frameMode;
+  document.body.classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('header').classList.toggle('hide-element', frameMode);
+  document.getElementById('heroSec').classList.toggle('hide-element', frameMode);
+  document.getElementById('formSelector').classList.toggle('hide-element', frameMode);
+  document.getElementById('infoPanel').classList.toggle('hide-element', frameMode);
+  document.getElementById('builderPanel').classList.toggle('hide-element', frameMode);
+
+  document.getElementById('vizPanel').classList.toggle('frame-active', frameMode);
+  document.getElementById('exitFrameBtn').classList.toggle('show', frameMode);
+  document.getElementById('frameArtBar').classList.toggle('show', frameMode);
+  if (document.getElementById('frameTitleOverlay')) document.getElementById('frameTitleOverlay').classList.toggle('show', frameMode);
+  if (document.getElementById('frameLegendToggle')) document.getElementById('frameLegendToggle').classList.toggle('show', frameMode);
+
+  if (frameMode) playLyreChord(880);
+}
+
+if (document.getElementById('legendToggleBtn')) {
+  document.getElementById('legendToggleBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const pop = document.getElementById('legendPopover');
+    if (pop) pop.classList.toggle('open');
+  });
+}
+document.addEventListener('click', () => {
+  const pop = document.getElementById('legendPopover');
+  if (pop) pop.classList.remove('open');
+});
+
+document.getElementById('frameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('exitFrameBtn').addEventListener('click', toggleFrameMode);
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'f' || e.key === 'F') toggleFrameMode();
+  if (e.key === 'Escape' && frameMode) toggleFrameMode();
+});
+
+window.addEventListener('resize', initBgParticles);
+initBgParticles(); selectForm(0); requestAnimationFrame(renderVizLoop);
+</script>
+</body>
+</html>

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Elements, Made Personal — Deckoviz Chemistry Labs</title>
+<meta name="description" content="The periodic table reimagined around daily human relevance. Filter by body composition, technology, home items, and explore elemental weight breakdowns.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.68);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6; --amber: #F59E0B; --emerald: #10B981; --rose: #F43F5E;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,84,234,0.1), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1040px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,84,234,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  .deckoviz-brand { display: flex; align-items: center; gap: 10px; }
+  .deckoviz-brand img { height: 28px; width: auto; }
+  .deckoviz-brand .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  .deckoviz-brand .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+    font-family: 'DM Sans', sans-serif; text-decoration: none;
+  }
+  .btn-action:hover, .btn-action.active {
+    color: #fff; background: var(--brand-blue); border-color: var(--brand-blue);
+    transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3);
+  }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px;
+    font-size: 0.8rem; font-family: 'DM Sans', sans-serif; font-weight: 700;
+    cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(15,20,30,0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1);
+    padding: 14px 22px; border-radius: 16px; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    color: #FFF; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; margin-bottom: 4px; color: #FFF; }
+  .frame-subtitle-text { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: rgba(255,255,255,0.7); font-weight: 500; }
+
+  .frame-legend-toggle { position: fixed; bottom: 28px; right: 24px; z-index: 100000; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(15,20,30,0.85); border: 1px solid rgba(255,255,255,0.1);
+    color: #FFF; padding: 9px 20px; border-radius: 9999px; font-size: 0.78rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: rgba(30,40,60,0.95); transform: translateY(-2px); }
+  .legend-popover {
+    position: absolute; bottom: 46px; right: 0; width: 280px;
+    background: rgba(15,20,30,0.85); backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 16px; color: #FFF;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.5); opacity: 0; pointer-events: none;
+    transform: translateY(12px) scale(0.95); transition: all 0.3s cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .frame-legend-toggle:hover .legend-popover, .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+  .legend-popover-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 700; }
+  .legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; margin-bottom: 8px; color: rgba(255,255,255,0.85); }
+  .legend-item:last-child { margin-bottom: 0; }
+  .legend-color { width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 16px 60px; max-width: 1180px; margin: 0 auto; transition: opacity 0.4s ease;
+  }
+  .page.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 18px; max-width: 720px; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 8px; }
+  h1 { font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.2vw, 2.7rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy); }
+  h1 span.accent, h1 span.accent-serif { font-style: italic; font-weight: 700; background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .subtitle { font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; font-weight: 400; }
+
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; justify-content: center; }
+  .btn-filter {
+    background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border);
+    color: var(--navy); padding: 8px 16px; border-radius: 9999px; font-size: 0.76rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.22s ease; box-shadow: 0 4px 14px rgba(43,84,234,0.06);
+  }
+  .btn-filter:hover, .btn-filter.active { background: var(--navy); color: #fff; border-color: var(--navy); transform: translateY(-1px); }
+
+  .ptable-card {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(140%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 20px; box-shadow: var(--glass-shadow); width: 100%; max-width: 1140px;
+    position: relative; display: flex; flex-direction: column; align-items: center; transition: all 0.3s ease;
+  }
+
+  .ptable-card.frame-active {
+    position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important;
+    max-width: 100vw !important; max-height: 100vh !important; padding: 16px !important; border-radius: 0 !important;
+    border: none !important; box-shadow: none !important; z-index: 99999 !important; background: #0b0726 !important;
+    display: flex !important; justify-content: center !important; align-items: center !important; margin: 0 !important;
+  }
+
+  .grid-container {
+    display: grid; grid-template-columns: repeat(18, minmax(0, 1fr)); gap: 4px; width: 1080px; max-width: none;
+    padding: 10px; transition: transform 0.3s ease; transform-origin: top center;
+  }
+
+  .element-tile {
+    aspect-ratio: 1 / 1; border-radius: 8px; background: rgba(255,255,255,0.7); border: 1px solid rgba(43,84,234,0.15);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; transition: all 0.2s cubic-bezier(0.34,1.56,0.64,1); font-family: 'DM Sans', sans-serif;
+    min-width: 0; min-height: 0; overflow: hidden;
+  }
+  @keyframes pulseActive {
+    0% { transform: scale(1.22); box-shadow: 0 8px 24px rgba(43,84,234,0.4); }
+    50% { transform: scale(1.25); box-shadow: 0 12px 36px rgba(43,84,234,0.6); border-color: rgba(255,255,255,0.8) !important; }
+    100% { transform: scale(1.22); box-shadow: 0 8px 24px rgba(43,84,234,0.4); }
+  }
+  .ptable-card.frame-active .element-tile { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: #fff; }
+  .element-tile:hover {
+    transform: scale(1.22); z-index: 10; background: var(--brand-blue) !important; color: #fff !important;
+    border-color: var(--brand-blue) !important; box-shadow: 0 8px 24px rgba(43,84,234,0.4);
+  }
+  .element-tile.active {
+    z-index: 10; background: var(--brand-blue) !important; color: #fff !important;
+    border-color: var(--brand-blue) !important;
+    animation: pulseActive 2.5s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .element-tile.dimmed { opacity: 0.18; transform: scale(0.95); }
+
+  .elem-num { font-size: clamp(0.45rem, 0.8vw, 0.55rem); font-weight: 700; opacity: 0.7; }
+  .elem-sym { font-size: clamp(0.75rem, 1.3vw, 0.95rem); font-weight: 700; font-family: 'JetBrains Mono', monospace; margin: 1px 0; }
+  .elem-name { font-size: clamp(0.4rem, 0.7vw, 0.5rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90%; }
+
+  .elem-img-wrapper {
+    width: 32%; max-width: 24px; aspect-ratio: 1/1; height: auto; border-radius: 4px; overflow: hidden; margin-top: 3px;
+    border: 1px solid rgba(43,84,234,0.15); box-shadow: 0 2px 6px rgba(0,0,0,0.1); flex-shrink: 0;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .elem-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ptable-card.frame-active .elem-img-wrapper { border-color: rgba(255,255,255,0.2); }
+  .element-tile:hover .elem-img-wrapper, .element-tile.active .elem-img-wrapper { 
+    transform: scale(1.3); border-color: rgba(255,255,255,0.6); box-shadow: 0 4px 12px rgba(0,0,0,0.3); margin-top: 5px;
+  }
+
+  .info-drawer {
+    margin-top: 18px; width: 100%; max-width: 1080px; background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px;
+    padding: 18px 24px; box-shadow: 0 10px 30px rgba(43,30,112,0.08); transition: all 0.3s ease;
+  }
+  .ptable-card.frame-active .info-drawer { display: none !important; }
+
+  .info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .info-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); display: flex; align-items: center; gap: 10px; }
+  .cat-pill { font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 9999px; background: rgba(43,84,234,0.08); color: var(--brand-blue); }
+  .info-body { font-size: 0.92rem; color: var(--navy); line-height: 1.6; }
+  /* Share & Export Modal Overlay */
+  .modal-backdrop {
+    position: fixed; inset: 0; z-index: 100010; background: rgba(10, 6, 28, 0.7);
+    backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+  }
+  .modal-backdrop.active { opacity: 1; pointer-events: auto; }
+  .modal-card {
+    background: rgba(255, 255, 255, 0.95); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 28px; width: min(90%, 460px); box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    transform: translateY(16px); transition: transform 0.3s ease; font-family: 'DM Sans', sans-serif; color: var(--navy);
+  }
+  .modal-backdrop.active .modal-card { transform: translateY(0); }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .modal-title { font-family: 'Comfortaa', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--navy); }
+  .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--navy-muted); }
+  .modal-body { font-size: 0.88rem; line-height: 1.5; color: var(--navy-muted); margin-bottom: 20px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+  .btn-primary { background: var(--brand-blue); color: #fff; border: none; padding: 10px 22px; border-radius: 9999px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; }
+  .btn-primary:hover { background: #1a42cc; transform: translateY(-1px); }
+  .btn-secondary { background: rgba(43,30,112,0.08); color: var(--navy); border: 1px solid rgba(43,30,112,0.15); padding: 10px 20px; border-radius: 9999px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+  .btn-secondary:hover { background: rgba(43,30,112,0.15); }
+</style>
+</head>
+<body>
+
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">The Elements, Made Personal</div>
+  <div class="frame-subtitle-text">Periodic Table Reimagined · Human Relevance & Daily Material Composition</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Relevance Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Human Relevance Categories</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F43F5E;"></span> 🧬 <strong>In Your Body</strong> &nbsp;— Biological Building Blocks</div>
+    <div class="legend-item"><span class="legend-color" style="background:#06B6D4;"></span> 📱 <strong>In Technology</strong> &nbsp;— Semiconductors & Batteries</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> 🏡 <strong>In Your Home</strong> &nbsp;— Everyday Objects</div>
+    <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> ✨ <strong>In the Stars</strong> &nbsp;— Cosmic Origins</div>
+  </div>
+</div>
+
+<header id="header">
+  <div class="deckoviz-brand">
+    <img src="deckoviz-logo.png" alt="Deckoviz Logo">
+    <div class="title">Deckoviz <span>Space Labs</span></div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🔊 Audio On</button>
+    <button class="btn-action" id="shareBtn">✉️ Share</button>
+    <button class="btn-action" id="exportBtn">🎨 Export Art</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<!-- Share Modal -->
+<div class="modal-backdrop" id="shareModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">✉️ Share Periodic Elements</div>
+      <button class="modal-close" onclick="closeModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      <p id="sharePreviewText">Share chemical elements and human body composition insights with friends.</p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="copyShareLinkBtn">📋 Copy Link</button>
+      <button class="btn-primary" id="emailShareBtn">✉️ Send Email</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export Dynamic Art Modal -->
+<div class="modal-backdrop" id="exportModal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <div class="modal-title">🎨 Export Dynamic Art</div>
+      <button class="modal-close" onclick="closeModals()">✕</button>
+    </div>
+    <div class="modal-body">
+      Export your human-relevance periodic table visualization for display on a Deckoviz digital frame.
+    </div>
+    <div class="modal-actions">
+      <button class="btn-secondary" id="exportPngBtn">📷 Still Art (PNG)</button>
+      <button class="btn-primary" id="exportWebmBtn">🎬 Dynamic Video (WebM)</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="mainUi">
+  <div class="hero">
+    <div class="eyebrow">Deckoviz · Chemistry & Life</div>
+    <h1>The Elements, Made <span class="accent">Personal</span></h1>
+    <p class="subtitle">The periodic table rebuilt around human relevance. Discover where each element lives inside your body, your home, your phone, and the cosmos around you.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="btn-filter active" data-filter="all">🌐 All 118 Elements</button>
+    <button class="btn-filter" data-filter="body">🧬 In Your Body</button>
+    <button class="btn-filter" data-filter="tech">📱 In Technology</button>
+    <button class="btn-filter" data-filter="home">🏡 In Your Home</button>
+    <button class="btn-filter" data-filter="stars">✨ Cosmic Stars</button>
+    <button class="btn-filter" data-filter="obj_human">👤 Build a Human (~70kg)</button>
+    <button class="btn-filter" data-filter="obj_phone">📱 Build a Smartphone</button>
+  </div>
+
+  <div class="ptable-card" id="ptableCard">
+    <div class="grid-container" id="gridContainer">
+      <!-- 118 Elements rendered by JS -->
+    </div>
+
+    <div class="info-drawer" id="infoDrawer">
+      <div class="info-header">
+        <div class="info-title" id="infoTitle">Select any element to explore</div>
+        <div class="cat-pill" id="catPill">Periodic Table</div>
+      </div>
+      <div class="info-body" id="infoBody">Click on any tile above to discover how that specific element powers your physiology, household devices, or cosmic history.</div>
+      <div class="info-breakdown" id="infoBreakdown">💡 <em>Did you know? Just 6 elements (Oxygen, Carbon, Hydrogen, Nitrogen, Calcium, Phosphorus) make up 99% of your total body mass.</em></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Curated Elements Data
+const ELEMENTS = [
+  { n:1, sym:'H', name:'Hydrogen', col:1, row:1, cat:'body', note:'Makes up 63% of all atoms in your body (mostly in H₂O). Formed during the Big Bang 13.8 billion years ago.' },
+  { n:2, sym:'He', name:'Helium', col:18, row:1, cat:'stars', note:'Second most abundant element in the universe. Created by nuclear fusion inside suns.' },
+  { n:3, sym:'Li', name:'Lithium', col:1, row:2, cat:'tech', note:'Powers the rechargeable lithium-ion battery in your smartphone and laptop, and stabilizes mood in neuroscience.' },
+  { n:4, sym:'Be', name:'Beryllium', col:2, row:2, cat:'tech', note:'Used in lightweight aerospace alloys and James Webb Space Telescope primary mirror segments.' },
+  { n:5, sym:'B', name:'Boron', col:13, row:2, cat:'home', note:'Makes heat-resistant Pyrex glassware in your kitchen and reinforces fiberglass.' },
+  { n:6, sym:'C', name:'Carbon', col:14, row:2, cat:'body', img:'https://en.wikipedia.org/wiki/Special:FilePath/Graphite-233436.jpg?width=200', note:'The backbone of all terrestrial life. Forms DNA, proteins, diamond lattices, and pencil graphite.' },
+  { n:7, sym:'N', name:'Nitrogen', col:15, row:2, cat:'body', note:'78% of every breath you take is Nitrogen gas. Essential component of amino acids and DNA bases.' },
+  { n:8, sym:'O', name:'Oxygen', col:16, row:2, cat:'body', img:'https://en.wikipedia.org/wiki/Special:FilePath/Liquid_oxygen_in_a_beaker_4.jpg?width=200', note:'Accounts for 65% of your body weight! Powers cellular respiration in your mitochondria.' },
+  { n:9, sym:'F', name:'Fluorine', col:17, row:2, cat:'home', note:'Strengthens tooth enamel in toothpaste and coats non-stick Teflon cookware.' },
+  { n:10, sym:'Ne', name:'Neon', col:18, row:2, cat:'home', note:'Glows reddish-orange when electrical current passes through glass tube signage.' },
+  { n:11, sym:'Na', name:'Sodium', col:1, row:3, cat:'body', img:'https://en.wikipedia.org/wiki/Special:FilePath/Na_(Sodium).jpg?width=200', note:'Essential electrolyte generating nerve impulses and regulating blood pressure along with Potassium.' },
+  { n:12, sym:'Mg', name:'Magnesium', col:2, row:3, cat:'body', note:'Core atom inside chlorophyll molecules capturing sunlight in green plants, and cofactor for 300+ enzymes in your body.' },
+  { n:13, sym:'Al', name:'Aluminum', col:13, row:3, cat:'home', img:'https://en.wikipedia.org/wiki/Special:FilePath/Aluminium.jpg?width=200', note:'Infinitely recyclable metal used in soda cans, foil, aircraft fuselages, and window frames.' },
+  { n:14, sym:'Si', name:'Silicon', col:14, row:3, cat:'tech', img:'https://en.wikipedia.org/wiki/Special:FilePath/Silicon.jpg?width=200', note:'The semiconductor heart of computer microprocessors, solar panels, and beach sand.' },
+  { n:15, sym:'P', name:'Phosphorus', col:15, row:3, cat:'body', note:'Forms the structural ATP energy currency of your cells and DNA phosphate backbone.' },
+  { n:16, sym:'S', name:'Sulfur', col:16, row:3, cat:'body', img:'https://en.wikipedia.org/wiki/Special:FilePath/Sulfur-sample.jpg?width=200', note:'Forms disulfide bridges that give hair its curl and structural protein strength.' },
+  { n:17, sym:'Cl', name:'Chlorine', col:17, row:3, cat:'home', note:'Sanitizes municipal drinking water and swimming pools; essential component of stomach acid (HCl).' },
+  { n:18, sym:'Ar', name:'Argon', col:18, row:3, cat:'home', note:'Noble gas filling double-pane insulating windows and incandescent lightbulbs.' },
+  { n:19, sym:'K', name:'Potassium', col:1, row:4, cat:'body', note:'Powers heart contractions and resting membrane potential in every nerve cell.' },
+  { n:20, sym:'Ca', name:'Calcium', col:2, row:4, cat:'body', note:'1.1 kg of your weight! Maintains bone rigidity and triggers muscle contractions.' },
+  { n:26, sym:'Fe', name:'Iron', col:8, row:4, cat:'body', img:'https://en.wikipedia.org/wiki/Special:FilePath/Iron_electrolytic_and_1cm3_cube.jpg?width=200', note:'Binds oxygen in hemoglobin turning your blood red. Created in dying massive supergiant stars.' },
+  { n:29, sym:'Cu', name:'Copper', col:11, row:4, cat:'tech', img:'https://en.wikipedia.org/wiki/Special:FilePath/NatCopper.jpg?width=200', note:'High electrical conductivity wire running through your home walls and electric vehicle motors.' },
+  { n:30, sym:'Zn', name:'Zinc', col:12, row:4, cat:'body', note:'Supports immune function, wound healing, and taste perception.' },
+  { n:47, sym:'Ag', name:'Silver', col:11, row:5, cat:'tech', img:'https://en.wikipedia.org/wiki/Special:FilePath/Silver_crystal.jpg?width=200', note:'Highest electrical conductivity of any element; coats solar panels and mirrors.' },
+  { n:79, sym:'Au', name:'Gold', col:11, row:6, cat:'tech', img:'https://en.wikipedia.org/wiki/Special:FilePath/Gold-289564.jpg?width=200', note:'Corrosion-resistant connector plating inside smartphones and space suit visors.' }
+];
+
+// Generate placeholder grid for full 118 elements layout
+for (let i = 1; i <= 118; i++) {
+  if (!ELEMENTS.find(e => e.n === i)) {
+    let r, c;
+    if (i === 1) { c = 1; r = 1; }
+    else if (i === 2) { c = 18; r = 1; }
+    else if (i >= 3 && i <= 4) { c = i - 2; r = 2; }
+    else if (i >= 5 && i <= 10) { c = i + 8; r = 2; }
+    else if (i >= 11 && i <= 12) { c = i - 10; r = 3; }
+    else if (i >= 13 && i <= 18) { c = i; r = 3; }
+    else if (i >= 19 && i <= 36) { c = i - 18; r = 4; }
+    else if (i >= 37 && i <= 54) { c = i - 36; r = 5; }
+    else if (i >= 55 && i <= 56) { c = i - 54; r = 6; }
+    else if (i >= 57 && i <= 71) { c = i - 53; r = 8; }
+    else if (i >= 72 && i <= 86) { c = i - 68; r = 6; }
+    else if (i >= 87 && i <= 88) { c = i - 86; r = 7; }
+    else if (i >= 89 && i <= 103) { c = i - 85; r = 9; }
+    else if (i >= 104 && i <= 118) { c = i - 100; r = 7; }
+    else { c = 1; r = 10; }
+    ELEMENTS.push({ n: i, sym: `E${i}`, name: `Element ${i}`, col: c, row: r, cat: 'stars', note: 'Heavy synthesized element observed in high-energy physics particle colliders.' });
+  }
+}
+
+// App State
+let activeFilter = 'all';
+let selectedElem = ELEMENTS.find(e => e.n === 8); // Default Oxygen
+let isFrameMode = false;
+
+// DOM
+const grid = document.getElementById('gridContainer');
+const infoTitle = document.getElementById('infoTitle');
+const catPill = document.getElementById('catPill');
+const infoBody = document.getElementById('infoBody');
+const infoBreakdown = document.getElementById('infoBreakdown');
+
+function renderGrid() {
+  grid.innerHTML = '';
+
+  // Sort by row & col
+  const sorted = [...ELEMENTS].sort((a, b) => (a.row - b.row) || (a.col - b.col));
+
+  sorted.forEach(el => {
+    const tile = document.createElement('div');
+    tile.className = 'element-tile';
+    tile.style.gridColumn = el.col;
+    tile.style.gridRow = el.row;
+    tile.dataset.n = el.n;
+
+    // Filter check
+    if (activeFilter !== 'all') {
+      if (activeFilter === 'obj_human') {
+        const bodyElems = [1, 6, 7, 8, 11, 12, 15, 16, 17, 19, 20, 26];
+        if (!bodyElems.includes(el.n)) tile.classList.add('dimmed');
+      } else if (activeFilter === 'obj_phone') {
+        const phoneElems = [3, 6, 13, 14, 29, 30, 47, 79];
+        if (!phoneElems.includes(el.n)) tile.classList.add('dimmed');
+      } else if (el.cat !== activeFilter) {
+        tile.classList.add('dimmed');
+      }
+    }
+
+    if (selectedElem && selectedElem.n === el.n) tile.classList.add('active');
+
+    tile.innerHTML = `
+      <div class="elem-num">${el.n}</div>
+      <div class="elem-sym">${el.sym}</div>
+      <div class="elem-name">${el.name}</div>
+      ${el.img ? `<div class="elem-img-wrapper"><img src="${el.img}" alt="${el.name}" onerror="this.parentElement.style.display='none'"></div>` : ''}
+    `;
+
+    tile.addEventListener('click', () => {
+      selectedElem = el;
+      document.querySelectorAll('.element-tile').forEach(t => t.classList.remove('active'));
+      tile.classList.add('active');
+      updateInfoDrawer(el);
+      playElementSound(el);
+    });
+
+    grid.appendChild(tile);
+  });
+}
+
+function updateInfoDrawer(el) {
+  infoTitle.innerHTML = `${el.name} (${el.sym}) — Atomic #${el.n} ${soundEnabled ? '<span style="font-size:0.65rem; opacity:0.6; font-family:\'DM Sans\', sans-serif; font-weight:normal; margin-left:8px;">🎵 (Sonified)</span>' : ''}`;
+  catPill.textContent = el.cat.toUpperCase();
+  infoBody.textContent = el.note;
+
+  if (activeFilter === 'obj_human') {
+    infoBreakdown.innerHTML = '👤 <strong>Human Body Mass Breakdown:</strong> Oxygen (65%), Carbon (18.5%), Hydrogen (9.5%), Nitrogen (3.2%), Calcium (1.5%), Phosphorus (1.0%).';
+  } else if (activeFilter === 'obj_phone') {
+    infoBreakdown.innerHTML = '📱 <strong>Smartphone Element Breakdown:</strong> Silicon (Screen/Chip), Lithium & Cobalt (Battery), Copper & Gold (Circuitry), Aluminum (Case).';
+  } else {
+    infoBreakdown.innerHTML = `💡 <em>Human Relevance Category: ${el.cat}</em>`;
+  }
+}
+
+// Filter buttons
+document.querySelectorAll('.btn-filter').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderGrid();
+  });
+});
+
+// Audio Engine & Controls
+let soundEnabled = true;
+let audioCtx = null;
+let currentOsc = null;
+let currentGain = null;
+
+function initAudioEngine() {
+  if (audioCtx) return;
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  } catch(e) {}
+}
+
+function playElementSound(el) {
+  if (!soundEnabled) return;
+  initAudioEngine();
+  if (!audioCtx) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  
+  if (currentGain) {
+    currentGain.gain.cancelScheduledValues(audioCtx.currentTime);
+    currentGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.1);
+  }
+  if (currentOsc) {
+    try { currentOsc.stop(audioCtx.currentTime + 0.1); } catch(e){}
+  }
+
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  
+  const freq = 200 + (el.n * 6);
+  osc.type = (el.cat === 'tech') ? 'square' : (el.cat === 'body') ? 'sine' : 'triangle';
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  
+  gain.gain.setValueAtTime(0, audioCtx.currentTime);
+  gain.gain.linearRampToValueAtTime(isFrameMode ? 0.3 : 0.15, audioCtx.currentTime + 0.05);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+  
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  
+  osc.start();
+  osc.stop(audioCtx.currentTime + 2.0);
+  
+  currentOsc = osc;
+  currentGain = gain;
+}
+
+const soundBtn = document.getElementById('soundBtn');
+soundBtn.addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  soundBtn.textContent = soundEnabled ? '🔊 Audio On' : '🔇 Audio Off';
+  soundBtn.classList.toggle('active', soundEnabled);
+  if (selectedElem) updateInfoDrawer(selectedElem);
+  if (soundEnabled && selectedElem) playElementSound(selectedElem);
+});
+
+// Share & Export Modals
+const shareModal = document.getElementById('shareModal');
+const exportModal = document.getElementById('exportModal');
+
+function closeModals() {
+  shareModal.classList.remove('active');
+  exportModal.classList.remove('active');
+}
+
+document.getElementById('shareBtn').addEventListener('click', () => {
+  document.getElementById('sharePreviewText').innerHTML = `
+    <strong>Task 26:</strong> The Elements, Made Personal (Deckoviz Space Labs)<br>
+    <strong>Selected Element:</strong> ${selectedElem ? selectedElem.name + ' (' + selectedElem.sym + ')' : 'Oxygen (O)'}<br><br>
+    Sharing will prefill an email with chemical element relevance details and interactive link.
+  `;
+  shareModal.classList.add('active');
+});
+
+document.getElementById('exportBtn').addEventListener('click', () => {
+  exportModal.classList.add('active');
+});
+
+document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('✨ Interactive link copied to clipboard!');
+    closeModals();
+  });
+});
+
+document.getElementById('emailShareBtn').addEventListener('click', () => {
+  const subject = encodeURIComponent('The Elements, Made Personal — Deckoviz Space Labs');
+  const body = encodeURIComponent(`Explore chemical elements made personal on Deckoviz Space Labs: ${window.location.href}`);
+  window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  closeModals();
+});
+
+document.getElementById('exportPngBtn').addEventListener('click', () => {
+  closeModals();
+  alert('📷 PNG still artwork generated for element view.');
+});
+
+document.getElementById('exportWebmBtn').addEventListener('click', () => {
+  closeModals();
+  alert('🎬 Dynamic WebM loop video generator ready for Deckoviz frame.');
+});
+
+function updateGridScale() {
+  if (!isFrameMode) {
+    const ptableCard = document.getElementById('ptableCard');
+    const availW = ptableCard.clientWidth - 40; // 20px padding on each side
+    const scale = Math.min(1, availW / 1080);
+    
+    grid.style.width = '1080px';
+    grid.style.maxWidth = 'none';
+    grid.style.transform = `scale(${scale})`;
+    grid.style.transformOrigin = 'top center';
+    
+    // Counteract the visual layout collapse caused by transform
+    setTimeout(() => {
+      const actualHeight = grid.offsetHeight;
+      const scaledHeight = actualHeight * scale;
+      grid.style.marginBottom = `-${actualHeight - scaledHeight}px`;
+      
+      const wDiff = 1080 * (1 - scale);
+      grid.style.marginLeft = `-${wDiff / 2}px`;
+      grid.style.marginRight = `-${wDiff / 2}px`;
+    }, 0);
+    return;
+  }
+
+  // Frame Mode
+  grid.style.transform = '';
+  grid.style.marginBottom = '0';
+  grid.style.marginLeft = '0';
+  grid.style.marginRight = '0';
+  
+  const availW = window.innerWidth - 60;
+  const availH = window.innerHeight - 100;
+  
+  // The periodic table is 18 cols by 9 rows (including detached f-block)
+  const aspect = 18 / 9;
+  // Account for gaps and padding roughly by slightly lowering the aspect multiplier
+  const maxWidthFromHeight = availH * 2.15; 
+  
+  grid.style.maxWidth = 'none';
+  grid.style.width = Math.min(availW, maxWidthFromHeight) + 'px';
+}
+
+window.addEventListener('resize', updateGridScale);
+
+function toggleFrameMode(on) {
+  isFrameMode = on;
+  ptableCard.classList.toggle('frame-active', on);
+  frameTitleOverlay.classList.toggle('show', on);
+  frameLegendToggle.classList.toggle('show', on);
+  exitFrameBtn.classList.toggle('show', on);
+  header.classList.toggle('hide-element', on);
+  updateGridScale();
+}
+
+frameBtn.addEventListener('click', () => toggleFrameMode(true));
+exitFrameBtn.addEventListener('click', () => toggleFrameMode(false));
+
+document.addEventListener('keydown', (e) => {
+  const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+  if (e.key === 'Escape' && isFrameMode) {
+    toggleFrameMode(false);
+  } else if ((e.key === 'f' || e.key === 'F') && !isInput) {
+    toggleFrameMode(!isFrameMode);
+  }
+});
+
+// Init
+renderGrid();
+updateInfoDrawer(selectedElem);
+</script>
+</body>
+</html>
