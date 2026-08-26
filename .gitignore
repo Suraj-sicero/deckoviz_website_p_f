@@ -1,89 +1,24 @@
-# Node modules
-node_modules/
-
-# Python virtual environments
-venv/
-.venv/
-
-# Python cache
-__pycache__/
-*.pyc
-
-# Build folders
-dist/
-build/
-
 # Logs
+logs
 *.log
-
-# Environment variables
-.env
-
-# Firebase service account and local DB dumps
-deckoviz_web-main/fastapi_backend/firebase-service-account.json
-deckoviz_web-main/fastapi_backend/local_firestore_db.json
-**/firebase-service-account.json
-
-# Generated jobs
-jobs/
-
-# OS files
-.DS_Store
-Thumbs.db# Dependencies
-node_modules/
-.pnp
-.pnp.js
-
-# Testing
-coverage/
-
-# Production
-dist/
-build/
-
-# Misc
-.DS_Store
-*.pem
-
-# Debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Local env files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+node_modules
+dist
+dist-ssr
+*.local
 
-# Vercel
-.vercel
-
-# VS Code
+# Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/launch.json
-
-# Junk files
-temp_nav.txt
-old_stores.txt
-deckoviz_web-main/diff.txt
-deckoviz_web-main/temp_nav.txt
-
-# Netlify
-.netlify
-
-# Database
-*.sqlite
-
-# Logs
-*.log
-
-# Uploads
-backend/public/uploads/*
-
-# Test files
-__test_*.mjs
-__*_test.mjs
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
