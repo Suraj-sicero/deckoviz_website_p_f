@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Golden Thread — Deckoviz Composition Analyzer</title>
+<meta name="description" content="Why do masterworks feel so deeply satisfying? Toggle golden ratio spirals, rule-of-thirds grids, and leading lines overlaying iconic compositions dynamically.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F0F4FF; --bg2: #E8EFFF; --navy: #1E1B4B; --navy-muted: rgba(30,27,75,0.65);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.95);
+    --glass-shadow: 0 20px 48px rgba(43,84,234,0.1), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1000px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,84,234,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  header .title { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  header .title span { font-style: italic; color: var(--brand-blue); }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); text-decoration: none; cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+  }
+  .btn-action:hover { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 700; cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 24px 80px; transition: opacity 0.4s ease; max-width: 1040px; margin: 0 auto;
+  }
+  .hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 24px; max-width: 680px; margin-top: 0; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy);
+  }
+  h1 span.accent-serif {
+    font-style: italic; font-weight: 700;
+    background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .subtitle { font-weight: 400; font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; }
+
+  .comp-selector { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; }
+  .comp-btn {
+    background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); color: var(--navy);
+    padding: 10px 20px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.25s; box-shadow: 0 4px 14px rgba(43,84,234,0.06);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .comp-btn:hover, .comp-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); box-shadow: 0 6px 20px rgba(43,84,234,0.3); transform: translateY(-1px); }
+
+  .canvas-area {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(150%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 22px; box-shadow: var(--glass-shadow); max-width: 960px; width: 100%;
+    margin-bottom: 24px; position: relative; transition: opacity 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+
+  .canvas-area.frame-active {
+    position: fixed !important; inset: 0 !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    max-width: 100vw !important; max-height: 100vh !important; width: 100vw !important; height: 100vh !important;
+    padding: 24px !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;
+    z-index: 99999 !important; background: #0b0726 !important; display: flex !important; justify-content: center !important; align-items: center !important; margin: 0 !important;
+  }
+
+  .artwork-container {
+    position: relative; width: fit-content; max-width: min(720px, 100%); margin: 0 auto; border-radius: 20px; overflow: hidden;
+    background: #0b0726; box-shadow: 0 8px 30px rgba(30,27,75,0.18); display: flex; justify-content: center; align-items: center;
+  }
+  .canvas-area.frame-active .artwork-container {
+    border-radius: 12px !important; max-width: min(90vw, 1200px) !important; max-height: 85vh !important; width: fit-content !important; height: fit-content !important;
+    display: flex !important; position: relative !important; align-items: center !important; justify-content: center !important; margin: auto !important;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.6) !important;
+  }
+  .canvas-area.frame-active .artwork-meta-badge { display: none !important; }
+
+  img#artImg {
+    display: block; width: auto; height: auto; max-width: min(720px, 100%); max-height: 65vh; object-fit: contain; margin: 0 auto;
+  }
+  .canvas-area.frame-active img#artImg {
+    max-width: min(90vw, 1200px) !important; max-height: 85vh !important; width: auto !important; height: auto !important; object-fit: contain !important; display: block !important; margin: 0 auto !important;
+  }
+
+  svg#overlaySvg {
+    position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; transition: opacity 0.3s;
+  }
+
+  .artwork-meta-badge {
+    margin-top: 14px; text-align: center; font-size: 0.82rem; font-weight: 600; color: var(--navy);
+    background: rgba(43,84,234,0.06); padding: 8px 16px; border-radius: 12px; border: 1px solid rgba(43,84,234,0.12);
+    width: 100%; max-width: min(720px, 100%);
+  }
+  .artwork-meta-badge span { color: var(--brand-blue); font-weight: 700; }
+
+  .overlay-controls { display: flex; gap: 10px; margin-top: 18px; justify-content: center; flex-wrap: wrap; align-items: center; }
+  .canvas-area.frame-active .overlay-controls { display: none !important; }
+  .overlay-btn {
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18); color: var(--navy);
+    padding: 9px 20px; border-radius: 9999px; font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all 0.25s;
+  }
+  .overlay-btn:hover, .overlay-btn.on { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-1px); box-shadow: 0 4px 14px rgba(43,84,234,0.3); }
+
+  .quiz-banner {
+    margin-top: 16px; font-size: 0.85rem; font-weight: 600; color: var(--brand-blue); text-align: center;
+    background: rgba(43,84,234,0.08); border: 1px solid rgba(43,84,234,0.2); padding: 12px 20px; border-radius: 16px; display: none;
+  }
+
+  /* FRAME MODE TITLE OVERLAY */
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); padding: 10px 18px; border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(43,30,112,0.14); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--navy, #1E1B4B);
+  }
+  .frame-legend-toggle {
+    position: fixed; bottom: 32px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(43,84,234,0.22);
+    color: var(--navy); padding: 8px 18px; border-radius: 9999px; font-size: 0.76rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(43,84,234,0.15); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 44px; right: 0; width: 260px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); border-radius: 20px; padding: 14px 16px;
+    box-shadow: 0 14px 40px rgba(43,30,112,0.2); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .frame-legend-toggle:hover .legend-popover,
+  .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--brand-blue); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--navy); margin-bottom: 6px; line-height: 1.3;
+  }
+  .legend-color { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">The Golden Thread</div>
+  <div class="frame-subtitle-text">Masterwork Composition Geometry & Dynamic Focal Point Vectors</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Geometry Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Composition Geometry</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> 🟡 <strong>Golden Spiral</strong> &nbsp;— Logarithmic Trajectory</div>
+    <div class="legend-item"><span class="legend-color" style="background:#EF4444;"></span> 🔴 <strong>Dynamic Diagonals</strong> &nbsp;— Eye Movement</div>
+    <div class="legend-item"><span class="legend-color" style="background:#2563EB;"></span> 🔵 <strong>Rule of Thirds</strong> &nbsp;— Intersections</div>
+    <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> 🟢 <strong>Harmonic Symmetry</strong> &nbsp;— Balance Lines</div>
+  </div>
+</div>
+
+
+<header id="header">
+  <div class="deckoviz-brand-mark" style="display: flex; align-items: center; gap: 8px;">
+    <img src="deckoviz-logo.png" alt="Deckoviz Logo" style="height: 30px; width: auto; object-fit: contain; display: block;">
+    <div class="title" style="font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.02rem; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+      Deckoviz <span style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue);">Space Labs</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🔊 Sound On</button>
+    <button class="btn-action" id="quizModeBtn">🎯 Test Yourself</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<div class="page" id="mainUi">
+  <div class="hero" id="heroSec">
+    <div class="eyebrow">Deckoviz · Composition Analyzer</div>
+    <h1>The Golden <span class="accent-serif">Thread</span></h1>
+    <p class="subtitle">Why do iconic masterworks feel so deeply satisfying? Dynamic mathematically precise overlays calculated directly from each painting's real aspect ratio geometry.</p>
+  </div>
+
+  <div class="comp-selector" id="compSelector"></div>
+
+  <div class="canvas-area" id="canvasArea">
+    <div class="artwork-container" id="artContainer">
+      <img id="artImg" alt="Masterwork Artwork" />
+      <svg id="overlaySvg" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="artwork-meta-badge" id="artMetaBadge">Loading masterwork...</div>
+
+    <div class="overlay-controls" id="overlayControls">
+      <button class="overlay-btn on" data-ov="thirds">Rule of Thirds</button>
+      <button class="overlay-btn" data-ov="golden">Golden Ratio Spiral</button>
+      <button class="overlay-btn" data-ov="symmetry">Symmetry Axis</button>
+      <button class="overlay-btn" data-ov="leading">Leading Lines</button>
+    </div>
+    <div class="quiz-banner" id="quizBanner">Click on the painting where you think the primary golden section focal point lies!</div>
+  </div>
+</div>
+
+<script>
+/* ---------- Foolproof Web Audio Autoplay Unlocker ---------- */
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playGoldenHarp(freq = 432) {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    [1, 1.618, 2.618].forEach((phi, i) => {
+      const osc = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      osc.type = 'sine'; osc.frequency.value = freq * phi;
+      g.gain.setValueAtTime(0.08 / (i + 1), audioCtx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 2.5);
+      osc.connect(g); g.connect(masterGain);
+      osc.start(); osc.stop(audioCtx.currentTime + 2.5);
+    });
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playGoldenHarp(432);
+});
+
+/* ---------- Public Domain Flat Museum Reproductions Dataset ---------- */
+const masterworks = [
+  {
+    name: 'Mona Lisa',
+    artist: 'Leonardo da Vinci (c. 1503, Louvre C2RMF Flat Panel Scan)',
+    orientation: 'portrait',
+    src: 'mona_lisa.png',
+    focalX: 0.618,
+    focalY: 0.382,
+    desc: 'Unframed Canvas Scan · Ratio 0.683 (1920×2811). Golden Spiral converges on Mona Lisa’s right eye & smile.'
+  },
+  {
+    name: 'The Great Wave off Kanagawa',
+    artist: 'Katsushika Hokusai (c. 1831, Met Museum Flat Woodblock Scan)',
+    orientation: 'landscape',
+    src: 'great_wave.png',
+    focalX: 0.35,
+    focalY: 0.60,
+    desc: 'Unframed Woodblock Scan · Ratio 1.461 (1920×1314). Logarithmic Golden Spiral frames Mount Fuji.'
+  },
+  {
+    name: 'Girl with a Pearl Earring',
+    artist: 'Johannes Vermeer (c. 1665, Mauritshuis Flat Canvas Scan)',
+    orientation: 'portrait',
+    src: 'pearl_earring.png',
+    focalX: 0.49,
+    focalY: 0.44,
+    desc: 'Unframed Canvas Scan · Ratio 0.844 (1920×2274). Golden Spiral terminates directly at the pearl earring.'
+  },
+  {
+    name: 'The Starry Night',
+    artist: 'Vincent van Gogh (1889, MoMA / Google Art Canvas Scan)',
+    orientation: 'landscape',
+    src: 'starry_night.png',
+    focalX: 0.72,
+    focalY: 0.35,
+    desc: 'Unframed Canvas Scan · Ratio 1.263 (1920×1520). Left third anchors cypress tree; spiral coils into the crescent moon.'
+  }
+];
+
+let activeWork = 0;
+let activeOverlays = { thirds: true, golden: false, symmetry: false, leading: false };
+let quizMode = false;
+let frameMode = false;
+
+const artImg = document.getElementById('artImg');
+const overlaySvg = document.getElementById('overlaySvg');
+const artMetaBadge = document.getElementById('artMetaBadge');
+
+/* ---------- Deckoviz Floating Particle Background ---------- */
+const bgCanvas = document.getElementById('bgCanvas');
+const bgCtx = bgCanvas.getContext('2d');
+let bgParticles = [];
+
+function initBgParticles() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  bgCanvas.width = window.innerWidth * dpr;
+  bgCanvas.height = window.innerHeight * dpr;
+  bgCanvas.style.width = window.innerWidth + 'px';
+  bgCanvas.style.height = window.innerHeight + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const num = Math.floor((window.innerWidth * window.innerHeight) / 7000);
+  const colors = ['rgba(6,182,212,', 'rgba(43,84,234,', 'rgba(139,92,246,', 'rgba(236,72,153,'];
+  bgParticles = Array.from({ length: num }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 2.2 + 0.6,
+    speedY: (Math.random() - 0.5) * 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    alpha: Math.random() * 0.5 + 0.15,
+    phase: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawBgParticles(t) {
+  bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  bgParticles.forEach(p => {
+    p.x += p.speedX; p.y += p.speedY;
+    if (p.x < 0) p.x = window.innerWidth;
+    if (p.x > window.innerWidth) p.x = 0;
+    if (p.y < 0) p.y = window.innerHeight;
+    if (p.y > window.innerHeight) p.y = 0;
+
+    const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(t * 0.0015 + p.phase));
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    bgCtx.fillStyle = p.color + currentAlpha + ')';
+    bgCtx.fill();
+  });
+  requestAnimationFrame(drawBgParticles);
+}
+
+/* ---------- Mathematically Exact Overlay Generator ---------- */
+function generateGoldenSpiralPath(W, H, focalXRatio, focalYRatio, orientation) {
+  const fx = W * focalXRatio;
+  const fy = H * focalYRatio;
+  const maxR = Math.max(W, H) * 0.95;
+  const b = 0.3063489; // ln(phi) / (pi / 2)
+  const points = [];
+  const steps = 160;
+
+  let startAngle = 0;
+  if (orientation === 'portrait') {
+    startAngle = focalXRatio > 0.5 ? -Math.PI / 2 : Math.PI / 2;
+  } else {
+    startAngle = focalYRatio > 0.5 ? Math.PI : 0;
+  }
+  const endAngle = startAngle + 3.9 * Math.PI;
+
+  for (let i = 0; i <= steps; i++) {
+    const t = startAngle + (endAngle - startAngle) * (i / steps);
+    const r = maxR * Math.exp(-b * (t - startAngle));
+    const x = fx + r * Math.cos(t);
+    const y = fy + r * Math.sin(t);
+    points.push(`${i === 0 ? 'M' : 'L'} ${x.toFixed(1)} ${y.toFixed(1)}`);
+  }
+  return { pathString: points.join(' '), fx, fy };
+}
+
+function renderOverlays() {
+  const m = masterworks[activeWork];
+  const W = artImg.naturalWidth || 800;
+  const H = artImg.naturalHeight || 600;
+
+  // Set SVG viewBox to EXACT pixel dimensions of the loaded image
+  overlaySvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+  let svg = '';
+
+  // 1. Rule of Thirds Grid (Lines at W/3, 2W/3, H/3, 2H/3)
+  if (activeOverlays.thirds) {
+    const strokeW = Math.max(W, H) * 0.0035;
+    const r = Math.max(W, H) * 0.016;
+
+    svg += `<line x1="${W/3}" y1="0" x2="${W/3}" y2="${H}" stroke="#E94BFF" stroke-width="${strokeW}" stroke-dasharray="${strokeW*3.5} ${strokeW*2.5}"/>`;
+    svg += `<line x1="${W*2/3}" y1="0" x2="${W*2/3}" y2="${H}" stroke="#E94BFF" stroke-width="${strokeW}" stroke-dasharray="${strokeW*3.5} ${strokeW*2.5}"/>`;
+    svg += `<line x1="0" y1="${H/3}" x2="${W}" y2="${H/3}" stroke="#E94BFF" stroke-width="${strokeW}" stroke-dasharray="${strokeW*3.5} ${strokeW*2.5}"/>`;
+    svg += `<line x1="0" y1="${H*2/3}" x2="${W}" y2="${H*2/3}" stroke="#E94BFF" stroke-width="${strokeW}" stroke-dasharray="${strokeW*3.5} ${strokeW*2.5}"/>`;
+
+    // 4 Intersections Circles
+    [[W/3, H/3], [W*2/3, H/3], [W/3, H*2/3], [W*2/3, H*2/3]].forEach(([cx, cy]) => {
+      svg += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#E94BFF" stroke-width="${strokeW*1.2}"/>`;
+      svg += `<circle cx="${cx}" cy="${cy}" r="${r*0.3}" fill="#E94BFF"/>`;
+    });
+  }
+
+  // 2. Logarithmic Golden Ratio Spiral
+  if (activeOverlays.golden) {
+    const strokeW = Math.max(W, H) * 0.0045;
+    const spiral = generateGoldenSpiralPath(W, H, m.focalX, m.focalY, m.orientation);
+    
+    svg += `<path d="${spiral.pathString}" fill="none" stroke="#FFD700" stroke-width="${strokeW}" stroke-linecap="round"/>`;
+    svg += `<circle cx="${spiral.fx}" cy="${spiral.fy}" r="${strokeW*2.5}" fill="#FFD700"/>`;
+    svg += `<circle cx="${spiral.fx}" cy="${spiral.fy}" r="${strokeW*5}" fill="none" stroke="#FFD700" stroke-width="${strokeW*0.6}" stroke-dasharray="4 4"/>`;
+  }
+
+  // 3. Symmetry Axis (Centered at W/2 and H/2)
+  if (activeOverlays.symmetry) {
+    const strokeW = Math.max(W, H) * 0.0035;
+    svg += `<line x1="${W/2}" y1="0" x2="${W/2}" y2="${H}" stroke="#6BFFB8" stroke-width="${strokeW}" stroke-dasharray="${strokeW*4} ${strokeW*2.5}"/>`;
+    svg += `<line x1="0" y1="${H/2}" x2="${W}" y2="${H/2}" stroke="#6BFFB8" stroke-width="${strokeW}" stroke-dasharray="${strokeW*4} ${strokeW*2.5}"/>`;
+    svg += `<line x1="0" y1="0" x2="${W}" y2="${H}" stroke="rgba(107,255,184,0.4)" stroke-width="${strokeW*0.8}"/>`;
+    svg += `<line x1="${W}" y1="0" x2="0" y2="${H}" stroke="rgba(107,255,184,0.4)" stroke-width="${strokeW*0.8}"/>`;
+  }
+
+  // 4. Leading Lines (Corner Rays to Focal Section)
+  if (activeOverlays.leading) {
+    const strokeW = Math.max(W, H) * 0.004;
+    const fx = W * m.focalX;
+    const fy = H * m.focalY;
+
+    svg += `<line x1="0" y1="0" x2="${fx}" y2="${fy}" stroke="#9ACBFF" stroke-width="${strokeW}"/>`;
+    svg += `<line x1="${W}" y1="0" x2="${fx}" y2="${fy}" stroke="#9ACBFF" stroke-width="${strokeW}"/>`;
+    svg += `<line x1="0" y1="${H}" x2="${fx}" y2="${fy}" stroke="#9ACBFF" stroke-width="${strokeW}"/>`;
+    svg += `<line x1="${W}" y1="${H}" x2="${fx}" y2="${fy}" stroke="#9ACBFF" stroke-width="${strokeW}"/>`;
+    svg += `<circle cx="${fx}" cy="${fy}" r="${strokeW*2}" fill="#9ACBFF"/>`;
+  }
+
+  overlaySvg.innerHTML = svg;
+}
+
+function loadArtwork(idx) {
+  activeWork = idx;
+  const m = masterworks[idx];
+  
+  artMetaBadge.innerHTML = `<strong>${m.name}</strong> by ${m.artist} · <span>${m.desc}</span>`;
+  
+  artImg.src = m.src;
+  artImg.alt = m.name;
+
+  if (artImg.complete && artImg.naturalWidth) {
+    renderOverlays();
+  } else {
+    artImg.onload = renderOverlays;
+  }
+}
+
+// Build Selector Buttons
+const selector = document.getElementById('compSelector');
+masterworks.forEach((m, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'comp-btn' + (i === 0 ? ' active' : '');
+  btn.innerHTML = `${m.orientation === 'portrait' ? '🖼️' : '🏞️'} ${m.name}`;
+  btn.addEventListener('click', () => {
+    playGoldenHarp(400 + i * 80);
+    document.querySelectorAll('.comp-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
+    loadArtwork(i);
+  });
+  selector.appendChild(btn);
+});
+
+document.querySelectorAll('.overlay-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    playGoldenHarp(528);
+    const ov = btn.dataset.ov;
+    const isCurrentlyOn = activeOverlays[ov];
+    // Single active overlay mode: turn off others
+    Object.keys(activeOverlays).forEach(k => activeOverlays[k] = false);
+    if (!isCurrentlyOn) {
+      activeOverlays[ov] = true;
+    }
+    document.querySelectorAll('.overlay-btn').forEach(b => {
+      b.classList.toggle('on', !!activeOverlays[b.dataset.ov]);
+    });
+    renderOverlays();
+  });
+});
+
+document.getElementById('quizModeBtn').addEventListener('click', () => {
+  quizMode = !quizMode;
+  document.getElementById('quizBanner').style.display = quizMode ? 'block' : 'none';
+  if (quizMode) {
+    activeOverlays = { thirds: false, golden: false, symmetry: false, leading: false };
+    document.querySelectorAll('.overlay-btn').forEach(b => b.classList.remove('on'));
+    renderOverlays();
+  }
+});
+
+function toggleFrameMode(){
+  frameMode = !frameMode;
+  if (document.getElementById('frameTitleOverlay')) document.getElementById('frameTitleOverlay').classList.toggle('show', frameMode);
+  if (document.getElementById('frameLegendToggle')) document.getElementById('frameLegendToggle').classList.toggle('show', frameMode);
+  document.body.classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('mainUi').classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('header').classList.toggle('hide-element', frameMode);
+  document.getElementById('heroSec').classList.toggle('hide-element', frameMode);
+  document.getElementById('compSelector').classList.toggle('hide-element', frameMode);
+
+  document.getElementById('canvasArea').classList.toggle('frame-active', frameMode);
+  document.getElementById('exitFrameBtn').classList.toggle('show', frameMode);
+
+  renderOverlays();
+  if (frameMode) playGoldenHarp(660);
+}
+
+document.getElementById('frameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('exitFrameBtn').addEventListener('click', toggleFrameMode);
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'f' || e.key === 'F') toggleFrameMode();
+  if (e.key === 'Escape' && frameMode) toggleFrameMode();
+  if (e.key === 'ArrowRight') {
+    const nextIdx = (activeWork + 1) % masterworks.length;
+    document.querySelectorAll('.comp-btn').forEach((b, idx) => b.classList.toggle('active', idx === nextIdx));
+    loadArtwork(nextIdx);
+  }
+  if (e.key === 'ArrowLeft') {
+    const prevIdx = (activeWork - 1 + masterworks.length) % masterworks.length;
+    document.querySelectorAll('.comp-btn').forEach((b, idx) => b.classList.toggle('active', idx === prevIdx));
+    loadArtwork(prevIdx);
+  }
+});
+
+window.addEventListener('resize', () => {
+  initBgParticles();
+  renderOverlays();
+});
+
+initBgParticles();
+requestAnimationFrame(drawBgParticles);
+loadArtwork(0);
+</script>
+</body>
+</html>

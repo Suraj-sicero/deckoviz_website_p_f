@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Shifting Canvas — Deckoviz</title>
+<meta name="description" content="Walk through eight eras of art history, from Renaissance to AI. Watch how the dominant palette, technique, and philosophy shifted with each movement.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.65);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,30,112,0.12), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1000px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,30,112,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  header .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  header .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); text-decoration: none; cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+  }
+  .btn-action:hover { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 700; cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .frame-art-bar {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 100000;
+    display: flex; gap: 8px; background: rgba(255,255,255,0.92); border: 1px solid var(--glass-border);
+    padding: 8px 16px; border-radius: 9999px; backdrop-filter: blur(20px); box-shadow: 0 12px 36px rgba(43,84,234,0.15);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; max-width: 92vw; overflow-x: auto;
+  }
+  .frame-art-bar.show { opacity: 1; pointer-events: auto; }
+  .art-pattern-btn {
+    background: rgba(240,244,255,0.8); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 6px 14px; border-radius: 9999px; font-size: 0.72rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.22s ease; display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  }
+  .art-pattern-btn:hover, .art-pattern-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(43,84,234,0.35); }
+
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  body.frame-mode-active {
+    background: #0F172A !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+  body.frame-mode-active canvas#bgCanvas {
+    display: none !important;
+  }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 24px 80px; transition: opacity 0.4s ease; max-width: 1040px; margin: 0 auto;
+    animation: pageFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .page.frame-mode-active, body.frame-mode-active .page {
+    animation: none !important; transform: none !important; filter: none !important; backdrop-filter: none !important;
+    max-width: none !important; width: 100vw !important; height: 100vh !important; padding: 0 !important; margin: 0 !important;
+    position: static !important;
+  }
+  .hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 24px; max-width: 680px; margin-top: 0; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy);
+  }
+  h1 span.accent-serif {
+    font-style: italic; font-weight: 700;
+    background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .subtitle { font-weight: 400; font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; }
+
+  /* MAIN ARTWORK DISPLAY PANEL (TASK 6 SIZES & CONTAINMENT) */
+  .canvas-panel {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(150%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 22px; box-shadow: var(--glass-shadow); max-width: 960px; width: 100%;
+    margin-bottom: 28px; position: relative; transition: opacity 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; z-index: 2;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .canvas-panel.frame-active {
+    position: fixed !important; inset: 0 !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    width: 100vw !important; height: 100vh !important; max-width: 100vw !important; max-height: 100vh !important;
+    padding: 24px !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;
+    z-index: 99999 !important; background: #0F172A !important; display: flex !important; justify-content: center !important; align-items: center !important; margin: 0 !important;
+  }
+  .canvas-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; width: 100%; max-width: min(720px, 100%);
+  }
+  .canvas-era-tag {
+    font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.15rem; color: var(--navy);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .canvas-era-tag span { font-family: 'DM Sans', sans-serif; font-size: 0.76rem; font-weight: 600; color: var(--brand-blue); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  .artwork-container {
+    position: relative; width: fit-content; max-width: min(720px, 100%); margin: 0 auto; border-radius: 20px; overflow: hidden;
+    background: #0b0726; box-shadow: 0 8px 30px rgba(30,27,75,0.18); display: flex; justify-content: center; align-items: center;
+  }
+  .canvas-panel.frame-active .artwork-container {
+    border-radius: 12px !important; max-width: min(90vw, 1200px) !important; max-height: 85vh !important; width: fit-content !important; height: fit-content !important;
+    display: flex !important; position: relative !important; align-items: center !important; justify-content: center !important; margin: auto !important;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.6) !important;
+  }
+
+  img#eraArtImg {
+    display: block; width: auto; height: auto; max-width: min(720px, 100%); max-height: 55vh; object-fit: contain; margin: 0 auto;
+  }
+  .canvas-panel.frame-active img#eraArtImg {
+    max-width: min(90vw, 1200px) !important; max-height: 85vh !important; width: auto !important; height: auto !important; object-fit: contain !important; display: block !important; margin: 0 auto !important;
+  }
+
+  /* HORIZONTAL ERA TIMELINE TRACK */
+  .timeline-track { width: 100%; max-width: 960px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 24px; }
+  .timeline { display: flex; gap: 14px; min-width: max-content; padding: 4px 2px; }
+
+  .era-card {
+    width: 220px; flex-shrink: 0; background: var(--glass); backdrop-filter: blur(28px);
+    border: 1px solid var(--glass-border); border-radius: 22px; padding: 14px; cursor: pointer;
+    box-shadow: var(--glass-shadow); transition: all 0.28s ease; display: flex; flex-direction: column; gap: 8px;
+  }
+  .era-card:hover { transform: translateY(-4px); box-shadow: 0 14px 36px rgba(43,30,112,0.15); border-color: var(--brand-blue); }
+  .era-card.active { border-color: var(--brand-blue); background: #ffffff; box-shadow: 0 16px 40px rgba(43,84,234,0.22); transform: translateY(-4px); }
+
+  .era-thumb-wrap {
+    width: 100%; height: 110px; border-radius: 14px; overflow: hidden; position: relative; background: #000;
+  }
+  .era-thumb {
+    width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;
+  }
+  .era-card:hover .era-thumb { transform: scale(1.08); }
+
+  .era-years { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand-blue); }
+  .era-name { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  .era-palette { display: flex; gap: 4px; height: 10px; border-radius: 6px; overflow: hidden; margin: 2px 0; }
+  .paint-stroke { height: 100%; flex: 1; }
+  .era-brief { font-size: 0.78rem; line-height: 1.45; color: var(--navy-muted); font-weight: 400; }
+
+  /* ERA DETAIL DESCRIPTION PANEL */
+  .detail-panel {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 24px 28px; max-width: 960px; width: 100%;
+    box-shadow: var(--glass-shadow); transition: all 0.3s ease;
+  }
+  .detail-era-name { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.35rem; color: var(--navy); margin-bottom: 8px; }
+  .detail-text { font-size: 0.88rem; line-height: 1.65; color: var(--navy-muted); font-weight: 400; }
+
+  /* FRAME MODE TITLE OVERLAY */
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); padding: 10px 18px; border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(43,30,112,0.14); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--navy, #1E1B4B);
+  }
+  .frame-legend-toggle {
+    position: fixed; bottom: 32px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(43,84,234,0.22);
+    color: var(--navy); padding: 8px 18px; border-radius: 9999px; font-size: 0.76rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(43,84,234,0.15); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 44px; right: 0; width: 260px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); border-radius: 20px; padding: 14px 16px;
+    box-shadow: 0 14px 40px rgba(43,30,112,0.2); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .frame-legend-toggle:hover .legend-popover,
+  .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--brand-blue); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--navy); margin-bottom: 6px; line-height: 1.3;
+  }
+  .legend-color { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">The Shifting Canvas</div>
+  <div class="frame-subtitle-text">Art History Color Palette Morphing Across Eras (1300–2026)</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Art Eras Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Art Eras & Styles</div>
+    <div class="legend-item"><span class="legend-color" style="background:#B45309;"></span> 🎨 <strong>Renaissance</strong> (1400–1600) — Earth Tones</div>
+    <div class="legend-item"><span class="legend-color" style="background:#06B6D4;"></span> 🖌️ <strong>Impressionism</strong> (1860s) — Light Pastels</div>
+    <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> 🟩 <strong>Cubism</strong> (1907–1930) — Geometrics</div>
+    <div class="legend-item"><span class="legend-color" style="background:#EC4899;"></span> 💥 <strong>Pop Art</strong> (1950s) — Saturated Primaries</div>
+    <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> 🤖 <strong>Generative AI</strong> (2020s) — Neon Spectrum</div>
+  </div>
+</div>
+
+
+<header id="header">
+  <div class="deckoviz-brand-mark" style="display: flex; align-items: center; gap: 8px;">
+    <img src="deckoviz-logo.png" alt="Deckoviz Logo" style="height: 30px; width: auto; object-fit: contain; display: block;">
+    <div class="title" style="font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.02rem; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+      Deckoviz <span style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue);">Space Labs</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🎨 Tone: On</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<div class="frame-art-bar" id="frameArtBar"></div>
+
+<div class="page" id="mainUi">
+  <div class="hero" id="heroSec">
+    <div class="eyebrow">Deckoviz Art Gallery</div>
+    <h1>The Shifting <span class="accent-serif">Canvas</span></h1>
+    <p class="subtitle">Eight iconic eras of art history. Select an movement to watch generative canvas algorithms shift style, geometry, and color palettes in real time.</p>
+  </div>
+
+  <!-- MAIN GENERATIVE CANVAS CONTAINER -->
+  <div class="canvas-panel" id="canvasPanel">
+    <div class="canvas-header" id="canvasHeader">
+      <div class="canvas-era-tag" id="canvasEraTag">Renaissance <span>1400–1600</span></div>
+      <button class="btn-action" id="expandArtBtn">✨ Fullscreen Art</button>
+    </div>
+    <div class="artwork-container" id="artContainer">
+      <img id="eraArtImg" alt="Era Masterwork Reproduction" />
+    </div>
+  </div>
+
+  <!-- HORIZONTAL ERA SELECTOR TIMELINE -->
+  <div class="timeline-track" id="timelineTrack">
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <!-- ERA DETAIL PANEL -->
+  <div class="detail-panel" id="detailPanel"></div>
+</div>
+
+<script>
+/* ---------- Deckoviz Floating Particle Background ---------- */
+const bgCanvas = document.getElementById('bgCanvas');
+const bgCtx = bgCanvas.getContext('2d');
+let bgParticles = [];
+
+function initBgParticles() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  bgCanvas.width = window.innerWidth * dpr;
+  bgCanvas.height = window.innerHeight * dpr;
+  bgCanvas.style.width = window.innerWidth + 'px';
+  bgCanvas.style.height = window.innerHeight + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const num = Math.floor((window.innerWidth * window.innerHeight) / 7000);
+  const colors = ['rgba(6,182,212,', 'rgba(43,84,234,', 'rgba(139,92,246,', 'rgba(236,72,153,'];
+  bgParticles = Array.from({ length: num }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 2.2 + 0.6,
+    speedY: (Math.random() - 0.5) * 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    alpha: Math.random() * 0.5 + 0.15,
+    phase: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawBgParticles(t) {
+  bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  bgParticles.forEach(p => {
+    p.x += p.speedX; p.y += p.speedY;
+    if (p.x < 0) p.x = window.innerWidth;
+    if (p.x > window.innerWidth) p.x = 0;
+    if (p.y < 0) p.y = window.innerHeight;
+    if (p.y > window.innerHeight) p.y = 0;
+
+    const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(t * 0.0015 + p.phase));
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    bgCtx.fillStyle = p.color + currentAlpha + ')';
+    bgCtx.fill();
+  });
+}
+
+/* ---------- Web Audio Controller ---------- */
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playTone(freq = 440, type = 'sine') {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = type; osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 2.5);
+    osc.connect(g); g.connect(masterGain);
+    osc.start(); osc.stop(audioCtx.currentTime + 2.5);
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🎨 Tone: On' : '🔇 Sound Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playTone(528);
+});
+
+/* ---------- 8 REAL ART ERAS DEFINITION & REPRODUCTIONS ---------- */
+const eras = [
+  { name: 'Renaissance', years: '1400–1600', img: 'mona_lisa.png', palette: ['#8B4513','#DAA520','#2F4F4F','#800020','#F5F5DC'], brief: 'Mona Lisa · Sfumato & golden ratios.', detail: 'Linear perspective, golden proportion, and soft sfumato shading turned flat wooden panels into infinite 3D horizons.', tone: 440, wave: 'sine' },
+  { name: 'Baroque', years: '1600–1750', img: 'pearl_earring.png', palette: ['#1A0A00','#CD853F','#8B0000','#F5DEB3','#2E1503'], brief: 'Girl with a Pearl Earring · Chiaroscuro.', detail: 'Tenebrism brought extreme theatrical darks and piercing directional spotlighting into oil canvas compositions.', tone: 330, wave: 'triangle' },
+  { name: 'Romanticism', years: '1780–1850', img: 'great_wave.png', palette: ['#4682B4','#8FBC8F','#D2691E','#FFE4B5','#483D8B'], brief: 'The Great Wave · Sublime emotion.', detail: 'Landscapes became sweeping portraits of human awe, turbulent seas, and untamed natural mystery.', tone: 392, wave: 'sine' },
+  { name: 'Impressionism', years: '1860–1890', img: 'starry_night.png', palette: ['#87CEEB','#FFB6C1','#98FB98','#FFDAB9','#E6E6FA'], brief: 'The Starry Night · Outdoor light.', detail: 'Artists abandoned indoor studios to capture fleeting sunlight using broken unmixed color brushstrokes.', tone: 523, wave: 'sine' },
+  { name: 'Cubism', years: '1907–1930', img: 'cubism_art.png', palette: ['#8B8378','#A0522D','#696969','#2F4F4F','#D2B48C'], brief: 'Fragmented geometric 3D facets.', detail: 'Shattered traditional perspective into multi-angled geometric planes rendered simultaneously.', tone: 587, wave: 'square' },
+  { name: 'Abstract Exp.', years: '1940–1960', img: 'abstract_exp_art.png', palette: ['#1C1C1C','#DC143C','#FFD700','#4169E1','#F5F5F5'], brief: 'Action drip splatters & kinetic energy.', detail: 'The physical kinetic act of dripping, pouring, and splashing paint became the emotional subject matter.', tone: 659, wave: 'sawtooth' },
+  { name: 'Pop Art', years: '1955–1975', img: 'pop_art.png', palette: ['#FF0000','#FFFF00','#0000FF','#FF69B4','#00FF00'], brief: 'Ben-Day dots & silkscreen grids.', detail: 'Commercial consumer culture, comic book dots, and neon silkscreen prints were elevated into fine gallery art.', tone: 698, wave: 'square' },
+  { name: 'Generative AI', years: '2020–Present', img: 'generative_ai_art.png', palette: ['#7B2FF7','#00D4FF','#FF3CAC','#0D0D0D','#E0E0E0'], brief: 'Neural flow fields & cyber glass.', detail: 'Algorithmic vector fields and neural diffusion shaders redefine creative human-machine collaboration.', tone: 880, wave: 'sine' },
+];
+
+let activeEra = 0;
+let frameMode = false;
+const eraArtImg = document.getElementById('eraArtImg');
+
+function renderLoop(t) {
+  drawBgParticles(t);
+  requestAnimationFrame(renderLoop);
+}
+
+function selectEra(index) {
+  activeEra = index;
+  const era = eras[index];
+  playTone(era.tone, era.wave);
+
+  // Set real artwork image
+  eraArtImg.src = era.img;
+  eraArtImg.alt = era.name;
+
+  // Update Canvas Tag Header
+  document.getElementById('canvasEraTag').innerHTML = `${era.name} <span>${era.years}</span>`;
+
+  // Update Active Card Highlight
+  document.querySelectorAll('.era-card').forEach((c, idx) => c.classList.toggle('active', idx === index));
+  document.querySelectorAll('.art-pattern-btn').forEach((b, idx) => b.classList.toggle('active', idx === index));
+
+  // Update Detail Panel
+  const detailPanel = document.getElementById('detailPanel');
+  detailPanel.innerHTML = `
+    <div class="detail-era-name">${era.name} (${era.years})</div>
+    <div class="detail-text">${era.detail}</div>
+  `;
+}
+
+// Build Timeline Cards
+const timeline = document.getElementById('timeline');
+const frameArtBar = document.getElementById('frameArtBar');
+
+eras.forEach((era, i) => {
+  const card = document.createElement('div');
+  card.className = 'era-card' + (i === 0 ? ' active' : '');
+  card.innerHTML = `
+    <div class="era-thumb-wrap">
+      <img class="era-thumb" src="${era.img}" alt="${era.name}">
+    </div>
+    <div class="era-years">${era.years}</div>
+    <div class="era-name">${era.name}</div>
+    <div class="era-palette">${era.palette.map(c=>`<div class="paint-stroke" style="background:${c}"></div>`).join('')}</div>
+    <div class="era-brief">${era.brief}</div>
+  `;
+  card.addEventListener('click', () => selectEra(i));
+  timeline.appendChild(card);
+
+  const frameBtn = document.createElement('button');
+  frameBtn.className = 'art-pattern-btn' + (i === 0 ? ' active' : '');
+  frameBtn.textContent = era.name;
+  frameBtn.addEventListener('click', () => selectEra(i));
+  frameArtBar.appendChild(frameBtn);
+});
+
+selectEra(0);
+
+function toggleFrameMode(){
+  frameMode = !frameMode;
+  document.body.classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('mainUi').classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('header').classList.toggle('hide-element', frameMode);
+  document.getElementById('heroSec').classList.toggle('hide-element', frameMode);
+  document.getElementById('canvasHeader').classList.toggle('hide-element', frameMode);
+  document.getElementById('timelineTrack').classList.toggle('hide-element', frameMode);
+  document.getElementById('detailPanel').classList.toggle('hide-element', frameMode);
+
+  document.getElementById('canvasPanel').classList.toggle('frame-active', frameMode);
+  document.getElementById('exitFrameBtn').classList.toggle('show', frameMode);
+  document.getElementById('frameArtBar').classList.toggle('show', frameMode);
+  if (document.getElementById('frameTitleOverlay')) document.getElementById('frameTitleOverlay').classList.toggle('show', frameMode);
+  if (document.getElementById('frameLegendToggle')) document.getElementById('frameLegendToggle').classList.toggle('show', frameMode);
+
+  if (frameMode) playTone(880, 'sine');
+}
+
+if (document.getElementById('legendToggleBtn')) {
+  document.getElementById('legendToggleBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const pop = document.getElementById('legendPopover');
+    if (pop) pop.classList.toggle('open');
+  });
+}
+document.addEventListener('click', () => {
+  const pop = document.getElementById('legendPopover');
+  if (pop) pop.classList.remove('open');
+});
+
+document.getElementById('frameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('expandArtBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('exitFrameBtn').addEventListener('click', toggleFrameMode);
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'f' || e.key === 'F') toggleFrameMode();
+  if (e.key === 'Escape' && frameMode) toggleFrameMode();
+});
+
+requestAnimationFrame(renderLoop);
+</script>
+</body>
+</html>
