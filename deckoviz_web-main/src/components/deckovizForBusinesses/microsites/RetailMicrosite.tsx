@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,12 +32,12 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
         <div className="absolute top-40 right-20 w-48 h-48 rounded-full bg-yellow-400/12 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
         <div className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-orange-300/15 blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
         
-        <div className="absolute top-20 left-10 text-4xl opacity-15 animate-float-slow">🛍️</div>
-        <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">�-</div>
-        <div className="absolute top-60 left-1/4 text-3xl opacity-15 animate-float-medium">👔</div>
-        <div className="absolute top-1/3 right-1/3 text-4xl opacity-10 animate-float-slow delay-1000">👠</div>
-        <div className="absolute bottom-1/3 right-10 text-4xl opacity-10 animate-float-medium delay-1500">💼</div>
-        <div className="absolute bottom-40 left-1/4 text-3xl opacity-15 animate-float-slow delay-500">✨</div>
+        <div className="absolute top-20 left-10 text-4xl opacity-15 animate-float-slow">ðŸ›ï¸</div>
+        <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">ðŸ‘-</div>
+        <div className="absolute top-60 left-1/4 text-3xl opacity-15 animate-float-medium">ðŸ‘”</div>
+        <div className="absolute top-1/3 right-1/3 text-4xl opacity-10 animate-float-slow delay-1000">ðŸ‘ </div>
+        <div className="absolute bottom-1/3 right-10 text-4xl opacity-10 animate-float-medium delay-1500">ðŸ’¼</div>
+        <div className="absolute bottom-40 left-1/4 text-3xl opacity-15 animate-float-slow delay-500">âœ¨</div>
       </div>
 
       <style dangerouslySetInnerHTML={{
@@ -73,7 +73,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
         <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
           <div className="mb-8">
             <span className="inline-block px-4 py-2 bg-gradient-to-r from-orange-900/80 to-yellow-900/80 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/20">
-              🛍️ RETAIL & FLAGSHIP STORES 🛍️
+              ðŸ›ï¸ RETAIL & FLAGSHIP STORES ðŸ›ï¸
             </span>
           </div>
 
@@ -96,7 +96,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
               onClick={handleScheduleDemo}
               className="px-8 py-4 bg-gradient-to-r from-orange-500 to-yellow-500 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105"
             >
-              ✨ Schedule a Demo →
+              âœ¨ Schedule a Demo â†’
             </button>
           </div>
         </div>
@@ -114,7 +114,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-orange-900/20 to-yellow-900/20 backdrop-blur-sm rounded-3xl p-8 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-yellow-500 flex items-center justify-center text-3xl mb-6">
-                  🪟
+                  ðŸªŸ
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Dynamic Storefront Storytelling</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -125,7 +125,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-yellow-900/20 to-orange-900/20 backdrop-blur-sm rounded-3xl p-8 border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center text-3xl mb-6">
-                  �-
+                  ðŸ‘-
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Living Lookbooks</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -136,7 +136,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-orange-900/20 to-red-900/20 backdrop-blur-sm rounded-3xl p-8 border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-red-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-3xl mb-6">
-                  🎨
+                  ðŸŽ¨
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Instant Campaign Deployment</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -147,7 +147,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-yellow-900/20 to-amber-900/20 backdrop-blur-sm rounded-3xl p-8 border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-amber-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-yellow-500 to-amber-500 flex items-center justify-center text-3xl mb-6">
-                  📱
+                  ðŸ“±
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">In-Store to Social Bridge</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -169,19 +169,19 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-gradient-to-br from-orange-900/30 to-orange-950 rounded-3xl p-8 text-center border border-orange-500/20 hover:border-orange-500/40 transition-all duration-300 hover:scale-105">
-                <div className="text-6xl mb-4">📈</div>
+                <div className="text-6xl mb-4">ðŸ“ˆ</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Higher Conversion</h3>
                 <p className="text-gray-400">Lifestyle context triggers purchase confidence</p>
               </div>
 
               <div className="bg-gradient-to-br from-yellow-900/30 to-orange-950 rounded-3xl p-8 text-center border border-yellow-500/20 hover:border-yellow-500/40 transition-all duration-300 hover:scale-105">
-                <div className="text-6xl mb-4">⏱️</div>
+                <div className="text-6xl mb-4">â±ï¸</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Increased Dwell Time</h3>
                 <p className="text-gray-400">Longer stays correlate with higher revenue</p>
               </div>
 
               <div className="bg-gradient-to-br from-amber-900/30 to-orange-950 rounded-3xl p-8 text-center border border-amber-500/20 hover:border-amber-500/40 transition-all duration-300 hover:scale-105">
-                <div className="text-6xl mb-4">💎</div>
+                <div className="text-6xl mb-4">ðŸ’Ž</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Premium Perception</h3>
                 <p className="text-gray-400">Tech-forward positioning justifies premium pricing</p>
               </div>
@@ -192,7 +192,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
         <div className="py-20 px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="bg-gradient-to-br from-orange-900/40 to-yellow-900/40 backdrop-blur-sm rounded-3xl p-12 border border-orange-500/30">
-              <div className="text-4xl mb-6">✨</div>
+              <div className="text-4xl mb-6">âœ¨</div>
               <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] text-white mb-6">
                 Ready to Redefine Your Retail Space?
               </h2>
@@ -203,7 +203,7 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
                 onClick={handleGetStarted}
                 className="px-10 py-5 bg-gradient-to-r from-orange-500 to-yellow-500 text-white text-lg rounded-full font-semibold hover:shadow-2xl hover:shadow-orange-500/50 transition-all duration-300 hover:scale-105"
               >
-                ✨ Get Started Today →
+                âœ¨ Get Started Today â†’
               </button>
             </div>
           </div>
@@ -214,3 +214,4 @@ const RetailMicrosite: React.FC<RetailMicrositeProps> = ({ onClose }) => {
 };
 
 export default RetailMicrosite;
+

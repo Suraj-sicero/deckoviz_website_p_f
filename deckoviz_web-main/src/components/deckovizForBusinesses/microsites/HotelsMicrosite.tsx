@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,13 +37,13 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
         <div className="absolute bottom-1/3 right-1/4 w-40 h-40 rounded-full bg-cyan-300/15 blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
         
         {/* Floating hotel/luxury emojis */}
-        <div className="absolute top-20 left-10 text-4xl opacity-15 animate-float-slow">🏨</div>
-        <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">✨</div>
-        <div className="absolute top-60 left-1/4 text-3xl opacity-15 animate-float-medium">🛎️</div>
-        <div className="absolute top-1/3 right-1/3 text-4xl opacity-10 animate-float-slow delay-1000">🌟</div>
-        <div className="absolute top-1/2 left-10 text-3xl opacity-15 animate-float-slower delay-2000">�-�️</div>
-        <div className="absolute bottom-1/3 right-10 text-4xl opacity-10 animate-float-medium delay-1500">💎</div>
-        <div className="absolute bottom-40 left-1/4 text-3xl opacity-15 animate-float-slow delay-500">🏛️</div>
+        <div className="absolute top-20 left-10 text-4xl opacity-15 animate-float-slow">ðŸ¨</div>
+        <div className="absolute top-40 right-20 text-5xl opacity-10 animate-float-slower">âœ¨</div>
+        <div className="absolute top-60 left-1/4 text-3xl opacity-15 animate-float-medium">ðŸ›Žï¸</div>
+        <div className="absolute top-1/3 right-1/3 text-4xl opacity-10 animate-float-slow delay-1000">ðŸŒŸ</div>
+        <div className="absolute top-1/2 left-10 text-3xl opacity-15 animate-float-slower delay-2000">ðŸ-ï¸</div>
+        <div className="absolute bottom-1/3 right-10 text-4xl opacity-10 animate-float-medium delay-1500">ðŸ’Ž</div>
+        <div className="absolute bottom-40 left-1/4 text-3xl opacity-15 animate-float-slow delay-500">ðŸ›ï¸</div>
       </div>
 
       <style dangerouslySetInnerHTML={{
@@ -82,7 +82,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
         <div className="min-h-screen flex flex-col items-center justify-center px-6 text-center">
           <div className="mb-8">
             <span className="inline-block px-4 py-2 bg-gradient-to-r from-cyan-900/80 to-blue-900/80 backdrop-blur-sm text-white text-sm font-medium rounded-full border border-white/20">
-              🏨 HOTELS & LUXURY RESORTS 🏨
+              ðŸ¨ HOTELS & LUXURY RESORTS ðŸ¨
             </span>
           </div>
 
@@ -105,7 +105,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
               onClick={handleScheduleDemo}
               className="px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full font-semibold hover:shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
             >
-              ✨ Schedule a Demo →
+              âœ¨ Schedule a Demo â†’
             </button>
           </div>
         </div>
@@ -124,7 +124,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-cyan-900/20 to-blue-900/20 backdrop-blur-sm rounded-3xl p-8 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-3xl mb-6">
-                  🛎️
+                  ðŸ›Žï¸
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Personalized Suite Welcomes</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -135,7 +135,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-blue-900/20 to-teal-900/20 backdrop-blur-sm rounded-3xl p-8 border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-teal-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-teal-500 flex items-center justify-center text-3xl mb-6">
-                  🧘
+                  ðŸ§˜
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">In-Room Wellness Modes</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -146,7 +146,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-teal-900/20 to-cyan-900/20 backdrop-blur-sm rounded-3xl p-8 border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-3xl mb-6">
-                  🌅
+                  ðŸŒ…
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Lobby Atmosphere Orchestration</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -157,7 +157,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
               <div className="group relative bg-gradient-to-br from-cyan-900/20 to-blue-900/20 backdrop-blur-sm rounded-3xl p-8 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-t-3xl" />
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-3xl mb-6">
-                  🎭
+                  ðŸŽ­
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-4">Event Space Metamorphosis</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -180,19 +180,19 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-gradient-to-br from-cyan-900/30 to-blue-950 rounded-3xl p-8 text-center border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 hover:scale-105">
-                <div className="text-6xl mb-4">🏨</div>
+                <div className="text-6xl mb-4">ðŸ¨</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Luxury Hotels</h3>
                 <p className="text-gray-400">Five-star experiences</p>
               </div>
 
               <div className="bg-gradient-to-br from-blue-900/30 to-blue-950 rounded-3xl p-8 text-center border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 hover:scale-105">
-                <div className="text-6xl mb-4">🏝️</div>
+                <div className="text-6xl mb-4">ðŸï¸</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Resorts & Spas</h3>
                 <p className="text-gray-400">Wellness destinations</p>
               </div>
 
               <div className="bg-gradient-to-br from-teal-900/30 to-blue-950 rounded-3xl p-8 text-center border border-teal-500/20 hover:border-teal-500/40 transition-all duration-300 hover:scale-105">
-                <div className="text-6xl mb-4">🏛️</div>
+                <div className="text-6xl mb-4">ðŸ›ï¸</div>
                 <h3 className="text-2xl font-semibold text-white mb-2">Boutique Hotels</h3>
                 <p className="text-gray-400">Unique character</p>
               </div>
@@ -204,7 +204,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
         <div className="py-20 px-6">
           <div className="max-w-4xl mx-auto text-center">
             <div className="bg-gradient-to-br from-cyan-900/40 to-blue-900/40 backdrop-blur-sm rounded-3xl p-12 border border-cyan-500/30">
-              <div className="text-4xl mb-6">✨</div>
+              <div className="text-4xl mb-6">âœ¨</div>
               <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] text-white mb-6">
                 Ready to Elevate Your Guest Experience?
               </h2>
@@ -215,7 +215,7 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
                 onClick={handleGetStarted}
                 className="px-10 py-5 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-lg rounded-full font-semibold hover:shadow-2xl hover:shadow-cyan-500/50 transition-all duration-300 hover:scale-105"
               >
-                ✨ Get Started Today →
+                âœ¨ Get Started Today â†’
               </button>
             </div>
           </div>
@@ -226,3 +226,4 @@ const HotelsMicrosite: React.FC<HotelsMicrositeProps> = ({ onClose }) => {
 };
 
 export default HotelsMicrosite;
+
