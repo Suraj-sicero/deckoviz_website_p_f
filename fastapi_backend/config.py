@@ -18,7 +18,10 @@ class Settings(BaseSettings):
     S3_MEDIA_PREFIX: str = "media/"
     S3_PRESIGNED_URL_EXPIRES_SECONDS: int = 3600
     S3_MAX_UPLOAD_BYTES: int = 25 * 1024 * 1024
-    
+    # Local-dev mode: store uploads on disk + JSON instead of S3 + PostgreSQL.
+    # Set true in .env when DB/S3 are not wired up. Flip to false for production.
+    DEV_LOCAL_MUSIC_STORAGE: bool = False
+
     # Firebase Configuration
     FIREBASE_CREDENTIALS_JSON: str = os.getenv("FIREBASE_CREDENTIALS_JSON", "")
     FIREBASE_CREDENTIALS_FILE: str = os.getenv("FIREBASE_CREDENTIALS_FILE", "/etc/deckoviz/firebase-service-account.json")

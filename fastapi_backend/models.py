@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from sqlalchemy import Column, String, Integer, Boolean, Text, DateTime, ForeignKey, JSON, UniqueConstraint
+from sqlalchemy import Column, String, Integer, Float, Boolean, Text, DateTime, ForeignKey, JSON, UniqueConstraint
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
 from database import Base
@@ -25,6 +25,7 @@ class User(Base):
     collections = relationship("Collection", back_populates="user", cascade="all, delete-orphan")
     media = relationship("UploadedMedia", back_populates="user", cascade="all, delete-orphan")
     queue_slots = relationship("DailyQueueSlot", back_populates="user", cascade="all, delete-orphan")
+    favorite_music = relationship("FavoriteMusic", back_populates="user", cascade="all, delete-orphan")
 
 class Profile(Base):
     __tablename__ = "profiles"
@@ -55,6 +56,7 @@ class Collection(Base):
     title = Column(String, nullable=True)
     description = Column(Text, nullable=True)
     music_url = Column(Text, nullable=True)
+    assigned_music_id = Column(String, ForeignKey("music.id", ondelete="SET NULL"), nullable=True, index=True)
     tags = Column(JSON, default=list)
     display_minutes = Column(Integer, default=0)
     display_hours = Column(Integer, default=0)
@@ -63,6 +65,7 @@ class Collection(Base):
 
     user = relationship("User", back_populates="collections")
     items = relationship("CollectionItem", back_populates="collection", cascade="all, delete-orphan")
+    assigned_music = relationship("Music", foreign_keys=[assigned_music_id])
 
 class CollectionItem(Base):
     __tablename__ = "collection_items"
@@ -192,3 +195,40 @@ class UserDocument(Base):
     payload = Column(JSONB, nullable=False, default=dict)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+
+# =========== MUSIC PLAYBACK ===========
+
+class Music(Base):
+    """A music track stored in private S3. File bytes never enter the database."""
+    __tablename__ = "music"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    title = Column(String(512), nullable=False)
+    artist = Column(String(512), nullable=True)
+    # S3 storage: object_key + bucket — presigned URL generated on read (same as MediaObject)
+    object_key = Column(String(1024), nullable=True, unique=True)
+    bucket = Column(String(255), nullable=True)
+    # Optional external URL for admin-seeded tracks that live outside S3
+    external_url = Column(Text, nullable=True)
+    # Nullable: admin-uploaded tracks may have no specific user owner
+    uploaded_by = Column(String, ForeignKey("users.id", ondelete="SET NULL"), nullable=True, index=True)
+    duration_seconds = Column(Float, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    uploader = relationship("User", foreign_keys=[uploaded_by])
+    favorited_by = relationship("FavoriteMusic", back_populates="music", cascade="all, delete-orphan")
+
+
+class FavoriteMusic(Base):
+    """Join table: one row per (user, music) favorite pair."""
+    __tablename__ = "favorite_music"
+    __table_args__ = (UniqueConstraint("user_id", "music_id", name="uq_favorite_music"),)
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    music_id = Column(String, ForeignKey("music.id", ondelete="CASCADE"), nullable=False, index=True)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+
+    user = relationship("User", back_populates="favorite_music")
+    music = relationship("Music", back_populates="favorited_by")
