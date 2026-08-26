@@ -19,7 +19,15 @@ export default defineConfig({
         auroraLedger: resolve(__dirname, 'aurora-ledger.html'),
         ripple: resolve(__dirname, 'ripple.html'),
         resonance: resolve(__dirname, 'resonance.html'),
-        gravity: resolve(__dirname, 'gravity.html')
+        gravity: resolve(__dirname, 'gravity.html'),
+        cosmicFluid: resolve(__dirname, '01-cosmic-fluid.html'),
+        livingInk: resolve(__dirname, '02-living-ink.html'),
+        auroraField: resolve(__dirname, '03-aurora-field.html'),
+        digitalGarden: resolve(__dirname, '04-digital-garden.html'),
+        lightArchitecture: resolve(__dirname, '05-light-architecture.html'),
+        oceanicBioluminescence: resolve(__dirname, '06-oceanic-bioluminescence.html'),
+        crystallineGrowth: resolve(__dirname, '07-crystalline-growth.html'),
+        kineticSculpture: resolve(__dirname, '08-kinetic-sculpture.html')
       }
     }
   }
