@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import Optional, List
+from typing import Optional, List, Tuple, Dict
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel
 from auth import get_current_user, FirebaseUser
@@ -53,7 +53,7 @@ DEFAULT_COLLECTIONS = [
 ]
 
 # ---------- Helper Functions ----------
-def get_daily_items_for_user(uid: str, date_str: str) -> tuple[List[dict], List[dict]]:
+def get_daily_items_for_user(uid: str, date_str: str) -> Tuple[List[Dict], List[Dict]]:
     db = get_firestore_db()
     saved_ids = set()
     liked_ids = set()

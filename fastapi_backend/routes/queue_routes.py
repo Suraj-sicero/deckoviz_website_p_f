@@ -1,6 +1,4 @@
-from __future__ import annotations
-
-from typing import Any, Optional
+from typing import Any, Optional, List, Dict
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
 
@@ -17,7 +15,7 @@ class AddToQueueBody(BaseModel):
 
 
 class ReorderQueueBody(BaseModel):
-    collection_ids: list[str]
+    collection_ids: List[str]
 
 
 class LiveStreamBody(BaseModel):
@@ -36,7 +34,7 @@ def _validate_device_ownership(user_id: str, app_instance_id: str) -> None:
         )
 
 
-async def _dispatch_queue_to_tv(user_id: str, app_instance_id: str, queue: list[dict[str, Any]]) -> bool:
+async def _dispatch_queue_to_tv(user_id: str, app_instance_id: str, queue: List[Dict[str, Any]]) -> bool:
     # First 20 collections auto-play/auto-display
     active_top_20 = queue[:20]
     msg = ws_hub.envelope(

@@ -1,19 +1,17 @@
-from __future__ import annotations
-
 import uuid
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Dict, List, Tuple
 
 # (user_id, app_instance_id) → list of queued collection dicts
 # Each collection dict: {"collection_id": str, "name": str, "item_count": int, "added_at": str, "order_index": int}
-_queues: dict[tuple[str, str], list[dict[str, Any]]] = {}
+_queues: Dict[Tuple[str, str], List[Dict[str, Any]]] = {}
 
 
 def _iso_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def get_queue(user_id: str, app_instance_id: str) -> list[dict[str, Any]]:
+def get_queue(user_id: str, app_instance_id: str) -> List[Dict[str, Any]]:
     key = (user_id, app_instance_id)
     return _queues.get(key, [])
 
@@ -24,7 +22,7 @@ def add_to_queue(
     collection_id: str,
     name: str = "Collection",
     item_count: int = 0,
-) -> list[dict[str, Any]]:
+) -> List[Dict[str, Any]]:
     key = (user_id, app_instance_id)
     queue = _queues.setdefault(key, [])
     
@@ -44,12 +42,12 @@ def add_to_queue(
     return queue
 
 
-def reorder_queue(user_id: str, app_instance_id: str, collection_ids: list[str]) -> list[dict[str, Any]]:
+def reorder_queue(user_id: str, app_instance_id: str, collection_ids: List[str]) -> List[Dict[str, Any]]:
     key = (user_id, app_instance_id)
     existing_queue = _queues.get(key, [])
     by_id = {item["collection_id"]: item for item in existing_queue}
 
-    new_queue: list[dict[str, Any]] = []
+    new_queue: List[Dict[str, Any]] = []
     for idx, cid in enumerate(collection_ids):
         if cid in by_id:
             item = by_id.pop(cid)
@@ -65,7 +63,7 @@ def reorder_queue(user_id: str, app_instance_id: str, collection_ids: list[str])
     return new_queue
 
 
-def remove_from_queue(user_id: str, app_instance_id: str, collection_id: str) -> list[dict[str, Any]]:
+def remove_from_queue(user_id: str, app_instance_id: str, collection_id: str) -> List[Dict[str, Any]]:
     key = (user_id, app_instance_id)
     queue = _queues.get(key, [])
     filtered = [item for item in queue if item["collection_id"] != collection_id]

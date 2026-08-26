@@ -3,6 +3,7 @@ import json
 import logging
 import uuid
 from datetime import datetime
+from typing import Optional, Dict, List
 import firebase_admin
 from firebase_admin import credentials, auth, storage, firestore
 from config import settings
@@ -22,7 +23,7 @@ def _has_default_credentials() -> bool:
         return False
 
 
-def _find_firebase_credential_file() -> str | None:
+def _find_firebase_credential_file() -> Optional[str]:
     base_dir = os.path.dirname(__file__) or "."
     candidates = [
         "/etc/deckoviz/firebase-service-account.json",
@@ -105,7 +106,7 @@ def get_firestore_db():
             _firestore_db = None
     return _firestore_db
 
-def verify_token(token: str) -> dict | None:
+def verify_token(token: str) -> Optional[Dict]:
     """Verifies Firebase ID token.
 
     Performs a lazy re-initialization of the Firebase Admin SDK if it was not
@@ -210,7 +211,7 @@ def fs_save_profile(uid: str, data: dict) -> dict:
         logger.warning(f"Firestore save profile notice: {e}")
     return data
 
-def fs_get_collections(uid: str) -> list[dict]:
+def fs_get_collections(uid: str) -> List[Dict]:
     """Retrieves all collections for user from Firebase Firestore 'collections' collection."""
     db = get_firestore_db()
     if not db:
@@ -334,7 +335,7 @@ def fs_delete_collection(uid: str, col_id: str) -> bool:
             logger.warning(f"Firestore delete collection notice: {e}")
     return False
 
-def fs_get_media(uid: str, media_type: str = None) -> list[dict]:
+def fs_get_media(uid: str, media_type: str = None) -> List[Dict]:
     """Retrieves all media documents for user from Firebase Firestore 'media' collection."""
     db = get_firestore_db()
     if not db:
@@ -369,7 +370,7 @@ def fs_save_media(uid: str, media_data: dict) -> dict:
             logger.warning(f"Firestore save media notice: {e}")
     return media_data
 
-def fs_get_daily_queue(uid: str) -> list[dict]:
+def fs_get_daily_queue(uid: str) -> List[Dict]:
     """Retrieves daily queue for user from Firebase Firestore 'daily_queue' collection."""
     db = get_firestore_db()
     if not db:
@@ -421,7 +422,7 @@ def fs_update_daily_queue_slot(uid: str, slot_id: str, slot_data: dict) -> dict:
     return slot_data
 
 
-def fs_get_curations(uid: str) -> list[dict]:
+def fs_get_curations(uid: str) -> List[Dict]:
     """Retrieves enterprise curations from Firestore."""
     db = get_firestore_db()
     if not db: return []
@@ -442,7 +443,7 @@ def fs_create_curation(uid: str, item: dict) -> dict:
         except Exception: pass
     return item
 
-def fs_get_events(uid: str) -> list[dict]:
+def fs_get_events(uid: str) -> List[Dict]:
     """Retrieves enterprise events from Firestore."""
     db = get_firestore_db()
     if not db: return []
@@ -483,7 +484,7 @@ def fs_delete_event(uid: str, event_id: str) -> bool:
         except Exception: pass
     return False
 
-def fs_get_members(uid: str) -> list[dict]:
+def fs_get_members(uid: str) -> List[Dict]:
     """Retrieves home suite members from Firestore."""
     db = get_firestore_db()
     if not db: return []
@@ -514,7 +515,7 @@ def fs_delete_member(uid: str, m_id: str) -> bool:
         except Exception: pass
     return False
 
-def fs_get_notes(uid: str) -> list[dict]:
+def fs_get_notes(uid: str) -> List[Dict]:
     """Retrieves saved notes from Firestore."""
     db = get_firestore_db()
     if not db: return []
@@ -535,7 +536,7 @@ def fs_create_note(uid: str, note: dict) -> dict:
         except Exception: pass
     return note
 
-def fs_get_vizzy_chats(uid: str) -> list[dict]:
+def fs_get_vizzy_chats(uid: str) -> List[Dict]:
     """Retrieves Vizzy chat sessions for user from Firestore."""
     db = get_firestore_db()
     if not db: return []
@@ -546,7 +547,7 @@ def fs_get_vizzy_chats(uid: str) -> list[dict]:
         logger.warning(f"Firestore get vizzy chats notice: {e}")
         return []
 
-def fs_get_vizzy_chat_detail(uid: str, chat_id: str) -> dict | None:
+def fs_get_vizzy_chat_detail(uid: str, chat_id: str) -> Optional[Dict]:
     """Retrieves single Vizzy chat session detail from Firestore."""
     db = get_firestore_db()
     if not db: return None
@@ -612,7 +613,7 @@ def fs_update_settings(uid: str, section: str, settings: dict) -> dict:
     return current
 
 # =========== CURATIONS ===========
-def fs_get_curations(uid: str, curation_type: str = "vizzy") -> list[dict]:
+def fs_get_curations(uid: str, curation_type: str = "vizzy") -> List[Dict]:
     """Retrieves curations from Firestore."""
     db = get_firestore_db()
     defaults = [
@@ -633,7 +634,7 @@ def fs_get_curations(uid: str, curation_type: str = "vizzy") -> list[dict]:
         return [c for c in defaults if c["type"] == curation_type or curation_type == "all"]
 
 # =========== MUSIC ===========
-def fs_get_music(uid: str) -> list[dict]:
+def fs_get_music(uid: str) -> List[Dict]:
     """Retrieves music tracks from Firestore."""
     db = get_firestore_db()
     if not db:
@@ -659,7 +660,7 @@ def fs_create_music(uid: str, track: dict) -> dict:
     return track
 
 # =========== LIBRARY ===========
-def fs_get_library(uid: str) -> list[dict]:
+def fs_get_library(uid: str) -> List[Dict]:
     """Retrieves user library items from Firestore."""
     db = get_firestore_db()
     if not db:
@@ -671,7 +672,7 @@ def fs_get_library(uid: str) -> list[dict]:
         return []
 
 # =========== JOURNAL ===========
-def fs_get_journal(uid: str) -> list[dict]:
+def fs_get_journal(uid: str) -> List[Dict]:
     """Retrieves journal entries from Firestore."""
     db = get_firestore_db()
     if not db:
@@ -719,7 +720,7 @@ def fs_delete_note(uid: str, n_id: str) -> bool:
     return False
 
 # =========== ENTERPRISE UNITS ===========
-def fs_get_enterprise_units(uid: str) -> list[dict]:
+def fs_get_enterprise_units(uid: str) -> List[Dict]:
     db = get_firestore_db()
     if not db: return []
     try:
@@ -756,7 +757,7 @@ def fs_delete_enterprise_unit(uid: str, u_id: str) -> bool:
     return False
 
 # =========== ENTERPRISE GUESTS ===========
-def fs_get_enterprise_guests(uid: str) -> list[dict]:
+def fs_get_enterprise_guests(uid: str) -> List[Dict]:
     db = get_firestore_db()
     if not db: return []
     try:
@@ -793,7 +794,7 @@ def fs_delete_enterprise_guest(uid: str, g_id: str) -> bool:
     return False
 
 # =========== ENTERPRISE TEMPLATES ===========
-def fs_get_enterprise_templates(uid: str) -> list[dict]:
+def fs_get_enterprise_templates(uid: str) -> List[Dict]:
     db = get_firestore_db()
     if not db: return []
     try:
@@ -830,7 +831,7 @@ def fs_delete_enterprise_template(uid: str, t_id: str) -> bool:
     return False
 
 # =========== ENTERPRISE NARRATIONS ===========
-def fs_get_enterprise_narrations(uid: str) -> list[dict]:
+def fs_get_enterprise_narrations(uid: str) -> List[Dict]:
     db = get_firestore_db()
     if not db: return []
     try:
@@ -858,7 +859,7 @@ def fs_delete_enterprise_narration(uid: str, n_id: str) -> bool:
         except Exception: pass
     return False
 # =========== MASTER ADMIN HELPERS ===========
-def fs_list_all_users() -> list[dict]:
+def fs_list_all_users() -> List[Dict]:
     """Lists all registered users from Firebase Auth and Firestore profiles."""
     users_dict = {}
     db = get_firestore_db()
@@ -921,7 +922,7 @@ def fs_list_all_users() -> list[dict]:
     return list(users_dict.values())
 
 
-def fs_list_all_media() -> list[dict]:
+def fs_list_all_media() -> List[Dict]:
     """Lists all media documents from Firebase Firestore."""
     db = get_firestore_db()
     if not db:

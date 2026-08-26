@@ -1,12 +1,11 @@
 """Private S3 media storage using the standard AWS IAM credential chain."""
-from __future__ import annotations
 
 import hashlib
 import os
 import re
 import uuid
 from pathlib import PurePath
-from typing import BinaryIO
+from typing import BinaryIO, Dict, Optional, Tuple
 
 import boto3
 from botocore.config import Config
@@ -23,7 +22,7 @@ class MediaValidationError(ValueError):
     pass
 
 
-def sanitize_filename(filename: str | None) -> str:
+def sanitize_filename(filename: Optional[str]) -> str:
     name = PurePath(filename or "upload").name
     stem, extension = os.path.splitext(name)
     stem = re.sub(r"[^A-Za-z0-9_-]+", "-", stem).strip(".-")
@@ -31,7 +30,7 @@ def sanitize_filename(filename: str | None) -> str:
     return f"{(stem or 'upload')[:180]}{extension}"
 
 
-def validate_media(content_type: str | None, size: int | None) -> str:
+def validate_media(content_type: Optional[str], size: Optional[int]) -> str:
     mime_type = (content_type or "").lower().split(";", 1)[0].strip()
     if mime_type not in ALLOWED_MEDIA_TYPES:
         raise MediaValidationError("Unsupported media type")
@@ -58,7 +57,7 @@ class _HashingReader:
 
 def _build_s3_client():
     """Use explicit env credentials when set; otherwise the standard IAM provider chain."""
-    client_kwargs: dict = {
+    client_kwargs: Dict = {
         "region_name": settings.AWS_REGION,
         "config": Config(connect_timeout=5, read_timeout=60, retries={"max_attempts": 3, "mode": "standard"}),
     }
@@ -76,7 +75,15 @@ class S3MediaStorage:
         self.prefix = settings.S3_MEDIA_PREFIX.strip("/")
         self.client = _build_s3_client()
 
-    def upload(self, *, user_id: str, source: BinaryIO, filename: str, content_type: str, size: int | None) -> tuple[str, str, int]:
+    def upload(
+        self,
+        *,
+        user_id: str,
+        source: BinaryIO,
+        filename: str,
+        content_type: str,
+        size: Optional[int],
+    ) -> Tuple[str, str, int]:
         mime_type = validate_media(content_type, size)
         clean_name = sanitize_filename(filename)
         extension = os.path.splitext(clean_name)[1].lower()

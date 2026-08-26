@@ -1,6 +1,21 @@
+import re
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List, Any
 from datetime import datetime
+
+
+def extract_placeholders(text: str) -> List[str]:
+    """Helper to extract [placeholders] from a prompt template string."""
+    return re.findall(r"\[(.*?)\]", text)
+
+
+class PromptTemplate(BaseModel):
+    id: str
+    vertical: str
+    category: str
+    title: str
+    prompt_text: str
+    placeholders: List[str] = []
 
 # --- Auth & User Schemas ---
 class UserBase(BaseModel):

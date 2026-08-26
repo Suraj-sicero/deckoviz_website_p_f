@@ -5,8 +5,6 @@ Requires FastAPI on :8000.
   python scripts/e2e_pairing_transfer.py
 """
 
-from __future__ import annotations
-
 import json
 import os
 import sys

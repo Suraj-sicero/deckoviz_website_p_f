@@ -6,7 +6,7 @@ paths and response aliases remain unchanged. Every lookup includes user_id.
 import asyncio
 import uuid
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Optional, List, Dict
 
 from sqlalchemy import delete, select
 
@@ -23,7 +23,7 @@ async def _ensure_user(session, uid: str) -> None:
     if not await session.get(User, uid):
         session.add(User(id=uid, email=f"user_{uid[:24]}@deckoviz.app", name="User", display_name="User"))
 
-async def ensure_application_user(uid: str, email: str, name: str | None = None) -> dict:
+async def ensure_application_user(uid: str, email: str, name: Optional[str] = None) -> dict:
     async with AsyncSessionLocal() as session:
         user = await session.get(User, uid)
         if not user:
@@ -37,19 +37,19 @@ async def ensure_application_user(uid: str, email: str, name: str | None = None)
         return {"id": user.id, "firebase_uid": user.id, "email": user.email, "name": user.name or "User", "display_name": user.display_name or user.name or "User", "avatar": user.avatar or "", "role": user.role}
 
 
-async def _list(uid: str, kind: str) -> list[dict]:
+async def _list(uid: str, kind: str) -> List[Dict]:
     async with AsyncSessionLocal() as session:
         rows = (await session.scalars(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind).order_by(UserDocument.created_at.desc()))).all()
         return [dict(row.payload) for row in rows]
 
 
-async def _get(uid: str, kind: str, document_id: str) -> dict | None:
+async def _get(uid: str, kind: str, document_id: str) -> Optional[Dict]:
     async with AsyncSessionLocal() as session:
         row = await session.scalar(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == document_id))
         return dict(row.payload) if row else None
 
 
-async def _save(uid: str, kind: str, data: dict, prefix: str, document_id: str | None = None, merge: bool = False) -> dict:
+async def _save(uid: str, kind: str, data: dict, prefix: str, document_id: Optional[str] = None, merge: bool = False) -> dict:
     doc_id = document_id or data.get("id") or f"{prefix}_{uuid.uuid4().hex[:12]}"
     payload = dict(data)
     payload["id"] = doc_id
@@ -105,7 +105,7 @@ def _media_payload(media: MediaObject) -> dict:
         "createdAt": media.created_at.isoformat(),
     }
 
-async def create_s3_media(uid: str, *, object_key: str, bucket: str, mime_type: str, size_bytes: int, checksum_sha256: str, filename: str, prompt: str | None = None, is_generated: bool = False) -> dict:
+async def create_s3_media(uid: str, *, object_key: str, bucket: str, mime_type: str, size_bytes: int, checksum_sha256: str, filename: str, prompt: Optional[str] = None, is_generated: bool = False) -> dict:
     async with AsyncSessionLocal() as session:
         await _ensure_user(session, uid)
         media = MediaObject(id=f"media_{uuid.uuid4().hex[:12]}", user_id=uid, object_key=object_key, bucket=bucket, mime_type=mime_type, size_bytes=size_bytes, checksum_sha256=checksum_sha256, filename=filename, prompt=prompt, is_generated=is_generated)
@@ -114,7 +114,7 @@ async def create_s3_media(uid: str, *, object_key: str, bucket: str, mime_type: 
         await session.refresh(media)
         return _media_payload(media)
 
-async def _list_media(uid: str, media_type: str | None = None) -> list[dict]:
+async def _list_media(uid: str, media_type: Optional[str] = None) -> List[Dict]:
     async with AsyncSessionLocal() as session:
         rows = (await session.scalars(select(MediaObject).where(MediaObject.user_id == uid).order_by(MediaObject.created_at.desc()))).all()
         return [_media_payload(row) for row in rows if not media_type or media_type in row.mime_type]
