@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Frozen Instant — Deckoviz</title>
+<meta name="description" content="What makes a photograph iconic? Explore composition overlays, contact sheet context, and technical breakdowns across history's greatest masterworks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.65);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,30,112,0.12), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1000px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,30,112,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  header .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  header .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); text-decoration: none; cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+  }
+  .btn-action:hover { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 700; cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .frame-art-bar {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 100000;
+    display: flex; gap: 8px; background: rgba(255,255,255,0.92); border: 1px solid var(--glass-border);
+    padding: 8px 16px; border-radius: 9999px; backdrop-filter: blur(20px); box-shadow: 0 12px 36px rgba(43,84,234,0.15);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; max-width: 92vw; overflow-x: auto;
+  }
+  .frame-art-bar.show { opacity: 1; pointer-events: auto; }
+  .art-pattern-btn {
+    background: rgba(240,244,255,0.8); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 6px 14px; border-radius: 9999px; font-size: 0.72rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.22s ease; display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  }
+  .art-pattern-btn:hover, .art-pattern-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(43,84,234,0.35); }
+
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  body.frame-mode-active {
+    background: #0F172A !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+  body.frame-mode-active canvas#bgCanvas {
+    display: none !important;
+  }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 24px 80px; transition: opacity 0.4s ease; max-width: 1040px; margin: 0 auto;
+    animation: pageFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .page.frame-mode-active, body.frame-mode-active .page {
+    animation: none !important; transform: none !important; filter: none !important; backdrop-filter: none !important;
+    max-width: none !important; width: 100vw !important; height: 100vh !important; padding: 0 !important; margin: 0 !important;
+    position: static !important;
+  }
+  .hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 24px; max-width: 680px; margin-top: 0; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy);
+  }
+  h1 span.accent-serif {
+    font-style: italic; font-weight: 700;
+    background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .subtitle { font-weight: 400; font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; }
+
+  /* PHOTO SELECTOR ROW */
+  .photo-selector { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: min(720px, 100%); }
+  .photo-btn {
+    background: var(--glass); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); color: var(--navy);
+    padding: 10px 20px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 14px rgba(43,84,234,0.06);
+  }
+  .photo-btn:hover, .photo-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); box-shadow: 0 6px 20px rgba(43,84,234,0.3); transform: translateY(-2px); }
+
+  /* MAIN VIEWFINDER CANVAS PANEL - TASK 6 CONTAINMENT & EDGE-TO-EDGE FIX */
+  .view-panel {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(150%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 22px; box-shadow: var(--glass-shadow); max-width: min(760px, 100%); width: 100%;
+    margin-bottom: 28px; position: relative; transition: opacity 0.3s ease, background 0.3s ease, box-shadow 0.3s ease; z-index: 2; margin-left: auto; margin-right: auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .view-panel.frame-active {
+    position: fixed !important; inset: 0 !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    max-width: 100vw !important; max-height: 100vh !important; width: 100vw !important; height: 100vh !important;
+    padding: 0 !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;
+    z-index: 99999 !important; background: #0F172A !important; display: flex !important; justify-content: center !important; align-items: center !important; margin: 0 !important;
+  }
+
+  .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 6px; flex-wrap: wrap; gap: 8px; width: 100%; }
+  .overlay-toggles { display: flex; gap: 8px; flex-wrap: wrap; }
+  .overlay-btn {
+    background: rgba(240,244,255,0.8); border: 1px solid rgba(43,84,234,0.18); color: var(--navy);
+    padding: 6px 14px; border-radius: 9999px; font-size: 0.76rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.2s ease;
+  }
+  .overlay-btn:hover, .overlay-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-1px); }
+
+  canvas#cameraCanvas { display: block; width: 100%; border-radius: 20px; background: #0F172A; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .view-panel.frame-active canvas#cameraCanvas { width: 100vw !important; height: 100vh !important; border-radius: 0 !important; }
+
+  /* CONTACT SHEET CONTEXT STRIP */
+  .contact-sheet-panel {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 24px 28px; max-width: min(720px, 100%); width: 100%; box-shadow: var(--glass-shadow);
+    margin-bottom: 28px; display: flex; flex-direction: column; gap: 14px; margin-left: auto; margin-right: auto;
+  }
+  .cs-title { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.25rem; color: var(--navy); display: flex; align-items: center; gap: 8px; }
+  .cs-strip { display: flex; gap: 14px; overflow-x: auto; padding: 8px 0; }
+  .cs-frame {
+    width: 220px; flex-shrink: 0; background: rgba(255,255,255,0.9); border: 1px solid rgba(43,84,234,0.2);
+    border-radius: 18px; padding: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.04); transition: all 0.25s ease; cursor: pointer;
+  }
+  .cs-frame:hover, .cs-frame.winner { border-color: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(43,84,234,0.18); }
+  .cs-frame.winner { border-width: 2px; background: #ffffff; }
+  .cs-num { font-size: 0.68rem; font-weight: 700; color: var(--brand-blue); letter-spacing: 0.1em; margin-bottom: 4px; }
+  .cs-label { font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+  .cs-desc { font-size: 0.78rem; color: var(--navy-muted); line-height: 1.45; }
+
+  /* TECHNICAL & HISTORICAL BREAKDOWN CARD */
+  .story-card {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 28px; max-width: min(720px, 100%); width: 100%; box-shadow: var(--glass-shadow);
+    margin-bottom: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-left: auto; margin-right: auto;
+  }
+  .story-title { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.4rem; color: var(--navy); margin-bottom: 6px; }
+  .story-photographer { font-size: 0.82rem; font-weight: 700; color: var(--brand-blue); margin-bottom: 12px; }
+  .story-text { font-size: 0.88rem; line-height: 1.65; color: var(--navy-muted); font-weight: 400; }
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .spec-box { background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.14); padding: 10px 12px; border-radius: 14px; }
+  .spec-lbl { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--brand-blue); }
+  .spec-val { font-size: 0.85rem; font-weight: 700; color: var(--navy); font-family: 'Comfortaa', sans-serif; }
+
+  /* FOOTER PANEL */
+  .footer-panel {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 20px 24px; max-width: 960px; width: 100%; text-align: center;
+    box-shadow: var(--glass-shadow); font-size: 0.78rem; color: var(--navy-muted); line-height: 1.6;
+  }
+  .footer-panel strong { color: var(--navy); font-weight: 700; }
+
+  @media (max-width: 768px) {
+    .story-card { grid-template-columns: 1fr; }
+  }
+
+  /* FRAME MODE TITLE OVERLAY */
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); padding: 10px 18px; border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(43,30,112,0.14); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--navy, #1E1B4B);
+  }
+  .frame-legend-toggle {
+    position: fixed; bottom: 32px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(43,84,234,0.22);
+    color: var(--navy); padding: 8px 18px; border-radius: 9999px; font-size: 0.76rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(43,84,234,0.15); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 44px; right: 0; width: 260px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border, rgba(43,84,234,0.18)); border-radius: 20px; padding: 14px 16px;
+    box-shadow: 0 14px 40px rgba(43,30,112,0.2); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .frame-legend-toggle:hover .legend-popover,
+  .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--brand-blue); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--navy); margin-bottom: 6px; line-height: 1.3;
+  }
+  .legend-color { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">The Frozen Instant</div>
+  <div class="frame-subtitle-text">Photojournalism Masterwork Geometry & Golden Ratio Viewfinder</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Viewfinder Key</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Viewfinder Geometry</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> 🟡 <strong>Golden Spiral</strong> &nbsp;— Eye Trajectory</div>
+    <div class="legend-item"><span class="legend-color" style="background:#EF4444;"></span> 🎯 <strong>Decisive Moment</strong> &nbsp;— Focal Center</div>
+    <div class="legend-item"><span class="legend-color" style="background:#2563EB;"></span> 📏 <strong>Rule of Thirds</strong> &nbsp;— Alignments</div>
+    <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> ⚡ <strong>Shutter Speed</strong> &nbsp;— 1/1000s Slice</div>
+  </div>
+</div>
+
+
+<header id="header">
+  <div class="deckoviz-brand-mark" style="display: flex; align-items: center; gap: 8px;">
+    <img src="deckoviz-logo.png" alt="Deckoviz Logo" style="height: 30px; width: auto; object-fit: contain; display: block;">
+    <div class="title" style="font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.02rem; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+      Deckoviz <span style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue);">Space Labs</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">📷 Click Shutter</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<div class="frame-art-bar" id="frameArtBar"></div>
+
+<div class="page" id="mainUi">
+  <div class="hero" id="heroSec">
+    <div class="eyebrow">Deckoviz Photojournalism DAS</div>
+    <h1>The Frozen <span class="accent-serif">Instant</span></h1>
+    <p class="subtitle">What separates a merely good photograph from an iconic masterwork? Explore decisive moment timing, contact sheet context, and composition overlays across history.</p>
+  </div>
+
+  <!-- ICONIC PHOTOGRAPH SELECTOR ROW -->
+  <div class="photo-selector" id="photoSelector"></div>
+
+  <!-- MAIN VIEWFINDER CANVAS PANEL -->
+  <div class="view-panel" id="viewPanel">
+    <div class="panel-header" id="panelHeader">
+      <div class="overlay-toggles">
+        <button class="overlay-btn active" data-overlay="thirds">📐 Rule of Thirds</button>
+        <button class="overlay-btn" data-overlay="spiral">🌀 Golden Spiral</button>
+        <button class="overlay-btn" data-overlay="vectors">↗️ Leading Vectors</button>
+      </div>
+      <button class="btn-action" id="expandFrameBtn">✨ Fullscreen Viewfinder Art</button>
+    </div>
+    <canvas id="cameraCanvas"></canvas>
+  </div>
+
+  <!-- CONTACT SHEET CONTEXT STRIP -->
+  <div class="contact-sheet-panel" id="contactSheetPanel">
+    <div class="cs-title">🎞️ Contact Sheet Context — The Decisive Instant Chosen</div>
+    <div style="font-size:0.84rem; color:var(--navy-muted);">See the frames shot immediately before and after the iconic photograph to understand why frame #14 captured immortality.</div>
+    <div class="cs-strip" id="csStrip"></div>
+  </div>
+
+  <!-- TECHNICAL & HISTORICAL STORY BREAKDOWN -->
+  <div class="story-card" id="storyCard"></div>
+
+  <!-- CITATION FOOTER -->
+  <div class="footer-panel">
+    <strong>Ethical & Historical Gravitas:</strong> Photographic masterworks document war, civil rights, and human resilience. Analyzed with respect for historical context and the photojournalists who witnessed them.
+  </div>
+</div>
+
+<script>
+/* ---------- Deckoviz Floating Particle Background ---------- */
+const bgCanvas = document.getElementById('bgCanvas');
+const bgCtx = bgCanvas.getContext('2d');
+let bgParticles = [];
+
+function initBgParticles() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  bgCanvas.width = window.innerWidth * dpr;
+  bgCanvas.height = window.innerHeight * dpr;
+  bgCanvas.style.width = window.innerWidth + 'px';
+  bgCanvas.style.height = window.innerHeight + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const num = Math.floor((window.innerWidth * window.innerHeight) / 7000);
+  const colors = ['rgba(6,182,212,', 'rgba(43,84,234,', 'rgba(139,92,246,', 'rgba(236,72,153,'];
+  bgParticles = Array.from({ length: num }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 2.2 + 0.6,
+    speedY: (Math.random() - 0.5) * 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    alpha: Math.random() * 0.5 + 0.15,
+    phase: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawBgParticles(t) {
+  bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  bgParticles.forEach(p => {
+    p.x += p.speedX; p.y += p.speedY;
+    if (p.x < 0) p.x = window.innerWidth;
+    if (p.x > window.innerWidth) p.x = 0;
+    if (p.y < 0) p.y = window.innerHeight;
+    if (p.y > window.innerHeight) p.y = 0;
+
+    const currentAlpha = p.alpha * (0.65 + 0.35 * Math.sin(t * 0.0015 + p.phase));
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    bgCtx.fillStyle = p.color + currentAlpha + ')';
+    bgCtx.fill();
+  });
+}
+
+/* ---------- Web Audio Controller ---------- */
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playShutterClick() {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'triangle'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.08);
+    g.gain.setValueAtTime(0.2, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+    osc.connect(g); g.connect(masterGain);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '📷 Click Shutter' : '🔇 Sound Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playShutterClick();
+});
+
+/* ---------- 6 ICONIC MASTERWORK CASES ---------- */
+const photos = [
+  {
+    title: 'Behind the Gare Saint-Lazare', year: 1932, photographer: 'Henri Cartier-Bresson',
+    imgSrc: 'gare_saint_lazare.png',
+    camera: 'Leica I (35mm)', lens: '50mm f/3.5 Elmar', speed: '1/50s', aperture: 'f/5.6', iso: 'ISO 50 Film',
+    story: 'Cartier-Bresson poked his lens through a wooden fence behind Paris railway station. He captured a man mid-air jumping across a puddle—his reflection floating below, mirroring a poster dancer in the background.',
+    frames: [
+      { num: 'Frame #12', title: 'Preparation', desc: 'Man stepping off ladder. Puddle reflection still static.' },
+      { num: 'Frame #13 ★ Iconic Instant', title: 'The Decisive Moment', desc: 'Heel 1 cm above water surface. Perfect silhouette & poster reflection alignment.' },
+      { num: 'Frame #14', title: 'Post Splash', desc: 'Foot hits water. Ripples obscure the double reflection.' }
+    ]
+  },
+  {
+    title: 'Migrant Mother', year: 1936, photographer: 'Dorothea Lange',
+    imgSrc: 'migrant_mother.png',
+    camera: 'Graflex Super D (4x5)', lens: '210mm', speed: '1/60s', aperture: 'f/8', iso: 'ISO 32 Ortho',
+    story: 'Lange pulled off Highway 101 into a pea-pickers camp in Nipomo, California. Florence Owens Thompson and her children were starving. This photograph became the human face of Great Depression dignity.',
+    frames: [
+      { num: 'Frame #1', title: 'Wide Shot', desc: 'Children facing camera. Composition scattered.' },
+      { num: 'Frame #6 ★ Iconic Instant', title: 'Maternal Pillar', desc: 'Children turn away into her shoulders. Hand resting on chin creates timeless grief motif.' },
+      { num: 'Frame #7', title: 'Baby Nursing', desc: 'Informal angle. Lacks universal sculptural weight.' }
+    ]
+  },
+  {
+    title: 'V-J Day Kiss in Times Square', year: 1945, photographer: 'Alfred Eisenstaedt',
+    imgSrc: 'vj_day_kiss.png',
+    camera: 'Leica IIIa', lens: '35mm Summaron', speed: '1/250s', aperture: 'f/5.6', iso: 'ISO 100',
+    story: 'Eisenstaedt watched a sailor grabbing every woman in sight on August 14, 1945. When he grabbed a nurse in white, the contrast of dark blue uniform and white dress froze victory euphoria.',
+    frames: [
+      { num: 'Frame #3', title: 'Approaching', desc: 'Sailor reaching out in crowd. Obscured background.' },
+      { num: 'Frame #4 ★ Iconic Instant', title: 'Victory Embrace', desc: 'Dip backwards. Dark blue and white forms make striking graphic geometry.' },
+      { num: 'Frame #5', title: 'Release', desc: 'Crowd walks past. Pose dissolves into casual sidewalk crowd.' }
+    ]
+  },
+  {
+    title: 'The Burning Monk', year: 1963, photographer: 'Malcolm Browne',
+    imgSrc: 'monk_reflection.png',
+    camera: 'Petri 7S', lens: '45mm f/2.8', speed: '1/125s', aperture: 'f/4', iso: 'ISO 400',
+    story: 'Thích Quảng Đức sat in lotus position on a Saigon intersection to protest religious persecution. He never moved a muscle as flames consumed him. President Kennedy remarked: "No news picture in history has generated so much emotion."',
+    frames: [
+      { num: 'Frame #10', title: 'Pouring Petrol', desc: 'Monks dousing gasoline. Crowds watching.' },
+      { num: 'Frame #14 ★ Iconic Instant', title: 'Stillness in Flame', desc: 'Lotus composure intact while flames envelop body. Pure stoic resilience.' },
+      { num: 'Frame #18', title: 'Collapse', desc: 'Flames subside. Body falls sideways.' }
+    ]
+  },
+  {
+    title: 'Ali vs. Liston Knockout', year: 1965, photographer: 'Neil Leifer',
+    imgSrc: 'ali_liston.png',
+    camera: 'Rolleiflex 500C', lens: '80mm Planar', speed: '1/500s (Strobe)', aperture: 'f/11', iso: 'ISO 160',
+    story: 'Leifer sat at ringside in Lewiston, Maine. In round one, Ali knocked down Liston and stood towering above him shouting "Get up and fight!". Overhead strobe lighting turned Ali into a colossus.',
+    frames: [
+      { num: 'Frame #1', title: 'Punch Impact', desc: 'Phantom punch lands. Liston stumbling down.' },
+      { num: 'Frame #2 ★ Iconic Instant', title: 'Roar of Triumph', desc: 'Ali right arm cocked across chest. Liston flat on canvas underneath.' },
+      { num: 'Frame #3', title: 'Ref Stepping In', desc: 'Referee pushes Ali to neutral corner.' }
+    ]
+  },
+  {
+    title: 'Afghan Girl', year: 1984, photographer: 'Steve McCurry',
+    imgSrc: 'afghan_girl.png',
+    camera: 'Nikon FM2', lens: '105mm f/2.5 AI-s', speed: '1/125s', aperture: 'f/2.5', iso: 'Kodachrome 64',
+    story: 'McCurry entered Nasir Bagh refugee camp in Pakistan. 12-year-old Sharbat Gula\'s intense sea-green eyes captured the haunted resilience of a generation displaced by war.',
+    frames: [
+      { num: 'Frame #1', title: 'Covered Face', desc: 'Shawl covering lower face. Eyes partially shaded.' },
+      { num: 'Frame #2 ★ Iconic Instant', title: 'Piercing Gaze', desc: 'Red shawl framing face. Piercing green eyes locking directly into lens.' },
+      { num: 'Frame #3', title: 'Slight Smile', desc: 'Expression relaxes. Misses haunting solemnity.' }
+    ]
+  }
+];
+
+// Preload Images
+const loadedImages = {};
+photos.forEach((p, idx) => {
+  const img = new Image();
+  img.src = p.imgSrc;
+  loadedImages[idx] = img;
+});
+
+let activePhotoIdx = 0;
+let activeOverlay = 'thirds';
+let frameMode = false;
+const canvas = document.getElementById('cameraCanvas');
+const ctx = canvas.getContext('2d');
+
+function sizeCanvas() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const parentRect = canvas.parentElement ? canvas.parentElement.getBoundingClientRect() : { width: window.innerWidth };
+  const w = frameMode ? window.innerWidth : parentRect.width;
+
+  let h = 480;
+  if (!frameMode) {
+    const activeImg = loadedImages[activePhotoIdx];
+    if (activeImg && activeImg.naturalWidth && activeImg.naturalHeight) {
+      const aspect = activeImg.naturalWidth / activeImg.naturalHeight;
+      h = Math.min(Math.max(Math.round(w / aspect), 360), 540);
+    }
+    canvas.style.width = '100%';
+    canvas.style.height = h + 'px';
+  } else {
+    h = window.innerHeight;
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+  }
+
+  canvas.width = Math.round(w * dpr);
+  canvas.height = Math.round(h * dpr);
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  initBgParticles();
+}
+
+function selectPhoto(index) {
+  activePhotoIdx = index;
+  const p = photos[index];
+  playShutterClick();
+
+  document.querySelectorAll('.photo-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+  document.querySelectorAll('.art-pattern-btn').forEach((b, i) => b.classList.toggle('active', i === index));
+
+  sizeCanvas();
+
+  // Render Story Breakdown
+  document.getElementById('storyCard').innerHTML = `
+    <div>
+      <div class="story-title">${p.title} (${p.year})</div>
+      <div class="story-photographer">Photojournalist: ${p.photographer}</div>
+      <div class="story-text">${p.story}</div>
+    </div>
+    <div>
+      <div style="font-size:0.75rem; font-weight:700; text-transform:uppercase; color:var(--brand-blue); margin-bottom:8px;">Camera & Technical Specifications</div>
+      <div class="spec-grid">
+        <div class="spec-box"><div class="spec-lbl">Camera</div><div class="spec-val">${p.camera}</div></div>
+        <div class="spec-box"><div class="spec-lbl">Lens</div><div class="spec-val">${p.lens}</div></div>
+        <div class="spec-box"><div class="spec-lbl">Shutter Speed</div><div class="spec-val">${p.speed}</div></div>
+        <div class="spec-box"><div class="spec-lbl">Aperture</div><div class="spec-val">${p.aperture}</div></div>
+      </div>
+    </div>
+  `;
+
+  // Render Contact Sheet
+  const strip = document.getElementById('csStrip');
+  strip.innerHTML = '';
+  p.frames.forEach(f => {
+    const isWinner = f.title.includes('Iconic Instant');
+    const div = document.createElement('div');
+    div.className = 'cs-frame' + (isWinner ? ' winner' : '');
+    div.innerHTML = `
+      <div class="cs-num">${f.num}</div>
+      <div class="cs-label">${f.title}</div>
+      <div class="cs-desc">${f.desc}</div>
+    `;
+    strip.appendChild(div);
+  });
+}
+
+function drawViewfinderArt(t) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = frameMode ? window.innerWidth : (canvas.width / dpr);
+  const h = frameMode ? window.innerHeight : (canvas.height / dpr);
+
+  ctx.clearRect(0, 0, w, h);
+
+  // 1. Darkroom Frame Background
+  ctx.fillStyle = '#0F172A'; ctx.fillRect(0, 0, w, h);
+
+  // 2. Compute Rendered Photograph Rectangle (dx, dy, dw, dh)
+  const activeImg = loadedImages[activePhotoIdx];
+  let dw = w, dh = h, dx = 0, dy = 0;
+  if (activeImg && activeImg.complete && activeImg.naturalWidth !== 0) {
+    const imgAspect = activeImg.naturalWidth / activeImg.naturalHeight;
+    const canvasAspect = w / h;
+    if (canvasAspect > imgAspect) {
+      dh = h; dw = h * imgAspect; dx = (w - dw) / 2; dy = 0;
+    } else {
+      dw = w; dh = w / imgAspect; dy = (h - dh) / 2; dx = 0;
+    }
+    ctx.drawImage(activeImg, dx, dy, dw, dh);
+  }
+
+  const cx = dx + dw / 2;
+  const cy = dy + dh / 2;
+  const reticleInset = Math.min(16, Math.min(dw, dh) * 0.05);
+  const rx = dx + reticleInset;
+  const ry = dy + reticleInset;
+  const rw = dw - reticleInset * 2;
+  const rh = dh - reticleInset * 2;
+
+  // 3. Viewfinder Reticle & HUD Outer Frame (STRICTLY OVER PHOTO BOUNDS)
+  ctx.strokeStyle = 'rgba(255,255,255,0.35)'; ctx.lineWidth = 1;
+  ctx.strokeRect(rx, ry, rw, rh);
+
+  // Sharp Camera L-Corner Brackets
+  const cornerLen = 16;
+  ctx.strokeStyle = '#06B6D4'; ctx.lineWidth = 2.5;
+  ctx.beginPath();
+  // Top-Left
+  ctx.moveTo(rx, ry + cornerLen); ctx.lineTo(rx, ry); ctx.lineTo(rx + cornerLen, ry);
+  // Top-Right
+  ctx.moveTo(rx + rw - cornerLen, ry); ctx.lineTo(rx + rw, ry); ctx.lineTo(rx + rw, ry + cornerLen);
+  // Bottom-Left
+  ctx.moveTo(rx, ry + rh - cornerLen); ctx.lineTo(rx, ry + rh); ctx.lineTo(rx + cornerLen, ry + rh);
+  // Bottom-Right
+  ctx.moveTo(rx + rw - cornerLen, ry + rh); ctx.lineTo(rx + rw, ry + rh); ctx.lineTo(rx + rw, ry + rh - cornerLen);
+  ctx.stroke();
+
+  // Center Focus Crosshair
+  ctx.beginPath();
+  ctx.moveTo(cx - 14, cy); ctx.lineTo(cx + 14, cy);
+  ctx.moveTo(cx, cy - 14); ctx.lineTo(cx, cy + 14);
+  ctx.strokeStyle = '#06B6D4'; ctx.lineWidth = 2; ctx.stroke();
+
+  ctx.beginPath(); ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(6, 182, 212, 0.6)'; ctx.fill();
+
+  // 4. Draw Composition Overlays DIRECTLY OVER THE RENDERED PHOTOGRAPH
+  if (activeOverlay === 'thirds') {
+    ctx.strokeStyle = 'rgba(6,182,212,0.85)'; ctx.lineWidth = 1.8; ctx.setLineDash([5, 5]);
+    ctx.beginPath();
+    ctx.moveTo(dx + dw / 3, ry); ctx.lineTo(dx + dw / 3, ry + rh);
+    ctx.moveTo(dx + (dw / 3) * 2, ry); ctx.lineTo(dx + (dw / 3) * 2, ry + rh);
+    ctx.moveTo(rx, dy + dh / 3); ctx.lineTo(rx + rw, dy + dh / 3);
+    ctx.moveTo(rx, dy + (dh / 3) * 2); ctx.lineTo(rx + rw, dy + (dh / 3) * 2);
+    ctx.stroke(); ctx.setLineDash([]);
+
+    // 4 Focal Nodes
+    const focalPoints = [
+      [dx + dw / 3, dy + dh / 3],
+      [dx + (dw / 3) * 2, dy + dh / 3],
+      [dx + dw / 3, dy + (dh / 3) * 2],
+      [dx + (dw / 3) * 2, dy + (dh / 3) * 2]
+    ];
+    focalPoints.forEach(([px, py]) => {
+      ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#EC4899'; ctx.fill();
+      ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 2; ctx.stroke();
+    });
+  } else if (activeOverlay === 'spiral') {
+    ctx.strokeStyle = 'rgba(236,72,153,0.9)'; ctx.lineWidth = 2.2; ctx.setLineDash([4, 4]);
+    ctx.beginPath();
+    const maxRadius = Math.min(dw, dh) * 0.46;
+    for (let i = 0; i < 46; i++) {
+      const angle = i * 0.28;
+      const r = (i / 46) * maxRadius;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.stroke(); ctx.setLineDash([]);
+  } else if (activeOverlay === 'vectors') {
+    ctx.strokeStyle = 'rgba(139,92,246,0.9)'; ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(rx, ry + rh); ctx.lineTo(cx, cy);
+    ctx.moveTo(rx + rw, ry + rh); ctx.lineTo(cx, cy);
+    ctx.moveTo(rx, ry); ctx.lineTo(cx, cy);
+    ctx.moveTo(rx + rw, ry); ctx.lineTo(cx, cy);
+    ctx.stroke();
+  }
+
+  // 5. Camera Viewfinder HUD Text (INSIDE PHOTO CORNERS)
+  const p = photos[activePhotoIdx];
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,0.85)';
+  ctx.shadowBlur = 6;
+  ctx.shadowOffsetX = 1;
+  ctx.shadowOffsetY = 1;
+
+  ctx.fillStyle = '#FF4D4D';
+  ctx.font = '700 11px "DM Sans", sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('● REC', rx + 12, ry + 22);
+
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = '700 11px "DM Sans", sans-serif';
+  ctx.fillText(` [${p.title.toUpperCase()}]`, rx + 52, ry + 22);
+
+  ctx.textAlign = 'right';
+  ctx.fillText(`${p.speed}  ·  ${p.aperture}  ·  ${p.iso}`, rx + rw - 12, ry + 22);
+  ctx.restore();
+}
+
+function renderLoop(t) {
+  drawBgParticles(t);
+  drawViewfinderArt(t);
+  requestAnimationFrame(renderLoop);
+}
+
+// Build Photo Selector Buttons
+const photoSelector = document.getElementById('photoSelector');
+const frameArtBar = document.getElementById('frameArtBar');
+
+photos.forEach((p, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'photo-btn' + (i === 0 ? ' active' : '');
+  btn.textContent = `${p.title} (${p.year})`;
+  btn.addEventListener('click', () => selectPhoto(i));
+  photoSelector.appendChild(btn);
+
+  const frameBtn = document.createElement('button');
+  frameBtn.className = 'art-pattern-btn' + (i === 0 ? ' active' : '');
+  frameBtn.textContent = p.title;
+  frameBtn.addEventListener('click', () => selectPhoto(i));
+  frameArtBar.appendChild(frameBtn);
+});
+
+selectPhoto(0);
+
+// Composition Overlay Buttons
+document.querySelectorAll('.overlay-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.overlay-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeOverlay = btn.dataset.overlay;
+    playShutterClick();
+  });
+});
+
+function toggleFrameMode(){
+  frameMode = !frameMode;
+  document.body.classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('mainUi').classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('header').classList.toggle('hide-element', frameMode);
+  document.getElementById('heroSec').classList.toggle('hide-element', frameMode);
+  document.getElementById('photoSelector').classList.toggle('hide-element', frameMode);
+  document.getElementById('panelHeader').classList.toggle('hide-element', frameMode);
+  document.getElementById('contactSheetPanel').classList.toggle('hide-element', frameMode);
+  document.getElementById('storyCard').classList.toggle('hide-element', frameMode);
+
+  document.getElementById('viewPanel').classList.toggle('frame-active', frameMode);
+  document.getElementById('exitFrameBtn').classList.toggle('show', frameMode);
+  document.getElementById('frameArtBar').classList.toggle('show', frameMode);
+  if (document.getElementById('frameTitleOverlay')) document.getElementById('frameTitleOverlay').classList.toggle('show', frameMode);
+  if (document.getElementById('frameLegendToggle')) document.getElementById('frameLegendToggle').classList.toggle('show', frameMode);
+
+  sizeCanvas();
+  setTimeout(sizeCanvas, 50);
+  setTimeout(sizeCanvas, 150);
+  if (frameMode) playShutterClick();
+}
+
+if (document.getElementById('legendToggleBtn')) {
+  document.getElementById('legendToggleBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    const pop = document.getElementById('legendPopover');
+    if (pop) pop.classList.toggle('open');
+  });
+}
+document.addEventListener('click', () => {
+  const pop = document.getElementById('legendPopover');
+  if (pop) pop.classList.remove('open');
+});
+
+document.getElementById('frameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('expandFrameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('exitFrameBtn').addEventListener('click', toggleFrameMode);
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'f' || e.key === 'F') toggleFrameMode();
+  if (e.key === 'Escape' && frameMode) toggleFrameMode();
+});
+
+window.addEventListener('resize', sizeCanvas);
+sizeCanvas(); requestAnimationFrame(renderLoop);
+</script>
+</body>
+</html>

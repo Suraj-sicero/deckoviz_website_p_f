@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Deckoviz Classical Music Gallery</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&family=Great+Vibes&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#060b16;
+  --navy-900:#0b1626;
+  --navy-800:#122036;
+  --navy-700:#1a2e4a;
+  --navy-600:#233c5e;
+  --teal-500:#2dd4bf;
+  --teal-400:#5eead4;
+  --teal-300:#99f6e4;
+  --teal-glow:rgba(45,212,191,.35);
+  --gold-500:#d4af7a;
+  --gold-300:#ecd8ae;
+  --ivory:#f5f2e9;
+  --mist:#9fb3cc;
+  --mist-dim:#6d84a3;
+  --glass-bg:rgba(18,32,54,.52);
+  --glass-bg-lite:rgba(26,46,74,.42);
+  --glass-border:rgba(159,179,204,.14);
+  --radius-lg:28px;
+  --radius-md:18px;
+  --radius-sm:12px;
+  --font-title:'Comfortaa',sans-serif;
+  --font-display:'Great Vibes',cursive;
+  --font-body:'Poppins',sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  background:
+    radial-gradient(ellipse 900px 560px at 12% -8%, rgba(45,212,191,.14), transparent 60%),
+    radial-gradient(ellipse 800px 620px at 88% 8%, rgba(212,175,122,.10), transparent 55%),
+    radial-gradient(ellipse 1000px 700px at 50% 108%, rgba(45,212,191,.10), transparent 60%),
+    linear-gradient(180deg,var(--navy-950) 0%,var(--navy-900) 45%,#081222 100%);
+  background-attachment:fixed;
+  color:var(--ivory);
+  font-family:var(--font-body);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+::selection{background:var(--teal-glow);color:var(--ivory);}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--navy-600);border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:var(--teal-500);}
+
+a{color:inherit;}
+button{font-family:var(--font-body);cursor:pointer;}
+:focus-visible{outline:2px solid var(--teal-400);outline-offset:3px;border-radius:8px;}
+
+/* ---------- signature ambient motif: staff-line aurora ---------- */
+.staff-aurora{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;overflow:hidden;}
+.staff-aurora svg{width:100%;height:100%;}
+.staff-line{stroke-width:1;fill:none;opacity:.5;}
+@keyframes driftLine{
+  0%{stroke-dashoffset:0;}
+  100%{stroke-dashoffset:-2400;}
+}
+.staff-line{stroke-dasharray:6 22;animation:driftLine 60s linear infinite;}
+.staff-line.l2{animation-duration:80s;animation-direction:reverse;}
+.staff-line.l3{animation-duration:100s;}
+.staff-line.l4{animation-duration:70s;animation-direction:reverse;}
+.staff-line.l5{animation-duration:90s;}
+
+.orb{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0;}
+.orb1{width:520px;height:520px;top:-180px;left:-140px;background:radial-gradient(circle,var(--teal-glow),transparent 70%);animation:float1 22s ease-in-out infinite;}
+.orb2{width:460px;height:460px;bottom:-160px;right:-120px;background:radial-gradient(circle,rgba(212,175,122,.22),transparent 70%);animation:float2 26s ease-in-out infinite;}
+.orb3{width:380px;height:380px;top:40%;right:8%;background:radial-gradient(circle,rgba(45,212,191,.12),transparent 70%);animation:float1 30s ease-in-out infinite reverse;}
+@keyframes float1{0%,100%{transform:translate(0,0);}50%{transform:translate(30px,-40px);}}
+@keyframes float2{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,30px);}}
+
+@media (prefers-reduced-motion:reduce){
+  .staff-line,.orb{animation:none !important;}
+  *{scroll-behavior:auto !important;}
+}
+
+.app{position:relative;z-index:1;min-height:100vh;}
+
+/* ---------- glass utility ---------- */
+.glass{
+  background:linear-gradient(155deg,var(--glass-bg),var(--glass-bg-lite));
+  backdrop-filter:blur(18px) saturate(140%);
+  -webkit-backdrop-filter:blur(18px) saturate(140%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  box-shadow:0 20px 60px -20px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+/* ---------- top nav ---------- */
+.topnav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(20px,5vw,64px);
+  position:sticky;top:0;z-index:40;
+}
+.wordmark{
+  font-family:var(--font-title);font-weight:700;letter-spacing:.06em;
+  font-size:1.15rem;display:flex;align-items:center;gap:10px;
+  text-decoration:none;cursor:pointer;background:none;border:none;color:var(--ivory);
+}
+.wordmark .dot{width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--teal-400),var(--gold-500));box-shadow:0 0 14px var(--teal-glow);}
+.wordmark .sub{font-family:var(--font-body);font-weight:300;color:var(--mist);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;margin-left:2px;}
+.nav-actions{display:flex;gap:10px;align-items:center;}
+
+/* ---------- buttons ---------- */
+.btn{
+  border:none;border-radius:999px;padding:14px 30px;font-family:var(--font-title);
+  font-weight:700;font-size:.85rem;letter-spacing:.04em;
+  display:inline-flex;align-items:center;gap:10px;transition:transform .25s ease,box-shadow .25s ease,background .25s ease;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--teal-500),#189d8e);
+  color:#04241f;box-shadow:0 10px 30px -8px rgba(45,212,191,.55);
+}
+.btn-primary:hover{box-shadow:0 14px 38px -8px rgba(45,212,191,.75);transform:translateY(-2px);}
+.btn-ghost{
+  background:rgba(159,179,204,.08);color:var(--ivory);border:1px solid rgba(212,175,122,.35);
+}
+.btn-ghost:hover{background:rgba(212,175,122,.12);border-color:var(--gold-500);transform:translateY(-2px);}
+.btn-icon{width:46px;height:46px;border-radius:50%;padding:0;display:inline-flex;align-items:center;justify-content:center;background:rgba(159,179,204,.09);border:1px solid var(--glass-border);color:var(--ivory);}
+.btn-icon:hover{background:rgba(45,212,191,.16);border-color:var(--teal-400);}
+.btn-icon svg{width:18px;height:18px;}
+.btn-sm{padding:9px 18px;font-size:.72rem;}
+.btn[disabled]{opacity:.35;cursor:not-allowed;pointer-events:none;}
+
+/* ---------- views ---------- */
+.view{display:none;}
+.view.active{display:block;}
+
+/* ================= HOME VIEW ================= */
+.hero{
+  padding:min(8vh,70px) clamp(20px,6vw,80px) 40px;
+  text-align:center;max-width:980px;margin:0 auto;
+}
+.hero-eyebrow{
+  font-family:var(--font-title);font-size:.72rem;letter-spacing:.32em;text-transform:uppercase;
+  color:var(--gold-300);opacity:.85;margin-bottom:18px;
+}
+.hero h1{
+  font-family:var(--font-display);font-weight:400;
+  font-size:clamp(3.2rem,8vw,6.4rem);line-height:1.05;margin:0 0 10px;
+  background:linear-gradient(135deg,var(--ivory) 30%,var(--teal-300) 70%,var(--gold-300) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.sub{
+  font-size:1.02rem;color:var(--mist);max-width:560px;margin:0 auto 40px;line-height:1.7;font-weight:300;
+}
+.hero p.sub em{color:var(--teal-300);font-style:normal;font-weight:500;}
+
+.picker{
+  max-width:640px;margin:0 auto;padding:10px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.combo{position:relative;}
+.combo input{
+  width:100%;padding:18px 52px 18px 22px;border-radius:999px;border:1px solid var(--glass-border);
+  background:rgba(11,22,38,.6);color:var(--ivory);font-family:var(--font-body);font-size:.95rem;
+  outline:none;transition:border-color .2s;
+}
+.combo input:focus{border-color:var(--teal-400);}
+.combo input::placeholder{color:var(--mist-dim);}
+.combo svg.search-ic{position:absolute;right:20px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--mist);pointer-events:none;}
+.combo-list{
+  position:absolute;top:calc(100% + 10px);left:0;right:0;max-height:340px;overflow-y:auto;
+  z-index:50;padding:8px;display:none;
+}
+.combo-list.open{display:block;}
+.combo-item{
+  padding:12px 16px;border-radius:var(--radius-sm);display:flex;align-items:center;gap:12px;
+  transition:background .15s;
+}
+.combo-item:hover,.combo-item.hl{background:rgba(45,212,191,.12);}
+.combo-rank{font-family:var(--font-title);font-size:.7rem;color:var(--gold-300);width:28px;flex-shrink:0;}
+.combo-meta{display:flex;flex-direction:column;text-align:left;overflow:hidden;}
+.combo-meta .t{font-size:.9rem;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.combo-meta .c{font-size:.72rem;color:var(--mist-dim);}
+
+.picker-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:6px;}
+
+.stats-row{display:flex;gap:30px;justify-content:center;margin-top:34px;flex-wrap:wrap;color:var(--mist-dim);font-size:.75rem;letter-spacing:.05em;font-family:var(--font-title);}
+.stats-row b{color:var(--teal-300);font-family:var(--font-title);}
+
+/* ---------- section headers ---------- */
+.section{padding:40px clamp(20px,6vw,80px);}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:26px;flex-wrap:wrap;gap:14px;}
+.section-head h2{
+  font-family:var(--font-display);font-weight:400;font-size:clamp(2.1rem,4vw,3rem);margin:0;
+  color:var(--ivory);
+}
+.section-head .eyebrow{font-family:var(--font-title);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--teal-400);margin-bottom:6px;display:block;}
+.section-head p{color:var(--mist);font-size:.85rem;max-width:480px;margin:0;font-weight:300;line-height:1.6;}
+
+/* ---------- curation rail ---------- */
+.rail{display:flex;gap:20px;overflow-x:auto;padding:10px 4px 26px;scroll-snap-type:x proximity;}
+.curation-card{
+  scroll-snap-align:start;flex:0 0 300px;padding:26px 24px;cursor:pointer;
+  transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;position:relative;overflow:hidden;
+}
+.curation-card:hover{transform:translateY(-6px);border-color:var(--gold-500);}
+.curation-card .glow{position:absolute;top:-40%;right:-30%;width:200px;height:200px;border-radius:50%;filter:blur(50px);opacity:.4;}
+.curation-card .rank-badge{
+  font-family:var(--font-title);font-size:.7rem;color:var(--gold-300);letter-spacing:.1em;
+  display:inline-block;margin-bottom:14px;padding:5px 12px;border:1px solid rgba(212,175,122,.4);border-radius:999px;
+}
+.curation-card h3{font-family:var(--font-display);font-size:1.9rem;font-weight:400;margin:0 0 4px;line-height:1.15;}
+.curation-card .composer{font-size:.76rem;color:var(--mist);margin-bottom:14px;letter-spacing:.03em;}
+.curation-card .why{font-size:.8rem;color:var(--teal-300);line-height:1.6;font-style:normal;position:relative;padding-left:14px;border-left:2px solid var(--teal-500);}
+
+/* ---------- gallery grid ---------- */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.chip{
+  padding:8px 18px;border-radius:999px;border:1px solid var(--glass-border);background:rgba(159,179,204,.06);
+  font-size:.72rem;font-family:var(--font-title);letter-spacing:.03em;color:var(--mist);transition:all .2s;
+}
+.chip.active,.chip:hover{background:rgba(45,212,191,.16);color:var(--teal-300);border-color:var(--teal-500);}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;}
+.piece-card{
+  padding:20px;cursor:pointer;transition:transform .25s ease,border-color .25s ease;
+  display:flex;flex-direction:column;gap:10px;min-height:150px;
+}
+.piece-card:hover{transform:translateY(-4px);border-color:var(--teal-500);}
+.piece-card .top-row{display:flex;justify-content:space-between;align-items:flex-start;}
+.piece-card .rank{font-family:var(--font-title);font-size:.68rem;color:var(--mist-dim);}
+.piece-card .mood-tag{font-size:.62rem;font-family:var(--font-title);color:var(--gold-300);background:rgba(212,175,122,.12);padding:3px 10px;border-radius:999px;}
+.piece-card h4{font-family:var(--font-display);font-size:1.5rem;font-weight:400;margin:0;line-height:1.15;}
+.piece-card .composer{font-size:.72rem;color:var(--mist);}
+.piece-card .syn{font-size:.72rem;color:var(--mist-dim);line-height:1.5;margin-top:auto;font-weight:300;}
+.piece-card .curated-flag{font-size:.6rem;color:var(--teal-300);letter-spacing:.08em;font-family:var(--font-title);}
+
+.load-more-wrap{display:flex;justify-content:center;margin-top:30px;}
+
+footer.site-footer{
+  padding:50px clamp(20px,6vw,80px) 70px;text-align:center;color:var(--mist-dim);font-size:.72rem;
+  font-family:var(--font-title);letter-spacing:.05em;
+}
+footer.site-footer .fw{color:var(--teal-400);}
+
+/* ================= PLAYER VIEW ================= */
+.player-view{padding-bottom:150px;}
+.player-top{
+  display:flex;align-items:center;gap:16px;padding:20px clamp(20px,6vw,64px) 0;
+}
+.piece-header{padding:20px clamp(20px,6vw,64px) 10px;max-width:1100px;}
+.piece-header .eyebrow{
+  font-family:var(--font-title);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-300);
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
+}
+.piece-header .eyebrow .rank-pill{border:1px solid rgba(212,175,122,.4);padding:3px 12px;border-radius:999px;}
+.piece-header h1{
+  font-family:var(--font-display);font-weight:400;font-size:clamp(2.6rem,6vw,4.6rem);margin:0 0 8px;line-height:1.08;
+  background:linear-gradient(135deg,var(--ivory),var(--teal-300));-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.piece-header .composer-line{color:var(--mist);font-size:1rem;font-weight:300;}
+.piece-header .composer-line b{color:var(--ivory);font-weight:500;}
+.piece-header .mood-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.tagpill{font-size:.68rem;font-family:var(--font-title);padding:6px 14px;border-radius:999px;background:rgba(45,212,191,.1);color:var(--teal-300);border:1px solid rgba(45,212,191,.25);}
+
+.stage-controls{
+  display:flex;gap:12px;padding:26px clamp(20px,6vw,64px) 0;flex-wrap:wrap;
+}
+.stage-wrap{margin:20px clamp(20px,6vw,64px) 0;padding:0;overflow:hidden;height:360px;position:relative;}
+.stage-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--mist-dim);text-align:center;padding:20px;}
+.stage-empty .glyph{font-size:2rem;opacity:.5;}
+canvas#viz{width:100%;height:100%;display:block;}
+.artwork-stage{position:absolute;inset:0;}
+.art-layer{position:absolute;inset:0;opacity:0;transition:opacity 1.8s ease;}
+.art-layer.on{opacity:1;}
+.art-caption{position:absolute;bottom:16px;right:22px;font-family:var(--font-title);font-size:.65rem;letter-spacing:.08em;color:rgba(245,242,233,.55);}
+
+.deep-dive{padding:34px clamp(20px,6vw,64px) 0;max-width:1000px;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px;border-bottom:1px solid var(--glass-border);padding-bottom:14px;}
+.tab-btn{
+  background:none;border:none;color:var(--mist);font-family:var(--font-title);font-size:.72rem;letter-spacing:.04em;
+  padding:10px 18px;border-radius:999px;transition:all .2s;
+}
+.tab-btn.active{background:linear-gradient(135deg,var(--teal-500),#189d8e);color:#04241f;font-weight:700;}
+.tab-btn:not(.active):hover{color:var(--teal-300);}
+.tab-panel{display:none;padding:8px 4px;}
+.tab-panel.active{display:block;animation:fadeUp .4s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.tab-panel p{line-height:1.85;color:#dbe4ef;font-weight:300;font-size:.97rem;margin:0 0 14px;}
+.tab-panel h5{font-family:var(--font-title);font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-300);margin:0 0 12px;}
+.empty-tab{padding:30px 10px;text-align:center;color:var(--mist-dim);}
+.empty-tab .glyph{font-size:1.8rem;margin-bottom:10px;opacity:.5;}
+.empty-tab p{color:var(--mist-dim) !important;font-size:.85rem !important;}
+
+.curator-note{margin:34px clamp(20px,6vw,64px) 0;padding:26px 28px;max-width:1000px;display:flex;gap:16px;align-items:flex-start;}
+.curator-note .ic{font-size:1.4rem;flex-shrink:0;}
+.curator-note p{margin:0;color:var(--teal-300);font-size:.88rem;line-height:1.7;font-style:italic;font-weight:300;}
+.curator-note h5{font-family:var(--font-title);font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-300);margin:0 0 8px;font-style:normal;}
+
+.up-next{padding:40px clamp(20px,6vw,64px) 0;max-width:1100px;}
+
+/* ---------- sticky player bar ---------- */
+.player-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  padding:16px clamp(16px,4vw,40px);
+  display:flex;align-items:center;gap:20px;
+  background:linear-gradient(180deg,rgba(6,11,22,.4),rgba(6,11,22,.92) 40%);
+  backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%);
+  border-top:1px solid var(--glass-border);
+}
+.pb-meta{display:flex;flex-direction:column;min-width:0;width:200px;flex-shrink:0;}
+.pb-meta .t{font-family:var(--font-title);font-size:.8rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pb-meta .c{font-size:.68rem;color:var(--mist-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pb-controls{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.pb-controls .btn-icon.active{background:rgba(45,212,191,.22);border-color:var(--teal-400);color:var(--teal-300);}
+.pb-play{width:54px;height:54px;background:linear-gradient(135deg,var(--teal-500),#189d8e);color:#04241f;box-shadow:0 8px 24px -6px rgba(45,212,191,.6);}
+.pb-play svg{width:22px;height:22px;}
+.pb-progress{flex:1;display:flex;align-items:center;gap:10px;min-width:120px;}
+.pb-progress span{font-size:.65rem;color:var(--mist-dim);font-family:var(--font-title);width:36px;flex-shrink:0;}
+.pb-progress span.end{text-align:right;}
+.seek{flex:1;-webkit-appearance:none;appearance:none;height:4px;border-radius:4px;background:var(--navy-600);cursor:pointer;}
+.seek::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--teal-400);box-shadow:0 0 8px var(--teal-glow);}
+.seek::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--teal-400);border:none;}
+.pb-vol{display:flex;align-items:center;gap:8px;width:110px;flex-shrink:0;}
+.pb-vol input{width:80px;-webkit-appearance:none;appearance:none;height:4px;border-radius:4px;background:var(--navy-600);}
+.pb-vol input::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--gold-300);}
+@media (max-width:860px){
+  .pb-vol{display:none;}
+  .pb-meta{width:110px;}
+}
+@media (max-width:600px){
+  .pb-meta{display:none;}
+}
+
+/* small util */
+.hidden{display:none !important;}
+.badge-live{width:7px;height:7px;border-radius:50%;background:var(--teal-400);box-shadow:0 0 8px var(--teal-400);display:inline-block;animation:pulse 1.4s ease-in-out infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+</style>
+</head>
+<body>
+
+<div class="staff-aurora">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="none">
+    <line class="staff-line l1" x1="0" y1="120" x2="1600" y2="90" stroke="#2dd4bf"/>
+    <line class="staff-line l2" x1="0" y1="260" x2="1600" y2="300" stroke="#d4af7a"/>
+    <line class="staff-line l3" x1="0" y1="480" x2="1600" y2="440" stroke="#2dd4bf"/>
+    <line class="staff-line l4" x1="0" y1="650" x2="1600" y2="690" stroke="#5eead4"/>
+    <line class="staff-line l5" x1="0" y1="800" x2="1600" y2="760" stroke="#d4af7a"/>
+  </svg>
+</div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<div class="app" id="app">
+
+  <nav class="topnav">
+    <button class="wordmark" id="logoBtn">
+      <span class="dot"></span> DECKOVIZ <span class="sub">Classical Gallery</span>
+    </button>
+    <div class="nav-actions">
+      <button class="btn btn-ghost btn-sm" id="navHomeBtn">Gallery</button>
+    </div>
+  </nav>
+
+  <!-- ============= HOME VIEW ============= -->
+  <section class="view active" id="view-home">
+
+    <div class="hero">
+      <span class="hero-eyebrow">The Deckoviz Classical Music Experience</span>
+      <h1>Enter the Gallery</h1>
+      <p class="sub">Two hundred works that shaped how the world listens. Chosen for how they move you, and unfolded here so you can understand exactly <em>why</em> they do.</p>
+
+      <div class="picker glass">
+        <div class="combo">
+          <input type="text" id="searchInput" placeholder="Search 200 iconic pieces — try “Moonlight” or “Beethoven”" autocomplete="off">
+          <svg class="search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <div class="combo-list glass" id="comboList"></div>
+        </div>
+        <div class="picker-actions">
+          <button class="btn btn-primary" id="startBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Start
+          </button>
+          <button class="btn btn-ghost" id="randomBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+            Random Play
+          </button>
+        </div>
+      </div>
+
+      <div class="stats-row">
+        <span><b>200</b> works in the gallery</span>
+        <span><b>30</b> Deckoviz Curations</span>
+        <span><b>5</b> centuries of music</span>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Handpicked</span>
+          <h2>Deckoviz Music Curations</h2>
+          <p>Our top picks for the frame, and a note on why each one earned its place.</p>
+        </div>
+      </div>
+      <div class="rail" id="curationRail"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Browse</span>
+          <h2>The Full Collection</h2>
+          <p>All 200 pieces, ranked by how iconic they are to the classical canon.</p>
+        </div>
+      </div>
+      <div class="filters" id="eraFilters"></div>
+      <div class="grid" id="pieceGrid"></div>
+      <div class="load-more-wrap">
+        <button class="btn btn-ghost" id="loadMoreBtn">Show more works</button>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      A <span class="fw">Deckoviz</span> Visual Reference Series experience — the gallery grows over time, one annotated piece at a time.
+    </footer>
+  </section>
+
+  <!-- ============= PLAYER VIEW ============= -->
+  <section class="view" id="view-player">
+    <div class="player-top">
+      <button class="btn-icon" id="backBtn" aria-label="Back to gallery">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </button>
+      <button class="btn btn-ghost btn-sm" id="backToGalleryBtn">Back to Gallery</button>
+    </div>
+
+    <div class="piece-header">
+      <div class="eyebrow"><span class="rank-pill" id="ph-rank">#1</span><span id="ph-era">Romantic</span></div>
+      <h1 id="ph-title">Piece Title</h1>
+      <div class="composer-line">by <b id="ph-composer">Composer</b></div>
+      <div class="mood-row" id="ph-moods"></div>
+    </div>
+
+    <div class="stage-controls">
+      <button class="btn btn-ghost btn-sm" id="vizBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 18v-6M8 18V6M13 18v-9M18 18v-4M23 18v-2"/></svg>
+        Music Visualisation
+      </button>
+      <button class="btn btn-ghost btn-sm" id="artBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        Accompanying Artwork
+      </button>
+    </div>
+
+    <div class="stage-wrap glass" id="stageWrap">
+      <canvas id="viz"></canvas>
+      <div class="artwork-stage hidden" id="artworkStage"></div>
+      <div class="stage-empty hidden" id="stageEmpty">
+        <div class="glyph">✦</div>
+        <p>Choose Visualisation or Artwork to fill this space.</p>
+      </div>
+    </div>
+
+    <div class="deep-dive">
+      <div class="tabs" id="tabBar">
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="history">Historical Context</button>
+        <button class="tab-btn" data-tab="emotion">Emotional Landscape</button>
+        <button class="tab-btn" data-tab="analysis">Musical Analysis</button>
+        <button class="tab-btn" data-tab="notes">Notes &amp; Trivia</button>
+      </div>
+
+      <div class="tab-panel active" id="panel-overview"></div>
+      <div class="tab-panel" id="panel-history"></div>
+      <div class="tab-panel" id="panel-emotion"></div>
+      <div class="tab-panel" id="panel-analysis"></div>
+      <div class="tab-panel" id="panel-notes"></div>
+    </div>
+
+    <div class="curator-note glass hidden" id="curatorNoteWrap">
+      <div class="ic">✎</div>
+      <div>
+        <h5>Why Deckoviz chose this piece</h5>
+        <p id="curatorNoteText"></p>
+      </div>
+    </div>
+
+    <div class="up-next">
+      <div class="section-head">
+        <div><span class="eyebrow">Continue exploring</span><h2 style="font-size:1.8rem;">Up Next</h2></div>
+      </div>
+      <div class="grid" id="upNextGrid"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============= STICKY PLAYER BAR ============= -->
+<div class="player-bar glass hidden" id="playerBar">
+  <div class="pb-meta">
+    <div class="t" id="pb-title">—</div>
+    <div class="c" id="pb-composer">—</div>
+  </div>
+  <div class="pb-controls">
+    <button class="btn-icon" id="shuffleBtn" aria-label="Shuffle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+    </button>
+    <button class="btn-icon" id="prevBtn" aria-label="Previous">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+    </button>
+    <button class="btn-icon pb-play" id="playBtn" aria-label="Play">
+      <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+    </button>
+    <button class="btn-icon" id="nextBtn" aria-label="Next">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zm-9.5 6L15 6v12z"/></svg>
+    </button>
+  </div>
+  <div class="pb-progress">
+    <span id="curTime">0:00</span>
+    <input type="range" class="seek" id="seekBar" min="0" max="100" value="0">
+    <span class="end" id="durTime">0:00</span>
+  </div>
+  <div class="pb-vol">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;color:var(--mist)"><path d="M3 10v4h4l5 5V5L7 10H3z"/></svg>
+    <input type="range" id="volBar" min="0" max="1" step="0.01" value="0.8">
+  </div>
+</div>
+
+<audio id="audioEl" preload="none"></audio>
+
+<script>
+/* =========================================================================
+   DECKOVIZ CLASSICAL MUSIC GALLERY
+   Data-driven SPA. Extend GALLERY_RAW / DEEP_CONTENT to grow the collection.
+   ========================================================================= */
+
+/* rank, title, composer, era, mood, synopsis, audioUrl(''=not yet added) */
+const GALLERY_RAW = [
+[1,"Symphony No. 5 in C minor, \"Fate\"","Ludwig van Beethoven","Classical","Heroic","Four notes that changed how music could begin — the most famous opening in the repertoire."],
+[2,"Toccata and Fugue in D minor, BWV 565","Johann Sebastian Bach","Baroque","Dramatic","The organ piece that became the universal sound of gothic drama and dark cathedrals."],
+[3,"Spring — The Four Seasons","Antonio Vivaldi","Baroque","Joyful","Birdsong, thunderstorms and blossoming fields, painted note by note three centuries ago."],
+[4,"Canon in D","Johann Pachelbel","Baroque","Serene","Eight bass notes, repeated for six minutes, that became the sound of a wedding aisle."],
+[5,"Moonlight Sonata — 1st mvt","Ludwig van Beethoven","Classical","Melancholic","A single rippling figure under a hushed melody, written in the dark of a difficult year."],
+[6,"Clair de Lune","Claude Debussy","Impressionist","Tender","Moonlight rendered as sound — impressionist piano at its most intimate."],
+[7,"Nocturne in E-flat major, Op. 9 No. 2","Frédéric Chopin","Romantic","Yearning","A single melody, ornamented and re-sung, that taught the piano how to sigh."],
+[8,"Requiem — Lacrimosa","Wolfgang Amadeus Mozart","Classical","Solemn","The unfinished mass Mozart wrote for his own death, completed by others after he died mid-bar."],
+[9,"Eine kleine Nachtmusik — 1st mvt","Wolfgang Amadeus Mozart","Classical","Playful","A little night music, effortless and sunny, written for no occasion anyone can name."],
+[10,"Swan Lake — Scene (Theme)","Pyotr Ilyich Tchaikovsky","Romantic","Haunting","The oboe melody that made a ballet about a cursed princess immortal."],
+[11,"The Nutcracker — Waltz of the Flowers","Pyotr Ilyich Tchaikovsky","Romantic","Radiant","A harp glissando opens into one of the most opulent waltzes ever orchestrated."],
+[12,"Piano Concerto No. 2 — 2nd mvt","Sergei Rachmaninoff","Late Romantic","Yearning","Written as therapy after a breakdown, it became the sound of unguarded longing."],
+[13,"Morning Mood — Peer Gynt","Edvard Grieg","Nationalist","Serene","A sunrise in three flutes and strings, from a play about a liar who never comes home."],
+[14,"Jupiter, the Bringer of Jollity — The Planets","Gustav Holst","Modern","Majestic","A tone poem for a planet, and the melody later borrowed for a national hymn."],
+[15,"O Fortuna — Carmina Burana","Carl Orff","Modern","Dramatic","A medieval poem about fate's wheel, set with a violence that still opens film trailers."],
+[16,"On the Beautiful Blue Danube","Johann Strauss II","Romantic","Joyful","The waltz that made Vienna synonymous with elegance, still played every New Year."],
+[17,"Boléro","Maurice Ravel","Modern","Ecstatic","One melody, one crescendo, seventeen minutes — Ravel called it 'orchestration without music.'"],
+[18,"The Swan — Carnival of the Animals","Camille Saint-Saëns","Romantic","Tender","A cello aria so serious the composer refused to publish it in his lifetime, fearing ridicule."],
+[19,"Symphony No. 9 \"New World\" — Largo","Antonín Dvořák","Nationalist","Nostalgic","An English horn melody so home-like it became an American spiritual, \"Goin' Home.\""],
+[20,"Finlandia","Jean Sibelius","Nationalist","Triumphant","Written in defiance of Russian censorship, its hymn became Finland's unofficial anthem."],
+[21,"Nimrod — Enigma Variations","Edward Elgar","Romantic","Sublime","A portrait of a friend's kindness, now played at funerals and remembrance services worldwide."],
+[22,"Ave Maria","Franz Schubert","Romantic","Sacred","A setting of a poem, not the prayer, that became sacred music almost by accident."],
+[23,"Wiegenlied (Lullaby), Op. 49 No. 4","Johannes Brahms","Romantic","Tender","The most recorded lullaby in history, written for the child of an old friend."],
+[24,"Hallelujah Chorus — Messiah","George Frideric Handel","Baroque","Triumphant","Legend says King George II stood when he heard it — audiences have stood ever since."],
+[25,"Adagio for Strings","Samuel Barber","Modern","Solemn","America's grief music, played after Kennedy's death, after 9/11, at state funerals."],
+[26,"Gymnopédie No. 1","Erik Satie","Modern","Melancholic","Deliberately 'furniture music' — spare, slow, and decades ahead of ambient sound."],
+[27,"Nessun Dorma — Turandot","Giacomo Puccini","Romantic","Triumphant","'None shall sleep' — an aria of certainty, sung by a prince betting his life on love."],
+[28,"Symphony No. 9 — \"Ode to Joy\"","Ludwig van Beethoven","Classical","Ecstatic","Written after Beethoven was completely deaf — humanity's most famous hymn to unity."],
+[29,"Pavane, Op. 50","Gabriel Fauré","Romantic","Serene","A slow processional dance, delicate enough to have been written for a garden party."],
+[30,"Bridal Chorus — Lohengrin","Richard Wagner","Romantic","Joyful","\"Here Comes the Bride\" started life as a knight's wedding in a medieval opera."],
+[31,"Air on the G String","Johann Sebastian Bach","Baroque","Serene","A single violin line so pure a 19th-century arranger built an entire myth around it."],
+[32,"Brandenburg Concerto No. 3","Johann Sebastian Bach","Baroque","Joyful","Nine solo strings, no conductor needed — chamber music as pure architecture."],
+[33,"Cello Suite No. 1 — Prelude","Johann Sebastian Bach","Baroque","Serene","Rolling arpeggios that rescued the cello suites from two centuries of obscurity."],
+[34,"Goldberg Variations — Aria","Johann Sebastian Bach","Baroque","Tender","Written, legend claims, to help an insomniac count fall asleep."],
+[35,"Jesu, Joy of Man's Desiring","Johann Sebastian Bach","Baroque","Sacred","A chorale so serene it's now as common at weddings as in church."],
+[36,"The Well-Tempered Clavier — Prelude No. 1","Johann Sebastian Bach","Baroque","Serene","Broken chords, nothing more — later set to words as Gounod's \"Ave Maria.\""],
+[37,"Brandenburg Concerto No. 2","Johann Sebastian Bach","Baroque","Playful","A trumpet part so punishing it's still a rite of passage for soloists."],
+[38,"Concerto for Two Violins in D minor","Johann Sebastian Bach","Baroque","Passionate","Two violins in constant conversation — argument, agreement, and embrace."],
+[39,"Mass in B minor — Kyrie","Johann Sebastian Bach","Baroque","Sacred","Bach's summation of everything he knew about sacred choral writing."],
+[40,"Little Fugue in G minor","Johann Sebastian Bach","Baroque","Dramatic","A compact fugue subject that unfolds into architecture of astonishing scale."],
+[41,"Symphony No. 40 in G minor — 1st mvt","Wolfgang Amadeus Mozart","Classical","Turbulent","One of only two Mozart symphonies in a minor key — restless from its first bar."],
+[42,"Symphony No. 41 \"Jupiter\" — Finale","Wolfgang Amadeus Mozart","Classical","Majestic","Five melodies combined in one finale — Mozart's last symphony, and his most complex."],
+[43,"Rondo alla Turca — Piano Sonata No. 11","Wolfgang Amadeus Mozart","Classical","Playful","A mock 'Turkish march' that remains the most-played encore in the piano repertoire."],
+[44,"Clarinet Concerto — Adagio","Wolfgang Amadeus Mozart","Classical","Tender","Written weeks before his death, for an instrument he loved more than any other."],
+[45,"Piano Concerto No. 21 — Andante","Wolfgang Amadeus Mozart","Classical","Tender","Nicknamed \"Elvira Madigan\" after a 1967 film made its slow movement famous."],
+[46,"The Marriage of Figaro — Overture","Wolfgang Amadeus Mozart","Classical","Playful","Comic opera compressed into four breathless minutes before a single word is sung."],
+[47,"Queen of the Night Aria — The Magic Flute","Wolfgang Amadeus Mozart","Classical","Dramatic","Two minutes of coloratura fury, among the highest and hardest arias ever written."],
+[48,"Piano Concerto No. 20 in D minor","Wolfgang Amadeus Mozart","Classical","Turbulent","Stormy and shadowed — the concerto Beethoven admired enough to write his own cadenza for."],
+[49,"Ave Verum Corpus","Wolfgang Amadeus Mozart","Classical","Sacred","Forty-six bars, written in the final year of his life, of near-total simplicity."],
+[50,"Symphony No. 25 in G minor","Wolfgang Amadeus Mozart","Classical","Turbulent","A teenage Mozart's first great dramatic statement, later used to open a film about him."],
+[51,"Summer — The Four Seasons","Antonio Vivaldi","Baroque","Turbulent","Oppressive heat breaking into a violent storm, all inside eleven minutes."],
+[52,"Winter — The Four Seasons, Largo","Antonio Vivaldi","Baroque","Serene","Pizzicato rain on a windowpane while a fire crackles inside — Vivaldi's own sonnet says so."],
+[53,"Autumn — The Four Seasons","Antonio Vivaldi","Baroque","Joyful","A harvest celebration, complete with a drunken dance and a sleepy hunt."],
+[54,"Gloria in D major, RV 589","Antonio Vivaldi","Baroque","Triumphant","Rediscovered only in the 20th century after two centuries of silence."],
+[55,"Concerto for Two Mandolins in G major","Antonio Vivaldi","Baroque","Playful","A bright, chattering duet between two of the era's more unusual solo instruments."],
+[56,"Water Music Suite","George Frideric Handel","Baroque","Joyful","Composed for a royal barge party on the Thames — outdoor music built for open air."],
+[57,"Music for the Royal Fireworks","George Frideric Handel","Baroque","Triumphant","Handel insisted on \"no fiddles\" — pure brass and winds for a king's celebration."],
+[58,"Zadok the Priest","George Frideric Handel","Baroque","Triumphant","Played at every British coronation since 1727, including the most recent ones."],
+[59,"Ombra mai fu — Xerxes","George Frideric Handel","Baroque","Tender","An aria sung to a tree — one of opera's strangest and most beautiful set-ups."],
+[60,"Sarabande in D minor","George Frideric Handel","Baroque","Solemn","A stately dance later reused, unforgettably, in the film \"Barry Lyndon.\""],
+[61,"Christmas Concerto, Op. 6 No. 8","Arcangelo Corelli","Baroque","Joyful","Marked \"for the night of the Nativity\" — Baroque concerto writing at its warmest."],
+[62,"Dido's Lament — Dido and Aeneas","Henry Purcell","Baroque","Solemn","\"Remember me\" — a descending bassline beneath opera's most devastating farewell."],
+[63,"Rondeau — Abdelazer","Henry Purcell","Baroque","Majestic","Later borrowed by Britten as the theme for \"The Young Person's Guide to the Orchestra.\""],
+[64,"Vespers — Magnificat","Claudio Monteverdi","Baroque","Sacred","A hinge point between Renaissance polyphony and the dramatic Baroque style to come."],
+[65,"Adagio in G minor","Tomaso Albinoni","Baroque","Melancholic","Mostly written by its 20th-century \"discoverer,\" not Albinoni — and beloved anyway."],
+[66,"Symphony No. 94 \"Surprise\" — 2nd mvt","Joseph Haydn","Classical","Playful","A gentle theme, then a sudden fortissimo chord — Haydn's joke on dozing audiences."],
+[67,"Trumpet Concerto — 3rd mvt","Joseph Haydn","Classical","Joyful","Written for a newly-invented keyed trumpet that could finally play a full melody."],
+[68,"Cello Concerto No. 1 in C major","Joseph Haydn","Classical","Joyful","Lost for over a century, rediscovered in 1961, now a cornerstone of the cello repertoire."],
+[69,"Für Elise","Ludwig van Beethoven","Classical","Tender","Never published in his lifetime — found in a drawer, dedicated to a woman still debated."],
+[70,"Piano Sonata \"Pathétique\" — 2nd mvt","Ludwig van Beethoven","Classical","Tender","A songful adagio inside a sonata Beethoven himself named \"pathetic\" — meaning passionate."],
+[71,"Symphony No. 6 \"Pastoral\" — 1st mvt","Ludwig van Beethoven","Classical","Serene","Beethoven's own titles guide the listener through a countryside walk, brook and all."],
+[72,"Symphony No. 7 — Allegretto","Ludwig van Beethoven","Classical","Solemn","A relentless, march-like rhythm Wagner called \"the apotheosis of the dance.\""],
+[73,"Symphony No. 3 \"Eroica\" — 1st mvt","Ludwig van Beethoven","Classical","Heroic","Originally dedicated to Napoleon — torn up when Napoleon crowned himself emperor."],
+[74,"Egmont Overture","Ludwig van Beethoven","Classical","Dramatic","Written for a play about a martyr for freedom, ending in defiant triumph."],
+[75,"Piano Concerto No. 5 \"Emperor\" — 1st mvt","Ludwig van Beethoven","Classical","Heroic","The nickname wasn't Beethoven's — but the grandeur earned it anyway."],
+[76,"Violin Concerto in D major","Ludwig van Beethoven","Classical","Majestic","Booed at its premiere in 1806; now one of the most performed violin concertos ever written."],
+[77,"Piano Sonata \"Appassionata\"","Ludwig van Beethoven","Classical","Turbulent","Beethoven himself considered it his most powerful piano sonata."],
+[78,"String Quartet No. 14 in C-sharp minor","Ludwig van Beethoven","Classical","Sublime","Seven movements played without pause — late Beethoven at his most inward."],
+[79,"Symphony No. 4 in B-flat major","Ludwig van Beethoven","Classical","Joyful","Schumann called it \"a slender Greek maiden between two Norse giants.\""],
+[80,"Symphony No. 8 in F major","Ludwig van Beethoven","Classical","Playful","Beethoven's own favourite among his symphonies, though the public preferred the others."],
+[81,"Symphony No. 8 \"Unfinished\" — 1st mvt","Franz Schubert","Romantic","Melancholic","Two movements, then silence — nobody knows for certain why Schubert stopped."],
+[82,"Trout Quintet — 4th mvt","Franz Schubert","Romantic","Playful","Variations on his own song \"Die Forelle,\" written for an unusual piano-and-strings lineup."],
+[83,"Serenade (Ständchen)","Franz Schubert","Romantic","Yearning","A moonlit love song, later arranged for every instrument imaginable."],
+[84,"Impromptu Op. 90 No. 3","Franz Schubert","Romantic","Tender","A flowing barcarolle-like melody, one of the most lyrical of his solo piano works."],
+[85,"William Tell Overture","Gioachino Rossini","Romantic","Triumphant","Four minutes of galloping brass that outran the opera itself in popularity."],
+[86,"The Barber of Seville — Overture","Gioachino Rossini","Romantic","Playful","Written so fast Rossini reportedly recycled it from two earlier, failed operas."],
+[87,"Wedding March — A Midsummer Night's Dream","Felix Mendelssohn","Romantic","Triumphant","Composed for Shakespeare, now the most-played recessional in Western weddings."],
+[88,"Violin Concerto in E minor","Felix Mendelssohn","Romantic","Yearning","The soloist enters within seconds — no orchestral introduction, a radical choice in 1845."],
+[89,"A Midsummer Night's Dream — Overture","Felix Mendelssohn","Romantic","Playful","Written when Mendelssohn was just 17, conjuring fairies from four soft opening chords."],
+[90,"Symphony No. 4 \"Italian\"","Felix Mendelssohn","Romantic","Joyful","Sunlight and travel diary in symphonic form, inspired by his trip to Italy."],
+[91,"Songs Without Words, Op. 19 No. 1","Felix Mendelssohn","Romantic","Tender","Piano miniatures that sing without a single word ever being sung."],
+[92,"Fantaisie-Impromptu, Op. 66","Frédéric Chopin","Romantic","Passionate","Published only after Chopin's death, against his own explicit wishes."],
+[93,"Minute Waltz, Op. 64 No. 1","Frédéric Chopin","Romantic","Playful","Nicknamed for a dog chasing its tail — rarely actually playable in sixty seconds."],
+[94,"Revolutionary Étude, Op. 10 No. 12","Frédéric Chopin","Romantic","Turbulent","Written, tradition holds, on hearing that Warsaw had fallen to Russian forces."],
+[95,"Prelude \"Raindrop,\" Op. 28 No. 15","Frédéric Chopin","Romantic","Melancholic","A repeated note said to mirror rain on the roof of a Majorcan monastery."],
+[96,"Polonaise \"Heroic,\" Op. 53","Frédéric Chopin","Romantic","Heroic","A defiant, martial dance written for a Poland Chopin would never see again."],
+[97,"Ballade No. 1 in G minor","Frédéric Chopin","Romantic","Dramatic","The piece that essentially invented the piano ballade as a form."],
+[98,"Waltz Op. 64 No. 2","Frédéric Chopin","Romantic","Melancholic","A waltz too introspective for any actual dance floor."],
+[99,"Nocturne in C-sharp minor, Op. posth.","Frédéric Chopin","Romantic","Melancholic","Written for his sister, published only decades after Chopin's death."],
+[100,"Étude \"Tristesse,\" Op. 10 No. 3","Frédéric Chopin","Romantic","Nostalgic","Chopin reportedly said he'd never written anything so beautiful."],
+[101,"Träumerei — Kinderszenen","Robert Schumann","Romantic","Tender","\"Dreaming\" — the best-known of Schumann's scenes from childhood."],
+[102,"Piano Concerto in A minor","Robert Schumann","Romantic","Passionate","Written for his wife Clara, one of the era's greatest pianists."],
+[103,"Carnaval, Op. 9","Robert Schumann","Romantic","Whimsical","A masked ball in music, with movements named for Schumann's own alter egos."],
+[104,"Liebestraum No. 3","Franz Liszt","Romantic","Passionate","\"Dream of Love\" — originally a song, now a piano showpiece of surging romance."],
+[105,"Hungarian Rhapsody No. 2","Franz Liszt","Romantic","Dramatic","A slow, mournful opening exploding into one of the most famous piano showpieces ever written."],
+[106,"La Campanella","Franz Liszt","Romantic","Whimsical","\"The Little Bell\" — a dazzling homage to Paganini's violin fireworks, reborn for piano."],
+[107,"Un Sospiro","Franz Liszt","Romantic","Yearning","\"A Sigh\" — hands crossing constantly to spin one continuous melodic line."],
+[108,"Consolation No. 3","Franz Liszt","Romantic","Serene","One of Liszt's gentlest, most Chopin-like miniatures."],
+[109,"Ride of the Valkyries","Richard Wagner","Romantic","Heroic","Warrior goddesses gathering fallen heroes — opera's most quoted orchestral moment."],
+[110,"Tannhäuser — Overture","Richard Wagner","Romantic","Dramatic","A pilgrim's hymn against a swirl of temptation, compressed into fifteen minutes."],
+[111,"Prelude to Tristan und Isolde","Richard Wagner","Romantic","Yearning","The famous \"Tristan chord\" that unsettled Western harmony for a century after."],
+[112,"La Traviata — Brindisi","Giuseppe Verdi","Romantic","Joyful","\"Let's drink\" — opera's most famous toast, sung by two people about to fall in love."],
+[113,"Aida — Triumphal March","Giuseppe Verdi","Romantic","Triumphant","Written for an opera commissioned to celebrate the opening of the Suez Canal."],
+[114,"Rigoletto — La donna è mobile","Giuseppe Verdi","Romantic","Playful","So catchy Verdi withheld it from rehearsals to stop it leaking before opening night."],
+[115,"Requiem — Dies Irae","Giuseppe Verdi","Romantic","Dramatic","\"Day of Wrath\" — a requiem so theatrical some called it an opera in disguise."],
+[116,"Hungarian Dance No. 5","Johannes Brahms","Romantic","Playful","A czardas-inspired dance Brahms admitted he adapted, not composed outright."],
+[117,"Symphony No. 1 — Finale","Johannes Brahms","Romantic","Triumphant","Twenty years in the making — Brahms felt Beethoven's shadow over every bar."],
+[118,"Violin Concerto in D major","Johannes Brahms","Romantic","Majestic","Written for his friend Joseph Joachim, and still one of the four great German concertos."],
+[119,"Academic Festival Overture","Johannes Brahms","Romantic","Joyful","A thank-you for an honorary degree, woven from German student drinking songs."],
+[120,"Symphony No. 4 in E minor","Johannes Brahms","Romantic","Solemn","Ends in a passacaglia — a Baroque form Brahms revived for his final symphony."],
+[121,"Symphony No. 7 — Adagio","Anton Bruckner","Romantic","Sublime","Written as Bruckner sensed Wagner's death approaching — a slow, cathedral-like farewell."],
+[122,"Violin Concerto No. 1 — 1st mvt","Max Bruch","Romantic","Passionate","Bruch grew to resent how far it eclipsed the rest of his output."],
+[123,"Danse Macabre","Camille Saint-Saëns","Romantic","Mysterious","Death tunes his fiddle at midnight and calls the skeletons out to dance."],
+[124,"Organ Symphony No. 3 — Finale","Camille Saint-Saëns","Romantic","Triumphant","A full pipe organ crashing in against the orchestra — used memorably in \"Babe.\""],
+[125,"Carmen — Habanera","Georges Bizet","Romantic","Passionate","\"Love is a rebellious bird\" — Carmen's entrance, and opera's most seductive theme."],
+[126,"Carmen — Toreador Song","Georges Bizet","Romantic","Triumphant","A bullfighter's boastful aria, now one of opera's most recognisable tunes anywhere."],
+[127,"1812 Overture","Pyotr Ilyich Tchaikovsky","Romantic","Triumphant","Written with real cannon fire in mind, to mark Russia's defeat of Napoleon."],
+[128,"Piano Concerto No. 1 in B-flat minor","Pyotr Ilyich Tchaikovsky","Romantic","Heroic","Rejected by its intended pianist as unplayable — now among the most beloved concertos alive."],
+[129,"Violin Concerto in D major","Pyotr Ilyich Tchaikovsky","Romantic","Passionate","Once dismissed by a critic as music that \"stinks to the ear\" — now a staple of the repertoire."],
+[130,"Romeo and Juliet — Fantasy Overture","Pyotr Ilyich Tchaikovsky","Romantic","Passionate","Shakespeare's lovers rendered in one of music's most famous love themes."],
+[131,"Serenade for Strings","Pyotr Ilyich Tchaikovsky","Romantic","Tender","Tchaikovsky called it a heartfelt homage to Mozart, written purely for pleasure."],
+[132,"Sleeping Beauty — Waltz","Pyotr Ilyich Tchaikovsky","Romantic","Joyful","One of ballet's grandest waltzes, from the score Tchaikovsky considered his finest."],
+[133,"Marche Slave","Pyotr Ilyich Tchaikovsky","Romantic","Solemn","Written to raise funds for soldiers, weaving in Serbian folk melodies and the Russian anthem."],
+[134,"Pictures at an Exhibition — The Great Gate of Kiev","Modest Mussorgsky","Nationalist","Majestic","A piano piece inspired by a friend's paintings, later orchestrated into a monumental finale."],
+[135,"Night on Bald Mountain","Modest Mussorgsky","Nationalist","Mysterious","A witches' sabbath at midnight, later immortalised by Disney's \"Fantasia.\""],
+[136,"Polovtsian Dances — Prince Igor","Alexander Borodin","Nationalist","Ecstatic","Later reworked into the musical \"Kismet\" as the song \"Stranger in Paradise.\""],
+[137,"Scheherazade — 1st mvt","Nikolai Rimsky-Korsakov","Nationalist","Mysterious","A storyteller saving her life one tale at a time, painted in shifting orchestral colour."],
+[138,"Slavonic Dance No. 8","Antonín Dvořák","Nationalist","Joyful","Bohemian folk rhythms dressed in full symphonic colour."],
+[139,"Humoresque No. 7","Antonín Dvořák","Nationalist","Playful","A short piano piece so catchy it's since been given at least three different sets of lyrics."],
+[140,"Cello Concerto in B minor","Antonín Dvořák","Nationalist","Nostalgic","Written in America but aching for home — Brahms reportedly wept on first hearing it."],
+[141,"The Moldau — Má vlast","Bedřich Smetana","Nationalist","Nostalgic","A river's journey across Bohemia, from two small springs to a great, surging current."],
+[142,"In the Hall of the Mountain King","Edvard Grieg","Nationalist","Mysterious","A troll king's chase, growing louder and faster until it becomes pure menace."],
+[143,"Piano Concerto in A minor","Edvard Grieg","Nationalist","Heroic","Grieg's only piano concerto, and one of the most-performed in the world."],
+[144,"Holberg Suite — Prelude","Edvard Grieg","Nationalist","Joyful","A tribute to an 18th-century playwright, written in a deliberately antique style."],
+[145,"Valse Triste","Jean Sibelius","Nationalist","Melancholic","A dying woman dances one last waltz with a memory of her husband."],
+[146,"Symphony No. 2 — Finale","Jean Sibelius","Nationalist","Triumphant","Widely read, though Sibelius denied it, as a symbol of Finnish national struggle."],
+[147,"Pomp and Circumstance March No. 1","Edward Elgar","Romantic","Triumphant","The graduation march the world knows, fitted later with the words \"Land of Hope and Glory.\""],
+[148,"Cello Concerto in E minor","Edward Elgar","Romantic","Solemn","Written in the shadow of the First World War, an elegy for a vanished world."],
+[149,"Requiem — In Paradisum","Gabriel Fauré","Romantic","Sublime","Fauré called death \"a happy deliverance\" — this is what that sounded like to him."],
+[150,"Sicilienne","Gabriel Fauré","Romantic","Tender","A lilting, lullaby-like dance, originally written for a stage production."],
+[151,"Prelude to the Afternoon of a Faun","Claude Debussy","Impressionist","Dreamlike","A single flute line that composer Pierre Boulez said marked the start of modern music."],
+[152,"Arabesque No. 1","Claude Debussy","Impressionist","Serene","Flowing, ornamental piano writing that helped define the Impressionist sound."],
+[153,"La Mer","Claude Debussy","Impressionist","Turbulent","Three symphonic sketches of the sea, from dawn calm to a churning storm."],
+[154,"Rêverie","Claude Debussy","Impressionist","Dreamlike","An early, dreamy work Debussy later dismissed — audiences never agreed with him."],
+[155,"Pavane pour une infante défunte","Maurice Ravel","Impressionist","Nostalgic","\"Pavane for a Dead Princess\" — no princess in particular, Ravel insisted, just the word's sound."],
+[156,"Daphnis et Chloé — Suite No. 2","Maurice Ravel","Impressionist","Radiant","Ravel considered this ballet score his finest work — sunrise rendered in pure orchestral colour."],
+[157,"Piano Concerto in G major — Adagio","Maurice Ravel","Modern","Serene","A long, unhurried melody Ravel said he wrote \"bar by bar,\" like Mozart before him."],
+[158,"Gnossienne No. 1","Erik Satie","Modern","Mysterious","No bar lines, no key signature — Satie inventing a new kind of musical space."],
+[159,"O mio babbino caro","Giacomo Puccini","Romantic","Yearning","\"Oh my dear papa\" — a daughter's plea, one of opera's most-loved short arias."],
+[160,"Un bel dì — Madama Butterfly","Giacomo Puccini","Romantic","Yearning","\"One fine day\" — hope sung by a woman waiting for a return that never comes."],
+[161,"E lucevan le stelle — Tosca","Giacomo Puccini","Romantic","Melancholic","A man's final memory of love, sung hours before his execution."],
+[162,"Cavalleria Rusticana — Intermezzo","Pietro Mascagni","Romantic","Solemn","A wordless pause for breath in the middle of an opera about betrayal and revenge."],
+[163,"Prelude in C-sharp minor","Sergei Rachmaninoff","Late Romantic","Dramatic","Written when Rachmaninoff was just 19 — he grew tired of audiences demanding it forever."],
+[164,"Vocalise","Sergei Rachmaninoff","Late Romantic","Yearning","A song with no words at all, just an open vowel carrying pure melody."],
+[165,"Symphony No. 2 — Adagio","Sergei Rachmaninoff","Late Romantic","Passionate","One long, unbroken melodic line, unfurling for nearly fifteen minutes."],
+[166,"Piano Concerto No. 3 — 1st mvt","Sergei Rachmaninoff","Late Romantic","Heroic","Nicknamed \"Rach 3\" for its ferocious technical demands, later the subject of the film \"Shine.\""],
+[167,"Mars, the Bringer of War — The Planets","Gustav Holst","Modern","Turbulent","A relentless 5/4 rhythm that influenced nearly every film-score war theme since."],
+[168,"The Lark Ascending","Ralph Vaughan Williams","Modern","Sublime","A solo violin imitates a bird rising and vanishing into open English sky."],
+[169,"Fantasia on Greensleeves","Ralph Vaughan Williams","Modern","Nostalgic","A centuries-old English folk tune, rewoven into orchestral gold."],
+[170,"Symphony No. 5 — 3rd mvt","Ralph Vaughan Williams","Modern","Serene","Composed during the Second World War, radiating an unlikely, hard-won calm."],
+[171,"Also Sprach Zarathustra — Introduction","Richard Strauss","Late Romantic","Majestic","A sunrise fanfare later used to open Stanley Kubrick's \"2001: A Space Odyssey.\""],
+[172,"Der Rosenkavalier — Suite","Richard Strauss","Late Romantic","Radiant","Waltzes for a Vienna that, by the time Strauss wrote them, already felt like nostalgia."],
+[173,"Tales from the Vienna Woods","Johann Strauss II","Romantic","Joyful","A zither solo mid-waltz brings the Viennese countryside straight into the ballroom."],
+[174,"Orpheus in the Underworld — Can-Can","Jacques Offenbach","Romantic","Ecstatic","Written for the underworld, now the default soundtrack for any kick-line."],
+[175,"Barcarolle — The Tales of Hoffmann","Jacques Offenbach","Romantic","Tender","A Venetian boat-song duet, finished by others after Offenbach's death."],
+[176,"Flower Duet — Lakmé","Léo Delibes","Romantic","Serene","Two voices twining together beside a river — later famous from countless adverts."],
+[177,"Minuet — String Quintet in E","Luigi Boccherini","Classical","Playful","A courtly little dance that far outlived the obscurity of the rest of Boccherini's output."],
+[178,"Caprice No. 24","Niccolò Paganini","Romantic","Dramatic","A theme so adaptable that Brahms, Liszt, Rachmaninoff and others all wrote variations on it."],
+[179,"The Rite of Spring — Introduction","Igor Stravinsky","Modern","Mysterious","Its 1913 premiere caused a riot — a bassoon pushed to the very top of its range."],
+[180,"The Firebird — Finale","Igor Stravinsky","Modern","Triumphant","A magical bird's theme building to one of ballet's most thrilling closing pages."],
+[181,"Romeo and Juliet — Dance of the Knights","Sergei Prokofiev","Modern","Dramatic","Crushing, stamping chords that scored a masked ball — and, decades later, a TV talent show."],
+[182,"Peter and the Wolf","Sergei Prokofiev","Modern","Whimsical","A symphonic fairy tale where each character gets their own instrument."],
+[183,"Piano Concerto No. 2 — 1st mvt","Sergei Prokofiev","Modern","Turbulent","So difficult its premiere reportedly emptied half the concert hall in confusion."],
+[184,"Waltz No. 2 — Jazz Suite","Dmitri Shostakovich","Modern","Nostalgic","Soviet dance-hall music, both sincere and quietly, knowingly theatrical."],
+[185,"Symphony No. 5 — Finale","Dmitri Shostakovich","Modern","Triumphant","Publicly a celebration, privately (Shostakovich later said) something closer to forced rejoicing."],
+[186,"Sabre Dance","Aram Khachaturian","Modern","Ecstatic","A whirlwind two minutes written, the composer claimed, in a single night under deadline."],
+[187,"Symphony No. 5 — Adagietto","Gustav Mahler","Late Romantic","Yearning","A love letter in music, for strings and harp alone, later used in \"Death in Venice.\""],
+[188,"Symphony No. 1 \"Titan\" — 3rd mvt","Gustav Mahler","Late Romantic","Mysterious","A funeral march built, unforgettably, on a minor-key \"Frère Jacques.\""],
+[189,"Fanfare for the Common Man","Aaron Copland","Modern","Majestic","Written during wartime to honour ordinary soldiers, not generals or kings."],
+[190,"Appalachian Spring","Aaron Copland","Modern","Serene","American folk simplicity, built around the Shaker tune \"Simple Gifts.\""],
+[191,"Rhapsody in Blue","George Gershwin","Modern","Ecstatic","A clarinet's opening wail bridges jazz and the concert hall in one gesture."],
+[192,"An American in Paris","George Gershwin","Modern","Playful","Gershwin bought real Parisian taxi horns to use as orchestral instruments."],
+[193,"Pines of Rome","Ottorino Respighi","Modern","Majestic","Ends with a recording of a real nightingale, and an offstage army approaching."],
+[194,"The Birds — Suite","Ottorino Respighi","Modern","Whimsical","Baroque birdsong tunes reorchestrated into a playful modern suite."],
+[195,"Symphony in D minor","César Franck","Romantic","Dramatic","A single theme transformed across three movements, tightly and ingeniously unified."],
+[196,"Méditation — Thaïs","Jules Massenet","Romantic","Serene","A solo violin interlude for a courtesan's moment of quiet spiritual doubt."],
+[197,"Romanian Rhapsody No. 1","George Enescu","Nationalist","Ecstatic","Folk tunes from Enescu's homeland, building to a whirling, joyous finish."],
+[198,"Sinfonietta","Leoš Janáček","Modern","Triumphant","Opens with a fanfare for twelve trumpets — written to celebrate Czech independence."],
+[199,"O Sacred Head Now Wounded — St Matthew Passion","Johann Sebastian Bach","Baroque","Solemn","A chorale melody so central Bach returns to it five times across the Passion."],
+[200,"Piano Sonata No. 21 \"Waldstein\"","Ludwig van Beethoven","Classical","Radiant","Dedicated to his patron and friend, and among the most technically demanding of his sonatas."]
+];
+
+/* Deep-dive content for the 30 Deckoviz Curations (keyed by rank) */
+const DEEP_CONTENT = {
+1:{
+  overview:"Beethoven's Fifth opens with the most famous four notes in music: short-short-short-long, hammered out in unison before the piece has even found its key. What follows is a forty-minute argument between darkness and light, built almost entirely from that one rhythmic cell. It is not a piece about a story so much as a piece about a process — a motif so small it could be a knock at the door, expanded until it becomes an entire symphony.",
+  history:"Beethoven composed the Fifth between 1804 and 1808, during the same years he wrote the 'Heiligenstadt Testament,' a private letter confessing his despair over his encroaching deafness. Europe itself was in upheaval, with Napoleon's armies reshaping the continent. The symphony premiered in December 1808 in Vienna, at a brutally long concert in an unheated theatre, and was initially received with confusion rather than the reverence it commands today.",
+  emotion:"The first movement feels like being pursued — anxious, clipped, refusing to resolve. The second movement offers a moment of lyrical rest, tender without ever fully relaxing its guard. The third movement rebuilds tension in the shadows, and then, without pause, the finale breaks into blazing C major: trombones enter for the first time in symphonic history, and the anxious motif that opened the piece is finally, triumphantly, resolved.",
+  analysis:"The opening motif (short-short-short-long) is often called the 'fate knocking at the door' figure, though that label came from Beethoven's secretary, not the composer himself. What matters musically is the rhythm, not the pitch: Beethoven builds nearly every theme in all four movements from some variant of this pattern, so the whole symphony feels organically grown from a single cell. The bridge from the stormy third movement into the triumphant fourth, played without a break, was itself a structural innovation — nobody had connected movements that way before.",
+  notes:"The symphony's opening rhythm — dot-dot-dot-dash — happens to match the letter V in Morse code, which the BBC used as a call sign for Allied broadcasts during the Second World War, unintentionally cementing the piece as a symbol of resistance and victory a full century after it was written."
+},
+2:{
+  overview:"A single held chord, a rushing downward flourish, and then silence — the opening of Bach's Toccata and Fugue in D minor is one of the most instantly recognisable gestures in all of music, even for people who couldn't name the piece. A free, improvisatory toccata gives way to a tightly constructed fugue, where one melodic line multiplies into four independent voices weaving around each other on the organ.",
+  history:"Long attributed to Bach's years as a young organist in Arnstadt around 1704–1707, the piece's authorship has actually been debated by scholars for decades — some structural quirks don't quite match Bach's usual habits, and it may have originated as a violin piece later adapted for organ. Its wide fame is a much later phenomenon, driven almost entirely by 19th and 20th century arrangements and, eventually, by film and cartoon soundtracks.",
+  emotion:"It feels theatrical almost by design — the toccata section is full of dramatic pauses, sudden runs, and unresolved tension, like a storm gathering and breaking in waves. The fugue that follows channels that same restless energy into something more disciplined but no less intense, voices chasing one another until the piece resolves in a final, unified blaze of chords.",
+  analysis:"A toccata (from the Italian 'to touch') is a free, virtuosic form meant to show off both the performer's hands and the instrument's capabilities — hence the dramatic opening flourish. The fugue that follows introduces a single subject that then enters in different voices at different pitches, each new entry layering over the last, a technique that turns one melodic idea into a dense, self-sustaining texture entirely through counterpoint.",
+  notes:"Despite being permanently associated with vampires and haunted houses, the piece had no such reputation in Bach's own lifetime — its 'spooky' status is almost entirely a 20th-century invention, cemented by its use in Disney's 'Fantasia' and countless horror-adjacent films since."
+},
+3:{
+  overview:"'Spring' opens Vivaldi's Four Seasons with birdsong rendered in trilling violins, a gentle stream in flowing arpeggios, and, in the middle movement, a literal thunderstorm complete with flashing lightning in the strings. It is program music centuries before the term existed — Vivaldi wrote a set of sonnets, possibly his own, that map almost line by line onto the notes.",
+  history:"Published in 1725 as part of a larger collection, Il cimento dell'armonia e dell'inventione, the Four Seasons was groundbreaking for pairing each concerto with a descriptive poem, printed directly in the score so performers and listeners alike could follow exactly what each passage depicted. It became enormously popular in Vivaldi's own lifetime and then fell into near-total obscurity for two centuries before a 20th-century revival made it one of the most recorded pieces in classical music.",
+  emotion:"The opening movement is pure, uncomplicated joy — birds calling to one another, a gentle breeze, an easy warmth after winter. The storm passage plunges suddenly into tension and unease before the sun returns and a shepherd's dog barks quietly (a viola, marked in the score, deliberately 'barking') in the final movement's pastoral calm.",
+  analysis:"Vivaldi uses solo violin lines to represent specific birds — listen for the quick, high trills that mimic distinct birdsong patterns — while tremolo strings represent the storm's building intensity in the second movement. Each of the concerto's three movements corresponds directly to a stanza of the accompanying sonnet, making this some of the most literal 'storytelling' music of the entire Baroque period.",
+  notes:"Vivaldi's manuscript includes actual letters in the margins of the score — a, b, c and so on — that correspond directly to lines of the sonnet, effectively an annotated guide from the composer himself for exactly which notes represent which images."
+},
+4:{
+  overview:"Eight notes in the bass, repeating without variation for the entire piece, while three violins spin twenty-eight increasingly elaborate variations above them. Pachelbel's Canon is built on almost nothing, and yet it has become one of the most recognisable pieces of music in the world, largely through its ubiquity at weddings.",
+  history:"Composed sometime around 1680–1706, likely for a wedding or similar ceremonial occasion, the piece was virtually unknown for nearly 300 years. It was rediscovered and popularised only in the late 1960s through a recording by the Jean-François Paillard chamber orchestra, after which it rapidly became one of the most licensed pieces of music in film, television, and wedding ceremonies worldwide.",
+  emotion:"There's a hypnotic, almost meditative calm to the repeating bassline, against which the violins feel like conversation gradually blossoming into elaboration — starting simple, growing more intricate and joyful without ever losing the sense of gentle, ceremonial stateliness underneath.",
+  analysis:"The technique is called a 'ground bass' or basso ostinato — a short repeating pattern in the lowest voice over which everything else is built. Pachelbel's genius is in how much variety he extracts from such a constrained structure: the same eight-note pattern repeats 28 times, while the violins move through increasingly complex rhythmic subdivisions above it, from long sustained notes to rapid running figures.",
+  notes:"The chord progression underneath the canon — now often called 'the Pachelbel progression' — has since been reused, sometimes note-for-note, in a huge number of pop songs, prompting the comedy musician Rob Paravonian's famous 'Pachelbel Rant' about cellists forever stuck playing the same eight notes."
+},
+5:{
+  overview:"A quiet, rippling triplet figure in the right hand, a slow melody moving above it, and a hushed, sustained darkness throughout — the first movement of the Moonlight Sonata is one of the most intimate pieces Beethoven ever wrote for solo piano, deliberately marked to be played 'delicately and without dampers,' letting the notes blur into one another.",
+  history:"Composed in 1801 and dedicated to Countess Giulietta Guicciardi, a young piano student Beethoven was reportedly infatuated with, the sonata was written during a period when Beethoven was privately grappling with the early, terrifying signs of his hearing loss. The famous 'Moonlight' nickname wasn't Beethoven's at all — it was attached decades later by a critic who compared the first movement to moonlight on Lake Lucerne.",
+  emotion:"There's a stillness here that borders on grief — not dramatic sorrow, but a quiet, private kind of sadness, turned inward. The repeated triplets never quite let the melody rest, creating a sense of restless calm, as though something is being held very carefully in place.",
+  analysis:"Beethoven marked the movement 'Adagio sostenuto' and instructed the pianist to keep the sustain pedal down throughout — an unusual and, on modern pianos, controversial choice, since it causes the harmonies to blur together far more than on the instruments of his own time. The famous triplet accompaniment sits low in the texture, almost like a held breath, while the melody floats above it in long, unhurried phrases.",
+  notes:"Beethoven himself never called this his best sonata — he reportedly felt the later 'Appassionata' was far superior, and was said to be irritated that the first movement of the 'Moonlight' became so disproportionately famous compared to the rest of his output."
+},
+6:{
+  overview:"Debussy's 'Clair de Lune' — 'moonlight' — is the third movement of his Suite bergamasque, and one of the most instantly identifiable pieces of piano music ever written: a slow, floating melody over softly shifting harmonies that never quite resolve the way a listener expects.",
+  history:"Debussy began the Suite bergamasque around 1890 but didn't publish it until 1905, revising it substantially in the intervening years. The title was inspired by a Paul Verlaine poem of the same name, which describes maskers and dancers under a moon that makes them all seem 'sad and beautiful.' It arrived at the dawn of what would become known as musical Impressionism.",
+  emotion:"It feels suspended — weightless, drifting, neither fully happy nor sad. The harmonies move in ways that avoid strong resolution, creating a sense of gentle uncertainty, like moonlight itself: soft, indirect, and constantly shifting.",
+  analysis:"Debussy avoids traditional functional harmony almost entirely here, favouring parallel chords and modal scales that create colour rather than clear direction. The melody rarely lands on where a 19th-century ear would expect — this deliberate ambiguity is the hallmark of Impressionist music, prioritising atmosphere and sensation over narrative resolution.",
+  notes:"The piece has appeared in dozens of films, from 'Ocean's Eleven' to 'Twilight,' almost always used as shorthand for romance, mystery, or introspection — a testament to how completely its mood has become part of the wider cultural vocabulary."
+},
+7:{
+  overview:"Chopin's Nocturne in E-flat major begins with a single, songlike melody that returns twice, each time more ornamented and expressive than the last, as if the same feeling is being expressed with growing intensity each time it's revisited.",
+  history:"Composed around 1830–1832, when Chopin was in his early twenties and newly arrived in Paris, this nocturne became one of his most celebrated works during his own lifetime — a rarity, since much of his output was appreciated more fully after his death. The nocturne form itself, borrowed from Irish composer John Field, was one Chopin would make entirely his own.",
+  emotion:"There's a bittersweet, conversational quality — the melody feels almost vocal, like an aria without words, moving between tenderness and quiet yearning without ever tipping into full melancholy.",
+  analysis:"The form is straightforward — a melody stated, then restated twice with increasing ornamentation — but the interest lies almost entirely in how the melody is decorated each time it returns, using trills, turns, and rubato (expressive flexibility of tempo) to make each repetition feel like a fresh outpouring of feeling rather than a mechanical repeat.",
+  notes:"Chopin reportedly played his own nocturnes with far more rhythmic freedom than the printed score suggests, famously telling a student that the left hand should be a strict conductor while the right hand is free to 'sing' — a philosophy that shaped how pianists interpret Chopin's rubato to this day."
+},
+8:{
+  overview:"'Lacrimosa' — 'weeping' — is the section of Mozart's Requiem where the text turns to a plea for mercy on the day of judgment. It is famous not only for its music but for the circumstances of its composition: Mozart wrote only the first eight bars before he died, and the rest was completed by his student Franz Xaver Süssmayr.",
+  history:"Mozart was commissioned to write the Requiem anonymously in 1791 by a nobleman intending to pass it off as his own composition. Mozart, already gravely ill, worked on it obsessively, reportedly believing he was writing his own funeral mass. He died on December 5, 1791, mid-composition, and the piece was completed by Süssmayr based on Mozart's sketches and, reportedly, his own recollection of conversations with the dying composer.",
+  emotion:"There's an almost unbearable weight to the opening bars — a slow, grieving descent in the strings under a hushed choral entrance — made more affecting by the knowledge that these were among the last notes Mozart himself ever wrote.",
+  analysis:"The movement builds through a repeated sighing figure in the strings, a musical gesture long associated with grief in the Baroque and Classical periods, while the choir enters with a melody that rises and falls like weeping itself. The famous break in the manuscript happens right after the eighth bar — scholars can point to the exact note where Mozart's own handwriting stops.",
+  notes:"Süssmayr's completion has been challenged and reworked by numerous scholars and composers since, including a well-regarded 1971 completion by Franz Beyer — but the original Süssmayr version, imperfect as it may be, remains the one most commonly performed."
+},
+9:{
+  overview:"'A Little Night Music' is exactly what its title promises — light, elegant, effortlessly charming chamber music, written for strings alone, with no grander program or story attached to it whatsoever.",
+  history:"Mozart entered the piece into his own catalogue of works on August 10, 1787, but almost nothing else is known about why he wrote it — no commission, no dedication, no occasion has ever been identified. It was likely intended as light evening entertainment, a genre known as 'Nachtmusik' that was common for social gatherings of the era.",
+  emotion:"Pure, uncomplicated pleasure — bright, symmetrical phrases that feel instantly familiar even on a first listen, radiating the kind of effortless charm that made Mozart's contemporaries describe his music as 'natural.'",
+  analysis:"The movement is in textbook sonata form, but what stands out is the melodic clarity: each phrase answers the one before it in perfectly balanced four- and eight-bar units, a hallmark of the Classical style's emphasis on symmetry and proportion over the more expansive, less predictable phrasing of the Romantic era that followed.",
+  notes:"The piece was originally written in five movements, but one — a second minuet — was lost; only its absence in the manuscript's page numbering tells us it ever existed at all."
+},
+10:{
+  overview:"The main theme of Swan Lake, first heard on solo oboe over shimmering strings, represents Odette — a princess transformed into a swan by a sorcerer's curse, able to become human only between midnight and dawn.",
+  history:"Tchaikovsky composed Swan Lake in 1875–76, his first ballet score, for the Bolshoi Theatre in Moscow. Its original 1877 production was poorly received, hampered by weak choreography and an under-rehearsed orchestra; the ballet only achieved the legendary status it holds today after a revised production in 1895, following Tchaikovsky's death, choreographed by Marius Petipa and Lev Ivanov.",
+  emotion:"Aching and unresolved — the oboe melody rises and falls with a kind of longing that never quite settles, mirroring Odette's own suspended state between two forms, neither fully human nor fully swan.",
+  analysis:"The theme is built on a descending minor melody that keeps reaching upward only to fall back down, a musical shape that mirrors both flight and the inescapability of the curse. Tchaikovsky uses recurring leitmotif-like treatment of this theme throughout the ballet, a technique more commonly associated with Wagner's operas than with ballet scores of the era.",
+  notes:"Despite now being considered one of the greatest ballet scores ever written, critics at its 1877 premiere dismissed the music itself as 'too complicated' and 'too symphonic' for dance — a judgment history has thoroughly reversed."
+},
+11:{
+  overview:"A shimmering harp cadenza opens into one of the most opulent waltzes Tchaikovsky ever orchestrated, the centrepiece of the Nutcracker's second act, where the Sugar Plum Fairy's kingdom celebrates Clara's arrival with a procession of dances.",
+  history:"The Nutcracker premiered in December 1892 in St. Petersburg, based on a story by E.T.A. Hoffmann as adapted by Alexandre Dumas. Tchaikovsky himself was reportedly unenthusiastic about the commission at first, considering the story slight, though the score he produced became one of the most performed works in the entire ballet repertoire.",
+  emotion:"Lavish and celebratory — the waltz builds in sweeping, symmetrical phrases that feel like swirling movement itself, radiant without ever tipping into anything but pure festive warmth.",
+  analysis:"The waltz is structured in the traditional 19th-century Viennese pattern — a slow introduction followed by a chain of contrasting melodic sections — but Tchaikovsky's orchestration is what elevates it, using the harp, celesta-adjacent textures, and full string sections in constantly shifting combinations to keep the lush sound in perpetual motion.",
+  notes:"The Nutcracker's now-legendary status as a Christmas tradition took decades to develop — for much of the early 20th century it was performed far less often than Tchaikovsky's other ballets, only becoming an annual holiday fixture in the West after a landmark 1954 New York City Ballet production choreographed by George Balanchine."
+},
+12:{
+  overview:"The second movement of Rachmaninoff's Second Piano Concerto opens with a hushed clarinet melody over rippling piano arpeggios, unfolding into one of the most openly romantic slow movements in the entire concerto repertoire.",
+  history:"Rachmaninoff composed the concerto in 1900–1901 following a period of severe depression and creative block after the disastrous premiere of his First Symphony. He credited hypnotherapy sessions with a physician named Nikolai Dahl, to whom the concerto is dedicated, with restoring his confidence enough to compose again.",
+  emotion:"Unguarded and deeply tender — the melody unfolds slowly, almost reluctantly, before opening into a fuller, more passionate statement, carrying the sense of someone rediscovering the ability to feel and express emotion after a long period of numbness.",
+  analysis:"The movement is built from a single long-breathed melody that migrates between piano and orchestra, growing in richness each time it returns — a technique Rachmaninoff used throughout his output, favouring expansive, continuously unfolding melodic lines over the more fragmented, motif-driven approach of composers like Beethoven.",
+  notes:"The piece's association with recovery and emotional catharsis has made it one of the most frequently used pieces in film to score moments of healing or renewed hope, most famously in 'Brief Encounter' (1945)."
+},
+13:{
+  overview:"A sunrise painted almost entirely in flute and strings, 'Morning Mood' opens Grieg's incidental music for Ibsen's play Peer Gynt — though, notably, the scene it originally accompanied is actually set not at sunrise at home, but in the Moroccan desert.",
+  history:"Grieg composed the incidental music for Peer Gynt in 1874–75 at Ibsen's own request, later extracting the most popular movements into two orchestral suites for concert performance, which is how most listeners encounter the music today, detached from Ibsen's play entirely.",
+  emotion:"Pure, gentle awakening — a simple ascending melody passed between flute, oboe, and strings, radiating calm optimism without ever building to anything dramatic; the feeling is entirely about stillness and gradual brightening.",
+  analysis:"The melody's gentle rising figure, first stated by solo flute, is passed through the orchestra in a slow crescendo of orchestration and dynamics rather than melodic complexity — Grieg builds the sense of 'dawn breaking' almost entirely through gradually thickening texture and rising volume rather than harmonic drama.",
+  notes:"Despite depicting a literal sunrise in the concert suite's popular imagination, in Ibsen's original play this music actually accompanies Peer Gynt waking up lost in the Sahara Desert — a mismatch between the music's popular association and its actual dramatic context that most listeners never learn."
+},
+14:{
+  overview:"'Jupiter, the Bringer of Jollity' is the largest and most celebratory movement of Holst's seven-movement orchestral suite The Planets, each movement representing the astrological character of a different planet rather than its scientific properties.",
+  history:"Holst composed The Planets between 1914 and 1917, largely uninterested in astronomy itself but fascinated by astrology, which was something of a personal hobby. The suite premiered privately in 1918 and publicly in 1920, quickly becoming Holst's most famous work — to his own eventual frustration, as it overshadowed the rest of his output for the remainder of his career.",
+  emotion:"Boisterous and expansive at its outer sections, giving way to a broad, noble central melody that feels almost hymn-like in its warmth and generosity — a movement that moves from festive energy to solemn grandeur and back again.",
+  analysis:"The movement's famous central melody, in a stately triple metre, was composed somewhat separately from the rest and later extracted and set to the patriotic poem 'I Vow to Thee, My Country,' becoming one of England's best-known hymns — a piece of musical recycling entirely independent of Holst's own astrological programme.",
+  notes:"Holst was reportedly uncomfortable with the fame the 'Jupiter' hymn tune achieved once fitted with patriotic lyrics, feeling it distorted the piece's original, more playful astrological intent."
+},
+15:{
+  overview:"'O Fortuna' opens and closes Carl Orff's Carmina Burana, a cantata setting medieval poems about fate, fortune, and the fickleness of life — sung here with a brute, hammering intensity that makes the wheel of fortune feel genuinely frightening.",
+  history:"Orff composed Carmina Burana in 1935–36, drawing his text from a collection of 24 medieval poems and songs discovered in a Bavarian monastery in 1803, written by wandering scholars, students, and clergy in a mix of Latin, German, and Old French. It premiered in Frankfurt in 1937, during the Nazi era, a period whose politics have complicated the piece's legacy ever since.",
+  emotion:"Overwhelming and ominous — relentless repeated rhythms, a full chorus singing at near-maximum volume, and a sense of being crushed by forces entirely beyond one's control, exactly matching the poem's warning that fortune 'ever waxes and wanes.'",
+  analysis:"Orff deliberately strips away complex harmony and counterpoint in favour of simple, driving rhythms and stark dynamic contrasts — a style he called his own return to musical 'elementals.' The famous crescendo is built almost entirely through orchestration and volume rather than melodic or harmonic development, making its power feel primal rather than intellectual.",
+  notes:"Despite being written and premiered under the Nazi regime, and Orff's own ambiguous relationship with that period remaining a subject of historical debate, 'O Fortuna' has since become almost entirely detached from its origins in popular culture, used in everything from film trailers to sports events."
+},
+16:{
+  overview:"'The Blue Danube' opens with a hushed, shimmering string tremolo before the famous waltz melody emerges on horn — a piece so associated with Vienna and the waltz tradition that it's sometimes called Austria's unofficial second national anthem.",
+  history:"Johann Strauss II composed it in 1866, originally for chorus with satirical lyrics reflecting Austria's recent, humiliating military defeat by Prussia; the choral version flopped. Strauss reworked it as a purely orchestral waltz for the 1867 Paris World's Fair, where it became an instant sensation, and it has remained enormously popular ever since.",
+  emotion:"Effortlessly graceful — a sequence of five connected waltz melodies moving from gentle anticipation to full sweeping grandeur, radiating the polished elegance of Vienna's grand ballrooms at their most confident.",
+  analysis:"Structurally, it's not one waltz but a chain of five, linked by a slow introduction and coda, a form Strauss used across many of his works to give a single piece the scope and variety of an entire evening of dances rather than a single repeated tune.",
+  notes:"It is traditionally played, without fail, as the first encore at the Vienna Philharmonic's New Year's Concert every January 1st — a tradition so fixed that the conductor typically interrupts the opening bars to wish the audience a happy new year before starting again from the beginning."
+},
+17:{
+  overview:"Boléro is built from a single melody, repeated over and over without variation, growing louder and more richly orchestrated each time, alongside one relentless snare drum rhythm that never changes for the entire seventeen-minute piece.",
+  history:"Ravel composed Boléro in 1928 on commission from dancer Ida Rubinstein, initially intending it as something of an orchestration experiment rather than a major artistic statement — he reportedly predicted it would be rejected by orchestras for having 'no music' in it. It became, to his own bemused surprise, the most commercially successful piece he ever wrote.",
+  emotion:"Hypnotic, then overwhelming — the unchanging rhythm creates a trance-like state that makes the very gradual increase in volume and orchestral colour feel almost unbearably suspenseful by the piece's final, crashing bars.",
+  analysis:"The entire piece is a single crescendo built through orchestration alone — the melody and harmony barely change at all, but the instruments playing it shift constantly, from solo flute at the opening to the full orchestra in unison by the end, demonstrating just how much emotional intensity can be generated through timbre and dynamics rather than melodic development.",
+  notes:"Ravel reportedly called it 'orchestration without music' — a piece he considered a technical exercise, not a masterpiece — and was genuinely startled by how enthusiastically audiences embraced it."
+},
+18:{
+  overview:"'The Swan' is a solo cello melody, unhurried and gliding, over rippling piano arpeggios representing water — the single serious movement in what was otherwise a comic orchestral suite mocking other composers and musical clichés.",
+  history:"Saint-Saëns wrote The Carnival of the Animals in 1886 as a private joke for friends, poking fun at fellow composers and famous melodies throughout. He was so worried it would damage his reputation as a 'serious' composer that he forbade its publication during his lifetime, with one single exception: he allowed 'The Swan' to be published and performed separately, recognising it as something genuinely beautiful rather than satirical.",
+  emotion:"Graceful and wistful — a long, gliding melody that never rushes, evoking a swan's outward serenity while the rippling piano beneath suggests the constant, unseen effort of paddling just below the surface.",
+  analysis:"The cello line moves in long, sustained phrases while the two pianos beneath provide continuous, gently undulating arpeggios — a simple but effective musical metaphor for the visible calm and invisible effort of swimming, achieved through the contrast between the smooth melodic line and the busier accompaniment underneath.",
+  notes:"'The Swan' became the basis for choreographer Michel Fokine's 1905 solo ballet 'The Dying Swan,' created for Anna Pavlova, which remains one of the most iconic solo pieces in all of ballet."
+},
+19:{
+  overview:"The Largo of Dvořák's 'New World' Symphony opens with a hushed brass chorale before an English horn introduces one of the most instantly recognisable melodies in the symphonic repertoire — a tune so song-like it was later given words entirely.",
+  history:"Dvořák composed the symphony in 1893 during his three-year tenure as director of the National Conservatory in New York, drawing inspiration from what he understood of African American spirituals and Native American music, though the melodies themselves are entirely his own original creations rather than direct quotations.",
+  emotion:"Deep, unhurried longing — a sense of homesickness that could belong equally to Dvořák's own distance from his native Bohemia and to the melody's later adoption as an anthem of longing for countless other listeners.",
+  analysis:"The English horn's famous melody uses a pentatonic-inflected scale that Dvořák associated with the folk idioms he was studying in America, set against sustained, chorale-like harmonies in the strings and brass that give the whole movement a hymn-like stillness.",
+  notes:"In 1922, Dvořák's student William Arms Fisher set words to the Largo melody, creating the spiritual 'Goin' Home' — a song now so widely known in its own right that many people are surprised to learn its melody originated in a symphony rather than as a traditional folk song."
+},
+20:{
+  overview:"Finlandia begins with dark, growling brass representing oppression, before gradually transforming into a serene, hymn-like melody that has come to represent Finnish national identity and resilience.",
+  history:"Sibelius composed Finlandia in 1899, during a period of intensified Russian censorship of Finnish press and culture. The piece was performed under disguised titles at the time to avoid Russian censors, who understood exactly what a patriotic Finnish tone poem could represent, and banned it outright under its true name for several years.",
+  emotion:"A journey from menace to peace — the opening brass chords feel genuinely oppressive and unsettled, while the famous hymn melody that eventually emerges carries a hard-won, dignified calm rather than triumphant celebration.",
+  analysis:"Sibelius structures the piece as a clear dramatic arc: turbulent, dissonant brass opens the work, a faster, more agitated string section builds tension further, and only then does the famous hymn tune emerge in the woodwinds and strings, functioning almost as a resolution to everything that came before it.",
+  notes:"The 'Finlandia Hymn' section was later fitted with independent lyrics and is now sung as a hymn in its own right in numerous languages, including as an unofficial second national anthem of Finland, entirely separate from its original orchestral context."
+},
+21:{
+  overview:"'Nimrod' is the ninth of Elgar's Enigma Variations, each variation a musical portrait of one of Elgar's friends — this one depicting Augustus Jaeger, a friend and publishing editor whose surname, meaning 'hunter' in German, connects to the biblical hunter Nimrod in the movement's title.",
+  history:"Elgar composed the Enigma Variations in 1898–99, and 'Nimrod' specifically recalls an evening when Jaeger, during a period of deep depression and self-doubt for Elgar, reminded him of Beethoven's own struggles and encouraged him to keep composing — a conversation Elgar directly commemorated in this movement's slow, Beethoven-influenced opening phrase.",
+  emotion:"Deeply moving and dignified — the melody builds gradually from a hushed, intimate opening to an overwhelming climax, carrying both gratitude and grief in equal measure, which is why it's become a fixture at British funerals, memorials, and remembrance services.",
+  analysis:"The movement's opening four notes deliberately echo the slow movement of Beethoven's 'Pathétique' Sonata, a private homage to the conversation that inspired it. Elgar builds the movement through a single sustained crescendo, using ever-thickening orchestration and rising melodic sequences to generate its overwhelming emotional weight.",
+  notes:"'Nimrod' is performed every year at Britain's Remembrance Sunday ceremony at the Cenotaph in London, and was also played at the state funerals of both Winston Churchill and Diana, Princess of Wales."
+},
+22:{
+  overview:"Schubert's 'Ave Maria' is, technically, not a setting of the Latin prayer at all — it was originally composed as 'Ellens dritter Gesang' ('Ellen's Third Song'), a setting of a German translation of a poem from Walter Scott's 'The Lady of the Lake,' which happens to open with the words 'Ave Maria.'",
+  history:"Schubert composed it in 1825 as part of a set of seven songs based on Scott's epic poem. It was only later, in the mid-19th century, that arrangers began fitting the melody with the full Latin 'Ave Maria' prayer text, a substitution so successful that most listeners today assume it was always a religious setting.",
+  emotion:"Serene and devotional — a simple, arching melody over a gently rocking accompaniment that suggests both prayer and lullaby, radiating a warmth that transcends its complicated textual origins.",
+  analysis:"The melody's gentle, repeating rhythmic pattern in the accompaniment creates a sense of rocking stillness, over which the vocal line moves in long, unhurried phrases — a straightforward but deeply effective piece of word-painting for a text about protection and comfort, regardless of which words are ultimately sung to it.",
+  notes:"Because the melody fits so naturally with the Latin prayer text despite never being written for it, many recordings and performances today present it as straightforward sacred music, a case of a piece's popular identity almost entirely overtaking its actual origin."
+},
+23:{
+  overview:"Brahms's Lullaby is among the simplest and most universally recognised pieces of music ever written — a gently rocking melody in 3/4 time, built almost entirely from a repeated rhythmic figure that mimics the motion of rocking a cradle.",
+  history:"Brahms composed it in 1868 for the birth of the second son of Bertha Faber, a former choir singer and close friend from his youth in Vienna, whom he reportedly had once been fond of. The melody is thought to be a gentle homage to a song Bertha herself used to sing.",
+  emotion:"Pure, unguarded tenderness — nothing about the piece asks to be admired or analysed; it exists simply to soothe, and its simplicity is precisely what has made it so enduring across cultures and languages for over 150 years.",
+  analysis:"The melody sits almost entirely within a narrow, comfortable vocal range, built from short, repeating phrases that never demand much of the singer or listener — a deliberate simplicity that stands in sharp contrast to the complex symphonic writing Brahms is otherwise known for.",
+  notes:"It is now the most recorded lullaby in history, translated and adapted into dozens of languages, and remains one of the very few pieces of classical music that most people worldwide can hum from memory without ever having studied music."
+},
+24:{
+  overview:"The Hallelujah Chorus closes Part II of Handel's Messiah, a jubilant setting of the word 'Hallelujah' repeated dozens of times across a dense, celebratory choral texture, building toward the declaration that 'the Kingdom of this world is become the Kingdom of our Lord.'",
+  history:"Handel composed the entire Messiah in just 24 days in the summer of 1741, reportedly working with such intensity that he barely ate or slept. It premiered in Dublin in 1742 to raise money for charity, and has been performed annually, often as a Christmas or Easter tradition, ever since.",
+  emotion:"Unrestrained jubilation — a sense of collective, overwhelming celebration built through sheer accumulated momentum, voices and instruments layering on top of one another until the sound feels like it fills an entire cathedral.",
+  analysis:"Handel uses a technique of interlocking choral entrances, where different voice parts enter the word 'Hallelujah' at staggered points, creating constant rhythmic energy and never allowing the texture to feel static, culminating in a famous unison declaration of 'King of Kings' against sustained trumpet fanfares.",
+  notes:"Tradition holds that England's King George II stood up during the chorus at an early performance, prompting the entire audience to rise with him — a gesture audiences have replicated ever since, though historians note the earliest written evidence for the story only appears decades after the fact."
+},
+25:{
+  overview:"Barber's Adagio for Strings is a single, slowly unfolding melodic line passed through the string section, building to an anguished, dissonant climax before falling back into hushed, unresolved silence.",
+  history:"Barber arranged it in 1936 from the slow movement of his String Quartet, Op. 11. Arturo Toscanini premiered the orchestral version with the NBC Symphony Orchestra in 1938, and it quickly became closely associated with public mourning — played on radio after President Roosevelt's death, after President Kennedy's assassination, and after the September 11 attacks.",
+  emotion:"Raw and unguarded grief — the melody climbs steadily upward through the strings, tension mounting almost unbearably, before an abrupt climax gives way to a long, exposed silence and a quiet, unresolved close.",
+  analysis:"The piece is built almost entirely from a single melodic line in close imitative counterpoint, without the harmonic complexity or structural variety of a typical symphonic movement — its power comes almost entirely from the sustained, unbroken intensity of that one rising and falling melodic arc.",
+  notes:"Barber himself was reportedly uneasy about how thoroughly the piece became linked to public tragedy and mourning, feeling it overshadowed the rest of a varied compositional career that included operas, songs, and orchestral works in a much wider emotional range."
+},
+26:{
+  overview:"Satie's Gymnopédie No. 1 moves at a deliberately unhurried pace, built from simple, repeating chords under a spare, wandering melody — music explicitly designed to avoid the drama and grandeur of the Romantic era it emerged from.",
+  history:"Satie composed the three Gymnopédies in 1888, taking the title from an ancient Greek word referring to a ritual dance performed by naked youths — though the precise connection to the music's mood remains characteristically mysterious, in keeping with Satie's often deliberately eccentric approach to naming his own pieces.",
+  emotion:"Wistful and unresolved — the piece drifts rather than develops, creating a mood of gentle, unforced melancholy that never asks for sympathy or resolution, simply existing in its own quiet, suspended space.",
+  analysis:"Satie deliberately avoids the harmonic drama typical of his era, using static, repeating chord patterns and sparse texture instead of dynamic development — a minimalist approach decades ahead of its time that would later directly influence 20th-century ambient and minimalist music.",
+  notes:"Satie later coined the term 'furniture music' for a different set of works meant to blend into the background of a room unnoticed — but the spirit of that idea, music as atmosphere rather than statement, is already fully present in the Gymnopédies, written years earlier."
+},
+27:{
+  overview:"'Nessun Dorma' — 'None shall sleep' — is sung by Prince Calaf, who has bet his life that the icy Princess Turandot will fail to learn his name by dawn; the aria is his private declaration of absolute certainty that he will win her love.",
+  history:"Puccini was still composing Turandot when he died in 1924, leaving the opera's final scenes unfinished; 'Nessun Dorma,' however, was fully completed and had already become one of Puccini's most celebrated arias by the time of his death. The opera premiered posthumously in 1926 at La Scala, with Arturo Toscanini famously stopping the performance at the point where Puccini's own music ended.",
+  emotion:"Defiant confidence building into overwhelming triumph — the aria moves from quiet, private resolve to an unrestrained, soaring declaration, ending on the word 'Vincerò' ('I will win') held at full voice.",
+  analysis:"The aria is built on a long, continuously rising melodic arc, with Puccini reserving the tenor's most powerful high notes for the very final phrase, so that the entire piece feels like it's been building deliberately toward that one climactic, sustained note.",
+  notes:"The aria became a global phenomenon far beyond opera circles after Luciano Pavarotti's performance was used as the theme for BBC television's coverage of the 1990 FIFA World Cup in Italy, introducing it to an audience of hundreds of millions who had likely never otherwise encountered opera."
+},
+28:{
+  overview:"The final movement of Beethoven's Ninth Symphony sets Friedrich Schiller's poem 'Ode to Joy,' bringing solo voices and a full chorus into a symphony for the first time in the genre's history — a radical structural choice that helped redefine what a symphony could be.",
+  history:"Beethoven completed the Ninth in 1824, by which point he was almost completely deaf. He reportedly had to be turned around by a soloist at the premiere to see the audience's standing ovation, since he could not hear it himself. It remains one of the most performed and culturally significant symphonies ever written.",
+  emotion:"A journey from struggle to universal joy — after three movements of tension, lyricism, and unrest, the finale bursts open into an anthem of collective celebration, a message of brotherhood that Beethoven, isolated by his deafness, wrote for a world he could no longer fully hear.",
+  analysis:"Beethoven introduces the famous 'Ode to Joy' theme quietly in the low strings before building it, layer by layer, through the full orchestra and eventually voices, a technique of gradual accumulation that mirrors the movement's larger message of individuals uniting into a collective whole.",
+  notes:"The 'Ode to Joy' melody was adopted as the official anthem of the European Union in 1972, chosen deliberately without lyrics so it could represent unity across the EU's many different languages."
+},
+29:{
+  overview:"Fauré's Pavane is a slow, stately processional dance, originally written for orchestra and later expanded with an optional chorus and choreography, built around a single elegant, unhurried melody.",
+  history:"Fauré composed it in 1887, initially as a purely orchestral piece intended for a series of light summer concerts, before later adding an optional chorus setting a set of frivolous verses about courtship, written by his friend Robert de Montesquiou, largely as an amusement rather than a serious addition.",
+  emotion:"Refined and gently melancholic — the pavane's slow, ceremonial tempo creates a sense of graceful restraint, elegant rather than emotionally intense, closer to wistful nostalgia than sorrow.",
+  analysis:"Fauré's melody moves in long, symmetrical phrases entirely appropriate to the pavane's origins as a slow processional court dance, while his harmony uses the subtly shifting, less strongly directional chords that would come to define much of French music in the following Impressionist generation.",
+  notes:"Fauré was reportedly ambivalent about the piece's popularity relative to his more ambitious chamber and orchestral works, viewing it as a charming but comparatively minor addition to his catalogue."
+},
+30:{
+  overview:"The Bridal Chorus, sung as Elsa is led to her wedding in Wagner's opera Lohengrin, has become the default processional music at Western weddings — though the opera it comes from ends in tragedy almost immediately after this scene.",
+  history:"Wagner composed Lohengrin in 1848, though it premiered in 1850 in Weimar under Franz Liszt's direction while Wagner himself was in political exile. The Bridal Chorus's popularity as wedding music grew substantially in the second half of the 19th century, cemented after its use at the 1858 wedding of Princess Victoria, the eldest daughter of Queen Victoria.",
+  emotion:"Warm and ceremonial — a steady, stately melody built for procession, radiating celebration and formality rather than personal, individual passion, entirely fitting its function as music for a public, communal event.",
+  analysis:"The melody is deliberately simple and singable, built in clear, repeating phrases suited to choral singing on stage, using a steady, unhurried tempo appropriate for an actual wedding procession rather than dramatic operatic display.",
+  notes:"The irony of its popularity is rarely mentioned at the weddings where it's played: in the opera itself, the marriage it accompanies collapses within the same act, when Elsa breaks her vow never to ask her new husband's name or origin."
+}
+};
+
+const CURATION_NOTES = {
+1:"The piece that taught the world what a symphony's opening could sound like — an essential anchor for any collection.",
+2:"Instantly recognisable even to non-listeners, it makes a striking, cinematic first impression on the frame.",
+3:"Vivid, seasonal, and endlessly re-watchable — the storm movement alone is a visualiser's dream.",
+4:"The gentlest possible entry point into classical music, and still one of the most requested pieces anywhere.",
+5:"A study in restraint — proof that a still, quiet piece can hold a room as powerfully as a loud one.",
+6:"Moonlight, literally, made audible — a natural pairing for any evening ambience mode.",
+7:"Chopin's most quietly perfect melody; the kind of piece that rewards a second and third listen.",
+8:"Weight and history in eight bars — a piece that carries its own story even before the annotation begins.",
+9:"Effortless elegance for daytime hours — Mozart at his most immediately likeable.",
+10:"A single oboe line that says more than most full arias — a masterclass in economy.",
+11:"Pure warmth and celebration — ideal for gatherings and festive moods on the frame.",
+12:"Proof that classical music can be a form of recovery, not just performance.",
+13:"The sound of a room waking up — genuinely useful, not just beautiful.",
+14:"Broad, generous, and quietly patriotic without being heavy-handed.",
+15:"The most dramatic ninety seconds in the entire gallery — a deliberate contrast to our gentler picks.",
+16:"Vienna in a single waltz — elegant, familiar, endlessly rewatchable.",
+17:"A masterclass in slow-building tension; watch the visualiser bloom as the orchestration grows.",
+18:"Simple, aching, and over almost before it starts — one of the shortest deeply emotional pieces we have.",
+19:"Homesickness rendered universal — resonates regardless of where you're actually from.",
+20:"A quiet reminder that music can be an act of quiet resistance.",
+21:"Our pick for reflective, contemplative moments — dignity without sentimentality.",
+22:"Devotional stillness that works whether or not you know its complicated origin story.",
+23:"The simplest piece in the whole gallery, and still one of the most requested.",
+24:"Collective joy at full volume — a genuine crowd-pleaser, still, after 280 years.",
+25:"America's grief music, and proof that restraint can carry more weight than volume.",
+26:"Minimalism before minimalism existed — ideal for slow mornings.",
+27:"Sheer, unguarded triumph — the aria that made opera a stadium event.",
+28:"Humanity's hymn to itself, chosen as a deliberate high point of the curated set.",
+29:"Understated French elegance for anyone who wants calm without melancholy.",
+30:"A wry inclusion — beautiful on its own terms, and a good conversation starter about the opera it's actually from."
+};
+
+/* ---------------- build objects ---------------- */
+const GALLERY = GALLERY_RAW.map(r=>({
+  rank:r[0], title:r[1], composer:r[2], era:r[3], mood:r[4], synopsis:r[5],
+  audioUrl:"", curated: !!DEEP_CONTENT[r[0]],
+  deep: DEEP_CONTENT[r[0]] || null,
+  curationNote: CURATION_NOTES[r[0]] || null
+}));
+const byRank = r => GALLERY.find(p=>p.rank===r);
+const CURATED_LIST = GALLERY.filter(p=>p.curated).sort((a,b)=>a.rank-b.rank);
+
+/* ---------------- state ---------------- */
+const state = {
+  currentRank: null,
+  shuffle: false,
+  gridLimit: 24,
+  activeEra: "All",
+  playing: false
+};
+
+/* ---------------- artwork palettes (per mood, generative) ---------------- */
+const MOOD_PALETTES = {
+  Heroic:["#d4af7a","#2dd4bf","#12203a"], Dramatic:["#1a2e4a","#d4af7a","#0b1626"],
+  Joyful:["#5eead4","#d4af7a","#123a33"], Serene:["#2dd4bf","#12203a","#a9bbd1"],
+  Melancholic:["#233c5e","#1a2e4a","#5eead4"], Tender:["#ecd8ae","#2dd4bf","#122036"],
+  Solemn:["#12203a","#233c5e","#d4af7a"], Playful:["#5eead4","#ecd8ae","#0b1626"],
+  Haunting:["#122036","#233c5e","#2dd4bf"], Radiant:["#d4af7a","#5eead4","#12203a"],
+  Nostalgic:["#233c5e","#ecd8ae","#0b1626"], Triumphant:["#d4af7a","#2dd4bf","#0b1626"],
+  Turbulent:["#1a2e4a","#0b1626","#5eead4"], Sacred:["#ecd8ae","#12203a","#233c5e"],
+  Passionate:["#d4af7a","#233c5e","#123a33"], Yearning:["#2dd4bf","#233c5e","#ecd8ae"],
+  Majestic:["#d4af7a","#12203a","#5eead4"], Ecstatic:["#5eead4","#d4af7a","#123a33"],
+  Sublime:["#ecd8ae","#2dd4bf","#0b1626"], Whimsical:["#5eead4","#ecd8ae","#233c5e"],
+  Mysterious:["#12203a","#0b1626","#2dd4bf"], Dreamlike:["#2dd4bf","#ecd8ae","#122036"]
+};
+function paletteFor(mood){ return MOOD_PALETTES[mood] || ["#2dd4bf","#d4af7a","#12203a"]; }
+
+/* ================= RENDER: HOME ================= */
+const comboInput = document.getElementById('searchInput');
+const comboList = document.getElementById('comboList');
+let comboHl = -1;
+
+function renderCombo(query){
+  const q = query.trim().toLowerCase();
+  let results = GALLERY;
+  if(q){ results = GALLERY.filter(p=> (p.title+" "+p.composer).toLowerCase().includes(q)); }
+  results = results.slice(0,40);
+  comboList.innerHTML = results.map((p,i)=>`
+    <div class="combo-item" data-rank="${p.rank}" role="option">
+      <span class="combo-rank">#${p.rank}</span>
+      <span class="combo-meta"><span class="t">${p.title}</span><span class="c">${p.composer}</span></span>
+    </div>`).join('');
+  comboHl = -1;
+  comboList.classList.toggle('open', results.length>0);
+}
+comboInput.addEventListener('focus', ()=>renderCombo(comboInput.value));
+comboInput.addEventListener('input', ()=>renderCombo(comboInput.value));
+comboInput.addEventListener('keydown', (e)=>{
+  const items = [...comboList.querySelectorAll('.combo-item')];
+  if(e.key==='ArrowDown'){ e.preventDefault(); comboHl=Math.min(comboHl+1, items.length-1); highlightCombo(items); }
+  if(e.key==='ArrowUp'){ e.preventDefault(); comboHl=Math.max(comboHl-1,0); highlightCombo(items); }
+  if(e.key==='Enter'){
+    e.preventDefault();
+    if(comboHl>=0 && items[comboHl]){ selectFromCombo(items[comboHl].dataset.rank); }
+    else if(items[0]){ selectFromCombo(items[0].dataset.rank); }
+  }
+  if(e.key==='Escape'){ comboList.classList.remove('open'); }
+});
+function highlightCombo(items){
+  items.forEach(it=>it.classList.remove('hl'));
+  if(items[comboHl]){ items[comboHl].classList.add('hl'); items[comboHl].scrollIntoView({block:'nearest'}); }
+}
+comboList.addEventListener('click', (e)=>{
+  const item = e.target.closest('.combo-item');
+  if(item) selectFromCombo(item.dataset.rank);
+});
+document.addEventListener('click', (e)=>{
+  if(!e.target.closest('.combo')) comboList.classList.remove('open');
+});
+let selectedRank = 1;
+function selectFromCombo(rankStr){
+  const rank = parseInt(rankStr,10);
+  selectedRank = rank;
+  const p = byRank(rank);
+  comboInput.value = `${p.title} — ${p.composer}`;
+  comboList.classList.remove('open');
+}
+
+document.getElementById('startBtn').addEventListener('click', ()=>{
+  openPlayer(selectedRank || 1);
+});
+document.getElementById('randomBtn').addEventListener('click', ()=>{
+  const r = GALLERY[Math.floor(Math.random()*GALLERY.length)].rank;
+  openPlayer(r);
+});
+
+/* curation rail */
+function renderCurationRail(){
+  const rail = document.getElementById('curationRail');
+  rail.innerHTML = CURATED_LIST.map(p=>{
+    const pal = paletteFor(p.mood);
+    return `<div class="curation-card glass" data-rank="${p.rank}">
+      <div class="glow" style="background:${pal[0]}"></div>
+      <span class="rank-badge">#${p.rank} · ${p.era}</span>
+      <h3>${p.title.split(' — ')[0]}</h3>
+      <div class="composer">${p.composer}</div>
+      <div class="why">${p.curationNote}</div>
+    </div>`;
+  }).join('');
+  rail.querySelectorAll('.curation-card').forEach(el=>{
+    el.addEventListener('click', ()=>openPlayer(parseInt(el.dataset.rank,10)));
+  });
+}
+
+/* era filters + grid */
+function renderFilters(){
+  const eras = ["All", ...Array.from(new Set(GALLERY.map(p=>p.era)))];
+  const wrap = document.getElementById('eraFilters');
+  wrap.innerHTML = eras.map(e=>`<button class="chip ${e===state.activeEra?'active':''}" data-era="${e}">${e}</button>`).join('');
+  wrap.querySelectorAll('.chip').forEach(c=>{
+    c.addEventListener('click', ()=>{ state.activeEra=c.dataset.era; state.gridLimit=24; renderFilters(); renderGrid(); });
+  });
+}
+function renderGrid(){
+  const grid = document.getElementById('pieceGrid');
+  let items = state.activeEra==="All" ? GALLERY : GALLERY.filter(p=>p.era===state.activeEra);
+  const shown = items.slice(0, state.gridLimit);
+  grid.innerHTML = shown.map(p=>`
+    <div class="piece-card glass" data-rank="${p.rank}">
+      <div class="top-row"><span class="rank">#${p.rank}</span><span class="mood-tag">${p.mood}</span></div>
+      <h4>${p.title.split(' — ')[0]}</h4>
+      <div class="composer">${p.composer}</div>
+      <div class="syn">${p.synopsis}</div>
+      ${p.curated ? '<span class="curated-flag">✦ Deckoviz Curation</span>' : ''}
+    </div>`).join('');
+  grid.querySelectorAll('.piece-card').forEach(el=>{
+    el.addEventListener('click', ()=>openPlayer(parseInt(el.dataset.rank,10)));
+  });
+  document.getElementById('loadMoreBtn').style.display = items.length > shown.length ? 'inline-flex' : 'none';
+}
+document.getElementById('loadMoreBtn').addEventListener('click', ()=>{ state.gridLimit += 24; renderGrid(); });
+
+/* ================= AUDIO / PLAYER BAR ================= */
+const audioEl = document.getElementById('audioEl');
+const playerBar = document.getElementById('playerBar');
+const playBtn = document.getElementById('playBtn');
+const playIcon = document.getElementById('playIcon');
+const seekBar = document.getElementById('seekBar');
+const curTimeEl = document.getElementById('curTime');
+const durTimeEl = document.getElementById('durTime');
+const volBar = document.getElementById('volBar');
+const shuffleBtn = document.getElementById('shuffleBtn');
+
+function fmtTime(s){ if(!isFinite(s)) return "0:00"; const m=Math.floor(s/60); const sec=Math.floor(s%60); return `${m}:${sec.toString().padStart(2,'0')}`; }
+
+function loadTrack(rank, autoplay){
+  const p = byRank(rank);
+  state.currentRank = rank;
+  document.getElementById('pb-title').textContent = p.title.split(' — ')[0];
+  document.getElementById('pb-composer').textContent = p.composer;
+  playerBar.classList.remove('hidden');
+  if(p.audioUrl){
+    audioEl.src = p.audioUrl;
+    if(autoplay) audioEl.play().catch(()=>{});
+  } else {
+    audioEl.removeAttribute('src');
+    state.playing = false;
+    updatePlayIcon();
+  }
+}
+function updatePlayIcon(){
+  playIcon.innerHTML = state.playing
+    ? '<rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/>'
+    : '<path d="M8 5v14l11-7z"/>';
+}
+playBtn.addEventListener('click', ()=>{
+  if(!state.currentRank) return;
+  const p = byRank(state.currentRank);
+  if(!p.audioUrl){
+    playBtn.classList.add('active');
+    setTimeout(()=>playBtn.classList.remove('active'),350);
+    return;
+  }
+  if(audioEl.paused){ audioEl.play().catch(()=>{}); } else { audioEl.pause(); }
+});
+audioEl.addEventListener('play', ()=>{ state.playing=true; updatePlayIcon(); });
+audioEl.addEventListener('pause', ()=>{ state.playing=false; updatePlayIcon(); });
+audioEl.addEventListener('timeupdate', ()=>{
+  if(audioEl.duration){
+    seekBar.value = (audioEl.currentTime/audioEl.duration)*100;
+    curTimeEl.textContent = fmtTime(audioEl.currentTime);
+    durTimeEl.textContent = fmtTime(audioEl.duration);
+  }
+});
+audioEl.addEventListener('ended', ()=>{ goNext(); });
+seekBar.addEventListener('input', ()=>{
+  if(audioEl.duration){ audioEl.currentTime = (seekBar.value/100)*audioEl.duration; }
+});
+volBar.addEventListener('input', ()=>{ audioEl.volume = parseFloat(volBar.value); });
+audioEl.volume = 0.8;
+
+shuffleBtn.addEventListener('click', ()=>{
+  state.shuffle = !state.shuffle;
+  shuffleBtn.classList.toggle('active', state.shuffle);
+});
+function goNext(){
+  if(!state.currentRank) return;
+  let nextRank;
+  if(state.shuffle){
+    const others = GALLERY.filter(p=>p.rank!==state.currentRank);
+    nextRank = others[Math.floor(Math.random()*others.length)].rank;
+  } else {
+    const idx = GALLERY.findIndex(p=>p.rank===state.currentRank);
+    nextRank = GALLERY[(idx+1)%GALLERY.length].rank;
+  }
+  openPlayer(nextRank, true);
+}
+function goPrev(){
+  if(!state.currentRank) return;
+  const idx = GALLERY.findIndex(p=>p.rank===state.currentRank);
+  const prevRank = GALLERY[(idx-1+GALLERY.length)%GALLERY.length].rank;
+  openPlayer(prevRank, true);
+}
+document.getElementById('nextBtn').addEventListener('click', goNext);
+document.getElementById('prevBtn').addEventListener('click', goPrev);
+
+/* ================= PLAYER VIEW RENDER ================= */
+function renderTabContent(p){
+  const map = {
+    overview:["What This Piece Is About", p.deep ? p.deep.overview : null],
+    history:["Historical Context", p.deep ? p.deep.history : null],
+    emotion:["The Emotional Landscape", p.deep ? p.deep.emotion : null],
+    analysis:["What The Notes Mean", p.deep ? p.deep.analysis : null],
+    notes:["Notes & Trivia", p.deep ? p.deep.notes : null]
+  };
+  Object.entries(map).forEach(([key,[label,text]])=>{
+    const panel = document.getElementById('panel-'+key);
+    if(text){
+      panel.innerHTML = `<h5>${label}</h5><p>${text}</p>`;
+    } else {
+      panel.innerHTML = `<div class="empty-tab"><div class="glyph">◌</div><p>The full annotation for "${p.title.split(' — ')[0]}" hasn't been written yet — it's queued for a future gallery update. In the meantime: ${p.synopsis}</p></div>`;
+    }
+  });
+}
+
+function openPlayer(rank, autoplay){
+  const p = byRank(rank);
+  document.getElementById('view-home').classList.remove('active');
+  document.getElementById('view-player').classList.add('active');
+  window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
+
+  document.getElementById('ph-rank').textContent = '#'+p.rank;
+  document.getElementById('ph-era').textContent = p.era;
+  document.getElementById('ph-title').textContent = p.title;
+  document.getElementById('ph-composer').textContent = p.composer;
+  document.getElementById('ph-moods').innerHTML = `<span class="tagpill">${p.mood}</span><span class="tagpill">${p.era}</span>${p.curated ? '<span class="tagpill">✦ Deckoviz Curation</span>':''}`;
+
+  renderTabContent(p);
+  document.querySelectorAll('.tab-btn').forEach((b,i)=>b.classList.toggle('active', i===0));
+  document.querySelectorAll('.tab-panel').forEach((b,i)=>b.classList.toggle('active', i===0));
+
+  const curatorWrap = document.getElementById('curatorNoteWrap');
+  if(p.curationNote){
+    curatorWrap.classList.remove('hidden');
+    document.getElementById('curatorNoteText').textContent = p.curationNote;
+  } else {
+    curatorWrap.classList.add('hidden');
+  }
+
+  resetStage();
+  renderUpNext(p);
+  loadTrack(rank, autoplay);
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-'+btn.dataset.tab).classList.add('active');
+  });
+});
+
+function renderUpNext(p){
+  const idx = GALLERY.findIndex(x=>x.rank===p.rank);
+  const upcoming = [GALLERY[(idx+1)%GALLERY.length], GALLERY[(idx+2)%GALLERY.length], GALLERY[(idx+3)%GALLERY.length], GALLERY[(idx+4)%GALLERY.length]];
+  const grid = document.getElementById('upNextGrid');
+  grid.innerHTML = upcoming.map(u=>`
+    <div class="piece-card glass" data-rank="${u.rank}">
+      <div class="top-row"><span class="rank">#${u.rank}</span><span class="mood-tag">${u.mood}</span></div>
+      <h4>${u.title.split(' — ')[0]}</h4>
+      <div class="composer">${u.composer}</div>
+      <div class="syn">${u.synopsis}</div>
+    </div>`).join('');
+  grid.querySelectorAll('.piece-card').forEach(el=>{
+    el.addEventListener('click', ()=>openPlayer(parseInt(el.dataset.rank,10), true));
+  });
+}
+
+/* nav */
+document.getElementById('backBtn').addEventListener('click', goHome);
+document.getElementById('backToGalleryBtn').addEventListener('click', goHome);
+document.getElementById('logoBtn').addEventListener('click', goHome);
+document.getElementById('navHomeBtn').addEventListener('click', goHome);
+function goHome(){
+  document.getElementById('view-player').classList.remove('active');
+  document.getElementById('view-home').classList.add('active');
+  window.scrollTo({top:0,behavior:'auto'});
+}
+
+/* ================= STAGE: VISUALISER + ARTWORK ================= */
+const vizBtn = document.getElementById('vizBtn');
+const artBtn = document.getElementById('artBtn');
+const canvas = document.getElementById('viz');
+const artworkStage = document.getElementById('artworkStage');
+const stageEmpty = document.getElementById('stageEmpty');
+let stageMode = null; // 'viz' | 'art' | null
+let vizRAF = null;
+let audioCtx=null, analyser=null, srcNode=null, dataArray=null;
+
+function resetStage(){
+  stageMode = null;
+  vizBtn.classList.remove('btn-primary'); vizBtn.classList.add('btn-ghost');
+  artBtn.classList.remove('btn-primary'); artBtn.classList.add('btn-ghost');
+  canvas.classList.add('hidden'); artworkStage.classList.add('hidden');
+  stageEmpty.classList.remove('hidden');
+  stopViz();
+}
+vizBtn.addEventListener('click', ()=>{
+  if(stageMode==='viz'){ resetStage(); return; }
+  stageMode='viz';
+  vizBtn.classList.add('btn-primary'); vizBtn.classList.remove('btn-ghost');
+  artBtn.classList.add('btn-ghost'); artBtn.classList.remove('btn-primary');
+  stageEmpty.classList.add('hidden'); artworkStage.classList.add('hidden');
+  canvas.classList.remove('hidden');
+  startViz();
+});
+artBtn.addEventListener('click', ()=>{
+  if(stageMode==='art'){ resetStage(); return; }
+  stageMode='art';
+  artBtn.classList.add('btn-primary'); artBtn.classList.remove('btn-ghost');
+  vizBtn.classList.add('btn-ghost'); vizBtn.classList.remove('btn-primary');
+  stageEmpty.classList.add('hidden'); canvas.classList.add('hidden');
+  artworkStage.classList.remove('hidden');
+  stopViz();
+  renderArtworkSequence();
+});
+
+function setupAnalyser(){
+  try{
+    if(!audioCtx){
+      audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+      srcNode = audioCtx.createMediaElementSource(audioEl);
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 128;
+      srcNode.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+    }
+    if(audioCtx.state==='suspended') audioCtx.resume();
+  }catch(e){ analyser=null; }
+}
+function stopViz(){ if(vizRAF){ cancelAnimationFrame(vizRAF); vizRAF=null; } }
+function startViz(){
+  setupAnalyser();
+  const ctx = canvas.getContext('2d');
+  function resize(){ canvas.width = canvas.clientWidth*devicePixelRatio; canvas.height = canvas.clientHeight*devicePixelRatio; }
+  resize();
+  window.addEventListener('resize', resize);
+  let t=0;
+  function draw(){
+    vizRAF = requestAnimationFrame(draw);
+    t += 0.012;
+    const w=canvas.width, h=canvas.height;
+    ctx.clearRect(0,0,w,h);
+    const g = ctx.createLinearGradient(0,0,0,h);
+    g.addColorStop(0,'rgba(45,212,191,0.05)'); g.addColorStop(1,'rgba(11,22,38,0.35)');
+    ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+
+    let bars = 64; let values = new Array(bars).fill(0);
+    if(analyser && state.playing){
+      analyser.getByteFrequencyData(dataArray);
+      for(let i=0;i<bars;i++){ values[i] = dataArray[Math.floor(i*dataArray.length/bars)] / 255; }
+    } else {
+      for(let i=0;i<bars;i++){ values[i] = (Math.sin(t*2 + i*0.35) * 0.5 + 0.5) * (0.4 + 0.3*Math.sin(t*0.5+i*0.1)); }
+    }
+    const barW = w/bars;
+    for(let i=0;i<bars;i++){
+      const v = values[i];
+      const barH = v*h*0.75;
+      const hue = 165 + v*40;
+      const grad = ctx.createLinearGradient(0,h-barH,0,h);
+      grad.addColorStop(0,'rgba(212,175,122,0.9)');
+      grad.addColorStop(1,'rgba(45,212,191,0.85)');
+      ctx.fillStyle = grad;
+      const x = i*barW;
+      const bw = barW*0.6;
+      const radius = Math.min(bw/2, 6);
+      roundRectMirror(ctx, x+barW*0.2, h-barH, bw, barH, radius);
+    }
+    // center glow line
+    ctx.strokeStyle='rgba(94,234,212,0.25)';
+    ctx.lineWidth=1;
+    ctx.beginPath();
+    for(let i=0;i<bars;i++){
+      const x=i*barW+barW/2;
+      const y = h*0.5 + Math.sin(t*1.5+i*0.3)*20*(analyser&&state.playing?values[i]:0.5);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+  function roundRectMirror(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y);
+    ctx.arcTo(x+w,y,x+w,y+h,r);
+    ctx.lineTo(x+w,y+h);
+    ctx.lineTo(x,y+h);
+    ctx.arcTo(x,y,x+w,y,r);
+    ctx.closePath();
+    ctx.fill();
+  }
+  draw();
+}
+
+/* ---- generative abstract artwork sequence ---- */
+function renderArtworkSequence(){
+  const p = byRank(state.currentRank);
+  const pal = paletteFor(p.mood);
+  const seed = p.rank;
+  function rand(n){ const x = Math.sin(seed*999+n*37.13)*10000; return x-Math.floor(x); }
+  let layers = [];
+  for(let i=0;i<3;i++){
+    const c1=pal[i%pal.length], c2=pal[(i+1)%pal.length];
+    const cx=20+rand(i+1)*60, cy=20+rand(i+2)*60, r=30+rand(i+3)*35;
+    const cx2=20+rand(i+4)*60, cy2=20+rand(i+5)*60, r2=20+rand(i+6)*30;
+    layers.push(`
+      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;position:absolute;inset:0;">
+        <defs>
+          <radialGradient id="g${i}a" cx="${cx}%" cy="${cy}%" r="70%">
+            <stop offset="0%" stop-color="${c1}" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="${c1}" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="g${i}b" cx="${cx2}%" cy="${cy2}%" r="60%">
+            <stop offset="0%" stop-color="${c2}" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="${c2}" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="100" height="100" fill="#0b1626"/>
+        <circle cx="${cx}" cy="${cy}" r="${r}" fill="url(#g${i}a)"/>
+        <circle cx="${cx2}" cy="${cy2}" r="${r2}" fill="url(#g${i}b)"/>
+        <circle cx="${100-cx}" cy="${100-cy2}" r="${r2*0.7}" fill="url(#g${i}b)" opacity="0.5"/>
+      </svg>`);
+  }
+  artworkStage.innerHTML = layers.map((l,i)=>`<div class="art-layer ${i===0?'on':''}" data-i="${i}">${l}</div>`).join('') +
+    `<div class="art-caption">Abstract composition · inspired by “${p.title.split(' — ')[0]}” · ${p.mood}</div>`;
+  let idx=0;
+  if(window._artInterval) clearInterval(window._artInterval);
+  window._artInterval = setInterval(()=>{
+    if(stageMode!=='art'){ clearInterval(window._artInterval); return; }
+    const els = artworkStage.querySelectorAll('.art-layer');
+    els[idx].classList.remove('on');
+    idx = (idx+1)%els.length;
+    els[idx].classList.add('on');
+  }, 5000);
+}
+
+/* ================= INIT ================= */
+renderCurationRail();
+renderFilters();
+renderGrid();
+</script>
+</body>
+</html>

@@ -1,0 +1,525 @@
+import { HeartPulse, Palette, Lightbulb, MessageCircle, HandCoins, Globe, PenTool, Star } from 'lucide-react';
+
+export interface Course {
+  id: string;
+  title: string;
+  track: string;
+  sessions: number;
+  description: string;
+  gradeLevel: string;
+  color: string;
+  icon: any;
+}
+
+export const COURSES: Course[] = [
+  {
+    id: 'c1',
+    title: 'Understanding My Emotions',
+    track: 'Emotional Intelligence',
+    sessions: 5,
+    description: 'Length: 5 classes, recurring yearly with increasing depth. A foundational course helping young students name and recognise what they\'re feeling, moving beyond "happy" and "sad" into a genuinely useful emotional vocabulary. Each class centres on a small cluster of related emotions, exploring the physical sensations that accompany them, the situations that tend to trigger them, and healthy ways to express rather than suppress them. Early sessions might focus on the basics, happy, sad, angry, scared, while later grades introduce more nuanced states like disappointment, jealousy, pride, or embarrassment. The course leans heavily on story and visual metaphor rather than definitions, since young children understand feeling through image and narrative long before they understand it through language. As the course recurs each year, it doesn\'t repeat itself, it deepens, revisiting familiar emotions with more sophistication as students mature. *Why Deckoviz: Emotions are abstract for young children. Deckoviz can generate a unique visual metaphor for each feeling in real time, turning "frustration" into an image a six-year-old can actually point to and say "that\'s what it feels like." Because the visuals are generated fresh each session rather than reused from a fixed picture book, the metaphors can be tailored to what\'s actually happening in a particular class or a particular child\'s life that week.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #ff6b6b)',
+    icon: HeartPulse
+  },
+  {
+    id: 'c2',
+    title: 'Empathy in Action',
+    track: 'Emotional Intelligence',
+    sessions: 6,
+    description: 'Length: 6 classes. Moves beyond recognising one\'s own emotions into genuinely understanding others\', a harder and more important skill that most curricula touch only lightly. The course uses perspective-taking exercises, guided storytelling told from another character\'s point of view, and scenario-based discussion where students are asked to sit with a situation from someone else\'s shoes before reacting. Sessions might explore a disagreement between two friends from both sides, a new student\'s first day from their perspective, or a family conflict seen through a sibling\'s eyes. The goal isn\'t to teach students what to feel, but to build the habit of pausing and genuinely imagining another person\'s experience before responding, a skill that compounds across every relationship a student will have for the rest of their life. *Why Deckoviz: Vizzy can generate a visual scene from a different character\'s perspective instantly, letting students literally see a situation change when the viewpoint changes, a far more visceral empathy exercise than a worksheet. Watching the same room, the same conflict, rendered differently depending on whose eyes it\'s seen through makes the abstract idea of perspective concrete in a way discussion alone rarely achieves.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #ff6b6b)',
+    icon: HeartPulse
+  },
+  {
+    id: 'c3',
+    title: 'Emotional Regulation Toolkit',
+    track: 'Emotional Intelligence',
+    sessions: 8,
+    description: 'Length: 8 classes, with a lighter recurring refresher each year. Teaches concrete, practical strategies for managing big emotions in the moment, breathing techniques, naming and reframing thoughts, grounding exercises, and simple calming rituals a student can turn to independently. Rather than presenting these as abstract advice, the course builds each student their own personal toolkit over the eight sessions, testing different techniques and letting them identify which ones actually work for them specifically, since regulation strategies are highly individual. Later sessions focus on applying the toolkit under more realistic pressure, a frustrating test question, a disagreement with a friend, waiting a turn in a group activity, so the skills transfer beyond the calm environment of the classroom itself. *Why Deckoviz: The generative visualisation and breathing-guide tools already built for mental wellness spaces translate directly here. Each student can develop a personalised calming visual sequence that\'s theirs specifically, not a generic worksheet everyone shares, and because Vizzy remembers what\'s worked for a given student before, it can proactively suggest their own toolkit during a difficult moment rather than starting from scratch each time.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #ff6b6b)',
+    icon: HeartPulse
+  },
+  {
+    id: 'c4',
+    title: 'Mindfulness & Breath Awareness',
+    track: 'Emotional Intelligence',
+    sessions: 10,
+    description: 'Length: 10 short classes, 15 to 20 minutes each. A short, recurring practice woven through the week rather than a single long class, built around simple breathing and present-moment awareness exercises suited to the realistic attention span of a school day. Sessions are intentionally brief so they can slot naturally between other classes, a calming reset before a test, a settling ritual after recess, rather than requiring a dedicated block of time. The practices focus on helping themselves stay simple and repeatable, noticing sound, noticing the body, building familiarity through consistency rather than novelty. *Why Deckoviz: Ambient, generative visuals paired with guided narration create an immersive mindfulness moment far beyond a teacher reading from a script, and the environment can be different every single session, a forest one day, a slow sunrise the next, which keeps young attention genuinely engaged with a practice that could otherwise become rote and easy to tune out.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #ff6b6b)',
+    icon: HeartPulse
+  },
+  {
+    id: 'c5',
+    title: 'The Art of Meditation & Visualisation',
+    track: 'Emotional Intelligence',
+    sessions: 6,
+    description: 'Length: 6 classes. A gentle introduction to guided meditation and visualisation techniques, imagining a calm place in detail, visualising a personal goal as though it\'s already achieved, or picturing a difficult upcoming moment, a test, a conversation, resolving well. Unlike the shorter mindfulness sessions, these classes take more time to build a full guided experience, walking students slowly through constructing a mental image and then holding it. The course also introduces the idea that visualisation is a skill athletes, performers, and high achievers actually use deliberately, framing it as a practical tool rather than something abstract or purely spiritual. *Why Deckoviz: This is close to Deckoviz\'s core capability. Vizzy can render a student\'s imagined "calm place" or goal as an actual generated visual in the room, making an internal, abstract practice suddenly external and shared, and giving a student something concrete to return to, a specific generated image tied to their own described calm place, rather than having to reconstruct the imagery from memory alone each time.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #ff6b6b)',
+    icon: HeartPulse
+  },
+  {
+    id: 'c6',
+    title: 'Journaling as a Life Practice',
+    track: 'Emotional Intelligence',
+    sessions: 40,
+    description: 'Length: Ongoing, weekly, across all grades. Builds the habit of reflection through age-appropriate journaling prompts, evolving from simple daily highlights in early grades, what made you smile today, what was hard, into deeper reflective writing in later years, examining patterns, values, and identity. Because this runs continuously across a student\'s entire schooling rather than as a bounded unit, it functions less like a course and more like a lifelong habit being deliberately cultivated, with the format and depth maturing as the student does. *Why Deckoviz: This is a natural extension of the Daily Study Journal session, with life-skills-specific prompts layered in. Because it\'s adaptive and remembers past entries, the journaling relationship deepens meaningfully over years, not just a term, letting Vizzy notice patterns a student might not notice themselves and gently reflect them back at the right moment.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #ff6b6b)',
+    icon: HeartPulse
+  },
+  {
+    id: 'c7',
+    title: 'Appreciating Art',
+    track: 'Creativity & Expression',
+    sessions: 5,
+    description: 'Length: 5 classes per grade, recurring yearly with rising complexity. Introduces students to looking at and understanding art, colour, composition, mood, meaning, growing from simple, intuitive questions in early grades, how does this make you feel, what do you notice first, into real critical and historical analysis by secondary school, examining technique, context, and intent. Each yearly cycle revisits the same broad territory with more depth, so a student\'s relationship with a single painting seen at age seven feels radically different after six years of exposure rather than being taught once and left behind. *Why Deckoviz: Vizzy can generate variations of an artwork on demand, same composition in different colour palettes, different styles, different eras, letting students see abstract art principles change in real time rather than reading about them, watching a single scene transform from impressionist to cubist to minimalist in seconds makes the underlying principles click in a way static reproductions never could.*',
+    gradeLevel: 'Secondary',
+    color: 'linear-gradient(135deg, #9d4edd, #c77dff)',
+    icon: Palette
+  },
+  {
+    id: 'c8',
+    title: 'Creating Art',
+    track: 'Creativity & Expression',
+    sessions: 5,
+    description: 'Length: 5 classes per grade, recurring yearly, growing in technical and conceptual depth. A hands-on creative course where students co-create original artwork with Vizzy, developing their own visual voice over years rather than treating art as a single isolated unit. Early grades might focus on pure playful exploration, colour, shape, mark-making, while later years introduce genuine conceptual development, students learning to translate an idea or emotion into a deliberate visual choice. Because the course recurs, a student\'s artistic interests and style genuinely have room to develop and be tracked over time rather than starting fresh every year. *Why Deckoviz: This is the platform\'s signature strength. Vizzy becomes a genuine creative collaborator, and because it remembers a student\'s evolving style and interests across years, "Creating Art" in grade five can build directly on what a student explored in grade two, referencing their own past work and growth in a way no single classroom art unit ever could.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #9d4edd, #c77dff)',
+    icon: Palette
+  },
+  {
+    id: 'c9',
+    title: 'Appreciating Poetry',
+    track: 'Creativity & Expression',
+    sessions: 4,
+    description: 'Length: 4 classes. Explores how poems work, rhythm, imagery, metaphor, emotion, through active engagement rather than dry analysis, reading and discussing poems chosen specifically for genuine relevance to students\' actual lives rather than a fixed canonical list. Sessions might pair a poem about a noisy sibling, a changing friendship, or a poem about friendship with the social dynamics students are actually navigating, making the literary study feel connected to lived experience rather than an academic exercise disconnected from it. *Why Deckoviz: Vizzy can generate a visual for a poem\'s central image on the spot, showing students exactly what a metaphor renders as, then vary it, making abstract literary devices concrete and memorable, and giving students who struggle with purely textual analysis another entry point into understanding what a poem is actually doing.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #9d4edd, #c77dff)',
+    icon: Palette
+  },
+  {
+    id: 'c10',
+    title: 'Creating Poetry',
+    track: 'Creativity & Expression',
+    sessions: 5,
+    description: 'Length: 5 classes, recurring across grades. Guides students through writing their own poetry, starting with simple structured forms, acrostics, simple rhyme, haiku, and progressing to freer expression as confidence and vocabulary grow, with Vizzy positioned throughout as a gentle creative coach rather than a grader marking correctness. The course deliberately avoids treating poetry as something with a single right answer, encouraging students to experiment with words and find their own voice, even when that voice breaks convention. *Why Deckoviz: The Creative Companion mode fits this precisely, nudging a student\'s own poem forward with genuine feedback, then visualising the finished piece as a piece of art in its own right, giving the writing a physical, displayable presence on the classroom or home wall that a piece of paper in a folder never gets.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #9d4edd, #c77dff)',
+    icon: Palette
+  },
+  {
+    id: 'c11',
+    title: 'Music Appreciation & Creation',
+    track: 'Creativity & Expression',
+    sessions: 6,
+    description: 'Length: 6 classes. Introduces musical structure, mood, and history through active listening, paired with simple creative composition exercises using accessible tools that don\'t require prior instrumental training. Students learn to identify what makes a piece of music feel tense, joyful, or melancholic, connecting musical elements, tempo, key, dynamics, to the emotional response they produce, before experimenting with shaping those same elements in their own simple compositions. *Why Deckoviz: Deckoviz\'s multisensory synchromy, pairing visuals with sound, lets students see a piece of music rendered visually as it plays, connecting auditory and visual understanding in a way a standard music class rarely can, particularly valuable for students who process information more visually than aurally.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #9d4edd, #c77dff)',
+    icon: Palette
+  },
+  {
+    id: 'c12',
+    title: 'Storytelling & Narrative Craft',
+    track: 'Creativity & Expression',
+    sessions: 8,
+    description: 'Length: 8 classes. Teaches the fundamentals of a good story, structure, character, tension, resolution, through both analysing existing stories, why does this scene work, what would happen if this choice were different, and building original ones from the ground up. Later sessions push into more sophisticated territory, unreliable narrators, non-linear structure, show versus tell, giving older students real craft tools rather than just plot mechanics. *Why Deckoviz: Vizzy can illustrate a student\'s story scene by scene as it develops, giving immediate visual feedback on pacing and clarity that written feedback alone can\'t provide as intuitively, a scene that isn\'t landing visually is often a sign the writing itself needs more clarity too.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #9d4edd, #c77dff)',
+    icon: Palette
+  },
+  {
+    id: 'c13',
+    title: 'Decision-Making Fundamentals',
+    track: 'Thinking & Decision-Making',
+    sessions: 6,
+    description: 'Length: 6 classes. Teaches a practical framework for making good decisions, identifying options, weighing consequences, handling a disagreement with a friend, deciding how to spend limited time or money, rather than abstract theory. Scenarios are chosen to feel genuinely relevant to students\' actual lives, choosing between activities, handling a disagreement with a friend, deciding how to spend limited time or money, rather than hypotheticals with no real stakes attached. The course also introduces the idea that not deciding is itself a decision, and that avoiding hard choices has its own consequences. *Why Deckoviz: Vizzy can visualise the branching outcomes of a decision scenario in real time, turning an abstract decision tree into something students can actually watch play out, seeing multiple possible futures rendered side by side makes the weight and reality of a choice far more tangible than simply discussing it.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ffbe0b, #fb5607)',
+    icon: Lightbulb
+  },
+  {
+    id: 'c14',
+    title: 'Critical Thinking & Questioning the World',
+    track: 'Thinking & Decision-Making',
+    sessions: 8,
+    description: 'Length: 8 classes. Builds the habit of questioning information, sources, and assumptions, developmentally appropriate media literacy woven together with basic logic and reasoning skills. Students learn to notice when a claim lacks evidence, when an image might be manipulated or out of context, and when their own assumptions are shaping how they interpret something, skills that become only more essential as students grow into an information environment thick with persuasion and misinformation. *Why Deckoviz: Generative visuals can illustrate how a misleading claim or a manipulated image works, making abstract media literacy concepts genuinely visible rather than just discussed, showing students a doctored image alongside the original, for instance, teaches the underlying lesson faster than any lecture on the topic could.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ffbe0b, #fb5607)',
+    icon: Lightbulb
+  },
+  {
+    id: 'c15',
+    title: 'Moral Values & Ethics Through Stories',
+    track: 'Thinking & Decision-Making',
+    sessions: 10,
+    description: 'Length: 10 classes across a year. Explores core values, honesty, fairness, courage, kindness, through discussion of stories and dilemmas rather than direct instruction, letting students reason their way toward understanding instead of simply being told what\'s right. Each session presents a genuine dilemma with no clean answer, a friend asking you to keep a secret that might hurt someone, finding money that isn\'t yours, and lets the class work through the tension together rather than being handed a moral at the end. *Why Deckoviz: Vizzy can generate a values-based scenario visually and let a class or student explore how it unfolds under different choices, making ethical reasoning an active, visual exploration rather than a lecture, and letting students genuinely see the different paths a single decision could lead down.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ffbe0b, #fb5607)',
+    icon: Lightbulb
+  },
+  {
+    id: 'c16',
+    title: 'Problem Solving & Creative Thinking',
+    track: 'Thinking & Decision-Making',
+    sessions: 6,
+    description: 'Length: 6 classes. Builds structured approaches to tackling open-ended problems, encouraging multiple solution paths rather than a single right answer, and deliberately working with problems that don\'t have one obvious correct method. Students practise reframing problems, breaking large problems into smaller ones, and generating multiple candidate solutions before evaluating which is strongest, a genuinely transferable skill set well beyond any single subject. *Why Deckoviz: The platform\'s generative range means Vizzy can visualise multiple wildly different solution directions to the same problem instantly, showing students that creative thinking genuinely branches rather than converges too fast, and modelling the kind of divergent thinking the course is trying to teach.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ffbe0b, #fb5607)',
+    icon: Lightbulb
+  },
+  {
+    id: 'c17',
+    title: 'Communication Skills — Speaking & Listening',
+    track: 'Communication & Relationships',
+    sessions: 6,
+    description: 'Length: 6 classes. Covers the fundamentals of clear expression and genuine listening, practised through structured conversation exercises and honest reflection on how a conversation actually went. Students practise both sides deliberately, expressing an idea clearly and concisely, and listening well enough to accurately repeat back what someone else meant, a surprisingly hard skill most adults never explicitly practise either. *Why Deckoviz: Vizzy\'s avatar and live interaction mode let students practise conversation with genuine responsiveness, and it can offer specific, real-time feedback on clarity and pacing that a peer partner might not know how to give, functioning almost like a patient conversation partner available whenever practice is needed.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #00b4d8, #0077b6)',
+    icon: MessageCircle
+  },
+  {
+    id: 'c18',
+    title: 'Public Speaking & Presentation Skills',
+    track: 'Communication & Relationships',
+    sessions: 5,
+    description: 'Length: 5 classes. Builds confidence and skill in speaking to a group, structure, delivery, handling nerves, through repeated low-stakes practice rather than one high-pressure presentation at the end of term. Early sessions focus purely on comfort, just speaking in front of others without judgment, before gradually introducing structure, supporting material, and more challenging audiences. *Why Deckoviz: This connects directly to the Public Speaking Coach mode. Live generated visuals during practice sessions give students the actual experience of presenting with support material, not just talking into a room, closely mirroring what real presentations will eventually feel like.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #00b4d8, #0077b6)',
+    icon: MessageCircle
+  },
+  {
+    id: 'c19',
+    title: 'Conflict Resolution & Negotiation',
+    track: 'Communication & Relationships',
+    sessions: 6,
+    description: 'Length: 6 classes. Teaches practical approaches to disagreement, active listening, finding common ground, fair compromise, through role-play and scenario work grounded in genuinely common school-age conflicts rather than adult workplace examples. Students practise both articulating their own position clearly and genuinely hearing the other side, then working toward a resolution neither party experiences as a loss. *Why Deckoviz: Vizzy can play a genuinely challenging counterpart in a role-play scenario, adjusting its difficulty and stance based on the student\'s approach, giving richer practice than a scripted classroom role-play where the other student already knows how the scene is supposed to end.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #00b4d8, #0077b6)',
+    icon: MessageCircle
+  },
+  {
+    id: 'c20',
+    title: 'Building Real Friendships',
+    track: 'Communication & Relationships',
+    sessions: 5,
+    description: 'Length: 5 classes. Explores what makes friendships work, trust, reciprocity, handling friction without ending the relationship, appropriate for the specific social dynamics of each age group, since what friendship challenges look like shift substantially between early primary and late secondary school. The course treats friendship skills as genuinely learnable rather than something students should simply figure out on their own. *Why Deckoviz: The platform\'s personalisation means the scenarios explored can reflect situations genuinely relevant to a specific class\'s real social dynamics, rather than generic textbook examples nobody relates to, making the discussion feel immediately applicable rather than abstract.*',
+    gradeLevel: 'Primary',
+    color: 'linear-gradient(135deg, #00b4d8, #0077b6)',
+    icon: MessageCircle
+  },
+  {
+    id: 'c21',
+    title: 'Leadership & Teamwork',
+    track: 'Communication & Relationships',
+    sessions: 8,
+    description: 'Length: 8 classes. Covers the basics of leading and collaborating, delegation, listening to a team, handling disagreement within a group, and taking initiative without dominating, through hands-on group projects and rotating leadership roles rather than lecture alone. The course is careful to teach leadership as service and facilitation, not authority, and to give quieter students genuine practice stepping into leading roles. *Why Deckoviz: Group-facilitated sessions let Vizzy simulate team dynamics and rotate leadership roles fairly among students, tracking who\'s had a turn and gently encouraging quieter students to step up, ensuring the leadership practice doesn\'t just default to the same confident few students each time.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #00b4d8, #0077b6)',
+    icon: MessageCircle
+  },
+  {
+    id: 'c22',
+    title: 'Financial Literacy for Kids',
+    track: 'Practical Life Skills',
+    sessions: 6,
+    description: 'Length: 6 classes; primary level. Introduces basic money concepts, saving, spending, needs versus wants, through simple, visual, story-based examples rather than abstract worksheets. A recurring character or scenario might guide the course, making decisions about a small budget, saving toward a goal, which keeps the content grounded and age-appropriate rather than abstractly financial. *Why Deckoviz: Abstract financial concepts become concrete when Vizzy visualises them, a savings goal literally growing visually on the wall over time as a student tracks progress toward it, turning an invisible number into something a young student can watch build.*',
+    gradeLevel: 'Primary',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c23',
+    title: 'Financial Literacy for Teens',
+    track: 'Practical Life Skills',
+    sessions: 8,
+    description: 'Length: 8 classes; secondary level. Builds on the earlier course with more sophisticated concepts, budgeting, basic investing principles, understanding debt and interest, preparing students for real financial independence before they encounter these decisions with real stakes attached. The course deliberately uses realistic numbers and scenarios, part-time job income, a first bank account, rather than staying purely theoretical. *Why Deckoviz: Vizzy can generate real-time visualisations of compound growth, budget breakdowns, and financial scenarios, making numbers-heavy content genuinely intuitive rather than a spreadsheet exercise, letting students see the dramatic long-term difference small early financial habits actually make.*',
+    gradeLevel: 'Secondary',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c24',
+    title: 'Time Management & Focus',
+    track: 'Practical Life Skills',
+    sessions: 5,
+    description: 'Length: 5 classes. Practical strategies for managing time, avoiding procrastination, and sustaining focus, tailored to the realistic pressures of school life, homework load, extracurriculars, screen time competing for attention, rather than generic productivity advice aimed at adults. *Why Deckoviz: This ties into Deckoviz\'s Focus Mode. The course doesn\'t just talk about focus, it configures a personalised, visual time-tracking companion that a student can check in with regularly, making abstract time-management advice into an ongoing, supportive practice rather than a one-off lesson forgotten within a week.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c25',
+    title: 'Goal Setting & Self-Motivation',
+    track: 'Practical Life Skills',
+    sessions: 5,
+    description: 'Length: 5 classes, with an ongoing check-in component. Teaches how to set meaningful, achievable goals and sustain motivation over time, connecting directly to the Personal Growth Tracking Board concept from home use, and explicitly addressing what happens when motivation dips, which it inevitably does, rather than pretending sustained motivation is simply a matter of willpower. *Why Deckoviz: The same evolving vision-board capability used at home applies powerfully here, a visual goal that updates as a student makes progress, kept alive and visible rather than written once and forgotten in the back of an exercise book.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c26',
+    title: 'Resilience & Growth Mindset',
+    track: 'Practical Life Skills',
+    sessions: 6,
+    description: 'Length: 6 classes. Explores how to respond to setbacks and failure productively, building the belief that ability grows through effort rather than being fixed, using real examples of failure and recovery rather than only success stories, since students learn more from seeing how someone handled things going wrong than from polished achievement. *Why Deckoviz: Vizzy can revisit a student\'s own past struggles, drawn from journal history, and visually show the growth that\'s happened since, making the growth mindset concept personally provable rather than just told, which lands far more powerfully than being told resilience matters in the abstract.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c27',
+    title: 'Gratitude & Positive Psychology',
+    track: 'Practical Life Skills',
+    sessions: 6,
+    description: 'Length: 6 classes. Introduces the practice and science of gratitude and positive reflection, building lasting habits rather than delivering a single feel-good lesson, and grounding the practice in genuine research on wellbeing rather than presenting it as vague positivity. *Why Deckoviz: A recurring gratitude visual, evolving as a student adds to it over the term, turns an abstract practice into something tangible they can watch grow, reinforcing the habit far more than a private list would, since there\'s something to actually look at and be proud of.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c28',
+    title: 'Body Literacy & Healthy Habits',
+    track: 'Practical Life Skills',
+    sessions: 6,
+    description: 'Length: 6 classes; age-appropriate content per grade. Covers basic understanding of the body, nutrition, movement, sleep, and healthy habit formation, in a positive, non-judgmental frame that focuses on how habits make a body feel and function rather than on appearance or weight. Age-appropriateness is treated carefully throughout, with content and depth adjusted meaningfully between primary and secondary grades. *Why Deckoviz: Vizzy can generate clear, engaging visuals of how the body works and responds to habits, making health education vivid rather than clinical, while keeping tone carefully age-appropriate and free of body-shaming framing throughout.*',
+    gradeLevel: 'Primary',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c29',
+    title: 'Digital Wellness & AI Literacy',
+    track: 'Practical Life Skills',
+    sessions: 6,
+    description: 'Length: 6 classes. Teaches healthy relationships with technology and a foundational, honest understanding of how AI systems like Vizzy itself actually work, including their genuine limits, biases, and the ways they can be wrong. The course treats students as capable of understanding real nuance rather than oversimplifying AI as either magic or a simple threat. *Why Deckoviz: There\'s a rare, powerful meta-moment here, Vizzy itself can be the live example, honestly explaining its own capabilities and limitations live in the lesson, making AI literacy immediate and concrete rather than theoretical, since the tool being discussed is right there in the room.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c30',
+    title: 'Career Exploration & Life Planning',
+    track: 'Practical Life Skills',
+    sessions: 8,
+    description: 'Length: 8 classes; secondary level, connecting to the earlier Career Exploration session. A more structured version of the standalone career session, helping older students map their interests and strengths to real potential paths, exploring not just job titles but the actual daily texture of different careers, with ongoing check-ins as thinking evolves and shifts over the course of secondary school. *Why Deckoviz: Long-term memory of a student\'s interests and strengths, built up across years of use, means this course can draw on a genuinely rich, personal picture of the student rather than a single interest-inventory quiz, making the career guidance feel earned and specific rather than generic.*',
+    gradeLevel: 'Secondary',
+    color: 'linear-gradient(135deg, #06d6a0, #2dc653)',
+    icon: HandCoins
+  },
+  {
+    id: 'c31',
+    title: 'Living History Immersion',
+    track: 'World, Culture & Ideas',
+    sessions: 6,
+    description: 'Length: 6 classes, tied to the history curriculum. Instead of reading about a historical moment, students step into it. Each session takes a single pivotal event, the signing of a treaty, a moment on the Silk Road, the fall of a great city, and rebuilds it as an immersive, first-person visual experience students discuss and analyse from inside the scene rather than from a textbook page. The course pairs historical accuracy with genuine emotional weight, helping students grasp not just what happened but what it might have felt like to be there. *Why Deckoviz: No other classroom tool can generate a historically grounded, immersive scene on demand and adjust it in real time based on student questions, what if this decision had gone differently, what did this room actually look like, turning passive historical study into something closer to being present.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #3a86ff, #023e8a)',
+    icon: Globe
+  },
+  {
+    id: 'c32',
+    title: 'World Cultures & Global Citizenship',
+    track: 'World, Culture & Ideas',
+    sessions: 8,
+    description: 'Length: 8 classes. Each session travels, visually and narratively, to a different part of the world, exploring daily life, tradition, art, and values through the eyes of people who live there, rather than tourist-brochure facts. The course deliberately builds toward a broader idea of global citizenship, helping students see commonality across difference and develop genuine curiosity about ways of living unlike their own. *Why Deckoviz: Vizzy can generate an immersive, respectful visual window into daily life anywhere in the world instantly, giving students a far richer sense of place than a map or a photograph, and letting a single classroom visit a dozen countries across a single term.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #3a86ff, #023e8a)',
+    icon: Globe
+  },
+  {
+    id: 'c33',
+    title: 'Mythology & Legends Across Cultures',
+    track: 'World, Culture & Ideas',
+    sessions: 6,
+    description: 'Length: 6 classes. Explores myths and legends from multiple cultures side by side, Greek, Norse, West African, Indigenous, East Asian, examining what these stories reveal about the values and fears of the people who told them. Rather than treating mythology as isolated folklore, the course draws connections across traditions, showing students how different cultures independently arrived at similar questions about the world. *Why Deckoviz: Vizzy can render each myth in a distinctive visual style, matching art style and mood to the specific culture it comes from, making the comparative structure of the course immediately visible rather than something students have to hold in their heads.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #3a86ff, #023e8a)',
+    icon: Globe
+  },
+  {
+    id: 'c34',
+    title: 'Philosophy for Young Minds',
+    track: 'World, Culture & Ideas',
+    sessions: 8,
+    description: 'Length: 8 classes. Introduces students to big, genuinely unresolved questions, what makes something fair, does a dog have a purpose, how do you know what you know, through open discussion rather than delivered answers. The course deliberately avoids rushing toward conclusions, teaching students that sitting with a hard question is itself a valuable skill, and that philosophy is less about right answers than about thinking clearly. *Why Deckoviz: Vizzy can generate thought experiments as visual scenarios on the spot, the classic ship that\'s had every plank replaced, a visualised trolley problem, turning abstract philosophical puzzles into something a class can actually look at and argue about together.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #3a86ff, #023e8a)',
+    icon: Globe
+  },
+  {
+    id: 'c35',
+    title: 'World Religions & Belief Systems, Respectfully Explored',
+    track: 'World, Culture & Ideas',
+    sessions: 6,
+    description: 'Length: 6 classes. A careful, comparative overview of major world belief systems, their core ideas, practices, and cultural significance, taught with genuine respect and academic neutrality rather than advocacy for any single view. The goal is understanding and cultural literacy, helping students recognise and appreciate the beliefs shaping the world and the people around them. *Why Deckoviz: Vizzy can visually and respectfully render the art, architecture, and symbolism of different traditions, giving students a genuine visual and cultural anchor for concepts that otherwise stay abstract or textbook-flat.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #3a86ff, #023e8a)',
+    icon: Globe
+  },
+  {
+    id: 'c36',
+    title: 'Civic Engagement & Community Building',
+    track: 'World, Culture & Ideas',
+    sessions: 6,
+    description: 'Length: 6 classes. Introduces students to how communities and societies actually function, local government, civic responsibility, how change happens, through practical, age-appropriate simulation rather than abstract civics lessons. Older students might run a simulated local council meeting or debate a real community issue, practising the mechanics of participation rather than just memorising how a bill becomes law. *Why Deckoviz: Vizzy can visualise the structures and stakes of a civic scenario, turning "how local government works" from a diagram into a lived simulation students actually participate in and see play out.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #3a86ff, #023e8a)',
+    icon: Globe
+  },
+  {
+    id: 'c37',
+    title: 'Design Thinking & Invention Lab',
+    track: 'Design, Invention & Creative Production',
+    sessions: 8,
+    description: 'Length: 8 classes. Teaches the design thinking process, identifying a real problem, ideating widely, prototyping, and refining, by having students invent something themselves across the course of the term. Rather than a single brainstorm-and-forget exercise, students carry one invention idea through the full process, learning that good design comes from iteration rather than a single flash of inspiration. *Why Deckoviz: Vizzy can visualise a student\'s invention concept instantly at every stage, letting them see their idea evolve visually from rough sketch to refined concept, making the abstract idea of "iteration" something they can actually watch happen to their own work.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c38',
+    title: 'Architecture & Spatial Imagination',
+    track: 'Design, Invention & Creative Production',
+    sessions: 6,
+    description: 'Length: 6 classes. Introduces basic architectural thinking, how spaces shape how people feel and behave, through hands-on design exercises, redesigning a classroom, imagining a dream treehouse, planning a public space for their neighbourhood. The course builds spatial reasoning and an early appreciation for how the built world around them was deliberately designed rather than simply existing. *Why Deckoviz: Vizzy can render a student\'s spatial concept as a real, walkable-feeling visual instantly, letting them see and refine a design idea long before it could ever be built, a capability no classroom model or sketch pad offers at this speed.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c39',
+    title: 'Culinary Arts & Food Culture',
+    track: 'Design, Invention & Creative Production',
+    sessions: 6,
+    description: 'Length: 6 classes. Explores food as culture, history, and creativity, tracing dishes to their origins, understanding the stories behind cuisines, and giving students a chance to conceptualise and visualise dishes of their own. The course treats cooking and food culture as a genuine creative discipline worth studying in its own right, not just a practical life skill. *Why Deckoviz: Vizzy can generate stunning visual renderings of dishes students design conceptually, turning food culture into a genuinely visual, engaging subject, and connecting directly to Deckoviz\'s existing restaurant-grade dish photography capability.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c40',
+    title: 'Comic Book & Graphic Novel Studio',
+    track: 'Design, Invention & Creative Production',
+    sessions: 8,
+    description: 'Length: 8 classes. A sustained creative project where students develop their own comic or graphic novel across the term, characters, plot, panel composition, visual style, learning storytelling and visual sequencing together as a single integrated craft rather than two separate skills. *Why Deckoviz: Vizzy can generate panel-by-panel visuals matching a student\'s evolving story and style in real time, giving them a genuine visual collaborator for a medium that usually requires drawing skills most students at this age simply haven\'t developed yet.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c41',
+    title: 'Film & Animation Storyboarding',
+    track: 'Design, Invention & Creative Production',
+    sessions: 6,
+    description: 'Length: 6 classes. Introduces the language of visual storytelling used in film and animation, shot composition, pacing, camera perspective, through hands-on storyboard creation for original short concepts. Students learn to think in sequences and scenes, a skill increasingly relevant given how much of their own media consumption is now visual and moving rather than text-based. *Why Deckoviz: Vizzy can generate a full visual storyboard from a student\'s described scene instantly, letting them see their creative choices rendered and revised in real time, dramatically lowering the barrier to entry for a normally technically demanding craft.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c42',
+    title: 'Game Design Fundamentals',
+    track: 'Design, Invention & Creative Production',
+    sessions: 8,
+    description: 'Length: 8 classes. Introduces the core principles behind what makes a game engaging, rules, challenge, feedback, reward, through analysing existing games and designing simple original game concepts of their own. The course treats game design as a genuine creative and systems-thinking discipline, connecting math, logic, and art in a single project with huge appeal across the curriculum. *Why Deckoviz: Vizzy can visualise a student\'s game concept, its world, its characters, its key moments, making an abstract set of rules feel like a real, tangible game world before any coding is required.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c43',
+    title: 'Fashion & Personal Style Expression',
+    track: 'Design, Invention & Creative Production',
+    sessions: 5,
+    description: 'Length: 5 classes. Explores fashion and personal style as a form of creative self-expression, colour, silhouette, cultural influence, individual taste, giving students, particularly older primary and secondary students, a genuinely engaging, low-stakes way to explore who they are visually. *Why Deckoviz: Vizzy\'s style and mood board generation capability, already built for the home vertical, translates instantly here, letting students visually experiment with personal style choices in a way that\'s playful and consequence-free.*',
+    gradeLevel: 'Primary',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c44',
+    title: 'Entrepreneurship & Pitching Big Ideas',
+    track: 'Design, Invention & Creative Production',
+    sessions: 8,
+    description: 'Length: 8 classes. Introduces the fundamentals of entrepreneurial thinking, identifying a genuine problem, shaping an idea into a solution, and communicating that idea persuasively, culminating in students pitching an original business or project idea to the class. The course builds comfort with the vulnerability of putting an idea forward and hearing honest feedback on it. *Why Deckoviz: Vizzy can generate branding, visuals, and even mock promotional material for a student\'s pitch on the spot, giving young entrepreneurs a taste of what a real, polished idea presentation actually looks and feels like.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c45',
+    title: 'Science Fiction & Worldbuilding',
+    track: 'Design, Invention & Creative Production',
+    sessions: 6,
+    description: 'Length: 6 classes. Builds around an original speculative world, its rules, its societies, its technology or magic system, and its central conflicts, learning worldbuilding as a genuine creative discipline that also happens to build systems thinking, cause and effect, and internal logical consistency. *Why Deckoviz: Vizzy can render a student\'s imagined world visually as it takes shape, giving abstract worldbuilding decisions immediate, tangible form and making the world feel real enough to keep building on session after session.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #8338ec, #3a0ca3)',
+    icon: PenTool
+  },
+  {
+    id: 'c46',
+    title: 'Astronomy & Cosmic Wonder',
+    track: 'Experiences Only Deckoviz Can Offer',
+    sessions: 6,
+    description: 'Length: 6 classes, ideally including evening sessions. Turns the classroom frame into a genuine window onto the cosmos, exploring the scale of the universe, the life cycle of stars, and the sheer improbability of Earth itself, aiming as much for a sense of awe as for factual astronomy content. The course leans deliberately into wonder as a pedagogical tool, not just information delivery. *Why Deckoviz: This is where Deckoviz\'s scale and visual power shine brightest. Vizzy can generate an immersive, scientifically grounded cosmic visual experience directly on a classroom or common-area frame, giving every school a planetarium-grade moment without the planetarium.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #8338ec)',
+    icon: Star
+  },
+  {
+    id: 'c47',
+    title: 'Cross-Generational Wisdom Exchange',
+    track: 'Experiences Only Deckoviz Can Offer',
+    sessions: 40,
+    description: 'Length: Ongoing, a recurring termly event rather than a fixed course. Connects students with grandparents, elders, or community members through guided, visually supported conversation, drawing out life stories, historical memory, and hard-won wisdom that would otherwise never make it into a classroom. This directly extends the home Elderly Companion and Reminiscence mode into a genuinely intergenerational school experience. *Why Deckoviz: Vizzy can facilitate and visually enrich a conversation between a student and an elder in real time, and can help capture and preserve what\'s shared as a lasting piece of media, something no standard classroom activity is built to do at all.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #8338ec)',
+    icon: Star
+  },
+  {
+    id: 'c48',
+    title: 'Identity & Personal Self-Portrait Journey',
+    track: 'Experiences Only Deckoviz Can Offer',
+    sessions: 5,
+    description: 'Length: 5 classes, recurs at key transition years. Students explore and express their own evolving sense of identity through a self-portrait created collaboratively with Vizzy, revisited at meaningful points across their schooling, entering secondary school, a milestone birthday, a big life change, building a visual record of how they see themselves changing over time. *Why Deckoviz: Because Vizzy retains context and memory across years, it can help a student create a genuine, evolving visual self-portrait series that grows with them, an experience literally impossible without a platform that remembers a student across their entire school journey.*',
+    gradeLevel: 'Secondary',
+    color: 'linear-gradient(135deg, #ff006e, #8338ec)',
+    icon: Star
+  },
+  {
+    id: 'c49',
+    title: 'The Legacy Project',
+    track: 'Experiences Only Deckoviz Can Offer',
+    sessions: 1,
+    description: 'Length: A single, meaningful multi-session project, typically for graduating students. A capstone experience where a graduating student reflects on their school years and creates something lasting, a letter to their future self, a piece of art capturing who they were at this moment, a narrated reflection on how they\'ve grown, to be revisited years later. *Why Deckoviz: Vizzy can generate a genuinely personal, beautifully rendered piece of legacy media, and because it holds a student\'s history across their years at the school, it can weave real moments and growth from that history into the final piece, something no single end-of-year activity could otherwise achieve.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #8338ec)',
+    icon: Star
+  },
+  {
+    id: 'c50',
+    title: 'Humor, Wit & The Craft of Comedy',
+    track: 'Experiences Only Deckoviz Can Offer',
+    sessions: 5,
+    description: 'Length: 5 classes. An unusually rare offering in most school curricula, exploring what actually makes something funny, timing, surprise, wordplay, observation, and giving students room to practise comedic writing and performance in a genuinely low-stakes, playful environment. *Why Deckoviz: Vizzy can generate visual gags, comedic scenarios, and playful illustrated material to match a student\'s attempts at humour instantly, giving young comedians real-time visual feedback on whether a joke actually lands, and making a subject rarely taught anywhere feel like a natural fit for the platform\'s playful, generative core.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #8338ec)',
+    icon: Star
+  },
+  {
+    id: 'c51',
+    title: 'Nature Connection & Environmental Wonder',
+    track: 'Experiences Only Deckoviz Can Offer',
+    sessions: 6,
+    description: 'Length: 6 classes, ideally with a recurring seasonal check-in. Builds a genuine relationship with the natural world, ecosystems, weather, the changing seasons, the interconnectedness of living things, aimed less at rote environmental facts and more at cultivating real curiosity and care for nature, especially for students in dense urban schools with limited access to green space. Sessions might trace a single ecosystem through a full year, or follow one species\' role in a larger web of life, building a sense of wonder alongside the science. *Why Deckoviz: Vizzy can bring an entire rainforest, coral reef, or migrating ecosystem into a classroom that may have no nearby nature to visit at all, rendering it immersively and letting students return to the same ecosystem across seasons to watch it change, an experience geography alone can\'t offer to a school without the natural setting on its doorstep.*',
+    gradeLevel: 'All Grades',
+    color: 'linear-gradient(135deg, #ff006e, #8338ec)',
+    icon: Star
+  },
+];

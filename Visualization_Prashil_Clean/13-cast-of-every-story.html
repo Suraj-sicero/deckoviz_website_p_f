@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cast of Every Story — Deckoviz</title>
+<meta name="description" content="Explore character archetypes (Hero, Mentor, Shadow, Trickster, Innocent, Shapeshifter, Ally, Herald), interactive relationship web, archetype clash battle mode, and personality quiz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EEE6F8; --bg2: #D5E6F7; --navy: #2B1E70; --navy-muted: rgba(43,30,112,0.65);
+    --brand-blue: #2B54EA; --brand-blue-hover: #1D44D8; --cyan: #06B6D4; --purple: #8B5CF6;
+    --glass: rgba(255,255,255,0.85); --glass-border: rgba(255,255,255,0.92);
+    --glass-shadow: 0 20px 48px rgba(43,30,112,0.12), 0 4px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.95);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; width: 100%; }
+
+  body {
+    min-height: 100vh; background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+    font-family: 'DM Sans', -apple-system, sans-serif; color: var(--navy); overflow-x: hidden;
+    user-select: none; -webkit-user-select: none;
+  }
+
+  canvas#bgCanvas {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+
+  header {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%); z-index: 10;
+    display: flex; justify-content: space-between; align-items: center; padding: 12px 28px;
+    width: min(92%, 1100px); background: rgba(255,255,255,0.88); backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border); border-radius: 9999px;
+    box-shadow: 0 12px 36px rgba(43,30,112,0.08); transition: opacity 0.4s;
+  }
+  header.hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+  header .title { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); }
+  header .title span { font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue); }
+  .header-actions { display: flex; gap: 10px; align-items: center; }
+
+  .btn-action {
+    font-size: 0.75rem; color: var(--brand-blue); text-decoration: none; cursor: pointer;
+    background: rgba(43,84,234,0.06); border: 1px solid rgba(43,84,234,0.18);
+    padding: 8px 18px; border-radius: 9999px; transition: all .25s ease; font-weight: 600;
+    display: flex; align-items: center; gap: 6px; backdrop-filter: blur(10px);
+  }
+  .btn-action:hover { color: #fff; border-color: var(--brand-blue); background: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+
+  .exit-frame-btn {
+    position: fixed; top: 24px; right: 24px; z-index: 100000;
+    background: rgba(255,255,255,0.92); border: 1px solid rgba(43,84,234,0.25);
+    color: var(--navy); padding: 10px 22px; border-radius: 9999px; font-size: 0.8rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 700; cursor: pointer; backdrop-filter: blur(16px); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s, background 0.2s; box-shadow: 0 8px 24px rgba(43,84,234,0.18);
+  }
+  .exit-frame-btn.show { opacity: 1; pointer-events: auto; }
+  .exit-frame-btn:hover { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: scale(1.05); }
+
+  .frame-art-bar {
+    position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); z-index: 100000;
+    display: flex; gap: 8px; background: rgba(255,255,255,0.92); border: 1px solid var(--glass-border);
+    padding: 8px 16px; border-radius: 9999px; backdrop-filter: blur(20px); box-shadow: 0 12px 36px rgba(43,84,234,0.15);
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease; max-width: 92vw; overflow-x: auto;
+  }
+  .frame-art-bar.show { opacity: 1; pointer-events: auto; }
+  .art-pattern-btn {
+    background: rgba(240,244,255,0.8); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 6px 14px; border-radius: 9999px; font-size: 0.74rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; cursor: pointer; transition: all 0.22s ease; display: flex; align-items: center; gap: 4px; white-space: nowrap;
+  }
+  .art-pattern-btn:hover, .art-pattern-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(43,84,234,0.35); }
+
+  @keyframes pageFade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page {
+    position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center;
+    padding: 96px 24px 80px; transition: opacity 0.4s ease; max-width: 1200px; margin: 0 auto;
+    animation: pageFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .hide-element { opacity: 0 !important; pointer-events: none !important; display: none !important; }
+
+  .hero { text-align: center; margin-bottom: 24px; max-width: 760px; margin-top: 0; }
+  .eyebrow { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--brand-blue); margin-bottom: 10px; }
+  h1 {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: clamp(2rem, 4.5vw, 2.8rem); line-height: 1.15; margin-bottom: 10px; color: var(--navy);
+  }
+  h1 span.accent-serif {
+    font-style: italic; font-weight: 700;
+    background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .subtitle { font-weight: 400; font-size: 0.94rem; color: var(--navy-muted); line-height: 1.6; }
+
+  /* TAB TOGGLE */
+  .tab-toggle { display: flex; gap: 6px; margin-bottom: 24px; background: rgba(43,84,234,0.06); padding: 4px; border-radius: 9999px; border: 1px solid rgba(43,84,234,0.12); }
+  .tab-btn {
+    background: none; border: none; color: var(--navy); padding: 8px 22px; border-radius: 9999px;
+    font-size: 0.82rem; font-family: 'DM Sans', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.25s ease;
+  }
+  .tab-btn:hover, .tab-btn.active { background: var(--brand-blue); color: #fff; box-shadow: 0 4px 14px rgba(43,84,234,0.3); transform: translateY(-1px); }
+
+  /* MAIN LAYOUT */
+  .web-section { max-width: 1200px; width: 100%; margin-bottom: 28px; }
+  .layout-grid { display: grid; grid-template-columns: 1fr 480px; gap: 24px; align-items: start; }
+
+  .web-panel {
+    background: var(--glass); backdrop-filter: blur(28px) saturate(150%); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 20px; box-shadow: var(--glass-shadow); position: relative; transition: all 0.4s ease;
+  }
+
+  body.frame-mode-active { overflow: hidden !important; }
+
+  body.frame-mode-active .page,
+  .page.frame-mode-active {
+    animation: none !important; transform: none !important; max-width: none !important;
+    margin: 0 !important; padding: 0 !important; width: 100vw !important; height: 100vh !important;
+    position: static !important;
+  }
+
+  .web-panel.frame-active {
+    position: fixed !important; inset: 0 !important; top: 0 !important; left: 0 !important;
+    width: 100vw !important; height: 100vh !important; max-width: none !important; margin: 0 !important;
+    padding: 0 !important; border-radius: 0 !important; border: none !important; box-shadow: none !important;
+    z-index: 9999 !important; background: #06031A !important;
+    display: flex !important; justify-content: center !important; align-items: center !important;
+  }
+
+  canvas#nodeCanvas { display: block; width: 100%; height: 560px; border-radius: 20px; background: rgba(240,244,255,0.6); cursor: grab; }
+  .web-panel.frame-active canvas#nodeCanvas { width: 100vw !important; height: 100vh !important; border-radius: 0 !important; background: transparent !important; }
+  canvas#nodeCanvas:active { cursor: grabbing; }
+
+  .drag-hint {
+    position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+    font-size: 0.72rem; font-weight: 600; color: var(--navy); background: rgba(255,255,255,0.92);
+    padding: 7px 18px; border-radius: 9999px; border: 1px solid var(--glass-border); pointer-events: none;
+    box-shadow: 0 4px 16px rgba(43,84,234,0.1); transition: opacity 0.4s; z-index: 2;
+  }
+  .web-panel.frame-active .drag-hint { opacity: 0 !important; }
+
+  .detail-panel {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 24px; box-shadow: var(--glass-shadow); transition: opacity 0.3s, transform 0.3s;
+  }
+
+  .identity-banner {
+    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--purple) 100%);
+    color: #fff; border-radius: 20px; padding: 18px 20px; margin-bottom: 18px;
+    box-shadow: 0 8px 24px rgba(43,84,234,0.22); transition: all 0.3s ease;
+  }
+  .identity-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.18em; color: #6BFFB8; margin-bottom: 4px; }
+  .identity-title { font-family: 'Comfortaa', cursive, sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 4px; }
+  .identity-trait { font-size: 0.8rem; line-height: 1.45; color: rgba(255,255,255,0.92); font-weight: 400; }
+
+  .side-by-side-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+
+  .mentality-sec-title { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--navy); margin-bottom: 8px; }
+  .mentality-options { display: flex; flex-direction: column; gap: 6px; }
+  .mentality-btn {
+    background: rgba(255,255,255,0.75); border: 1px solid rgba(43,84,234,0.15); color: var(--navy);
+    padding: 7px 10px; border-radius: 12px; font-size: 0.72rem; font-family: 'DM Sans', sans-serif;
+    font-weight: 600; text-align: left; cursor: pointer; transition: all 0.22s ease;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .mentality-btn:hover { background: #fff; border-color: var(--brand-blue); transform: translateX(2px); color: var(--brand-blue); }
+  .mentality-btn.active { background: var(--brand-blue); color: #fff; border-color: var(--brand-blue); box-shadow: 0 4px 14px rgba(43,84,234,0.25); }
+
+  .archetype-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .archetype-icon { font-size: 1.8rem; line-height: 1; }
+  .archetype-name { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 1.25rem; color: var(--navy); }
+  .archetype-role { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-blue); margin-bottom: 8px; }
+  .archetype-desc { font-size: 0.78rem; line-height: 1.5; color: var(--navy-muted); margin-bottom: 12px; font-weight: 400; }
+
+  .example-list { display: flex; flex-direction: column; gap: 6px; }
+  .example-item {
+    background: rgba(255,255,255,0.85); border: 1px solid rgba(43,84,234,0.12); border-radius: 10px; padding: 7px 10px;
+    transition: transform 0.2s, border-color 0.2s; cursor: pointer;
+  }
+  .example-item:hover { transform: translateX(2px); border-color: var(--brand-blue); background: #fff; }
+  .example-char { font-weight: 700; font-size: 0.78rem; color: var(--navy); }
+  .example-work { font-size: 0.68rem; color: var(--navy-muted); font-style: italic; margin-top: 1px; }
+
+  /* QUIZ SECTION */
+  .quiz-section { max-width: 680px; width: 100%; display: none; margin-bottom: 28px; }
+  .quiz-section.active { display: block; }
+  .web-section.hidden { display: none; }
+
+  .quiz-card {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 28px; padding: 36px; text-align: center; box-shadow: var(--glass-shadow);
+  }
+  .quiz-progress { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--brand-blue); margin-bottom: 10px; }
+  .quiz-question { font-family: 'Playfair Display', serif; font-weight: 700; font-size: 1.4rem; color: var(--navy); margin-bottom: 24px; line-height: 1.35; }
+  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+  .quiz-option {
+    background: rgba(255,255,255,0.9); border: 1px solid rgba(43,84,234,0.18); color: var(--navy);
+    padding: 14px 20px; border-radius: 16px; font-size: 0.9rem; font-family: 'DM Sans', sans-serif; font-weight: 500;
+    cursor: pointer; transition: all 0.22s; text-align: left; box-shadow: 0 4px 12px rgba(43,84,234,0.04);
+  }
+  .quiz-option:hover { background: var(--brand-blue); color: white; border-color: var(--brand-blue); transform: translateY(-1px); box-shadow: 0 6px 18px rgba(43,84,234,0.25); }
+
+  .quiz-result { text-align: center; padding: 24px; }
+  .result-icon { font-size: 3.5rem; margin-bottom: 12px; }
+  .result-name { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 2rem; color: var(--navy); margin-bottom: 6px; }
+  .result-role { font-size: 0.85rem; color: var(--brand-blue); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
+  .result-desc { font-size: 0.92rem; line-height: 1.65; color: var(--navy-muted); font-weight: 400; max-width: 500px; margin: 0 auto 20px; }
+  .btn-quiz-again {
+    background: var(--brand-blue); border: none; color: white; padding: 12px 28px; border-radius: 9999px;
+    font-size: 0.85rem; font-family: 'DM Sans', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-quiz-again:hover { background: var(--brand-blue-hover); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(43,84,234,0.3); }
+
+  /* FOOTER PANEL */
+  .footer-panel {
+    background: var(--glass); backdrop-filter: blur(28px); border: 1px solid var(--glass-border);
+    border-radius: 24px; padding: 20px 24px; max-width: 1200px; width: 100%; text-align: center;
+    box-shadow: var(--glass-shadow); font-size: 0.78rem; color: var(--navy-muted); line-height: 1.6;
+  }
+  .footer-panel strong { color: var(--navy); font-weight: 700; }
+
+  @media (max-width: 1024px) {
+    .layout-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .side-by-side-grid { grid-template-columns: 1fr; }
+  }
+  /* FRAME MODE TITLE & LEGEND OVERLAYS */
+  .frame-title-overlay {
+    position: fixed; top: 24px; left: 24px; z-index: 100000;
+    background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border); padding: 10px 18px; border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(43,30,112,0.14); opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease; transform: translateY(-8px);
+  }
+  .frame-title-overlay.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .frame-title-text {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.95rem; color: var(--navy);
+  }
+  .frame-subtitle-text {
+    font-family: 'DM Sans', sans-serif; font-size: 0.72rem; color: var(--navy-muted); margin-top: 2px;
+  }
+
+  .frame-legend-toggle {
+    position: fixed; bottom: 32px; right: 24px; z-index: 100000;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+  }
+  .frame-legend-toggle.show { opacity: 1; pointer-events: auto; }
+  .legend-btn {
+    background: rgba(255, 255, 255, 0.92); border: 1px solid rgba(43,84,234,0.22);
+    color: var(--navy); padding: 8px 18px; border-radius: 9999px; font-size: 0.76rem;
+    font-family: 'DM Sans', sans-serif; font-weight: 700; cursor: pointer;
+    backdrop-filter: blur(16px); box-shadow: 0 6px 20px rgba(43,84,234,0.15); transition: all 0.22s ease;
+  }
+  .legend-btn:hover { background: var(--brand-blue); color: #fff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(43,84,234,0.3); }
+  .legend-popover {
+    position: absolute; bottom: 44px; right: 0; width: 270px;
+    background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border); border-radius: 20px; padding: 14px 16px;
+    box-shadow: 0 14px 40px rgba(43,30,112,0.2); opacity: 0; pointer-events: none;
+    transform: translateY(8px); transition: all 0.25s ease;
+  }
+  .frame-legend-toggle:hover .legend-popover,
+  .legend-popover.open { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .legend-popover-title {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--brand-blue); margin-bottom: 8px; font-family: 'DM Sans', sans-serif;
+  }
+  .legend-item {
+    display: flex; align-items: center; gap: 8px; font-size: 0.74rem; color: var(--navy); margin-bottom: 6px; line-height: 1.3;
+  }
+  .legend-color { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+
+<div class="frame-title-overlay" id="frameTitleOverlay">
+  <div class="frame-title-text">The Cast of Every Story</div>
+  <div class="frame-subtitle-text">Universal Character Archetypes & Interactive Relationship Web</div>
+</div>
+
+<div class="frame-legend-toggle" id="frameLegendToggle">
+  <button class="legend-btn" id="legendToggleBtn">📖 Connection Legend</button>
+  <div class="legend-popover" id="legendPopover">
+    <div class="legend-popover-title">Connection Link Meanings</div>
+    <div class="legend-item"><span class="legend-color" style="background:#10B981;"></span> <strong>Companionship</strong> &nbsp;(Hero ↔ Ally)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#2563EB;"></span> <strong>Guidance</strong> &nbsp;(Hero ↔ Mentor)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#06B6D4;"></span> <strong>Protection</strong> &nbsp;(Hero ↔ Innocent)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#3B82F6;"></span> <strong>Dynamic Trust</strong> &nbsp;(Hero ↔ Shapeshifter)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> <strong>Subversion</strong> &nbsp;(Hero ↔ Trickster)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#EC4899;"></span> <strong>Antagonism</strong> &nbsp;(Hero ↔ Shadow)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> <strong>Rivalry</strong> &nbsp;(Mentor ↔ Shadow)</div>
+    <div class="legend-item"><span class="legend-color" style="background:#14B8A6;"></span> <strong>Call to Adventure</strong> &nbsp;(Hero ↔ Herald)</div>
+  </div>
+</div>
+
+<header id="header">
+  <div class="deckoviz-brand-mark" style="display: flex; align-items: center; gap: 8px;">
+    <img src="deckoviz-logo.png" alt="Deckoviz Logo" style="height: 30px; width: auto; object-fit: contain; display: block;">
+    <div class="title" style="font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 1.02rem; color: var(--navy); display: flex; align-items: center; gap: 4px;">
+      Deckoviz <span style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--brand-blue);">Space Labs</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-action" id="soundBtn">🔊 Sound On</button>
+    <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+  </div>
+</header>
+
+<button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+<div class="frame-art-bar" id="frameArtBar">
+  <button class="art-pattern-btn active" data-pattern="battle">⚔️ Archetype Battle Clash</button>
+  <button class="art-pattern-btn" data-pattern="galaxy">🌌 Cosmic Galaxy Orbit</button>
+  <button class="art-pattern-btn" data-pattern="heart">💖 Sacred Heart Synergy</button>
+  <button class="art-pattern-btn" data-pattern="dna">🧬 DNA Double Helix</button>
+</div>
+
+<div class="page" id="mainUi">
+  <div class="hero" id="heroSec">
+    <div class="eyebrow">Deckoviz Narrative Science DAS</div>
+    <h1>The Cast of <span class="accent-serif">Every Story</span></h1>
+    <p class="subtitle">An exploration of universal character archetypes across mythology, literature, and film — mapped as an interactive spring-physics relationship web, live battle clash artwork in Frame Mode, and archetype personality quiz.</p>
+  </div>
+
+  <div class="tab-toggle" id="tabToggle">
+    <button class="tab-btn active" id="tabWeb">✨ Interactive Archetype Web</button>
+    <button class="tab-btn" id="tabQuiz">🔮 Take Archetype Quiz</button>
+  </div>
+
+  <!-- INTERACTIVE ARCHETYPE WEB SECTION -->
+  <div class="web-section" id="webSection">
+    <div class="layout-grid">
+      <div class="web-panel" id="webPanel">
+        <canvas id="nodeCanvas"></canvas>
+        <div class="drag-hint">💡 Click & drag any archetype node to stretch the web</div>
+      </div>
+
+      <div class="detail-panel" id="detailPanel">
+        <div class="identity-banner" id="identityBanner">
+          <div class="identity-tag" id="identityTag">YOUR MENTALITY PROFILE</div>
+          <div class="identity-title" id="identityTitle">Courageous Warrior Mentality ⚔️</div>
+          <div class="identity-trait" id="identityTrait">You possess a Hero Mentality: you confront life's toughest obstacles head-on, growing stronger through adversity to inspire others.</div>
+        </div>
+
+        <div class="side-by-side-grid">
+          <div class="column-box">
+            <div class="mentality-sec-title">Core Life Mentality</div>
+            <div class="mentality-options" id="mentalityOptions"></div>
+          </div>
+
+          <div class="column-box">
+            <div class="archetype-header">
+              <span class="archetype-icon" id="archIcon">⚔️</span>
+              <div>
+                <div class="archetype-name" id="archName">The Hero</div>
+                <div class="archetype-role" id="archRole">Ego & Quest</div>
+              </div>
+            </div>
+            <div class="archetype-desc" id="archDesc">The protagonist whose journey drives the narrative. They leave the known world to face trials and return transformed with a gift for humanity.</div>
+            <div style="font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--navy); margin-bottom:8px;">Famous Character Examples</div>
+            <div class="example-list" id="exampleList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ SECTION -->
+  <div class="quiz-section" id="quizSection">
+    <div class="quiz-card" id="quizCard"></div>
+  </div>
+
+  <!-- CITATION FOOTER -->
+  <div class="footer-panel">
+    <strong>Narrative Psychology Grounding:</strong> Based on Joseph Campbell's <em>The Hero with a Thousand Faces</em> and Christopher Vogler's archetype structures.
+  </div>
+</div>
+
+<script>
+/* ---------- Deckoviz Floating Particle Background ---------- */
+const bgCanvas = document.getElementById('bgCanvas');
+const bgCtx = bgCanvas.getContext('2d');
+let bgParticles = [];
+
+function initBgParticles() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  bgCanvas.width = window.innerWidth * dpr;
+  bgCanvas.height = window.innerHeight * dpr;
+  bgCanvas.style.width = window.innerWidth + 'px';
+  bgCanvas.style.height = window.innerHeight + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const num = Math.floor((window.innerWidth * window.innerHeight) / 7000);
+  const colors = ['rgba(6,182,212,', 'rgba(43,84,234,', 'rgba(139,92,246,', 'rgba(217,70,239,'];
+  bgParticles = Array.from({ length: num }, () => ({
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    size: Math.random() * 2.2 + 0.6,
+    speedY: (Math.random() - 0.5) * 0.3,
+    speedX: (Math.random() - 0.5) * 0.3,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    alpha: Math.random() * 0.5 + 0.15,
+    phase: Math.random() * Math.PI * 2
+  }));
+}
+
+function drawBgParticles(t) {
+  bgCtx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+  const w = window.innerWidth, h = window.innerHeight;
+  bgParticles.forEach(p => {
+    p.x += p.speedX; p.y += p.speedY;
+    if (p.x < 0) p.x = w; else if (p.x > w) p.x = 0;
+    if (p.y < 0) p.y = h; else if (p.y > h) p.y = 0;
+
+    const alpha = (p.alpha * (0.65 + 0.35 * Math.sin(t * 0.0015 + p.phase))).toFixed(2);
+    bgCtx.beginPath();
+    bgCtx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    bgCtx.fillStyle = p.color + alpha + ')';
+    bgCtx.fill();
+  });
+}
+
+/* ---------- Foolproof Web Audio Autoplay Unlocker ---------- */
+let audioCtx = null;
+let soundEnabled = true;
+let masterGain = null;
+
+function unlockAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AudioContext();
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.15;
+    masterGain.connect(audioCtx.destination);
+  }
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+}
+
+function playBattleClash(freq = 660) {
+  unlockAudio();
+  if (!soundEnabled || !audioCtx) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    osc.type = 'sawtooth'; osc.frequency.value = freq;
+    g.gain.setValueAtTime(0.09, audioCtx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.3);
+    osc.connect(g); g.connect(masterGain);
+    osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+  } catch(e){}
+}
+
+window.addEventListener('pointerdown', unlockAudio, { once: true });
+window.addEventListener('keydown', unlockAudio, { once: true });
+
+document.getElementById('soundBtn').addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  document.getElementById('soundBtn').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+  if (masterGain) masterGain.gain.value = soundEnabled ? 0.15 : 0;
+  if (soundEnabled) playBattleClash(528);
+});
+
+const archetypes = [
+  { id: 'hero', key: 'hero', icon: '⚔️', name: 'The Hero', role: 'Ego & Quest', battleColor: '#2B54EA', mentalityName: 'Courageous Warrior Mentality ⚔️', whoYouAre: 'You possess a Hero Mentality: you confront life\'s toughest obstacles head-on, growing stronger through adversity to inspire others.', optionText: '⚔️ "I face challenges head-on to protect and improve things."', desc: 'The protagonist whose journey drives the narrative. They leave the known world to face trials and return transformed with a gift for humanity.', examples: [{ char: 'Odysseus', work: 'The Odyssey' }, { char: 'Frodo Baggins', work: 'Lord of the Rings' }, { char: 'Harry Potter', work: 'Harry Potter' }, { char: 'Luke Skywalker', work: 'Star Wars' }, { char: 'Neo', work: 'The Matrix' }] },
+  { id: 'mentor', key: 'mentor', icon: '🧙‍♂️', name: 'The Mentor', role: 'Superego & Wisdom', battleColor: '#8B5CF6', mentalityName: 'Wise Strategist Mentality 🧙‍♂️', whoYouAre: 'You possess a Mentor Mentality: you observe deeply, gain master wisdom, and take joy in guiding others toward success.', optionText: '🧙‍♂️ "I analyze situations and guide others toward wisdom."', desc: 'Provides guidance, gifts, or training to prepare the hero for the threshold ahead.', examples: [{ char: 'Athena', work: 'Greek Mythology' }, { char: 'Gandalf', work: 'Middle-earth' }, { char: 'Dumbledore', work: 'Harry Potter' }, { char: 'Obi-Wan Kenobi', work: 'Star Wars' }] },
+  { id: 'shadow', key: 'shadow', icon: '👑', name: 'The Shadow', role: 'Repressed Psyche & Power', battleColor: '#EC4899', mentalityName: 'Ambitious Sovereign Mentality 👑', whoYouAre: 'You possess a Shadow Mentality: intense focus, ambition, and refusal to settle. You demand total mastery.', optionText: '👑 "I strive for complete mastery and relentless ambition."', desc: 'Embodied darkness or formidable villainy that reflects unexpressed flaws and forces transformation.', examples: [{ char: 'Darth Vader', work: 'Star Wars' }, { char: 'Sauron', work: 'Lord of the Rings' }, { char: 'Voldemort', work: 'Harry Potter' }, { char: 'Agent Smith', work: 'The Matrix' }] },
+  { id: 'trickster', key: 'trickster', icon: '🃏', name: 'The Trickster', role: 'Disruption & Humor', battleColor: '#F59E0B', mentalityName: 'Maverick Catalyst Mentality 🃏', whoYouAre: 'You possess a Trickster Mentality: quick-witted and out-of-the-box. You break boring rules to unlock creative solutions.', optionText: '🃏 "I use humor and creative chaos to solve tough problems."', desc: 'Cuts through arrogance with humor, chaos, and unexpected subversion of status quo.', examples: [{ char: 'Loki', work: 'Norse Mythology' }, { char: 'Cheshire Cat', work: 'Alice in Wonderland' }, { char: 'Jack Sparrow', work: 'Pirates of the Caribbean' }, { char: 'Puck', work: 'A Midsummer Night\'s Dream' }] },
+  { id: 'innocent', key: 'innocent', icon: '🌸', name: 'The Innocent', role: 'Purity, Faith & Hope', battleColor: '#06B6D4', mentalityName: 'Pure Optimist Mentality 🌸', whoYouAre: 'You possess an Innocent Mentality: pure-hearted and optimistic. You see beauty and hope where others see darkness.', optionText: '🌸 "I believe in goodness, hope, and seeing the best in life."', desc: 'Represents pure faith, optimism, and moral clarity.', examples: [{ char: 'Dorothy Gale', work: 'Wizard of Oz' }, { char: 'WALL-E', work: 'Pixar' }, { char: 'Buddy', work: 'Elf' }, { char: 'Forrest Gump', work: 'Forrest Gump' }] },
+  { id: 'shapeshifter', key: 'shapeshifter', icon: '🎭', name: 'The Shapeshifter', role: 'Illusion & Adaptability', battleColor: '#3B82F6', mentalityName: 'Fluid Chameleon Mentality 🎭', whoYouAre: 'You possess a Shapeshifter Mentality: highly adaptable and versatile. You read social atmospheres effortlessly.', optionText: '🎭 "I stay flexible and adapt my approach to fit any situation."', desc: 'Changes allegiance or appearance, creating intrigue and testing true loyalty.', examples: [{ char: 'Severus Snape', work: 'Harry Potter' }, { char: 'Catwoman', work: 'DC Comics' }, { char: 'Gollum', work: 'Lord of the Rings' }, { char: 'Lando Calrissian', work: 'Star Wars' }] },
+  { id: 'ally', key: 'ally', icon: '🛡️', name: 'The Ally', role: 'Companionship & Loyalty', battleColor: '#10B981', mentalityName: 'Steadfast Guardian Mentality 🛡️', whoYouAre: 'You possess an Ally Mentality: deeply loyal and reliable. You are the backbone that keeps loved ones safe.', optionText: '🛡️ "I am fiercely loyal and always support my companions."', desc: 'Stands alongside the hero during trials, filling in weaknesses and sharing heavy burdens.', examples: [{ char: 'Samwise Gamgee', work: 'Lord of the Rings' }, { char: 'Ron & Hermione', work: 'Harry Potter' }, { char: 'Chewbacca', work: 'Star Wars' }, { char: 'Dr. Watson', work: 'Sherlock Holmes' }] },
+  { id: 'herald', key: 'herald', icon: '📯', name: 'The Herald', role: 'Messenger of Change', battleColor: '#14B8A6', mentalityName: 'Visionary Catalyst Mentality 📯', whoYouAre: 'You possess a Herald Mentality: you spark transformation, deliver powerful insights, and call others to embark on their greatest journey.', optionText: '📯 "I deliver powerful ideas and spark the call to action."', desc: 'Announces the beginning of the adventure and brings the challenge that disrupts the hero\'s ordinary world.', examples: [{ char: 'R2-D2', work: 'Star Wars' }, { char: 'Hagrid\'s Letter', work: 'Harry Potter' }, { char: 'White Rabbit', work: 'Alice in Wonderland' }, { char: 'Morpheus', work: 'The Matrix' }] }
+];
+
+const edges = [
+  { from: 'hero', to: 'mentor', label: 'Guidance' },
+  { from: 'hero', to: 'shadow', label: 'Antagonism' },
+  { from: 'hero', to: 'trickster', label: 'Subversion' },
+  { from: 'hero', to: 'innocent', label: 'Protection' },
+  { from: 'hero', to: 'shapeshifter', label: 'Dynamic Trust' },
+  { from: 'hero', to: 'ally', label: 'Companionship' },
+  { from: 'hero', to: 'herald', label: 'Call to Adventure' },
+  { from: 'mentor', to: 'shadow', label: 'Rivalry' }
+];
+
+let activeIdx = 0;
+let frameMode = false;
+let currentArtPattern = 'battle';
+const canvas = document.getElementById('nodeCanvas');
+const ctx = canvas.getContext('2d');
+let nodes = [];
+let draggingNode = null;
+let dragOffset = { x: 0, y: 0 };
+let battleSparks = [];
+let battleShockwaves = [];
+
+function initNodes() {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  if (!frameMode) {
+    canvas.style.width = '100%';
+    canvas.style.height = '560px';
+  }
+
+  const parentRect = canvas.parentElement.getBoundingClientRect();
+  const w = frameMode ? window.innerWidth : parentRect.width;
+  const h = frameMode ? window.innerHeight : 560;
+
+  canvas.width = w * dpr; canvas.height = h * dpr;
+  if (frameMode) {
+    canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+  }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  const cx = w / 2, cy = (h / 2) + 10;
+  const R = Math.min(w, h) * (frameMode ? 0.35 : 0.30);
+
+  nodes = archetypes.map((arch, i) => {
+    const angle = (i / archetypes.length) * Math.PI * 2 - Math.PI / 2;
+    const origX = cx + Math.cos(angle) * R;
+    const origY = cy + Math.sin(angle) * R;
+
+    const angleV = Math.random() * Math.PI * 2;
+    const speedV = 3 + Math.random() * 3.5;
+
+    return {
+      ...arch,
+      x: origX, y: origY,
+      origX: origX, origY: origY,
+      vx: Math.cos(angleV) * speedV,
+      vy: Math.sin(angleV) * speedV,
+      r: frameMode ? 32 : 28
+    };
+  });
+
+  // Rebuild O(1) id→node lookup (used per frame in physics and edge draw)
+  nodeMap = {};
+  nodes.forEach(n => { nodeMap[n.id] = n; });
+
+  // Pre-build Frame Mode background gradient once (not per frame)
+  if (frameMode) {
+    const gw = window.innerWidth, gh = window.innerHeight;
+    frameBgGradient = ctx.createRadialGradient(gw/2, gh/2, 10, gw/2, gh/2, Math.max(gw, gh) * 0.7);
+    frameBgGradient.addColorStop(0,   'rgba(17,11,56,0.95)');
+    frameBgGradient.addColorStop(0.6, 'rgba(6,3,26,0.98)');
+    frameBgGradient.addColorStop(1,   '#06031A');
+  } else {
+    frameBgGradient = null;
+  }
+
+  initBgParticles();
+}
+
+function triggerBattleClashEffect(x, y, color1, color2) {
+  playBattleClash(400 + Math.random() * 400);
+  battleShockwaves.push({ x, y, r: 5, alpha: 1, color: color1 });
+  for (let s = 0; s < 12; s++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 3 + Math.random() * 6;
+    battleSparks.push({
+      x, y, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed,
+      life: 1.0, color: Math.random() > 0.5 ? color1 : color2
+    });
+  }
+}
+
+let canvasRect = null;
+let rawPointer = { x: 0, y: 0 };
+let hoveredNode = null;
+let nodeMap = {};           // id → node, rebuilt in initNodes
+let frameBgGradient = null; // pre-built Frame Mode bg gradient, rebuilt on resize
+
+function updateCanvasRect() {
+  canvasRect = canvas.getBoundingClientRect();
+}
+
+function updateDraggingNode() {
+  if (draggingNode && canvasRect) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const scaleX = (canvas.width / dpr) / canvasRect.width;
+    const scaleY = (canvas.height / dpr) / canvasRect.height;
+    
+    const targetX = ((rawPointer.x - canvasRect.left) * scaleX) - dragOffset.x;
+    const targetY = ((rawPointer.y - canvasRect.top) * scaleY) - dragOffset.y;
+
+    // Track drag velocity for flinging when released in Battle Clash mode
+    draggingNode.vx = (targetX - draggingNode.x) * 0.4;
+    draggingNode.vy = (targetY - draggingNode.y) * 0.4;
+    draggingNode.x = targetX;
+    draggingNode.y = targetY;
+  }
+}
+
+function updateSpringPhysics() {
+  // dragging node position is applied once here for normal mode;
+  // Frame Mode calls updateDraggingNode() directly inside drawPlayableWeb
+  if (!frameMode) updateDraggingNode();
+  if (frameMode) return;
+
+  const springK = 0.035;   // Stable spring tension
+  const damping = 0.85;    // Critically damped
+  const repulseDist = 100;
+  const repulseDist2 = repulseDist * repulseDist; // avoid sqrt when possible
+
+  // Physics update for non-dragged nodes — O(n) spring + O(n) neighbour repulsion
+  const nLen = nodes.length;
+  for (let i = 0; i < nLen; i++) {
+    const n = nodes[i];
+    if (n === draggingNode) continue;
+
+    n.vx = (n.vx + (n.origX - n.x) * springK) * damping;
+    n.vy = (n.vy + (n.origY - n.y) * springK) * damping;
+
+    // O(n) pairwise repulsion — only check each pair once
+    for (let j = i + 1; j < nLen; j++) {
+      const other = nodes[j];
+      const rdx = n.x - other.x;
+      const rdy = n.y - other.y;
+      const d2 = rdx * rdx + rdy * rdy;
+      if (d2 < repulseDist2 && d2 > 0) {
+        const dist = Math.sqrt(d2);
+        const push = (repulseDist - dist) * 0.012 / dist;
+        const fx = rdx * push, fy = rdy * push;
+        n.vx += fx; n.vy += fy;
+        if (other !== draggingNode) { other.vx -= fx; other.vy -= fy; }
+      }
+    }
+
+    n.x += n.vx;
+    n.y += n.vy;
+  }
+
+  // Elastic edge pull during drag — O(1) lookup via nodeMap
+  if (draggingNode) {
+    const dId = draggingNode.id;
+    edges.forEach(e => {
+      const other = e.from === dId ? nodeMap[e.to] : e.to === dId ? nodeMap[e.from] : null;
+      if (other && other !== draggingNode) {
+        const dx = draggingNode.x - other.x;
+        const dy = draggingNode.y - other.y;
+        const dist = Math.hypot(dx, dy) || 1;
+        const delta = dist - 130;
+        if (delta > 0) {
+          const f = Math.min(delta * 0.015, 6) / dist;
+          other.vx += dx * f;
+          other.vy += dy * f;
+        }
+      }
+    });
+  }
+}
+
+function drawPlayableWeb(t) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const w = frameMode ? window.innerWidth : (canvas.width / dpr);
+  const h = frameMode ? window.innerHeight : 560;
+  const cx = w / 2, cy = (h / 2) + 10;
+  ctx.clearRect(0, 0, w, h);
+
+  if (frameMode) {
+    // Apply dragged-node position once per rAF tick in Frame Mode
+    updateDraggingNode();
+
+    // Pre-cached gradient — created once in initNodes/resize, not every frame
+    if (frameBgGradient) {
+      ctx.fillStyle = frameBgGradient;
+    } else {
+      ctx.fillStyle = '#06031A';
+    }
+    ctx.fillRect(0, 0, w, h);
+
+    if (currentArtPattern === 'battle') {
+      const nLen = nodes.length;
+
+      // Physics update
+      for (let i = 0; i < nLen; i++) {
+        const n = nodes[i];
+        if (n !== draggingNode) {
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < n.r + 20 || n.x > w - n.r - 20) n.vx *= -1;
+          if (n.y < n.r + 20 || n.y > h - n.r - 20) n.vy *= -1;
+        }
+        for (let j = i + 1; j < nLen; j++) {
+          const n2 = nodes[j];
+          if (Math.hypot(n2.x - n.x, n2.y - n.y) < n.r + n2.r + 30) {
+            triggerBattleClashEffect((n.x + n2.x)/2, (n.y + n2.y)/2, n.battleColor, n2.battleColor);
+            if (n !== draggingNode) { const tv = n.vx; n.vx = n2.vx; n2.vx = tv; }
+            if (n2 !== draggingNode) { const tv = n.vy; n.vy = n2.vy; n2.vy = tv; }
+          }
+        }
+      }
+
+      // Batch edge drawing — group by colour to minimise strokeStyle changes
+      ctx.lineWidth = 2.5;
+      for (let i = 0; i < nLen; i++) {
+        const n = nodes[i];
+        ctx.strokeStyle = n.battleColor + '77';
+        ctx.beginPath();
+        for (let j = i + 1; j < nLen; j++) {
+          ctx.moveTo(n.x, n.y); ctx.lineTo(nodes[j].x, nodes[j].y);
+        }
+        ctx.stroke();
+      }
+    } else {
+      const rot = t * 0.001;
+      const nLen = nodes.length;
+      for (let i = 0; i < nLen; i++) {
+        const n = nodes[i];
+        if (n === draggingNode) continue;
+        let tx = cx, ty = cy;
+        if (currentArtPattern === 'galaxy') {
+          const angle = (i / nLen) * Math.PI * 2 + rot;
+          const R = Math.min(w, h) * 0.32;
+          tx = cx + Math.cos(angle) * R; ty = cy + Math.sin(angle) * R;
+        } else if (currentArtPattern === 'heart') {
+          const angle = (i / nLen) * Math.PI * 2;
+          const scale = Math.min(w, h) * 0.016;
+          tx = cx + 16 * Math.pow(Math.sin(angle), 3) * scale;
+          ty = cy - (13 * Math.cos(angle) - 5 * Math.cos(2*angle) - 2 * Math.cos(3*angle) - Math.cos(4*angle)) * scale;
+        } else if (currentArtPattern === 'dna') {
+          const normY = (i / (nLen - 1)) - 0.5;
+          const angle = normY * Math.PI * 3 + rot;
+          tx = cx + Math.cos(angle) * 140; ty = cy + normY * (h * 0.6);
+        }
+        n.x += (tx - n.x) * 0.08; n.y += (ty - n.y) * 0.08;
+      }
+
+      ctx.beginPath();
+      nodes.forEach((n, i) => { if (i === 0) ctx.moveTo(n.x, n.y); else ctx.lineTo(n.x, n.y); });
+      ctx.closePath(); ctx.strokeStyle = 'rgba(233,75,255,0.45)'; ctx.lineWidth = 3; ctx.stroke();
+    }
+
+    // Shockwaves and sparks — iterate backwards so splice doesn't skip
+    for (let i = battleShockwaves.length - 1; i >= 0; i--) {
+      const sw = battleShockwaves[i];
+      sw.r += 3.5; sw.alpha -= 0.04;
+      if (sw.alpha <= 0) { battleShockwaves.splice(i, 1); continue; }
+      ctx.beginPath(); ctx.arc(sw.x, sw.y, sw.r, 0, Math.PI * 2);
+      ctx.strokeStyle = sw.color; ctx.globalAlpha = sw.alpha; ctx.lineWidth = 3; ctx.stroke();
+    }
+    for (let i = battleSparks.length - 1; i >= 0; i--) {
+      const sp = battleSparks[i];
+      sp.x += sp.vx; sp.y += sp.vy; sp.life -= 0.04;
+      if (sp.life <= 0) { battleSparks.splice(i, 1); continue; }
+      ctx.beginPath(); ctx.arc(sp.x, sp.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = sp.color; ctx.globalAlpha = sp.life; ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+  } else {
+    updateSpringPhysics();
+
+    ctx.beginPath(); ctx.arc(cx, cy, Math.min(w, h) * 0.30, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(43,84,234,0.08)'; ctx.lineWidth = 1.5; ctx.stroke();
+
+    // Batch inactive edges in a single path, then active edges in another
+    const activeNode = nodes[activeIdx];
+    const pulseProgress = (t * 0.0006) % 1;
+
+    ctx.beginPath(); ctx.lineWidth = 1.8; ctx.strokeStyle = 'rgba(43,84,234,0.18)';
+    edges.forEach(e => {
+      const n1 = nodeMap[e.from], n2 = nodeMap[e.to];
+      if (!n1 || !n2) return;
+      if (n1 === activeNode || n2 === activeNode) return; // drawn separately
+      ctx.moveTo(n1.x, n1.y); ctx.lineTo(n2.x, n2.y);
+    });
+    ctx.stroke();
+
+    ctx.beginPath(); ctx.lineWidth = 3.0; ctx.strokeStyle = 'rgba(43,84,234,0.85)';
+    edges.forEach(e => {
+      const n1 = nodeMap[e.from], n2 = nodeMap[e.to];
+      if (!n1 || !n2 || (n1 !== activeNode && n2 !== activeNode)) return;
+      ctx.moveTo(n1.x, n1.y); ctx.lineTo(n2.x, n2.y);
+    });
+    ctx.stroke();
+
+    // Pulse dots and labels — per-edge, unavoidable
+    edges.forEach(e => {
+      const n1 = nodeMap[e.from], n2 = nodeMap[e.to];
+      if (!n1 || !n2) return;
+      const px = n1.x + (n2.x - n1.x) * pulseProgress;
+      const py = n1.y + (n2.y - n1.y) * pulseProgress;
+      ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#06B6D4'; ctx.fill();
+      const mx = (n1.x + n2.x) / 2, my = (n1.y + n2.y) / 2;
+      ctx.fillStyle = 'rgba(43,30,112,0.65)'; ctx.font = '600 10px DM Sans, sans-serif';
+      ctx.textAlign = 'center'; ctx.fillText(e.label, mx, my - 4);
+    });
+  }
+
+  nodes.forEach((n, i) => {
+    const isActive = i === activeIdx;
+    const isHovered = hoveredNode === n;
+
+    // Fast, zero-allocation alpha aura glow
+    if (isActive || isHovered || frameMode) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, isHovered ? n.r + 14 : n.r + 9, 0, Math.PI * 2);
+      ctx.fillStyle = (n.battleColor || '#2B54EA') + (isHovered ? '44' : '22');
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    ctx.arc(n.x, n.y, isHovered ? n.r + 4 : n.r, 0, Math.PI * 2);
+    ctx.fillStyle = frameMode ? '#110B38' : (isActive ? '#2B54EA' : '#FFFFFF');
+    ctx.fill();
+    ctx.strokeStyle = n.battleColor || '#2B54EA';
+    ctx.lineWidth = (isActive || isHovered || frameMode) ? 3.5 : 2.2;
+    ctx.stroke();
+
+    ctx.font = '17px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(n.icon, n.x, n.y - 4);
+
+    ctx.fillStyle = frameMode ? '#FFFFFF' : (isActive ? '#FFFFFF' : '#2B1E70');
+    ctx.font = 'bold 9px DM Sans, sans-serif'; ctx.textBaseline = 'alphabetic';
+    ctx.fillText(n.name, n.x, n.y + (isHovered ? 21 : 17));
+  });
+}
+
+function renderLoop(t) {
+  // Skip expensive background particle draw while Frame Mode is covering the canvas
+  if (!frameMode) drawBgParticles(t);
+  drawPlayableWeb(t);
+  requestAnimationFrame(renderLoop);
+}
+
+function buildMentalityOptions() {
+  const container = document.getElementById('mentalityOptions');
+  container.innerHTML = '';
+  archetypes.forEach((a, idx) => {
+    const btn = document.createElement('button');
+    btn.className = `mentality-btn ${idx === activeIdx ? 'active' : ''}`;
+    btn.innerHTML = `<span>${a.optionText}</span> <span>➔</span>`;
+    btn.addEventListener('click', () => { selectArchetype(idx); });
+    container.appendChild(btn);
+  });
+}
+
+function selectArchetype(index) {
+  playBattleClash(400 + index * 60);
+  activeIdx = index;
+  const a = archetypes[index];
+
+  document.getElementById('identityTitle').textContent = a.mentalityName;
+  document.getElementById('identityTrait').textContent = a.whoYouAre;
+  document.getElementById('archIcon').textContent = a.icon;
+  document.getElementById('archName').textContent = a.name;
+  document.getElementById('archRole').textContent = a.role;
+  document.getElementById('archDesc').textContent = a.desc;
+
+  document.querySelectorAll('.mentality-btn').forEach((b, i) => { b.classList.toggle('active', i === index); });
+
+  const exList = document.getElementById('exampleList'); exList.innerHTML = '';
+  a.examples.forEach(ex => {
+    const item = document.createElement('div'); item.className = 'example-item';
+    item.innerHTML = `<div class="example-char">${ex.char}</div><div class="example-work">${ex.work}</div>`;
+    exList.appendChild(item);
+  });
+}
+
+function handlePointerDown(e) {
+  updateCanvasRect();
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const scaleX = (canvas.width / dpr) / canvasRect.width;
+  const scaleY = (canvas.height / dpr) / canvasRect.height;
+  const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+  const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+  rawPointer.x = clientX; rawPointer.y = clientY;
+
+  const mx = (clientX - canvasRect.left) * scaleX;
+  const my = (clientY - canvasRect.top) * scaleY;
+
+  nodes.forEach((n, i) => {
+    if (Math.hypot(mx - n.x, my - n.y) <= n.r + 25) {
+      draggingNode = n;
+      dragOffset.x = mx - n.x;
+      dragOffset.y = my - n.y;
+      selectArchetype(i);
+    }
+  });
+}
+
+canvas.addEventListener('mousedown', handlePointerDown);
+canvas.addEventListener('touchstart', e => { handlePointerDown(e); }, { passive: true });
+
+// High-frequency pointer events store raw coordinates and update hover states
+window.addEventListener('mousemove', e => {
+  rawPointer.x = e.clientX;
+  rawPointer.y = e.clientY;
+
+  if (canvasRect) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const scaleX = (canvas.width / dpr) / canvasRect.width;
+    const scaleY = (canvas.height / dpr) / canvasRect.height;
+    const mx = (e.clientX - canvasRect.left) * scaleX;
+    const my = (e.clientY - canvasRect.top) * scaleY;
+
+    let foundHover = null;
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const n = nodes[i];
+      if (Math.hypot(mx - n.x, my - n.y) <= n.r + 20) {
+        foundHover = n;
+        break;
+      }
+    }
+    hoveredNode = foundHover;
+    canvas.style.cursor = draggingNode ? 'grabbing' : (hoveredNode ? 'grab' : 'default');
+  }
+});
+
+window.addEventListener('touchmove', e => {
+  if (!e.touches[0]) return;
+  rawPointer.x = e.touches[0].clientX;
+  rawPointer.y = e.touches[0].clientY;
+}, { passive: true });
+
+window.addEventListener('mouseup', () => { if (draggingNode) playBattleClash(660); draggingNode = null; });
+window.addEventListener('touchend', () => { if (draggingNode) playBattleClash(660); draggingNode = null; });
+
+// Tab Switching
+document.getElementById('tabWeb').addEventListener('click', () => {
+  document.getElementById('tabWeb').classList.add('active');
+  document.getElementById('tabQuiz').classList.remove('active');
+  document.getElementById('webSection').classList.remove('hidden');
+  document.getElementById('quizSection').classList.remove('active');
+});
+
+document.getElementById('tabQuiz').addEventListener('click', () => {
+  document.getElementById('tabQuiz').classList.add('active');
+  document.getElementById('tabWeb').classList.remove('active');
+  document.getElementById('webSection').classList.add('hidden');
+  document.getElementById('quizSection').classList.add('active');
+  startQuiz();
+});
+
+// Quiz Logic
+const questions = [
+  {
+    q: 'A friend calls at midnight, panicked. What do you do?',
+    options: [
+      { text: 'Drop everything and go help them immediately', scores: { hero: 3, ally: 2 } },
+      { text: 'Talk them through it calmly with steady wisdom', scores: { mentor: 3, innocent: 1 } },
+      { text: 'Make a joke to break the tension', scores: { trickster: 3, shapeshifter: 1 } },
+      { text: 'Tell them the hard truth they need to hear', scores: { shadow: 2, herald: 2 } },
+    ]
+  },
+  {
+    q: 'In a group project, you naturally become the person who…',
+    options: [
+      { text: 'Takes charge and leads the mission', scores: { hero: 3, herald: 1 } },
+      { text: 'Supports whoever needs help most', scores: { ally: 3, mentor: 1 } },
+      { text: 'Questions the assumptions everyone accepts', scores: { trickster: 2, shadow: 2 } },
+      { text: 'Guards the timeline and blocks distractions', scores: { mentor: 2, shadow: 1 } },
+    ]
+  },
+  {
+    q: 'What draws you most to a story?',
+    options: [
+      { text: 'A hero who transforms through courageous struggle', scores: { hero: 3, mentor: 1 } },
+      { text: 'A complex antagonist you almost agree with', scores: { shadow: 3, shapeshifter: 1 } },
+      { text: 'A loyal friendship tested to its absolute limits', scores: { ally: 3, hero: 1 } },
+      { text: 'A clever plot twist nobody saw coming', scores: { trickster: 2, shapeshifter: 2 } },
+    ]
+  },
+  {
+    q: 'When faced with an unfair rule, you…',
+    options: [
+      { text: 'Break it openly and face the consequences', scores: { hero: 3, herald: 1 } },
+      { text: 'Find a clever loophole around it', scores: { trickster: 3, shapeshifter: 1 } },
+      { text: 'Teach others why it is wrong so they can decide', scores: { mentor: 3, herald: 1 } },
+      { text: 'Enforce order — chaos is worse than strict rules', scores: { shadow: 2, hero: 1 } },
+    ]
+  },
+  {
+    q: 'How do you handle sudden change?',
+    options: [
+      { text: 'Charge into it headfirst with courage', scores: { hero: 2, herald: 2 } },
+      { text: 'Adapt fluidly — become whoever the moment requires', scores: { shapeshifter: 3, trickster: 1 } },
+      { text: 'Guide others through it with steady wisdom', scores: { mentor: 2, ally: 2 } },
+      { text: 'Look for the silver lining and remain hopeful', scores: { innocent: 3, ally: 1 } },
+    ]
+  },
+];
+
+let quizStep = 0;
+let quizScores = {};
+
+function startQuiz() {
+  quizStep = 0;
+  quizScores = {};
+  archetypes.forEach(a => quizScores[a.key] = 0);
+  showQuestion();
+}
+
+function showQuestion() {
+  const card = document.getElementById('quizCard');
+  if (quizStep >= questions.length) { showResult(); return; }
+
+  const q = questions[quizStep];
+  let html = `<div class="quiz-progress">Question ${quizStep + 1} of ${questions.length}</div>`;
+  html += `<div class="quiz-question">${q.q}</div>`;
+  html += `<div class="quiz-options">`;
+  q.options.forEach((opt, i) => {
+    html += `<button class="quiz-option" data-idx="${i}">${opt.text}</button>`;
+  });
+  html += `</div>`;
+  card.innerHTML = html;
+
+  card.querySelectorAll('.quiz-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = parseInt(btn.dataset.idx);
+      const scores = q.options[idx].scores;
+      for (const k in scores) quizScores[k] += scores[k];
+      quizStep++; showQuestion();
+    });
+  });
+}
+
+function showResult() {
+  const card = document.getElementById('quizCard');
+  let maxKey = 'hero', maxScore = 0;
+  for (const k in quizScores) {
+    if (quizScores[k] > maxScore) { maxScore = quizScores[k]; maxKey = k; }
+  }
+  const arch = archetypes.find(a => a.key === maxKey);
+
+  card.innerHTML = `
+    <div class="quiz-result">
+      <div class="result-icon">${arch.icon}</div>
+      <div class="result-name">${arch.name}</div>
+      <div class="result-role">${arch.role}</div>
+      <div class="result-desc">${arch.desc}</div>
+      <div style="font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--brand-blue); margin-bottom:6px;">Famous Characters You Share</div>
+      <div style="font-size:0.85rem; font-weight:600; color:var(--navy); line-height:1.5; margin-bottom:20px">${arch.examples.map(e => e.char + ' (' + e.work + ')').join(', ')}</div>
+      <button class="btn-quiz-again" onclick="startQuiz()">🔮 Take Quiz Again</button>
+    </div>
+  `;
+}
+
+function toggleFrameMode(){
+  frameMode = !frameMode;
+  document.body.classList.toggle('frame-mode-active', frameMode);
+  document.getElementById('header').classList.toggle('hide-element', frameMode);
+  document.getElementById('heroSec').classList.toggle('hide-element', frameMode);
+  document.getElementById('tabToggle').classList.toggle('hide-element', frameMode);
+  document.getElementById('detailPanel').classList.toggle('hide-element', frameMode);
+
+  document.getElementById('webPanel').classList.toggle('frame-active', frameMode);
+  document.getElementById('exitFrameBtn').classList.toggle('show', frameMode);
+  document.getElementById('frameArtBar').classList.toggle('show', frameMode);
+  document.getElementById('frameTitleOverlay').classList.toggle('show', frameMode);
+  document.getElementById('frameLegendToggle').classList.toggle('show', frameMode);
+
+  initNodes();
+  updateCanvasRect();
+  setTimeout(updateCanvasRect, 50);
+  setTimeout(updateCanvasRect, 150);
+  if (frameMode) playBattleClash(528);
+}
+
+document.getElementById('legendToggleBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  document.getElementById('legendPopover').classList.toggle('open');
+});
+document.addEventListener('click', () => {
+  const pop = document.getElementById('legendPopover');
+  if (pop) pop.classList.remove('open');
+});
+
+document.getElementById('frameBtn').addEventListener('click', toggleFrameMode);
+document.getElementById('exitFrameBtn').addEventListener('click', toggleFrameMode);
+
+document.querySelectorAll('.art-pattern-btn[data-pattern]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.art-pattern-btn[data-pattern]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentArtPattern = btn.dataset.pattern;
+    playBattleClash(700);
+  });
+});
+
+window.addEventListener('keydown', e => {
+  if (e.key === 'f' || e.key === 'F') toggleFrameMode();
+  if (e.key === 'Escape' && frameMode) toggleFrameMode();
+});
+
+window.addEventListener('resize', () => { initNodes(); updateCanvasRect(); });
+initNodes();
+updateCanvasRect();
+requestAnimationFrame(renderLoop);
+buildMentalityOptions();
+selectArchetype(0);
+</script>
+</body>
+</html>

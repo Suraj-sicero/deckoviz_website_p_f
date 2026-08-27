@@ -1,0 +1,114 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--space-6);
+}
+
+.actionCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.iconWarning { color: var(--accent-orange); }
+.iconSuccess { color: var(--accent-green); }
+.iconInfo { color: var(--accent-blue); }
+
+.actionText {
+  font-size: 1.05rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.actionText strong {
+  color: white;
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: auto;
+}
+
+.scheduleSection {
+  margin-top: var(--space-4);
+}
+
+.scheduleSection h2 {
+  margin-bottom: var(--space-4);
+  font-size: 1.5rem;
+}
+
+.classList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.classItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-6);
+}
+
+.classInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.time {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--accent-navy);
+  font-weight: 600;
+  width: 100px;
+}
+
+.classInfo h3 {
+  font-size: 1.25rem;
+  margin-bottom: var(--space-1);
+}
+
+.classInfo p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.classActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.studentCount {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}

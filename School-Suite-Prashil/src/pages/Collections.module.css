@@ -1,0 +1,233 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.header h1 {
+  font-size: 2.2rem;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.createBtn {
+  background: linear-gradient(135deg, var(--accent-indigo), var(--accent-navy));
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-full);
+  font-weight: 600;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(27, 43, 91, 0.2);
+  white-space: nowrap;
+}
+
+.createBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(27, 43, 91, 0.3);
+}
+
+.collectionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-6);
+}
+
+.collectionCard {
+  background: #FFFFFF;
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(27, 43, 91, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.collectionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(27, 43, 91, 0.1);
+  border-color: rgba(27, 43, 91, 0.2);
+}
+
+.coverGraphic {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.coverIcon {
+  color: white;
+  z-index: 2;
+  opacity: 0.9;
+}
+
+.cardInfo {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;
+}
+
+.cardInfo h3 {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+
+.cardInfo p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: var(--space-3);
+  border-top: 1px solid rgba(27, 43, 91, 0.05);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--accent-navy);
+}
+
+/* Detail Modal */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+
+.modal {
+  background: #FFFFFF;
+  width: 100%;
+  max-width: 1000px;
+  max-height: 90vh;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(27, 43, 91, 0.15);
+  border: 1px solid var(--surface-border);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.closeBtn {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 50%;
+  padding: 8px;
+  transition: all 0.2s;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+}
+
+.closeBtn:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.modalHeader {
+  padding: var(--space-8);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.modalHeader h2 {
+  font-size: 2.2rem;
+}
+
+.modalHeader p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+.modalContent {
+  padding: var(--space-8);
+  overflow-y: auto;
+  flex: 1;
+  background: #FAFAFA;
+}
+
+.artworkGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--space-4);
+  grid-auto-rows: 150px;
+}
+
+.artItem {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 10px rgba(27, 43, 91, 0.05);
+}
+
+.artItem:nth-child(even) {
+  grid-row: span 2;
+}
+
+.artItem:nth-child(3n) {
+  grid-row: span 1;
+}
+
+.artImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artGradient {
+  width: 100%;
+  height: 100%;
+}
+
+.artOverlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: var(--space-3);
+  background: linear-gradient(to top, rgba(27, 43, 91, 0.8), transparent);
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.artItem:hover .artOverlay {
+  opacity: 1;
+}
+
+.artTitle {
+  font-weight: 600;
+  font-size: 0.9rem;
+}

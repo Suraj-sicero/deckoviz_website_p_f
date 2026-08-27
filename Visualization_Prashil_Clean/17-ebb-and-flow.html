@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Ebb and Flow of a Day — Elinity</title>
+  <meta name="description"
+    content="A chronobiology-backed visualization of human mood and energy rhythms across 24 hours and 7 days. Compare your personal check-ins to population-level circadian benchmarks.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #EEE6F8;
+      --bg2: #D5E6F7;
+      --navy: #2B1E70;
+      --navy-muted: rgba(43, 30, 112, 0.68);
+      --brand-blue: #2B54EA;
+      --brand-blue-hover: #1D44D8;
+      --cyan: #06B6D4;
+      --purple: #8B5CF6;
+      --rose: #F43F5E;
+      --amber: #F59E0B;
+      --glass: rgba(255, 255, 255, 0.85);
+      --glass-border: rgba(255, 255, 255, 0.92);
+      --glass-shadow: 0 20px 48px rgba(43, 30, 112, 0.12), 0 4px 16px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      color: var(--navy);
+      overflow-x: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    canvas#bgCanvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 28px;
+      width: min(92%, 1040px);
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 9999px;
+      box-shadow: 0 12px 36px rgba(43, 30, 112, 0.08);
+      transition: opacity 0.4s;
+    }
+
+    header.hide-element {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+
+    .elinity-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .elinity-brand img {
+      height: 28px;
+      width: auto;
+    }
+
+    .elinity-brand .title {
+      font-family: 'Comfortaa', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--navy);
+    }
+
+    .elinity-brand .title span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: var(--brand-blue);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .btn-action {
+      font-size: 0.75rem;
+      color: var(--brand-blue);
+      cursor: pointer;
+      background: rgba(43, 84, 234, 0.06);
+      border: 1px solid rgba(43, 84, 234, 0.18);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      transition: all .25s ease;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(10px);
+      font-family: 'DM Sans', sans-serif;
+      text-decoration: none;
+    }
+
+    .btn-action:hover,
+    .btn-action.active {
+      color: #fff;
+      background: var(--brand-blue);
+      border-color: var(--brand-blue);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43, 84, 234, 0.3);
+    }
+
+    .exit-frame-btn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      z-index: 100000;
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s, transform 0.2s, background 0.2s;
+    }
+
+    .exit-frame-btn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .exit-frame-btn:hover {
+      background: var(--brand-blue);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    .frame-title-overlay {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      z-index: 100000;
+      background: rgba(15, 23, 42, 0.78);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      padding: 12px 20px;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(-8px);
+    }
+
+    .frame-title-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .frame-title-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .frame-subtitle-text {
+      font-size: 0.72rem;
+      color: rgba(226, 232, 240, 0.75);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .frame-legend-toggle {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 100000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .frame-legend-toggle.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .legend-btn {
+      background: rgba(15, 23, 42, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: #ffffff;
+      padding: 9px 20px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+      transition: all 0.22s ease;
+    }
+
+    .legend-btn:hover {
+      background: var(--brand-blue);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(43, 84, 234, 0.4);
+    }
+
+    .legend-popover {
+      position: absolute;
+      bottom: 46px;
+      right: 0;
+      width: 280px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: all 0.25s ease;
+    }
+
+    .frame-legend-toggle:hover .legend-popover,
+    .legend-popover.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .legend-popover-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #38BDF8;
+      margin-bottom: 10px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: rgba(241, 245, 249, 0.9);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 96px 20px 60px;
+      max-width: 1080px;
+      margin: 0 auto;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .page.hide-element {
+      opacity: 0 !important;
+      pointer-events: none !important;
+      display: none !important;
+    }
+
+    .fade-out {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 22px;
+      max-width: 720px;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .eyebrow {
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brand-blue);
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 4.2vw, 2.7rem);
+      line-height: 1.15;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+
+    h1 span.accent, h1 span.accent-serif {
+      font-style: italic;
+      font-weight: 700;
+      background: linear-gradient(135deg, #06B6D4 0%, #2563EB 60%, #7C3AED 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 0.94rem;
+      color: var(--navy-muted);
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .citation-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      font-size: 0.72rem;
+      color: var(--brand-blue);
+      background: rgba(43, 84, 234, 0.08);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    .controls-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .mode-btn {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      color: var(--navy);
+      padding: 9px 20px;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 14px rgba(43, 30, 112, 0.06);
+    }
+
+    .mode-btn:hover,
+    .mode-btn.active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+      transform: translateY(-1px);
+    }
+
+    .chart-card {
+      background: var(--glass);
+      backdrop-filter: blur(28px) saturate(140%);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: var(--glass-shadow);
+      width: 100%;
+      max-width: 980px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 1.2s ease-in-out;
+    }
+
+    .chart-card.frame-active {
+      position: fixed !important;
+      inset: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      max-width: 100vw !important;
+      max-height: 100vh !important;
+      padding: 24px !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      z-index: 99999 !important;
+      background: #0b0726 !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      margin: 0 !important;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 920px;
+      aspect-ratio: 1.8 / 1;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.45);
+      border: 1px solid rgba(43, 30, 112, 0.1);
+      box-shadow: inset 0 0 30px rgba(43, 30, 112, 0.03);
+      overflow: hidden;
+    }
+
+    .chart-card.frame-active .canvas-wrapper {
+      max-width: min(90vw, 1100px) !important;
+      aspect-ratio: 2 / 1 !important;
+      background: rgba(15, 11, 42, 0.95) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+    }
+
+    canvas#chartCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    /* Info / Annotation Card */
+    .info-panel {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 920px;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 20px 24px;
+      box-shadow: 0 10px 30px rgba(43, 30, 112, 0.08);
+      transition: all 0.3s ease;
+    }
+
+    .chart-card.frame-active .info-panel {
+      display: none !important;
+    }
+
+    .info-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .info-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-pill {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      background: rgba(43, 84, 234, 0.08);
+      color: var(--brand-blue);
+      border: 1px solid rgba(43, 84, 234, 0.2);
+    }
+
+    .info-body {
+      font-size: 0.9rem;
+      color: var(--navy);
+      line-height: 1.6;
+    }
+
+    .info-biology {
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--purple);
+      background: rgba(139, 92, 246, 0.06);
+      padding: 10px 14px;
+      border-radius: 12px;
+      border-left: 3px solid var(--purple);
+      line-height: 1.5;
+    }
+
+    /* Quick Check-in Modal Bar */
+    .checkin-box {
+      margin-top: 16px;
+      width: 100%;
+      max-width: 920px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px dashed rgba(43, 84, 234, 0.3);
+      border-radius: 16px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    .checkin-prompt {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .checkin-inputs {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .slider-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--navy-muted);
+    }
+
+    .slider-group input {
+      width: 100px;
+      accent-color: var(--brand-blue);
+    }
+
+    .btn-submit {
+      font-size: 0.76rem;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      background: var(--brand-blue);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      background: var(--brand-blue-hover);
+      transform: translateY(-1px);
+    }
+
+    .crosslink-box {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: var(--navy-muted);
+      text-align: center;
+      transition: opacity 1.2s ease-in-out;
+    }
+
+    /* Share & Export Modal Overlay */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 100010;
+      background: rgba(10, 6, 28, 0.7);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 28px;
+      width: min(90%, 460px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(16px);
+      transition: transform 0.3s ease;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--navy);
+    }
+
+    .modal-backdrop.active .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-title {
+      font-family: 'Comfortaa', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: var(--navy-muted);
+    }
+
+    .modal-body {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--navy-muted);
+      margin-bottom: 20px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn-primary {
+      background: var(--brand-blue);
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background: #1a42cc;
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      background: rgba(43, 30, 112, 0.08);
+      color: var(--navy);
+      border: 1px solid rgba(43, 30, 112, 0.15);
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(43, 30, 112, 0.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Hidden YouTube Background Audio Container -->
+  <div id="ytAudioContainer" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; overflow: hidden; left: -9999px; top: -9999px;">
+    <div id="ytAudioPlayer"></div>
+  </div>  <canvas id="bgCanvas"></canvas>
+
+  <div class="frame-title-overlay" id="frameTitleOverlay">
+    <div class="frame-title-text">The Ebb and Flow of a Day</div>
+    <div class="frame-subtitle-text">Circadian Chronobiology · 24-Hour & 7-Day Diurnal Mood Dynamics</div>
+  </div>
+
+  <div class="frame-legend-toggle" id="frameLegendToggle">
+    <button class="legend-btn" id="legendToggleBtn">📖 Key / Rhythms</button>
+    <div class="legend-popover" id="legendPopover">
+      <div class="legend-popover-title">Diurnal Curves</div>
+      <div class="legend-item"><span class="legend-color" style="background:#2B54EA;"></span> 🔵 <strong>Population
+          Average</strong> &nbsp;— Chronobiology Baseline</div>
+      <div class="legend-item"><span class="legend-color" style="background:#F43F5E;"></span> 🔴 <strong>Your
+          Check-Ins</strong> &nbsp;— Personal Overlay</div>
+      <div class="legend-item"><span class="legend-color" style="background:#F59E0B;"></span> ☀️ <strong>Morning
+          Peak</strong> &nbsp;— Cortisol Awakening Response</div>
+      <div class="legend-item"><span class="legend-color" style="background:#8B5CF6;"></span> 🌙 <strong>Post-Lunch
+          Dip</strong> &nbsp;— Core Body Temp Drop</div>
+    </div>
+  </div>
+
+  <header id="header">
+    <div class="elinity-brand">
+      <img src="elinity-logo.png" alt="Elinity Logo">
+      <div class="title"><span>Mood Across Time</span></div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-action" id="soundBtn">🔇 Audio Off</button>
+      <button class="btn-action" id="shareBtn">✉️ Share</button>
+      <button class="btn-action" id="exportBtn">🎨 Export Art</button>
+      <button class="btn-action" id="frameBtn">✨ Frame Mode</button>
+    </div>
+  </header>
+
+  <button class="exit-frame-btn" id="exitFrameBtn">✕ Exit Frame Mode</button>
+
+  <!-- Share Modal -->
+  <div class="modal-backdrop" id="shareModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">✉️ Share Circadian Rhythm</div>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p id="sharePreviewText">Share your daily diurnal mood rhythm and circadian curve with friends.</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="copyShareLinkBtn">📋 Copy Link</button>
+        <button class="btn-primary" id="emailShareBtn">✉️ Send Email</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export Dynamic Art Modal -->
+  <div class="modal-backdrop" id="exportModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">🎨 Export Dynamic Art</div>
+        <button class="modal-close" onclick="closeModals()">✕</button>
+      </div>
+      <div class="modal-body">
+        Export your circadian wave curve artwork for your Deckoviz frame display.
+      </div>
+      <div class="modal-actions">
+        <button class="btn-secondary" id="exportPngBtn">📷 Still Art (PNG)</button>
+        <button class="btn-primary" id="exportWebmBtn">🎬 Dynamic Video (WebM)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="mainUi">
+    <div class="hero">
+      <div class="eyebrow">Elinity · Moods & Emotions</div>
+      <h1>The Ebb and Flow of a <span class="accent">Day</span></h1>
+      <p class="subtitle">Human energy and mood follow remarkable biological and social tides across 24 hours and 7
+        days. Explore population benchmarks and overlay your own daily rhythm.</p>
+      <div class="citation-tag">🔬 Grounded in Golder & Macy (2011, Science) & Circadian Endocrinology Research</div>
+    </div>
+
+    <div class="controls-bar">
+      <button class="mode-btn active" id="btn24h" data-view="24h">⏱️ 24-Hour Circadian Day</button>
+      <button class="mode-btn" id="btn7d" data-view="7d">📅 7-Day Weekly Rhythm</button>
+      <button class="mode-btn" id="btnOverlay" data-overlay="on">🔴 Show My Overlay</button>
+    </div>
+
+    <div class="chart-card" id="chartCard">
+      <div class="canvas-wrapper" id="canvasWrapper">
+        <canvas id="chartCanvas"></canvas>
+      </div>
+
+      <div class="info-panel" id="infoPanel">
+        <div class="info-header">
+          <div class="info-title" id="infoTitle">08:00 AM — Morning Awakening Peak</div>
+          <div class="info-pill" id="infoPill">Circadian Peak</div>
+        </div>
+        <div class="info-body" id="infoBody">Click or hover anywhere on the timeline curve to explore physiological
+          peaks, post-lunch dips, and weekend lifts.</div>
+        <div class="info-biology" id="infoBio">🧬 <strong>Biological Mechanism:</strong> Cortisol Awakening Response
+          (CAR) causes a 50–75% surge in cortisol within 30–45 minutes of waking, priming alertness and positive affect.
+        </div>
+      </div>
+
+      <div class="checkin-box">
+        <div class="checkin-prompt">⚡ Log your current energy & mood right now:</div>
+        <div class="checkin-inputs">
+          <div class="slider-group">
+            <label for="valSlider">Mood (1–10)</label>
+            <input type="range" id="valSlider" min="1" max="10" value="7">
+          </div>
+          <div class="slider-group">
+            <label for="arousalSlider">Energy (1–10)</label>
+            <input type="range" id="arousalSlider" min="1" max="10" value="6">
+          </div>
+          <button class="btn-submit" id="submitCheckinBtn">Log Entry</button>
+        </div>
+      </div>
+
+      <div class="crosslink-box">
+        Curious about the exact coordinates of how you feel right now? Explore <a href="16-weather-of-feeling.html">The
+          Weather of Feeling Map</a>.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Research Data: 24-hour diurnal population mood/energy curve (Golder & Macy Science 2011 baseline)
+    // Index = Hour (0 to 23), values 0 to 10
+    const DAY_24H_DATA = [
+      { hour: 0, time: '12:00 AM', mood: 4.2, energy: 2.5, name: 'Midnight Transition', note: 'Sleep onset for most. Melatonin reaches peak levels while body temperature drops.', bio: 'Pineal gland releases melatonin under darkness, slowing metabolic rate.' },
+      { hour: 2, time: '02:00 AM', mood: 3.5, energy: 1.5, name: 'Deep Sleep Trough', note: 'Lowest metabolic arousal of the 24-hour cycle. Cognitive capacity is severely impaired if awake.', bio: 'Growth hormone peaks during slow-wave NREM sleep for tissue repair.' },
+      { hour: 4, time: '04:00 AM', mood: 3.8, energy: 1.8, name: 'Pre-Dawn Low', note: 'Circadian nadir. Body temperature reaches absolute daily minimum (~36.4°C).', bio: 'Core body temperature nadir occurs approximately 2 hours before habitual waking.' },
+      { hour: 6, time: '06:00 AM', mood: 5.8, energy: 4.5, name: 'Dawn Awakening', note: 'Body prepares for wakefulness. Core temperature begins rising.', bio: 'Cortisol starts rising in response to light exposure.' },
+      { hour: 8, time: '08:00 AM', mood: 7.8, energy: 7.5, name: 'Morning Cortisol Peak', note: 'Sharpest rise in positive affect and alertness across the population.', bio: 'Cortisol Awakening Response (CAR) boosts blood glucose and executive readiness.' },
+      { hour: 10, time: '10:00 AM', mood: 8.2, energy: 8.4, name: 'Peak Cognitive Alertness', note: 'Optimal window for analytical thinking, complex problem-solving, and decision-making.', bio: 'High alertness and low adenosine pressure yield prime working memory.' },
+      { hour: 12, time: '12:00 PM', mood: 7.5, energy: 7.2, name: 'Midday Steady', note: 'Sustained positive mood and social engagement.', bio: 'Metabolic fuel intake begins shifting physiological priority toward digestion.' },
+      { hour: 14, time: '02:00 PM', mood: 5.6, energy: 4.8, name: 'Post-Lunch Dip', note: 'Universal biological dip in alertness (~13:00 to 15:00), independent of food volume.', bio: 'Circadian drive for sleep peaks briefly 8 hours after waking; core temperature drops slightly.' },
+      { hour: 16, time: '04:00 PM', mood: 7.0, energy: 6.8, name: 'Afternoon Rebound', note: 'Second wind of alertness and physical motor coordination.', bio: 'Body temperature peaks, optimizing muscular power and reaction time.' },
+      { hour: 18, time: '06:00 PM', mood: 7.6, energy: 6.5, name: 'Evening Unwind', note: 'Shift toward social connection and leisure activities.', bio: 'Cortisol drops to baseline; parasympathetic tone increases.' },
+      { hour: 20, time: '08:00 PM', mood: 6.8, energy: 5.0, name: 'Nightfall Relaxation', note: 'Calm mood, decreasing physical drive.', bio: 'Dim-light melatonin onset (DLMO) begins about 2 hours before habitual sleep.' },
+      { hour: 22, time: '10:00 PM', mood: 5.2, energy: 3.2, name: 'Late Night Wind-Down', note: 'Alertness drops sharply. Vulnerability to ruminative thoughts increases if awake late.', bio: 'Adenosine sleep pressure reaches maximum daily accumulation.' }
+    ];
+
+    // 7-Day Weekly Data (Mon to Sun)
+    const WEEK_7D_DATA = [
+      { day: 'Mon', name: 'Monday Re-entry', mood: 5.5, energy: 6.2, note: 'Workweek transition stress ("Monday Blues"), compensated by high morning cortisol.', bio: 'Weekend circadian phase-shift often causes mild social jetlag on Monday morning.' },
+      { day: 'Tue', name: 'Tuesday Productivity', mood: 6.8, energy: 7.8, note: 'Statistically the highest productivity day of the week for most knowledge workers.', bio: 'Circadian rhythm stabilizes back into routine sleep-wake cadence.' },
+      { day: 'Wed', name: 'Wednesday Midweek', mood: 6.5, energy: 7.0, note: 'Midweek equilibrium; steady rhythm between past and upcoming effort.', bio: 'Sustained cognitive pace before late-week fatigue.' },
+      { day: 'Thu', name: 'Thursday Momentum', mood: 7.2, energy: 6.8, note: 'Anticipation of weekend approaching boosts positive affect outlook.', bio: 'Dopaminergic reward anticipation rises ahead of weekend rest.' },
+      { day: 'Fri', name: 'Friday Afternoon Lift', mood: 8.6, energy: 8.0, note: 'Pronounced surge in mood and positive sentiment starting mid-afternoon.', bio: 'Social facilitation and reduction in anticipatory work stress.' },
+      { day: 'Sat', name: 'Saturday Peak Savoring', mood: 9.0, energy: 8.5, note: 'Highest average positive affect and subjective autonomy of the entire week.', bio: 'High intrinsic motivation and flexible circadian sleep timing.' },
+      { day: 'Sun', name: 'Sunday Evening Dread', mood: 6.2, energy: 5.5, note: 'Mood drops Sunday evening ("Sunday Scaries") as anticipation of Monday responsibilities sets in.', bio: 'Pre-work anxiety triggers sympathetic nervous system arousal before sleep.' }
+    ];
+
+    // App State
+    let currentView = '24h'; // '24h' or '7d'
+    let showUserOverlay = true;
+    let hoverIndex = -1;
+    let isFrameMode = false;
+
+    // User Check-in Storage
+    let userEntries = JSON.parse(localStorage.getItem('elinity_ebb_user_entries') || '[]');
+
+    // DOM Elements
+    const canvas = document.getElementById('chartCanvas');
+    const ctx = canvas.getContext('2d');
+    const infoTitle = document.getElementById('infoTitle');
+    const infoPill = document.getElementById('infoPill');
+    const infoBody = document.getElementById('infoBody');
+    const infoBio = document.getElementById('infoBio');
+    const valSlider = document.getElementById('valSlider');
+    const arousalSlider = document.getElementById('arousalSlider');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * window.devicePixelRatio;
+      canvas.height = rect.height * window.devicePixelRatio;
+      drawChart();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawChart() {
+      const w = canvas.width;
+      const h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+
+      const dataset = currentView === '24h' ? DAY_24H_DATA : WEEK_7D_DATA;
+      const paddingLeft = 70;
+      const paddingRight = 40;
+      const paddingTop = 50;
+      const paddingBottom = 60;
+      const chartW = w - paddingLeft - paddingRight;
+      const chartH = h - paddingTop - paddingBottom;
+
+      // Grid Lines & Y-Axis Labels
+      ctx.strokeStyle = isFrameMode ? 'rgba(255,255,255,0.1)' : 'rgba(43,30,112,0.08)';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = isFrameMode ? 'rgba(255,255,255,0.5)' : 'rgba(43,30,112,0.6)';
+      ctx.font = `${Math.round(12 * window.devicePixelRatio)}px 'DM Sans', sans-serif`;
+
+      for (let i = 0; i <= 10; i += 2) {
+        const y = paddingTop + chartH - (i / 10) * chartH;
+        ctx.beginPath();
+        ctx.moveTo(paddingLeft, y);
+        ctx.lineTo(w - paddingRight, y);
+        ctx.stroke();
+        ctx.fillText(`${i}/10`, 20, y + 4);
+      }
+
+      // Draw Population Curve (Smooth Bezier)
+      const pts = dataset.map((d, i) => {
+        const x = paddingLeft + (i / (dataset.length - 1)) * chartW;
+        const y = paddingTop + chartH - (d.mood / 10) * chartH;
+        return { x, y };
+      });
+
+      // Gradient Fill under Curve
+      const grad = ctx.createLinearGradient(0, paddingTop, 0, paddingTop + chartH);
+      if (isFrameMode) {
+        grad.addColorStop(0, 'rgba(43, 84, 234, 0.4)');
+        grad.addColorStop(1, 'rgba(43, 84, 234, 0.0)');
+      } else {
+        grad.addColorStop(0, 'rgba(43, 84, 234, 0.25)');
+        grad.addColorStop(1, 'rgba(43, 84, 234, 0.02)');
+      }
+
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 0; i < pts.length - 1; i++) {
+        const xc = (pts[i].x + pts[i + 1].x) / 2;
+        const yc = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+      }
+      ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+      ctx.lineTo(pts[pts.length - 1].x, paddingTop + chartH);
+      ctx.lineTo(pts[0].x, paddingTop + chartH);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Draw Stroke Line
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, pts[0].y);
+      for (let i = 0; i < pts.length - 1; i++) {
+        const xc = (pts[i].x + pts[i + 1].x) / 2;
+        const yc = (pts[i].y + pts[i + 1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+      }
+      ctx.lineTo(pts[pts.length - 1].x, pts[pts.length - 1].y);
+      ctx.strokeStyle = '#2B54EA';
+      ctx.lineWidth = 3.5 * window.devicePixelRatio;
+      ctx.stroke();
+
+      // Draw Data Points & X-Axis Labels
+      dataset.forEach((d, i) => {
+        const pt = pts[i];
+        const label = currentView === '24h' ? d.time : d.day;
+
+        // X Axis Label
+        ctx.fillStyle = isFrameMode ? 'rgba(255,255,255,0.7)' : 'rgba(43,30,112,0.8)';
+        ctx.font = `${Math.round(11 * window.devicePixelRatio)}px 'DM Sans', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(label, pt.x, paddingTop + chartH + 28);
+
+        // Node Circle
+        ctx.beginPath();
+        ctx.arc(pt.x, pt.y, (i === hoverIndex ? 8 : 5) * window.devicePixelRatio, 0, Math.PI * 2);
+        ctx.fillStyle = i === hoverIndex ? '#F43F5E' : '#2B54EA';
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 2 * window.devicePixelRatio;
+        ctx.fill();
+        ctx.stroke();
+      });
+
+      // User Check-ins Overlay
+      if (showUserOverlay && userEntries.length > 0) {
+        ctx.strokeStyle = '#F43F5E';
+        ctx.lineWidth = 2.5 * window.devicePixelRatio;
+        ctx.setLineDash([5, 5]);
+        ctx.beginPath();
+
+        userEntries.forEach((entry, idx) => {
+          const matchIndex = currentView === '24h' ? Math.floor((entry.hour / 24) * dataset.length) : entry.dayIndex;
+          if (matchIndex >= 0 && matchIndex < dataset.length) {
+            const x = pts[matchIndex].x;
+            const y = paddingTop + chartH - (entry.mood / 10) * chartH;
+            if (idx === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+
+            // Dot
+            ctx.fillStyle = '#F43F5E';
+            ctx.beginPath();
+            ctx.arc(x, y, 6 * window.devicePixelRatio, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        });
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+
+      // Hover Annotation Line
+      if (hoverIndex >= 0 && hoverIndex < dataset.length) {
+        const pt = pts[hoverIndex];
+        ctx.strokeStyle = isFrameMode ? 'rgba(244,63,94,0.6)' : 'rgba(244,63,94,0.4)';
+        ctx.lineWidth = 1.5 * window.devicePixelRatio;
+        ctx.beginPath();
+        ctx.moveTo(pt.x, paddingTop);
+        ctx.lineTo(pt.x, paddingTop + chartH);
+        ctx.stroke();
+      }
+    }
+
+    // Hover Interaction
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = (e.clientX - rect.left) * window.devicePixelRatio;
+      const dataset = currentView === '24h' ? DAY_24H_DATA : WEEK_7D_DATA;
+      const paddingLeft = 70;
+      const paddingRight = 40;
+      const chartW = canvas.width - paddingLeft - paddingRight;
+
+      let closestIndex = -1;
+      let minDiff = Infinity;
+
+      dataset.forEach((d, i) => {
+        const x = paddingLeft + (i / (dataset.length - 1)) * chartW;
+        const diff = Math.abs(mouseX - x);
+        if (diff < minDiff) {
+          minDiff = diff;
+          closestIndex = i;
+        }
+      });
+
+      if (closestIndex !== hoverIndex) {
+        hoverIndex = closestIndex;
+        drawChart();
+        updateInfoPanel(dataset[hoverIndex]);
+        playWebAudioSFX('graphHover', dataset[hoverIndex].mood);
+      }
+    });
+
+    function updateInfoPanel(item) {
+      if (!item) return;
+      infoTitle.textContent = currentView === '24h' ? `${item.time} — ${item.name}` : `${item.day} — ${item.name}`;
+      infoPill.textContent = item.mood > 7.5 ? '🔥 High Energy Peak' : item.mood < 4.5 ? '🌙 Low Energy Trough' : '⚖️ Balanced State';
+      infoBody.textContent = item.note;
+      infoBio.innerHTML = `🧬 <strong>Biological Mechanism:</strong> ${item.bio}`;
+    }
+
+    // Mode Buttons
+    document.getElementById('btn24h').addEventListener('click', (e) => {
+      playWebAudioSFX('button');
+      currentView = '24h';
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      hoverIndex = 4; // Default 8am
+      drawChart();
+      updateInfoPanel(DAY_24H_DATA[4]);
+    });
+
+    document.getElementById('btn7d').addEventListener('click', (e) => {
+      playWebAudioSFX('button');
+      currentView = '7d';
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      hoverIndex = 5; // Default Saturday
+      drawChart();
+      updateInfoPanel(WEEK_7D_DATA[5]);
+    });
+
+    document.getElementById('btnOverlay').addEventListener('click', (e) => {
+      playWebAudioSFX('button');
+      showUserOverlay = !showUserOverlay;
+      e.target.classList.toggle('active', showUserOverlay);
+      drawChart();
+    });
+
+    // Submit Check-in
+    document.getElementById('submitCheckinBtn').addEventListener('click', () => {
+      playWebAudioSFX('checkin');
+      const m = parseFloat(valSlider.value);
+      const a = parseFloat(arousalSlider.value);
+      const now = new Date();
+
+      userEntries.push({
+        hour: now.getHours(),
+        dayIndex: (now.getDay() + 6) % 7, // Mon=0, Sun=6
+        mood: m,
+        energy: a,
+        timestamp: now.toISOString()
+      });
+
+      if (userEntries.length > 30) userEntries.shift();
+      localStorage.setItem('elinity_ebb_user_entries', JSON.stringify(userEntries));
+      drawChart();
+      alert(`Logged mood score of ${m}/10 on your personal circadian line!`);
+    });
+
+    // Interactive Web Audio Sound Effects
+    let sfxAudioCtx = null;
+    function playWebAudioSFX(type, val = 5) {
+      if (!soundEnabled) return;
+      try {
+        if (!sfxAudioCtx) sfxAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (sfxAudioCtx.state === 'suspended') sfxAudioCtx.resume();
+
+        const now = sfxAudioCtx.currentTime;
+
+        if (type === 'button') {
+          const osc = sfxAudioCtx.createOscillator();
+          const gain = sfxAudioCtx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(520, now);
+          osc.frequency.exponentialRampToValueAtTime(260, now + 0.08);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+          osc.connect(gain);
+          gain.connect(sfxAudioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'graphHover') {
+          const osc = sfxAudioCtx.createOscillator();
+          const gain = sfxAudioCtx.createGain();
+          const targetFreq = 260 + (val / 10) * 380; // Mood pitch resonance
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(targetFreq, now);
+          gain.gain.setValueAtTime(0.02, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.connect(gain);
+          gain.connect(sfxAudioCtx.destination);
+          osc.start(now);
+          osc.stop(now + 0.1);
+        } else if (type === 'checkin') {
+          [392, 493.88, 587.33, 783.99].forEach((f, idx) => {
+            const o = sfxAudioCtx.createOscillator();
+            const g = sfxAudioCtx.createGain();
+            o.type = 'sine';
+            o.frequency.setValueAtTime(f, now + idx * 0.05);
+            g.gain.setValueAtTime(0.04, now + idx * 0.05);
+            g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.5);
+            o.connect(g);
+            g.connect(sfxAudioCtx.destination);
+            o.start(now + idx * 0.05);
+            o.stop(now + idx * 0.05 + 0.5);
+          });
+        }
+      } catch (e) {}
+    }
+
+    // YouTube Background Audio Player Integration (Distinct Audio for Task 17: Video ID 5qap5aO4i9A)
+    let soundEnabled = false;
+    let ytPlayer = null;
+    let isYtReady = false;
+
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    function onYouTubeIframeAPIReady() {
+      ytPlayer = new YT.Player('ytAudioPlayer', {
+        height: '1',
+        width: '1',
+        videoId: '5qap5aO4i9A',
+        playerVars: {
+          'autoplay': 1,
+          'controls': 0,
+          'loop': 1,
+          'playlist': '5qap5aO4i9A',
+          'playsinline': 1,
+          'enablejsapi': 1
+        },
+        events: {
+          'onReady': (event) => {
+            isYtReady = true;
+            event.target.setVolume(isFrameMode ? 50 : 35);
+            if (soundEnabled) {
+              try { event.target.playVideo(); } catch(e){}
+            }
+          },
+          'onStateChange': (event) => {
+            if (event.data === YT.PlayerState.ENDED) {
+              event.target.playVideo();
+            }
+          }
+        }
+      });
+    }
+
+    function updateAudioState() {
+      if (isYtReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        if (soundEnabled) {
+          try {
+            ytPlayer.setVolume(isFrameMode ? 50 : 35);
+            ytPlayer.playVideo();
+          } catch(e) {}
+        } else {
+          try { ytPlayer.pauseVideo(); } catch(e) {}
+        }
+      }
+    }
+
+    function tryPlayAudio() {
+      if (soundEnabled && isYtReady && ytPlayer && typeof ytPlayer.playVideo === 'function') {
+        try { ytPlayer.playVideo(); } catch(e) {}
+      }
+    }
+    window.addEventListener('click', tryPlayAudio, { once: true });
+
+    const soundBtn = document.getElementById('soundBtn');
+    soundBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      soundBtn.textContent = soundEnabled ? '🔊 Audio On' : '🔇 Audio Off';
+      soundBtn.classList.toggle('active', soundEnabled);
+      updateAudioState();
+      playWebAudioSFX('button');
+    });
+
+    // Share & Export Modals
+    const shareModal = document.getElementById('shareModal');
+    const exportModal = document.getElementById('exportModal');
+
+    function closeModals() {
+      shareModal.classList.remove('active');
+      exportModal.classList.remove('active');
+    }
+
+    document.getElementById('shareBtn').addEventListener('click', () => {
+      playWebAudioSFX('button');
+      document.getElementById('sharePreviewText').innerHTML = `
+    <strong>Task 17:</strong> The Ebb and Flow of a Day (Elinity)<br>
+    <strong>Current View:</strong> ${currentView === '24h' ? '24-Hour Circadian Day' : '7-Day Weekly Rhythm'}<br><br>
+    Sharing will prefill an email with your circadian rhythm analysis and interactive visualization link.
+  `;
+      shareModal.classList.add('active');
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      playWebAudioSFX('button');
+      exportModal.classList.add('active');
+    });
+
+    document.getElementById('copyShareLinkBtn').addEventListener('click', () => {
+      playWebAudioSFX('button');
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert('✨ Interactive link copied to clipboard!');
+        closeModals();
+      });
+    });
+
+    document.getElementById('emailShareBtn').addEventListener('click', () => {
+      playWebAudioSFX('button');
+      const subject = encodeURIComponent('My Circadian Mood Rhythm — Elinity');
+      const body = encodeURIComponent(`Explore human circadian mood dynamics and population averages on Elinity: ${window.location.href}`);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+      closeModals();
+    });
+
+    document.getElementById('exportPngBtn').addEventListener('click', () => {
+      playWebAudioSFX('button');
+      closeModals();
+      const canvas = document.getElementById('chartCanvas');
+      const link = document.createElement('a');
+      link.download = `elinity-circadian-rhythm-${currentView}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+
+    document.getElementById('exportWebmBtn').addEventListener('click', () => {
+      playWebAudioSFX('button');
+      closeModals();
+      try {
+        const canvas = document.getElementById('chartCanvas');
+        const stream = canvas.captureStream(30);
+        const mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(chunks, { type: 'video/webm' });
+          const link = document.createElement('a');
+          link.download = `elinity-circadian-art-${currentView}.webm`;
+          link.href = URL.createObjectURL(blob);
+          link.click();
+        };
+        alert('🎬 Recording 4-second circadian rhythm loop...');
+        mediaRecorder.start();
+        setTimeout(() => mediaRecorder.stop(), 4000);
+      } catch (e) {
+        alert('WebM recording not supported in this browser window. Exporting PNG still art.');
+      }
+    });
+
+    function toggleFrameMode(on) {
+      isFrameMode = on;
+      chartCard.classList.toggle('frame-active', on);
+      frameTitleOverlay.classList.toggle('show', on);
+      frameLegendToggle.classList.toggle('show', on);
+      exitFrameBtn.classList.toggle('show', on);
+      header.classList.toggle('hide-element', on);
+
+      // Fade out other UI elements smoothly
+      document.querySelector('.hero').classList.toggle('fade-out', on);
+      document.querySelector('.controls-bar').classList.toggle('fade-out', on);
+      document.querySelector('.checkin-box').classList.toggle('fade-out', on);
+      document.querySelector('.crosslink-box').classList.toggle('fade-out', on);
+
+      updateAudioState();
+      setTimeout(resizeCanvas, 100);
+    }
+
+    frameBtn.addEventListener('click', () => {
+      playWebAudioSFX('button');
+      toggleFrameMode(true);
+    });
+    exitFrameBtn.addEventListener('click', () => {
+      playWebAudioSFX('button');
+      toggleFrameMode(false);
+    });
+    document.getElementById('legendToggleBtn').addEventListener('click', () => {
+      playWebAudioSFX('button');
+    });
+
+    document.addEventListener('keydown', (e) => {
+      const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+      if (e.key === 'Escape' && isFrameMode) {
+        toggleFrameMode(false);
+      } else if ((e.key === 'f' || e.key === 'F') && !isInput) {
+        toggleFrameMode(!isFrameMode);
+      }
+    });
+
+    // Init
+    resizeCanvas();
+    hoverIndex = 4;
+    updateInfoPanel(DAY_24H_DATA[4]);
+  </script>
+</body>
+
+</html>

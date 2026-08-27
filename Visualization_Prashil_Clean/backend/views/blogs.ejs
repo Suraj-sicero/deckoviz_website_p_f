@@ -1,0 +1,82 @@
+<%- include('layout', { body: `
+<header>
+  <h1>All Blog Posts</h1>
+  <a href="/add" class="btn-primary">+ Add New Blog</a>
+</header>
+
+<table class="blog-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Tag</th>
+      <th>Read Time</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    ${blogs.map(blog => `
+      <tr>
+        <td>${blog.title}</td>
+        <td><span class="tag" style="background: ${blog.tagColor || '#ddd'}">${blog.tag}</span></td>
+        <td>${blog.readTime || '-'}</td>
+        <td>${new Date(blog.date).toDateString()}</td>
+        <td>
+          <a href="/edit/${blog._id}" class="btn-edit">✏️ Edit</a>
+          <form action="/delete/${blog._id}?_method=DELETE" method="POST" class="inline-form">
+            <button type="submit" class="btn-delete">🗑 Delete</button>
+          </form>
+        </td>
+      </tr>
+    `).join('')}
+  </tbody>
+</table>
+
+<style>
+.blog-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.blog-table th, .blog-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.blog-table th {
+  background: #f9fafc;
+  font-weight: 600;
+}
+.blog-table tr:hover {
+  background: #f4f6f9;
+}
+.tag {
+  color: #333;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+}
+.btn-edit {
+  background: #22c55e;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 5px;
+}
+.btn-edit:hover { background: #16a34a; }
+.btn-delete {
+  background: #ef4444;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn-delete:hover { background: #dc2626; }
+.inline-form { display: inline; }
+</style>
+` }) %>

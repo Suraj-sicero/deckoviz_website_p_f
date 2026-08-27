@@ -1,0 +1,224 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: var(--space-4);
+}
+
+.titleInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.headerIcon {
+  color: var(--accent-pink);
+  background: rgba(255, 0, 110, 0.1);
+  padding: 12px;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.modesSection h2, .recentSection h2 {
+  margin-bottom: var(--space-4);
+  font-size: 1.5rem;
+}
+
+.modeGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.modeCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  text-align: center;
+  height: 100%;
+}
+
+.iconWrapper {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.bg-pink { background: linear-gradient(135deg, #ff006e, #ff6b6b); box-shadow: 0 4px 20px rgba(255, 0, 110, 0.3); }
+.bg-blue { background: linear-gradient(135deg, #3a86ff, #00b4d8); box-shadow: 0 4px 20px rgba(58, 134, 255, 0.3); }
+.bg-green { background: linear-gradient(135deg, #06d6a0, #2dc653); box-shadow: 0 4px 20px rgba(6, 214, 160, 0.3); }
+.bg-orange { background: linear-gradient(135deg, #ff9f1c, #ffbf69); box-shadow: 0 4px 20px rgba(255, 159, 28, 0.3); }
+.bg-purple { background: linear-gradient(135deg, #9d4edd, #c77dff); box-shadow: 0 4px 20px rgba(27, 43, 91, 0.3); }
+
+.recentGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.creationCard {
+  padding: 0;
+  overflow: hidden;
+}
+
+.creationPreviewBox {
+  height: 160px;
+  background: rgba(43, 30, 112, 0.03);
+  border-bottom: 1px solid var(--surface-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+}
+
+.creationInfo {
+  padding: var(--space-4);
+}
+
+.creationInfo h3 {
+  font-size: 1.1rem;
+  margin-bottom: var(--space-1);
+}
+
+.creationType {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* Mockup styles */
+.artMockup {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff9f1c, #e01e37);
+  box-shadow: 0 0 30px rgba(255, 159, 28, 0.5);
+}
+
+.textMockup {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.line {
+  height: 8px;
+  background: rgba(43, 30, 112, 0.1);
+  border-radius: 4px;
+}
+
+/* Workspace overlay styles */
+.workspaceOverlay {
+  position: fixed;
+  top: 0; left: 240px; right: 0; bottom: 0;
+  background: var(--background);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-6);
+  animation: slideIn 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.workspaceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.workspaceContent {
+  display: flex;
+  gap: var(--space-6);
+  flex: 1;
+  min-height: 0;
+}
+
+.draftArea {
+  flex: 2;
+  display: flex;
+  padding: 0;
+}
+
+.editor {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: var(--space-6);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  resize: none;
+  outline: none;
+}
+
+.feedbackArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.vizzyCoachHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.feedbackMessage {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.feedbackActions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.chatInputRow {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.coachInput {
+  flex: 1;
+  background: rgba(43, 30, 112,0.05);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-3);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  outline: none;
+}
