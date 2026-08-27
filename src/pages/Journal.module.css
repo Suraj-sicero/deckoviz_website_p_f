@@ -1,0 +1,135 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  height: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.headerIcon {
+  color: var(--accent-green);
+  background: rgba(6, 214, 160, 0.1);
+  padding: 12px;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-lg);
+}
+
+.subtitle {
+  color: var(--text-secondary);
+}
+
+.moodIndicators {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.moodBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(43, 30, 112,0.05);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border: 1px solid var(--surface-border);
+}
+
+.chatArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+.messages {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.messageBubble {
+  max-width: 75%;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  line-height: 1.5;
+  position: relative;
+}
+
+.vizzyBubble {
+  align-self: flex-start;
+  background: rgba(27, 43, 91, 0.1);
+  border: 1px solid rgba(27, 43, 91, 0.3);
+  border-top-left-radius: 4px;
+}
+
+.userBubble {
+  align-self: flex-end;
+  background: rgba(58, 134, 255, 0.15);
+  border: 1px solid rgba(58, 134, 255, 0.3);
+  border-top-right-radius: 4px;
+}
+
+.bubbleIcon {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  color: var(--accent-navy);
+  background: var(--surface-base);
+  border-radius: 50%;
+  padding: 4px;
+  width: 24px;
+  height: 24px;
+}
+
+.inputArea {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: rgba(43, 30, 112,0.3);
+  border-top: 1px solid var(--surface-border);
+}
+
+.textInput {
+  flex: 1;
+  background: rgba(43, 30, 112,0.05);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-4);
+  color: white;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  outline: none;
+}
+
+.textInput:focus {
+  border-color: var(--accent-blue);
+}
+
+.micBtn {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

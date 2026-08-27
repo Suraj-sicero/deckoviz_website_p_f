@@ -1,0 +1,370 @@
+.classroomContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  height: calc(100vh - 64px);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--surface-glass);
+  padding: var(--space-3) var(--space-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--surface-border);
+}
+
+.titleInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.liveBadge {
+  background: rgba(255, 0, 110, 0.2);
+  color: var(--accent-pink);
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% { box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(255, 0, 110, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 0, 110, 0); }
+}
+
+.titleInfo h1 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.topic {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  border-left: 1px solid var(--surface-border);
+  padding-left: var(--space-4);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.divider {
+  width: 1px;
+  height: 24px;
+  background: var(--surface-border);
+  margin: 0 var(--space-2);
+}
+
+.mainWorkspace {
+  display: flex;
+  gap: var(--space-4);
+  flex: 1;
+  min-height: 0;
+}
+
+.canvasArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.simulationCanvas {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.simHeader {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--surface-border);
+}
+
+.simHeader h3 {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-1);
+}
+
+.simHeader p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.simGraphic {
+  flex: 1;
+  width: 100%;
+  padding: var(--space-6);
+}
+
+.simControls {
+  display: flex;
+  gap: var(--space-8);
+  padding: var(--space-4) var(--space-6);
+  background: rgba(43, 30, 112,0.3);
+  border-top: 1px solid var(--surface-border);
+}
+
+.controlGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1;
+}
+
+.controlGroup label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  min-width: 80px;
+}
+
+.controlGroup input[type="range"] {
+  flex: 1;
+  accent-color: var(--accent-blue);
+}
+
+.placeholderState {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  color: var(--text-secondary);
+}
+
+.sidebar {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.vizzyPanel {
+  background: rgba(27, 43, 91, 0.05);
+  border-color: rgba(27, 43, 91, 0.2);
+}
+
+.vizzyHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.vizzyContent p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: var(--space-3);
+}
+
+.studentsPanel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-4);
+  color: var(--text-secondary);
+}
+
+.studentList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  overflow-y: auto;
+}
+
+.studentItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  background: rgba(43, 30, 112,0.02);
+}
+
+.studentAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--surface-border-highlight);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.studentName {
+  flex: 1;
+  font-size: 0.95rem;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+/* Additional styles for Multimodal & Avatar */
+.multimodalCanvas {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-4);
+  gap: var(--space-4);
+}
+
+.intentCaptureBar {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-3);
+  background: rgba(43, 30, 112,0.4);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--surface-border-highlight);
+}
+
+.intentInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: white;
+  font-family: var(--font-body);
+  outline: none;
+  font-size: 1rem;
+}
+
+.micActive {
+  background: var(--accent-pink) !important;
+  animation: pulse-red 2s infinite;
+}
+
+.multiGrid {
+  display: flex;
+  gap: var(--space-4);
+  flex: 1;
+  min-height: 0;
+}
+
+.multiItemPrimary {
+  flex: 2;
+  background: rgba(43, 30, 112,0.02);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+}
+
+.multiSide {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.multiItem {
+  flex: 1;
+  background: rgba(43, 30, 112,0.02);
+  border: 1px solid var(--surface-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+}
+
+.multiHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mockWaterCycle {
+  flex: 1;
+  background: radial-gradient(circle at center, rgba(58, 134, 255, 0.2), transparent);
+  border-radius: var(--radius-md);
+  border: 1px dashed rgba(58, 134, 255, 0.4);
+}
+
+.mockTextLines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.mLine { height: 8px; background: rgba(43, 30, 112,0.1); border-radius: 4px; }
+
+.mockVideo {
+  flex: 1;
+  background: rgba(43, 30, 112,0.5);
+  border-radius: var(--radius-md);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mockVideo::after {
+  content: '▶';
+  font-size: 24px;
+  color: rgba(43, 30, 112,0.5);
+}
+
+.vizzyAvatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.avatar-idle {
+  background: rgba(27, 43, 91, 0.4);
+  box-shadow: 0 0 10px rgba(27, 43, 91, 0.4);
+}
+
+.avatar-listening {
+  background: var(--accent-pink);
+  box-shadow: 0 0 20px var(--accent-pink);
+  animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+.avatar-generating {
+  background: var(--accent-blue);
+  box-shadow: 0 0 20px var(--accent-blue);
+  animation: pulse-blue 1s infinite alternate;
+}
+
+@keyframes pulse-blue {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1.05); opacity: 1; }
+}
+
+.vizzyStatus {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

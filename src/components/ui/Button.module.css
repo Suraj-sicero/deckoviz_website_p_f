@@ -1,0 +1,74 @@
+.button {
+  font-family: var(--font-body);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+/* Sizes */
+.size-sm {
+  padding: var(--space-2) var(--space-3);
+  font-size: 0.875rem;
+}
+.size-md {
+  padding: var(--space-3) var(--space-4);
+  font-size: 1rem;
+}
+.size-lg {
+  padding: var(--space-4) var(--space-6);
+  font-size: 1.125rem;
+}
+
+/* Variants */
+.variant-primary {
+  background: linear-gradient(135deg, var(--accent-indigo), var(--accent-navy));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(203, 135, 255, 0.3);
+}
+
+.variant-primary:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(203, 135, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.variant-secondary {
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text-primary);
+  border: 1px solid var(--surface-border);
+}
+
+.variant-secondary:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: var(--surface-border-highlight);
+}
+
+.variant-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+.variant-ghost:hover {
+  background: rgba(43, 30, 112, 0.05);
+  color: var(--text-primary);
+}
+
+.variant-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-primary);
+  border: 1px solid var(--surface-border);
+}
+.variant-glass:hover {
+  background: rgba(255, 255, 255, 0.9);
+}

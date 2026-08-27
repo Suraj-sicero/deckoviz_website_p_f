@@ -1,0 +1,404 @@
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.greetingRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-2);
+}
+
+.greeting {
+  font-size: 2.5rem;
+}
+
+.streakBadge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(255, 159, 28, 0.1);
+  border: 1px solid rgba(255, 159, 28, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  color: #ff9f1c;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.flameIcon {
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.8; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1.05); }
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.goalPill {
+  background: #FFFFFF;
+  border: 1px solid var(--surface-border);
+  box-shadow: 0 2px 8px rgba(43, 30, 112, 0.05);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.bellButton {
+  background: transparent;
+  border: none;
+  position: relative;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: 50%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bellButton:hover {
+  background: rgba(43, 30, 112, 0.05);
+  color: var(--text-primary);
+}
+
+.notificationDot {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  background: #ff006e;
+  border-radius: 50%;
+  border: 2px solid var(--background);
+}
+
+.adaptiveEnvironment {
+  position: relative;
+  border-radius: var(--radius-xl);
+  height: 300px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--surface-border);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: var(--space-12);
+  box-shadow: 0 8px 32px rgba(43, 30, 112, 0.05);
+}
+
+.adaptiveEnvironment::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at 70% 50%, rgba(58, 134, 255, 0.15), transparent 60%);
+  z-index: 0;
+}
+
+.environmentVisual {
+  position: absolute;
+  right: 15%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.orbitContainer {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orbitRing1, .orbitRing2 {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px dashed var(--accent-indigo);
+  opacity: 0.3;
+}
+
+.orbitRing1 {
+  width: 140px; height: 140px;
+  animation: spin 20s linear infinite;
+}
+
+.orbitRing2 {
+  width: 200px; height: 200px;
+  animation: spin 30s linear infinite reverse;
+}
+
+.particleCore {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--accent-indigo), var(--accent-navy));
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(27, 43, 91, 0.5);
+  animation: pulse 4s infinite alternate;
+}
+
+.particle1, .particle2 {
+  position: absolute;
+  width: 12px; height: 12px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--accent-blue);
+}
+
+.particle1 {
+  top: 15%; left: 20%;
+  animation: floatOrb 5s infinite ease-in-out;
+}
+
+.particle2 {
+  bottom: 20%; right: 15%;
+  animation: floatOrb 7s infinite ease-in-out reverse;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatOrb {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-15px) scale(1.2); }
+}
+
+.envGlow {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+  background: var(--accent-navy);
+  filter: blur(80px);
+  opacity: 0.15;
+  z-index: -1;
+  animation: pulse 4s ease-in-out infinite;
+}
+
+.envContent {
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+}
+
+.focusPill {
+  display: inline-block;
+  background: rgba(43, 30, 112, 0.05);
+  color: var(--accent-indigo);
+  border: 1px solid rgba(43, 30, 112, 0.1);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+
+.envContent h2 {
+  font-size: 2rem;
+  margin-bottom: var(--space-3);
+  background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.envContent p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-6);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.progressBarContainer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(43, 30, 112, 0.05);
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-indigo), var(--accent-navy));
+  border-radius: 0 4px 4px 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-6);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.cardIcon {
+  color: var(--accent-navy);
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bottomCard {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(43, 30, 112, 0.1) !important;
+  box-shadow: 0 4px 15px rgba(43, 30, 112, 0.05) !important;
+}
+
+.scheduleItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4);
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(43, 30, 112, 0.05);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.scheduleItem:hover {
+  background: rgba(43, 30, 112, 0.02);
+  border-color: var(--accent-indigo);
+  transform: translateX(4px);
+}
+
+.scheduleInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.scheduleDotActive {
+  width: 10px; height: 10px;
+  background: #ff006e;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 0, 110, 0.5);
+  animation: pulse 2s infinite;
+}
+
+.scheduleDotUpcoming {
+  width: 10px; height: 10px;
+  background: var(--accent-blue);
+  border-radius: 50%;
+}
+
+.scheduleActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.liveBadge {
+  background: rgba(255, 0, 110, 0.1);
+  color: #ff006e;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.actionBtn {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.2s;
+}
+
+.scheduleItem:hover .actionBtn {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.growthHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--space-6);
+}
+
+.growthHeader p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 70%;
+}
+
+.growthBadge {
+  background: #10b981;
+  color: white;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.sparklineContainer {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.sparkline {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.time {
+  color: var(--text-secondary);
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+}
+
+.subject {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(-50%) translateY(0); }
+  50% { transform: translateY(-50%) translateY(-20px); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.2); }
+}
