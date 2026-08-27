@@ -218,6 +218,9 @@ import HapticMemory from "./components/developerSpecs/HapticMemory";
 import SilenceArchitecture from "./components/developerSpecs/SilenceArchitecture";
 import MusicResponsiveArt from "./components/developerSpecs/MusicResponsiveArt";
 import AgenticShapeVortex from "./components/developerSpecs/AgenticShapeVortex";
+import MasterHub from "./pages/ArtHub/MasterHub";
+import VisualizationsHub from "./pages/ArtHub/VisualizationsHub";
+import DynamicArtHub from "./pages/ArtHub/DynamicArtHub";
 import CreateWorld from "./pages/CreateWorld";
 import MasterSuiteOfFeatures from "./pages/MasterSuiteOfFeatures";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
@@ -276,9 +279,18 @@ const ScrollToSectionOnHome: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.get('from_art') === '1') {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      return false;
+    }
+    return true;
+  });
 
   useEffect(() => {
+    if (!isLoading) return;
+
     // Simulate loading time - adjust as needed
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -299,7 +311,7 @@ const App: React.FC = () => {
       clearTimeout(timer);
       window.removeEventListener("load", handleLoad);
     };
-  }, []);
+  }, [isLoading]);
 
   return (
     <Router>
@@ -620,6 +632,9 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/developer-specs/music-responsive-art" element={<MusicResponsiveArt />} />
           <Route path="/developer-specs/agentic-shape-vortex" element={<AgenticShapeVortex />} />
           <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
+          <Route path="/art-hub" element={<MasterHub />} />
+          <Route path="/art-hub/visualizations" element={<VisualizationsHub />} />
+          <Route path="/art-hub/dynamic-art" element={<DynamicArtHub />} />
           <Route path="/create-world" element={<CreateWorld />} />
           <Route path="/master-suite" element={<MasterSuiteOfFeatures />} />
           <Route path="/vizzy-fun-zone" element={<VizzyFunZone />} />

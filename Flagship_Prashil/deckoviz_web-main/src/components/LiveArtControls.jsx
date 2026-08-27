@@ -9,7 +9,8 @@ export default function LiveArtControls({ title }) {
     triggerReset, 
     isAudioEnabled, toggleAudio,
     isFrameMode, setIsFrameMode,
-    activeStyle, setActiveStyle
+    activeStyle, setActiveStyle,
+    isMouseIdle
   } = useLiveArt();
 
   // Hide UI for headless video recording
@@ -119,11 +120,14 @@ export default function LiveArtControls({ title }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [setIsFrameMode]);
 
-  const hideUi = !isUiVisible || isFrameMode;
+  const hideUi = !isUiVisible || isFrameMode || isMouseIdle;
 
   return (
     <div className={`live-art-controls-wrapper ${hideUi ? 'hidden' : ''}`}>
       <div className="lac-header">
+        <a href="/art-hub?from_art=1" className="lac-back-btn" style={{ pointerEvents: 'auto' }}>
+          ← Back to Hub
+        </a>
         <div className="lac-branding">DECKOVIZ PORTAL</div>
         <div className="lac-title">{title}</div>
       </div>

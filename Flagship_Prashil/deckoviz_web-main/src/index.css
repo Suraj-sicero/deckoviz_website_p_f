@@ -967,35 +967,4 @@
     padding-left: 0.75em;
     margin-left: 0;
   }
-}@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-
-:root {
-  --bg-color: #000000;
-  --text-color: #ffffff;
-  --primary: #ffffff;
-  --font-main: 'Inter', sans-serif;
 }
-
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-body, html {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: var(--font-main);
-  overflow: hidden; /* Prevent scrolling in frame mode */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#root {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-}
-
