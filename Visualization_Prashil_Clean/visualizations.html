@@ -4,33 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualization Tools Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.3);
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --text-secondary: #a1a1aa;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --font-main: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
         }
         
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             min-height: 100vh;
-            background-image: radial-gradient(circle at 50% 0%, rgba(30, 58, 138, 0.5), transparent 60%),
-                              radial-gradient(circle at 0% 100%, rgba(88, 28, 135, 0.3), transparent 50%);
+            background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.15), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.15), transparent 40%);
             background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 5rem 2rem;
         }
 
         header {
@@ -39,13 +41,14 @@
         }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
             margin-bottom: 1rem;
-            background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
+            font-family: var(--font-serif);
+            background: linear-gradient(135deg, #ffffff, #a1a1aa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: -0.05em;
+            letter-spacing: -0.02em;
         }
 
         .subtitle {
@@ -54,6 +57,7 @@
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
+            font-weight: 300;
         }
 
         .grid {
@@ -67,10 +71,8 @@
             color: inherit;
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            border-radius: 12px;
             padding: 2rem;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
@@ -78,6 +80,7 @@
             flex-direction: column;
             justify-content: center;
             min-height: 120px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .card::before {
@@ -86,18 +89,17 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
+            height: 3px;
+            background: linear-gradient(90deg, #2563EB, #06b6d4, #8b5cf6);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
 
         .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
-                        0 0 40px var(--accent-glow);
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
         }
 
         .card:hover::before {
@@ -106,14 +108,17 @@
 
         .card-title {
             margin: 0 0 0.75rem 0;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            color: #fff;
+            color: #ffffff;
             transition: color 0.3s ease;
+            letter-spacing: -0.01em;
         }
 
         .card:hover .card-title {
-            color: var(--accent);
+            background: linear-gradient(135deg, #2563EB, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .card-desc {
@@ -121,20 +126,26 @@
             font-size: 0.95rem;
             color: var(--text-secondary);
             line-height: 1.5;
+            font-weight: 300;
         }
         
         .nav-link {
             display: inline-block;
-            margin-top: 3rem;
-            color: var(--accent);
+            margin-top: 4rem;
+            color: #ffffff;
             text-decoration: none;
-            font-weight: 600;
-            transition: opacity 0.3s ease;
+            font-weight: 400;
+            padding: 0.75rem 2rem;
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            background: var(--glass-bg);
+            transition: all 0.3s ease;
         }
         
         .nav-link:hover {
-            opacity: 0.8;
-            text-decoration: underline;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
         }
 
         @media (max-width: 768px) {
