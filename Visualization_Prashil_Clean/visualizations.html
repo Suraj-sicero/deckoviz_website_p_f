@@ -4,27 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visualization Tools Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --text-secondary: #a1a1aa;
-            --glass-bg: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --font-main: 'Inter', sans-serif;
-            --font-serif: 'Playfair Display', serif;
+            --bg: #EEE6F8; 
+            --bg2: #D5E6F7; 
+            --navy: #2B1E70; 
+            --brand-blue: #2B54EA; 
+            --glass: rgba(255,255,255,0.85); 
+            --glass-border: rgba(255,255,255,0.92);
+            --glass-shadow: 0 12px 36px rgba(43,30,112,0.08);
         }
         
         body {
             margin: 0;
             padding: 0;
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, var(--bg2) 100%);
+            color: var(--navy);
             min-height: 100vh;
-            background-image: radial-gradient(circle at top right, rgba(37, 99, 235, 0.15), transparent 40%),
-                              radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.15), transparent 40%);
             background-attachment: fixed;
             -webkit-font-smoothing: antialiased;
         }
@@ -41,23 +39,27 @@
         }
 
         h1 {
-            font-size: 4rem;
-            font-weight: 800;
+            font-size: 3.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-            font-family: var(--font-serif);
-            background: linear-gradient(135deg, #ffffff, #a1a1aa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-family: 'Comfortaa', sans-serif;
+            color: var(--navy);
             letter-spacing: -0.02em;
+        }
+        
+        h1 span {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--brand-blue);
         }
 
         .subtitle {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
+            font-size: 1.15rem;
+            color: rgba(43, 30, 112, 0.7);
             max-width: 600px;
             margin: 0 auto;
             line-height: 1.6;
-            font-weight: 300;
+            font-weight: 500;
         }
 
         .grid {
@@ -69,18 +71,19 @@
         .card {
             text-decoration: none;
             color: inherit;
-            background: var(--glass-bg);
+            background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 2rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: var(--glass-shadow);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
             min-height: 120px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
 
         .card::before {
@@ -89,17 +92,16 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #2563EB, #06b6d4, #8b5cf6);
+            height: 4px;
+            background: var(--brand-blue);
             opacity: 0;
+            border-radius: 16px 16px 0 0;
             transition: opacity 0.4s ease;
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(43,30,112,0.12);
         }
 
         .card:hover::before {
@@ -108,44 +110,46 @@
 
         .card-title {
             margin: 0 0 0.75rem 0;
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #ffffff;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--navy);
+            font-family: 'Comfortaa', sans-serif;
             transition: color 0.3s ease;
-            letter-spacing: -0.01em;
         }
 
         .card:hover .card-title {
-            background: linear-gradient(135deg, #2563EB, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--brand-blue);
         }
 
         .card-desc {
             margin: 0;
             font-size: 0.95rem;
-            color: var(--text-secondary);
+            color: rgba(43, 30, 112, 0.7);
             line-height: 1.5;
-            font-weight: 300;
         }
         
         .nav-link {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             margin-top: 4rem;
-            color: #ffffff;
+            color: var(--brand-blue);
             text-decoration: none;
-            font-weight: 400;
-            padding: 0.75rem 2rem;
-            border: 1px solid var(--glass-border);
-            border-radius: 50px;
-            background: var(--glass-bg);
-            transition: all 0.3s ease;
+            font-weight: 700;
+            padding: 0.85rem 2.2rem;
+            border: 1px solid rgba(43, 84, 234, 0.18);
+            border-radius: 9999px;
+            background: rgba(43, 84, 234, 0.06);
+            backdrop-filter: blur(10px);
+            transition: all 0.25s ease;
+            font-family: 'DM Sans', sans-serif;
         }
         
         .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+            background: var(--brand-blue);
+            color: #ffffff;
+            border-color: var(--brand-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(43, 84, 234, 0.3);
         }
 
         @media (max-width: 768px) {
@@ -158,7 +162,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Visualization Tools</h1>
+            <h1>Visualization <span>Hub</span></h1>
             <p class="subtitle">A complete collection of interactive data experiences, models, and generative visualizations.</p>
         </header>
         
@@ -167,224 +171,224 @@
             <a href="01-weeks-you-have.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Weeks You Have</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Weeks You Have.</p>
+                    <p class="card-desc">Explore the interactive visualization for Weeks You Have.</p>
                 </div>
             </a>
 
             <a href="02-where-days-go.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Where Days Go</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Where Days Go.</p>
+                    <p class="card-desc">Explore the interactive visualization for Where Days Go.</p>
                 </div>
             </a>
 
             <a href="03-whats-left.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Whats Left</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Whats Left.</p>
+                    <p class="card-desc">Explore the interactive visualization for Whats Left.</p>
                 </div>
             </a>
 
             <a href="04-circles-around-you.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Circles Around You</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Circles Around You.</p>
+                    <p class="card-desc">Explore the interactive visualization for Circles Around You.</p>
                 </div>
             </a>
 
             <a href="05-shifting-canvas.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Shifting Canvas</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Shifting Canvas.</p>
+                    <p class="card-desc">Explore the interactive visualization for Shifting Canvas.</p>
                 </div>
             </a>
 
             <a href="06-golden-thread.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Golden Thread</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Golden Thread.</p>
+                    <p class="card-desc">Explore the interactive visualization for Golden Thread.</p>
                 </div>
             </a>
 
             <a href="07-sentence-over-centuries.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Sentence Over Centuries</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Sentence Over Centuries.</p>
+                    <p class="card-desc">Explore the interactive visualization for Sentence Over Centuries.</p>
                 </div>
             </a>
 
             <a href="08-compressed-line.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Compressed Line</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Compressed Line.</p>
+                    <p class="card-desc">Explore the interactive visualization for Compressed Line.</p>
                 </div>
             </a>
 
             <a href="09-hook-decade.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Hook Decade</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Hook Decade.</p>
+                    <p class="card-desc">Explore the interactive visualization for Hook Decade.</p>
                 </div>
             </a>
 
             <a href="10-sound-itself.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Sound Itself</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Sound Itself.</p>
+                    <p class="card-desc">Explore the interactive visualization for Sound Itself.</p>
                 </div>
             </a>
 
             <a href="11-frozen-instant.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Frozen Instant</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Frozen Instant.</p>
+                    <p class="card-desc">Explore the interactive visualization for Frozen Instant.</p>
                 </div>
             </a>
 
             <a href="12-shape-of-story.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Shape Of Story</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Shape Of Story.</p>
+                    <p class="card-desc">Explore the interactive visualization for Shape Of Story.</p>
                 </div>
             </a>
 
             <a href="13-cast-of-every-story.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Cast Of Every Story</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Cast Of Every Story.</p>
+                    <p class="card-desc">Explore the interactive visualization for Cast Of Every Story.</p>
                 </div>
             </a>
 
             <a href="13-language-city.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Language City</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Language City.</p>
+                    <p class="card-desc">Explore the interactive visualization for Language City.</p>
                 </div>
             </a>
 
             <a href="14-who-we-are.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Who We Are</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Who We Are.</p>
+                    <p class="card-desc">Explore the interactive visualization for Who We Are.</p>
                 </div>
             </a>
 
             <a href="15-world-right-now.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">World Right Now</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for World Right Now.</p>
+                    <p class="card-desc">Explore the interactive visualization for World Right Now.</p>
                 </div>
             </a>
 
             <a href="16-weather-of-feeling.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Weather Of Feeling</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Weather Of Feeling.</p>
+                    <p class="card-desc">Explore the interactive visualization for Weather Of Feeling.</p>
                 </div>
             </a>
 
             <a href="17-ebb-and-flow.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Ebb And Flow</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Ebb And Flow.</p>
+                    <p class="card-desc">Explore the interactive visualization for Ebb And Flow.</p>
                 </div>
             </a>
 
             <a href="18-powers-of-ten.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Powers Of Ten</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Powers Of Ten.</p>
+                    <p class="card-desc">Explore the interactive visualization for Powers Of Ten.</p>
                 </div>
             </a>
 
             <a href="19-equations-felt.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Equations Felt</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Equations Felt.</p>
+                    <p class="card-desc">Explore the interactive visualization for Equations Felt.</p>
                 </div>
             </a>
 
             <a href="20-river-of-civilizations.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">River Of Civilizations</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for River Of Civilizations.</p>
+                    <p class="card-desc">Explore the interactive visualization for River Of Civilizations.</p>
                 </div>
             </a>
 
             <a href="21-borders-in-motion.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Borders In Motion</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Borders In Motion.</p>
+                    <p class="card-desc">Explore the interactive visualization for Borders In Motion.</p>
                 </div>
             </a>
 
             <a href="22-beautiful-infinities.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Beautiful Infinities</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Beautiful Infinities.</p>
+                    <p class="card-desc">Explore the interactive visualization for Beautiful Infinities.</p>
                 </div>
             </a>
 
             <a href="23-shape-of-numbers.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Shape Of Numbers</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Shape Of Numbers.</p>
+                    <p class="card-desc">Explore the interactive visualization for Shape Of Numbers.</p>
                 </div>
             </a>
 
             <a href="24-three-pound-universe.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Three Pound Universe</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Three Pound Universe.</p>
+                    <p class="card-desc">Explore the interactive visualization for Three Pound Universe.</p>
                 </div>
             </a>
 
             <a href="25-thought-in-motion.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Thought In Motion</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Thought In Motion.</p>
+                    <p class="card-desc">Explore the interactive visualization for Thought In Motion.</p>
                 </div>
             </a>
 
             <a href="26-elements-made-personal.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Elements Made Personal</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Elements Made Personal.</p>
+                    <p class="card-desc">Explore the interactive visualization for Elements Made Personal.</p>
                 </div>
             </a>
 
             <a href="27-bonds-that-build-us.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Bonds That Build Us</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Bonds That Build Us.</p>
+                    <p class="card-desc">Explore the interactive visualization for Bonds That Build Us.</p>
                 </div>
             </a>
 
             <a href="28-tree-that-grew-everything.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Tree That Grew Everything</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Tree That Grew Everything.</p>
+                    <p class="card-desc">Explore the interactive visualization for Tree That Grew Everything.</p>
                 </div>
             </a>
 
             <a href="29-city-inside-you.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">City Inside You</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for City Inside You.</p>
+                    <p class="card-desc">Explore the interactive visualization for City Inside You.</p>
                 </div>
             </a>
 
             <a href="30-rhythms-of-consciousness.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Rhythms Of Consciousness</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Rhythms Of Consciousness.</p>
+                    <p class="card-desc">Explore the interactive visualization for Rhythms Of Consciousness.</p>
                 </div>
             </a>
 
             <a href="31-shape-of-your-life.html" class="card">
                 <div class="card-content">
                     <h3 class="card-title">Shape Of Your Life</h3>
-                    <p class="card-desc">Explore the unique interactive visualization for Shape Of Your Life.</p>
+                    <p class="card-desc">Explore the interactive visualization for Shape Of Your Life.</p>
                 </div>
             </a>
 
