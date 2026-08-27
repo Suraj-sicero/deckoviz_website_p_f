@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Artworks</title>
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #f43f5e;
+            --accent-glow: rgba(244, 63, 94, 0.3);
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            background-image: radial-gradient(circle at 80% 20%, rgba(225, 29, 72, 0.2), transparent 50%),
+                              radial-gradient(circle at 20% 80%, rgba(124, 58, 237, 0.2), transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fb7185, #f43f5e, #e11d48);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.05em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .card {
+            text-decoration: none;
+            color: inherit;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #fb7185, #f43f5e);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 10;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 
+                        0 0 40px var(--accent-glow);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-img-container {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card:hover .card-img {
+            transform: scale(1.1);
+        }
+
+        .card-content {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            margin: 0 0 0.75rem 0;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            color: var(--accent);
+        }
+
+        .card-desc {
+            margin: 0;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .nav-link {
+            display: inline-block;
+            margin-top: 3rem;
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .container { padding: 2rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dynamic Artworks</h1>
+            <p class="subtitle">Experience famous masterpieces transformed through interactive and generative technology.</p>
+        </header>
+        
+        <div class="grid">
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="mona_lisa.png" alt="Mona Lisa" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Mona Lisa</h3>
+                    <p class="card-desc">Interactive dynamic mode for the Mona Lisa.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="starry_night.png" alt="Starry Night" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Starry Night</h3>
+                    <p class="card-desc">Immerse yourself in Van Gogh's masterpiece.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="pearl_earring.png" alt="Girl with a Pearl Earring" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Girl with a Pearl Earring</h3>
+                    <p class="card-desc">Experience Vermeer's classic like never before.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="great_wave.png" alt="The Great Wave" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">The Great Wave</h3>
+                    <p class="card-desc">Dynamic visualization of Hokusai's wave.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="gare_saint_lazare.png" alt="Gare Saint-Lazare" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Gare Saint-Lazare</h3>
+                    <p class="card-desc">Atmospheric exploration of the train station.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="parthenon.jpg" alt="The Parthenon" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">The Parthenon</h3>
+                    <p class="card-desc">Architectural deconstruction mode.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="cubism_art.png" alt="Cubism Mode" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Cubism Mode</h3>
+                    <p class="card-desc">Transform input into a Cubist perspective.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="pop_art.png" alt="Pop Art Mode" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Pop Art Mode</h3>
+                    <p class="card-desc">Vibrant pop-art styling and interaction.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="migrant_mother.png" alt="Migrant Mother" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Migrant Mother</h3>
+                    <p class="card-desc">Historical depth and context mode.</p>
+                </div>
+            </a>
+
+            <a href="#" class="card">
+                <div class="card-img-container">
+                    <img src="vj_day_kiss.png" alt="V-J Day Kiss" class="card-img" onerror="this.src='deckoviz-logo.png'">
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">V-J Day Kiss</h3>
+                    <p class="card-desc">Dynamic scene exploration.</p>
+                </div>
+            </a>
+
+        </div>
+        
+        <div style="text-align: center;">
+            <a href="visualizations.html" class="nav-link">&larr; Back to Visualization Tools</a>
+        </div>
+    </div>
+</body>
+</html>
