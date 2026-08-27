@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
-import { BookOpen, Mic, Send, Sparkles, Smile, BatteryMedium } from 'lucide-react';
+import { BookOpen, Mic, Send, Smile, BatteryMedium } from 'lucide-react';
 import styles from './Journal.module.css';
 import { useAppStore } from '../store/useAppStore';
 
