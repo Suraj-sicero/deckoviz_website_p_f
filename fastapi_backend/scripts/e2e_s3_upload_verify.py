@@ -1,4 +1,5 @@
 """One-shot production S3 upload verification. Does not print secrets."""
+from __future__ import annotations
 
 import io
 import json
@@ -7,7 +8,6 @@ import sys
 import urllib.error
 import urllib.request
 from datetime import datetime, timezone
-from typing import Dict, Tuple
 
 try:
     import boto3
@@ -29,7 +29,7 @@ PNG_BYTES = bytes.fromhex(
 )
 
 
-def multipart_upload(filename: str, content: bytes, content_type: str) -> Tuple[int, Dict]:
+def multipart_upload(filename: str, content: bytes, content_type: str) -> tuple[int, dict]:
     boundary = f"----DeckovizE2E{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
     body = io.BytesIO()
     body.write(f"--{boundary}\r\n".encode())
@@ -61,7 +61,7 @@ def multipart_upload(filename: str, content: bytes, content_type: str) -> Tuple[
         return exc.code, payload
 
 
-def verify_presigned_url(url: str) -> Tuple[int, str]:
+def verify_presigned_url(url: str) -> tuple[int, str]:
     req = urllib.request.Request(url, method="GET")
     try:
         with urllib.request.urlopen(req, timeout=60) as resp:
@@ -70,7 +70,7 @@ def verify_presigned_url(url: str) -> Tuple[int, str]:
         return exc.code, exc.read(200).decode(errors="replace")
 
 
-def verify_s3_object(object_key: str) -> Dict:
+def verify_s3_object(object_key: str) -> dict:
     if not boto3:
         return {"checked": False, "reason": "boto3 unavailable"}
     access_key = os.environ.get("AWS_ACCESS_KEY_ID")

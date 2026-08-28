@@ -1,7 +1,7 @@
 import logging
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
-from typing import Optional, Any, Dict
+from typing import Optional, Any
 from datetime import datetime, timedelta
 import jwt
 from pydantic import BaseModel
@@ -73,7 +73,7 @@ def _get_or_create_firestore_user_sync(uid: str, email: str, name: Optional[str]
 get_or_create_firestore_user = _get_or_create_firestore_user_sync
 
 
-def verify_token_to_user_dict(token: str) -> Optional[Dict[str, Any]]:
+def verify_token_to_user_dict(token: str) -> dict[str, Any] | None:
     """Verifies internal signed JWT, Firebase ID token, or direct UID string.
     Returns a dict with user ID, email, name and app_instance_id.
     This is a SYNC function — call it via run_in_executor from async contexts."""
@@ -127,7 +127,7 @@ def verify_token_to_user_dict(token: str) -> Optional[Dict[str, Any]]:
     return None
 
 
-async def verify_token_to_user_dict_async(token: str) -> Optional[Dict[str, Any]]:
+async def verify_token_to_user_dict_async(token: str) -> dict[str, Any] | None:
     """Async-safe wrapper: runs verify_token_to_user_dict in a thread pool executor
     so blocking Firebase/Firestore network calls don't stall the event loop."""
     loop = asyncio.get_event_loop()

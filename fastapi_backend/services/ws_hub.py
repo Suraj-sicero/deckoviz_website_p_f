@@ -1,27 +1,23 @@
+from __future__ import annotations
+
 import uuid
 from datetime import datetime, timezone
-from typing import Any, Dict, Optional
+from typing import Any
 
 from fastapi import WebSocket
 
 from services import device_registry
 
 # user_id → { conn_key → {ws, client_type, app_instance_id} }
-_connections: Dict[str, Dict[str, Dict[str, Any]]] = {}
+_connections: dict[str, dict[str, dict[str, Any]]] = {}
 
 
 def _iso_now() -> str:
     return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def envelope(
-    action: str,
-    payload: Dict[str, Any],
-    *,
-    target: Optional[Dict] = None,
-    message_id: Optional[str] = None,
-) -> Dict[str, Any]:
-    msg: Dict[str, Any] = {
+def envelope(action: str, payload: dict[str, Any], *, target: dict | None = None, message_id: str | None = None) -> dict[str, Any]:
+    msg: dict[str, Any] = {
         "protocol_version": 1,
         "message_id": message_id or str(uuid.uuid4()),
         "timestamp": _iso_now(),
@@ -33,14 +29,14 @@ def envelope(
     return msg
 
 
-async def send_json(ws: WebSocket, data: Dict[str, Any]) -> None:
+async def send_json(ws: WebSocket, data: dict[str, Any]) -> None:
     try:
         await ws.send_json(data)
     except Exception:
         pass
 
 
-def register(user_id: str, client_type: str, app_instance_id: Optional[str], ws: WebSocket) -> str:
+def register(user_id: str, client_type: str, app_instance_id: str | None, ws: WebSocket) -> str:
     if user_id not in _connections:
         _connections[user_id] = {}
     key = app_instance_id if client_type == "tv" else "browser"
@@ -69,9 +65,7 @@ def is_tv_online(user_id: str, app_instance_id: str) -> bool:
     return False
 
 
-async def route_to_tv(
-    user_id: str, target_app_instance_id: Optional[str], message: Dict[str, Any]
-) -> bool:
+async def route_to_tv(user_id: str, target_app_instance_id: str | None, message: dict[str, Any]) -> bool:
     user_conns = _connections.get(user_id)
     if not user_conns:
         return False
@@ -86,7 +80,7 @@ async def route_to_tv(
     return sent
 
 
-async def broadcast_to_browsers(user_id: str, message: Dict[str, Any]) -> None:
+async def broadcast_to_browsers(user_id: str, message: dict[str, Any]) -> None:
     user_conns = _connections.get(user_id)
     if not user_conns:
         return
@@ -95,9 +89,7 @@ async def broadcast_to_browsers(user_id: str, message: Dict[str, Any]) -> None:
             await send_json(conn["ws"], message)
 
 
-async def send_connected(
-    ws: WebSocket, client_type: str, user_id: str, app_instance_id: Optional[str]
-) -> None:
+async def send_connected(ws: WebSocket, client_type: str, user_id: str, app_instance_id: str | None) -> None:
     await send_json(
         ws,
         envelope(
@@ -112,9 +104,7 @@ async def send_connected(
     )
 
 
-async def send_acknowledgement(
-    ws: WebSocket, reference_message_id: Optional[str], status: str = "success"
-) -> None:
+async def send_acknowledgement(ws: WebSocket, reference_message_id: str | None, status: str = "success") -> None:
     await send_json(
         ws,
         envelope(
@@ -124,7 +114,7 @@ async def send_acknowledgement(
     )
 
 
-async def send_error(ws: WebSocket, reference_message_id: Optional[str], reason: str) -> None:
+async def send_error(ws: WebSocket, reference_message_id: str | None, reason: str) -> None:
     await send_json(
         ws,
         envelope(

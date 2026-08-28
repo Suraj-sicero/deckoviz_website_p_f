@@ -1,9 +1,11 @@
+from __future__ import annotations
+
 import uuid
 from datetime import datetime, timezone
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 # app_instance_id → device record
-_devices: Dict[str, Dict[str, Any]] = {}
+_devices: dict[str, dict[str, Any]] = {}
 
 
 def _iso_now() -> str:
@@ -17,7 +19,7 @@ def upsert_device(
     device_name: str = "Deckoviz TV",
     platform: str = "google_tv",
     status: str = "offline",
-) -> Tuple[Dict[str, Any], bool]:
+) -> tuple[dict[str, Any], bool]:
     existing = _devices.get(app_instance_id)
     if existing:
         existing["user_id"] = user_id
@@ -43,7 +45,7 @@ def upsert_device(
     return device, True
 
 
-def list_devices_for_user(user_id: str) -> List[Dict[str, Any]]:
+def list_devices_for_user(user_id: str) -> list[dict[str, Any]]:
     return [d for d in _devices.values() if d["user_id"] == user_id]
 
 
@@ -54,5 +56,5 @@ def set_status(user_id: str, app_instance_id: str, status: str) -> None:
         device["last_seen"] = _iso_now()
 
 
-def get_device(app_instance_id: str) -> Optional[Dict[str, Any]]:
+def get_device(app_instance_id: str) -> dict[str, Any] | None:
     return _devices.get(app_instance_id)

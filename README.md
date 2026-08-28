@@ -1,16 +1,108 @@
-# React + Vite
+# Deckoviz — Full-Stack Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Deckoviz is an interactive web platform powered by a **React + Vite** frontend and a **FastAPI (Python) + Firebase** backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📁 Repository Structure
 
-## React Compiler
+```text
+.
+├── deckoviz_web-main/             # Frontend application (React, Vite, TypeScript)
+│   └── fastapi_backend/           # FastAPI Backend (Python 3.10+, Firebase)
+├── backend_legacy/                # Legacy backend reference (if applicable)
+├── netlify.toml                   # Frontend deployment configuration
+└── README.md                      # Project documentation
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🚀 Quick Start Guide
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### Prerequisites
+
+- **Node.js** (v18+ recommended) & **npm**
+- **Python** (v3.10+)
+- **Git**
+
+---
+
+### 🎨 Frontend Setup (`/deckoviz_web-main`)
+
+The frontend is built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd deckoviz_web-main
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+   The app will run locally (typically at `http://localhost:5173`).
+
+---
+
+### ⚡ Backend Setup (`/deckoviz_web-main/fastapi_backend`)
+
+The backend is built with **FastAPI**, **Uvicorn**, and **Firebase Admin SDK**.
+
+1. Navigate to the backend directory:
+   ```bash
+   cd deckoviz_web-main/fastapi_backend
+   ```
+
+2. Create and activate a virtual environment:
+   - **Windows (PowerShell):**
+     ```powershell
+     python -m venv .venv
+     .\.venv\Scripts\Activate
+     ```
+   - **macOS/Linux:**
+     ```bash
+     python3 -m venv .venv
+     source .venv/bin/activate
+     ```
+
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Start the FastAPI server:
+   ```bash
+   python main.py
+   ```
+   *Alternatively:*
+   ```bash
+   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+   ```
+
+5. **API Documentation**:
+   - Swagger UI: `http://localhost:8000/docs`
+   - ReDoc: `http://localhost:8000/redoc`
+   - Health Check: `http://localhost:8000/api/health`
+
+---
+
+## ⚙️ Environment Variables
+
+### Backend (`/deckoviz_web-main/fastapi_backend/.env`)
+Ensure your backend environment variables (e.g. Firebase credentials, CORS origins) are set up. Refer to `config.py` or `.env.example` in `/deckoviz_web-main/fastapi_backend` for required keys.
+
+### Frontend (`/deckoviz_web-main/.env`)
+Set any required Vite environment variables (`VITE_API_BASE_URL`, Firebase client keys, etc.).
+
+---
+
+## 📄 License & Notes
+
+- **CMS / Blog Posts:** Markdown blog posts are located under `deckoviz_web-main/src/content/blogs`.
+- Frontmatter `id` must be unique. Tags are discovered automatically.

@@ -8,12 +8,13 @@ Usage (FastAPI on :8000):
 2) Leave this process running — it stays on /ws/tv and acks display_image
 """
 
+from __future__ import annotations
+
 import json
 import os
 import sys
 import time
 import uuid
-from typing import Optional
 from urllib.parse import urlencode
 
 import requests
@@ -78,7 +79,7 @@ def poll_session(session_id: str) -> dict:
     raise RuntimeError("Timed out waiting for pairing.")
 
 
-def send_tv_ack(ws: websocket.WebSocket, reference_message_id: str, status: str = "success", reason: Optional[str] = None):
+def send_tv_ack(ws: websocket.WebSocket, reference_message_id: str, status: str = "success", reason: str | None = None):
     payload = {"reference_message_id": reference_message_id, "status": status}
     if reason:
         payload["reason"] = reason

@@ -1,10 +1,8 @@
 import logging
 import os
-import pathlib
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from config import settings
 from routes.auth_routes import router as auth_router
 from routes.webapp_routes import router as webapp_router
@@ -16,8 +14,6 @@ from routes.pairing_routes import router as pairing_router
 from routes.queue_routes import router as queue_router
 from routes.curator_routes import router as curator_router
 from routes.ws_routes import router as ws_router
-from routes.promptLibraryRoutes import router as prompt_library_router
-from routes.music_routes import router as music_router
 from database import close_database, database_is_healthy
 
 # Configure logging
@@ -60,14 +56,7 @@ app.include_router(upload_router, prefix=settings.API_V1_STR)
 app.include_router(pairing_router, prefix=settings.API_V1_STR)
 app.include_router(queue_router, prefix=settings.API_V1_STR)
 app.include_router(curator_router, prefix=settings.API_V1_STR)
-app.include_router(prompt_library_router, prefix=settings.API_V1_STR)
-app.include_router(music_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
-
-# Serve locally-uploaded files (used when DEV_LOCAL_MUSIC_STORAGE=true).
-_uploads_dir = pathlib.Path(__file__).parent / "uploads"
-_uploads_dir.mkdir(parents=True, exist_ok=True)
-app.mount("/uploads", StaticFiles(directory=str(_uploads_dir)), name="uploads")
 
 @app.get("/")
 def root():

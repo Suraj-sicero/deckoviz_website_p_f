@@ -1,0 +1,20 @@
+Triggering song-visuals process API request...
+API Response Success: {
+  success: true,
+  videoUrl: '/uploads/video-1780513012206-puadbn.mp4',
+  songUrl: '/uploads/song-gemini-1780513007365-s1zfv.mp3',
+  segments: [
+    {
+      section: 1,
+      lyrics: 'Golden sunrise breaks the night, stars fade out of sight.',
+      imagePrompt: 'A breathtaking watercolor painting depicting the exact moment a golden sunrise breaks through the deep indigo night sky. Soft, radiant hues of yellow, orange, and rose bleed across the horizon, pushing back the dark blue and purple tones of the fading night. A few delicate, shimmering stars are still visible, subtly dissolving into the growing light. The scene captures the ethereal transition from darkness to dawn, with an atmosphere of quiet majesty and impending light. Highly detailed, artistic watercolor brushstrokes, expressive, soft edges, luminous.',
+      imageUrl: 'https://replicate.delivery/yhqm/kxOq4mtNxha5EZPbWAiu3Bw0Re1XeTxYqHrdi0Y8FPixrirWA/out-0.png'
+    },
+    {
+      section: 2,
+      lyrics: 'A new beginning has begun.',
+      imagePrompt: 'A serene and hopeful watercolor painting showcasing a fresh, vibrant landscape bathed in the full, soft light of a brand new day. The scene evokes a sense of peace and potential, with gentle, luminous colors dominating – soft greens, clear blues, and warm, diffused sunlight. Perhaps a tranquil field, a distant mountain range, or a calm body of water reflecting the serene sky. The brushstrokes are fluid and elegant, conveying a feeling of renewal, optimism, and the quiet beauty of a world awakened, symbolizing a profound new beginning. Highly detailed, artistic watercolor effects, harmonious composition, ethereal glow.',
+      imageUrl: 'https://replicate.delivery/yhqm/M7k85BQ1S9q4GVzQsyPyvVYQqgbW5reSmeOdKvmYXsBzrirWA/out-0.png'
+    }
+  ]
+}

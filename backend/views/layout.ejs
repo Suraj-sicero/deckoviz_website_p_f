@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Deckoviz CMS</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      display: flex;
+      height: 100vh;
+      background: #f4f6f9;
+    }
+    .sidebar {
+      width: 240px;
+      background: #1e1e2f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+    }
+    .sidebar h2 {
+      margin-bottom: 30px;
+      font-size: 20px;
+      text-align: center;
+    }
+    .sidebar nav a {
+      display: block;
+      color: #c7c7d1;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      transition: 0.3s;
+    }
+    .sidebar nav a:hover {
+      background: #2b2b44;
+      color: #fff;
+    }
+    .main {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+    header h1 {
+      font-size: 26px;
+      font-weight: 600;
+    }
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2>🛠 Deckoviz CMS</h2>
+    <nav>
+      <a href="/">📚 Blogs</a>
+      <a href="/add">➕ Add Blog</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <%- body %>
+  </main>
+</body>
+</html>

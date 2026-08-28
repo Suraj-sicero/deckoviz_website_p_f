@@ -1,14 +1,16 @@
+from __future__ import annotations
+
 import re
 import secrets
 import time
 import uuid
-from typing import Any, Dict, Optional
+from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 SESSION_TTL_MS = 10 * 60 * 1000
 
-_sessions_by_id: Dict[str, Dict[str, Any]] = {}
-_session_id_by_code: Dict[str, str] = {}
+_sessions_by_id: dict[str, dict[str, Any]] = {}
+_session_id_by_code: dict[str, str] = {}
 
 
 def _now_ms() -> int:
@@ -44,10 +46,10 @@ def generate_unique_code() -> str:
 
 def create_session(
     *,
-    device_name: Optional[str] = None,
-    platform: Optional[str] = None,
-    pair_page_base_url: Optional[str] = None,
-) -> Dict[str, Any]:
+    device_name: str | None = None,
+    platform: str | None = None,
+    pair_page_base_url: str | None = None,
+) -> dict[str, Any]:
     cleanup_expired()
 
     session_id = str(uuid.uuid4())
@@ -84,12 +86,12 @@ def create_session(
     }
 
 
-def get_by_session_id(session_id: str) -> Optional[Dict[str, Any]]:
+def get_by_session_id(session_id: str) -> dict[str, Any] | None:
     cleanup_expired()
     return _sessions_by_id.get(session_id)
 
 
-def get_by_code(code: Optional[str]) -> Optional[Dict[str, Any]]:
+def get_by_code(code: str | None) -> dict[str, Any] | None:
     cleanup_expired()
     if not code:
         return None
@@ -101,12 +103,12 @@ def get_by_code(code: Optional[str]) -> Optional[Dict[str, Any]]:
 
 
 def claim_session(
-    session: Optional[Dict[str, Any]],
+    session: dict[str, Any] | None,
     *,
     user_id: str,
     token: str,
-    device_name: Optional[str] = None,
-) -> Dict[str, Any]:
+    device_name: str | None = None,
+) -> dict[str, Any]:
     if not session:
         return {"ok": False, "error": "Session not found"}
     if session["status"] == "expired" or session["expires_at"] <= _now_ms():
@@ -127,7 +129,7 @@ def claim_session(
     return {"ok": True, "session": session}
 
 
-def build_poll_response(session: Optional[Dict[str, Any]]) -> Dict[str, Any]:
+def build_poll_response(session: dict[str, Any] | None) -> dict[str, Any]:
     from datetime import datetime, timezone
 
     if not session:
@@ -168,7 +170,7 @@ def build_poll_response(session: Optional[Dict[str, Any]]) -> Dict[str, Any]:
     return {"status": "expired"}
 
 
-def extract_code_from_payload(input_val: Optional[str]) -> Optional[str]:
+def extract_code_from_payload(input_val: str | None) -> str | None:
     if not input_val:
         return None
     raw = str(input_val).strip()

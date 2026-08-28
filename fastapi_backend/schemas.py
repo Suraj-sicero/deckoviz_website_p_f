@@ -1,21 +1,6 @@
-import re
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List, Any
 from datetime import datetime
-
-
-def extract_placeholders(text: str) -> List[str]:
-    """Helper to extract [placeholders] from a prompt template string."""
-    return re.findall(r"\[(.*?)\]", text)
-
-
-class PromptTemplate(BaseModel):
-    id: str
-    vertical: str
-    category: str
-    title: str
-    prompt_text: str
-    placeholders: List[str] = []
 
 # --- Auth & User Schemas ---
 class UserBase(BaseModel):
@@ -111,7 +96,6 @@ class CollectionResponse(CollectionBase):
     user_id: str
     item_count: int = Field(default=0, alias="itemCount")
     items: List[CollectionItemResponse] = []
-    assigned_music_id: Optional[str] = Field(default=None, alias="assignedMusicId")
     created_at: datetime
 
     class Config:
@@ -161,52 +145,4 @@ class DailyQueueSlotResponse(DailyQueueSlotCreate):
 
     class Config:
         from_attributes = True
-        populate_by_name = True
-
-
-# --- Music Playback Schemas ---
-class MusicResponse(BaseModel):
-    """Response shape for a single music track.
-
-    `file_url` is a presigned S3 URL generated at read time — never stored.
-    """
-    id: str
-    title: str
-    artist: Optional[str] = None
-    file_url: Optional[str] = Field(default=None, alias="fileUrl")
-    uploaded_by: Optional[str] = Field(default=None, alias="uploadedBy")
-    duration_seconds: Optional[float] = Field(default=None, alias="durationSeconds")
-    created_at: datetime
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-
-class FavoriteMusicResponse(BaseModel):
-    """Response shape for a user's favorited music track entry."""
-    id: str
-    user_id: str = Field(alias="userId")
-    music_id: str = Field(alias="musicId")
-    music: Optional[MusicResponse] = None
-    created_at: datetime
-
-    class Config:
-        from_attributes = True
-        populate_by_name = True
-
-
-class AssignMusicRequest(BaseModel):
-    """Body for PATCH /api/collections/{collection_id}/music."""
-    music_id: Optional[str] = Field(default=None, alias="musicId")
-
-    class Config:
-        populate_by_name = True
-
-
-class PlayMusicRequest(BaseModel):
-    """Body for POST /api/music/{app_instance_id}/play."""
-    music_id: str = Field(alias="musicId")
-
-    class Config:
         populate_by_name = True
