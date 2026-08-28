@@ -1,108 +1,136 @@
-# Deckoviz — Full-Stack Application
+﻿Deckoviz — Full Codebase Reference
 
-Deckoviz is an interactive web platform powered by a **React + Vite** frontend and a **FastAPI (Python) + Firebase** backend.
+This document is a comprehensive technical reference for the Deckoviz platform codebase. It covers the active Vite/React frontend located in the deckoviz_web-main directory, the FastAPI Python backend in the fastapi_backend directory, and all deployment, infrastructure, environment, and integration details. A legacy Next.js frontend exists in the repository history but is not in active use and is not documented here. The production API domain is api.deckoviz.com and the frontend is deployed at deckoviz.com. The GitHub repository is https://github.com/Suraj-sicero/deckoviz_website_p_f.git.
 
----
+REPOSITORY ROOT STRUCTURE
 
-## 📁 Repository Structure
+The repository root contains the deckoviz_web-main directory (the active Vite/React frontend), the fastapi_backend directory (the FastAPI Python backend), a netlify.toml deployment configuration file, a MUSIC_API_DOCUMENTATION.md file describing the music playback API for third-party integrators, and several standalone HTML visualization files (20-river-of-civilizations.html, 24-three-pound-universe.html, 25-thought-in-motion.html, 27-bonds-that-build-us.html, 28-tree-that-grew-everything.html, 29-city-inside-you.html) that are self-contained interactive data-visualization pages rendered using vanilla JavaScript with no build step required. These HTML files contain rich animated visualizations and are served directly by Netlify.
 
-```text
-.
-├── deckoviz_web-main/             # Frontend application (React, Vite, TypeScript)
-│   └── fastapi_backend/           # FastAPI Backend (Python 3.10+, Firebase)
-├── backend_legacy/                # Legacy backend reference (if applicable)
-├── netlify.toml                   # Frontend deployment configuration
-└── README.md                      # Project documentation
-```
+FASTAPI BACKEND ARCHITECTURE AND FOLDER STRUCTURE
 
----
+The backend is a FastAPI application written in Python 3.9 located entirely inside the fastapi_backend directory. It requires Python 3.9 specifically because the production AWS Lightsail server runs Amazon Linux 2023 with Python 3.9 as the system Python. The codebase avoids all Python 3.10+ syntax including the union type shorthand (X | Y) and instead uses typing.Optional, typing.List, typing.Dict, and typing.Union throughout to maintain compatibility. The backend exposes a REST API and a WebSocket server. All REST routes are prefixed under /api. The application entry point is main.py, which creates the FastAPI app instance with lifespan management that verifies database connectivity on startup and closes the async database pool on shutdown. CORS is open to support local development and the production frontend domain. Interactive API docs are available at /docs (Swagger UI) and /redoc (ReDoc).
 
-## 🚀 Quick Start Guide
+main.py is the application entry point and router registration hub. config.py defines all settings using pydantic-settings BaseSettings. auth.py implements the authentication dependency and JWT token creation. database.py configures the async SQLAlchemy engine using asyncpg. models.py defines all SQLAlchemy ORM models for the PostgreSQL tables. schemas.py defines the Pydantic request and response schemas. postgres_store.py contains the database access layer functions. firebase_config.py contains the Firebase Admin SDK initialization logic and the verify_token function. local_music_store.py is a development-only drop-in that saves audio files to disk under uploads/music/ and tracks metadata in a JSON index file at uploads/music_index.json; it activates when DEV_LOCAL_MUSIC_STORAGE=true in .env. The routes directory contains one file per feature area. The services directory contains background service classes for WebSocket connection management, device pairing, queue management, device registration, and S3 storage. The alembic directory contains the Alembic migration environment and version scripts. The data directory contains seed data files such as prompt_library_seed.py.
 
-### Prerequisites
+FASTAPI BACKEND SETTINGS AND CONFIGURATION
 
-- **Node.js** (v18+ recommended) & **npm**
-- **Python** (v3.10+)
-- **Git**
+All settings are managed through the Settings class in config.py. DATABASE_URL is a required field with no default that must be a valid asyncpg-compatible PostgreSQL connection string (postgresql+asyncpg://user:pass@host/dbname). S3_MEDIA_BUCKET is a required field; the production bucket is deckoviz-media-prod in the eu-west-2 (London) region. AWS_REGION defaults to eu-west-2. S3 credentials are obtained from the AWS IAM instance role attached to the Lightsail instance and are never embedded in application config. S3_PRESIGNED_URL_EXPIRES_SECONDS defaults to 3600 (one hour). S3_MAX_UPLOAD_BYTES defaults to 26214400 (25 MB). FIREBASE_CREDENTIALS_FILE defaults to /etc/deckoviz/firebase-service-account.json, which is the location of the Firebase Admin SDK service account key file on the production Lightsail server. FIREBASE_CREDENTIALS_JSON can alternatively hold the raw JSON content of the service account as an environment variable. FIREBASE_STORAGE_BUCKET defaults to deckoviz-app.appspot.com. SECRET_KEY is the HMAC key used to sign internal JWT tokens. ACCESS_TOKEN_EXPIRE_MINUTES is set to 10080 (7 days). The ALGORITHM is HS256. PROJECT_NAME is Deckoviz FastAPI Backend and API_V1_STR is /api.
 
----
+FASTAPI BACKEND AUTHENTICATION FLOW
 
-### 🎨 Frontend Setup (`/deckoviz_web-main`)
+Authentication is handled by the get_current_user FastAPI dependency defined in auth.py. The dependency accepts an HTTP Bearer token from the Authorization header. Token verification is a three-step process. First, the function attempts to decode the token as an internally signed HS256 JWT using the SECRET_KEY; if that succeeds it extracts uid, email, and name from the payload and returns without making any network calls. Second, if internal JWT decoding fails, it attempts to verify the token as a Firebase ID token by calling the Firebase Admin SDK auth.verify_id_token method; this call makes a network request to Google's public key endpoint and runs off the asyncio event loop using a ThreadPoolExecutor with a maximum of four workers. Third, as a last resort for device pairing flows, if the token does not begin with ey (indicating it is not a JWT), the raw string is treated as a direct UID. After any successful token resolution, the user's PostgreSQL record is upserted via ensure_application_user in postgres_store.py. Firestore user documents are also lazily created in the users collection on first login. The create_access_token function generates internal JWTs that embed the user's uid, email, and name with a 7-day expiration; these are returned to the frontend after a successful Firebase token exchange via POST /api/auth/signin.
 
-The frontend is built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
+FASTAPI BACKEND DATABASE LAYER AND MODELS
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd deckoviz_web-main
-   ```
+The database uses PostgreSQL accessed via the async SQLAlchemy 2.0 engine with asyncpg as the driver. Alembic handles schema migrations. The ORM models defined in models.py are as follows. The users table stores platform user accounts with columns id (UUID string primary key), firebase_uid (unique, indexed), email (unique, not null), name, display_name, avatar (text URL), banner (text URL), role (defaulting to user), and created_at. The profiles table stores extended user profile data including username, title, bio, location, art_styles (JSON array), follower_count, following_count, and post_count, linked to users by foreign key on user_id. The collections table stores user-created visual content collections with name, title, description, music_url (for background audio assigned to the collection), tags (JSON array), display_minutes, display_hours, is_system flag, and created_at. The collection_items table stores individual artwork items inside collections with item_type, item_id, url, media_url, title, display_hours, display_seconds, and meta_notes. The uploaded_media table records media uploaded by users with url, media_url, file_name, media_type, file_size, is_generated flag, prompt, and created_at. The media_objects table is a normalized S3 object registry with object_key (the S3 key), bucket, mime_type, size_bytes, checksum_sha256, filename, external_url, is_generated, and prompt; file bytes never enter PostgreSQL. The daily_queue_slots table stores scheduled display queue entries with collection_id, collection_name, title, start_time, end_time, day_of_week (integer 0-6), and active flag. The event_items table stores calendar events with name, date, collection_name, collection_id, and user_id. The vizzy_chat_sessions table stores AI chat sessions with title, active_agent (defaulting to Art Generator), and messages_json (JSON-serialized message arrays in a text column). The curation_items table stores curated content recommendations with title, subtitle, description, category, and image_url. The saved_note_items table stores user text notes with title, content, and tags. The user_documents table is a flexible JSONB document store for variable-schema payloads such as enterprise units, templates, and settings; it has a unique constraint on (user_id, kind, document_id) and uses a JSONB payload column.
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+FASTAPI BACKEND FIREBASE FIRESTORE USAGE
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+Firebase Firestore is used alongside PostgreSQL as a secondary real-time data store. The Firebase Admin SDK is initialized lazily in firebase_config.py. The Firestore collections used are: users (mirrors user account data, written on first login), media (stores artwork metadata records including image URL, title, category, visual style, and tags; managed by addFirebaseMedia and deleteFirebaseMedia on the frontend), music (stores music track metadata including audio URLs, titles, and artist names; managed by addFirebaseMusic and deleteFirebaseMusic). Firebase Realtime Database (RTDB) is also used with a /media node for artwork links and a /music node for music track links, providing a real-time read path for connected TV frames and the admin suite. Firestore collections are also used by route handlers in firebase_config.py for collections, queue slots, events, curation items, enterprise data, and pairing sessions as a real-time fallback alongside PostgreSQL.
 
-   The app will run locally (typically at `http://localhost:5173`).
+FASTAPI BACKEND S3 STORAGE INTEGRATION
 
----
+All media file uploads use Amazon S3 in the eu-west-2 (London) region with private ACLs. Objects are never publicly accessible by URL. Access is granted exclusively through presigned S3 URLs generated on demand using boto3's generate_presigned_url with an expiry of 3600 seconds. S3 service logic is in services/s3_storage.py. S3 credentials are obtained from the AWS IAM role attached to the Lightsail instance via the standard boto3 credential chain. The upload endpoint POST /api/upload accepts multipart image files and returns a presigned URL after storing the object under the media/ prefix. Music uploads via POST /api/music/upload store audio files under media/ with the user's firebase_uid as a path component (media/user_uid/filename.mp3).
 
-### ⚡ Backend Setup (`/deckoviz_web-main/fastapi_backend`)
+FASTAPI BACKEND BACKGROUND SERVICES
 
-The backend is built with **FastAPI**, **Uvicorn**, and **Firebase Admin SDK**.
+The WebSocket hub in services/ws_hub.py maintains in-memory dictionaries mapping app_instance_id strings to active WebSocket connections. When a TV frame connects to /ws/{app_instance_id}, the hub registers its connection and supports broadcasting typed action payloads to specific connected screens. The play_music action is the primary real-time command, dispatched by POST /api/music/{app_instance_id}/play. The pairing store in services/pairing_store.py manages 6-digit pairing codes used to link mobile devices with TV frames. The device registry in services/device_registry.py tracks which devices are currently online. The queue store in services/queue_store.py handles daily display schedule queue logic.
 
-1. Navigate to the backend directory:
-   ```bash
-   cd deckoviz_web-main/fastapi_backend
-   ```
+FASTAPI BACKEND ALL ROUTE MODULES AND ENDPOINTS
 
-2. Create and activate a virtual environment:
-   - **Windows (PowerShell):**
-     ```powershell
-     python -m venv .venv
-     .\.venv\Scripts\Activate
-     ```
-   - **macOS/Linux:**
-     ```bash
-     python3 -m venv .venv
-     source .venv/bin/activate
-     ```
+auth_routes.py (prefix /api/auth): POST /api/auth/signin accepts a JSON body with firebase_token, verifies it via Firebase Admin SDK, upserts the user in PostgreSQL, creates a signed internal JWT, and returns the token with user profile data including id, email, name, display_name, avatar, and role.
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+webapp_routes.py (prefix /api): Routes for the consumer web application including user profile reads and updates, collection management (create, list, get, update, delete), collection item management (add items, reorder, delete), media listing, and event and queue slot CRUD.
 
-4. Start the FastAPI server:
-   ```bash
-   python main.py
-   ```
-   *Alternatively:*
-   ```bash
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-   ```
+home_routes.py (prefix /api): Routes supporting the Home Suite features including artworks, collections, daily queue management, event calendar entries, saved notes, and curation recommendations with dual writes to both PostgreSQL and Firebase Firestore.
 
-5. **API Documentation**:
-   - Swagger UI: `http://localhost:8000/docs`
-   - ReDoc: `http://localhost:8000/redoc`
-   - Health Check: `http://localhost:8000/api/health`
+enterprise_routes.py (prefix /api): Routes for the Enterprise Webapp including enterprise user profile reads, enterprise collection management, enterprise-specific content and template access, and enterprise pairing.
 
----
+vizzy_routes.py (prefix /api/vizzy): Routes for the Vizzy AI assistant feature including creating chat sessions (POST /api/vizzy/sessions), listing sessions (GET /api/vizzy/sessions), retrieving session history (GET /api/vizzy/sessions/{id}), and appending messages (POST /api/vizzy/sessions/{id}/messages). Chat history is persisted in the vizzy_chat_sessions PostgreSQL table.
 
-## ⚙️ Environment Variables
+upload_routes.py (prefix /api): POST /api/upload accepts a multipart image file, uploads it to S3 under the user's private prefix, records object metadata in media_objects, and returns a presigned URL. Maximum upload size is 25 MB.
 
-### Backend (`/deckoviz_web-main/fastapi_backend/.env`)
-Ensure your backend environment variables (e.g. Firebase credentials, CORS origins) are set up. Refer to `config.py` or `.env.example` in `/deckoviz_web-main/fastapi_backend` for required keys.
+pairing_routes.py (prefix /api/pairing): GET /api/pairing/session generates a new 6-digit pairing code and stores it in the pairing store. POST /api/pairing/confirm accepts a pairing code and app_instance_id to complete the pairing. DELETE /api/pairing/session removes a pairing session.
 
-### Frontend (`/deckoviz_web-main/.env`)
-Set any required Vite environment variables (`VITE_API_BASE_URL`, Firebase client keys, etc.).
+queue_routes.py (prefix /api): Routes for managing the daily display schedule queue including listing, creating, updating, and deleting queue slots.
 
----
+curator_routes.py (prefix /api): Routes for the curator feature including listing curation items, creating new curation items, updating and deleting them, with Firebase Firestore sync.
 
-## 📄 License & Notes
+music_routes.py (prefix /api/music): GET /api/music lists all music tracks with optional search query parameter for case-insensitive title filtering; in production queries PostgreSQL and generates presigned S3 URLs for each track. POST /api/music/upload accepts multipart/form-data with file, title, artist, and duration_seconds fields, validates the MIME type (audio/mpeg, audio/mp4, audio/ogg, audio/wav, audio/webm), uploads to S3, saves metadata to PostgreSQL, and returns a MusicResponse object. GET /api/music/favorites returns the calling user's favorited tracks. POST /api/music/{music_id}/favorite marks a track as a favorite. DELETE /api/music/{music_id}/favorite removes a favorite. PATCH /api/collections/{collection_id}/music assigns or unassigns a music track to a collection by setting music_url on the collection record. POST /api/music/{app_instance_id}/play resolves the audio file's presigned URL and dispatches a play_music WebSocket event to the target screen. In local development when DEV_LOCAL_MUSIC_STORAGE=true, music uploads write to disk via local_music_store.py instead of S3, and file URLs are served from the /uploads/music/ static path.
 
-- **CMS / Blog Posts:** Markdown blog posts are located under `deckoviz_web-main/src/content/blogs`.
-- Frontmatter `id` must be unique. Tags are discovered automatically.
+promptLibraryRoutes.py (prefix /api/prompt-library): GET /api/prompt-library returns all prompt template sets grouped by vertical (restaurants_cafes, retail_stores, hotels_hospitality, schools_universities, home). GET /api/prompt-library/{vertical} returns templates for a single vertical; returns 404 if the vertical key does not exist. Template data is static seed data from data/prompt_library_seed.py.
+
+ws_routes.py: WebSocket endpoint at /ws/{app_instance_id} for TV frame connections. GET /api/ws/status returns currently connected app_instance_ids. GET /api/health returns system health including database connectivity and S3 bucket name.
+
+FASTAPI BACKEND MUSIC SCHEMAS
+
+The MusicResponse schema contains id (string prefixed with music_), title, artist (nullable), fileUrl (nullable, a presigned S3 URL valid for one hour), uploadedBy (nullable, Firebase UID of the uploader), durationSeconds (nullable float), and createdAt (ISO-8601 string). The FavoriteMusicResponse contains id (prefixed fav_music_), userId, musicId, music (nested MusicResponse or null), and created_at. The WebSocket play_music payload contains action, message_id, and a payload object with music_id, file_url, title, artist, duration_seconds, and app_instance_id.
+
+FASTAPI BACKEND REQUIREMENTS AND KEY DEPENDENCIES
+
+fastapi>=0.100.0 (web framework), uvicorn[standard]>=0.20.0 (ASGI server with websocket support), websockets>=12.0 (WebSocket protocol support), firebase-admin>=6.0.0 (Firebase Admin SDK for token verification and Firestore access), pydantic>=2.0.0 (data validation), pydantic-settings>=2.0.0 (settings management from environment variables and .env files), python-multipart>=0.0.6 (required for multipart file uploads in FastAPI), requests>=2.28.0 (for synchronous HTTP calls), gunicorn>=21.0.0 (production ASGI process manager), PyJWT>=2.0.0 (for signing and verifying internal HS256 JWT tokens), websocket-client>=1.6.0 (for client-side WebSocket connections in scripts), SQLAlchemy>=2.0.0 (async ORM), asyncpg>=0.29.0 (async PostgreSQL driver), alembic>=1.13.0 (database schema migration tool), boto3>=1.34.0 (AWS SDK for Python used for S3 uploads, presigned URL generation, and object deletion).
+
+FASTAPI BACKEND PYTHON 3.9 CONSTRAINT
+
+The entire codebase targets Python 3.9. All type annotations must use typing.Optional[X] rather than X | None, typing.List[X] rather than list[X], typing.Dict[K, V] rather than dict[K, V], and typing.Union[X, Y] rather than X | Y. This constraint exists because the production AWS Lightsail server runs Amazon Linux 2023 with Python 3.9 as the system Python. Any Python 3.10+ syntax will cause a SyntaxError on the server and prevent the backend from starting. All contributors must avoid 3.10+ union syntax when adding new backend code.
+
+VITE/REACT FRONTEND OVERVIEW AND FOLDER STRUCTURE
+
+The active frontend is a React 18 single-page application built with Vite 5 and TypeScript, located in the deckoviz_web-main directory. The src directory contains: App.tsx (the root component containing the full React Router DOM routing tree), main.tsx (the Vite entry point), index.css (global CSS styles), a components directory (all reusable UI components organized by feature area), a pages directory (full-page components), a lib directory (API client modules, Firebase client helpers, and utility functions), a context directory (React context providers including AuthContext.tsx for Firebase authentication state), a hooks directory (custom React hooks), a data directory (static data files and blog post data), a content directory (markdown blog post files), and a types directory with TypeScript type definitions.
+
+VITE/REACT FRONTEND KEY PAGES AND ROUTES
+
+All routing is defined in App.tsx using react-router-dom v6. The standalone page components in src/pages are MasterSuiteOfFeatures.tsx (the Master Admin Suite with its five tabs: Dashboard, Users, Library, Devices, and Settings), CreateWorld.tsx (a 3D world-building feature), DisplayOnTvPage.tsx (the TV frame display mode), PairDevicePage.tsx (the QR-code-based device pairing flow), and VizzyFunZone.tsx (an interactive AI art generation playground).
+
+VITE/REACT FRONTEND MASTER ADMIN SUITE
+
+The Master Admin Suite is accessible at the /admin route and is protected by a client-side passcode. The passcode is deckovizadmin123 and authentication state is stored in localStorage under the key deckoviz_admin_auth set to the string true. The suite has five operational modules. The Dashboard Overview provides real-time metrics including total registered users, active Smart Frames, global artworks count, cloud storage usage, monthly revenue, and quick navigation shortcuts. The User Directory allows searching users by email, name, or subscription tier (Free, Pro, Enterprise) and supports per-user detail views with tier upgrade and AI credit controls. The Global Media Library manages artwork image URLs and music audio URLs by writing records directly to Firebase Firestore (media collection and music collection) and Firebase Realtime Database (/media node and /music node) rather than uploading to S3; admins can click Send to Frame on any music card to broadcast a play_music WebSocket command to all connected TV Smart Frames. The Smart Frame Devices panel shows active pairing codes and allows remote commands including reload, sleep, play, and collection switch sent over WebSocket. The Subscriptions and System Settings panel configures subscription tier pricing, sets monthly generative AI credit quotas, and sends global broadcast announcements. Admin components are in src/components/admin/: MasterAdminSuite.tsx (main wrapper and auth), MasterAdminLibrary.tsx (media and music management), MasterAdminDashboard.tsx (metrics display), MasterAdminUsers.tsx (user directory), MasterAdminDevices.tsx (device management), MasterAdminSettings.tsx (configuration). The admin REST base URL hardcoded in constants.ts points to https://api.deckoviz.com and the WebSocket gateway for admin commands is wss://ckoviz-backend.onrender.com.
+
+VITE/REACT FRONTEND LIVEART VISUALIZER MODES
+
+The LiveArt feature is a set of real-time, music-reactive 3D visual art modes built with Three.js and @react-three/fiber. Each mode is a self-contained JSX component in src/pages/LiveArt/modes/. The LiveArtWrapper.jsx in src/pages/LiveArt/ wraps each mode with shared controls and audio input handling. The available modes are: AuroraField.jsx (shimmering aurora borealis particle field), AuroraLedger.jsx (aurora with Bloom post-processing and particle system), CoralBloom.jsx (organic coral-growth particle simulation), CosmicFluid.jsx (flowing cosmic fluid dynamics simulation), CrystallineGrowth.jsx (fractal crystalline structure growth animation), DigitalGarden.jsx (procedurally growing digital garden), DigitalLife.jsx (cellular automata-inspired life simulation with Bloom), Gravity.jsx (gravitational particle attractor system with EffectComposer and Bloom), InkTide.jsx (ink-in-water diffusion simulation using simplex noise), KineticSculpture.jsx (kinetic three-dimensional line sculpture using OrbitControls and Line from @react-three/drei), LightArchitecture.jsx (light-and-geometry architectural space using OrbitControls and Box from @react-three/drei), LivingInk.jsx (organic ink organism simulation), Murmuration.jsx (starling murmuration flocking simulation using simplex noise and Bloom effects), OceanicBioluminescence.jsx (underwater bioluminescence particle simulation), Resonance.jsx (resonant frequency waveform visualization with Bloom), Reverie.jsx (dreamy abstract noise field), and Ripple.jsx (water ripple propagation simulation using simplex noise). All modes import from three and @react-three/fiber. Modes using post-processing import from @react-three/postprocessing. Modes using drei helpers import from @react-three/drei. Modes using noise import from simplex-noise.
+
+VITE/REACT FRONTEND KEY COMPONENTS
+
+The src/components directory contains subdirectories organized by feature. The admin subdirectory contains the Master Admin Suite components. The homepage subdirectory contains the main marketing landing page including the Hero component which uses Three.js for background animation. The webapp subdirectory contains the consumer web application shell (DeckovizWebapp.tsx) and its view components (ProfileView, CreateCollectionView, AddImagesToCollectionView, MarketplaceView, CartView, ChoosePlanView, CommentsView, FollowersFollowingView, PaymentDetailsView, AIPhotoManagerView, AIPhotoManagerHomeView). The enterpriseWebapp subdirectory contains the enterprise application views. The deckovizForBusinesses subdirectory contains marketing microsites for different industry verticals (EventsMicrosite, ArtsMicrosite, EducationMicrosite, OfficesMicrosite, WellnessMicrosite, RetailMicrosite, HotelsMicrosite, EnterpriseVisionMicrosite). The vizzyCanvas subdirectory contains the Vizzy AI chat interface components. The world subdirectory contains Three.js world-building components including WorldScene.tsx and WorldBuilder.ts. Other subdirectories (OrganismSim, MemoryLandscapes, MaterialSimulations, DreamArchitecture, CelestialCosmos, AmbientRitual, SymmetryMachine, creative-suite, developerSpecs) contain various Three.js-powered generative art and simulation components.
+
+VITE/REACT FRONTEND STATE MANAGEMENT AND API CLIENTS
+
+State management uses React built-in useState, useEffect, and useContext hooks without a global state management library. The AuthContext in src/context/AuthContext.tsx wraps the Firebase Authentication onAuthStateChanged listener to provide the current user object throughout the component tree. API calls to the FastAPI backend are organized into typed client modules in src/lib: webappApi.ts (consumer webapp API functions for collections, media, user profile, queue, events), enterpriseApi.ts (enterprise-specific API functions), homeApi.ts (Home Suite API functions), curatorApi.ts (curation item API functions), pairingApi.ts (device pairing API calls), vgcApi.ts (Vizzy generative content API functions). firebaseClient.ts wraps Firebase Firestore and RTDB read, write, and delete operations with helper functions used by the admin suite. All API modules read the backend base URL from src/lib/constants.ts, which hardcodes the production backend URL as https://api.deckoviz.com. Custom hooks in src/hooks include useCollectionQueue.ts (queue management), useLiveStream.ts (WebSocket live stream state), and useWebSocket.ts (WebSocket connection lifecycle).
+
+VITE/REACT FRONTEND ENVIRONMENT VARIABLES AND BUILD CONFIGURATION
+
+Vite environment variables are prefixed with VITE_ and are baked into the bundle at build time. Active environment variables include VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY for Supabase integration via src/lib/supabase.ts. The Vite configuration is in deckoviz_web-main/vite.config.ts and uses the @vitejs/plugin-react plugin. The production build is invoked with npm run build which outputs to the dist directory. The development server runs on port 5173 by default using npm run dev.
+
+VITE/REACT FRONTEND KEY DEPENDENCIES
+
+react and react-dom are pinned at ^18.3.1. React 18 is required because @react-three/fiber v9 requires React 19 and the project uses r3f v8. react-router-dom ^6.30.0 handles client-side routing. three ^0.183.2 is the Three.js 3D graphics library (also pinned in the overrides section of package.json). @react-three/fiber ^8.18.0 is the React renderer for Three.js; version 8.x is pinned because v9 requires React 19. @react-three/drei ^9.115.0 provides Three.js helper components compatible with r3f v8. @react-three/postprocessing ^2.16.3 provides EffectComposer and Bloom effects. simplex-noise provides 3D Perlin noise generation used in Murmuration and InkTide. framer-motion ^11.18.2 handles UI animations. @supabase/supabase-js ^2.98.0 is the Supabase client. firebase ^12.17.0 is the Firebase client SDK. @mediapipe/pose and @mediapipe/camera_utils are the MediaPipe pose estimation libraries. lucide-react ^0.344.0 provides the icon set. embla-carousel-react provides carousel components. jspdf and pdf-lib handle PDF generation. tesseract.js provides OCR capabilities. html5-qrcode handles QR code scanning for device pairing. react-markdown and rehype-raw render markdown content. tailwindcss ^3.4.1 provides utility-class styling.
+
+DEPLOYMENT BACKEND ON AWS LIGHTSAIL
+
+The FastAPI backend is deployed on an AWS Lightsail instance running Amazon Linux 2023. The production domain api.deckoviz.com points to the public IP of this Lightsail instance via a DNS A record. The application runs as a systemd service named deckoviz-backend.service. The systemd service file is located at /etc/systemd/system/deckoviz-backend.service. The ExecStart command uses gunicorn as the process manager with uvicorn workers; the command structure is /path/to/venv/bin/gunicorn -k uvicorn.workers.UvicornWorker main:app --bind 127.0.0.1:8000 --workers 2 --timeout 120. Nginx is installed and configured as a reverse proxy that accepts inbound traffic on ports 80 and 443 and proxies requests to 127.0.0.1:8000. SSL termination is handled by nginx using Let's Encrypt certificates managed by Certbot. Environment variables (DATABASE_URL, S3_MEDIA_BUCKET, SECRET_KEY, FIREBASE_CREDENTIALS_FILE) are set in the systemd service file or in an EnvironmentFile referenced by the service unit. The Firebase Admin SDK service account JSON file is stored at /etc/deckoviz/firebase-service-account.json on the server. The Python virtual environment is created at fastapi_backend/.venv39 using Python 3.9.
+
+DEPLOYMENT BACKEND REDEPLOY PROCEDURE
+
+SSH into the Lightsail instance, navigate to the repository directory, run git pull origin main, activate the virtual environment with source fastapi_backend/.venv39/bin/activate, run pip install -r fastapi_backend/requirements.txt, run alembic -c fastapi_backend/alembic.ini upgrade head if schema changes were made, then restart the systemd service with sudo systemctl restart deckoviz-backend.service. Verify the service started with sudo systemctl status deckoviz-backend.service and check logs with sudo journalctl -u deckoviz-backend.service -n 100 --no-pager. The /api/health endpoint returns database connectivity status and S3 bucket name once the service is running.
+
+DEPLOYMENT FRONTEND ON NETLIFY
+
+The frontend is deployed on Netlify with continuous deployment connected to the GitHub repository at https://github.com/Suraj-sicero/deckoviz_website_p_f. The netlify.toml file at the repository root configures the build. The base directory is deckoviz_web-main (all build commands run with deckoviz_web-main as the working directory). The build command is npm run build. The publish directory is dist (relative to base, so the full path is deckoviz_web-main/dist). The Node.js version is pinned to 20 via the NODE_VERSION build environment variable. NPM_CONFIG_LEGACY_PEER_DEPS is set to true. A catch-all redirect rule routes all paths to /index.html with status 200 for SPA routing. Security headers are set globally: Cache-Control is public with max-age=0 and must-revalidate, X-Frame-Options is DENY, X-XSS-Protection is 1; mode=block, X-Content-Type-Options is nosniff, and Referrer-Policy is strict-origin-when-cross-origin. Netlify auto-publishes on every push to the main branch. VITE_ prefixed environment variables must be set in the Netlify site's environment variables dashboard to be baked into the production bundle at build time.
+
+DEPLOYMENT KNOWN CONSTRAINTS AND GOTCHAS
+
+The Python 3.9 constraint on the production server is the most critical constraint. Any Python 3.10+ syntax (X | Y union types, match statements, etc.) will cause a SyntaxError on the server and prevent the backend from starting. All backend code must use typing.Optional, typing.Union, typing.List, and typing.Dict. The @react-three/fiber React version constraint is the second most critical: the project is locked to React 18 and must use @react-three/fiber v8 (^8.18.0); upgrading to r3f v9 would require upgrading React to v19 which is a breaking change. The package.json overrides section pins three to ^0.183.2 to prevent version conflicts. NPM_CONFIG_LEGACY_PEER_DEPS=true in Netlify is required because some packages have peer dependency declarations that do not match what is installed; without this flag Netlify's npm install step fails with ERESOLVE errors.
+
+MUSIC PLAYBACK API THIRD-PARTY INTEGRATION
+
+The music playback API is documented in MUSIC_API_DOCUMENTATION.md at the repository root. The base URL is https://api.deckoviz.com. All endpoints require a valid Firebase Authentication ID token in the Authorization Bearer header. The API supports listing music tracks with title search (GET /api/music), uploading audio files to S3 (POST /api/music/upload with multipart/form-data), managing per-user music favorites (GET /api/music/favorites, POST /api/music/{music_id}/favorite, DELETE /api/music/{music_id}/favorite), assigning music tracks to visual collections (PATCH /api/collections/{collection_id}/music), and triggering real-time WebSocket music playback on connected TV Smart Frame devices (POST /api/music/{app_instance_id}/play). When the play endpoint is called, the backend dispatches a play_music WebSocket action to the target app_instance_id with the presigned file URL, track title, artist, and duration embedded in the payload.
+
+LOCAL DEVELOPMENT SETUP
+
+Backend: create a .env file in fastapi_backend by copying .env.example and filling in DATABASE_URL, S3_MEDIA_BUCKET, and Firebase credentials. Set DEV_LOCAL_MUSIC_STORAGE=true to use local disk storage for audio uploads instead of S3. Create a Python 3.9 virtual environment with python3.9 -m venv .venv39, activate it, run pip install -r requirements.txt, and start the server with uvicorn main:app --reload from inside the fastapi_backend directory. The API will be available at http://localhost:8000 with docs at http://localhost:8000/docs. Frontend: navigate to deckoviz_web-main, run npm install, create a .env.development.local file with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY if needed, then run npm run dev. The frontend will be available at http://localhost:5173. Navigate to http://localhost:5173/admin and enter the passcode deckovizadmin123 to access the Master Admin Suite.
+
+CMS AND BLOG
+
+Markdown blog posts are located under deckoviz_web-main/src/content/blogs. Each post uses YAML frontmatter with a unique id field. Tags are discovered automatically. Blog loading logic is in src/lib/blogLoader.tsx and data is exposed via src/data/blogPosts.js.
+
