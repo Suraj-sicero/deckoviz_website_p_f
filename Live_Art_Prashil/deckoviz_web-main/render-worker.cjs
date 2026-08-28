@@ -72,25 +72,20 @@ async function recordMode(modeId, durationMinutes) {
       // Capture at 30fps for smooth playback
       const stream = canvas.captureStream(30);
       
-      // H264 isn't strictly guaranteed across all Chrome instances for MediaRecorder,
       const recorder = new MediaRecorder(stream, { mimeType: 'video/webm', videoBitsPerSecond: 8000000 });
       
-      const chunks = [];
-      
-      recorder.ondataavailable = (e) => {
-        if (e.data.size > 0) chunks.push(e.data);
-      };
-      
-      recorder.onstop = async () => {
-        // Send chunks sequentially over IPC to guarantee perfect order and avoid massive payload crashes
-        for (let i = 0; i < chunks.length; i++) {
+      recorder.ondataavailable = async (e) => {
+        if (e.data.size > 0) {
           const reader = new FileReader();
           const base64data = await new Promise(res => {
-            reader.readAsDataURL(chunks[i]);
+            reader.readAsDataURL(e.data);
             reader.onloadend = () => res(reader.result.split(',')[1]);
           });
           await window.onChunk(base64data, false);
         }
+      };
+      
+      recorder.onstop = async () => {
         await window.onChunk('', true);
         resolve();
       };

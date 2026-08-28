@@ -541,6 +541,12 @@ const Navbar: React.FC = () => {
               </div>
 
               <a
+                href="/art-hub"
+                className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/art-hub') ? 'text-cyan-500' : 'text-[#2563EB] hover:text-cyan-500'}`}
+              >
+                Live Art
+              </a>
+              <a
                 href="/pricing"
                 className={`transition-colors duration-300 font-semibold text-sm relative group whitespace-nowrap px-2 py-2 ${currentPath.startsWith('/pricing') ? 'text-cyan-500' : 'text-[#2563EB] hover:text-cyan-500'}`}
               >
@@ -781,6 +787,7 @@ const Navbar: React.FC = () => {
 
               {/* Nav links */}
               {[
+                { href: '/art-hub', label: '🎨 Live Art' },
                 { href: '/Wall-Of-Love', label: '❤️ Wall Of Love' },
                 { href: '/Leaderboard', label: '🏆 Leaderboard' },
                 { href: '/pricing', label: '💎 Pricing' },

@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 interface FeatureCardProps {
   title: string;
   description: string;
-     index: number;
+  index: number;
+  route?: string;
 }
 interface Feature {
   title: string;
   description: string;
+  route?: string;
 }
 const getIconForFeature = (title: string) => {
   const map: Record<string, string> = {
@@ -112,6 +114,12 @@ const getIconForFeature = (title: string) => {
 
 
 const ADDITIONAL_FEATURES : Feature[] = [
+  {
+    title: "Live Art Hub",
+    description:
+      "Explore dynamic, evolving artworks that you can interact with.",
+    route: "/art-hub"
+  },
   {
     title: "Dynamic Abstracts",
     description:
@@ -357,8 +365,10 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
   title,
   description,
   index,
+  route,
 }) => (
   <motion.div
+    onClick={() => route && (window.location.href = route)}
     initial={{
       opacity: 0,
       y: -200,
@@ -527,6 +537,7 @@ export default function AllFeatures() {
     index={index}
     title={feature.title}
     description={feature.description}
+    route={feature.route}
   />
 ))}
 
@@ -546,6 +557,7 @@ export default function AllFeatures() {
     index={index + mainFeatures.length}
     title={feature.title}
     description={feature.description}
+    route={feature.route}
   />
 ))}
 
