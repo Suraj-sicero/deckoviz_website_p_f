@@ -1,108 +1,97 @@
-# Deckoviz — Full-Stack Application
+# Deckoviz � Live Art Hub (Prashil_Combined Branch)
 
-Deckoviz is an interactive web platform powered by a **React + Vite** frontend and a **FastAPI (Python) + Firebase** backend.
+This folder contains the Live Art Hub feature work developed by Prashil Maske, integrated into the main Deckoviz website.
 
 ---
 
-## 📁 Repository Structure
+## ?? Quick Start
 
-```text
-.
-├── deckoviz_web-main/             # Frontend application (React, Vite, TypeScript)
-│   └── fastapi_backend/           # FastAPI Backend (Python 3.10+, Firebase)
-├── backend_legacy/                # Legacy backend reference (if applicable)
-├── netlify.toml                   # Frontend deployment configuration
-└── README.md                      # Project documentation
+### 1. Prerequisites
+
+Make sure you have the following installed:
+- **Node.js** v18 or higher � https://nodejs.org/
+- **npm** (comes with Node.js)
+
+### 2. Install Dependencies
+
+Navigate into this folder and install:
+
+```bash
+cd Live_Art_Prashil/deckoviz_web-main
+npm install
 ```
 
----
+### 3. Run the Website (Dev Server)
 
-## 🚀 Quick Start Guide
+```bash
+npm run dev
+```
 
-### Prerequisites
-
-- **Node.js** (v18+ recommended) & **npm**
-- **Python** (v3.10+)
-- **Git**
+Then open your browser at: **http://localhost:5173**
 
 ---
 
-### 🎨 Frontend Setup (`/deckoviz_web-main`)
+## What's New in This Branch
 
-The frontend is built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
+### Live Art Link in Navbar
+A **Live Art** navigation link has been added to the top navbar (both desktop and mobile). Clicking it takes you to the Live Art Hub gallery.
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd deckoviz_web-main
-   ```
+### Live Art Hub Card in "Extended Universe"
+On the homepage All Features section, scroll down to **Extended Universe** and you will find a new **Live Art Hub** card. Clicking it navigates directly to the Live Art Hub.
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+### Live Art Hub Page (/art-hub)
+Browse all available Live Art modes:
+- **Ink Tide** � Fluid ink simulation reacting to mouse movement
+- **Gravity** � Particle gravity simulation with multiple art styles
+- And more coming soon
 
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-   The app will run locally (typically at `http://localhost:5173`).
+Each mode opens in full TV Mode for immersive viewing.
 
 ---
 
-### ⚡ Backend Setup (`/deckoviz_web-main/fastapi_backend`)
+## Live Art to Video Export (Optional Feature)
 
-The backend is built with **FastAPI**, **Uvicorn**, and **Firebase Admin SDK**.
+The Live Art pages include a **Live Art to Video Converter** panel that can export the artwork as an MP4 video.
 
-1. Navigate to the backend directory:
-   ```bash
-   cd deckoviz_web-main/fastapi_backend
-   ```
+> This feature requires a separate API server to be running alongside the dev server.
 
-2. Create and activate a virtual environment:
-   - **Windows (PowerShell):**
-     ```powershell
-     python -m venv .venv
-     .\.venv\Scripts\Activate
-     ```
-   - **macOS/Linux:**
-     ```bash
-     python3 -m venv .venv
-     source .venv/bin/activate
-     ```
+### Setup for Video Export
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+**Terminal 1 � Run the website:**
+```bash
+npm run dev
+```
 
-4. Start the FastAPI server:
-   ```bash
-   python main.py
-   ```
-   *Alternatively:*
-   ```bash
-   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-   ```
+**Terminal 2 � Run the export API server:**
+```bash
+npm run api
+```
 
-5. **API Documentation**:
-   - Swagger UI: `http://localhost:8000/docs`
-   - ReDoc: `http://localhost:8000/redoc`
-   - Health Check: `http://localhost:8000/api/health`
+### How to Export a Video
+1. Open any Live Art mode (e.g. Ink Tide at http://localhost:5173/ink-tide.html)
+2. Move your mouse to reveal the controls panel
+3. Scroll down to **Live Art to Video Convertor**
+4. Click a duration button (5m, 10m, 20m, 30m)
+5. Wait for the export to complete in the background
+6. A green **Download MP4** button will appear when ready
+
+Note: Video encoding is CPU-intensive. A 5-minute video may take 10-30 minutes to fully process depending on your machine.
 
 ---
 
-## ⚙️ Environment Variables
+## Key Files Changed
 
-### Backend (`/deckoviz_web-main/fastapi_backend/.env`)
-Ensure your backend environment variables (e.g. Firebase credentials, CORS origins) are set up. Refer to `config.py` or `.env.example` in `/deckoviz_web-main/fastapi_backend` for required keys.
-
-### Frontend (`/deckoviz_web-main/.env`)
-Set any required Vite environment variables (`VITE_API_BASE_URL`, Firebase client keys, etc.).
+| File | Description |
+|------|-------------|
+| src/components/layout/Navbar.tsx | Added Live Art nav link |
+| src/components/homepage/AllFeatures.tsx | Added Live Art Hub card to Extended Universe |
+| api-server.cjs | Express API server for video export jobs |
+| render-worker.cjs | Puppeteer + FFmpeg video capture and encoding worker |
 
 ---
 
-## 📄 License & Notes
+## Branch Info
 
-- **CMS / Blog Posts:** Markdown blog posts are located under `deckoviz_web-main/src/content/blogs`.
-- Frontmatter `id` must be unique. Tags are discovered automatically.
+- **Branch:** Prashil_Combined
+- **Repo:** https://github.com/Suraj-sicero/deckoviz_website_p_f
+- **Does NOT affect:** main branch
