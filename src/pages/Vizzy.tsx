@@ -186,7 +186,7 @@ export const Vizzy: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               />
-              <Button variant="primary" onClick={handleSend}>
+              <Button variant="primary" onClick={() => handleSend()}>
                 <Send size={18} />
               </Button>
             </div>

@@ -52,6 +52,26 @@ app.get('/api/teacher/dashboard', async (req, res) => {
   }
 });
 
+// Get user classes
+app.get('/api/classes', async (req, res) => {
+  try {
+    const userId = req.query.userId as string;
+    const role = req.query.role as string || 'student';
+    
+    let classes;
+    if (role === 'teacher') {
+      classes = await prisma.class.findMany({
+        where: { teacherId: userId }
+      });
+    } else {
+      classes = await prisma.class.findMany();
+    }
+    res.json(classes);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Student dashboard endpoints
 app.get('/api/student/dashboard', async (req, res) => {
   try {
@@ -167,7 +187,9 @@ app.delete('/api/chat/session', async (req, res) => {
 
 app.post('/api/chat/message', async (req, res) => {
   try {
-    const { sessionId, message, history } = req.body;
+    const { sessionId, message, history: rawHistory } = req.body;
+    // Guard: ensure history is always an array even if client omits it
+    const history: any[] = Array.isArray(rawHistory) ? rawHistory : [];
     const apiKey = process.env.GEMINI_API_KEY;
     
     if (!apiKey || apiKey === "your-key-here") {

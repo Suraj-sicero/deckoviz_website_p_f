@@ -1,13 +1,40 @@
-import React from 'react';
-
+import React, { useState, useEffect } from 'react';
 import { GlassCard } from '../components/ui/GlassCard';
 import { Button } from '../components/ui/Button';
 import { Users, AlertTriangle, TrendingUp, Sparkles, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Classes.module.css';
+import { useAppStore } from '../store/useAppStore';
+
+interface ClassData {
+  id: string;
+  name: string;
+  subject: string;
+  gradeLevel: string;
+  teacherId: string;
+}
 
 export const Classes: React.FC = () => {
   const navigate = useNavigate();
+  const { user, role } = useAppStore();
+  const [classes, setClasses] = useState<ClassData[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (user?.id) {
+      setLoading(true);
+      fetch(`http://localhost:3001/api/classes?userId=${user.id}&role=${role}`)
+        .then(res => res.json())
+        .then(data => {
+          setClasses(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error(err);
+          setLoading(false);
+        });
+    }
+  }, [user, role]);
 
   return (
     <div className={styles.container}>
@@ -55,35 +82,27 @@ export const Classes: React.FC = () => {
       <section className={styles.scheduleSection}>
         <h2>Today's Classes</h2>
         <div className={styles.classList}>
-          <GlassCard className={styles.classItem}>
-            <div className={styles.classInfo}>
-              <div className={styles.time}>09:00 AM</div>
-              <div>
-                <h3>Advanced Physics (Grade 11)</h3>
-                <p>Topic: Kinematics & Projectile Motion</p>
+          {loading ? (
+            <div style={{ color: 'white', padding: '1rem' }}>Loading classes...</div>
+          ) : classes.length === 0 ? (
+            <div style={{ color: 'white', padding: '1rem' }}>No classes assigned today.</div>
+          ) : classes.map((c) => (
+            <GlassCard key={c.id} className={styles.classItem}>
+              <div className={styles.classInfo}>
+                <div className={styles.time}>09:00 AM</div>
+                <div>
+                  <h3>{c.name} ({c.gradeLevel})</h3>
+                  <p>Topic: {c.subject} Lesson</p>
+                </div>
               </div>
-            </div>
-            <div className={styles.classActions}>
-              <div className={styles.studentCount}><Users size={16}/> 24 Students</div>
-              <Button variant="primary" onClick={() => navigate('/classroom')}>
-                <Play size={16} /> Launch Session
-              </Button>
-            </div>
-          </GlassCard>
-
-          <GlassCard className={styles.classItem}>
-            <div className={styles.classInfo}>
-              <div className={styles.time}>11:00 AM</div>
-              <div>
-                <h3>Algebra Foundations (Grade 9)</h3>
-                <p>Topic: Polynomials</p>
+              <div className={styles.classActions}>
+                <div className={styles.studentCount}><Users size={16}/> 24 Students</div>
+                <Button variant="primary" onClick={() => navigate('/classroom')}>
+                  <Play size={16} /> Launch Session
+                </Button>
               </div>
-            </div>
-            <div className={styles.classActions}>
-              <div className={styles.studentCount}><Users size={16}/> 28 Students</div>
-              <Button variant="secondary">Prepare Lesson</Button>
-            </div>
-          </GlassCard>
+            </GlassCard>
+          ))}
         </div>
       </section>
     </div>

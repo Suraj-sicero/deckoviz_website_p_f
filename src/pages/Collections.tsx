@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, X, Image as ImageIcon, Music, Type } from 'lucide-react';
+import { Plus, X, Image as ImageIcon } from 'lucide-react';
 import styles from './Collections.module.css';
 
 import { useAppStore } from '../store/useAppStore';

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../store/useAppStore';
 import { GlassCard } from '../ui/GlassCard';
 import { 
@@ -272,7 +271,6 @@ const itemVariants = {
 };
 
 export const TeacherDashboard: React.FC = () => {
-  const navigate = useNavigate();
   const user = useAppStore(state => state.user);
   const [stats, setStats] = useState({ activeClasses: 0, studentsNeedingAttention: 0 });
 
