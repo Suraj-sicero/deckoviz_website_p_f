@@ -1,4 +1,5 @@
 import json
+import random
 import uuid
 import urllib.parse
 from datetime import datetime
@@ -13,6 +14,35 @@ from postgres_store import (
 )
 
 router = APIRouter(prefix="/vizzy-canvas", tags=["Vizzy Generative Canvas"])
+
+ASPECT_DIMENSIONS = {
+    "1:1": {"width": 1024, "height": 1024},
+    "16:9": {"width": 1344, "height": 768},
+    "9:16": {"width": 768, "height": 1344},
+    "3:2": {"width": 1216, "height": 832},
+    "2:3": {"width": 832, "height": 1216},
+    "4:3": {"width": 1152, "height": 896},
+}
+
+
+def _build_pollinations_urls(prompt: str, aspect_ratio: str = "1:1", num_results: int = 1) -> list[dict]:
+    """Build Pollinations image URLs (Flux model) matching the Node vizzy-canvas /generate behavior."""
+    dims = ASPECT_DIMENSIONS.get(aspect_ratio) or ASPECT_DIMENSIONS["1:1"]
+    num_outputs = min(max(int(num_results or 1), 1), 4)
+    clean_prompt = urllib.parse.quote(
+        f"Ultra high resolution masterpiece, sharp detail, 8k render: {prompt or 'art'}"
+    )
+    base_seed = random.randint(0, 999999)
+    images = []
+    for i in range(num_outputs):
+        seed = base_seed + i * 7
+        url = (
+            f"https://image.pollinations.ai/prompt/{clean_prompt}"
+            f"?width={dims['width']}&height={dims['height']}&seed={seed}"
+            f"&model=flux&enhance=true&nologo=true"
+        )
+        images.append({"url": url, "seed": seed})
+    return images
 
 @router.get("/agents")
 def get_agents():
@@ -112,29 +142,17 @@ def vizzy_master_agent(payload: dict, current_user: FirebaseUser = Depends(get_c
     }
 
 @router.post("/generate")
-def generate_image_api(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
-    uid = current_user.firebase_uid or current_user.id
-    prompt = payload.get("prompt") or "Stunning Artwork"
-    encoded_prompt = urllib.parse.quote(prompt)
-    image_url = f"https://image.pollinations.ai/prompt/{encoded_prompt}?nologo=true&width=1024&height=1024"
-    
-    media_doc = {
-        "id": f"gen_{uuid.uuid4().hex[:10]}",
-        "userId": uid,
-        "url": image_url,
-        "mediaUrl": image_url,
-        "prompt": prompt,
-        "isGenerated": True,
-        "createdAt": datetime.utcnow().isoformat()
-    }
-    try:
-        fs_save_media(uid, media_doc)
-    except Exception:
-        pass
-
+def generate_image_api(payload: dict):
+    """Generate Pollinations image URLs from a text prompt. No auth required."""
+    prompt = payload.get("prompt") or "art"
+    aspect_ratio = payload.get("aspect_ratio") or "1:1"
+    num_results = payload.get("num_results") or 1
+    images = _build_pollinations_urls(prompt, aspect_ratio, num_results)
     return {
-        "images": [{"url": image_url, "seed": 42}],
-        "prompt": prompt
+        "images": images,
+        "prompt": prompt,
+        "aspect_ratio": aspect_ratio,
+        "creditsRemaining": None,
     }
 
 @router.post("/message")

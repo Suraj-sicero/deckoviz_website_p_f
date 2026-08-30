@@ -32,7 +32,7 @@ class ClaimBody(BaseModel):
 
 
 @router.post("/session", status_code=201)
-def create_pairing_session(body: CreateSessionBody | None = None):
+def create_pairing_session(body: Optional[CreateSessionBody] = None):
     body = body or CreateSessionBody()
     try:
         return create_session(

@@ -1,0 +1,274 @@
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import { PrismaClient } from '@prisma/client';
+
+const app = express();
+const prisma = new PrismaClient();
+const PORT = process.env.PORT || 3001;
+
+app.use(cors());
+app.use(express.json());
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Deckoviz Backend is running!' });
+});
+
+// Get user profile
+app.get('/api/users/me', async (req, res) => {
+  try {
+    const role = req.query.role as string || 'teacher';
+    // In a real app we use JWT, here we just query by role
+    const user = await prisma.user.findFirst({
+      where: { role: role }
+    });
+    
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Teacher dashboard endpoints
+app.get('/api/teacher/dashboard', async (req, res) => {
+  try {
+    const teacherId = req.query.teacherId as string;
+    
+    // Get their classes
+    const activeClassesCount = await prisma.class.count({
+      where: { teacherId: teacherId }
+    });
+    
+    res.json({
+      activeClasses: activeClassesCount,
+      studentsNeedingAttention: 3, // mock complex logic
+      alerts: [
+        { id: 1, message: 'New messages in Year 9 Science' }
+      ]
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Get user classes
+app.get('/api/classes', async (req, res) => {
+  try {
+    const userId = req.query.userId as string;
+    const role = req.query.role as string || 'student';
+    
+    let classes;
+    if (role === 'teacher') {
+      classes = await prisma.class.findMany({
+        where: { teacherId: userId }
+      });
+    } else {
+      classes = await prisma.class.findMany();
+    }
+    res.json(classes);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Student dashboard endpoints
+app.get('/api/student/dashboard', async (req, res) => {
+  try {
+    const studentId = req.query.studentId as string;
+    
+    // Fetch their recent journal entries or stats
+    const recentJournals = await prisma.journalEntry.findMany({
+      where: { studentId: studentId },
+      orderBy: { createdAt: 'desc' },
+      take: 2
+    });
+    
+    res.json({
+      streak: 5,
+      currentFocus: 'Quantum Physics',
+      recentJournals
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Collections endpoint
+app.get('/api/collections', async (req, res) => {
+  try {
+    const userId = req.query.userId as string;
+    const collections = await prisma.collection.findMany({
+      where: { userId: userId },
+      include: { artworks: true }
+    });
+    res.json(collections);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Journals endpoints
+app.get('/api/journals', async (req, res) => {
+  try {
+    const studentId = req.query.studentId as string;
+    const journals = await prisma.journalEntry.findMany({
+      where: { studentId: studentId },
+      orderBy: { createdAt: 'desc' }
+    });
+    res.json(journals);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.post('/api/journals', async (req, res) => {
+  try {
+    const { studentId, content, sentiment, tags } = req.body;
+    const newJournal = await prisma.journalEntry.create({
+      data: {
+        studentId,
+        content,
+        sentiment: sentiment || 'neutral',
+        tags: JSON.stringify(tags || [])
+      }
+    });
+    res.json(newJournal);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+// Chat Endpoints
+app.get('/api/chat/session', async (req, res) => {
+  try {
+    const userId = req.query.userId as string;
+    // Find or create a session for this user
+    let session = await prisma.session.findFirst({
+      where: { userId, type: 'vizzy_chat' },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    if (!session) {
+      const initialContent = JSON.stringify([
+        { id: '1', sender: 'vizzy', text: "Hi! I noticed you were looking at Physics (Kinematics) earlier. Would you like to visualize how a cannonball's trajectory works?" }
+      ]);
+      session = await prisma.session.create({
+        data: {
+          title: 'General Chat',
+          type: 'vizzy_chat',
+          content: initialContent,
+          userId: userId
+        }
+      });
+    }
+
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+app.delete('/api/chat/session', async (req, res) => {
+  try {
+    const { sessionId, userName } = req.body;
+    const initialContent = JSON.stringify([
+      { id: Date.now().toString(), sender: 'vizzy', text: "Hi! I noticed you were looking at Physics (Kinematics) earlier. Would you like to visualize how a cannonball's trajectory works?" }
+    ]);
+    
+    const session = await prisma.session.update({
+      where: { id: sessionId },
+      data: { content: initialContent }
+    });
+    
+    res.json(session);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error clearing chat' });
+  }
+});
+
+app.post('/api/chat/message', async (req, res) => {
+  try {
+    const { sessionId, message, history: rawHistory } = req.body;
+    // Guard: ensure history is always an array even if client omits it
+    const history: any[] = Array.isArray(rawHistory) ? rawHistory : [];
+    const apiKey = process.env.GEMINI_API_KEY;
+    
+    if (!apiKey || apiKey === "your-key-here") {
+      // Fallback mock mode if no API key is provided
+      const mockResponse = { id: Date.now().toString(), sender: 'vizzy', text: "I'm in mock mode because no GEMINI_API_KEY was found in server/.env! Add one to chat with the real me." };
+      const newHistory = [...history, { id: Date.now().toString(), sender: 'student', text: message }, mockResponse];
+      
+      await prisma.session.update({
+        where: { id: sessionId },
+        data: { content: JSON.stringify(newHistory) }
+      });
+      
+      return res.json(mockResponse);
+    }
+
+    // Call Real Gemini API
+    const { GoogleGenAI } = await import('@google/genai');
+    const ai = new GoogleGenAI({ apiKey });
+    
+    // Format history for Gemini
+    const systemInstruction = `You are Vizzy, an encouraging, Socratic AI tutor for a student. 
+
+CORE RULES (AS PER BUILD NOTES):
+1. NEVER just give the direct answer or explain the concept yourself immediately. You must make the user do the work.
+2. Guide the student to answers using strategic, Socratic questions. Break down complex problems into smaller, manageable questions.
+3. If the user is completely stuck or asks for the answer directly, you may provide a gentle hint or help them solve it step-by-step, but always encourage them to keep trying.
+4. Keep your responses concise and focused on the user's latest message, but use chat history for context.
+
+IMPORTANT VISUAL RULE: If the student asks to "show visually", "generate an image", or requests visual context, YOU MUST GENERATE A VISUAL. This OVERRIDES the Socratic rules. 
+You MUST return a Markdown image using the Pollinations AI service.
+Format: ![description](https://image.pollinations.ai/prompt/detailed-visual-description?width=800&height=400&nologo=true)
+Example: ![A futuristic cyber city with neon lights](https://image.pollinations.ai/prompt/A%20futuristic%20cyber%20city%20with%20neon%20lights?width=800&height=400&nologo=true)
+Always URL-encode the prompt in the URL. Keep the image description highly detailed for the best result.`;
+    
+    const formattedHistory = history.map((msg: any) => `${msg.sender === 'vizzy' ? 'Vizzy' : 'Student'}: ${msg.text}`).join('\n');
+    const promptWithHistory = `Past Conversation:\n${formattedHistory}\n\nStudent's New Message: ${message}`;
+    
+    const response = await ai.models.generateContent({
+      model: process.env.GEMINI_MODEL || 'gemini-1.5-flash',
+      contents: promptWithHistory,
+      config: {
+        systemInstruction: systemInstruction,
+      }
+    });
+
+    let aiText = response.text || "I'm not sure how to respond to that.";
+    
+    // Restore the mock CSS animation if requested, but only if the topic is actually physics
+    const historyText = history.map((msg: any) => msg.text).join(' ').toLowerCase() + ' ' + message.toLowerCase();
+    const isPhysicsContext = historyText.includes('trajectory') || historyText.includes('gravity') || historyText.includes('cannonball') || historyText.includes('projectile') || historyText.includes('physics');
+    const isVisualRequest = message.toLowerCase().includes('visually') || message.toLowerCase().includes('animation') || message.toLowerCase().includes('image') || message.toLowerCase().includes('show');
+    
+    // If it is a visual request but the AI forgot the image, gently append a generic one, but prefer AI's
+    if (isVisualRequest && !aiText.includes('![') && !aiText.includes('pollinations.ai')) {
+       // Just append an image based on the LAST AI MESSAGE context
+       const topicMatch = historyText.match(/physics|biology|math|history|science/i);
+       const topic = topicMatch ? topicMatch[0] : 'educational topic';
+       aiText += `\n\n![Generated Visual](https://image.pollinations.ai/prompt/${encodeURIComponent(topic + ' detailed diagram educational')}?width=800&height=400&nologo=true)`;
+    }
+
+    const visualContext = (isVisualRequest && isPhysicsContext) ? 'physics-trajectory' : undefined;
+    
+    const aiMessage = { id: Date.now().toString(), sender: 'vizzy', text: aiText, visualContext };
+    const newHistory = [...history, { id: Date.now().toString(), sender: 'student', text: message }, aiMessage];
+    
+    // Save to DB
+    await prisma.session.update({
+      where: { id: sessionId },
+      data: { content: JSON.stringify(newHistory) }
+    });
+    
+    res.json(aiMessage);
+  } catch (error) {
+    console.error(error);
+    const fallbackMessage = { id: Date.now().toString(), sender: 'vizzy', text: "I'm sorry, I'm having trouble connecting right now. Please try again later!" };
+    res.json(fallbackMessage);
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});

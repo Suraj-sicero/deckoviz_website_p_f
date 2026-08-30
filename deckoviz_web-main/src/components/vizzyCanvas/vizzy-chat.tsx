@@ -651,6 +651,77 @@ function VizzyChatInner() {
       }
 
       // ─────────────────────────────────────────────────────────────────────
+      // Image generation — FastAPI only (skip agent gate; no Node backend)
+      // ─────────────────────────────────────────────────────────────────────
+      const isClientImageReq =
+        /\b(image|photo|picture|draw|paint|generate|render|artwork|illustration)\b/i.test(trimmedInput) &&
+        !/\b(video|music|song|audio)\b/i.test(trimmedInput)
+
+      if (isClientImageReq) {
+        const refinedPrompt = buildRefinedPrompt(updatedMessages, trimmedInput)
+        const numResults = parseNumImages(trimmedInput)
+
+        const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/generate`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
+        })
+
+        let data = await response.json().catch(() => ({} as { images?: { url: string; seed?: number }[] }))
+        if (!response.ok || !data.images?.length) {
+          const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
+          const seed = Math.floor(Math.random() * 1000000)
+          data = {
+            images: [{ url: `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&model=flux&enhance=true&nologo=true`, seed }],
+          }
+        }
+
+        const normalizeImageUrl = (url: string): string => {
+          if (!url) return url
+          if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:")) return url
+          if (/^[A-Za-z0-9+/=]/.test(url) && url.length > 100) return `data:image/png;base64,${url}`
+          return url
+        }
+
+        const generatedImages = data.images.map((img: { url: string; seed?: number }) => ({
+          url: normalizeImageUrl(img.url),
+          prompt: refinedPrompt,
+          seed: img.seed,
+        }))
+
+        const updatedWithGenImages = updatedMessages.concat([
+          {
+            id: assistantMessage.id,
+            role: "assistant" as const,
+            content: generateAssistantText(data.images.length, refinedPrompt),
+            images: generatedImages,
+            isLoading: false,
+            agentUsed: "vizzy_pipeline",
+            intent: "image_generation",
+            timestamp: Date.now(),
+          },
+        ])
+
+        setMessages(updatedWithGenImages)
+
+        data.images.forEach((img: { url: string; seed?: number }, index: number) => {
+          const cleanUrl = normalizeImageUrl(img.url)
+          const cachedImage = {
+            id: `img-${Date.now()}-${index}`,
+            image_url: cleanUrl,
+            prompt: refinedPrompt,
+            aspect_ratio: aspectRatio,
+            created_at: new Date().toISOString(),
+            is_favorited: false,
+          }
+          imageCache.save(cachedImage)
+          imageCache.syncToBackend(cachedImage, token || undefined)
+        })
+
+        return
+      }
+
+      // ─────────────────────────────────────────────────────────────────────
       // VIZZY 2.0 - Step 2: Send to Vizzy Master Agent
       // The backend classifies intent, selects sub-agent, loads memory +
       // system card, and either responds directly or signals media delegation.
@@ -688,9 +759,8 @@ function VizzyChatInner() {
       // The master agent doesn't handle media - it delegates back to the
       // existing specialized endpoints (unchanged from v1).
       // ─────────────────────────────────────────────────────────────────────
-      const isClientImageReq = /\b(image|photo|picture|draw|paint|generate|render|artwork|illustration)\b/i.test(trimmedInput) && !/\b(video|music|song|audio)\b/i.test(trimmedInput);
-      if (agentData.delegateToMedia || isClientImageReq) {
-        const intent = isClientImageReq ? "image_generation" : agentData.intent;
+      if (agentData.delegateToMedia) {
+        const intent = agentData.intent;
 
         if (intent === "music_generation") {
           // Music pipeline
@@ -783,41 +853,25 @@ function VizzyChatInner() {
         }
 
         if (intent === "image_generation") {
-          // Image generation pipeline
+          // Image generation pipeline — FastAPI only
           const refinedPrompt = buildRefinedPrompt(updatedMessages, trimmedInput)
           const numResults = parseNumImages(trimmedInput)
 
-          let response: Response;
-          try {
-            response = await fetch(`${IMAGE_GEN_API_URL}/api/vizzy-canvas/generate`, {
-              method: "POST",
-              headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
-              body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
-            })
-            if (!response.ok) throw new Error("Render gen failed")
-          } catch {
-            try {
-              response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/generate`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
-                body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
-              })
-            } catch {
-              const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
-              const seed = Math.floor(Math.random() * 1000000)
-              const fallbackUrl = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&nologo=true`
-              response = new Response(JSON.stringify({ images: [{ url: fallbackUrl }] }), { status: 200, headers: { "Content-Type": "application/json" } })
-            }
-          }
+          const response = await fetch(`${API_BASE_URL}/api/vizzy-canvas/generate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
+          })
+
           const data = await response.json().catch(() => {
             const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
             const seed = Math.floor(Math.random() * 1000000)
-            return { images: [{ url: `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&nologo=true` }] }
+            return { images: [{ url: `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&model=flux&enhance=true&nologo=true` }] }
           })
           if (!data.images || data.images.length === 0) {
             const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
             const seed = Math.floor(Math.random() * 1000000)
-            data.images = [{ url: `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&nologo=true` }]
+            data.images = [{ url: `https://image.pollinations.ai/prompt/${cleanPrompt}?width=1024&height=1024&seed=${seed}&model=flux&enhance=true&nologo=true` }]
           }
 
           console.log('[Vizzy2.0] Image generation response:', JSON.stringify(data, null, 2).substring(0, 500))

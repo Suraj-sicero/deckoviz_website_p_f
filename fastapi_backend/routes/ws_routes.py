@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import Any, Optional
 
 import jwt
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
@@ -16,7 +16,7 @@ router = APIRouter(tags=["RTCSP WebSocket"])
 MAX_MESSAGE_SIZE = 1024 * 1024
 
 
-async def _verify_token(token: str) -> dict[str, Any] | None:
+async def _verify_token(token: str) -> Optional[dict[str, Any]]:
     """Async-safe token verification — runs blocking Firebase calls in a thread pool."""
     return await verify_token_to_user_dict_async(token)
 
@@ -24,8 +24,8 @@ async def _verify_token(token: str) -> dict[str, Any] | None:
 async def _handle_display_image(
     user_id: str,
     payload: dict[str, Any],
-    target_app_instance_id: str | None,
-    origin_message_id: str | None,
+    target_app_instance_id: Optional[str],
+    origin_message_id: Optional[str],
 ) -> bool:
     message = ws_hub.envelope(
         "display_image",
@@ -45,7 +45,7 @@ async def _handle_display_image(
 async def _handle_acknowledgement(
     user_id: str,
     payload: dict[str, Any],
-    tv_app_instance_id: str | None,
+    tv_app_instance_id: Optional[str],
 ) -> bool:
     forward = ws_hub.envelope(
         "acknowledgement",
@@ -61,7 +61,7 @@ async def _handle_acknowledgement(
     return True
 
 
-async def _run_socket(websocket: WebSocket, client_type: str, app_instance_id: str | None) -> None:
+async def _run_socket(websocket: WebSocket, client_type: str, app_instance_id: Optional[str]) -> None:
     token = websocket.query_params.get("token")
     if not token:
         await websocket.close(code=4401)
