@@ -26,10 +26,19 @@ _fallback_chats: Dict[str, Dict[str, Any]] = {}
 # Vertical -> system prompt mapping (reuses existing vertical prompts; minimal fallback if not found elsewhere)
 # Task says to reuse existing Home/Enterprise/Schools prompts — these are the same prompts already used forVizzy chats,
 # kept here as thin mapping to avoid duplicating prompt text. If a dedicated prompt file exists, this would load from there.
+# SKILL SELECTION & EXPANSION PROTOCOL — Users may enter a conversation by selecting a specific
+# use case, skill, or subagent card, rather than typing a request from scratch. Do not treat that
+# short description as a finished brief. It is a seed, not a spec. Silently expand the seed without
+# narrating this step to the user. Open with a real first move, not a blank question — a
+# clarifying question that moves things forward, a first creative offer to react to, or both.
+# Treat the expansion as reusable scaffolding through the whole session. Calibrate depth to the
+# skill. Never expose the mechanics — no 'let me expand on this skill' narration.
 _VERTICAL_SYSTEM_PROMPTS: Dict[str, str] = {
-    "home": "You are Vizzy for Home — a warm, personal creative companion for individuals and families. Follow the Skill Selection & Expansion Protocol: when a session is started from a selected card, do not ask a generic 'what would you like to do?' — instead form the fuller working sense of what the card requires and open with a specific first move.",
-    "enterprise": "You are Vizzy for Enterprise/CMED — a brand-aware assistant for restaurants & hotels. Follow the Skill Selection & Expansion Protocol: when a session is started from a selected card, open with a specific first move that uses the card's full context, not a generic opener.",
-    "schools": "You are Vizzy for Schools — a supportive guide for Teachers and Students. Follow the Skill Selection & Expansion Protocol: when a session is started from a selected card, open with a specific first move tailored to that card, and keep that fuller understanding across the whole session.",
+    "home": "You are Vizzy for Home — a warm, personal creative companion for individuals and families. SKILL SELECTION & EXPANSION PROTOCOL — Users may enter a conversation by selecting a specific use case, skill, or subagent card, rather than typing a request from scratch. Do not treat that short description as a finished brief. It is a seed, not a spec. Silently expand the seed without narrating this step to the user. Open with a real first move, not a blank question — a clarifying question that moves things forward, a first creative offer to react to, or both. Treat the expansion as reusable scaffolding through the whole session. Calibrate depth to the skill. Never expose the mechanics — no 'let me expand on this skill' narration.",
+    "enterprise": "You are Vizzy for Enterprise/CMED — a brand-aware assistant for restaurants & hotels. SKILL SELECTION & EXPANSION PROTOCOL — Users may enter a conversation by selecting a specific use case, skill, or subagent card, rather than typing a request from scratch. Do not treat that short description as a finished brief. It is a seed, not a spec. Silently expand the seed without narrating this step to the user. Open with a real first move, not a blank question — a clarifying question that moves things forward, a first creative offer to react to, or both. Treat the expansion as reusable scaffolding through the whole session. Calibrate depth to the skill. Never expose the mechanics — no 'let me expand on this skill' narration.",
+    "schools": "You are Vizzy for Schools — a supportive guide for Teachers and Students. SKILL SELECTION & EXPANSION PROTOCOL — Users may enter a conversation by selecting a specific use case, skill, or subagent card, rather than typing a request from scratch. Do not treat that short description as a finished brief. It is a seed, not a spec. Silently expand the seed without narrating this step to the user. Open with a real first move, not a blank question — a clarifying question that moves things forward, a first creative offer to react to, or both. Treat the expansion as reusable scaffolding through the whole session. Calibrate depth to the skill. Never expose the mechanics — no 'let me expand on this skill' narration.",
+    "schools_teacher": "You are Vizzy for Schools — Teacher mode — a calm, capable partner for educators managing a class. You help plan, differentiate, and keep the whole room engaged, speaking to the teacher as a collaborator who orchestrates learning. SKILL SELECTION & EXPANSION PROTOCOL — Users may enter a conversation by selecting a specific use case, skill, or subagent card, rather than typing a request from scratch. Do not treat that short description as a finished brief. It is a seed, not a spec. Silently expand the seed without narrating this step to the user. Open with a real first move, not a blank question — a clarifying question that moves things forward, a first creative offer to react to, or both. Treat the expansion as reusable scaffolding through the whole session. Calibrate depth to the skill. Never expose the mechanics — no 'let me expand on this skill' narration.",
+    "schools_student": "You are Vizzy for Schools — Student mode — a warm, encouraging companion who speaks directly to the learner. You celebrate curiosity, invite the student to co-create, and never frame gaps as deficiencies. You say 'let's explore this together' not 'you don't know this yet'. SKILL SELECTION & EXPANSION PROTOCOL — Users may enter a conversation by selecting a specific use case, skill, or subagent card, rather than typing a request from scratch. Do not treat that short description as a finished brief. It is a seed, not a spec. Silently expand the seed without narrating this step to the user. Open with a real first move, not a blank question — a clarifying question that moves things forward, a first creative offer to react to, or both. Treat the expansion as reusable scaffolding through the whole session. Calibrate depth to the skill. Never expose the mechanics — no 'let me expand on this skill' narration.",
 }
 
 _VERTICAL_AGENT: Dict[str, str] = {
@@ -38,11 +47,39 @@ _VERTICAL_AGENT: Dict[str, str] = {
     "schools": "Style Advisor",
 }
 
-def _get_system_prompt(vertical: str) -> str:
+def _get_system_prompt(vertical: str, audience: Optional[str] = None) -> str:
+    if vertical == "schools" and audience:
+        key = "schools_{}".format(str(audience).strip().lower())
+        if key in _VERTICAL_SYSTEM_PROMPTS:
+            return _VERTICAL_SYSTEM_PROMPTS[key]
     return _VERTICAL_SYSTEM_PROMPTS.get(vertical, _VERTICAL_SYSTEM_PROMPTS["home"])
 
-def _get_agent_for_vertical(vertical: str) -> str:
+def _get_agent_for_vertical(vertical: str, audience: Optional[str] = None) -> str:
+    if vertical == "schools" and audience:
+        # Teacher and student share Style Advisor but could differ; keep simple
+        return _VERTICAL_AGENT.get("schools", "Style Advisor")
     return _VERTICAL_AGENT.get(vertical, "Art Generator")
+
+def _get_enterprise_brand_context(uid: str) -> Optional[Dict[str, Any]]:
+    """Fetch enterprise brand profile via existing postgres_store pattern; returns None on failure."""
+    try:
+        from postgres_store import fs_get_profile
+        profile = fs_get_profile(uid)
+        if profile and isinstance(profile, dict):
+            # Try to extract brand-relevant fields; fallback to generic
+            name = profile.get("displayName") or profile.get("display_name") or profile.get("company") or profile.get("name") or "your brand"
+            company = profile.get("company") or name
+            location = profile.get("location") or profile.get("subtitle") or "your location"
+            # Also try to get units for more context
+            brand = {"name": name, "company": company, "location": location}
+            # Add any extra fields that exist
+            for k in ["palette", "theme", "brandColors", "brand_palette", "colors"]:
+                if profile.get(k):
+                    brand[k] = profile.get(k)
+            return brand
+    except Exception:
+        pass
+    return None
 
 def _lookup_power_use(vertical: str, power_use_id: str) -> Optional[Dict[str, str]]:
     items = POWER_USES_BY_VERTICAL.get(vertical, [])
@@ -51,36 +88,82 @@ def _lookup_power_use(vertical: str, power_use_id: str) -> Optional[Dict[str, st
             return item
     return None
 
-def _build_first_message(power_use: Dict[str, str], vertical: str) -> str:
+def _build_first_message(power_use: Dict[str, str], vertical: str, audience: Optional[str] = None, brand_context: Optional[Dict[str, Any]] = None) -> str:
     """Generate Vizzy's first reply specific to the chosen card per Expansion Protocol.
     Uses the same generation flow as ordinary new sessions but seeded with card title/description.
+    Calibrates depth: quick cards ask one sharp clarifying question before a first draft; deep cards invite back-and-forth.
     """
     title = power_use.get("title", "")
     description = power_use.get("description", "")
+    depth = power_use.get("depth", "deep")
     # Load correct vertical system prompt (reuse existing, do not invent new prompt engineering)
-    system_prompt = _get_system_prompt(vertical)
+    system_prompt = _get_system_prompt(vertical, audience)
     # The system_prompt is kept as context for future turns; the first_message is the user-visible opener.
     # Keep it specific — a sharp clarifying question / first creative offer, not a generic opener.
+    # Brand context for enterprise: inject real brand name/location if available
+    brand_suffix = ""
+    if vertical == "enterprise" and brand_context:
+        brand_name = brand_context.get("company") or brand_context.get("name") or ""
+        if brand_name and brand_name != "your brand":
+            brand_suffix = " for {}".format(brand_name)
     if vertical == "home":
-        return (
-            "Perfect — let's dive into '{title}'. {description} "
-            "Tell me the first feeling, memory, or detail you'd like to start with, and I'll shape the first version with you."
-        ).format(title=title, description=description)
+        if depth == "quick":
+            return (
+                "Perfect — let's dive into '{title}'{brand_suffix}. {description} "
+                "Quick question to get us started: what's the one detail or style you want this in? Share that and I'll pull together a strong first draft for you to react to."
+            ).format(title=title, description=description, brand_suffix=brand_suffix)
+        else:
+            return (
+                "Perfect — let's dive into '{title}'{brand_suffix}. {description} "
+                "This one benefits from a little back-and-forth — tell me the first feeling, memory, or detail you'd like to start with, and we'll shape it together step by step before locking a direction."
+            ).format(title=title, description=description, brand_suffix=brand_suffix)
     elif vertical == "enterprise":
-        return (
-            "Great choice — '{title}'. {description} "
-            "Tell me a bit about your space or campaign and I'll draft the first on-brand concept for you."
-        ).format(title=title, description=description)
+        if depth == "quick":
+            return (
+                "Great choice — '{title}'{brand_suffix}. {description} "
+                "Quick question: what's the one space, dish, or campaign detail you want this tailored to? Give me that and I'll draft the first on-brand concept for you."
+            ).format(title=title, description=description, brand_suffix=brand_suffix)
+        else:
+            return (
+                "Great choice — '{title}'{brand_suffix}. {description} "
+                "This is a richer one — let's explore it together. Tell me a bit about your space, brand story, or campaign goals, and we'll shape the first concept together before committing to a direction."
+            ).format(title=title, description=description, brand_suffix=brand_suffix)
     elif vertical == "schools":
-        return (
-            "Let's get started with '{title}'. {description} "
-            "What topic, class, or student group should we tailor this for first?"
-        ).format(title=title, description=description)
+        # Teacher vs student tone already in system prompt; opener should also reflect it, and depth
+        if audience and str(audience).lower() == "student":
+            if depth == "quick":
+                return (
+                    "Let's get started with '{title}'{brand_suffix}. {description} "
+                    "Quick question to tailor this for you: what topic or style are you most curious about right now? Share that and I'll build the first version for you."
+                ).format(title=title, description=description, brand_suffix=brand_suffix)
+            else:
+                return (
+                    "Let's get started with '{title}'{brand_suffix}. {description} "
+                    "This one is more fun as a back-and-forth — what are you hoping to explore or create? We'll build it together step by step, and I'll coach, not just produce, along the way."
+                ).format(title=title, description=description, brand_suffix=brand_suffix)
+        else:
+            # Teacher mode (or both)
+            if depth == "quick":
+                return (
+                    "Let's get started with '{title}'{brand_suffix}. {description} "
+                    "Quick question to tailor this for your class: what topic, year group, or lesson focus should we start with? Once you share that, I'll draft the first version for you."
+                ).format(title=title, description=description, brand_suffix=brand_suffix)
+            else:
+                return (
+                    "Let's get started with '{title}'{brand_suffix}. {description} "
+                    "This one benefits from a little planning together — tell me about your class, topic, or group, and we'll shape the first version together before rolling it out."
+                ).format(title=title, description=description, brand_suffix=brand_suffix)
     else:
-        return (
-            "Let's get started with '{title}': {description} "
-            "What would you like to explore first?"
-        ).format(title=title, description=description)
+        if depth == "quick":
+            return (
+                "Let's get started with '{title}'{brand_suffix}: {description} "
+                "Quick question: what's the one detail you'd like this tailored to? Share that and I'll draft the first version."
+            ).format(title=title, description=description, brand_suffix=brand_suffix)
+        else:
+            return (
+                "Let's get started with '{title}'{brand_suffix}: {description} "
+                "Let's explore this together — what would you like to focus on first? We'll shape it step by step."
+            ).format(title=title, description=description, brand_suffix=brand_suffix)
 
 def _fallback_key(uid: str, chat_id: str) -> str:
     return "{}:{}".format(uid, chat_id)
@@ -118,36 +201,72 @@ def _list_chats_with_fallback(uid: str) -> List[Dict[str, Any]]:
                 chats.append(v)
     return chats
 
-def _create_power_use_session(uid: str, vertical: str, power_use: Dict[str, str]) -> Dict[str, Any]:
+def _create_power_use_session(uid: str, vertical: str, power_use: Dict[str, str], audience: Optional[str] = None) -> Dict[str, Any]:
     """Create a new vizzy chat session pre-seeded with power-use card context.
     Reuses the same required fields as normal new Vizzy session creation, plus persists seed context
     in the JSONB payload (user_documents kind=vizzy_chat) so it's available on every subsequent turn.
     Uses user_documents JSONB pattern — no migration, variable-shaped payload.
+    For enterprise, auto-pulls brand context via existing fs_get_profile. For schools, selects teacher/student prompt based on card audience and request audience.
+    Calibrates first message depth via power_use depth field.
     """
     chat_id = "chat_{}".format(uuid.uuid4().hex[:10])
     title = power_use.get("title", "Vizzy Chat")
-    agent = _get_agent_for_vertical(vertical)
-    system_prompt = _get_system_prompt(vertical)
-    first_message = _build_first_message(power_use, vertical)
+    # Determine effective audience for schools: card's audience vs request audience
+    effective_audience: Optional[str] = None
+    if vertical == "schools":
+        card_audience = power_use.get("audience")
+        # If card is "both", use request audience if provided, else default to teacher for backward compat
+        if card_audience == "both":
+            effective_audience = audience if audience in ("teacher", "student") else None
+            # If still None, keep as None to use generic schools prompt (fallback)
+        elif card_audience in ("teacher", "student"):
+            effective_audience = card_audience
+        else:
+            effective_audience = audience
+    # For enterprise brand auto-pull
+    brand_context: Optional[Dict[str, Any]] = None
+    if vertical == "enterprise":
+        brand_context = _get_enterprise_brand_context(uid)
+    agent = _get_agent_for_vertical(vertical, effective_audience)
+    system_prompt = _get_system_prompt(vertical, effective_audience)
+    first_message = _build_first_message(power_use, vertical, effective_audience, brand_context)
     now = datetime.utcnow().isoformat()
+    # Build powerUse with audience and depth for persistence and frontend filtering
+    power_use_payload: Dict[str, Any] = {
+        "id": power_use.get("id"),
+        "title": power_use.get("title"),
+        "description": power_use.get("description"),
+        "vertical": vertical,
+        "depth": power_use.get("depth"),
+        "audience": power_use.get("audience"),
+    }
+    seed_context_payload: Dict[str, Any] = {
+        "power_use_id": power_use.get("id"),
+        "title": power_use.get("title"),
+        "description": power_use.get("description"),
+        "vertical": vertical,
+        "depth": power_use.get("depth"),
+        "audience": power_use.get("audience"),
+        "effectiveAudience": effective_audience,
+    }
+    if brand_context:
+        seed_context_payload["brandContext"] = brand_context
+        power_use_payload["brandContext"] = brand_context
+    # Inject brand into systemPrompt if enterprise and brand available (reuse existing brand data, don't build new store)
+    if brand_context and vertical == "enterprise":
+        brand_name = brand_context.get("company") or brand_context.get("name") or ""
+        if brand_name and brand_name != "your brand":
+            system_prompt = system_prompt + " Brand context: {} (location: {}). Use this brand context automatically where the card implies it.".format(brand_name, brand_context.get("location", ""))
     chat: Dict[str, Any] = {
         "id": chat_id,
         "userId": uid,
         "title": title,
         "activeAgent": agent,
         "vertical": vertical,
-        "powerUse": {
-            "id": power_use.get("id"),
-            "title": power_use.get("title"),
-            "description": power_use.get("description"),
-            "vertical": vertical,
-        },
-        "seedContext": {
-            "power_use_id": power_use.get("id"),
-            "title": power_use.get("title"),
-            "description": power_use.get("description"),
-            "vertical": vertical,
-        },
+        "audience": effective_audience,
+        "depth": power_use.get("depth"),
+        "powerUse": power_use_payload,
+        "seedContext": seed_context_payload,
         "systemPrompt": system_prompt,
         "messages": [
             {"role": "assistant", "content": first_message}
@@ -155,24 +274,30 @@ def _create_power_use_session(uid: str, vertical: str, power_use: Dict[str, str]
         "createdAt": now,
         "updatedAt": now,
     }
+    if brand_context:
+        chat["brandContext"] = brand_context
     saved = _save_chat_with_fallback(uid, chat)
     # _save_chat_with_fallback returns the saved payload; ensure we return the chat_id and first_message
     return {"chat": saved, "first_message": first_message, "chat_id": saved.get("id", chat_id)}
 
 def _handle_start_from_power_use(payload: Dict[str, Any], current_user: FirebaseUser) -> Dict[str, Any]:
     uid = current_user.firebase_uid or current_user.id
-    # Support both snake_case and camelCase from request (Pydantic handles alias, but raw dict may vary)
+    # Support both snake_case and camelCase from request (Pydantic handles alias, but raw dict may vary); also support audience/mode for schools
     vertical = payload.get("vertical") or payload.get("Vertical")
     power_use_id = payload.get("power_use_id") or payload.get("powerUseId") or payload.get("power_useId")
+    audience = payload.get("audience") or payload.get("mode") or payload.get("audienceMode") or payload.get("teacherMode")
     # Also handle Pydantic model dump case where vertical/power_use_id are already extracted
     if vertical is None and "vertical" in payload:
         vertical = payload["vertical"]
     if power_use_id is None and "power_use_id" in payload:
         power_use_id = payload["power_use_id"]
+    if audience is None:
+        audience = payload.get("audience") or payload.get("mode")
     if not vertical or not power_use_id:
         # Fallback for case where payload is already a Pydantic object dict with different keys
         vertical = payload.get("vertical")
         power_use_id = payload.get("power_use_id") or payload.get("powerUseId")
+        audience = audience or payload.get("audience") or payload.get("mode")
     if not vertical or not power_use_id:
         raise HTTPException(status_code=400, detail="vertical and power_use_id are required")
     normalized = str(vertical).strip().lower()
@@ -181,7 +306,12 @@ def _handle_start_from_power_use(payload: Dict[str, Any], current_user: Firebase
     power_use = _lookup_power_use(normalized, str(power_use_id).strip())
     if not power_use:
         raise HTTPException(status_code=404, detail="power_use_id '{}' not found for vertical '{}'".format(power_use_id, normalized))
-    result = _create_power_use_session(uid, normalized, power_use)
+    # Normalize audience for schools: teacher/student/both
+    if audience is not None:
+        audience = str(audience).strip().lower()
+        if audience not in ("teacher", "student", "both"):
+            audience = None
+    result = _create_power_use_session(uid, normalized, power_use, audience)
     chat = result["chat"]
     first_message = result["first_message"]
     chat_id = result["chat_id"]

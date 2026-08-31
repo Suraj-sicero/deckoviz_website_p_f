@@ -306,8 +306,8 @@ export const vizzyApi = {
   getCurations: (token?: string) => vizzyGet("/curations", token),
 
   /* Power Uses — start from a selected card */
-  startFromPowerUse: (vertical: string, power_use_id: string, token?: string) =>
-    vizzyPostPowerUse(vertical, power_use_id, token),
+  startFromPowerUse: (vertical: string, power_use_id: string, token?: string, audience?: string) =>
+    vizzyPostPowerUse(vertical, power_use_id, token, audience),
 };
 
 /* ── Power Uses API ──────────────────────────────────────────────────────── */
@@ -315,6 +315,8 @@ export interface PowerUse {
   id: string;
   title: string;
   description: string;
+  audience?: "teacher" | "student" | "both";
+  depth?: "quick" | "deep";
 }
 
 async function getPowerUses(vertical: string, token?: string): Promise<PowerUse[]> {
@@ -327,8 +329,13 @@ async function getPowerUses(vertical: string, token?: string): Promise<PowerUse[
   return [];
 }
 
-async function vizzyPostPowerUse(vertical: string, power_use_id: string, token?: string) {
-  const body = JSON.stringify({ vertical, power_use_id });
+async function vizzyPostPowerUse(vertical: string, power_use_id: string, token?: string, audience?: string) {
+  const payload: any = { vertical, power_use_id };
+  if (audience) {
+    payload.audience = audience;
+    payload.mode = audience;
+  }
+  const body = JSON.stringify(payload);
   // Primary path per spec: /api/vizzy/...
   let res = await fetch(`${BASE}/api/vizzy/sessions/start-from-power-use`, {
     method: "POST",

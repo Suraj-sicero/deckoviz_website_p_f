@@ -1,13 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { Loader2, Sparkles, ArrowRight } from "lucide-react";
+import { Loader2, Sparkles, ArrowRight, GraduationCap, Users } from "lucide-react";
 import { powerUsesApi, vizzyApi } from "../../lib/webappApi";
 import type { PowerUse } from "../../lib/webappApi";
 
 type Vertical = "home" | "enterprise" | "schools";
+type SchoolsAudience = "teacher" | "student";
 
 interface PowerUsesSectionProps {
   vertical: Vertical;
+  /** For schools, controls whether teacher or student cards are shown. Defaults to teacher. */
+  audience?: SchoolsAudience;
+  /** If true, shows a toggle for teacher/student when vertical is schools. Defaults to true for schools. */
+  showAudienceToggle?: boolean;
 }
 
 const verticalLabels: Record<Vertical, string> = {
@@ -16,13 +21,21 @@ const verticalLabels: Record<Vertical, string> = {
   schools: "Schools",
 };
 
-export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
+export function PowerUsesSection({ vertical, audience: audienceProp, showAudienceToggle }: PowerUsesSectionProps) {
   const navigate = useNavigate();
   const [items, setItems] = useState<PowerUse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [startingId, setStartingId] = useState<string | null>(null);
   const [startError, setStartError] = useState<string | null>(null);
+  const [audienceFilter, setAudienceFilter] = useState<SchoolsAudience>(audienceProp || "teacher");
+
+  // Keep internal filter in sync if parent prop changes
+  useEffect(() => {
+    if (audienceProp) setAudienceFilter(audienceProp);
+  }, [audienceProp]);
+
+  const shouldShowToggle = showAudienceToggle ?? vertical === "schools";
 
   useEffect(() => {
     let cancelled = false;
@@ -30,15 +43,12 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
       setIsLoading(true);
       setError(null);
       try {
-        // Direct fetch via powerUsesApi which wraps /api/power-uses/{vertical}
         const data = await powerUsesApi.getPowerUses(vertical);
         if (cancelled) return;
-        // powerUsesApi.getPowerUses already normalizes to array; fallback to raw fetch if needed
         const list = Array.isArray(data) ? data : [];
         setItems(list);
       } catch (err: any) {
         if (cancelled) return;
-        // Fallback: try raw fetch in case the wrapper shape differs
         try {
           const base = (await import("../../lib/constants")).API_BASE_URL;
           const token =
@@ -67,24 +77,38 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
     };
   }, [vertical]);
 
+  const filteredItems = useMemo(() => {
+    if (vertical !== "schools") return items;
+    return items.filter((card) => {
+      const aud = (card as any).audience;
+      if (!aud || aud === "both") return true;
+      return aud === audienceFilter;
+    });
+  }, [items, vertical, audienceFilter]);
+
   const handleCardClick = async (card: PowerUse) => {
     if (startingId) return;
     setStartingId(card.id);
     setStartError(null);
     try {
-      // Use vizzyApi.startFromPowerUse which posts to /api/vizzy/sessions/start-from-power-use
-      // It handles both /vizzy and /vizzy-canvas fallback and auth headers internally
-      const res: any = await vizzyApi.startFromPowerUse(vertical, card.id);
-      // Backend returns { session_id, first_message, chatId, id, content, ... } — handle all aliases
+      // Determine effective audience for schools: card's audience vs current filter
+      let effectiveAudience: string | undefined;
+      if (vertical === "schools") {
+        const cardAud = (card as any).audience;
+        if (cardAud === "teacher" || cardAud === "student") {
+          effectiveAudience = cardAud;
+        } else if (cardAud === "both") {
+          effectiveAudience = audienceFilter;
+        } else {
+          effectiveAudience = audienceFilter;
+        }
+      }
+      const res: any = await vizzyApi.startFromPowerUse(vertical, card.id, undefined, effectiveAudience);
       const sessionId = res?.session_id || res?.sessionId || res?.chatId || res?.id || res?.chat?.id;
       if (!sessionId) throw new Error("No session id returned");
-      // Navigate into existing Vizzy chat UI at the returned session_id — reuse the same mechanism
-      // that the app uses for opening an existing session (query param ?chatId=)
-      // Vizzy chat is at /vizzy-canvas (also /vizzy-generative-chat), we use /vizzy-canvas?chatId=
       navigate(`/vizzy-canvas?chatId=${encodeURIComponent(sessionId)}`);
     } catch (err: any) {
       const msg = err?.message || "Failed to start session";
-      // Surface 401 as auth required (vizzyApi already dispatches deckoviz-auth-required, but also show inline)
       if (msg.includes("401") || msg.toLowerCase().includes("authentication")) {
         setStartError("Please log in to start a session");
         window.dispatchEvent(new CustomEvent("deckoviz-auth-required"));
@@ -98,7 +122,6 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
 
   return (
     <section className="py-16 md:py-20 px-6 max-w-7xl mx-auto">
-      {/* Header */}
       <div className="text-center mb-10 md:mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/60 shadow-sm text-xs font-semibold tracking-wider uppercase text-gray-700 mb-4">
           <Sparkles size={14} className="text-[#2563EB]" />
@@ -110,9 +133,24 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
         <p className="mt-3 text-sm md:text-base text-gray-600 max-w-2xl mx-auto">
           Pick a card to start a new Vizzy chat — it opens pre-seeded with that use-case, so Vizzy replies with a specific first move, not a generic question.
         </p>
+        {vertical === "schools" && shouldShowToggle && (
+          <div className="mt-6 inline-flex items-center rounded-full bg-gray-100 p-1">
+            <button
+              onClick={() => setAudienceFilter("teacher")}
+              className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition ${audienceFilter === "teacher" ? "bg-white shadow text-[#182a4a]" : "text-gray-600 hover:text-gray-800"}`}
+            >
+              <Users size={14} /> Teacher
+            </button>
+            <button
+              onClick={() => setAudienceFilter("student")}
+              className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-semibold transition ${audienceFilter === "student" ? "bg-white shadow text-[#182a4a]" : "text-gray-600 hover:text-gray-800"}`}
+            >
+              <GraduationCap size={14} /> Student
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Loading */}
       {isLoading && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-5">
           {Array.from({ length: 10 }).map((_, i) => (
@@ -125,7 +163,6 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
         </div>
       )}
 
-      {/* Error */}
       {!isLoading && error && (
         <div className="mx-auto max-w-2xl rounded-2xl border border-red-200 bg-red-50 p-6 text-center">
           <p className="text-sm font-semibold text-red-700">Failed to load power uses</p>
@@ -147,12 +184,13 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
         </div>
       )}
 
-      {/* Grid */}
       {!isLoading && !error && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-5">
-            {items.map((card) => {
+            {filteredItems.map((card) => {
               const isStarting = startingId === card.id;
+              const depth = (card as any).depth as "quick" | "deep" | undefined;
+              const audience = (card as any).audience as string | undefined;
               return (
                 <button
                   key={card.id}
@@ -163,7 +201,6 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
                     ${startingId && !isStarting ? "opacity-60 pointer-events-none" : ""}
                   `}
                 >
-                  {/* subtle top accent */}
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#182a4a] to-[#2563EB] opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="flex items-start justify-between gap-3 mb-3">
                     <h3 className="text-sm md:text-[15px] font-bold leading-tight text-gray-900 group-hover:text-[#182a4a] line-clamp-2">
@@ -176,6 +213,18 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
                   <p className="text-xs md:text-[13px] leading-relaxed text-gray-600 line-clamp-3">
                     {card.description}
                   </p>
+                  <div className="mt-3 flex items-center gap-2">
+                    {depth && (
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider border ${depth === "quick" ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-amber-50 text-amber-700 border-amber-200"}`}>
+                        {depth}
+                      </span>
+                    )}
+                    {audience && vertical === "schools" && (
+                      <span className="inline-flex items-center rounded-full bg-gray-50 px-2 py-0.5 text-[10px] font-semibold text-gray-600 border border-gray-200 capitalize">
+                        {audience}
+                      </span>
+                    )}
+                  </div>
                   <div className="mt-4 flex items-center gap-1 text-[11px] font-semibold uppercase tracking-wider text-[#2563EB]/70 group-hover:text-[#2563EB]">
                     <span>Start session</span>
                     <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
@@ -195,8 +244,13 @@ export function PowerUsesSection({ vertical }: PowerUsesSectionProps) {
               </button>
             </div>
           )}
-          {items.length === 0 && !isLoading && !error && (
-            <p className="mt-8 text-center text-sm text-gray-500">No power uses available for this vertical.</p>
+          {filteredItems.length === 0 && !isLoading && !error && (
+            <p className="mt-8 text-center text-sm text-gray-500">No power uses available for this view. Try switching audience.</p>
+          )}
+          {items.length > 0 && filteredItems.length === 0 && (
+            <p className="mt-2 text-center text-xs text-gray-400">
+              Showing {filteredItems.length} of {items.length} cards for {audienceFilter} mode — “both” cards appear in either mode.
+            </p>
           )}
         </>
       )}

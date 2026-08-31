@@ -166,6 +166,8 @@ class PowerUseItem(BaseModel):
     id: str
     title: str
     description: str
+    audience: Optional[str] = None
+    depth: Optional[str] = None
 
 class PowerUseListResponse(BaseModel):
     vertical: str
@@ -174,6 +176,8 @@ class PowerUseListResponse(BaseModel):
 class PowerUseStartRequest(BaseModel):
     vertical: str
     power_use_id: str = Field(..., alias="powerUseId")
+    audience: Optional[str] = Field(default=None, alias="audience")
+    mode: Optional[str] = Field(default=None, alias="mode")
 
     class Config:
         populate_by_name = True
