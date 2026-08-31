@@ -44,6 +44,7 @@ import EnterpriseWhyDeckoviz from "./EnterpriseWhyDeckoviz";
 import EnterpriseVisionMicrosite from "./EnterpriseVisionMicrosite";
 import AILayerForBusiness from "./AILayerForBusiness";
 import EnterpriseFAQ from "./EnterpriseFAQ";
+import PowerUsesSection from "../PowerUses/PowerUsesSection";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import {
@@ -2874,6 +2875,8 @@ export default function DeckovizForEnterprise() {
       </section>
 
       <EnterpriseFAQ />
+
+      <PowerUsesSection vertical="enterprise" />
 
       <section className="bg-transparent py-20 border-t border-gray-100">
         {/* ================= EXPLORE FURTHER PREMIUM ================= */}

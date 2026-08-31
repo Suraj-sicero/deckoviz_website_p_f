@@ -70,6 +70,7 @@ import SearchView from "./views/SearchView";
 import { setFrameImage } from "../../lib/frameStore";
 import { webappApi } from "../../lib/webappApi";
 import { homeApi } from "../../lib/homeApi";
+import PowerUsesSection from "../PowerUses/PowerUsesSection";
 import { getUserCollections, saveUserCollections, getUserMedia, saveUserMedia, getUserAvatar } from "../../lib/userStorage";
 import {
   HomeDailyQueueView,
@@ -819,6 +820,9 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
           </button>
         </div>
       </div>
+
+      {/* ── The 10 Power Uses (Home) ── */}
+      <PowerUsesSection vertical="home" />
 
       {/* ── DAILY QUEUE SECTION ON HOME PAGE ── */}
       <SectionCard

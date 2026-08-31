@@ -304,6 +304,60 @@ export const vizzyApi = {
 
   /* Curations */
   getCurations: (token?: string) => vizzyGet("/curations", token),
+
+  /* Power Uses — start from a selected card */
+  startFromPowerUse: (vertical: string, power_use_id: string, token?: string) =>
+    vizzyPostPowerUse(vertical, power_use_id, token),
+};
+
+/* ── Power Uses API ──────────────────────────────────────────────────────── */
+export interface PowerUse {
+  id: string;
+  title: string;
+  description: string;
+}
+
+async function getPowerUses(vertical: string, token?: string): Promise<PowerUse[]> {
+  const res = await fetch(`${BASE}/api/power-uses/${vertical}`, { headers: authHeaders(token) });
+  const data = await handleResponse(res, "GET", `/power-uses/${vertical}`);
+  if (Array.isArray(data)) return data;
+  if (Array.isArray((data as any)?.items)) return (data as any).items;
+  if (Array.isArray((data as any)?.power_uses)) return (data as any).power_uses;
+  if (Array.isArray((data as any)?.powerUses)) return (data as any).powerUses;
+  return [];
+}
+
+async function vizzyPostPowerUse(vertical: string, power_use_id: string, token?: string) {
+  const body = JSON.stringify({ vertical, power_use_id });
+  // Primary path per spec: /api/vizzy/...
+  let res = await fetch(`${BASE}/api/vizzy/sessions/start-from-power-use`, {
+    method: "POST",
+    headers: authHeaders(token),
+    body,
+  });
+  // Fallback for deployments where only /vizzy-canvas is mounted
+  if (res.status === 404) {
+    const fallback = await fetch(`${BASE}/api/vizzy-canvas/sessions/start-from-power-use`, {
+      method: "POST",
+      headers: authHeaders(token),
+      body,
+    });
+    // If fallback succeeded (or is a validation 404), prefer its result; otherwise keep original
+    // We distinguish by checking if fallback is not a generic "Not Found" route error vs a validation error.
+    // Simplest: if fallback is not 404, use it; if it is 404 but primary was also 404, use fallback (same validation)
+    if (fallback.status !== 404) {
+      res = fallback;
+    } else {
+      // Both 404 — use fallback (it will have the same validation message)
+      res = fallback;
+    }
+  }
+  return handleResponse(res, "POST", "/vizzy/sessions/start-from-power-use");
+}
+
+export const powerUsesApi = {
+  getPowerUses,
+  startFromPowerUse: vizzyPostPowerUse,
 };
 
 /**

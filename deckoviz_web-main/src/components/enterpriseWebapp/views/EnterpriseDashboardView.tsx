@@ -8,6 +8,7 @@ import {
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { setFrameImage } from "../../../lib/frameStore";
 import { EmptyState } from "./ui/EmptyState";
+import PowerUsesSection from "../../PowerUses/PowerUsesSection";
 
 interface DashboardData {
   profile: { name: string; subtitle: string; location: string; units: number; activeFrames: number };
@@ -327,6 +328,11 @@ export default function EnterpriseDashboardView() {
             <ArrowUpRight size={14} className="ml-auto opacity-0 transition group-hover:opacity-100 relative z-10" />
           </button>
         </div>
+      </div>
+
+      {/* The 10 Power Uses (Enterprise) */}
+      <div className="mb-8">
+        <PowerUsesSection vertical="enterprise" />
       </div>
 
       {/* Virtual Frame Modal */}

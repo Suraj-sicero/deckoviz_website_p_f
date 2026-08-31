@@ -257,6 +257,7 @@ import EnterpriseWebapp from "./components/enterpriseWebapp/EnterpriseWebapp";
 import WebFrame from "./components/WebFrame";
 import PairDevicePage from "./pages/PairDevicePage";
 import DisplayOnTvPage from "./pages/DisplayOnTvPage";
+import PowerUsesSection from "./components/PowerUses/PowerUsesSection";
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -356,6 +357,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                 <AILayerForHome />
                 <WhyDeckoviz />
                 <WhoIsDeckovizFor />
+                <PowerUsesSection vertical="home" />
                 <DesignedFor />
                 <HowItWorks />
                 <GuestReactionsTestimonials />
