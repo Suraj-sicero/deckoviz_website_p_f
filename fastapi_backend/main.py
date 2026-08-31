@@ -15,6 +15,7 @@ from routes.queue_routes import router as queue_router
 from routes.curator_routes import router as curator_router
 from routes.ws_routes import router as ws_router
 from routes.promptLibraryRoutes import router as prompt_library_router
+from routes.power_use_routes import router as power_use_router
 from database import close_database, database_is_healthy
 
 # Configure logging
@@ -58,6 +59,7 @@ app.include_router(pairing_router, prefix=settings.API_V1_STR)
 app.include_router(queue_router, prefix=settings.API_V1_STR)
 app.include_router(curator_router, prefix=settings.API_V1_STR)
 app.include_router(prompt_library_router, prefix=settings.API_V1_STR)
+app.include_router(power_use_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
 
 @app.get("/")

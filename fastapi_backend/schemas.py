@@ -161,3 +161,13 @@ def extract_placeholders(text: str) -> List[str]:
     """Helper to extract [placeholders] from a prompt template string."""
     return re.findall(r'\[(.*?)\]', text)
 
+# --- Power Uses Schemas (10 Power Uses per vertical) ---
+class PowerUseItem(BaseModel):
+    id: str
+    title: str
+    description: str
+
+class PowerUseListResponse(BaseModel):
+    vertical: str
+    items: List[PowerUseItem]
+
