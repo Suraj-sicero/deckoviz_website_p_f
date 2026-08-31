@@ -245,6 +245,59 @@ export const webappApi = {
     };
   },
 
+  /* Batch Upload — 200 cap, per-file status, parallel, background for video/waveform */
+  uploadBatch: async (
+    files: File[],
+    opts?: { destination?: "personal" | "global"; libraryType?: string; token?: string }
+  ): Promise<{ batch_id: string; total: number; done: number; failed: number; results: Array<{ filename: string; status: "done" | "failed"; error?: string; media?: any }> }> => {
+    if (files.length > 200) throw new Error("Batch exceeds 200 files limit");
+    if (files.length === 0) throw new Error("No files provided");
+    const formData = new FormData();
+    files.forEach((f) => formData.append("files", f));
+    formData.append("destination", opts?.destination || "personal");
+    if (opts?.libraryType) formData.append("library_type", opts.libraryType);
+    const headers = authHeaders(opts?.token);
+    delete headers["Content-Type"];
+    const res = await fetch(`${BASE}/api/upload/batch`, { method: "POST", headers, body: formData });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Batch upload failed: ${res.status}`);
+    }
+    return res.json();
+  },
+
+  uploadBatchRetry: async (
+    file: File,
+    opts?: { destination?: "personal" | "global"; libraryType?: string; token?: string }
+  ): Promise<{ filename: string; status: "done" | "failed"; error?: string; media?: any }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("destination", opts?.destination || "personal");
+    if (opts?.libraryType) formData.append("library_type", opts.libraryType);
+    const headers = authHeaders(opts?.token);
+    delete headers["Content-Type"];
+    const res = await fetch(`${BASE}/api/upload/batch/retry`, { method: "POST", headers, body: formData });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Retry failed: ${res.status}`);
+    }
+    return res.json();
+  },
+
+  tagBatch: async (payload: { media_ids: string[]; tags?: string; collection_id?: string; collection_name?: string; curation_id?: string; destination?: "personal" | "global"; library_type?: string }, token?: string) => {
+    const headers = authHeaders(token);
+    const res = await fetch(`${BASE}/api/upload/batch/tag`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Tagging failed: ${res.status}`);
+    }
+    return res.json();
+  },
+
   getMusic: (token?: string) => homeGet("/music", token),
   createMusic: (data: unknown, token?: string) => homePost("/music", data, token),
 

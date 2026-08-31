@@ -18,6 +18,18 @@ ALLOWED_MEDIA_TYPES = {
     "video/mp4", "video/webm", "audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav",
 }
 
+# Per-library allowed types — extend helper, don't replace validate_media
+LIBRARY_TYPE_MIMES: dict[str, set[str]] = {
+    "image": {"image/jpeg", "image/png", "image/webp", "image/gif"},
+    "music": {"audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav"},
+    "video": {"video/mp4", "video/webm"},
+    "art": {"image/jpeg", "image/png", "image/webp", "image/gif"},
+    "posters": {"image/jpeg", "image/png", "image/webp", "image/gif"},
+    "photos": {"image/jpeg", "image/png", "image/webp", "image/gif"},
+    "art/posters/photos": {"image/jpeg", "image/png", "image/webp", "image/gif"},
+    "all": ALLOWED_MEDIA_TYPES,
+}
+
 
 class MediaValidationError(ValueError):
     pass
@@ -37,6 +49,22 @@ def validate_media(content_type: str | None, size: int | None) -> str:
         raise MediaValidationError("Unsupported media type")
     if size is not None and size > settings.S3_MAX_UPLOAD_BYTES:
         raise MediaValidationError("Upload exceeds the configured size limit")
+    return mime_type
+
+
+def get_allowed_types_for_library(library_type: str | None) -> set[str]:
+    if not library_type:
+        return ALLOWED_MEDIA_TYPES
+    key = library_type.strip().lower()
+    return LIBRARY_TYPE_MIMES.get(key, ALLOWED_MEDIA_TYPES)
+
+
+def validate_media_for_library(content_type: str | None, size: int | None, library_type: str | None) -> str:
+    """Validate mime matches target library (e.g. reject video in image library). Extends validate_media."""
+    mime_type = validate_media(content_type, size)
+    allowed = get_allowed_types_for_library(library_type)
+    if mime_type not in allowed:
+        raise MediaValidationError(f"File type {mime_type} not allowed in {library_type or 'all'} library")
     return mime_type
 
 
@@ -99,6 +127,20 @@ class S3MediaStorage:
 
     def delete(self, object_key: str) -> None:
         self.client.delete_object(Bucket=self.bucket, Key=object_key)
+
+
+def process_video_in_background(object_key: str, user_id: str) -> None:
+    """Placeholder for heavy video transcoding — runs via BackgroundTasks so upload returns fast."""
+    # In production this would trigger a transcoding pipeline (e.g. FFmpeg, MediaConvert)
+    # For now we just log; the file is already in S3 and accessible.
+    import logging
+    logging.getLogger("deckoviz.s3").info(f"Background video processing queued for {object_key} user {user_id}")
+
+
+def generate_waveform_in_background(object_key: str, user_id: str) -> None:
+    """Placeholder for audio waveform generation — runs via BackgroundTasks."""
+    import logging
+    logging.getLogger("deckoviz.s3").info(f"Background waveform generation queued for {object_key} user {user_id}")
 
 
 def get_media_storage() -> S3MediaStorage:
