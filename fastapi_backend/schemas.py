@@ -171,3 +171,17 @@ class PowerUseListResponse(BaseModel):
     vertical: str
     items: List[PowerUseItem]
 
+class PowerUseStartRequest(BaseModel):
+    vertical: str
+    power_use_id: str = Field(..., alias="powerUseId")
+
+    class Config:
+        populate_by_name = True
+
+class PowerUseStartResponse(BaseModel):
+    session_id: str = Field(..., alias="sessionId")
+    first_message: str = Field(..., alias="firstMessage")
+
+    class Config:
+        populate_by_name = True
+
