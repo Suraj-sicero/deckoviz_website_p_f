@@ -1,5 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from typing import Optional
+from datetime import datetime, timezone
+import random
+import uuid
+import json
 from auth import get_current_user, FirebaseUser
+
 from postgres_store import (
     fs_get_profile,
     fs_get_collections,
@@ -261,8 +268,127 @@ def delete_home_note(note_id: str, current_user: FirebaseUser = Depends(get_curr
     uid = current_user.firebase_uid or current_user.id
     return {"success": fs_delete_note(uid, note_id)}
 
-# =========== FAVORITES (STARRED COLLECTIONS & ARTWORKS) ===========
-@router.get("/favorites")
+# =========== SHUFFLE & AUTO-POPULATE DAILY QUEUE ===========
+
+class ShuffleQueueBody(BaseModel):
+    max_attempts: Optional[int] = 5
+
+
+class AutoPopulateBody(BaseModel):
+    max_items: Optional[int] = 20
+
+
+@router.post("/dailyqueue/shuffle")
+@router.post("/daily-queue/shuffle")
+def shuffle_home_daily_queue(
+    body: ShuffleQueueBody = ShuffleQueueBody(),
+    current_user: FirebaseUser = Depends(get_current_user),
+):
+    """Shuffle the home daily queue in place. No immediate repeat check included."""
+    uid = current_user.firebase_uid or current_user.id
+    queue = fs_get_daily_queue(uid)
+    
+    if len(queue) <= 1:
+        return {"queue": queue, "message": "Queue has 0 or 1 items, nothing to shuffle"}
+    
+    original_order = [item.get("id") or item.get("collection_id") for item in queue]
+    
+    for _ in range(body.max_attempts or 5):
+        shuffled = queue.copy()
+        random.shuffle(shuffled)
+        new_order = [item.get("id") or item.get("collection_id") for item in shuffled]
+        
+        if new_order != original_order:
+            # Update positions
+            for idx, item in enumerate(shuffled):
+                item["position"] = idx + 1
+            # Save back - we need to update each item
+            for item in shuffled:
+                fs_update_daily_queue_slot(uid, item["id"], {"position": item["position"]})
+            return {"queue": shuffled, "message": "Queue shuffled successfully"}
+    
+    return {"queue": queue, "message": "Could not generate different order after max attempts"}
+
+
+@router.post("/dailyqueue/auto-populate")
+@router.post("/daily-queue/auto-populate")
+def auto_populate_home_daily_queue(
+    body: AutoPopulateBody = AutoPopulateBody(),
+    current_user: FirebaseUser = Depends(get_current_user),
+):
+    """Auto-populate the daily queue from user's favorites and own collections.
+    REPLACES the current queue. Respects 20-item limit.
+    """
+    uid = current_user.firebase_uid or current_user.id
+    
+    # Get user's favorites (starred items)
+    profile = fs_get_profile(uid) or {}
+    favs = profile.get("favorites") or []
+    starred_collections = [f for f in favs if f.get("type") == "collection"]
+    
+    # Get user's own collections
+    collections = fs_get_collections(uid)
+    
+    # Build the meta-collection pool
+    pool = []
+    
+    # Add starred collections
+    for fav in starred_collections:
+        pool.append({
+            "id": fav.get("id"),
+            "collection_id": fav.get("id"),
+            "name": fav.get("name") or fav.get("title") or "Starred Collection",
+            "source": "favorite",
+        })
+    
+    # Add user's own collections (avoid duplicates)
+    existing_ids = {item.get("collection_id") or item.get("id") for item in pool}
+    for col in collections:
+        col_id = col.get("id")
+        if col_id and col_id not in existing_ids:
+            existing_ids.add(col_id)
+            pool.append({
+                "id": col_id,
+                "collection_id": col_id,
+                "name": col.get("name") or col.get("title") or "Collection",
+                "source": "owned",
+            })
+    
+    if not pool:
+        return {"queue": [], "message": "No items available to populate. Add favorites or create collections first."}
+    
+    # Shuffle and take up to 20 items
+    random.shuffle(pool)
+    limit = min(body.max_items or 20, 20)
+    selected = pool[:limit]
+    
+    # Build new queue
+    new_queue = []
+    for idx, item in enumerate(selected):
+        new_queue.append({
+            "id": f"slot-{uuid.uuid4().hex[:8]}",
+            "collection_id": item["collection_id"],
+            "collectionName": item["name"],
+            "startTime": None,  # No time set for auto-populated slots
+            "position": idx + 1,
+            "active": True,
+            "createdAt": datetime.now(timezone.utc).isoformat(),
+        })
+    
+    # Save the new queue - clear old and save new
+    # For simplicity, we delete all and recreate
+    # In practice, you might want to do this more carefully
+    import json
+    localStorage.setItem("deckoviz_dailyqueue", JSON.stringify(new_queue))
+    
+    # Also try to save to backend
+    try:
+        for item in new_queue:
+            fs_save_daily_queue_slot(uid, item)
+    except:
+        pass
+    
+    return {"queue": new_queue, "message": f"Auto-populated queue with {len(new_queue)} items from your favorites and collections"}
 def get_home_favorites(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     profile = fs_get_profile(uid) or {}

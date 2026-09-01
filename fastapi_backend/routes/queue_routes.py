@@ -20,6 +20,14 @@ class ReorderQueueBody(BaseModel):
     collection_ids: list[str]
 
 
+class ShuffleQueueBody(BaseModel):
+    max_attempts: Optional[int] = 5
+
+
+class AutoPopulateBody(BaseModel):
+    max_items: Optional[int] = 20
+
+
 class LiveStreamBody(BaseModel):
     artwork_id: str
     url: Optional[str] = None
@@ -108,6 +116,48 @@ async def reorder_device_queue(
         "dispatched": dispatched,
         "total_queued": len(reordered_queue),
         "items": reordered_queue,
+    }
+
+
+@router.post("/queue/{app_instance_id}/shuffle")
+async def shuffle_device_queue(
+    app_instance_id: str,
+    body: ShuffleQueueBody = ShuffleQueueBody(),
+    current_user: FirebaseUser = Depends(get_current_user),
+):
+    _validate_device_ownership(current_user.id, app_instance_id)
+    shuffled_queue = queue_store.shuffle_queue(
+        user_id=current_user.id,
+        app_instance_id=app_instance_id,
+        max_attempts=body.max_attempts or 5,
+    )
+    dispatched = await _dispatch_queue_to_tv(current_user.id, app_instance_id, shuffled_queue)
+    return {
+        "success": True,
+        "dispatched": dispatched,
+        "total_queued": len(shuffled_queue),
+        "items": shuffled_queue,
+    }
+
+
+@router.post("/queue/{app_instance_id}/auto-populate")
+async def auto_populate_device_queue(
+    app_instance_id: str,
+    body: AutoPopulateBody = AutoPopulateBody(),
+    current_user: FirebaseUser = Depends(get_current_user),
+):
+    _validate_device_ownership(current_user.id, app_instance_id)
+    populated_queue = queue_store.auto_populate_queue(
+        user_id=current_user.id,
+        app_instance_id=app_instance_id,
+        max_items=body.max_items or 20,
+    )
+    dispatched = await _dispatch_queue_to_tv(current_user.id, app_instance_id, populated_queue)
+    return {
+        "success": True,
+        "dispatched": dispatched,
+        "total_queued": len(populated_queue),
+        "items": populated_queue,
     }
 
 

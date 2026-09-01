@@ -4,7 +4,8 @@ import urllib.parse
 from datetime import datetime
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException
-from auth import get_current_user, FirebaseUser
+from auth import get_current_user, get_current_user_optional, FirebaseUser
+
 from postgres_store import (
     fs_get_vizzy_chats,
     fs_get_vizzy_chat_detail,
@@ -497,3 +498,108 @@ def start_from_power_use_vizzy_canvas(payload: PowerUseStartRequest, current_use
 def start_from_power_use(payload: PowerUseStartRequest, current_user: FirebaseUser = Depends(get_current_user)):
     # Reuse same in-process data-access (POWER_USES_BY_VERTICAL) — no HTTP call to own API
     return _handle_start_from_power_use(payload.model_dump(by_alias=False) if hasattr(payload, "model_dump") else payload.__dict__, current_user)
+
+# --- Proactive Vizzy Window MVP Endpoints ---
+
+SAMPLE_PROACTIVE_ITEMS = [
+    {
+        "id": "proactive-1",
+        "title": "Morning Ambient Refresh",
+        "description": "Your living room display has been on the same artwork for 3 days. Shall I curate a soothing morning landscape collection?",
+        "type": "Suggestion",
+        "actionText": "Apply Collection",
+        "actionView": "daily_queue",
+        "icon": "Sparkles"
+    },
+    {
+        "id": "proactive-2",
+        "title": "Creative Nudge: Sunset Photography",
+        "description": "Golden hour is in 45 minutes! Vizzy noticed you love warm tone palettes. Ready to turn your recent photos into framed art?",
+        "type": "Nudge",
+        "actionText": "Open VGC",
+        "actionView": "vgc",
+        "icon": "Sun"
+    },
+    {
+        "id": "proactive-3",
+        "title": "Idea: Weekly Memory Digest",
+        "description": "Combine this week's favorite family photos with gentle background ambient music for tonight's dinner display.",
+        "type": "Idea",
+        "actionText": "Create Album",
+        "actionView": "create_collection",
+        "icon": "Lightbulb"
+    },
+    {
+        "id": "proactive-4",
+        "title": "Art Curation: Modern Minimalist",
+        "description": "5 new minimalist digital art pieces match your current theme. Add them to your rotation?",
+        "type": "Suggestion",
+        "actionText": "View Curations",
+        "actionView": "curations",
+        "icon": "Palette"
+    },
+    {
+        "id": "proactive-5",
+        "title": "Ritual Nudge: Evening Wind-Down",
+        "description": "Set display brightness to warm low-light mode for your evening relaxation ritual.",
+        "type": "Nudge",
+        "actionText": "Setup Ritual",
+        "actionView": "rituals",
+        "icon": "Moon"
+    }
+]
+
+_fallback_proactive_dismissals: Dict[str, List[str]] = {}
+
+def _get_proactive_dismissals_with_fallback(uid: str) -> List[str]:
+    try:
+        from postgres_store import fs_get_proactive_dismissals
+        db_dismissed = fs_get_proactive_dismissals(uid)
+        fb_dismissed = _fallback_proactive_dismissals.get(uid, [])
+        combined = list(db_dismissed)
+        for item_id in fb_dismissed:
+            if item_id not in combined:
+                combined.append(item_id)
+        return combined
+    except Exception:
+        return _fallback_proactive_dismissals.get(uid, [])
+
+def _dismiss_proactive_item_with_fallback(uid: str, item_id: str) -> List[str]:
+    if uid not in _fallback_proactive_dismissals:
+        _fallback_proactive_dismissals[uid] = []
+    if item_id not in _fallback_proactive_dismissals[uid]:
+        _fallback_proactive_dismissals[uid].append(item_id)
+    try:
+        from postgres_store import fs_dismiss_proactive_item
+        db_dismissed = fs_dismiss_proactive_item(uid, item_id)
+        for item_id_db in db_dismissed:
+            if item_id_db not in _fallback_proactive_dismissals[uid]:
+                _fallback_proactive_dismissals[uid].append(item_id_db)
+        return _fallback_proactive_dismissals[uid]
+    except Exception:
+        return _fallback_proactive_dismissals[uid]
+
+@router.get("/proactive")
+@vizzy_router.get("/proactive")
+def get_proactive_items(limit: int = 3, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
+    dismissed = _get_proactive_dismissals_with_fallback(uid)
+    active_items = [item for item in SAMPLE_PROACTIVE_ITEMS if item["id"] not in dismissed]
+    return {
+        "items": active_items[:limit],
+        "total": len(active_items),
+        "dismissed_count": len(dismissed)
+    }
+
+@router.post("/proactive/dismiss")
+@vizzy_router.post("/proactive/dismiss")
+def dismiss_proactive_item(payload: dict, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
+    item_id = payload.get("id") or payload.get("itemId")
+    if not item_id:
+        raise HTTPException(status_code=400, detail="Missing item id")
+    dismissed = _dismiss_proactive_item_with_fallback(uid, str(item_id))
+    return {"success": True, "dismissed_id": item_id, "total_dismissed": len(dismissed)}
+
+
+

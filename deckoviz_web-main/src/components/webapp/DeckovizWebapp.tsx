@@ -67,7 +67,9 @@ import PricingPlanView from "./views/PricingPlanView";
 import ProductInfoView from "./views/ProductInfoView";
 import ProfileView from "./views/ProfileView";
 import SearchView from "./views/SearchView";
+import { VizzyWindow } from "./VizzyWindow";
 import { setFrameImage } from "../../lib/frameStore";
+
 import { webappApi } from "../../lib/webappApi";
 import { homeApi } from "../../lib/homeApi";
 import PowerUsesSection from "../PowerUses/PowerUsesSection";
@@ -784,8 +786,12 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
         </div>
       </div>
 
+      {/* ── Proactive Vizzy Window ── */}
+      <VizzyWindow onNavigate={onNavigate} />
+
       {/* Quick Actions */}
       <div>
+
         <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4 px-1">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           {quickActions.map((action) => (

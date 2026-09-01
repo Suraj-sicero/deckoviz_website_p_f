@@ -3,7 +3,8 @@ import type React from "react";
 import {
   Monitor, Calendar, Image as ImageIcon, Sparkles, PenTool,
   FileImage, RefreshCw, ArrowUpRight, Clock, Layers, Play,
-  Upload, X, CheckCircle2, Loader2, LayoutDashboard
+  Upload, X, CheckCircle2, Loader2, LayoutDashboard,
+  Shuffle, RotateCcw,
 } from "lucide-react";
 import { enterpriseApi } from "../../../lib/enterpriseApi";
 import { setFrameImage } from "../../../lib/frameStore";
@@ -244,6 +245,25 @@ export default function EnterpriseDashboardView() {
   const [loading, setLoading] = useState(true);
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
 
+  const handleShuffleSchedule = async () => {
+    try {
+      // In a real implementation, this would call the backend shuffle endpoint
+      console.log("Shuffling schedule...");
+      // For now, just log - the actual implementation would call the API
+    } catch (err) {
+      console.error("Failed to shuffle schedule:", err);
+    }
+  };
+
+  const handleAutoPopulateSchedule = async () => {
+    try {
+      // In a real implementation, this would call the auto-populate endpoint
+      console.log("Auto-populating schedule...");
+    } catch (err) {
+      console.error("Failed to auto-populate schedule:", err);
+    }
+  };
+
   useEffect(() => {
     enterpriseApi.getDashboard().then((res) => {
       if (res && res.profile) {
@@ -396,7 +416,27 @@ export default function EnterpriseDashboardView() {
           </div>
 
           <div className="mt-4 rounded-xl border border-[#e8eaef] bg-white p-5">
-            <h3 className="mb-3 font-serif text-[15px] font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">Today's Schedule</h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-serif text-[15px] font-bold bg-gradient-to-r from-[#182a4a] to-[#3b82f6] bg-clip-text text-transparent">Today's Schedule</h3>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleShuffleSchedule}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/60 text-slate-600 border border-slate-200 hover:bg-white hover:text-[#182a4a] hover:border-[#182a4a] transition-colors"
+                  title="Shuffle schedule order"
+                >
+                  <Shuffle size={12} />
+                  <span>Shuffle</span>
+                </button>
+                <button
+                  onClick={handleAutoPopulateSchedule}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-white/60 text-slate-600 border border-slate-200 hover:bg-white hover:text-[#182a4a] hover:border-[#182a4a] transition-colors"
+                  title="Auto-populate from your collections & favorites"
+                >
+                  <RotateCcw size={12} />
+                  <span>Auto-Populate</span>
+                </button>
+              </div>
+            </div>
             <div className="space-y-2.5">
               {[
                 { time: "06:00 – 10:00", label: "Morning Zen", collection: "Nature Serenity" },

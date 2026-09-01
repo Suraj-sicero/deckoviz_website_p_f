@@ -327,21 +327,34 @@ export const webappApi = {
  * These wrap the /api/vizzy-canvas endpoints for persistence.
  * ───────────────────────────────────────────────────────────────────────────── */
 async function vizzyGet(path: string, token?: string) {
-  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { headers: authHeaders(token) });
+  let res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { headers: authHeaders(token) });
+  if (res.status === 404) {
+    res = await fetch(`${BASE}/api/vizzy${path}`, { headers: authHeaders(token) });
+  }
   return handleResponse(res, "GET", path);
 }
 
 async function vizzyPost(path: string, body?: unknown, token?: string) {
-  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, {
+  let res = await fetch(`${BASE}/api/vizzy-canvas${path}`, {
     method: "POST",
     headers: authHeaders(token),
     body: JSON.stringify(body ?? {}),
   });
+  if (res.status === 404) {
+    res = await fetch(`${BASE}/api/vizzy${path}`, {
+      method: "POST",
+      headers: authHeaders(token),
+      body: JSON.stringify(body ?? {}),
+    });
+  }
   return handleResponse(res, "POST", path);
 }
 
 async function vizzyDel(path: string, token?: string) {
-  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { method: "DELETE", headers: authHeaders(token) });
+  let res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { method: "DELETE", headers: authHeaders(token) });
+  if (res.status === 404) {
+    res = await fetch(`${BASE}/api/vizzy${path}`, { method: "DELETE", headers: authHeaders(token) });
+  }
   return handleResponse(res, "DELETE", path);
 }
 
@@ -361,7 +374,12 @@ export const vizzyApi = {
   /* Power Uses — start from a selected card */
   startFromPowerUse: (vertical: string, power_use_id: string, token?: string, audience?: string) =>
     vizzyPostPowerUse(vertical, power_use_id, token, audience),
+
+  /* Proactive Vizzy Window */
+  getProactiveItems: (limit: number = 3, token?: string) => vizzyGet(`/proactive?limit=${limit}`, token),
+  dismissProactiveItem: (id: string, token?: string) => vizzyPost("/proactive/dismiss", { id }, token),
 };
+
 
 /* ── Power Uses API ──────────────────────────────────────────────────────── */
 export interface PowerUse {

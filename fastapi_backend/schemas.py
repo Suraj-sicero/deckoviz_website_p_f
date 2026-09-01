@@ -175,16 +175,19 @@ class PowerUseListResponse(BaseModel):
 
 class PowerUseStartRequest(BaseModel):
     vertical: str
-    power_use_id: str = Field(..., alias="powerUseId")
-    audience: Optional[str] = Field(default=None, alias="audience")
-    mode: Optional[str] = Field(default=None, alias="mode")
+    # Frontend sends snake_case (power_use_id). Also accept camelCase alias (powerUseId) as a convenience.
+    power_use_id: Optional[str] = Field(default=None)
+    audience: Optional[str] = Field(default=None)
+    mode: Optional[str] = Field(default=None)
+    # camelCase aliases for clients that send camelCase
+    powerUseId: Optional[str] = Field(default=None)
 
     class Config:
         populate_by_name = True
 
 class PowerUseStartResponse(BaseModel):
-    session_id: str = Field(..., alias="sessionId")
-    first_message: str = Field(..., alias="firstMessage")
+    session_id: str
+    first_message: str
 
     class Config:
         populate_by_name = True

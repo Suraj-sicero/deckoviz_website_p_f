@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """PostgreSQL implementation of the legacy Firestore persistence contract.
 
 The public function names intentionally mirror the old helpers so existing router
@@ -49,6 +51,8 @@ async def _get(uid: str, kind: str, document_id: str) -> dict | None:
         return dict(row.payload) if row else None
 
 
+from sqlalchemy.orm.attributes import flag_modified
+
 async def _save(uid: str, kind: str, data: dict, prefix: str, document_id: str | None = None, merge: bool = False) -> dict:
     doc_id = document_id or data.get("id") or f"{prefix}_{uuid.uuid4().hex[:12]}"
     payload = dict(data)
@@ -60,6 +64,7 @@ async def _save(uid: str, kind: str, data: dict, prefix: str, document_id: str |
         row = await session.scalar(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == doc_id))
         if row:
             row.payload = {**row.payload, **payload} if merge else payload
+            flag_modified(row, "payload")
         else:
             session.add(UserDocument(user_id=uid, kind=kind, document_id=doc_id, payload=payload))
         await session.commit()
@@ -196,3 +201,15 @@ def fs_get_vizzy_chat_detail(uid, chat_id): return _run(_get(uid, "vizzy_chat", 
 def fs_save_vizzy_chat(uid, data):
     data = dict(data); data["updatedAt"] = _now()
     return _run(_save(uid, "vizzy_chat", data, "chat", data.get("id"), True))
+
+def fs_get_proactive_dismissals(uid):
+    doc = _run(_get(uid, "proactive_dismissals", "dismissals"))
+    return doc.get("dismissed_ids", []) if doc else []
+
+def fs_dismiss_proactive_item(uid, item_id: str):
+    dismissed = list(fs_get_proactive_dismissals(uid))
+    if item_id not in dismissed:
+        dismissed.append(item_id)
+        _run(_save(uid, "proactive_dismissals", {"dismissed_ids": dismissed}, "proactive_dismissals", "dismissals", True))
+    return dismissed
+

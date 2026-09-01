@@ -123,11 +123,8 @@ export function PowerUsesSection({ vertical, audience: audienceProp, showAudienc
   return (
     <section className="py-16 md:py-20 px-6 max-w-7xl mx-auto">
       <div className="text-center mb-10 md:mb-12">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200/60 shadow-sm text-xs font-semibold tracking-wider uppercase text-gray-700 mb-4">
-          <Sparkles size={14} className="text-[#2563EB]" />
-          <span>{verticalLabels[vertical]} · Vizzy Power Uses</span>
-        </div>
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900" style={{ fontFamily: "'Playfair Display', serif" }}>
+
           The 10 Power Uses
         </h2>
         <p className="mt-3 text-sm md:text-base text-gray-600 max-w-2xl mx-auto">

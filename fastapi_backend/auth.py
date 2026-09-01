@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -157,5 +159,33 @@ async def get_current_user(
         detail="Authentication required. Please log in.",
         headers={"WWW-Authenticate": "Bearer"},
     )
+
+
+async def get_current_user_optional(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+) -> Optional[FirebaseUser]:
+    """
+    Optional auth dependency that returns FirebaseUser if authenticated, or a default guest/anonymous user if unauthenticated or missing token.
+    """
+    try:
+        if credentials and credentials.credentials:
+            token = credentials.credentials
+            loop = asyncio.get_event_loop()
+            user_info = await loop.run_in_executor(_executor, verify_token_to_user_dict, token)
+            if user_info:
+                try:
+                    user_dict = await ensure_application_user(user_info["id"], user_info["email"], user_info.get("name"))
+                    return FirebaseUser(**user_dict)
+                except Exception:
+                    return FirebaseUser(id=user_info["id"], firebase_uid=user_info["id"], email=user_info["email"], name=user_info.get("name", "User"), display_name=user_info.get("name", "User"), role="creator")
+        try:
+            guest_dict = await ensure_application_user("anonymous_user", "guest@deckoviz.app", "Guest User")
+            return FirebaseUser(**guest_dict)
+        except Exception:
+            return FirebaseUser(id="anonymous_user", firebase_uid="anonymous_user", email="guest@deckoviz.app", name="Guest User", display_name="Guest User", role="guest")
+    except Exception:
+        return FirebaseUser(id="anonymous_user", firebase_uid="anonymous_user", email="guest@deckoviz.app", name="Guest User", display_name="Guest User", role="guest")
+
+
 
 
