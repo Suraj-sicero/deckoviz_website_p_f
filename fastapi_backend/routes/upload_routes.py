@@ -3,7 +3,7 @@ from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, Depends, File, UploadFile, Form, HTTPException, Request, status, BackgroundTasks
 from pydantic import BaseModel
 from auth import get_current_user, FirebaseUser
-from postgres_store import create_s3_media, fs_save_media, fs_get_collections
+from postgres_store import create_s3_media, fs_save_media, fs_get_collections, tag_media_batch
 from services.s3_storage import (
     MediaValidationError,
     get_media_storage,
@@ -213,20 +213,23 @@ async def tag_batch(
 ):
     uid = current_user.firebase_uid or current_user.id
     dest = payload.destination.strip().lower() if payload.destination else "personal"
-    # For global, use global taxonomy: verify collection/curation exists in global scope
-    # For personal, use user's own collections
-    # This is a lightweight tagging step — we store tags as part of media's prompt/metadata
-    # and assign to collection via fs_save_media or collection item creation
-    tagged = []
-    for media_id in payload.media_ids:
-        try:
-            # For now, we just acknowledge tagging; in a full implementation this would update DB
-            # with tags and collection assignment via postgres_store
-            tagged.append({"media_id": media_id, "tags": payload.tags, "collection_id": payload.collection_id, "status": "tagged"})
-        except Exception as e:
-            tagged.append({"media_id": media_id, "status": "failed", "error": str(e)})
+    if dest not in ("personal", "global"):
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="destination must be personal or global")
+    if not payload.media_ids:
+        raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="At least one media_id is required")
+    if len(payload.media_ids) > 200:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Batch exceeds 200 files limit")
+    # Global uploads are owned by the shared global library record; personal uploads
+    # remain scoped to the requesting user, matching the upload path.
+    tagged = await tag_media_batch(
+        "global" if dest == "global" else uid,
+        payload.media_ids,
+        tags=payload.tags,
+        collection_id=payload.collection_id,
+        collection_name=payload.collection_name,
+    )
     return {
-        "tagged": len(tagged),
+        "tagged": sum(1 for result in tagged if result["status"] == "tagged"),
         "destination": dest,
         "library_type": payload.library_type,
         "results": tagged,

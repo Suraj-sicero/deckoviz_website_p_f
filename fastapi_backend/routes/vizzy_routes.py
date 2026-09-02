@@ -188,6 +188,32 @@ def _get_chat_with_fallback(uid: str, chat_id: str) -> Optional[Dict[str, Any]]:
     # Check in-memory fallback
     return _fallback_chats.get(_fallback_key(uid, chat_id))
 
+
+def _session_scaffolding(chat: Dict[str, Any]) -> str:
+    """Rehydrate the persisted card seed and vertical prompt for every agent turn."""
+    system_prompt = chat.get("systemPrompt") or _get_system_prompt(
+        chat.get("vertical", "home"), chat.get("audience")
+    )
+    seed = chat.get("seedContext") or chat.get("powerUse") or {}
+    if not seed:
+        return system_prompt
+    return "{}\nSelected-card session scaffold: title={}; description={}; depth={}; audience={}. Keep this active for every reply.".format(
+        system_prompt, seed.get("title", ""), seed.get("description", ""),
+        seed.get("depth", ""), seed.get("effectiveAudience") or seed.get("audience", ""),
+    )
+
+
+def _build_seeded_turn_response(last_msg: str, chat: Dict[str, Any], session_scaffolding: str) -> str:
+    """Deterministic local fallback that visibly retains selected-card context."""
+    seed = chat.get("seedContext") or chat.get("powerUse") or {}
+    title = seed.get("title")
+    # The fallback deliberately consumes the reconstructed scaffold too: a
+    # malformed/legacy chat without it must not pretend it has card context.
+    if not title or "Selected-card session scaffold:" not in session_scaffolding:
+        return "I'm processing your request: '{}'.".format(last_msg)
+    direction = seed.get("description") or "the creative direction from your selected card"
+    return "For {}: {} Your latest detail is '{}'. I'll keep this direction active as we shape the next move.".format(title, direction, last_msg)
+
 def _list_chats_with_fallback(uid: str) -> List[Dict[str, Any]]:
     try:
         chats = fs_get_vizzy_chats(uid)
@@ -417,14 +443,10 @@ def vizzy_master_agent(payload: dict, current_user: FirebaseUser = Depends(get_c
         "messages": []
     }
 
-    # If chat has seedContext/powerUse, it remains available for prompt construction on every turn
-    # (no extra prompt engineering needed here; the stored context is the mechanism)
-    ai_response = "I'm processing your request: '{}'. Expanding your vision on Deckoviz Canvas!".format(last_msg)
-    # If powerUse is present, keep using the fuller understanding, not just opening message — available via chat.get("powerUse")
-    power_use = chat.get("powerUse") or chat.get("seedContext")
-    if power_use:
-        # No extra prompt text needed; the stored context ensures every turn has the card context
-        pass
+    # Reconstruct the persisted prompt + seed on every turn, rather than falling
+    # back to a generic prompt after session creation.
+    session_scaffolding = _session_scaffolding(chat)
+    ai_response = _build_seeded_turn_response(last_msg, chat, session_scaffolding)
     
     chat_messages = chat.get("messages") or []
     chat_messages.append({"role": "user", "content": last_msg})
@@ -600,6 +622,4 @@ def dismiss_proactive_item(payload: dict, current_user: Optional[FirebaseUser] =
         raise HTTPException(status_code=400, detail="Missing item id")
     dismissed = _dismiss_proactive_item_with_fallback(uid, str(item_id))
     return {"success": True, "dismissed_id": item_id, "total_dismissed": len(dismissed)}
-
-
 

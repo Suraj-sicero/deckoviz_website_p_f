@@ -107,6 +107,8 @@ def _media_payload(media: MediaObject) -> dict:
         "fileName": media.filename, "mediaType": media.mime_type,
         "fileSize": media.size_bytes, "checksum": media.checksum_sha256,
         "isGenerated": media.is_generated, "prompt": media.prompt,
+        "tags": media.tags or [], "collectionId": media.collection_id,
+        "collectionName": media.collection_name,
         "createdAt": media.created_at.isoformat(),
     }
 
@@ -164,6 +166,46 @@ def fs_get_media(uid, media_type=None): return _run(_list_media(uid, media_type)
 def fs_save_media(uid, data): return _run(_save_external_media(uid, data))
 def fs_delete_media(uid, media_id): return _run(_delete_media(uid, media_id))
 
+
+def _normalize_tags(raw_tags: str | list[str] | None) -> list[str]:
+    if raw_tags is None:
+        return []
+    values = raw_tags if isinstance(raw_tags, list) else str(raw_tags).split(",")
+    return list(dict.fromkeys(tag.strip() for tag in values if str(tag).strip()))
+
+
+async def tag_media_batch(
+    owner_id: str,
+    media_ids: list[str],
+    *,
+    tags: str | list[str] | None = None,
+    collection_id: str | None = None,
+    collection_name: str | None = None,
+) -> list[dict]:
+    """Persist tags and collection taxonomy for owner-scoped media objects."""
+    normalized_tags = _normalize_tags(tags)
+    async with AsyncSessionLocal() as session:
+        rows = (await session.scalars(select(MediaObject).where(
+            MediaObject.id.in_(media_ids), MediaObject.user_id == owner_id
+        ))).all()
+        found = {row.id: row for row in rows}
+        results: list[dict] = []
+        for media_id in media_ids:
+            media = found.get(media_id)
+            if not media:
+                results.append({"media_id": media_id, "status": "failed", "error": "Media not found in this library"})
+                continue
+            if tags is not None:
+                media.tags = normalized_tags
+            if collection_id is not None:
+                media.collection_id = collection_id or None
+            if collection_name is not None:
+                media.collection_name = collection_name or None
+            results.append({"media_id": media.id, "status": "tagged", "tags": media.tags or [],
+                            "collection_id": media.collection_id, "collection_name": media.collection_name})
+        await session.commit()
+        return results
+
 def fs_get_daily_queue(uid): return _run(_list(uid, "daily_queue"))
 def fs_save_daily_queue_slot(uid, data): return _run(_save(uid, "daily_queue", data, "slot"))
 def fs_update_daily_queue_slot(uid, item_id, data): return _run(_save(uid, "daily_queue", data, "slot", item_id, True))
@@ -212,4 +254,3 @@ def fs_dismiss_proactive_item(uid, item_id: str):
         dismissed.append(item_id)
         _run(_save(uid, "proactive_dismissals", {"dismissed_ids": dismissed}, "proactive_dismissals", "dismissals", True))
     return dismissed
-
