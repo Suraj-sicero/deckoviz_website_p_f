@@ -369,8 +369,8 @@ def get_agents():
     ]
 
 @router.get("/chats")
-def get_chats(current_user: FirebaseUser = Depends(get_current_user)):
-    uid = current_user.firebase_uid or current_user.id
+def get_chats(current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
     chats = _list_chats_with_fallback(uid)
     return [
         {
@@ -385,8 +385,8 @@ def get_chats(current_user: FirebaseUser = Depends(get_current_user)):
     ]
 
 @router.get("/chats/{id}")
-def get_chat_detail(id: str, current_user: FirebaseUser = Depends(get_current_user)):
-    uid = current_user.firebase_uid or current_user.id
+def get_chat_detail(id: str, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
     chat = _get_chat_with_fallback(uid, id)
     if not chat:
         raise HTTPException(status_code=404, detail="Chat session not found")
@@ -402,8 +402,8 @@ def get_chat_detail(id: str, current_user: FirebaseUser = Depends(get_current_us
     }
 
 @router.post("/agent")
-def vizzy_master_agent(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
-    uid = current_user.firebase_uid or current_user.id
+def vizzy_master_agent(payload: dict, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
     messages = payload.get("messages") or []
     chat_id = payload.get("chatId") or "chat_{}".format(uuid.uuid4().hex[:10])
     
@@ -464,8 +464,8 @@ def vizzy_master_agent(payload: dict, current_user: FirebaseUser = Depends(get_c
     }
 
 @router.post("/generate")
-def generate_image_api(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
-    uid = current_user.firebase_uid or current_user.id
+def generate_image_api(payload: dict, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
     prompt = payload.get("prompt") or "Stunning Artwork"
     encoded_prompt = urllib.parse.quote(prompt)
     image_url = "https://image.pollinations.ai/prompt/{}?nologo=true&width=1024&height=1024".format(encoded_prompt)
@@ -490,12 +490,12 @@ def generate_image_api(payload: dict, current_user: FirebaseUser = Depends(get_c
     }
 
 @router.post("/message")
-def send_message(payload: dict, current_user: FirebaseUser = Depends(get_current_user)):
+def send_message(payload: dict, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
     return vizzy_master_agent(payload, current_user)
 
 @router.get("/images")
-def get_vizzy_images(current_user: FirebaseUser = Depends(get_current_user)):
-    uid = current_user.firebase_uid or current_user.id
+def get_vizzy_images(current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
     media = fs_get_media(uid)
     generated = [m for m in media if m.get("isGenerated") or m.get("is_generated")]
     return [
@@ -513,13 +513,15 @@ def get_vizzy_images(current_user: FirebaseUser = Depends(get_current_user)):
 # required fields and agent/vertical association as normal new Vizzy session creation.
 
 @router.post("/sessions/start-from-power-use")
-def start_from_power_use_vizzy_canvas(payload: PowerUseStartRequest, current_user: FirebaseUser = Depends(get_current_user)):
-    return _handle_start_from_power_use(payload.model_dump(by_alias=False) if hasattr(payload, "model_dump") else payload.__dict__, current_user)
+def start_from_power_use_vizzy_canvas(payload: PowerUseStartRequest, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    user = current_user or FirebaseUser(id="anonymous_user", firebase_uid="anonymous_user", email="guest@deckoviz.app", name="Guest User", display_name="Guest User", role="guest")
+    return _handle_start_from_power_use(payload.model_dump(by_alias=False) if hasattr(payload, "model_dump") else payload.__dict__, user)
 
 @vizzy_router.post("/sessions/start-from-power-use")
-def start_from_power_use(payload: PowerUseStartRequest, current_user: FirebaseUser = Depends(get_current_user)):
+def start_from_power_use(payload: PowerUseStartRequest, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    user = current_user or FirebaseUser(id="anonymous_user", firebase_uid="anonymous_user", email="guest@deckoviz.app", name="Guest User", display_name="Guest User", role="guest")
     # Reuse same in-process data-access (POWER_USES_BY_VERTICAL) — no HTTP call to own API
-    return _handle_start_from_power_use(payload.model_dump(by_alias=False) if hasattr(payload, "model_dump") else payload.__dict__, current_user)
+    return _handle_start_from_power_use(payload.model_dump(by_alias=False) if hasattr(payload, "model_dump") else payload.__dict__, user)
 
 # --- Proactive Vizzy Window MVP Endpoints ---
 

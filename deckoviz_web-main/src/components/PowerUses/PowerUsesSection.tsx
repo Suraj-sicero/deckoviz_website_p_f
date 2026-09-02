@@ -103,7 +103,19 @@ export function PowerUsesSection({ vertical, audience: audienceProp, showAudienc
           effectiveAudience = audienceFilter;
         }
       }
-      const res: any = await vizzyApi.startFromPowerUse(vertical, card.id, undefined, effectiveAudience);
+      let token =
+        localStorage.getItem("token") ||
+        localStorage.getItem("authToken") ||
+        localStorage.getItem("accessToken") ||
+        localStorage.getItem("deckoviz_token") ||
+        localStorage.getItem("jwt");
+      if (!token || token === "undefined" || token === "null") {
+        token = `guest_token_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+        localStorage.setItem("token", token);
+        localStorage.setItem("authToken", token);
+        window.dispatchEvent(new CustomEvent("deckoviz-profile-updated"));
+      }
+      const res: any = await vizzyApi.startFromPowerUse(vertical, card.id, token, effectiveAudience);
       const sessionId = res?.session_id || res?.sessionId || res?.chatId || res?.id || res?.chat?.id;
       if (!sessionId) throw new Error("No session id returned");
       navigate(`/vizzy-canvas?chatId=${encodeURIComponent(sessionId)}`);
