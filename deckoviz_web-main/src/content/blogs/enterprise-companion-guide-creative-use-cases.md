@@ -6,7 +6,7 @@ tagColor: "bg-[#182A4A] text-white"
 date: "July 5, 2026"
 readTime: "25 min read"
 pinned: true
-image: "/images/enterprise_guide_hero.png"
+image: "/blogs/enterprise-companion-guide-creative-use-cases.png"
 size: "large"
 description: "An extended compilation of unexpected possibilities, out-of-the-box experiences, and 120 additional ideas for creative enterprise use."
 enterpriseCategory: "Strategy & Capabilities"

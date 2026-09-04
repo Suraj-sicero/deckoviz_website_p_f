@@ -224,10 +224,10 @@ const WhoIsDeckovizFor: React.FC = () => {
 
         <div className="text-center mt-16 space-y-4">
           <p className="text-xl text-gray-600 font-semibold">
-            Deckoviz is for spaces that want to feel <span className="text-violet-600 font-bold">alive</span>.
+            Deckoviz is for spaces that want to feel <span className="text-[#182a4a] font-bold">alive</span>.
           </p>
           <p className="text-lg text-gray-500">
-            For people who value <span className="text-indigo-600 font-semibold">beauty</span>, <span className="text-violet-600 font-semibold">emotion</span>, and <span className="text-rose-500 font-semibold">expression</span>. For environments that deserve more than <span className="text-gray-700 font-semibold">static walls</span> and spaces.
+            For people who value <span className="text-[#182a4a] font-bold">beauty</span>, <span className="text-[#182a4a] font-bold">emotion</span>, and <span className="text-[#182a4a] font-bold">expression</span>. For environments that deserve more than <span className="text-[#182a4a] font-semibold">static walls</span> and spaces.
           </p>
         </div>
       </div>

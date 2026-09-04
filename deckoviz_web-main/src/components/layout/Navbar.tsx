@@ -64,6 +64,7 @@ const ImagePreloader: React.FC = () => {
       "/images/realestatenavbar.png",
       "/images/therapistnavbar.png",
       "/images/schoolnavbar.png",
+      "/images/universitynavbar.png",
       "/images/retailnavbar.png",
       "/images/newenterpriselogo.png",
     ];
@@ -193,14 +194,6 @@ const Navbar: React.FC = () => {
   // OPTIMIZATION 3: Move business categories to top level to avoid recreation
   const businessCategories = [
     {
-      title: "Hotels & Resorts",
-      description: "Elevate guest experiences",
-      image: "/images/hotelnavbar.png",
-      gradient: "from-blue-500 to-cyan-500",
-      route: "/deckoviz-for-hotels",
-      fallbackColor: "bg-gradient-to-br from-blue-100 to-cyan-100",
-    },
-    {
       title: "Restaurants & Cafés",
       description: "Create dining ambiance",
       image: "/images/restaurantnavbar.png",
@@ -209,36 +202,12 @@ const Navbar: React.FC = () => {
       fallbackColor: "bg-gradient-to-br from-orange-100 to-red-100",
     },
     {
-      title: "Architects & Designers",
-      description: "Design living spaces",
-      image: "/images/architectnavbar.png",
-      gradient: "from-blue-500 to-indigo-500",
-      route: "/deckoviz-for-architects",
-      fallbackColor: "bg-gradient-to-br from-blue-100 to-indigo-100",
-    },
-    {
-      title: "Offices & Workspaces",
-      description: "Inspire productivity",
-      image: "/images/officenavbar.png",
-      gradient: "from-green-500 to-emerald-500",
-      route: "/deckoviz-for-offices",
-      fallbackColor: "bg-gradient-to-br from-green-100 to-emerald-100",
-    },
-    {
-      title: "Real Estate",
-      description: "Showcase properties",
-      image: "/images/realestatenavbar.png",
-      gradient: "from-indigo-500 to-blue-500",
-      route: "/deckoviz-for-realestate",
-      fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
-    },
-    {
-      title: "Fitness & Wellness",
-      description: "Body & mind spaces",
-      image: "/images/therapistnavbar.png",
-      gradient: "from-teal-500 to-cyan-500",
-      route: "/deckoviz-for-wellness",
-      fallbackColor: "bg-gradient-to-br from-teal-100 to-cyan-100",
+      title: "Hotels & Resorts",
+      description: "Elevate guest experiences",
+      image: "/images/hotelnavbar.png",
+      gradient: "from-blue-500 to-cyan-500",
+      route: "/deckoviz-for-hotels",
+      fallbackColor: "bg-gradient-to-br from-blue-100 to-cyan-100",
     },
     {
       title: "Schools & Learning",
@@ -249,6 +218,30 @@ const Navbar: React.FC = () => {
       fallbackColor: "bg-gradient-to-br from-yellow-100 to-orange-100",
     },
     {
+      title: "Colleges & Universities",
+      description: "Higher Education Portal",
+      image: "/images/universitynavbar.png",
+      gradient: "from-blue-600 to-indigo-600",
+      route: "/deckoviz-for-universities",
+      fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
+    },
+    {
+      title: "Real Estate",
+      description: "Showcase properties",
+      image: "/images/realestatenavbar.png",
+      gradient: "from-indigo-500 to-blue-500",
+      route: "/deckoviz-for-realestate",
+      fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
+    },
+    {
+      title: "Architects & Designers",
+      description: "Design living spaces",
+      image: "/images/architectnavbar.png",
+      gradient: "from-blue-500 to-indigo-500",
+      route: "/deckoviz-for-architects",
+      fallbackColor: "bg-gradient-to-br from-blue-100 to-indigo-100",
+    },
+    {
       title: "Retail & Showrooms",
       description: "Shopping experiences",
       image: "/images/retailnavbar.png",
@@ -257,22 +250,30 @@ const Navbar: React.FC = () => {
       fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100",
     },
     {
+      title: "Offices & Workspaces",
+      description: "Inspire productivity",
+      image: "/images/officenavbar.png",
+      gradient: "from-green-500 to-emerald-500",
+      route: "/deckoviz-for-offices",
+      fallbackColor: "bg-gradient-to-br from-green-100 to-emerald-100",
+    },
+    {
+      title: "Fitness & Wellness",
+      description: "Body & mind spaces",
+      image: "/images/therapistnavbar.png",
+      gradient: "from-teal-500 to-cyan-500",
+      route: "/deckoviz-for-wellness",
+      fallbackColor: "bg-gradient-to-br from-teal-100 to-cyan-100",
+    },
+    {
       title: "Enterprises",
       description: "Crafting exquisite spaces",
       image: "/images/newenterpriselogo.png",
-      gradient: "from-pink-500 to-rose-500",
+      gradient: "from-indigo-600 to-blue-600",
       route: "/deckoviz-for-enterprises",
-      fallbackColor: "bg-gradient-to-br from-pink-100 to-rose-100",
+      fallbackColor: "bg-gradient-to-br from-indigo-100 to-blue-100",
     },
   ];
-
-  // Separate Enterprise from other categories for featured layout
-  const enterpriseCategory = businessCategories.find(
-    (cat) => cat.title === "Enterprises",
-  );
-  const otherCategories = businessCategories.filter(
-    (cat) => cat.title !== "Enterprises",
-  );
 
   return (
     <>
@@ -464,42 +465,9 @@ const Navbar: React.FC = () => {
                         scrollbarColor: 'rgba(37, 99, 235, 0.3) transparent'
                       }}>
                       <div className="p-5">
-                        {/* Featured Enterprise Card */}
-                        {enterpriseCategory && (
-                          <button
-                            key="enterprises"
-                            onClick={() => handleBusinessNavigation(enterpriseCategory.route)}
-                            className="group relative w-full mb-4 p-4 rounded-2xl text-left overflow-hidden transition-all duration-400 hover:scale-[1.015] hover:-translate-y-0.5"
-                            style={{
-                              background: "linear-gradient(135deg, rgba(24,42,74,0.06) 0%, rgba(37,99,235,0.08) 100%)",
-                              border: "1.5px solid rgba(37,99,235,0.18)",
-                              boxShadow: "0 4px 20px rgba(37,99,235,0.08), inset 0 1px 0 rgba(255,255,255,0.8)"
-                            }}
-                          >
-                            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-400"
-                              style={{ background: "linear-gradient(135deg, rgba(24,42,74,0.10) 0%, rgba(37,99,235,0.13) 100%)" }} />
-                            <div className="absolute left-0 top-3 bottom-3 w-1 rounded-r-full bg-gradient-to-b from-indigo-600 to-blue-500" />
-                            <div className="relative z-10 flex items-center gap-4 pl-3">
-                              <div className="w-12 h-12 flex-shrink-0 rounded-xl overflow-hidden shadow-md transform group-hover:scale-105 transition-transform duration-300"
-                                style={{ background: "linear-gradient(135deg, #182A4A, #2563EB)" }}
-                              >
-                                <OptimizedImage src={enterpriseCategory.image} alt={enterpriseCategory.title} className="w-12 h-12" fallbackColor={enterpriseCategory.fallbackColor} />
-                              </div>
-                              <div className="flex-1">
-                                <div className="flex items-center gap-2">
-                                  <h4 className="font-bold text-[#182A4A] text-base group-hover:text-blue-700 transition-colors duration-300">{enterpriseCategory.title}</h4>
-                                  <span className="text-[10px] font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-2 py-0.5 rounded-full">Featured</span>
-                                </div>
-                                <p className="text-xs text-gray-500 mt-0.5 group-hover:text-gray-700 transition-colors">{enterpriseCategory.description}</p>
-                              </div>
-                              <ArrowRight size={16} className="text-indigo-400 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 flex-shrink-0" />
-                            </div>
-                          </button>
-                        )}
-
-                        {/* Grid of industry cards */}
+                        {/* Grid of 10 industry cards */}
                         <div className="grid grid-cols-2 gap-2.5">
-                          {otherCategories.map((category, index) => (
+                          {businessCategories.map((category, index) => (
                             <button
                               key={index}
                               onClick={() => handleBusinessNavigation(category.route)}
@@ -733,33 +701,10 @@ const Navbar: React.FC = () => {
                   <ChevronDown size={16} className={`transition-transform duration-300 ${isBusinessDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <div className={`overflow-hidden transition-all duration-300 ${isBusinessDropdownOpen ? 'max-h-[800px] opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
-                  <div className="px-2 pb-2 space-y-2">
-                    {/* Featured Enterprise card */}
-                    {enterpriseCategory && (
-                      <button
-                        onClick={() => handleBusinessNavigation(enterpriseCategory.route)}
-                        className="group relative w-full flex items-center gap-3 p-3 rounded-xl text-left transition-all duration-200"
-                        style={{
-                          background: "linear-gradient(135deg, rgba(24,42,74,0.06) 0%, rgba(37,99,235,0.08) 100%)",
-                          border: "1.5px solid rgba(37,99,235,0.18)",
-                        }}
-                      >
-                        <div className="absolute left-0 top-2.5 bottom-2.5 w-1 rounded-r-full bg-gradient-to-b from-indigo-600 to-blue-500" />
-                        <div className="w-8 h-8 flex-shrink-0 rounded-lg overflow-hidden ml-2" style={{ background: "linear-gradient(135deg, #182A4A, #2563EB)" }}>
-                          <OptimizedImage src={enterpriseCategory.image} alt={enterpriseCategory.title} className="w-8 h-8" fallbackColor={enterpriseCategory.fallbackColor} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-1.5">
-                            <span className="font-bold text-xs text-[#182A4A]">{enterpriseCategory.title}</span>
-                            <span className="text-[9px] font-bold uppercase tracking-wider bg-gradient-to-r from-indigo-600 to-blue-500 text-white px-1.5 py-0.5 rounded-full">Featured</span>
-                          </div>
-                          <p className="text-[10px] text-gray-500 truncate">{enterpriseCategory.description}</p>
-                        </div>
-                      </button>
-                    )}
-                    {/* Other categories grid */}
+                  <div className="px-2 pb-2">
+                    {/* All 10 industry categories grid */}
                     <div className="grid grid-cols-2 gap-2">
-                      {otherCategories.map((category, index) => (
+                      {businessCategories.map((category, index) => (
                         <button
                           key={index}
                           onClick={() => handleBusinessNavigation(category.route)}

@@ -41,12 +41,12 @@ interface CategoryData {
 const whatYouGetCategories: CategoryData[] = [
   {
     id: "homes",
-    icon: <Home className="w-5 h-5 sm:w-6 sm:h-6 text-teal-600" />,
+    icon: <Home className="w-5 h-5 sm:w-6 sm:h-6 text-[#182a4a]" />,
     badge: "For Homes",
     title: "Deckoviz Portal for Your Home",
     subtitle: "What exactly do you get with a Deckoviz Portal for your home?",
     gradient: "from-teal-400/20 via-indigo-400/10 to-transparent",
-    badgeBg: "bg-teal-50/80 text-teal-900 border-teal-200/80 shadow-sm",
+    badgeBg: "bg-teal-50/90 text-teal-900 border-teal-200/90 shadow-sm",
     items: [
       {
         title: "The DASPort, your generative display",
@@ -81,12 +81,12 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "A sleek, handcrafted wooden frame",
         desc: "Designed to belong on your wall, not just in front of it, as an actual art frame would.",
-        icon: <Frame className="w-5 h-5 text-emerald-600" />
+        icon: <Frame className="w-5 h-5 text-teal-600" />
       },
       {
         title: "Optional add-ons",
         desc: "Custom frame finishes, mounts and stands, immersive 16D speakers, wooden frame skins, and more.",
-        icon: <PackagePlus className="w-5 h-5 text-purple-600" />
+        icon: <PackagePlus className="w-5 h-5 text-indigo-600" />
       },
       {
         title: "Weekly feature and content updates",
@@ -111,23 +111,23 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "More Perks of the Deckoviz Family",
         desc: "Being a Deckoviz customer comes with more than the Portal itself. We've got more perks and benefits for our community, coming soon.",
-        icon: <Gift className="w-5 h-5 text-rose-500" />
+        icon: <Gift className="w-5 h-5 text-[#182a4a]" />
       }
     ]
   },
   {
     id: "enterprises",
-    icon: <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-rose-600" />,
+    icon: <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-[#182a4a]" />,
     badge: "For Enterprises",
     title: "Deckoviz Portal for Your Business",
     subtitle: "What exactly do you get with a Deckoviz Portal for your business?",
-    gradient: "from-rose-500/20 via-indigo-500/10 to-transparent",
-    badgeBg: "bg-rose-50/80 text-rose-900 border-rose-200/80 shadow-sm",
+    gradient: "from-teal-500/20 via-indigo-500/10 to-transparent",
+    badgeBg: "bg-teal-50/90 text-teal-900 border-teal-200/90 shadow-sm",
     items: [
       {
         title: "The DASPort, your generative display",
         desc: "A living canvas for on-brand art, posters, live-generated visuals, and multimodal content across your space.",
-        icon: <Frame className="w-5 h-5 text-rose-600" />
+        icon: <Frame className="w-5 h-5 text-teal-600" />
       },
       {
         title: "Vizzy, your Creative, Marketing & Experience Director",
@@ -152,12 +152,12 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "A sleek, handcrafted wooden frame",
         desc: "A piece that elevates your space, not just occupies it.",
-        icon: <Frame className="w-5 h-5 text-emerald-600" />
+        icon: <Frame className="w-5 h-5 text-teal-600" />
       },
       {
         title: "Optional add-ons",
         desc: "Custom frame finishes, mounts and stands, immersive 16D speakers, wooden frame skins, and more.",
-        icon: <PackagePlus className="w-5 h-5 text-purple-600" />
+        icon: <PackagePlus className="w-5 h-5 text-indigo-600" />
       },
       {
         title: "Weekly feature and content updates",
@@ -172,7 +172,7 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "Onboarding & Installation Guide",
         desc: "A clear, guided setup process, from unboxing to your first generated experience, built for teams and staff, not just individual users.",
-        icon: <BookOpenCheck className="w-5 h-5 text-rose-600" />
+        icon: <BookOpenCheck className="w-5 h-5 text-teal-600" />
       },
       {
         title: "Tens of In-Depth Guides to Get the Most From Your DASPort",
@@ -187,23 +187,23 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "More Perks of the Deckoviz Family",
         desc: "Being part of the Deckoviz ecosystem comes with more than the Portal itself. We've got more perks and benefits for our partners and institutions, coming soon.",
-        icon: <Gift className="w-5 h-5 text-rose-500" />
+        icon: <Gift className="w-5 h-5 text-[#182a4a]" />
       }
     ]
   },
   {
     id: "schools",
-    icon: <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />,
+    icon: <GraduationCap className="w-5 h-5 sm:w-6 sm:h-6 text-teal-700" />,
     badge: "For Schools",
     title: "Deckoviz Portal for Your Classroom",
     subtitle: "What exactly do you get with a Deckoviz Portal for your classroom?",
-    gradient: "from-emerald-500/20 via-teal-500/10 to-transparent",
-    badgeBg: "bg-emerald-50/80 text-emerald-900 border-emerald-200/80 shadow-sm",
+    gradient: "from-teal-500/20 via-blue-500/10 to-transparent",
+    badgeBg: "bg-teal-50/90 text-teal-900 border-teal-200/90 shadow-sm",
     items: [
       {
         title: "The Portal, your generative display",
         desc: "A living canvas for multimodal learning content, and a fully capable classroom smart display in its own right, to adapt classes to lessons and students.",
-        icon: <Frame className="w-5 h-5 text-emerald-600" />
+        icon: <Frame className="w-5 h-5 text-teal-600" />
       },
       {
         title: "Vizzy, the ultimate learning companion and teaching assistant",
@@ -233,12 +233,12 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "A sleek, handcrafted wooden frame",
         desc: "Built to belong in a modern learning space.",
-        icon: <Frame className="w-5 h-5 text-emerald-600" />
+        icon: <Frame className="w-5 h-5 text-teal-600" />
       },
       {
         title: "Optional add-ons",
         desc: "Custom frame finishes, mounts and stands, immersive 16D speakers, wooden frame skins, and more.",
-        icon: <PackagePlus className="w-5 h-5 text-purple-600" />
+        icon: <PackagePlus className="w-5 h-5 text-indigo-600" />
       },
       {
         title: "Weekly feature and content updates",
@@ -248,7 +248,7 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "Onboarding & Installation Guide",
         desc: "A clear, guided setup process, from unboxing to your first generated experience, built for teams and staff, not just individual users.",
-        icon: <BookOpenCheck className="w-5 h-5 text-emerald-600" />
+        icon: <BookOpenCheck className="w-5 h-5 text-teal-600" />
       },
       {
         title: "Tens of In-Depth Guides to Get the Most From Your DASPort",
@@ -263,53 +263,58 @@ const whatYouGetCategories: CategoryData[] = [
       {
         title: "More Perks of the Deckoviz Family",
         desc: "Being part of the Deckoviz ecosystem comes with more than the Portal itself. We've got more perks and benefits for our partners and institutions, coming soon.",
-        icon: <Gift className="w-5 h-5 text-rose-500" />
+        icon: <Gift className="w-5 h-5 text-[#182a4a]" />
       }
     ]
   }
 ];
 
 export default function WhatYouGetSection() {
-  const [openCategory, setOpenCategory] = useState<string>("");
+  const [openCategory, setOpenCategory] = useState<string>("homes");
+
+  const handleMouseEnter = (id: string, e: React.MouseEvent) => {
+    if ("pointerType" in e.nativeEvent && (e.nativeEvent as PointerEvent).pointerType === "touch") {
+      return;
+    }
+    setOpenCategory(id);
+  };
 
   return (
     <div
-      onMouseLeave={() => setOpenCategory("")}
-      className="w-full max-w-6xl mx-auto my-16 px-4 sm:px-6 relative z-10"
+      className="w-full max-w-6xl mx-auto my-12 sm:my-16 px-3 sm:px-6 relative z-10"
     >
       {/* SECTION HEADER */}
-      <div className="text-center mb-12">
-        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/50 backdrop-blur-xl border border-white/80 shadow-[0_8px_25px_rgba(37,99,235,0.15)] text-xs font-bold text-indigo-900 uppercase tracking-widest mb-4">
-          <Sparkle className="w-4 h-4 text-indigo-600 animate-spin-slow" />
+      <div className="text-center mb-8 sm:mb-12">
+        <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/50 backdrop-blur-xl border border-white/80 shadow-[0_8px_25px_rgba(37,99,235,0.15)] text-[10px] sm:text-xs font-bold text-indigo-900 uppercase tracking-widest mb-3 sm:mb-4">
+          <Sparkle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600 animate-spin-slow" />
           <span>Included With Every Purchase</span>
         </div>
 
         <h2
-          className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4"
+          className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 sm:mb-4"
           style={{ fontFamily: "'Playfair Display', serif" }}
         >
-          What You Get — <span className="bg-gradient-to-r from-indigo-950 via-indigo-700 to-blue-600 bg-clip-text text-transparent italic">Deckoviz Portal</span>
+          What You Get <span className="bg-gradient-to-r from-indigo-950 via-indigo-700 to-blue-600 bg-clip-text text-transparent italic">Deckoviz Portal</span>
         </h2>
 
-        <p className="text-base sm:text-lg text-slate-700 max-w-3xl mx-auto leading-relaxed font-normal">
-          What all do you get as a Deckoviz customer when you purchase a Deckoviz Portal? Hover over any category to expand.
+        <p className="text-xs sm:text-base lg:text-lg text-slate-700 max-w-3xl mx-auto leading-relaxed font-normal px-2">
+          What all do you get as a Deckoviz customer when you purchase a Deckoviz Portal? Tap or hover over any category to expand.
         </p>
       </div>
 
-      {/* CATEGORY ACCORDION PANELS WITH HOVER EXPAND & MINIMIZE */}
-      <div className="space-y-6">
+      {/* CATEGORY ACCORDION PANELS WITH MOBILE TOUCH FIX */}
+      <div className="space-y-4 sm:space-y-6">
         {whatYouGetCategories.map((cat) => {
           const isOpen = openCategory === cat.id;
 
           return (
             <div
               key={cat.id}
-              onMouseEnter={() => setOpenCategory(cat.id)}
-              onMouseLeave={() => setOpenCategory("")}
-              className={`group/panel relative rounded-[2.5rem] border transition-all duration-500 ease-in-out overflow-hidden ${
+              onMouseEnter={(e) => handleMouseEnter(cat.id, e)}
+              className={`group/panel relative rounded-3xl sm:rounded-[2.5rem] border transition-all duration-500 ease-in-out overflow-hidden ${
                 isOpen
-                  ? "bg-white/55 backdrop-blur-2xl border-white/95 shadow-[inset_0_2.5px_5px_rgba(255,255,255,1),0_30px_70px_rgba(37,99,235,0.2)] scale-[1.01]"
-                  : "bg-white/35 backdrop-blur-xl border-white/70 hover:bg-white/55 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.8),0_12px_35px_rgba(0,0,0,0.06)]"
+                  ? "bg-white/70 sm:bg-white/55 backdrop-blur-2xl border-white/95 shadow-[inset_0_2.5px_5px_rgba(255,255,255,1),0_20px_50px_rgba(37,99,235,0.15)] sm:scale-[1.01]"
+                  : "bg-white/40 sm:bg-white/35 backdrop-blur-xl border-white/70 hover:bg-white/55 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.8),0_10px_25px_rgba(0,0,0,0.04)]"
               }`}
             >
               {/* Glass Top Edge Reflection Line */}
@@ -324,41 +329,42 @@ export default function WhatYouGetSection() {
 
               {/* ACCORDION HEADER BUTTON */}
               <button
+                type="button"
                 onClick={() => setOpenCategory((prev) => (prev === cat.id ? "" : cat.id))}
-                className="w-full px-6 sm:px-9 py-6 text-left flex items-center justify-between gap-4 focus:outline-none relative z-10"
+                className="w-full px-4 sm:px-9 py-4 sm:py-6 text-left flex items-center justify-between gap-3 sm:gap-4 focus:outline-none relative z-10 cursor-pointer"
               >
-                <div className="flex items-center gap-4 sm:gap-5">
-                  <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-white/80 backdrop-blur-md shadow-[0_8px_20px_rgba(0,0,0,0.08)] border border-white flex items-center justify-center group-hover/panel:scale-110 group-hover/panel:rotate-3 transition-all duration-500 shrink-0">
+                <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+                  <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-white/90 backdrop-blur-md shadow-sm border border-white flex items-center justify-center group-hover/panel:scale-105 sm:group-hover/panel:scale-110 transition-all duration-500 shrink-0">
                     {cat.icon}
                   </div>
 
-                  <div>
+                  <div className="min-w-0">
                     <span
-                      className={`inline-block px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-1.5 backdrop-blur-md border ${cat.badgeBg}`}
+                      className={`inline-block px-2.5 sm:px-3.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-1 backdrop-blur-md border ${cat.badgeBg}`}
                     >
                       {cat.badge}
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight">
+                    <h3 className="text-base sm:text-2xl font-bold text-slate-900 leading-tight truncate">
                       {cat.title}
                     </h3>
                   </div>
                 </div>
 
                 <div
-                  className={`w-11 h-11 rounded-full flex items-center justify-center transition-all duration-500 shrink-0 ${
+                  className={`w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-500 shrink-0 ${
                     isOpen
-                      ? "bg-gradient-to-r from-indigo-900 to-blue-600 text-white rotate-180 shadow-lg shadow-indigo-600/30 border border-white/30"
-                      : "bg-white/60 backdrop-blur-md text-slate-700 group-hover/panel:bg-white group-hover/panel:text-indigo-900 border border-white/80"
+                      ? "bg-gradient-to-r from-indigo-900 to-blue-600 text-white rotate-180 shadow-md shadow-indigo-600/30 border border-white/30"
+                      : "bg-white/80 sm:bg-white/60 backdrop-blur-md text-slate-700 group-hover/panel:bg-white group-hover/panel:text-indigo-900 border border-white/80"
                   }`}
                 >
-                  <ChevronDown className="w-5 h-5" />
+                  <ChevronDown className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
               </button>
 
-              {/* ACCORDION BODY CONTENT WITH SMOOTH HOVER EXPAND */}
+              {/* ACCORDION BODY CONTENT WITH SMOOTH MOBILE ANIMATION */}
               {isOpen && (
-                <div className="px-6 sm:px-9 pb-9 pt-2 border-t border-slate-200/50 relative z-10 transition-all duration-500 animate-fadeIn">
-                  <p className="text-sm sm:text-base font-bold text-indigo-950 mb-7 italic bg-white/75 backdrop-blur-md px-5 py-3 rounded-2xl border border-white/95 shadow-sm inline-block">
+                <div className="px-4 sm:px-9 pb-6 sm:pb-9 pt-2 border-t border-slate-200/50 relative z-10 transition-all duration-500 animate-fadeIn">
+                  <p className="text-xs sm:text-base font-bold text-indigo-950 mb-4 sm:mb-7 italic bg-white/85 backdrop-blur-md px-3.5 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl border border-white/95 shadow-sm inline-block max-w-full">
                     {cat.subtitle}
                   </p>
 

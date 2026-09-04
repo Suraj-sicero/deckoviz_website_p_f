@@ -258,14 +258,6 @@ const frameImages = [
     },
     {
       title:
-        "For parents and families who want to infuse family time family rituals",
-      gradient: "from-yellow-200 via-orange-100 to-pink-300",
-      caption: " More bonding. More traditions. More joy in family moments.",
-      image:
-        "/images/h11.png",
-    },
-    {
-      title:
         "For couples who want to infuse their relationship with more joy, intimacy, growth, beauty, passion, and romance",
       gradient: "from-rose-200 via-pink-100 to-indigo-300",
       caption: " More connection. More love. More shared experiences.",
@@ -431,58 +423,56 @@ const frameImages = [
             <p className="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
               And so, in essence, we have designed Deckoviz to be for those who
               want more{" "}
-              <span className="text-violet-600 font-semibold">
+              <span className="text-[#182a4a] font-bold">
                 life in their life
               </span>
               , more{" "}
-              <span className="text-pink-600 font-semibold">
+              <span className="text-[#182a4a] font-bold">
                 magic in their moments.
               </span>
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-lg font-semibold">
-              <span className="text-indigo-600">Deckoviz for You,</span>
-              <span className="text-violet-600">Deckoviz for All.</span>
+              <span className="text-[#182a4a] font-bold">Deckoviz for You,</span>
+              <span className="text-[#182a4a] font-bold">Deckoviz for All.</span>
             </div>
           </div>
         </div>
         
+        {/* 
         <div className="relative mt-8">
           <div className="w-full relative z-20">
             <ScrollingImageGallery />
           </div>
         </div>
 
-{/* Dynamic Frame Showcase */}
-<div className="flex justify-center mt-20">
-  <div className="relative w-[520px] rounded-2xl overflow-hidden">
+        <div className="flex justify-center mt-20">
+          <div className="relative w-[520px] rounded-2xl overflow-hidden">
 
-    {/* glow */}
-    <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-violet-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
+            <div className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-r from-violet-400/30 via-pink-300/30 to-yellow-300/30 blur-2xl opacity-70"></div>
 
-    {/* FULL furniture image */}
-    <img
-      src="/images/furniture-left.png"
-      alt="Living room"
-      className="w-full h-auto object-contain rounded-2xl"
-    />
+            <img
+              src="/images/furniture-left.png"
+              alt="Living room"
+              className="w-full h-auto object-contain rounded-2xl"
+            />
 
-    {/* Artwork inside frame */}
-    <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[57%] h-[57%] overflow-hidden">
-      {frameImages.map((img, index) => (
-        <img
-          key={index}
-          src={img}
-          alt={`Frame artwork ${index + 1}`}
-          className={`absolute inset-0 w-full h-full object-contain rounded-lg transition-opacity duration-1000 ${
-            index === leftImageIndex ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
-    </div>
+            <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[57%] h-[57%] overflow-hidden">
+              {frameImages.map((img, index) => (
+                <img
+                  key={index}
+                  src={img}
+                  alt={`Frame artwork ${index + 1}`}
+                  className={`absolute inset-0 w-full h-full object-contain rounded-lg transition-opacity duration-1000 ${
+                    index === leftImageIndex ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              ))}
+            </div>
 
-  </div>
-</div>
+          </div>
+        </div>
+        */}
       </div>
     </section>
   );

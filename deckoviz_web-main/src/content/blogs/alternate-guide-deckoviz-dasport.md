@@ -6,12 +6,12 @@ tagColor: "bg-gradient-to-r from-indigo-100 to-purple-100 text-indigo-700"
 date: "July 5, 2026"
 readTime: "20 min read"
 pinned: true
-image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=1000&auto=format&fit=crop"
+image: "/blogs/alternate-guide-deckoviz-dasport.jpg"
 size: "large"
 description: "A stunning look at turning your home into a living canvas. Explore memory, ritual, intelligence, and the rhythm of everyday life."
 ---
 
-<div className="my-12 relative rounded-3xl overflow-hidden shadow-2xl border border-white/20 group"><div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent pointer-events-none z-10"></div><img src="https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=1200&auto=format&fit=crop" className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105" alt="Deckoviz Inspiration" /></div>
+<div className="my-12 relative rounded-3xl overflow-hidden shadow-2xl border border-white/20 group"><div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent pointer-events-none z-10"></div><img src="/blogs/alternate-guide-deckoviz-dasport.jpg" className="w-full h-[400px] object-cover transition-transform duration-700 group-hover:scale-105" alt="Deckoviz Inspiration" /></div>
 
 <h1 className="text-4xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-300 my-10 tracking-tight">Part 1: The Living Canvas  -  Art, Mood, Story, and Inner Worlds</h1>
 

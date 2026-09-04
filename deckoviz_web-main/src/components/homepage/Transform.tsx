@@ -146,25 +146,60 @@ export default function TransformWalls() {
               <motion.span initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} viewport={{ once: true }} transition={{ delay: 1, duration: 0.8 }} className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400 to-transparent origin-center"></motion.span>
             </motion.p>
 
-            {/* Animated Mood Pills */}
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.9, duration: 0.6 }} className="flex flex-wrap gap-2.5 pt-2">
-              {[
-                { text: "Inspired", color: "from-cyan-500 to-teal-500", delay: 0 },
-                { text: "Serene", color: "from-sky-500 to-blue-500", delay: 0.05 },
-                { text: "Energized", color: "from-orange-500 to-red-500", delay: 0.1 },
-                { text: "Grounded", color: "from-emerald-500 to-green-600", delay: 0.15 },
-                { text: "Joyous", color: "from-amber-500 to-orange-500", delay: 0.2 },
-                { text: "Curious", color: "from-teal-500 to-cyan-600", delay: 0.25 },
-                { text: "Playful", color: "from-pink-500 to-rose-500", delay: 0.3 },
-                { text: "Nostalgic", color: "from-violet-500 to-pink-500", delay: 0.35 },
-                { text: "Uplifted", color: "from-yellow-500 to-amber-500", delay: 0.4 },
-                { text: "Centered", color: "from-lime-500 to-emerald-500", delay: 0.45 },
-                { text: "Alive", color: "from-red-500 to-orange-500", delay: 0.5 }
-              ].map((mood) => (
-                <motion.span key={mood.text} initial={{ opacity: 0, scale: 0.8, y: 10 }} whileInView={{ opacity: 1, scale: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: mood.delay, duration: 0.4, type: "spring", bounce: 0.5 }} whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 bg-gradient-to-r ${mood.color} text-white rounded-full text-sm font-semibold shadow-md hover:shadow-lg transition-shadow duration-300 cursor-default`} style={{ fontFamily: "'Comfortaa', sans-serif" }}>
-                  {mood.text}
-                </motion.span>
-              ))}
+            {/* Auto-scrolling Single-Line Mood Pills */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.9, duration: 0.6 }}
+              className="relative overflow-hidden py-3 max-w-full my-1 rounded-2xl"
+            >
+              {/* Soft fade edges */}
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-[#f8fafc] via-[#f8fafc]/80 to-transparent z-10 pointer-events-none" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#f8fafc] via-[#f8fafc]/80 to-transparent z-10 pointer-events-none" />
+
+              <motion.div
+                className="flex items-center gap-3 w-max"
+                animate={{ x: ["-50%", "0%"] }}
+                transition={{
+                  repeat: Infinity,
+                  ease: "linear",
+                  duration: 22,
+                }}
+              >
+                {[
+                  { text: "Inspired", color: "from-cyan-500 to-teal-500" },
+                  { text: "Serene", color: "from-sky-500 to-blue-500" },
+                  { text: "Energized", color: "from-orange-500 to-red-500" },
+                  { text: "Grounded", color: "from-emerald-500 to-green-600" },
+                  { text: "Joyous", color: "from-amber-500 to-orange-500" },
+                  { text: "Curious", color: "from-teal-500 to-cyan-600" },
+                  { text: "Playful", color: "from-pink-500 to-rose-500" },
+                  { text: "Nostalgic", color: "from-violet-500 to-pink-500" },
+                  { text: "Uplifted", color: "from-yellow-500 to-amber-500" },
+                  { text: "Centered", color: "from-lime-500 to-emerald-500" },
+                  { text: "Alive", color: "from-red-500 to-orange-500" },
+                  { text: "Inspired", color: "from-cyan-500 to-teal-500" },
+                  { text: "Serene", color: "from-sky-500 to-blue-500" },
+                  { text: "Energized", color: "from-orange-500 to-red-500" },
+                  { text: "Grounded", color: "from-emerald-500 to-green-600" },
+                  { text: "Joyous", color: "from-amber-500 to-orange-500" },
+                  { text: "Curious", color: "from-teal-500 to-cyan-600" },
+                  { text: "Playful", color: "from-pink-500 to-rose-500" },
+                  { text: "Nostalgic", color: "from-violet-500 to-pink-500" },
+                  { text: "Uplifted", color: "from-yellow-500 to-amber-500" },
+                  { text: "Centered", color: "from-lime-500 to-emerald-500" },
+                  { text: "Alive", color: "from-red-500 to-orange-500" }
+                ].map((mood, idx) => (
+                  <span
+                    key={`${mood.text}-${idx}`}
+                    className={`px-4 py-2 bg-gradient-to-r ${mood.color} text-white rounded-full text-sm font-semibold shadow-md shrink-0 cursor-default hover:scale-105 transition-transform duration-200`}
+                    style={{ fontFamily: "'Comfortaa', sans-serif" }}
+                  >
+                    {mood.text}
+                  </span>
+                ))}
+              </motion.div>
             </motion.div>
 
             {/* Animated Feature Points */}

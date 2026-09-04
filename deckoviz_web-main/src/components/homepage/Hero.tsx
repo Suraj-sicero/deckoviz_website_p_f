@@ -333,7 +333,7 @@ const Hero: React.FC = () => {
   const [rightImageIndex, setRightImageIndex] = useState(0)
 
   const frameImages = Array.from({ length: 22 }, (_, i) => i + 1)
-    .filter((num) => num !== 16 && num !== 18)
+    .filter((num) => num !== 2 && num !== 16 && num !== 18)
     .map((num) => `/images/herol (${num}).png`)
 
   const rightImages = [
@@ -341,7 +341,6 @@ const Hero: React.FC = () => {
     "/images/righthero2.png",
     "/images/righthero4.png",
     "/images/righthero5.png",
-    "/images/righthero6.png",
     "/images/righthero7.png",
     "/images/righthero8.png",
     "/images/righthero9.png",

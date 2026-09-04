@@ -13,7 +13,10 @@ import {
   Notebook,
   Sparkles,
   Grid,
-  Shield
+  Shield,
+  Heart,
+  GraduationCap,
+  Monitor
 } from "lucide-react"
 import { motion } from "framer-motion"
 
@@ -24,7 +27,9 @@ const productLinks = [
   { name: "How It Works", path: "/how-it-works" },
   { name: "Pricing", path: "/pricing" },
   { name: "FAQ", path: "/faq" },
+  { name: "Deckoviz Subscriptions", path: "/subscriptions" },
   { name: "Subscriptions & more Info", path: "/generalinfo" },
+  { name: "Sponsorship Program", path: "/sponsorship" },
   { name: "Stories in Sound", path: "/audiobook" },
   { name: "Experimental Art Modes", path: "/experimental-art-modes" },
   { name: "Flagship Games", path: "/flagship-games" },
@@ -38,6 +43,7 @@ const companyLinks = [
   { name: "Careers", path: "/contact" },
   { name: "Blog", path: "/blog" },
   { name: "Contact Us", path: "/contact" },
+  { name: "Sponsorship Program", path: "/sponsorship" },
   { name: "Sitemap", path: "/sitemap" },
   { name: "Support", path: "/support" },
   { name: "Partnerships", path: "/partnership" },
@@ -187,7 +193,7 @@ const Footer = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
-            className="flex flex-col items-center gap-8 mb-10"
+            className="flex flex-col items-center gap-3 mb-8"
           >
             <style dangerouslySetInnerHTML={{
               __html: `
@@ -198,8 +204,8 @@ const Footer = () => {
                 }
               `}} />
 
-            {/* Top 3 Primary Horizon Buttons (Home Webapp, Enterprise Webapp, Master Admin Suite) */}
-            <div className="flex justify-center items-center gap-6 w-full flex-wrap">
+            {/* Top 3 Primary Horizon Webapp Buttons (BIG, Centered) */}
+            <div className="flex justify-center items-center gap-5 flex-wrap max-w-5xl mx-auto w-full mb-6">
               {[
                 { label: "Home Webapp", href: "/webapp", icon: Grid, gradient: "linear-gradient(135deg, #38bdf8, #0ea5e9, #0284c7, #0ea5e9, #38bdf8)", shadow: "rgba(14,165,233,0.4)", hoverShadow: "rgba(14,165,233,0.7)" },
                 { label: "Enterprise Webapp", href: "/enterprise-webapp", icon: Grid, gradient: "linear-gradient(135deg, #1e40af, #1e3a5f, #3b82f6, #1e3a5f, #1e40af)", shadow: "rgba(30,64,175,0.4)", hoverShadow: "rgba(59,130,246,0.7)" },
@@ -208,7 +214,7 @@ const Footer = () => {
                 <a
                   key={btn.label}
                   href={btn.href}
-                  className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-base transition-all duration-300 overflow-hidden hover:scale-105 border border-white/20"
+                  className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-full font-bold text-base md:text-lg transition-all duration-300 overflow-hidden hover:scale-105 border border-white/20"
                   style={{
                     background: btn.gradient,
                     backgroundSize: "300% 300%",
@@ -228,12 +234,26 @@ const Footer = () => {
                   <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                   <btn.icon className="relative z-10 w-5 h-5 flex-shrink-0" />
                   <span className="relative z-10">{btn.label}</span>
+                  <svg
+                    className="relative z-10 group-hover:translate-x-1 transition-transform ml-1"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
                 </a>
               ))}
             </div>
 
-            {/* Remaining 9 Standardized Buttons */}
-            <div className="flex justify-center items-center gap-4 flex-wrap max-w-4xl">
+            {/* Remaining Small Standardized Buttons (Centered Below) */}
+            <div className="flex justify-center items-center gap-2.5 flex-wrap max-w-5xl mx-auto w-full">
               {[
                 { label: "Quick Access Zone: Some nifty little fun tools", href: "/vizzy-fun-zone", icon: Sparkles },
                 { label: "Creative Journal", href: "/creative-journal", icon: Notebook },
@@ -246,12 +266,9 @@ const Footer = () => {
                 { label: "Master Suite of Features", href: "/master-suite", icon: Grid },
               ].map((btn, index) => {
                 const isStyle1 = index % 2 === 0;
-                // Style 1: Vibrant transparent-like Blue (Creative Studio style)
-                // Style 2: Deep Blue to Light Blue to Slate Edge
                 const gradient = isStyle1
                   ? "linear-gradient(90deg, #38bdf8, #0ea5e9, #38bdf8)"
                   : "linear-gradient(90deg, #1d4ed8, #3b82f6, #94a3b8, #3b82f6, #1d4ed8)";
-                
                 const shadowColor = isStyle1 ? "rgba(14,165,233,0.4)" : "rgba(59,130,246,0.4)";
                 const hoverShadowColor = isStyle1 ? "rgba(14,165,233,0.7)" : "rgba(59,130,246,0.7)";
 
@@ -259,19 +276,19 @@ const Footer = () => {
                   <a
                     key={btn.label}
                     href={btn.href}
-                    className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 overflow-hidden hover:scale-105"
+                    className="group relative inline-flex items-center gap-2 px-4 py-2 rounded-full font-semibold text-xs md:text-sm transition-all duration-300 overflow-hidden hover:scale-105"
                     style={{
                       background: gradient,
                       backgroundSize: "300% 300%",
                       animation: "footerGradientFlow 4s ease infinite",
                       color: "white",
-                      boxShadow: `0 0 20px ${shadowColor}`,
+                      boxShadow: `0 0 15px ${shadowColor}`,
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow = `0 0 35px ${hoverShadowColor}`;
+                      e.currentTarget.style.boxShadow = `0 0 25px ${hoverShadowColor}`;
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow = `0 0 20px ${shadowColor}`;
+                      e.currentTarget.style.boxShadow = `0 0 15px ${shadowColor}`;
                     }}
                   >
                     <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
@@ -279,8 +296,8 @@ const Footer = () => {
                     <span className="relative z-10">{btn.label}</span>
                     <svg
                       className="relative z-10 group-hover:translate-x-1 transition-transform ml-1"
-                      width="16"
-                      height="16"
+                      width="14"
+                      height="14"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"

@@ -17,12 +17,22 @@ import {
   Sparkle,
   ShoppingBag,
   CheckCircle2,
-  Flame
+  Flame,
+  UtensilsCrossed,
+  Building
 } from "lucide-react";
 
 /* ===== Core Reading Content ===== */
 
-const coreReadings = [
+const coreReadings: {
+  title: string;
+  slug: string;
+  category: string;
+  readTime: string;
+  isFeatured?: boolean;
+  description: string;
+  customLink?: string;
+}[] = [
   {
     title: "Why The Deckoviz Portal for Homes?",
     slug: "why-the-deckoviz-portal-for-homes",
@@ -127,6 +137,24 @@ const coreReadings = [
     readTime: "5 min read",
     description:
       "Why Deckoviz is built as a platform that keeps evolving, learning, and growing with you long after it’s on your wall."
+  },
+  {
+    title: "The Home of 2030: Your Home Learns to Love You Back",
+    slug: "home-of-2030",
+    category: "Essays",
+    readTime: "12 min read",
+    customLink: "/essay/home-of-2030",
+    description:
+      "An essay on the future of the home — from smart to sentient, from static walls to living expressions. What happens when your home becomes a genuine member of the family."
+  },
+  {
+    title: "The Restaurant of 2030: Designing for an Experience-Led Future",
+    slug: "restaurant-of-2030",
+    category: "Essays",
+    readTime: "10 min read",
+    customLink: "/essay/restaurant-of-2030",
+    description:
+      "A thought piece for restaurant owners, operators, and hospitality leaders. When food becomes a commodity, experience becomes the moat."
   }
 ];
 
@@ -142,7 +170,9 @@ const icons = [
   Palette,
   Heart,
   Clock,
-  Wand2
+  Wand2,
+  Building,
+  UtensilsCrossed
 ];
 
 export default function CoreReading() {
@@ -155,7 +185,8 @@ export default function CoreReading() {
     "Philosophy",
     "AI & Tech",
     "Guides",
-    "Design"
+    "Design",
+    "Essays"
   ];
 
   const featuredArticle = coreReadings.find((r) => r.isFeatured) || coreReadings[0];
@@ -212,7 +243,7 @@ export default function CoreReading() {
         {selectedCategory === "All" && (
           <div className="mb-16">
             <div
-              onClick={() => navigate(`/blog/${featuredArticle.slug}`)}
+              onClick={() => navigate(featuredArticle.customLink || `/blog/${featuredArticle.slug}`)}
               className="group relative rounded-[2.5rem] p-6 sm:p-10 md:p-12 bg-white/55 backdrop-blur-2xl border border-white/90 shadow-[inset_0_2px_4px_rgba(255,255,255,1),0_25px_60px_rgba(37,99,235,0.12)] hover:shadow-[inset_0_2.5px_5px_rgba(255,255,255,1),0_35px_80px_rgba(37,99,235,0.22)] transition-all duration-500 cursor-pointer overflow-hidden"
             >
               <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 relative z-10">
@@ -270,7 +301,7 @@ export default function CoreReading() {
           {filteredReadings.map((item, index) => (
             <div
               key={index}
-              onClick={() => navigate(`/blog/${item.slug}`)}
+              onClick={() => navigate(item.customLink || `/blog/${item.slug}`)}
               className="group relative rounded-[2rem] p-7 bg-white/50 backdrop-blur-2xl border border-white/80 shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.9),0_12px_35px_rgba(37,99,235,0.08)] hover:shadow-[inset_0_2px_4px_rgba(255,255,255,1),0_25px_60px_rgba(37,99,235,0.18)] hover:border-white hover:-translate-y-2 transition-all duration-500 cursor-pointer flex flex-col justify-between"
             >
               <div>

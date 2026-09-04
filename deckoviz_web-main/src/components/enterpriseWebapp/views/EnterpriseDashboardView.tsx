@@ -19,7 +19,6 @@ interface DashboardData {
 /* ======================== MEDIA SAMPLES ======================== */
 const ENT_MEDIA_SAMPLES = [
   "/images/herol (1).png",
-  "/images/herol (2).png",
   "/images/herol (3).png",
   "/images/herol (4).png",
   "/images/herol (5).png",

@@ -7,7 +7,7 @@ tagColor: "bg-indigo-500"
 date: "June 26, 2026"
 readTime: "30 min read"
 pinned: true
-image: "/blogs/the-50-greatest-institutions.png"
+image: "/blogs/the-50-greatest-institutions.jpg"
 size: "large"
 ---
 

@@ -464,7 +464,6 @@ export default function DeckovizWebapp() {
 /* ======================== VIRTUAL FRAME MODAL ======================== */
 export const MEDIA_SAMPLES = [
   "/images/herol (1).png",
-  "/images/herol (2).png",
   "/images/herol (3).png",
   "/images/herol (4).png",
   "/images/herol (5).png",
@@ -960,7 +959,7 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
       {/* Favourite Artworks */}
       <SectionCard title="Favourite Artworks" icon={<Star size={18} />} accentColor="#f59e0b" fullWidth>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-          {(userArtworks.length > 0 ? userArtworks.slice(0, 4) : ["/images/herol (1).png", "/images/herol (2).png", "/images/herol (4).png", "/images/herol (8).png"]).map((img, i) => {
+          {(userArtworks.length > 0 ? userArtworks.slice(0, 4) : ["/images/herol (1).png", "/images/herol (4).png", "/images/herol (8).png"]).map((img, i) => {
             const artworkObj = typeof img === "string" ? { url: img, title: `Favourite Artwork #${i + 1}` } : img;
             return (
               <div key={i} className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.08)] hover:shadow-[0_12px_40px_rgba(24,42,74,0.2)] transition-all duration-500 hover:-translate-y-1">
@@ -989,7 +988,7 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
             ))}
           </div>
           <div className="grid grid-cols-4 gap-2 mt-4">
-            {["/images/herol (9).png", "/images/herol (13).png", "/images/herol (15).png", "/images/herol (17).png"].map((img, i) => (
+            {["/images/herol (9).png", "/images/herol (13).png", "/images/herol (15).png"].map((img, i) => (
               <div key={i} className="aspect-square rounded-xl overflow-hidden">
                 <img src={img} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
               </div>
@@ -1845,7 +1844,7 @@ export function AllMediaPlaceholder() {
 export function ExploreLibraryPlaceholder() {
   const categories = ["Art", "Photos", "Posters", "Prompts", "Templates"];
   const items = [
-    { title: "Renaissance Masters", type: "Art", count: "48 pieces", img: "/images/herol (2).png" },
+    { title: "Renaissance Masters", type: "Art", count: "48 pieces", img: "/images/herol (1).png" },
     { title: "Impressionist Dreams", type: "Art", count: "36 pieces", img: "/images/herol (4).png" },
     { title: "Nature Photography", type: "Photos", count: "72 pieces", img: "/images/herol (6).png" },
     { title: "Minimalist Posters", type: "Posters", count: "24 designs", img: "/images/herol (8).png" },

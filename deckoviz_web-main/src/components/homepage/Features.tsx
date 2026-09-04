@@ -389,17 +389,17 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ title, description, longDescr
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
        
         {/* Horizontal Scrolling Features Section */}
-        <div className="mb-16 md:mb-24"><HorizontalScrollingFeatures /></div>
+        <div className="mb-6 md:mb-8"><HorizontalScrollingFeatures /></div>
 
         {/* Intro Card */}
         <div className="mb-20 relative z-10">
           <div className="relative overflow-hidden rounded-[32px] p-[1px] bg-white/20 shadow-2xl">
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[31px] p-6 sm:p-12 md:p-16 relative overflow-hidden">
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-[31px] p-6 sm:p-10 md:p-12 relative overflow-hidden">
               {/* soft glow blobs - using radial gradients */}
               <div className="absolute -top-24 -left-24 w-64 h-64" style={{ background: 'radial-gradient(circle, rgba(191,219,254,0.4) 0%, transparent 70%)' }}></div>
               <div className="absolute -bottom-24 -right-24 w-64 h-64" style={{ background: 'radial-gradient(circle, rgba(165,243,252,0.4) 0%, transparent 70%)' }}></div>
  {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6" style={{ fontFamily: "'Playfair Display', serif" }}>
             <span className="text-gray-900">Features &</span>{" "}
             <span className="italic bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-500 bg-clip-text text-transparent">

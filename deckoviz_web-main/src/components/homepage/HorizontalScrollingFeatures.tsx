@@ -193,7 +193,7 @@ const HorizontalScrollingFeatures: React.FC = () => {
   };
 
   return (
-    <div className="relative -mt-8 flex items-center overflow-hidden rounded-[2.5rem] bg-[#f7fbff] py-8 pb-20 md:-mt-12 md:rounded-[4rem] md:py-10 md:pb-28">
+    <div className="relative -mt-8 flex flex-col items-center overflow-hidden rounded-[2.5rem] bg-[#f7fbff] py-6 pb-6 md:-mt-12 md:rounded-[4rem] md:py-8 md:pb-8">
       {/* Frosted blue/teal background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div

@@ -6,7 +6,7 @@ tagColor: "bg-gradient-to-r from-violet-100 to-indigo-100 text-violet-700"
 date: "December 12, 2025"
 readTime: "6 min read"
 pinned: true
-image: "/blogs/future_restaurant.png"
+image: "/blogs/future_restaurant.jpg"
 size: "medium"
 ---
 

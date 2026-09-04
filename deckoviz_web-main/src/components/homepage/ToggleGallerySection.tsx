@@ -5,36 +5,19 @@ const ToggleGallerySection: React.FC = () => {
   const [imageToggle, setImageToggle] = useState<boolean>(false);
 
   const imagesSet1: string[] = [
-    "/toggleimg/img (1).jpeg",
-    "/toggleimg/img (2).jpeg",
     "/toggleimg/img (3).jpeg",
-    "/toggleimg/img (4).jpeg",
   ];
 
   const imagesSet2: string[] = [
     "/toggleimg/img (5).jpeg",
     "/toggleimg/img (6).jpeg",
-    "/toggleimg/img (7).jpeg",
-    "/toggleimg/img (8).jpeg",
   ];
 
   const images = imageToggle ? imagesSet2 : imagesSet1;
   const contentSet1 = [
     {
-      title: "Morning Calm",
-      desc: "Soft daylight scenes that awaken your space gently.",
-    },
-    {
-      title: "Creative Flow",
-      desc: "Visuals that spark imagination and artistic energy.",
-    },
-    {
       title: "Nature Escape",
       desc: "Bring forests, skies, and serenity into your walls.",
-    },
-    {
-      title: "Modern Minimal",
-      desc: "Clean aesthetics for focused and peaceful living.",
     },
   ];
 
@@ -46,14 +29,6 @@ const ToggleGallerySection: React.FC = () => {
     {
       title: "Cosmic Dream",
       desc: "Celestial visuals that expand your imagination.",
-    },
-    {
-      title: "Moody Atmosphere",
-      desc: "Deep colors that transform your room’s emotion.",
-    },
-    {
-      title: "Digital Art Pulse",
-      desc: "AI-generated worlds that evolve in the dark.",
     },
   ];
 
