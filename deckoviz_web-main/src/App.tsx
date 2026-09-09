@@ -252,6 +252,10 @@ import VizzyFunZone from "./pages/VizzyFunZone";
 import DeckovizWebapp from "./components/webapp/DeckovizWebapp";
 import EnterpriseWebapp from "./components/enterpriseWebapp/EnterpriseWebapp";
 import WebFrame from "./components/WebFrame";
+import SchoolHome from "./components/school/SchoolHome";
+import VGCPage from "./components/school/VGCPage";
+import TeachersHome from "./components/school/TeachersHome";
+import StudentsHome from "./components/school/StudentsHome";
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -639,6 +643,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/admin/daily-curator" element={<ProtectedRoute><AdminDailyCuratorPage /></ProtectedRoute>} />
           <Route path="/elinity-deckoviz-guide" element={<ElinityDeckovizGuide />} />
           <Route path="/webframe" element={<WebFrame />} />
+           <Route path="/school" element={<SchoolHome />} />
+           <Route path="/school/vgc" element={<VGCPage />} />
+           <Route path="/school/teachers" element={<TeachersHome />} />
+           <Route path="/school/students" element={<StudentsHome />} />
         </Routes>
       </main>
       {!isDeveloperTool && !isCanvasPage && <Footer />}

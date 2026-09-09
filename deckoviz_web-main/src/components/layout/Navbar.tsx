@@ -556,20 +556,30 @@ const Navbar: React.FC = () => {
           </div>
 
           {/* Center Logo */}
-          <div className="flex-shrink-0 flex justify-center items-center z-50">
-            <a href="/" className="flex items-center">
-              <img
-                src="/images/deckovizlogo.png"
-                alt="Deckoviz Symbol"
-                className="h-10 sm:h-12 md:h-12 w-auto object-contain"
-              />
-              <img
-                src="/images/bg_removed_logo.png"
-                alt="Deckoviz Space Labs Logo"
-                className="h-10 sm:h-12 md:h-12 w-auto object-contain -ml-2"
-              />
-            </a>
-          </div>
+<div className="flex-shrink-0 flex justify-center items-center z-50">
+  <a href="/" className="flex items-center">
+    <img
+      src="/images/deckovizlogo.png"
+      alt="Deckoviz Symbol"
+      className="h-10 sm:h-12 md:h-12 w-auto object-contain"
+    />
+
+    <img
+      src="/images/bg_removed_logo.png"
+      alt="Deckoviz Space Labs Logo"
+      className="h-10 sm:h-12 md:h-12 w-auto object-contain -ml-2"
+    />
+  </a>
+
+  <a
+  href="/school"
+  className="ml-10 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+>
+  School Ground
+</a>
+</div>
+
+{/* Right Navigation */}
 
           {/* Right Navigation */}
           <div className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-end">
