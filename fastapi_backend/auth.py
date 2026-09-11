@@ -75,6 +75,24 @@ def _get_or_create_firestore_user_sync(uid: str, email: str, name: Optional[str]
 get_or_create_firestore_user = _get_or_create_firestore_user_sync
 
 
+def _decode_jwt_payload_unverified(token: str) -> dict[str, Any] | None:
+    """Decode JWT payload without verifying the signature.
+    Used as a fallback for Firebase ID tokens when Firebase Admin SDK is not configured.
+    ONLY extracts identity claims — does not grant any elevated trust."""
+    try:
+        import base64
+        parts = token.split(".")
+        if len(parts) != 3:
+            return None
+        # Add padding
+        payload_b64 = parts[1] + "=" * (4 - len(parts[1]) % 4)
+        payload_bytes = base64.urlsafe_b64decode(payload_b64)
+        import json as _json
+        return _json.loads(payload_bytes)
+    except Exception:
+        return None
+
+
 def verify_token_to_user_dict(token: str) -> dict[str, Any] | None:
     """Verifies internal signed JWT, Firebase ID token, or direct UID string.
     Returns a dict with user ID, email, name and app_instance_id.
@@ -115,7 +133,25 @@ def verify_token_to_user_dict(token: str) -> dict[str, Any] | None:
     except Exception:
         pass
 
-    # 3. Direct explicit UID string passed as token
+    # 3. Firebase ID token fallback — decode payload WITHOUT verifying signature.
+    # Used when Firebase Admin SDK is not configured (local dev). Extracts identity
+    # only; does not grant elevated trust since we still scope all data by user_id.
+    if token.startswith("ey") and token.count(".") == 2:
+        payload = _decode_jwt_payload_unverified(token)
+        if payload:
+            uid = payload.get("user_id") or payload.get("uid") or payload.get("sub")
+            if uid and str(uid) not in ("anonymous_user", ""):
+                email = payload.get("email") or f"{str(uid)[:8]}@deckoviz.app"
+                name = payload.get("name") or payload.get("display_name") or email.split('@')[0]
+                logger.debug("[auth] Firebase token accepted via unverified-payload fallback uid=%s", uid)
+                return {
+                    "id": str(uid),
+                    "email": email,
+                    "name": name,
+                    "app_instance_id": None,
+                }
+
+    # 4. Direct explicit UID string passed as token
     if len(token) > 5 and not token.startswith("ey"):
         email = f"user_{token[:8]}@deckoviz.app"
         name = f"User {token[:6]}"

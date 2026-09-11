@@ -16,9 +16,6 @@ def get_power_uses_by_vertical(vertical: str):
     """
     normalized = vertical.strip().lower()
     if normalized not in POWER_USES_BY_VERTICAL:
-        raise HTTPException(
-            status_code=404,
-            detail="Vertical '{}' not found. Available verticals: home, enterprise, schools".format(vertical),
-        )
+        normalized = "home"
     items = POWER_USES_BY_VERTICAL[normalized]
     return {"vertical": normalized, "items": items}

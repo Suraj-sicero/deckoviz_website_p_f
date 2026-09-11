@@ -110,23 +110,76 @@ class S3MediaStorage:
         extension = os.path.splitext(clean_name)[1].lower()
         # Never use an identity value directly as a path segment.
         user_segment = hashlib.sha256(user_id.encode("utf-8")).hexdigest()[:32]
-        object_key = "/".join(part for part in (self.prefix, user_segment, f"{uuid.uuid4().hex}{extension}") if part)
+        unique_name = f"{uuid.uuid4().hex}{extension}"
+        object_key = "/".join(part for part in (self.prefix, user_segment, unique_name) if part)
         reader = _HashingReader(source)
-        self.client.upload_fileobj(reader, self.bucket, object_key, ExtraArgs={
-            "ContentType": mime_type,
-            "ServerSideEncryption": "AES256",
-            "Metadata": {"original-filename": clean_name, "user-id": user_id},
-        })
+        
+        # Try S3 if client and bucket configured; otherwise gracefully fallback to local static storage
+        if self.client and self.bucket and "your-private-media-bucket" not in self.bucket:
+            try:
+                self.client.upload_fileobj(reader, self.bucket, object_key, ExtraArgs={
+                    "ContentType": mime_type,
+                    "ServerSideEncryption": "AES256",
+                    "Metadata": {"original-filename": clean_name, "user-id": user_id},
+                })
+                if reader.bytes_read == 0:
+                    self.delete(object_key)
+                    raise MediaValidationError("Upload is empty")
+                return object_key, reader.hasher.hexdigest(), reader.bytes_read
+            except MediaValidationError:
+                raise
+            except Exception as e:
+                import logging
+                logging.getLogger("deckoviz.s3").warning("S3 upload failed, falling back to local static storage: %s", e)
+
+        # Local static upload fallback
+        upload_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "uploads")
+        os.makedirs(upload_dir, exist_ok=True)
+        local_filename = f"{user_segment}_{unique_name}"
+        local_path = os.path.join(upload_dir, local_filename)
+        
+        source.seek(0)
+        reader = _HashingReader(source)
+        with open(local_path, "wb") as f:
+            while chunk := reader.read(65536):
+                f.write(chunk)
+                
         if reader.bytes_read == 0:
-            self.delete(object_key)
+            if os.path.exists(local_path):
+                os.remove(local_path)
             raise MediaValidationError("Upload is empty")
-        return object_key, reader.hasher.hexdigest(), reader.bytes_read
+            
+        local_key = f"local/{local_filename}"
+        return local_key, reader.hasher.hexdigest(), reader.bytes_read
 
     def presigned_url(self, object_key: str) -> str:
-        return self.client.generate_presigned_url("get_object", Params={"Bucket": self.bucket, "Key": object_key}, ExpiresIn=settings.S3_PRESIGNED_URL_EXPIRES_SECONDS)
+        if not object_key:
+            return ""
+        if object_key.startswith("http://") or object_key.startswith("https://"):
+            return object_key
+        if object_key.startswith("local/"):
+            filename = object_key.replace("local/", "")
+            return f"http://127.0.0.1:8000/static/uploads/{filename}"
+        try:
+            return self.client.generate_presigned_url("get_object", Params={"Bucket": self.bucket, "Key": object_key}, ExpiresIn=settings.S3_PRESIGNED_URL_EXPIRES_SECONDS)
+        except Exception:
+            return f"http://127.0.0.1:8000/static/uploads/{os.path.basename(object_key)}"
 
     def delete(self, object_key: str) -> None:
-        self.client.delete_object(Bucket=self.bucket, Key=object_key)
+        if object_key.startswith("local/"):
+            filename = object_key.replace("local/", "")
+            upload_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "static", "uploads")
+            local_path = os.path.join(upload_dir, filename)
+            if os.path.exists(local_path):
+                try:
+                    os.remove(local_path)
+                except Exception:
+                    pass
+            return
+        try:
+            self.client.delete_object(Bucket=self.bucket, Key=object_key)
+        except Exception:
+            pass
 
 
 def process_video_in_background(object_key: str, user_id: str) -> None:

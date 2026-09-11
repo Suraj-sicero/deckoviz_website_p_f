@@ -8,13 +8,14 @@ import { ChatInput } from "./chat-input"
 import { ImageLightbox } from "./image-lightbox"
 import { WelcomeScreen } from "./welcome-screen"
 import { ArtStylesReference } from "./art-styles-reference"
+import { QuickTemplates } from "./quick-templates"
 import { Button } from "./ui/button"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "./ui/tooltip"
-import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home, MessageSquare, ChevronRight, Image as ImageIcon, Upload, ArrowLeft } from "lucide-react"
+import { Sparkles, Plus, Sun, Moon, Trash2, Clock, LogOut, User, Zap, Volume2, Palette, X, Home, MessageSquare, ChevronRight, Image as ImageIcon, Upload, ArrowLeft, LayoutGrid } from "lucide-react"
 import { imageCache } from "./lib/image-cache"
 import type { ChatMessage as ChatMessageType } from "./lib/types"
 import { API_BASE_URL, IMAGE_GEN_API_URL } from "../../lib/constants"
@@ -56,7 +57,7 @@ function buildRefinedPrompt(messages: ChatMessageType[], newInput: string): stri
   const isGenericTrigger = genericTriggers.includes(lower);
 
   // Extract last descriptive user message
-  const userMessages = messages.filter((m) => m.role === "user" && !genericTriggers.includes(m.content.toLowerCase().trim()));
+  const userMessages = messages.filter((m) => m.role === "user" && !genericTriggers.includes((m.content ?? "").toLowerCase().trim()));
   const lastUserMsg = userMessages[userMessages.length - 1]?.content;
 
   if (isGenericTrigger) {
@@ -75,12 +76,11 @@ function buildRefinedPrompt(messages: ChatMessageType[], newInput: string): stri
     .slice(-1)
 
   const positiveResponsePatterns = [
-    /^(yup|yeah|yes|ok|okay|good|great|perfect|excellent|love it|nice|cool|rad|awesome|image|photo|picture)$/i,
-    /^(ok|okay|alright|sure)\s+(let|lets|let's).*generate/i,
-    /^(let|lets|let's).*(generate|make|draw|create)/i,
-    /generate(\s+that|\s+image)?/i,
-    /make(\s+that|\s+image)?/i,
-    /create(\s+that|\s+image)?/i,
+    /^(yup|yeah|yes|ok|okay|good|great|perfect|excellent|love it|nice|cool|rad|awesome)$/i,
+    /^(ok|okay|alright|sure)\s+(let|lets|let's)\s+(do\s+it|generate|make\s+it)$/i,
+    /^(let|lets|let's)\s+(do\s+it|generate|create|make\s+it)$/i,
+    /^(generate|make|create)\s+(that|it)$/i,
+    /^(generate|make|create)\s+(that|the)\s+(image|picture|photo)$/i,
   ]
 
   const isPositiveResponse = positiveResponsePatterns.some(pattern => pattern.test(trimmed))
@@ -140,7 +140,7 @@ function parseNumImages(input: string): number {
 
 function generateAssistantText(numImages: number, prompt: string): string {
   if (numImages > 1) return `Here are ${numImages} variations based on your vision:`
-  const lowerPrompt = prompt.toLowerCase()
+  const lowerPrompt = (prompt ?? "").toLowerCase()
   if (lowerPrompt.includes("poster") || lowerPrompt.includes("signage")) return "Here's your design:"
   if (lowerPrompt.includes("product") || lowerPrompt.includes("photo")) return "Here's the product visual:"
   if (lowerPrompt.includes("brand") || lowerPrompt.includes("marketing")) return "Here's your brand visual:"
@@ -223,6 +223,7 @@ function VizzyChatInner() {
   const [persona, setPersona] = useState<any>(null)
   const [showPersonaModal, setShowPersonaModal] = useState(false)
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
+  const [showCreativeCanvasModal, setShowCreativeCanvasModal] = useState(false)
   const [showStylesReference, setShowStylesReference] = useState(false)
 
   // ─── Chat History Persistence State ───────────────────────────────────────
@@ -346,24 +347,10 @@ function VizzyChatInner() {
         },
         body: JSON.stringify({ messages: cleanMsgs }),
       }).catch(() => {})
-
-      // Also notify agent endpoint to sync messages
-      await fetch(`${API_BASE_URL}/api/vizzy-canvas/agent`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${tkn}`,
-        },
-        body: JSON.stringify({
-          messages: cleanMsgs,
-          chatId,
-          mode: chatMode,
-        }),
-      }).catch(() => {})
     } catch (err) {
       console.warn("[Vizzy] Failed to sync updated chat to backend:", err)
     }
-  }, [token, chatMode, saveChatToLocalHistory])
+  }, [token, saveChatToLocalHistory])
 
   // ─── Load a previous chat ─────────────────────────────────────────────────
   const loadChat = useCallback(async (chatId: string) => {
@@ -688,9 +675,15 @@ function VizzyChatInner() {
       // The master agent doesn't handle media - it delegates back to the
       // existing specialized endpoints (unchanged from v1).
       // ─────────────────────────────────────────────────────────────────────
-      const isClientImageReq = /\b(image|photo|picture|draw|paint|generate|render|artwork|illustration)\b/i.test(trimmedInput) && !/\b(video|music|song|audio)\b/i.test(trimmedInput);
-      if (agentData.delegateToMedia || isClientImageReq) {
-        const intent = isClientImageReq ? "image_generation" : agentData.intent;
+      const isAudioOrVideo = /\b(video|music|song|audio|melody|tune|track|beat|sound|clip|animat(e|ion))\b/i.test(trimmedInput);
+      const isQuestionOrChat = /^(hi|hello|hey|what|why|how|who|where|when|can you|could you|tell me|explain|help|is there|are you|do you)\b/i.test(trimmedInput.trim()) || /\?$/.test(trimmedInput.trim());
+      const isClientImageReq = !isAudioOrVideo && (
+        /\b(image|photo|picture|draw|paint|generate|render|artwork|illustration|futuristic|city|neon|portrait|landscape|view|scenery|building|character|robot|cat|dog|car|space|art)\b/i.test(trimmedInput) ||
+        (!isQuestionOrChat && trimmedInput.trim().length > 3)
+      );
+
+      if (agentData.delegateToMedia || agentData.intent === "image_generation" || isClientImageReq || agentData.content?.includes("processing your request")) {
+        const intent = isAudioOrVideo ? (agentData.intent || "video_generation") : (agentData.intent === "video_generation" || agentData.intent === "music_generation" ? agentData.intent : "image_generation");
 
         if (intent === "music_generation") {
           // Music pipeline
@@ -802,6 +795,7 @@ function VizzyChatInner() {
                 headers: { "Content-Type": "application/json", ...(token && { "Authorization": `Bearer ${token}` }) },
                 body: JSON.stringify({ prompt: refinedPrompt, aspect_ratio: aspectRatio, num_results: numResults }),
               })
+              if (!response.ok) throw new Error("API base gen failed")
             } catch {
               const cleanPrompt = encodeURIComponent(refinedPrompt || trimmedInput)
               const seed = Math.floor(Math.random() * 1000000)
@@ -870,7 +864,7 @@ function VizzyChatInner() {
             }).then(async (r) => {
               if (r.ok) {
                 const { analysis } = await r.json()
-                setMessages((prev) => [...prev, { id: `analysis_${Date.now()}`, role: "assistant", content: analysis, images: [], isLoading: false, timestamp: Date.now() }])
+                setMessages((prev) => [...prev, { id: `analysis_${Date.now()}`, role: "assistant", content: analysis ?? "", images: [], isLoading: false, timestamp: Date.now() }])
               }
             }).catch(() => {})
           }
@@ -905,7 +899,11 @@ function VizzyChatInner() {
       )
 
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Something went wrong"
+      console.error("[Vizzy] Request error:", error)
+      const isImageGen = agentData?.intent === "image_generation" || intent === "image_generation"
+      const errorMessage = isImageGen
+        ? "Our image service is experiencing high load right now. Please try again shortly."
+        : "Something went wrong processing your request. Please try again."
       setMessages((prev) =>
         prev.map((m) =>
           m.id === assistantMessage.id
@@ -1120,47 +1118,40 @@ function VizzyChatInner() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <span>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant={selectedStyle ? "default" : "ghost"}
-                      size="icon-sm"
-                      className={selectedStyle ? "rounded-xl transition-all duration-300 bg-cyan-500 hover:bg-cyan-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)]" : "rounded-xl transition-all duration-300 text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)]"}
-                      aria-label="Select Art Style"
-                    >
-                      <Palette className="size-4" />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="bottom">
-                    {selectedStyle ? `Style: ${selectedStyle}` : "Style Transfer"}
-                  </TooltipContent>
-                </Tooltip>
-              </span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56 max-h-80 overflow-y-auto bg-[var(--vc-glass-strong)] border-[var(--vc-glass-border-strong)] text-[var(--vc-text)] backdrop-blur-2xl" data-vc-theme={theme}>
-              <div className="px-2 py-1.5 text-xs font-semibold text-[var(--vc-text-muted)] border-b border-[var(--vc-glass-border)] uppercase tracking-wider">
-                Select Art Style
-              </div>
-              <DropdownMenuItem
-                onClick={() => setSelectedStyle(null)}
-                className={selectedStyle === null ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant={selectedStyle ? "default" : "ghost"}
+                size="icon-sm"
+                onClick={() => setShowArtStyleModal(true)}
+                className={selectedStyle ? "rounded-xl transition-all duration-300 bg-cyan-500 hover:bg-cyan-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)]" : "rounded-xl transition-all duration-300 text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)]"}
+                aria-label="Select Art Style"
               >
-                <span className="text-sm">None (Normal Chat)</span>
-              </DropdownMenuItem>
-              {ART_STYLES.map((style) => (
-                <DropdownMenuItem
-                  key={style}
-                  onClick={() => setSelectedStyle(style)}
-                  className={selectedStyle === style ? "bg-cyan-400/20 font-medium text-[var(--vc-text)]" : "text-[var(--vc-text)]"}
-                >
-                  <span className="text-sm">{style}</span>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+                <Palette className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">
+              {selectedStyle ? `Style: ${selectedStyle}` : "Select Art Style"}
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant={showCreativeCanvasModal ? "default" : "ghost"}
+                size="icon-sm"
+                onClick={() => setShowCreativeCanvasModal(true)}
+                className={showCreativeCanvasModal
+                  ? "rounded-xl bg-cyan-500 hover:bg-cyan-600 text-white shadow-[0_0_12px_rgba(6,182,212,0.4)] transition-all duration-300"
+                  : "text-[var(--vc-text-muted)] hover:text-[var(--vc-accent-text)] hover:bg-[var(--vc-glass-hover)] rounded-xl transition-all duration-300"
+                }
+                aria-label="Creative Canvas Templates"
+              >
+                <LayoutGrid className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom">Creative Canvas Templates</TooltipContent>
+          </Tooltip>
 
           <Tooltip>
             <TooltipTrigger asChild>
@@ -1382,6 +1373,7 @@ function VizzyChatInner() {
               onSuggestionClick={handleSuggestionClick}
               isOnboardingCompleted={isOnboardingCompleted}
               onStartOnboarding={handleStartOnboarding}
+              onOpenCreativeCanvas={() => setShowCreativeCanvasModal(true)}
             />
           ) : (
             <div className="flex flex-col gap-5 py-6">
@@ -1487,6 +1479,41 @@ function VizzyChatInner() {
           setLightboxPrompt("")
         }}
       />
+
+
+      {/* Creative Canvas Templates Modal */}
+      {showCreativeCanvasModal && (
+        <div
+          className="fixed inset-0 z-[90] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-md animate-in fade-in duration-300"
+          onClick={(e) => { if (e.target === e.currentTarget) setShowCreativeCanvasModal(false) }}
+        >
+          <div className="relative w-full sm:max-w-4xl max-h-[85vh] overflow-y-auto rounded-t-3xl sm:rounded-3xl border border-[var(--vc-glass-border-strong)] bg-[var(--vc-glass-strong)] backdrop-blur-3xl shadow-2xl animate-in slide-in-from-bottom-4 sm:zoom-in-95 duration-300">
+            {/* Header */}
+            <div className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 border-b border-[var(--vc-glass-border)] bg-[var(--vc-glass-strong)] backdrop-blur-3xl rounded-t-3xl sm:rounded-t-3xl">
+              <div className="flex items-center gap-2">
+                <LayoutGrid className="size-4 text-cyan-400" />
+                <span className="font-semibold text-sm text-[var(--vc-text)]">Creative Canvas Templates</span>
+              </div>
+              <button
+                onClick={() => setShowCreativeCanvasModal(false)}
+                className="size-8 flex items-center justify-center rounded-xl text-[var(--vc-text-muted)] hover:text-[var(--vc-text)] hover:bg-[var(--vc-glass-hover)] transition-all"
+                aria-label="Close Creative Canvas"
+              >
+                <X className="size-4" />
+              </button>
+            </div>
+            {/* Body */}
+            <div className="p-4">
+              <QuickTemplates
+                onSelect={(text) => {
+                  handleSuggestionClick(text)
+                  setShowCreativeCanvasModal(false)
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Art Styles Reference Guide */}
       <ArtStylesReference

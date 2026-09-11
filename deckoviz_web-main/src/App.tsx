@@ -328,7 +328,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/vizzy-generative-chat",
     "/pair",
     "/display",
-  ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp") || location.pathname.startsWith("/admin");
+  ].includes(location.pathname) || location.pathname.startsWith("/webapp") || location.pathname.startsWith("/enterprise-webapp") || location.pathname.startsWith("/admin");
 
   return (
     <>
@@ -632,8 +632,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/elinity/ellaris" element={<ElinityEllaris />} />
           <Route path="/elinity/contact" element={<ElinityContact />} />
           <Route path="/elinity/join-us" element={<ElinityJoinUs />} />
-          <Route path="/webapp" element={<ProtectedRoute><DeckovizWebapp /></ProtectedRoute>} />
-          <Route path="/webapp/*" element={<ProtectedRoute><DeckovizWebapp /></ProtectedRoute>} />
+          <Route path="/webapp" element={<ProtectedRoute><CanvasErrorBoundary><DeckovizWebapp /></CanvasErrorBoundary></ProtectedRoute>} />
+          <Route path="/webapp/*" element={<ProtectedRoute><CanvasErrorBoundary><DeckovizWebapp /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/pair" element={<ProtectedRoute><PairDevicePage /></ProtectedRoute>} />
           <Route path="/display" element={<ProtectedRoute><DisplayOnTvPage /></ProtectedRoute>} />
           <Route path="/enterprise-webapp" element={<ProtectedRoute><EnterpriseWebapp /></ProtectedRoute>} />

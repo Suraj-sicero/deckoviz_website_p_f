@@ -48,12 +48,14 @@ interface WelcomeScreenProps {
   onSuggestionClick: (suggestion: string) => void
   isOnboardingCompleted: boolean | null
   onStartOnboarding: () => void
+  onOpenCreativeCanvas?: () => void
 }
 
 export function WelcomeScreen({
   onSuggestionClick,
   isOnboardingCompleted,
   onStartOnboarding,
+  onOpenCreativeCanvas,
 }: WelcomeScreenProps) {
   const [mode, setMode] = useState<CreativeMode>("home")
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null)
@@ -200,16 +202,23 @@ export function WelcomeScreen({
         ))}
       </div>
 
-      {/* Templates / Library display depending on active tab */}
-      {mode === "home" ? (
-        <QuickTemplates onSelect={onSuggestionClick} />
-      ) : (
-        <EnterpriseLibrary onSelect={onSuggestionClick} />
+      {/* Creative Canvas Modal Launch Button */}
+      {onOpenCreativeCanvas && (
+        <div className="relative z-10 mt-6">
+          <button
+            onClick={onOpenCreativeCanvas}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-semibold backdrop-blur-xl transition-all duration-300 hover:scale-[1.02] active:scale-95 shadow-[0_4px_20px_rgba(6,182,212,0.15)]"
+          >
+            <Sparkles className="size-4 animate-pulse text-cyan-400" />
+            Explore Creative Canvas Quick Templates
+            <ChevronRight className="size-3.5" />
+          </button>
+        </div>
       )}
 
       {/* Bottom hint */}
       <p
-        className="mt-8 text-xs text-center"
+        className="mt-6 text-xs text-center"
         style={{ color: "var(--vc-text-faint)" }}
       >
         Or just type anything below to get started

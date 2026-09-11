@@ -12,11 +12,12 @@ from routes.vizzy_routes import router as vizzy_router, vizzy_router as vizzy_po
 from routes.upload_routes import router as upload_router
 from routes.pairing_routes import router as pairing_router
 from routes.queue_routes import router as queue_router
-from routes.curator_routes import router as curator_router
+from routes.curator_routes import router as curator_router, curator_router as curator_catalog_router
 from routes.ws_routes import router as ws_router
 from routes.promptLibraryRoutes import router as prompt_library_router
 from routes.power_use_routes import router as power_use_router
 from database import close_database, database_is_healthy
+from config import settings
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -59,9 +60,16 @@ app.include_router(upload_router, prefix=settings.API_V1_STR)
 app.include_router(pairing_router, prefix=settings.API_V1_STR)
 app.include_router(queue_router, prefix=settings.API_V1_STR)
 app.include_router(curator_router, prefix=settings.API_V1_STR)
+app.include_router(curator_catalog_router, prefix=settings.API_V1_STR)
 app.include_router(prompt_library_router, prefix=settings.API_V1_STR)
 app.include_router(power_use_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
+
+# Mount local static directory for uploads
+from fastapi.staticfiles import StaticFiles
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+os.makedirs(os.path.join(static_dir, "uploads"), exist_ok=True)
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 @app.get("/")
 def root():

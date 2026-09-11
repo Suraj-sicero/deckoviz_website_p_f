@@ -375,20 +375,16 @@ def auto_populate_home_daily_queue(
             "createdAt": datetime.now(timezone.utc).isoformat(),
         })
     
-    # Save the new queue - clear old and save new
-    # For simplicity, we delete all and recreate
-    # In practice, you might want to do this more carefully
-    import json
-    localStorage.setItem("deckoviz_dailyqueue", JSON.stringify(new_queue))
-    
-    # Also try to save to backend
+    # Save the new queue
     try:
         for item in new_queue:
             fs_save_daily_queue_slot(uid, item)
-    except:
+    except Exception:
         pass
     
     return {"queue": new_queue, "message": f"Auto-populated queue with {len(new_queue)} items from your favorites and collections"}
+
+@router.get("/favorites")
 def get_home_favorites(current_user: FirebaseUser = Depends(get_current_user)):
     uid = current_user.firebase_uid or current_user.id
     profile = fs_get_profile(uid) or {}
@@ -409,7 +405,7 @@ def add_home_favorite(payload: dict, current_user: FirebaseUser = Depends(get_cu
     favs = profile.get("favorites") or []
 
     fav_item = {
-        "id": payload.get("id") or f"fav_{Date.now()}",
+        "id": payload.get("id") or f"fav_{int(datetime.now().timestamp() * 1000)}",
         "type": payload.get("type") or "artwork",
         "name": payload.get("name") or payload.get("title") or "Starred Item",
         "title": payload.get("title") or payload.get("name") or "Starred Item",

@@ -147,21 +147,10 @@ def build_poll_response(session: dict[str, Any] | None) -> dict[str, Any]:
             .replace("+00:00", "Z"),
         }
 
-    if session["status"] == "paired":
-        payload = {
-            "status": "paired",
-            "token": session["token"],
-            "app_instance_id": session["app_instance_id"],
-            "user_id": session["user_id"],
-            "device_name": session["device_name"],
-        }
-        session["status"] = "consumed"
-        session["token"] = None
-        return payload
-
-    if session["status"] == "consumed":
+    if session["status"] in ("paired", "consumed"):
         return {
             "status": "paired",
+            "token": session.get("token"),
             "app_instance_id": session["app_instance_id"],
             "user_id": session["user_id"],
             "device_name": session["device_name"],

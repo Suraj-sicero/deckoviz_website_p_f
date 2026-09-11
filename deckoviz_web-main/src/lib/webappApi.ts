@@ -447,19 +447,30 @@ export async function saveImageToMediaLibrary(
   imageUrl: string,
   metadata: { prompt?: string; source?: string; fileName?: string },
   token?: string,
-): Promise<void> {
-  try {
-    const fileName = metadata.fileName || `vizzy-${Date.now()}.jpg`;
-    const res = await fetch(`${BASE}/api/upload`, {
-      method: "POST",
-      headers: authHeaders(token),
-      body: JSON.stringify({ url: imageUrl, fileName, prompt: metadata.prompt, source: metadata.source || "vizzy_chat", isGenerated: true }),
-    });
-    if (!res.ok) throw new Error(`Media registration failed: ${res.status}`);
-    console.log("[VizzySync] Image saved to PostgreSQL media library:", fileName);
-  } catch (err) {
-    console.warn("[VizzySync] Failed to sync image to media library:", err);
+): Promise<any> {
+  const fileName = metadata.fileName || `vizzy-${Date.now()}.jpg`;
+  const formData = new FormData();
+  formData.append("url", imageUrl);
+  formData.append("fileName", fileName);
+  if (metadata.prompt) formData.append("prompt", metadata.prompt);
+  formData.append("source", metadata.source || "vizzy_chat");
+
+  const headers = authHeaders(token);
+  delete headers["Content-Type"];
+
+  const res = await fetch(`${BASE}/api/upload`, {
+    method: "POST",
+    headers,
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(`Media registration failed (${res.status}): ${errText || res.statusText}`);
   }
+  const data = await res.json();
+  console.log("[VizzySync] Image saved to PostgreSQL media library:", fileName);
+  return data;
 }
 
 /**

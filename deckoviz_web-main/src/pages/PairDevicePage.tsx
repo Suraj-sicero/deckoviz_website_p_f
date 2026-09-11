@@ -41,11 +41,6 @@ export default function PairDevicePage() {
 
   const submitCode = useCallback(
     async (raw: string) => {
-      if (!token) {
-        setStatus("error");
-        setMessage("You must be signed in to pair a device.");
-        return;
-      }
       const resolved = extractPairingCode(raw);
       if (!resolved) {
         setStatus("error");
@@ -55,16 +50,18 @@ export default function PairDevicePage() {
 
       setCode(resolved);
       setStatus("loading");
-      setMessage("Pairing your frame…");
+      setMessage("Linking frame to account…");
 
       try {
         const result = await claimPairingCode(token, resolved);
         setStatus("success");
         setPairedAppInstanceId(result.device.app_instance_id);
         setMessage(
-          `Connected to ${result.device.device_name}. Your frame is linked to this account.`
+          `Connected to ${result.device.device_name || "Deckoviz TV"}. Device linked successfully!`
         );
-        navigate("/display");
+        setTimeout(() => {
+          navigate("/display");
+        }, 1200);
       } catch (err) {
         setStatus("error");
         setMessage(err instanceof Error ? err.message : "Pairing failed");
@@ -75,12 +72,12 @@ export default function PairDevicePage() {
 
   useEffect(() => {
     const fromUrl = searchParams.get("code");
-    if (fromUrl && !autoSubmittedRef.current && token) {
+    if (fromUrl && !autoSubmittedRef.current) {
       autoSubmittedRef.current = true;
       setCode(fromUrl);
       void submitCode(fromUrl);
     }
-  }, [searchParams, token, submitCode]);
+  }, [searchParams, submitCode]);
 
   useEffect(() => {
     return () => {

@@ -20,25 +20,32 @@ router = APIRouter(tags=["Media Uploads - private S3"])
 @router.post("/home/media")
 async def upload_media(
     request: Request,
-    file: Optional[UploadFile] = File(None),
-    url: Optional[str] = Form(None),
-    fileName: Optional[str] = Form(None),
-    prompt: Optional[str] = Form(None),
-    source: Optional[str] = Form(None),
     current_user: FirebaseUser = Depends(get_current_user)
 ):
     uid = current_user.firebase_uid or current_user.id
     try:
-        # Existing clients can still register a trusted external URL. File uploads
-        # always go to private S3; data URLs and placeholder fallbacks are rejected.
-        if request.headers.get("content-type", "").startswith("application/json"):
+        content_type_hdr = request.headers.get("content-type", "")
+        if "application/json" in content_type_hdr:
             payload = await request.json()
-            payload["prompt"] = payload.get("prompt") or prompt
-            payload["isGenerated"] = bool(payload.get("isGenerated") or source == "vizzy_chat")
-            return fs_save_media(uid, payload)
+            payload["isGenerated"] = bool(payload.get("isGenerated") or payload.get("source") == "vizzy_chat")
+            return await asyncio.to_thread(fs_save_media, uid, payload)
+
+        form_data = await request.form()
+        file = form_data.get("file")
+        url_val = form_data.get("url")
+        fileName_val = form_data.get("fileName")
+        prompt_val = form_data.get("prompt")
+        source_val = form_data.get("source")
+
+        url = str(url_val) if url_val is not None else None
+        fileName = str(fileName_val) if fileName_val is not None else None
+        prompt = str(prompt_val) if prompt_val is not None else None
+        source = str(source_val) if source_val is not None else None
+
         if url:
-            return fs_save_media(uid, {"url": url, "fileName": fileName, "prompt": prompt, "isGenerated": source == "vizzy_chat"})
-        if not file:
+            return await asyncio.to_thread(fs_save_media, uid, {"url": url, "fileName": fileName, "prompt": prompt, "isGenerated": source == "vizzy_chat"})
+
+        if not file or not hasattr(file, "filename"):
             raise HTTPException(status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="A media file or URL is required")
 
         content_type = validate_media(file.content_type, file.size)
@@ -65,7 +72,7 @@ async def upload_media(
     except Exception:
         raise HTTPException(status_code=500, detail="Failed to store media")
     finally:
-        if file:
+        if "file" in locals() and file and hasattr(file, "close"):
             await file.close()
 
 

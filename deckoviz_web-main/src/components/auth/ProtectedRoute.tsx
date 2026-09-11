@@ -23,12 +23,33 @@ export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ childr
         <p className="text-sm text-blue-200/80 max-w-sm mb-6">
           Please sign in to access your personalized collections, AI generative tools, and webapp dashboard.
         </p>
-        <button
-          onClick={() => openAuthModal(true)}
-          className="px-6 py-3 rounded-xl bg-white text-[#182a4a] font-bold text-sm shadow-xl hover:bg-blue-50 hover:scale-105 transition-all duration-300"
-        >
-          Sign In / Create Account
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <button
+            onClick={() => openAuthModal(true)}
+            className="px-6 py-3 rounded-xl bg-white text-[#182a4a] font-bold text-sm shadow-xl hover:bg-blue-50 hover:scale-105 transition-all duration-300"
+          >
+            Sign In / Create Account
+          </button>
+          <button
+            onClick={() => {
+              const demoToken = `token_guest_${Date.now()}`;
+              const demoUser = {
+                id: "guest_user",
+                email: "creator@deckoviz.com",
+                name: "Guest Creator",
+                displayName: "Guest Creator",
+                credits: 50,
+                tier: "creator" as const
+              };
+              localStorage.setItem("token", demoToken);
+              localStorage.setItem("user", JSON.stringify(demoUser));
+              window.location.reload();
+            }}
+            className="px-6 py-3 rounded-xl bg-white/10 border border-white/30 text-white font-semibold text-sm hover:bg-white/20 transition-all duration-300"
+          >
+            Explore as Guest
+          </button>
+        </div>
         {isAuthModalOpen && <AuthModal />}
       </div>
     );

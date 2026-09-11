@@ -147,6 +147,14 @@ router.post("/onboarding/complete", async (req, res) => {
 // on failure (e.g. 401 unauthenticated, 402 insufficient credits).
 const chargeCredits = async (req, action, count = 1) => {
   const tokenUser = getUserFromToken(req);
+
+  // Image generation & image editing actions are unlimited and bypass credit requirements
+  const isImageAction = ["image", "generate", "image_generation", "inpaint", "style_transfer"].includes(action);
+  if (isImageAction) {
+    const user = tokenUser ? await User.findByPk(tokenUser.id).catch(() => null) : null;
+    return { ok: true, remaining: user?.credits ?? null, charged: 0, user: tokenUser || user };
+  }
+
   if (!tokenUser) {
     return { ok: false, status: 401, error: "Sign in to use this feature." };
   }
@@ -303,11 +311,9 @@ router.post("/generate", async (req, res) => {
     const { prompt, num_results = 1, aspect_ratio = "1:1" } = req.body;
     const numOutputs = Math.min(Math.max(parseInt(num_results, 10) || 1, 1), 4);
 
-    const charge = await chargeCredits(req, "image", numOutputs);
-    let user = null;
-    if (charge.ok) {
-      user = charge.user;
-    }
+    // Unlimited image generation mode: attach user for DB history saving without checking or deducting credit balance
+    const tokenUser = getUserFromToken(req);
+    const user = tokenUser ? await User.findByPk(tokenUser.id) : null;
 
     const dims = ASPECT_DIMENSIONS[aspect_ratio] || { width: 1280, height: 1280 };
     let urls = [];
@@ -337,7 +343,7 @@ router.post("/generate", async (req, res) => {
       images: urls.map((url) => ({ url })),
       prompt,
       aspect_ratio,
-      creditsRemaining: charge?.remaining ?? null,
+      creditsRemaining: user?.credits ?? null,
     });
   } catch (err) {
     console.error("[generate] Error:", err);

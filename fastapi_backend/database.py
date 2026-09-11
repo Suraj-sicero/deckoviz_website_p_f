@@ -18,7 +18,12 @@ def _async_database_url(url: str) -> str:
     raise ValueError("DATABASE_URL must use postgresql:// or postgresql+asyncpg://")
 
 DATABASE_URL = _async_database_url(settings.DATABASE_URL)
-engine = create_async_engine(DATABASE_URL, pool_pre_ping=True, poolclass=NullPool)
+engine = create_async_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    poolclass=NullPool,
+    connect_args={"timeout": 3},  # fail fast when Postgres is unreachable (asyncpg)
+)
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 async def get_db() -> AsyncGenerator[AsyncSession, None]:

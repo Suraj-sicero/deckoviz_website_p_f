@@ -47,18 +47,22 @@ function quickKeywordClassifier(userInput) {
   const text = (userInput || "").toLowerCase().trim();
   if (!text) return null;
 
-  // Direct image intent keywords
+  if (/\b(video|animation|animating|clip|gif|movie|motion)\b/.test(text)) return "video_generation";
+  if (/\b(music|song|audio|melody|tune|track|beat|sound)\b/.test(text)) return "music_generation";
+
+  // Direct image intent keywords or visual descriptions
   if (
-    /^(image|photo|picture|draw|paint|generate|create|render|art|artwork|wallpaper|poster|illustration|portrait|landscape)\b/.test(text) ||
-    /\b(image|photo|picture|draw|paint|generate|render|illustration|portrait|landscape)\b/.test(text)
+    /^(image|photo|picture|draw|paint|generate|create|render|art|artwork|wallpaper|poster|illustration|portrait|landscape|design|make)\b/.test(text) ||
+    /\b(image|photo|picture|draw|paint|generate|render|illustration|portrait|landscape|futuristic|city|neon|cyberpunk|scenery|sunset|mountain|ocean|view|space|robot|character|cat|dog|car|building|wallpaper|art)\b/.test(text)
   ) {
-    if (/\b(video|animation|movie|clip|motion)\b/.test(text)) return "video_generation";
-    if (/\b(music|song|audio|track|beat|sound)\b/.test(text)) return "music_generation";
     return "image_generation";
   }
 
-  if (/\b(video|animation|animating|clip|gif)\b/.test(text)) return "video_generation";
-  if (/\b(music|song|audio|melody|tune|track|beat)\b/.test(text)) return "music_generation";
+  // Non-conversational prompt check: if it's not a question or greeting, treat descriptive prompts as image_generation
+  const isQuestionOrGreeting = /^(hi|hello|hey|greetings|what|why|how|who|where|when|can you|could you|tell me|explain|is there|are you|do you|help)\b/i.test(text) || /\?$/.test(text);
+  if (!isQuestionOrGreeting && text.length > 3) {
+    return "image_generation";
+  }
 
   return null;
 }

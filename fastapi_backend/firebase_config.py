@@ -13,6 +13,9 @@ logger = logging.getLogger("deckoviz.firebase")
 
 _firebase_app = None
 _firestore_db = None
+# Set to True after the first failed lazy-init so we never make the slow
+# google.auth.default() network call (GCP metadata server) more than once.
+_firebase_unavailable = False
 
 
 def _has_default_credentials() -> bool:
@@ -50,9 +53,12 @@ def _find_firebase_credential_file() -> str | None:
 
 
 def init_firebase():
-    global _firebase_app, _firestore_db
+    global _firebase_app, _firestore_db, _firebase_unavailable
     if _firebase_app:
         return _firebase_app
+    # Already confirmed unavailable — don't make slow network calls again.
+    if _firebase_unavailable:
+        return None
 
     try:
         found_cred_file = _find_firebase_credential_file()
@@ -80,11 +86,14 @@ def init_firebase():
             logger.info("Firebase Admin initialized with default application credentials")
         else:
             logger.warning(
-                "Firebase Admin is not configured. Set FIREBASE_CREDENTIALS_JSON or mount FIREBASE_CREDENTIALS_FILE before Google Sign-In."
+                "Firebase Admin is not configured. Set FIREBASE_CREDENTIALS_JSON or mount "
+                "FIREBASE_CREDENTIALS_FILE before Google Sign-In."
             )
+            _firebase_unavailable = True
             return None
     except Exception as e:
         logger.warning(f"Firebase Admin initialization notice: {e}")
+        _firebase_unavailable = True
         return None
 
     try:
@@ -117,7 +126,14 @@ def verify_token(token: str) -> dict | None:
     if not token:
         return None
 
-    global _firebase_app
+    global _firebase_app, _firebase_unavailable
+
+    # Fast-path: already confirmed Firebase is unavailable — skip all network calls.
+    if _firebase_unavailable:
+        raise RuntimeError(
+            "Firebase Admin is not configured. "
+            "Set FIREBASE_CREDENTIALS_JSON or mount FIREBASE_CREDENTIALS_FILE."
+        )
 
     # Lazy re-init: credential file or env var may have appeared after startup.
     if not _firebase_app:
@@ -125,15 +141,13 @@ def verify_token(token: str) -> dict | None:
         init_firebase()
 
     if not _firebase_app:
-        # Still not initialized after retry — check all sources before raising.
-        if not _has_default_credentials() and not _find_firebase_credential_file() and not settings.FIREBASE_CREDENTIALS_JSON:
-            raise RuntimeError(
-                "Firebase Admin is not configured. "
-                "Place the service-account JSON at /etc/deckoviz/firebase-service-account.json "
-                "or set the FIREBASE_CREDENTIALS_JSON environment variable."
-            )
-        # Credential source exists but init still failed (e.g. bad JSON); let
-        # auth.verify_id_token produce the precise error below.
+        # init_firebase() sets _firebase_unavailable=True on failure, so the
+        # fast-path above will catch subsequent calls.  Raise immediately here.
+        raise RuntimeError(
+            "Firebase Admin is not configured. "
+            "Place the service-account JSON at /etc/deckoviz/firebase-service-account.json "
+            "or set the FIREBASE_CREDENTIALS_JSON environment variable."
+        )
 
     try:
         decoded_token = auth.verify_id_token(token)

@@ -369,6 +369,7 @@ def get_agents():
     ]
 
 @router.get("/chats")
+@vizzy_router.get("/chats")
 def get_chats(current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
     uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
     chats = _list_chats_with_fallback(uid)
@@ -385,6 +386,7 @@ def get_chats(current_user: Optional[FirebaseUser] = Depends(get_current_user_op
     ]
 
 @router.get("/chats/{id}")
+@vizzy_router.get("/chats/{id}")
 def get_chat_detail(id: str, current_user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
     uid = (current_user.firebase_uid or current_user.id) if current_user else "anonymous_user"
     chat = _get_chat_with_fallback(uid, id)
@@ -411,12 +413,17 @@ def vizzy_master_agent(payload: dict, current_user: Optional[FirebaseUser] = Dep
     if messages:
         last_msg = messages[-1].get("content", "")
     
-    clean_text = last_msg.lower()
+    clean_text = last_msg.lower().strip()
     
-    media_keywords = ["image", "picture", "photo", "draw", "create", "generate", "paint", "art", "illustration", "elephant", "cat", "dog", "landscape", "poster"]
-    is_image = any(k in clean_text for k in media_keywords)
-    is_music = any(k in clean_text for k in ["music", "song", "audio", "sound"])
-    is_video = any(k in clean_text for k in ["video", "animate", "motion"])
+    media_keywords = ["image", "picture", "photo", "draw", "create", "generate", "paint", "art", "illustration", "elephant", "cat", "dog", "landscape", "poster", "futuristic", "city", "neon", "cyberpunk", "scene", "view", "scenery", "portrait", "character", "building", "wallpaper", "sunset", "mountain"]
+    is_music = any(k in clean_text for k in ["music", "song", "audio", "sound", "track", "beat", "melody"])
+    is_video = any(k in clean_text for k in ["video", "animate", "animation", "motion", "clip"])
+    
+    is_chat_question = any(clean_text.startswith(k) for k in ["hi", "hello", "hey", "what", "why", "how", "who", "where", "when", "can you", "could you", "tell me", "explain", "help", "is there", "are you", "do you"]) or clean_text.endswith("?")
+    
+    is_image = (not is_music and not is_video) and (
+        any(k in clean_text for k in media_keywords) or (not is_chat_question and len(clean_text) > 3)
+    )
 
     intent = "general_chat"
     delegate = False
@@ -446,11 +453,15 @@ def vizzy_master_agent(payload: dict, current_user: Optional[FirebaseUser] = Dep
     # Reconstruct the persisted prompt + seed on every turn, rather than falling
     # back to a generic prompt after session creation.
     session_scaffolding = _session_scaffolding(chat)
-    ai_response = _build_seeded_turn_response(last_msg, chat, session_scaffolding)
-    
     chat_messages = chat.get("messages") or []
     chat_messages.append({"role": "user", "content": last_msg})
-    chat_messages.append({"role": "assistant", "content": ai_response})
+
+    if delegate:
+        ai_response = None
+    else:
+        ai_response = _build_seeded_turn_response(last_msg, chat, session_scaffolding)
+        chat_messages.append({"role": "assistant", "content": ai_response})
+
     chat["messages"] = chat_messages
     # Preserve vertical/powerUse if present
     _save_chat_with_fallback(uid, chat)

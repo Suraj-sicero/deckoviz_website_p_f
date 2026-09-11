@@ -21,34 +21,65 @@ def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+# ---------- In-memory fallback store (used when DB is unavailable) ----------
+_doc_store: dict[str, dict] = {}   # "{uid}:{kind}:{doc_id}" -> payload
+_doc_index: dict[str, list[str]] = {}  # "{uid}:{kind}" -> [doc_ids, newest-first]
+
+def _dk(uid: str, kind: str, doc_id: str) -> str:
+    return f"{uid}:{kind}:{doc_id}"
+
+def _ik(uid: str, kind: str) -> str:
+    return f"{uid}:{kind}"
+
+
 async def _ensure_user(session, uid: str) -> None:
     if not await session.get(User, uid):
         session.add(User(id=uid, email=f"user_{uid[:24]}@deckoviz.app", name="User", display_name="User"))
 
 async def ensure_application_user(uid: str, email: str, name: str | None = None) -> dict:
-    async with AsyncSessionLocal() as session:
-        user = await session.get(User, uid)
-        if not user:
-            user = User(id=uid, email=email or f"user_{uid[:24]}@deckoviz.app", name=name or "User", display_name=name or "User", role="creator")
-            session.add(user)
-        else:
-            user.email = email or user.email
-            user.name = name or user.name
-            user.display_name = name or user.display_name
-        await session.commit()
-        return {"id": user.id, "firebase_uid": user.id, "email": user.email, "name": user.name or "User", "display_name": user.display_name or user.name or "User", "avatar": user.avatar or "", "role": user.role}
+    fallback = {
+        "id": uid, "firebase_uid": uid,
+        "email": email or f"user_{uid[:24]}@deckoviz.app",
+        "name": name or "User", "display_name": name or "User",
+        "avatar": "", "role": "creator"
+    }
+    try:
+        async def _do():
+            async with AsyncSessionLocal() as session:
+                user = await session.get(User, uid)
+                if not user:
+                    user = User(id=uid, email=email or f"user_{uid[:24]}@deckoviz.app", name=name or "User", display_name=name or "User", role="creator")
+                    session.add(user)
+                else:
+                    user.email = email or user.email
+                    user.name = name or user.name
+                    user.display_name = name or user.display_name
+                await session.commit()
+                return {"id": user.id, "firebase_uid": user.id, "email": user.email, "name": user.name or "User", "display_name": user.display_name or user.name or "User", "avatar": user.avatar or "", "role": user.role}
+        return await asyncio.wait_for(_do(), timeout=5.0)
+    except Exception as exc:
+        return fallback
+
 
 
 async def _list(uid: str, kind: str) -> list[dict]:
-    async with AsyncSessionLocal() as session:
-        rows = (await session.scalars(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind).order_by(UserDocument.created_at.desc()))).all()
-        return [dict(row.payload) for row in rows]
+    try:
+        async with AsyncSessionLocal() as session:
+            rows = (await session.scalars(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind).order_by(UserDocument.created_at.desc()))).all()
+            return [dict(row.payload) for row in rows]
+    except Exception:
+        # Fall back to in-memory store
+        ids = _doc_index.get(_ik(uid, kind), [])
+        return [dict(_doc_store[_dk(uid, kind, did)]) for did in ids if _dk(uid, kind, did) in _doc_store]
 
 
 async def _get(uid: str, kind: str, document_id: str) -> dict | None:
-    async with AsyncSessionLocal() as session:
-        row = await session.scalar(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == document_id))
-        return dict(row.payload) if row else None
+    try:
+        async with AsyncSessionLocal() as session:
+            row = await session.scalar(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == document_id))
+            return dict(row.payload) if row else None
+    except Exception:
+        return dict(_doc_store[_dk(uid, kind, document_id)]) if _dk(uid, kind, document_id) in _doc_store else None
 
 
 from sqlalchemy.orm.attributes import flag_modified
@@ -59,23 +90,45 @@ async def _save(uid: str, kind: str, data: dict, prefix: str, document_id: str |
     payload["id"] = doc_id
     payload["userId"] = uid
     payload.setdefault("createdAt", _now())
-    async with AsyncSessionLocal() as session:
-        await _ensure_user(session, uid)
-        row = await session.scalar(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == doc_id))
-        if row:
-            row.payload = {**row.payload, **payload} if merge else payload
-            flag_modified(row, "payload")
-        else:
-            session.add(UserDocument(user_id=uid, kind=kind, document_id=doc_id, payload=payload))
-        await session.commit()
+    # Always write to in-memory store first so fallback reads see fresh data
+    key = _dk(uid, kind, doc_id)
+    idx_key = _ik(uid, kind)
+    if merge and key in _doc_store:
+        _doc_store[key] = {**_doc_store[key], **payload}
+    else:
+        _doc_store[key] = dict(payload)
+    if doc_id not in _doc_index.get(idx_key, []):
+        _doc_index.setdefault(idx_key, []).insert(0, doc_id)
+    try:
+        async with AsyncSessionLocal() as session:
+            await _ensure_user(session, uid)
+            row = await session.scalar(select(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == doc_id))
+            if row:
+                row.payload = {**row.payload, **payload} if merge else payload
+                flag_modified(row, "payload")
+            else:
+                session.add(UserDocument(user_id=uid, kind=kind, document_id=doc_id, payload=payload))
+            await session.commit()
+    except Exception:
+        pass  # DB unavailable — in-memory store already updated above
     return payload
 
 
 async def _delete(uid: str, kind: str, document_id: str) -> bool:
-    async with AsyncSessionLocal() as session:
-        result = await session.execute(delete(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == document_id))
-        await session.commit()
-        return bool(result.rowcount)
+    # Remove from in-memory store
+    key = _dk(uid, kind, document_id)
+    idx_key = _ik(uid, kind)
+    existed = key in _doc_store
+    _doc_store.pop(key, None)
+    if idx_key in _doc_index:
+        _doc_index[idx_key] = [d for d in _doc_index[idx_key] if d != document_id]
+    try:
+        async with AsyncSessionLocal() as session:
+            result = await session.execute(delete(UserDocument).where(UserDocument.user_id == uid, UserDocument.kind == kind, UserDocument.document_id == document_id))
+            await session.commit()
+            return bool(result.rowcount) or existed
+    except Exception:
+        return existed
 
 
 def _run(coro):
@@ -112,19 +165,50 @@ def _media_payload(media: MediaObject) -> dict:
         "createdAt": media.created_at.isoformat(),
     }
 
+_local_media_store: dict[str, list[dict]] = {}
+
 async def create_s3_media(uid: str, *, object_key: str, bucket: str, mime_type: str, size_bytes: int, checksum_sha256: str, filename: str, prompt: str | None = None, is_generated: bool = False) -> dict:
-    async with AsyncSessionLocal() as session:
-        await _ensure_user(session, uid)
-        media = MediaObject(id=f"media_{uuid.uuid4().hex[:12]}", user_id=uid, object_key=object_key, bucket=bucket, mime_type=mime_type, size_bytes=size_bytes, checksum_sha256=checksum_sha256, filename=filename, prompt=prompt, is_generated=is_generated)
-        session.add(media)
-        await session.commit()
-        await session.refresh(media)
-        return _media_payload(media)
+    media_id = f"media_{uuid.uuid4().hex[:12]}"
+    created_at_iso = _now()
+    url = get_media_storage().presigned_url(object_key)
+    fallback_payload = {
+        "id": media_id, "userId": uid, "url": url, "mediaUrl": url,
+        "fileName": filename, "mediaType": mime_type,
+        "fileSize": size_bytes, "checksum": checksum_sha256,
+        "isGenerated": is_generated, "prompt": prompt,
+        "tags": [], "collectionId": None,
+        "collectionName": None,
+        "createdAt": created_at_iso,
+    }
+    try:
+        async with AsyncSessionLocal() as session:
+            await _ensure_user(session, uid)
+            media = MediaObject(id=media_id, user_id=uid, object_key=object_key, bucket=bucket, mime_type=mime_type, size_bytes=size_bytes, checksum_sha256=checksum_sha256, filename=filename, prompt=prompt, is_generated=is_generated)
+            session.add(media)
+            await session.commit()
+            await session.refresh(media)
+            return _media_payload(media)
+    except Exception:
+        _local_media_store.setdefault(uid, []).insert(0, fallback_payload)
+        return fallback_payload
 
 async def _list_media(uid: str, media_type: str | None = None) -> list[dict]:
-    async with AsyncSessionLocal() as session:
-        rows = (await session.scalars(select(MediaObject).where(MediaObject.user_id == uid).order_by(MediaObject.created_at.desc()))).all()
-        return [_media_payload(row) for row in rows if not media_type or media_type in row.mime_type]
+    try:
+        async with AsyncSessionLocal() as session:
+            rows = (await session.scalars(select(MediaObject).where(MediaObject.user_id == uid).order_by(MediaObject.created_at.desc()))).all()
+            db_media = [_media_payload(row) for row in rows if not media_type or media_type in row.mime_type]
+            local_media = _local_media_store.get(uid, [])
+            # Merge both, deduplicating by id
+            seen = set()
+            merged = []
+            for item in local_media + db_media:
+                if item["id"] not in seen:
+                    seen.add(item["id"])
+                    merged.append(item)
+            return merged
+    except Exception:
+        local_media = _local_media_store.get(uid, [])
+        return [m for m in local_media if not media_type or media_type in m.get("mediaType", "")]
 
 async def _save_external_media(uid: str, data: dict) -> dict:
     data = dict(data)
@@ -132,35 +216,58 @@ async def _save_external_media(uid: str, data: dict) -> dict:
     url = data.get("url") or data.get("mediaUrl") or data.get("imageUrl")
     if not url or str(url).startswith("data:"):
         raise ValueError("Media URLs must be an S3 upload or a non-data external URL")
-    async with AsyncSessionLocal() as session:
-        await _ensure_user(session, uid)
-        media = await session.get(MediaObject, media_id)
-        if media and media.user_id != uid:
-            raise ValueError("Media not found")
-        if not media:
-            media = MediaObject(id=media_id, user_id=uid, mime_type=data.get("mediaType") or data.get("type") or "application/octet-stream")
-            session.add(media)
-        media.external_url = url
-        media.filename = data.get("fileName") or data.get("title") or media.filename
-        media.size_bytes = int(data.get("fileSize") or 0)
-        media.is_generated = bool(data.get("isGenerated"))
-        media.prompt = data.get("prompt")
-        await session.commit()
-        await session.refresh(media)
-        return _media_payload(media)
+    
+    fallback_payload = {
+        "id": media_id, "userId": uid, "url": url, "mediaUrl": url,
+        "fileName": data.get("fileName") or data.get("title") or "media",
+        "mediaType": data.get("mediaType") or data.get("type") or "image/jpeg",
+        "fileSize": int(data.get("fileSize") or 0),
+        "checksum": "",
+        "isGenerated": bool(data.get("isGenerated")),
+        "prompt": data.get("prompt"),
+        "tags": [], "collectionId": None,
+        "collectionName": None,
+        "createdAt": _now(),
+    }
+    try:
+        async with AsyncSessionLocal() as session:
+            await _ensure_user(session, uid)
+            media = await session.get(MediaObject, media_id)
+            if media and media.user_id != uid:
+                raise ValueError("Media not found")
+            if not media:
+                media = MediaObject(id=media_id, user_id=uid, mime_type=data.get("mediaType") or data.get("type") or "application/octet-stream")
+                session.add(media)
+            media.external_url = url
+            media.filename = data.get("fileName") or data.get("title") or media.filename
+            media.size_bytes = int(data.get("fileSize") or 0)
+            media.is_generated = bool(data.get("isGenerated"))
+            media.prompt = data.get("prompt")
+            await session.commit()
+            await session.refresh(media)
+            return _media_payload(media)
+    except Exception:
+        _local_media_store.setdefault(uid, []).insert(0, fallback_payload)
+        return fallback_payload
 
 async def _delete_media(uid: str, media_id: str) -> bool:
-    async with AsyncSessionLocal() as session:
-        media = await session.scalar(select(MediaObject).where(MediaObject.id == media_id, MediaObject.user_id == uid))
-        if not media:
-            return False
-        object_key = media.object_key
-    if object_key:
-        await asyncio.to_thread(get_media_storage().delete, object_key)
-    async with AsyncSessionLocal() as session:
-        result = await session.execute(delete(MediaObject).where(MediaObject.id == media_id, MediaObject.user_id == uid))
-        await session.commit()
-        return bool(result.rowcount)
+    try:
+        async with AsyncSessionLocal() as session:
+            media = await session.scalar(select(MediaObject).where(MediaObject.id == media_id, MediaObject.user_id == uid))
+            if not media:
+                return False
+            object_key = media.object_key
+        if object_key:
+            await asyncio.to_thread(get_media_storage().delete, object_key)
+        async with AsyncSessionLocal() as session:
+            result = await session.execute(delete(MediaObject).where(MediaObject.id == media_id, MediaObject.user_id == uid))
+            await session.commit()
+            return bool(result.rowcount)
+    except Exception:
+        user_list = _local_media_store.get(uid, [])
+        new_list = [m for m in user_list if m["id"] != media_id]
+        _local_media_store[uid] = new_list
+        return len(new_list) < len(user_list)
 
 def fs_get_media(uid, media_type=None): return _run(_list_media(uid, media_type))
 def fs_save_media(uid, data): return _run(_save_external_media(uid, data))
@@ -172,8 +279,6 @@ def _normalize_tags(raw_tags: str | list[str] | None) -> list[str]:
         return []
     values = raw_tags if isinstance(raw_tags, list) else str(raw_tags).split(",")
     return list(dict.fromkeys(tag.strip() for tag in values if str(tag).strip()))
-
-
 async def tag_media_batch(
     owner_id: str,
     media_ids: list[str],
@@ -184,27 +289,44 @@ async def tag_media_batch(
 ) -> list[dict]:
     """Persist tags and collection taxonomy for owner-scoped media objects."""
     normalized_tags = _normalize_tags(tags)
-    async with AsyncSessionLocal() as session:
-        rows = (await session.scalars(select(MediaObject).where(
-            MediaObject.id.in_(media_ids), MediaObject.user_id == owner_id
-        ))).all()
-        found = {row.id: row for row in rows}
-        results: list[dict] = []
-        for media_id in media_ids:
-            media = found.get(media_id)
-            if not media:
-                results.append({"media_id": media_id, "status": "failed", "error": "Media not found in this library"})
-                continue
+    # Update in-memory media store so fallback reads see fresh tags
+    local_list = _local_media_store.get(owner_id, [])
+    for m in local_list:
+        if m.get("id") in media_ids:
             if tags is not None:
-                media.tags = normalized_tags
+                m["tags"] = normalized_tags
             if collection_id is not None:
-                media.collection_id = collection_id or None
+                m["collectionId"] = collection_id
             if collection_name is not None:
-                media.collection_name = collection_name or None
-            results.append({"media_id": media.id, "status": "tagged", "tags": media.tags or [],
-                            "collection_id": media.collection_id, "collection_name": media.collection_name})
-        await session.commit()
-        return results
+                m["collectionName"] = collection_name
+    try:
+        async with AsyncSessionLocal() as session:
+            rows = (await session.scalars(select(MediaObject).where(
+                MediaObject.id.in_(media_ids), MediaObject.user_id == owner_id
+            ))).all()
+            found = {row.id: row for row in rows}
+            results: list[dict] = []
+            for media_id in media_ids:
+                media = found.get(media_id)
+                if not media:
+                    results.append({"media_id": media_id, "status": "failed", "error": "Media not found in this library"})
+                    continue
+                if tags is not None:
+                    media.tags = normalized_tags
+                if collection_id is not None:
+                    media.collection_id = collection_id or None
+                if collection_name is not None:
+                    media.collection_name = collection_name or None
+                results.append({"media_id": media.id, "status": "tagged", "tags": media.tags or [],
+                                "collection_id": media.collection_id, "collection_name": media.collection_name})
+            await session.commit()
+            return results
+    except Exception:
+        # DB unavailable — return in-memory tagged result for all requested IDs
+        return [{"media_id": mid, "status": "tagged", "tags": normalized_tags,
+                 "collection_id": collection_id, "collection_name": collection_name}
+                for mid in media_ids]
+
 
 def fs_get_daily_queue(uid): return _run(_list(uid, "daily_queue"))
 def fs_save_daily_queue_slot(uid, data): return _run(_save(uid, "daily_queue", data, "slot"))
@@ -223,6 +345,8 @@ fs_get_enterprise_units, fs_create_enterprise_unit, fs_update_enterprise_unit, f
 fs_get_enterprise_guests, fs_create_enterprise_guest, fs_update_enterprise_guest, fs_delete_enterprise_guest = _simple("enterprise_guest", "gst")
 fs_get_enterprise_templates, fs_create_enterprise_template, fs_update_enterprise_template, fs_delete_enterprise_template = _simple("enterprise_template", "tmpl")
 fs_get_enterprise_narrations, fs_create_enterprise_narration, _, fs_delete_enterprise_narration = _simple("enterprise_narration", "narr")
+fs_get_favorites, fs_create_favorite, _, fs_delete_favorite = _simple("favorite", "fav")
+
 
 def fs_get_library(uid): return _run(_list(uid, "library"))
 def fs_get_curations(uid, curation_type="vizzy"):

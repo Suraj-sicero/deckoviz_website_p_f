@@ -67,16 +67,32 @@ def is_tv_online(user_id: str, app_instance_id: str) -> bool:
 
 async def route_to_tv(user_id: str, target_app_instance_id: str | None, message: dict[str, Any]) -> bool:
     user_conns = _connections.get(user_id)
-    if not user_conns:
-        return False
     sent = False
-    for conn in user_conns.values():
-        if conn["client_type"] != "tv":
-            continue
-        if target_app_instance_id and conn["app_instance_id"] != target_app_instance_id:
-            continue
-        await send_json(conn["ws"], message)
-        sent = True
+    if user_conns:
+        for conn in user_conns.values():
+            if conn["client_type"] != "tv":
+                continue
+            if target_app_instance_id and conn["app_instance_id"] != target_app_instance_id:
+                continue
+            await send_json(conn["ws"], message)
+            sent = True
+
+    if not sent:
+        # ── Cross-user fallback for local dev ──────────────────────────────────
+        # TV may have connected under a different user_id (e.g. "anonymous_user")
+        # while the browser is authenticated as the real Firebase UID.
+        for other_uid, conns in _connections.items():
+            if other_uid == user_id:
+                continue
+            for conn in conns.values():
+                if conn["client_type"] != "tv":
+                    continue
+                aid = conn.get("app_instance_id")
+                if target_app_instance_id and aid != target_app_instance_id:
+                    continue
+                await send_json(conn["ws"], message)
+                sent = True
+
     return sent
 
 
@@ -142,6 +158,7 @@ async def send_devices_list(user_id: str, ws: WebSocket) -> None:
             }
         )
 
+    # Include live TV connections for this user not yet in device_registry
     user_conns = _connections.get(user_id) or {}
     for conn in user_conns.values():
         aid = conn.get("app_instance_id")
@@ -157,19 +174,62 @@ async def send_devices_list(user_id: str, ws: WebSocket) -> None:
                     "playback_state": "playing",
                 }
             )
+            db_ids.add(aid)
+
+    # ── Cross-user fallback for local dev ────────────────────────────────────
+    # When Firebase Admin is not configured the TV may have paired as
+    # "anonymous_user" while the browser connected as the real Firebase UID.
+    # Merge in any live TV connections from anonymous_user or other users that
+    # are not already represented in the list above.
+    for other_uid, conns in _connections.items():
+        if other_uid == user_id:
+            continue
+        for conn in conns.values():
+            aid = conn.get("app_instance_id")
+            if conn["client_type"] != "tv" or not aid or aid in db_ids:
+                continue
+            # Also look up device_registry for richer metadata
+            reg_device = device_registry.get_device(aid)
+            live.append(
+                {
+                    "app_instance_id": aid,
+                    "device_name": (reg_device or {}).get("device_name") or "TV Device",
+                    "platform": (reg_device or {}).get("platform") or "google_tv",
+                    "status": "online",
+                    "last_seen": _iso_now(),
+                    "current_artwork": (reg_device or {}).get("current_artwork"),
+                    "playback_state": (reg_device or {}).get("playback_state"),
+                }
+            )
+            db_ids.add(aid)
 
     await send_json(ws, envelope("devices_list", {"devices": live}))
 
 
 async def notify_browsers_device_offline(user_id: str, app_instance_id: str) -> None:
-    await broadcast_to_browsers(
-        user_id,
-        envelope("device_offline", {"app_instance_id": app_instance_id}),
-    )
+    msg = envelope("device_offline", {"app_instance_id": app_instance_id})
+    # Notify browsers under the TV's own user_id
+    await broadcast_to_browsers(user_id, msg)
+    # Also notify all other browser connections (cross-user dev fallback)
+    for other_uid, conns in _connections.items():
+        if other_uid == user_id:
+            continue
+        for conn in conns.values():
+            if conn["client_type"] == "browser":
+                await send_json(conn["ws"], msg)
 
 
 async def refresh_browser_device_lists(user_id: str) -> None:
-    user_conns = _connections.get(user_id) or {}
-    for conn in user_conns.values():
-        if conn["client_type"] == "browser":
-            await send_devices_list(user_id, conn["ws"])
+    """Push an updated device list to all browser WebSocket connections.
+
+    Iterates every user's browser connections (not just the TV owner's) so that
+    when the TV connects as anonymous_user, the real-UID browser still sees it.
+    """
+    all_browser_conns: list[tuple[str, Any]] = []
+    for uid, conns in _connections.items():
+        for conn in conns.values():
+            if conn["client_type"] == "browser":
+                all_browser_conns.append((uid, conn["ws"]))
+
+    for uid, ws in all_browser_conns:
+        await send_devices_list(uid, ws)

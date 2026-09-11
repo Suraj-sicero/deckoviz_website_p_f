@@ -52,6 +52,7 @@ import {
 
 import AddImagesToCollectionView from "./views/AddImagesToCollectionView";
 import AddMediaView from "./views/AddMediaView";
+import BatchUploadZone from "../BatchUpload/BatchUploadZone";
 import AIPhotoManagerHomeView from "./views/AIPhotoManagerHomeView";
 import AIPhotoManagerView from "./views/AIPhotoManagerView";
 import ArtDrawerView from "./views/ArtDrawerView";
@@ -73,7 +74,7 @@ import { setFrameImage } from "../../lib/frameStore";
 import { webappApi } from "../../lib/webappApi";
 import { homeApi } from "../../lib/homeApi";
 import PowerUsesSection from "../PowerUses/PowerUsesSection";
-import { getUserCollections, saveUserCollections, getUserMedia, saveUserMedia, getUserAvatar } from "../../lib/userStorage";
+import { getUserCollections, saveUserCollections, getUserMedia, saveUserMedia, getUserAvatar, compressImageFile } from "../../lib/userStorage";
 import {
   HomeDailyQueueView,
   HomeEventsView,
@@ -136,6 +137,7 @@ const sidebarMain: { icon: React.ReactNode; label: string; view: ViewType }[] = 
   { icon: <Clock size={20} />, label: "Daily Queue", view: "daily_queue" },
   { icon: <ImageIcon size={20} />, label: "All Media", view: "all_media" },
   { icon: <Library size={20} />, label: "Explore Library", view: "explore_library" },
+  { icon: <Plus size={20} />, label: "Upload Media", view: "upload_modal" as any },
   { icon: <Monitor size={20} />, label: "Device Pairing", view: "pair" as ViewType },
   { icon: <Play size={20} />, label: "Display", view: "display" as ViewType },
 ];
@@ -177,6 +179,7 @@ export default function DeckovizWebapp() {
   const [activeView, setActiveView] = useState<ViewType>("drawing_room");
   const [showMenu, setShowMenu] = useState(false);
   const [showVirtualFrameModal, setShowVirtualFrameModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const [profileTick, setProfileTick] = useState(0);
   const ws = useWebSocket();
 
@@ -371,7 +374,9 @@ export default function DeckovizWebapp() {
                 <button
                   key={item.view}
                   onClick={() => {
-                    if (item.view === "vgc") {
+                    if (item.view === ("upload_modal" as any)) {
+                      setShowUploadModal(true);
+                    } else if (item.view === "vgc") {
                       window.location.href = "/vizzy-canvas";
                     } else if (item.view === ("pair" as any)) {
                       window.location.href = "/pair";
@@ -418,7 +423,13 @@ export default function DeckovizWebapp() {
         {/* Content Area */}
         <section className="min-w-0 flex-1">
           <div className="min-h-full">
-            {activeView === "drawing_room" && <DrawingRoomView onNavigate={setActiveView} onSendToFrame={() => setShowVirtualFrameModal(true)} />}
+            {activeView === "drawing_room" && (
+              <DrawingRoomView
+                onNavigate={setActiveView}
+                onSendToFrame={() => setShowVirtualFrameModal(true)}
+                onOpenUploadModal={() => setShowUploadModal(true)}
+              />
+            )}
             {activeView === "vgc" && <VGCPlaceholder />}
             {activeView === "create_collection" && <CreateCollectionView />}
             {activeView === "vcc" && <VCCPlaceholder />}
@@ -459,6 +470,21 @@ export default function DeckovizWebapp() {
       {/* Virtual Frame Modal */}
       {showVirtualFrameModal && (
         <VirtualFrameModal onClose={() => setShowVirtualFrameModal(false)} />
+      )}
+
+      {/* Shared Media Upload Modal */}
+      {showUploadModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white rounded-3xl w-full max-w-4xl shadow-2xl overflow-hidden p-6 relative">
+            <button 
+              onClick={() => setShowUploadModal(false)}
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 text-gray-500 z-10"
+            >
+              <X size={20} />
+            </button>
+            <BatchUploadZone onUploadComplete={() => setShowUploadModal(false)} />
+          </div>
+        </div>
       )}
     </div>
   );
@@ -664,12 +690,24 @@ export function VirtualFrameModal({ onClose }: { onClose: () => void }) {
 }
 
 /* ======================== DRAWING ROOM VIEW ======================== */
-export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v: ViewType) => void; onSendToFrame: () => void }) {
+export function DrawingRoomView({ onNavigate, onSendToFrame, onOpenUploadModal }: { onNavigate: (v: ViewType) => void; onSendToFrame: () => void; onOpenUploadModal?: () => void }) {
   const { user } = useAuth();
   const [userCollections, setUserCollections] = useState<any[]>([]);
   const [dailyQueue, setDailyQueue] = useState<any[]>([]);
   const [userArtworks, setUserArtworks] = useState<string[]>([]);
+  const [userMedia, setUserMedia] = useState<any[]>([]);
   const [loadingData, setLoadingData] = useState(true);
+
+  useEffect(() => {
+    const syncUserMedia = () => setUserMedia(getUserMedia());
+    syncUserMedia();
+    window.addEventListener("deckoviz-media-updated", syncUserMedia);
+    window.addEventListener("deckoviz-user-changed", syncUserMedia);
+    return () => {
+      window.removeEventListener("deckoviz-media-updated", syncUserMedia);
+      window.removeEventListener("deckoviz-user-changed", syncUserMedia);
+    };
+  }, [user]);
 
   useEffect(() => {
     let isMounted = true;
@@ -987,24 +1025,64 @@ export function DrawingRoomView({ onNavigate, onSendToFrame }: { onNavigate: (v:
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SectionCard title="All Media" icon={<ImageIcon size={18} />} accentColor="#2563EB" onClick={() => onNavigate("all_media")}>
           <div className="flex items-center gap-5 mt-4">
-            {[
-              { label: "Images", count: 142, color: "bg-blue-600" },
-              { label: "Videos", count: 23, color: "bg-cyan-500" },
-              { label: "Music", count: 38, color: "bg-indigo-500" },
-            ].map((stat) => (
-              <div key={stat.label} className="flex items-center gap-2">
-                <div className={`w-2 h-2 rounded-full ${stat.color}`} />
-                <span className="text-xs text-gray-500">{stat.count} {stat.label}</span>
-              </div>
-            ))}
+            {(() => {
+              const imgCount = userMedia.filter(m => m.mediaType === "image" || m.type?.startsWith("image/")).length;
+              const vidCount = userMedia.filter(m => m.mediaType === "video" || m.type?.startsWith("video/")).length;
+              const musCount = userMedia.filter(m => m.mediaType === "music" || m.type?.startsWith("audio/")).length;
+              return [
+                { label: "Images", count: imgCount, color: "bg-blue-600" },
+                { label: "Videos", count: vidCount, color: "bg-cyan-500" },
+                { label: "Music", count: musCount, color: "bg-indigo-500" },
+              ].map((stat) => (
+                <div key={stat.label} className="flex items-center gap-2">
+                  <div className={`w-2 h-2 rounded-full ${stat.color}`} />
+                  <span className="text-xs text-gray-500">{stat.count} {stat.label}</span>
+                </div>
+              ));
+            })()}
           </div>
-          <div className="grid grid-cols-4 gap-2 mt-4">
-            {["/images/herol (9).png", "/images/herol (13).png", "/images/herol (15).png", "/images/herol (17).png"].map((img, i) => (
-              <div key={i} className="aspect-square rounded-xl overflow-hidden">
-                <img src={img} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+
+          {userMedia.length === 0 ? (
+            <div className="flex flex-col items-center justify-center p-6 text-center rounded-xl bg-gray-50/70 border border-dashed border-gray-200 mt-4 gap-3">
+              <UploadCloud className="size-8 text-blue-500/60" />
+              <div>
+                <p className="text-sm font-bold text-gray-800">No Media Uploaded Yet</p>
+                <p className="text-xs text-gray-500">Drop files or click upload to add content to your library.</p>
               </div>
-            ))}
-          </div>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (onOpenUploadModal) onOpenUploadModal();
+                  else onNavigate("all_media");
+                }}
+                className="px-4 py-2 rounded-full text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition"
+              >
+                + Upload Media
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-4 gap-2 mt-4">
+              {userMedia.slice(0, 4).map((item, i) => {
+                const src = item.url || item.mediaUrl || item.imageUrl;
+                return (
+                  <div key={item.id || i} className="aspect-square rounded-xl overflow-hidden bg-gray-100 border border-gray-100 relative group">
+                    {item.mediaType === "video" || item.type?.startsWith("video/") ? (
+                      <video src={src} className="w-full h-full object-cover" />
+                    ) : (
+                      <img
+                        src={src}
+                        alt=""
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(item.name || item.filename || "art")}/800/800`;
+                        }}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </SectionCard>
 
         <SectionCard title="Upcoming Events" icon={<Calendar size={18} />} accentColor="#059669" onClick={() => onNavigate("events")}>
@@ -1347,7 +1425,7 @@ export function DailyQueuePlaceholder() {
 export function AllMediaPlaceholder() {
   const { token, openAuthModal } = useAuth();
   const [mediaFiles, setMediaFiles] = useState<{ id: string; mediaUrl: string; fileName: string; mediaType: string; isGenerated?: boolean }[]>([]);
-  const [activeTab, setActiveTab] = useState("Generated Images");
+  const [activeTab, setActiveTab] = useState("All Media");
   const [uploading, setUploading] = useState(false);
   const [isDragActive, setIsDragActive] = useState(false);
   const [error, setError] = useState("");
@@ -1362,7 +1440,7 @@ export function AllMediaPlaceholder() {
   const [addedToast, setAddedToast] = useState<string | null>(null);
   const [viewingImage, setViewingImage] = useState<string | null>(null);
 
-  const tabs = ["Generated Images", "Generated Videos", "Generated Narrations", "Generated Music", "Uploaded Images", "Uploaded Videos", "Uploaded Music"];
+  const tabs = ["All Media", "Uploaded Images", "Uploaded Videos", "Uploaded Music", "Generated Images", "Generated Videos", "Generated Narrations", "Generated Music"];
 
   const fetchMedia = useCallback(async () => {
     try {
@@ -1409,16 +1487,6 @@ export function AllMediaPlaceholder() {
         });
       } catch { /* ignore */ }
 
-      // Default high quality artworks if user history is brand new
-      const defaultArtworks = [
-        { id: "art-1", mediaUrl: "https://picsum.photos/seed/deckoviz-synth/1024/1024", fileName: "Synthwave Sunset", mediaType: "image/png", isGenerated: true },
-        { id: "art-2", mediaUrl: "https://picsum.photos/seed/deckoviz-neon/1024/1024", fileName: "Neon Metropolis", mediaType: "image/png", isGenerated: true },
-        { id: "art-3", mediaUrl: "https://picsum.photos/seed/deckoviz-emerald/1024/1024", fileName: "Emerald Forest Realm", mediaType: "image/png", isGenerated: true },
-        { id: "art-4", mediaUrl: "https://picsum.photos/seed/deckoviz-cosmic/1024/1024", fileName: "Cosmic Nebula", mediaType: "image/png", isGenerated: true },
-        { id: "art-5", mediaUrl: "https://picsum.photos/seed/deckoviz-abstract/1024/1024", fileName: "Prism Dynamics", mediaType: "image/png", isGenerated: true },
-        { id: "art-6", mediaUrl: "https://picsum.photos/seed/deckoviz-cyber/1024/1024", fileName: "Cybernetic Horizon", mediaType: "image/png", isGenerated: true },
-      ];
-
       const normalizedVizzy = vizzyImgs.map((img: any) => ({
         id: img.id || `vimg-${Date.now()}-${Math.random()}`,
         mediaUrl: img.url || img.imageUrl || img.mediaUrl || img.path || "",
@@ -1440,7 +1508,7 @@ export function AllMediaPlaceholder() {
         mediaUrl: m.url || m.mediaUrl || "",
         fileName: m.fileName || m.name || "Uploaded Item",
         mediaType: m.type || m.mediaType || "image/png",
-        isGenerated: m.isGenerated ?? true,
+        isGenerated: m.isGenerated ?? false,
       }));
 
       const normalizedCollection = collectionMedia.map((m: any) => ({
@@ -1452,20 +1520,22 @@ export function AllMediaPlaceholder() {
       }));
 
       const allCombined = new Map();
-      [...normalizedLocal, ...normalizedCollection, ...normalizedVizzy, ...normalizedMedia, ...defaultArtworks].forEach(item => {
+      [...normalizedLocal, ...normalizedCollection, ...normalizedVizzy, ...normalizedMedia].forEach(item => {
         if (item.mediaUrl) allCombined.set(item.mediaUrl, item);
       });
 
       const combinedList = Array.from(allCombined.values());
 
       let filtered = combinedList;
-      if (activeTab === "Generated Images") {
-        filtered = combinedList.filter(m => (m.isGenerated || !m.mediaType || m.mediaType.startsWith("image/")) && !m.mediaType?.startsWith("video/") && !m.mediaType?.startsWith("audio/"));
+      if (activeTab === "All Media") {
+        filtered = combinedList;
       } else if (activeTab === "Uploaded Images") {
-        filtered = combinedList.filter(m => m.mediaType?.startsWith("image/"));
-      } else if (activeTab === "Generated Videos" || activeTab === "Uploaded Videos") {
+        filtered = combinedList.filter(m => (m.mediaType?.startsWith("image/") || m.mediaType === "image"));
+      } else if (activeTab === "Generated Images") {
+        filtered = combinedList.filter(m => m.isGenerated && (m.mediaType?.startsWith("image/") || m.mediaType === "image"));
+      } else if (activeTab === "Uploaded Videos" || activeTab === "Generated Videos") {
         filtered = combinedList.filter(m => m.mediaType?.startsWith("video/") || m.fileName?.toLowerCase().endsWith(".mp4") || m.fileName?.toLowerCase().endsWith(".webm"));
-      } else if (activeTab === "Generated Music" || activeTab === "Uploaded Music") {
+      } else if (activeTab === "Uploaded Music" || activeTab === "Generated Music") {
         filtered = combinedList.filter(m => m.mediaType?.startsWith("audio/") || m.mediaType?.startsWith("music/") || m.fileName?.toLowerCase().endsWith(".mp3") || m.fileName?.toLowerCase().endsWith(".wav"));
       } else if (activeTab === "Generated Narrations") {
         filtered = combinedList.filter(m => m.mediaType?.includes("narration") || m.fileName?.toLowerCase().includes("narration"));
@@ -1494,17 +1564,26 @@ export function AllMediaPlaceholder() {
     let failed = 0;
     for (const file of Array.from(fileList)) {
       try {
-        const previewUrl = URL.createObjectURL(file);
+        const dataUrl = await compressImageFile(file).catch(() => null);
+
+        if (!dataUrl) {
+          failed++;
+          continue;
+        }
+
         const fileType = file.type || (file.name.endsWith(".mp4") ? "video/mp4" : file.name.endsWith(".mp3") ? "audio/mp3" : "image/png");
         
         let uploadedItem: any = null;
         try {
-          uploadedItem = await webappApi.uploadMedia(file, token || undefined);
-        } catch { /* fallback to previewUrl */ }
+          uploadedItem = await Promise.race([
+            webappApi.uploadMedia(file, token || undefined),
+            new Promise<null>((r) => setTimeout(() => r(null), 3000)),
+          ]).catch(() => null);
+        } catch { /* fallback to dataUrl */ }
 
-        const finalUrl = uploadedItem?.url || uploadedItem?.mediaUrl || previewUrl;
+        const finalUrl = uploadedItem?.url || uploadedItem?.mediaUrl || dataUrl;
         const newMediaItem = {
-          id: `media-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+          id: uploadedItem?.id || `media-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
           url: finalUrl,
           mediaUrl: finalUrl,
           fileName: file.name,
@@ -1513,6 +1592,7 @@ export function AllMediaPlaceholder() {
           type: fileType,
           isGenerated: false,
           createdAt: new Date().toISOString(),
+          isUploaded: true,
         };
 
         let currentMedia = getUserMedia();
@@ -1523,9 +1603,8 @@ export function AllMediaPlaceholder() {
         failed++;
       }
     }
-    if (failed > 0) setError(`${failed} file(s) failed to upload.`);
+    if (failed > 0) setError("Unable to upload media file. Please try a different file.");
     await fetchMedia();
-    setUploading(false);
   };
 
   const handleDelete = async (id: string, url: string) => {

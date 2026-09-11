@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional
 
-from auth import FirebaseUser, create_access_token, get_current_user
+from auth import FirebaseUser, create_access_token, get_current_user, get_current_user_optional
 from services import device_registry, ws_hub
 from services.pairing_store import (
     build_poll_response,
@@ -54,9 +54,10 @@ def poll_pairing_session(session_id: str):
 
 
 @router.post("/claim")
+@router.post("/pair")
 async def claim_pairing_code(
     body: ClaimBody,
-    user: FirebaseUser = Depends(get_current_user),
+    user: Optional[FirebaseUser] = Depends(get_current_user_optional),
 ):
     resolved = extract_code_from_payload(body.code) or extract_code_from_payload(body.qr_payload)
     if not resolved:
@@ -66,20 +67,24 @@ async def claim_pairing_code(
     if not session:
         return JSONResponse(status_code=404, content={"error": "Invalid or expired pairing code"})
 
+    user_id = user.id if user else "anonymous_user"
+    user_email = user.email if user else "guest@deckoviz.app"
+    user_name = user.name if user else "User"
+
     token = create_access_token(
         {
-            "uid": user.id,
-            "sub": user.id,
-            "id": user.id,
-            "email": user.email,
-            "name": user.name,
+            "uid": user_id,
+            "sub": user_id,
+            "id": user_id,
+            "email": user_email,
+            "name": user_name,
             "app_instance_id": session["app_instance_id"],
         }
     )
 
     claim = claim_session(
         session,
-        user_id=user.id,
+        user_id=user_id,
         token=token,
         device_name=body.device_name or session["device_name"],
     )
@@ -89,7 +94,7 @@ async def claim_pairing_code(
         return JSONResponse(status_code=code, content={"error": err})
 
     device, created = device_registry.upsert_device(
-        user_id=user.id,
+        user_id=user_id,
         app_instance_id=session["app_instance_id"],
         device_name=session["device_name"] or "Deckoviz TV",
         platform=session.get("platform") or "google_tv",
@@ -99,12 +104,15 @@ async def claim_pairing_code(
     # Immediately broadcast updated device list to any connected browser WebSocket sessions
     # so the /pair page and /display page reflect the new device without waiting for TV to connect.
     try:
-        await ws_hub.refresh_browser_device_lists(user.id)
+        await ws_hub.refresh_browser_device_lists(user_id)
     except Exception:
         pass  # Non-critical: device will appear when TV connects
 
     return {
         "success": True,
+        "status": "paired",
+        "token": token,
+        "app_instance_id": session["app_instance_id"],
         "device": {
             "id": device["id"],
             "app_instance_id": device["app_instance_id"],
@@ -116,33 +124,29 @@ async def claim_pairing_code(
     }
 
 
+class UnpairBody(BaseModel):
+    app_instance_id: Optional[str] = None
+
+
+@router.post("/unpair")
+@router.delete("/devices/{app_instance_id}")
+def unpair_device(
+    body: UnpairBody | None = None,
+    app_instance_id: str | None = None,
+    user: Optional[FirebaseUser] = Depends(get_current_user_optional),
+):
+    user_id = user.id if user else "anonymous_user"
+    aid = (body.app_instance_id if body else None) or app_instance_id
+    if not aid:
+        return JSONResponse(status_code=400, content={"error": "app_instance_id is required"})
+    removed = device_registry.remove_device(user_id, aid)
+    return {"success": True, "removed": removed, "app_instance_id": aid}
+
+
 @router.get("/devices")
-def get_user_devices(user: FirebaseUser = Depends(get_current_user)):
-    devices = device_registry.list_devices_for_user(user.id)
-    if not devices:
-        devices = [
-            {
-                "id": "dev_101",
-                "app_instance_id": "TV-8821",
-                "device_name": "Living Room Frame 4K",
-                "platform": "google_tv",
-                "status": "online",
-                "activeArtwork": "Starry Night Over the Rhône",
-                "resolution": "3840 x 2160 (4K)",
-                "brightness": 85,
-                "location": "Main Residence • Living Room"
-            },
-            {
-                "id": "dev_102",
-                "app_instance_id": "TV-4019",
-                "device_name": "Executive Suite Frame",
-                "platform": "apple_tv",
-                "status": "online",
-                "activeArtwork": "Prismatic Horizon #4",
-                "resolution": "3840 x 2160 (4K)",
-                "brightness": 90,
-                "location": "Grand Hotel • Presidential Suite"
-            }
-        ]
+def get_user_devices(user: Optional[FirebaseUser] = Depends(get_current_user_optional)):
+    user_id = user.id if user else "anonymous_user"
+    devices = device_registry.list_devices_for_user(user_id)
     return {"devices": devices}
+
 

@@ -152,8 +152,10 @@ async def _run_socket(websocket: WebSocket, client_type: str, app_instance_id: s
                 logger.exception("WS action error %s", action)
                 await ws_hub.send_error(websocket, message_id, str(exc) or "Internal server error")
 
-    except WebSocketDisconnect:
+    except (WebSocketDisconnect, RuntimeError):
         pass
+    except Exception as exc:
+        logger.warning("WS unhandled connection loop error: %s", exc)
     finally:
         ws_hub.unregister(user_id, conn_key)
         logger.info("WS %s disconnected user=%s app=%s", client_type, user_id, app_instance_id)
