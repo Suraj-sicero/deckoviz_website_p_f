@@ -557,6 +557,142 @@ export default function StartHere() {
                 </div>
               </button>
 
+              {/* 🎨 100 Ways to Fill Your Walls Button */}
+              <button
+                onClick={() => navigate("/blog/100-ways-to-fill-your-walls")}
+                className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(168,85,247,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(168,85,247,0.3)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 via-pink-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
+                     style={{
+                       background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.7) 60%, transparent 80%)",
+                       backgroundSize: "200% 100%",
+                       animation: "glassShine 3s infinite linear"
+                     }}
+                />
+                <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(168,85,247,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-purple-400 animate-pulse" />
+                      <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-purple-800 font-bold opacity-80">
+                        100 Playlists Guide
+                      </span>
+                    </div>
+                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-purple-800 transition-colors w-40 sm:w-48">
+                      100 Ways to Fill Your Walls
+                    </span>
+                  </div>
+                </div>
+                <div className="ml-auto w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full bg-white/50 border border-white/80 flex items-center justify-center text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300 group-hover:scale-110 relative z-10 shadow-sm">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </div>
+              </button>
+
+              {/* 📸 The Complete Photos Guide Button */}
+              <button
+                onClick={() => navigate("/blog/the-complete-photos-guide-for-your-deckoviz-dasportal")}
+                className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(244,63,94,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(244,63,94,0.3)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-rose-400/10 via-amber-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
+                     style={{
+                       background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.7) 60%, transparent 80%)",
+                       backgroundSize: "200% 100%",
+                       animation: "glassShine 3s infinite linear"
+                     }}
+                />
+                <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-rose-500 to-amber-500 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(244,63,94,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <BookOpen className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-rose-400 animate-pulse" />
+                      <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-rose-800 font-bold opacity-80">
+                        Photos Guide
+                      </span>
+                    </div>
+                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-rose-800 transition-colors w-40 sm:w-48">
+                      The Complete Photos Guide
+                    </span>
+                  </div>
+                </div>
+                <div className="ml-auto w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full bg-white/50 border border-white/80 flex items-center justify-center text-rose-600 group-hover:bg-rose-600 group-hover:text-white transition-all duration-300 group-hover:scale-110 relative z-10 shadow-sm">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </div>
+              </button>
+
+              {/* 🖼️ The Complete Posters Guide Button */}
+              <button
+                onClick={() => navigate("/blog/the-complete-posters-guide-for-your-deckoviz-portal")}
+                className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(16,185,129,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(16,185,129,0.3)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/10 via-teal-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
+                     style={{
+                       background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.7) 60%, transparent 80%)",
+                       backgroundSize: "200% 100%",
+                       animation: "glassShine 3s infinite linear"
+                     }}
+                />
+                <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(16,185,129,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <BookMarked className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-emerald-800 font-bold opacity-80">
+                        Posters Guide
+                      </span>
+                    </div>
+                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-emerald-800 transition-colors w-40 sm:w-48">
+                      The Complete Posters Guide
+                    </span>
+                  </div>
+                </div>
+                <div className="ml-auto w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full bg-white/50 border border-white/80 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 group-hover:scale-110 relative z-10 shadow-sm">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </div>
+              </button>
+
+              {/* 🎨 The Complete Art Guide Button */}
+              <button
+                onClick={() => navigate("/blog/the-complete-art-guide-for-your-deckoviz-dasportal")}
+                className="relative flex items-center justify-between gap-3 sm:gap-4 p-3 sm:p-4 pr-4 sm:pr-6 bg-white/40 border border-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] shadow-[0_8px_32px_rgba(99,102,241,0.1)] transition-all duration-500 overflow-hidden group hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(99,102,241,0.3)] hover:border-white/90 min-w-[280px] sm:min-w-[340px]"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-400/10 via-purple-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 z-0 pointer-events-none mix-blend-overlay"
+                     style={{
+                       background: "linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.7) 40%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.7) 60%, transparent 80%)",
+                       backgroundSize: "200% 100%",
+                       animation: "glassShine 3s infinite linear"
+                     }}
+                />
+                <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-[0_4px_16px_rgba(99,102,241,0.35)] group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                  </div>
+                  <div className="flex flex-col text-left">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-indigo-400 animate-pulse" />
+                      <span className="text-[9px] sm:text-[10px] uppercase tracking-widest text-indigo-800 font-bold opacity-80">
+                        Art Guide
+                      </span>
+                    </div>
+                    <span className="text-[13px] sm:text-[15px] font-bold text-[#182A4A] leading-tight group-hover:text-indigo-800 transition-colors w-40 sm:w-48">
+                      The Complete Art Guide
+                    </span>
+                  </div>
+                </div>
+                <div className="ml-auto w-8 h-8 sm:w-10 sm:h-10 shrink-0 rounded-full bg-white/50 border border-white/80 flex items-center justify-center text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 group-hover:scale-110 relative z-10 shadow-sm">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                </div>
+              </button>
+
               {/* 💞 Elinity × Deckoviz Guide Button */}
               <button
                 onClick={() => navigate("/elinity-deckoviz-guide")}

@@ -18,6 +18,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Hero from "./components/homepage/Hero";
 import Features from "./components/homepage/Features";
 import WhoIsDeckovizFor from "./components/homepage/WhoIsDeckovizFor";
+import WhoTheDASPortIsFor from "./components/homepage/WhoTheDASPortIsFor";
 import PrivacyPolicy from "./components/policies/PrivacyPolicy";
 import TermsOfService from "./components/policies/TermsOfService";
 import ShippingPolicy from "./components/policies/ShippingPolicy";
@@ -362,6 +363,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                 <WhyDeckoviz />
                 <DeckovizGallerySection />
                 <WhoIsDeckovizFor />
+                <WhoTheDASPortIsFor />
                 <DesignedFor />
                 <HowItWorks />
                 <GuestReactionsTestimonials />

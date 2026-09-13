@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { DynamicImageGrid } from "../other/DynamicImageGrid";
+import WhatYouGetSection from "../homepage/WhatYouGetSection";
 import {
   BookOpen,
   Sparkles,
@@ -38,8 +39,8 @@ const LightTheme = {
   tealSoft: "#ccfbf1",
   emeraldPrimary: "#059669",
   emeraldSoft: "#d1fae5",
-  cyanPrimary: "#0284c7",
-  cyanSoft: "#e0f2fe",
+  cyanPrimary: "#0d9488",
+  cyanSoft: "#ccfbf1",
   borderLight: "#e2e8f0",
 };
 
@@ -76,7 +77,7 @@ const TealParticles: React.FC<{ count?: number }> = ({ count = 35 }) => {
     size: Math.random() * 5 + 2,
     dur: Math.random() * 8 + 6,
     delay: Math.random() * 4,
-    color: i % 3 === 0 ? "#0d9488" : i % 3 === 1 ? "#0284c7" : "#059669",
+    color: i % 3 === 0 ? "#0d9488" : i % 3 === 1 ? "#14b8a6" : "#059669",
   }));
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -267,7 +268,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
       {/* Background Lighting & Particles */}
       <TealParticles count={40} />
       <GlowOrb color="#ccfbf1" size="800px" top="-150px" left="-200px" opacity={0.5} />
-      <GlowOrb color="#e0f2fe" size="700px" top="35%" right="-250px" opacity={0.45} />
+      <GlowOrb color="#ccfbf1" size="700px" top="35%" right="-250px" opacity={0.45} />
       <GlowOrb color="#d1fae5" size="900px" bottom="5%" left="-300px" opacity={0.5} />
 
       {/* Subtle Mesh Background Grid */}
@@ -293,7 +294,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
           <motion.h1
             variants={fadeUp}
             custom={1}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.08] mb-8"
+            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.08] mb-8 font-['Playfair_Display']"
           >
             Where{" "}
             <span className="bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
@@ -421,7 +422,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
             viewport={{ once: true }}
             className="mb-4"
           >
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-['Playfair_Display']">
               A <span className="bg-gradient-to-r from-teal-700 to-emerald-600 bg-clip-text text-transparent">Different Category</span> of Learning
             </h2>
           </motion.div>
@@ -474,7 +475,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <SectionEyebrow icon={Layers} text="THE FOUR CORE PILLARS" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">
             The Four Core Pillars
           </h2>
         </div>
@@ -523,7 +524,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <SectionEyebrow icon={Sparkles} text="MORE BUILT INTO THE PLATFORM" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">More Built Into The Platform</h2>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">More Built Into The Platform</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
@@ -560,7 +561,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <SectionEyebrow icon={Compass} text="12 CORE USE CASES" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">12 Core Use Cases</h2>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">12 Core Use Cases</h2>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -597,7 +598,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <SectionEyebrow icon={Building2} text="30 MORE WAYS DECKOVIZ FITS YOUR SCHOOL" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6 font-['Playfair_Display']">
             30 More Ways Deckoviz Fits Your School
           </h2>
 
@@ -667,7 +668,7 @@ const DeckovizSchoolsLanding: React.FC = () => {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <SectionEyebrow icon={TrendingUp} text="CORE BENEFITS" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">Core Benefits</h2>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">Core Benefits</h2>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
@@ -712,6 +713,9 @@ const DeckovizSchoolsLanding: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* WHAT YOU GET FOR SCHOOLS */}
+      <WhatYouGetSection allowedCategories={["schools"]} defaultOpen="schools" />
 
       {/* ════════════════════════════════════════════════════════════════
           CLOSING & CTA

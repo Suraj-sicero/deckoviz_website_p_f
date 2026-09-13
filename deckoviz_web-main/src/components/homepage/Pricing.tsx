@@ -1,7 +1,10 @@
 "use client"
 
 import React, { useState, ReactNode } from "react"
-import { Check, Sparkles, Gift, Star, Zap, Leaf } from "lucide-react"
+import { 
+  Check, Sparkles, Gift, Star, Zap, Leaf, X, Home, Bot, Layers, Music, 
+  Compass, Calendar, Palette, Gamepad2, Library, Mic, Brain, Tv, Volume2, ShieldCheck, Flame
+} from "lucide-react"
 import WhatYouGetSection from "./WhatYouGetSection"
 
 // Custom Button component
@@ -245,9 +248,98 @@ const largeFormatTiers: PricingPlan[] = [
   },
 ]
 
+interface DasportV1Feature {
+  title: string
+  badge: string
+  description: string
+  icon: React.ReactNode
+}
+
+const dasportV1HomeFeatures: DasportV1Feature[] = [
+  {
+    title: "Vizzy Generative Companion (VGC)",
+    badge: "60+ Subagents & Capabilities",
+    description: "60+ subagents, personas & capabilities: Personal Artist, Poster Creator, Curator, Ambiance/Vibe Setter, Story Buddy, Journal Buddy, Visual Chat Companion, Muse, and more",
+    icon: <Bot className="w-6 h-6 text-[#2563EB]" />,
+  },
+  {
+    title: "20+ Distinct Modes",
+    badge: "Experience Modes",
+    description: "Including Focus Mode, Calm & Reset Mode, Celebration Mode, Story Time Mode, Ritual Mode, Meditation & Visualisation Mode, Creative Muse Mode, and Family Memory Mode",
+    icon: <Layers className="w-6 h-6 text-indigo-600" />,
+  },
+  {
+    title: "Get Curations Now",
+    badge: "On-Demand",
+    description: "On-demand personalised curation, art, photos, collections, music, posters",
+    icon: <Compass className="w-6 h-6 text-blue-600" />,
+  },
+  {
+    title: "Background Music & Soundscapes",
+    badge: "Audio Moodscape",
+    description: "Sets mood and atmosphere across the home",
+    icon: <Music className="w-6 h-6 text-cyan-600" />,
+  },
+  {
+    title: "Proactive Creation & Display",
+    badge: "Autonomous AI",
+    description: "Vizzy initiates experiences, doesn't just respond",
+    icon: <Zap className="w-6 h-6 text-amber-500" />,
+  },
+  {
+    title: "Rituals & Scheduling",
+    badge: "Automated Routines",
+    description: "Recurring, automated experiences tied to time, mood, occasion",
+    icon: <Calendar className="w-6 h-6 text-purple-600" />,
+  },
+  {
+    title: "55+ Conversational Canvas Modes",
+    badge: "55+ Modes",
+    description: "Chat-driven creative and experiential modes",
+    icon: <Palette className="w-6 h-6 text-pink-600" />,
+  },
+  {
+    title: "16+ Flagship Social & Creative Games",
+    badge: "Interactive Gaming",
+    description: "Flagship social and creative games",
+    icon: <Gamepad2 className="w-6 h-6 text-violet-600" />,
+  },
+  {
+    title: "12+ Flagship Dynamic, Live Art Modes",
+    badge: "Live Generative Art",
+    description: "Flagship dynamic, live art modes",
+    icon: <Flame className="w-6 h-6 text-orange-500" />,
+  },
+  {
+    title: "Smart Access Library",
+    badge: "Instant Search",
+    description: "Personal + global libraries, instantly searchable",
+    icon: <Library className="w-6 h-6 text-teal-600" />,
+  },
+  {
+    title: "Voice Mode",
+    badge: "Hands-Free Control",
+    description: "Full creation, curation, and display access hands-free",
+    icon: <Mic className="w-6 h-6 text-emerald-600" />,
+  },
+  {
+    title: "Vizzy Home Companion AI",
+    badge: "Lifetime Intelligence",
+    description: "Learns and grows with the household across years/decades; understands moods, preferences, lifestyle, goals, hopes; proactively creates experiences",
+    icon: <Brain className="w-6 h-6 text-blue-700" />,
+  },
+  {
+    title: "Google TV Built-In",
+    badge: "Smart Entertainment",
+    description: "Full smart TV functionality alongside the generative platform",
+    icon: <Tv className="w-6 h-6 text-[#2563EB]" />,
+  },
+]
+
 export default function Pricing() {
   const [selectedTier, setSelectedTier] = useState<PricingPlan | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [showComparisonModal, setShowComparisonModal] = useState(false)
   const handleBuyNow = (tier?: PricingPlan): void => {
     if (tier?.name === "Enterprise") {
       window.location.href = "/bulk-orders"
@@ -557,7 +649,11 @@ export default function Pricing() {
 
           {/* Feature Comparison Link */}
           <div className="text-center mt-8 mb-12">
-            <Button variant="ghost" className="text-base sm:text-lg group hover:bg-transparent transition-transform hover:scale-105">
+            <Button
+              variant="ghost"
+              onClick={() => setShowComparisonModal(true)}
+              className="text-base sm:text-lg group hover:bg-transparent transition-transform hover:scale-105"
+            >
               <span className="font-bold bg-gradient-to-r from-[#182A4A] to-[#2563EB] bg-clip-text text-transparent group-hover:from-[#13223B] group-hover:to-[#1D4ED8] transition-all">
                 View complete feature comparison
               </span>
@@ -568,19 +664,26 @@ export default function Pricing() {
           </div>
 
           {/* What You Get Section */}
-          <WhatYouGetSection />
+          <WhatYouGetSection allowedCategories={["homes"]} defaultOpen="homes" />
         </div>
 
         {/* Features Modal */}
         {showModal && selectedTier && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden">
+          <div className="fixed inset-0 bg-black/75 backdrop-blur-md flex items-center justify-center z-[300] p-4 sm:p-6">
+            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-hidden border border-white/40">
               {/* Modal Header */}
-              <div className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] px-8 py-6 text-white">
-                <div className="flex items-center justify-between">
+              <div className="bg-gradient-to-r from-[#182A4A] to-[#2563EB] px-6 sm:px-8 py-6 text-white relative">
+                <button
+                  onClick={closeModal}
+                  className="absolute top-5 right-5 w-9 h-9 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-colors text-white"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                <div className="flex items-center justify-between pr-10">
                   <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-                      <Sparkles className="w-6 h-6" />
+                    <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center">
+                      <Sparkles className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <h3 className="text-2xl font-bold">{selectedTier.name} Plan</h3>
@@ -601,7 +704,7 @@ export default function Pricing() {
               </div>
 
               {/* Modal Content */}
-              <div className="p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
+              <div className="p-6 sm:p-8 overflow-y-auto max-h-[calc(90vh-200px)]">
                 <div className="mb-6">
                   <p className="text-gray-600 text-lg leading-relaxed">{selectedTier.description}</p>
                 </div>
@@ -633,7 +736,7 @@ export default function Pricing() {
               </div>
 
               {/* Modal Footer */}
-              <div className="bg-gray-50 px-8 py-6 flex flex-col sm:flex-row gap-4 border-t border-gray-200">
+              <div className="bg-gray-50 px-6 sm:px-8 py-5 flex flex-col sm:flex-row gap-4 border-t border-gray-200">
                 <Button variant="outline" className="flex-1 bg-transparent" onClick={closeModal}>
                   Close Details
                 </Button>
@@ -647,6 +750,112 @@ export default function Pricing() {
                   {selectedTier.buttonText}
                 </Button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* DASPort V1 Core Feature Set Comparison Modal */}
+        {showComparisonModal && (
+          <div className="fixed inset-0 bg-black/75 backdrop-blur-md flex items-center justify-center z-[300] p-4 sm:p-6 animate-in fade-in duration-200">
+            <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl w-full max-w-5xl max-h-[88vh] flex flex-col overflow-hidden border border-white/50">
+              
+              {/* Modal Header */}
+              <div className="bg-gradient-to-r from-[#182A4A] via-[#1E3A8A] to-[#2563EB] px-6 sm:px-8 py-5 sm:py-6 text-white relative flex-shrink-0">
+                <button
+                  onClick={() => setShowComparisonModal(false)}
+                  className="absolute top-4 right-4 sm:top-5 sm:right-6 w-9 h-9 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-colors text-white shadow-md z-10"
+                  aria-label="Close modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pr-10 sm:pr-12">
+                  <div className="flex items-center space-x-3.5">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/30 shadow-inner flex-shrink-0">
+                      <Home className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                    </div>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                        <span className="bg-white/20 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                          🏠 HOMES
+                        </span>
+                        <span className="text-white/80 text-xs font-medium">Sales Quick Reference (Compact)</span>
+                      </div>
+                      <h3 className="text-lg sm:text-2xl font-extrabold tracking-tight leading-snug">
+                        Deckoviz Portal V1 - Core Feature Set
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="self-start sm:self-auto">
+                    <span className="inline-block bg-blue-400/30 text-white border border-blue-300/40 text-xs px-3 py-1 rounded-full font-medium shadow-sm">
+                      Revised • Fully Standalone
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 sm:p-8 overflow-y-auto space-y-6 flex-grow">
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50/50 p-4 sm:p-5 rounded-2xl border border-blue-100 flex items-start space-x-3">
+                  <Sparkles className="w-5 h-5 text-[#2563EB] flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    <strong className="text-gray-900 font-semibold">Deckoviz DASPort V1</strong> is designed from the ground up as a complete standalone home generative companion & portal. Below is the quick reference feature matrix included in your experience.
+                  </p>
+                </div>
+
+                {/* Features Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {dasportV1HomeFeatures.map((item, index) => (
+                    <div
+                      key={index}
+                      className="p-4 sm:p-5 rounded-2xl bg-white border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-200 flex flex-col justify-between group"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="w-10 h-10 rounded-xl bg-blue-50 group-hover:bg-blue-100 flex items-center justify-center transition-colors">
+                            {item.icon}
+                          </div>
+                          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-blue-50 text-[#2563EB] border border-blue-100">
+                            {item.badge}
+                          </span>
+                        </div>
+                        <h4 className="text-base font-bold text-gray-900 mb-1.5 group-hover:text-[#2563EB] transition-colors">
+                          {item.title}
+                        </h4>
+                        <p className="text-sm text-gray-600 leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="bg-gray-50 px-6 sm:px-8 py-4 border-t border-gray-200 flex flex-col sm:flex-row items-center justify-between gap-3 flex-shrink-0">
+                <div className="text-xs text-gray-500 font-medium">
+                  Deckoviz DASPort V1 • Core Platform Specifications
+                </div>
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <Button
+                    variant="outline"
+                    className="w-full sm:w-auto text-sm py-2 px-5 bg-white hover:bg-gray-100"
+                    onClick={() => setShowComparisonModal(false)}
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    className="w-full sm:w-auto text-sm py-2 px-6 bg-gradient-to-r from-[#182A4A] to-[#2563EB] hover:from-[#13223B] hover:to-[#1D4ED8] text-white shadow-md"
+                    onClick={() => {
+                      setShowComparisonModal(false)
+                      handleBuyNow()
+                    }}
+                  >
+                    Get DASPort Now →
+                  </Button>
+                </div>
+              </div>
+
             </div>
           </div>
         )}

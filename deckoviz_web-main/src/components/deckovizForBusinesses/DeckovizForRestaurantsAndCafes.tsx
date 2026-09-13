@@ -663,7 +663,7 @@ const DeckovizForRestaurantsAndCafes = () => {
       </section>
 
       {/* Top Image Marquee */}
-      <TopImageMarquee />
+      {/* <TopImageMarquee /> */}
 
       {/* Core Problems We Solve */}
       <section className="py-24 relative z-10 bg-black/40">
@@ -779,6 +779,8 @@ const DeckovizForRestaurantsAndCafes = () => {
               </div>
             </motion.div>
             
+            {/* Image carousel commented out */}
+            {/*
             <motion.div 
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -788,10 +790,8 @@ const DeckovizForRestaurantsAndCafes = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-tr from-orange-500/20 to-indigo-500/20 blur-3xl rounded-full" />
               <div className="relative bg-white/5 border border-white/10 rounded-3xl p-4 backdrop-blur-xl">
-                {/* Main rotating image */}
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent z-10" />
-                  {/* Previous image fading out */}
                   {prevImg !== null && (
                     <img
                       key={`prev-${prevImg}`}
@@ -801,7 +801,6 @@ const DeckovizForRestaurantsAndCafes = () => {
                       style={{ opacity: fading ? 0 : 1, transition: 'opacity 0.6s ease' }}
                     />
                   )}
-                  {/* Current image */}
                   <img
                     key={`curr-${currentImg}`}
                     src={restaurantImages[currentImg]}
@@ -816,7 +815,6 @@ const DeckovizForRestaurantsAndCafes = () => {
                     </div>
                     <p className="text-xl text-white font-['Playfair_Display']" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Transforming spaces with intelligent design</p>
                   </div>
-                  {/* Dot indicators */}
                   <div className="absolute top-4 right-4 z-20 flex flex-col gap-1.5">
                     {restaurantImages.map((_, i) => (
                       <button
@@ -829,7 +827,6 @@ const DeckovizForRestaurantsAndCafes = () => {
                     ))}
                   </div>
                 </div>
-                {/* Thumbnail strip */}
                 <div className="flex gap-2 mt-3 overflow-x-auto pb-1 scrollbar-hide">
                   {restaurantImages.map((src, i) => (
                     <button
@@ -845,12 +842,13 @@ const DeckovizForRestaurantsAndCafes = () => {
                 </div>
               </div>
             </motion.div>
+            */}
           </div>
         </div>
       </section>
 
       {/* Middle Image Marquee */}
-      <MiddleImageMarquee />
+      {/* <MiddleImageMarquee /> */}
 
       {/* 15 High-Impact Use Cases */}
       <section className="py-24 relative z-10 bg-black/40 border-y border-white/5">

@@ -40,8 +40,8 @@ const LightTheme = {
   tealSoft: "#ccfbf1",
   emeraldPrimary: "#059669",
   emeraldSoft: "#d1fae5",
-  cyanPrimary: "#0284c7",
-  cyanSoft: "#e0f2fe",
+  cyanPrimary: "#0d9488",
+  cyanSoft: "#ccfbf1",
   borderLight: "#e2e8f0",
 };
 
@@ -71,7 +71,7 @@ const DynamicTealParticles: React.FC<{ count?: number }> = ({ count = 35 }) => {
     size: Math.random() * 5 + 2,
     dur: Math.random() * 9 + 7,
     delay: Math.random() * 4,
-    color: i % 3 === 0 ? "#0d9488" : i % 3 === 1 ? "#0284c7" : "#059669",
+    color: i % 3 === 0 ? "#0d9488" : i % 3 === 1 ? "#14b8a6" : "#059669",
   }));
 
   return (
@@ -336,7 +336,7 @@ export default function DeckovizForUniversities() {
     <div className="relative min-h-screen bg-[#f8fafc] text-slate-900 overflow-hidden font-sans selection:bg-teal-500 selection:text-white">
       {/* Top Scroll Indicator Progress Line */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 z-[150] origin-left shadow-sm"
+        className="fixed top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-teal-600 via-emerald-600 to-teal-500 z-[150] origin-left shadow-sm"
         style={{ scaleX }}
       />
 
@@ -344,7 +344,7 @@ export default function DeckovizForUniversities() {
       <CursorSpotlight />
       <DynamicTealParticles count={40} />
       <GlowOrb color="#ccfbf1" size="800px" top="-150px" left="-200px" opacity={0.5} />
-      <GlowOrb color="#e0f2fe" size="700px" top="35%" right="-250px" opacity={0.45} />
+      <GlowOrb color="#ccfbf1" size="700px" top="35%" right="-250px" opacity={0.45} />
       <GlowOrb color="#d1fae5" size="900px" bottom="5%" left="-300px" opacity={0.5} />
 
       {/* Subtle Mesh Background Grid */}
@@ -370,7 +370,7 @@ export default function DeckovizForUniversities() {
           <motion.h1
             variants={fadeUp}
             custom={1}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.08] mb-8"
+            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.08] mb-8 font-['Playfair_Display']"
           >
             The Living Learning Portal for Universities:{" "}
             <span className="bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
@@ -528,7 +528,7 @@ export default function DeckovizForUniversities() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-20">
           <SectionEyebrow icon={Layers} text="THE FOUR CORE PILLARS" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">
             The Four Core Pillars
           </h2>
         </div>
@@ -692,7 +692,7 @@ export default function DeckovizForUniversities() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <SectionEyebrow icon={Sparkles} text="MORE BUILT INTO THE PLATFORM" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">More Built Into The Platform</h2>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">More Built Into The Platform</h2>
         </div>
 
         <div className="grid md:grid-cols-2 gap-4">
@@ -770,7 +770,7 @@ export default function DeckovizForUniversities() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <SectionEyebrow icon={Compass} text="12 CORE USE CASES" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">12 Core Use Cases</h2>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">12 Core Use Cases</h2>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -807,7 +807,7 @@ export default function DeckovizForUniversities() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <SectionEyebrow icon={Building2} text="30 MORE WAYS DECKOVIZ FITS YOUR CAMPUS" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6 font-['Playfair_Display']">
             30 More Ways Deckoviz Fits Your Campus
           </h2>
 
@@ -884,7 +884,7 @@ export default function DeckovizForUniversities() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <SectionEyebrow icon={TrendingUp} text="CORE BENEFITS" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">Core Benefits</h2>
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">Core Benefits</h2>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
@@ -967,7 +967,7 @@ export default function DeckovizForUniversities() {
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <SectionEyebrow icon={Brain} text="VIZZY FOR HIGHER EDUCATION" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">
             Vizzy for Higher Education
           </h2>
 
@@ -1078,7 +1078,7 @@ export default function DeckovizForUniversities() {
          ════════════════════════════════════════════════════════════════ */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10 text-left sm:text-center space-y-8">
         <SectionEyebrow icon={Compass} text="THE FUTURE OF HIGHER EDUCATION, ARRIVING NOW" />
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight">
+        <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 leading-tight font-['Playfair_Display']">
           The Future of Higher Education, Arriving Now
         </h2>
         <div className="bg-white border border-slate-200/80 rounded-3xl p-8 sm:p-12 shadow-lg space-y-6 text-slate-700 text-base sm:text-lg leading-relaxed max-w-4xl mx-auto">
@@ -1112,7 +1112,7 @@ export default function DeckovizForUniversities() {
 
           <div className="border-t border-teal-200 pt-10">
             <h3 className="text-xs font-bold text-teal-700 uppercase tracking-widest mb-2">BRING YOUR CAMPUS TO LIFE</h3>
-            <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3">Bring Your Campus to Life.</p>
+            <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 mb-3 font-['Playfair_Display']">Bring Your Campus to Life.</p>
             <p className="text-base text-slate-600 max-w-2xl mx-auto mb-10">
               See what a university looks like when research, teaching, and student life finally run on the same intelligent platform.
             </p>

@@ -57,6 +57,32 @@ const legalLinks = [
   { name: "Return Policy", path: "/return-policy" }
 ]
 
+const verticalsLinks = [
+  { name: "Deckoviz for Homes", path: "/deckoviz-for-homes" },
+  { name: "Deckoviz for Schools", path: "/deckoviz-for-schools" },
+  { name: "Deckoviz for Restaurants", path: "/deckoviz-for-restaurants" },
+  { name: "Deckoviz for Hotels", path: "/deckoviz-for-hotels" },
+  { name: "Deckoviz for Real Estate", path: "/deckoviz-for-real-estate" },
+  { name: "Deckoviz for Architects & Interior Designers", path: "/deckoviz-for-architects" },
+  { name: "Subscriptions and Features", path: "/subscriptions" },
+]
+
+const othersLinks = [
+  { name: "Partnership Programmes", path: "/partnership" },
+  { name: "Master Admin Suite", path: "/admin" },
+  { name: "Deckoviz Curations", path: "/curations" },
+  { name: "Virtual Art Gallery", path: "/virtual-art-gallery" },
+  { name: "Virtual Music Gallery", path: "/virtual-music-gallery" },
+]
+
+const deckovizProductsLinks = [
+  { name: "Deckoviz for Learning Spaces: Schools & Universities", path: "/deckoviz-for-learning-spaces" },
+  { name: "Deckoviz for Enterprises, Restaurants & Hotels", path: "/deckoviz-for-enterprises" },
+  { name: "Deckoviz Visualizers", path: "/deckoviz-visualizers" },
+  { name: "Deckoviz Live Art", path: "/deckoviz-live-art" },
+  { name: "Deckoviz Creation Tools", path: "/deckoviz-creation-tools" },
+]
+
 const socialLinks = [
   { name: "Instagram", href: "https://www.instagram.com/deckoviz/", icon: Instagram },
   { name: "Twitter", href: "#", icon: Twitter },
@@ -66,6 +92,38 @@ const socialLinks = [
 
 
 // ───────────────── FOOTER ─────────────────
+
+const DropdownColumn = ({ title, links }: { title: string, links: {name: string, path: string}[] }) => {
+  return (
+    <motion.div
+      variants={{
+        hidden: { opacity: 0, y: 10 },
+        visible: { opacity: 1, y: 0 },
+      }}
+      className="group flex flex-col items-center md:items-start w-full relative"
+    >
+      <h3 className="text-white font-semibold text-xs mb-1.5 flex items-center gap-1.5 cursor-pointer py-1">
+        {title}
+        <svg className="w-3 h-3 transition-transform duration-300 group-hover:rotate-180 text-cyan-400 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </h3>
+      <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100 w-full">
+        <div className="overflow-hidden">
+          <ul className="space-y-0.5 flex flex-col items-center md:items-start pb-2">
+            {links.map((link) => (
+              <motion.li key={link.name} whileHover={{ x: 3 }}>
+                <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block py-0.5">
+                  {link.name}
+                </a>
+              </motion.li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
 const Footer = () => {
   const year = new Date().getFullYear()
@@ -328,65 +386,16 @@ const Footer = () => {
                 },
               },
             }}
-            className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3 mb-3 justify-items-center"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-3 mb-3 justify-items-center items-start"
           >
 
-            {/* Product */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-            >
-              <h3 className="text-white font-semibold text-xs mb-1.5">Product</h3>
-              <ul className="space-y-0.5">
-                {productLinks.map((link) => (
-                  <motion.li key={link.name} whileHover={{ x: 3 }}>
-                    <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Company */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-            >
-              <h3 className="text-white font-semibold text-xs mb-1.5">Company</h3>
-              <ul className="space-y-0.5">
-                {companyLinks.map((link) => (
-                  <motion.li key={link.name} whileHover={{ x: 3 }}>
-                    <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-
-            {/* Legal */}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-            >
-              <h3 className="text-white font-semibold text-xs mb-1.5">Legal</h3>
-              <ul className="space-y-0.5">
-                {legalLinks.map((link) => (
-                  <motion.li key={link.name} whileHover={{ x: 3 }}>
-                    <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block">
-                      {link.name}
-                    </a>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+            {/* Columns as dropdowns on hover */}
+            <DropdownColumn title="Product" links={productLinks} />
+            <DropdownColumn title="Company" links={companyLinks} />
+            <DropdownColumn title="Legal" links={legalLinks} />
+            <DropdownColumn title="Verticals & Products" links={verticalsLinks} />
+            <DropdownColumn title="Others" links={othersLinks} />
+            <DropdownColumn title="Deckoviz Products" links={deckovizProductsLinks} />
 
 
           </motion.div>

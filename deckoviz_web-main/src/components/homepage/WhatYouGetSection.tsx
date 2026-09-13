@@ -269,8 +269,27 @@ const whatYouGetCategories: CategoryData[] = [
   }
 ];
 
-export default function WhatYouGetSection() {
-  const [openCategory, setOpenCategory] = useState<string>("homes");
+interface WhatYouGetSectionProps {
+  allowedCategories?: string[];
+  defaultOpen?: string;
+  customTitle?: string;
+  customSubtitle?: string;
+  customBadge?: string;
+}
+
+export default function WhatYouGetSection({
+  allowedCategories,
+  defaultOpen,
+  customTitle,
+  customSubtitle,
+  customBadge,
+}: WhatYouGetSectionProps = {}) {
+  const filteredCategories = allowedCategories
+    ? whatYouGetCategories.filter((cat) => allowedCategories.includes(cat.id))
+    : whatYouGetCategories;
+
+  const initialOpen = defaultOpen || (filteredCategories.length > 0 ? filteredCategories[0].id : "homes");
+  const [openCategory, setOpenCategory] = useState<string>(initialOpen);
 
   const handleMouseEnter = (id: string, e: React.MouseEvent) => {
     if ("pointerType" in e.nativeEvent && (e.nativeEvent as PointerEvent).pointerType === "touch") {
@@ -287,24 +306,30 @@ export default function WhatYouGetSection() {
       <div className="text-center mb-8 sm:mb-12">
         <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-white/50 backdrop-blur-xl border border-white/80 shadow-[0_8px_25px_rgba(37,99,235,0.15)] text-[10px] sm:text-xs font-bold text-indigo-900 uppercase tracking-widest mb-3 sm:mb-4">
           <Sparkle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600 animate-spin-slow" />
-          <span>Included With Every Purchase</span>
+          <span>{customBadge || "Included With Every Purchase"}</span>
         </div>
 
         <h2
           className="text-2xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-3 sm:mb-4"
           style={{ fontFamily: "'Playfair Display', serif" }}
         >
-          What You Get <span className="bg-gradient-to-r from-indigo-950 via-indigo-700 to-blue-600 bg-clip-text text-transparent italic">Deckoviz Portal</span>
+          {customTitle ? (
+            customTitle
+          ) : (
+            <>
+              What You Get <span className="bg-gradient-to-r from-indigo-950 via-indigo-700 to-blue-600 bg-clip-text text-transparent italic">Deckoviz Portal</span>
+            </>
+          )}
         </h2>
 
         <p className="text-xs sm:text-base lg:text-lg text-slate-700 max-w-3xl mx-auto leading-relaxed font-normal px-2">
-          What all do you get as a Deckoviz customer when you purchase a Deckoviz Portal? Tap or hover over any category to expand.
+          {customSubtitle || "What all do you get as a Deckoviz customer when you purchase a Deckoviz Portal? Tap or hover over any category to expand."}
         </p>
       </div>
 
       {/* CATEGORY ACCORDION PANELS WITH MOBILE TOUCH FIX */}
       <div className="space-y-4 sm:space-y-6">
-        {whatYouGetCategories.map((cat) => {
+        {filteredCategories.map((cat) => {
           const isOpen = openCategory === cat.id;
 
           return (

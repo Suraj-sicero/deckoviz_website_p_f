@@ -43,6 +43,38 @@ const coreReadings: {
       "The foundational thesis. What happens when your home starts co-evolving with you — and why this is the best thing that will ever enter your life."
   },
   {
+    title: "100 Ways to Fill Your Walls: Playlists and Collections for Your DASPort",
+    slug: "100-ways-to-fill-your-walls",
+    category: "Guides",
+    readTime: "15 min read",
+    description:
+      "The Many Moods Of Your Home: For A Sanctuary That Actually Gets You. A comprehensive guide to 100 playlists, modes, and collections to transform your space."
+  },
+  {
+    title: "The Complete Photos Guide for Your Deckoviz DASPortal",
+    slug: "the-complete-photos-guide-for-your-deckoviz-dasportal",
+    category: "Guides",
+    readTime: "14 min read",
+    description:
+      "How personal photos, global collections, artistic reinterpretations, and subtle motion bring memory, emotion, and presence back into your home."
+  },
+  {
+    title: "The Complete Posters Guide for Your Deckoviz Portal",
+    slug: "the-complete-posters-guide-for-your-deckoviz-portal",
+    category: "Guides",
+    readTime: "16 min read",
+    description:
+      "A painting speaks to the heart. A poster speaks to the mind. Discover the many forms of living posters, vision boards, priorities, and typographic art for your home."
+  },
+  {
+    title: "The Complete Art Guide for Your Deckoviz DASPortal",
+    slug: "the-complete-art-guide-for-your-deckoviz-dasportal",
+    category: "Guides",
+    readTime: "18 min read",
+    description:
+      "Everything on your Portal exists around a center: Art. A comprehensive guide to genres, styles, co-creating with Vizzy, and personal art for your home."
+  },
+  {
     title: "Who Is Deckoviz For?",
     slug: "who-is-deckoviz-for",
     category: "Philosophy",
@@ -67,12 +99,12 @@ const coreReadings: {
       "An introduction to Vizzy, your quiet AI companion. How it curates, learns, adapts, and supports without demanding attention or control."
   },
   {
-    title: "DASP User’s Guide",
+    title: "The Deckoviz User's Guide",
     slug: "dasp-users-guide",
     category: "Guides",
-    readTime: "10 min read",
+    readTime: "20 min read",
     description:
-      "A practical guide to living with Deckoviz: modes, rituals, personalization, memories, posters, and how it all fits together over time."
+      "The master guide to your relationship with your Portal and Vizzy, organized around the seven pillars: Art, Posters, Photos, Mood & State Design, Stories, Emotional Intelligence, and Creative Muse."
   },
   {
     title: "Looking to Buy a Smart TV?",

@@ -44,6 +44,7 @@ import EnterpriseWhyDeckoviz from "./EnterpriseWhyDeckoviz";
 import EnterpriseVisionMicrosite from "./EnterpriseVisionMicrosite";
 import AILayerForBusiness from "./AILayerForBusiness";
 import EnterpriseFAQ from "./EnterpriseFAQ";
+import WhatYouGetSection from "../homepage/WhatYouGetSection";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import {
@@ -2871,6 +2872,8 @@ export default function DeckovizForEnterprise() {
         </section>
 
       </section>
+
+      <WhatYouGetSection allowedCategories={["enterprises"]} defaultOpen="enterprises" />
 
       <EnterpriseFAQ />
 
