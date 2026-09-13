@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import HowToUseDeckoviz from "./HowToUseDeckoviz";
 import {
   Brain,
   Home,
@@ -229,12 +230,20 @@ export default function CoreReading() {
   });
 
   return (
-    <section className="min-h-screen px-4 sm:px-6 py-20 sm:py-28 relative overflow-hidden bg-gradient-to-br from-[#f0f4ff] via-[#e8efff] via-[#f5f3ff] to-[#e0f2fe]">
+    <section className="min-h-screen px-4 sm:px-6 py-12 sm:py-20 relative overflow-hidden bg-gradient-to-br from-[#f0f4ff] via-[#e8efff] via-[#f5f3ff] to-[#e0f2fe]">
       {/* Ambient Soft Glow Background Orbs */}
       <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
         <div className="absolute top-[-10%] left-[-10%] w-[700px] h-[700px] bg-gradient-to-br from-indigo-400/20 via-teal-300/15 to-blue-500/15 rounded-full blur-[160px]" />
         <div className="absolute top-[35%] right-[-15%] w-[750px] h-[750px] bg-gradient-to-tl from-purple-400/20 via-sky-300/15 to-indigo-400/20 rounded-full blur-[170px]" />
         <div className="absolute bottom-[-10%] left-[20%] w-[650px] h-[650px] bg-gradient-to-tr from-emerald-300/20 via-cyan-400/15 to-blue-400/20 rounded-full blur-[150px]" />
+      </div>
+
+      {/* 1. HOW TO USE DECKOVIZ SECTION (PLACED JUST ABOVE CORE READING) */}
+      <HowToUseDeckoviz />
+
+      {/* ELEGANT SECTION SEPARATOR */}
+      <div className="max-w-7xl mx-auto px-4 my-14 sm:my-20">
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-indigo-300/60 to-transparent" />
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">

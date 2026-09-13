@@ -41,6 +41,7 @@ import DeckovizForEnterprise from "./components/deckovizForBusinesses/DeckovizFo
 import FAQ from "./components/homepage/FAQ";
 import WallOfLove from "./components/WallOfLove";
 import HowItWorks from "./components/homepage/HowItWorks";
+import WhatKindsOfSpaces from "./components/homepage/WhatKindsOfSpaces";
 
 import AllFeatures from "./components/homepage/AllFeatures";
 import Leaderboard from "./components/Leaderboard";
@@ -359,6 +360,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                 <WhoIsDeckovizFor />
                 <PowerUsesSection vertical="home" />
                 <DesignedFor />
+                <WhatKindsOfSpaces />
                 <HowItWorks />
                 <GuestReactionsTestimonials />
 
