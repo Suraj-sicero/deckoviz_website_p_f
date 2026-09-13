@@ -1,6 +1,7 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List, Any
 from datetime import datetime
+import re
 
 # --- Auth & User Schemas ---
 class UserBase(BaseModel):
@@ -146,3 +147,48 @@ class DailyQueueSlotResponse(DailyQueueSlotCreate):
     class Config:
         from_attributes = True
         populate_by_name = True
+
+# --- Prompt Library Schemas ---
+class PromptTemplate(BaseModel):
+    id: str
+    vertical: str
+    category: str
+    title: str
+    prompt_text: str
+    placeholders: List[str] = []
+
+def extract_placeholders(text: str) -> List[str]:
+    """Helper to extract [placeholders] from a prompt template string."""
+    return re.findall(r'\[(.*?)\]', text)
+
+# --- Power Uses Schemas (10 Power Uses per vertical) ---
+class PowerUseItem(BaseModel):
+    id: str
+    title: str
+    description: str
+    audience: Optional[str] = None
+    depth: Optional[str] = None
+
+class PowerUseListResponse(BaseModel):
+    vertical: str
+    items: List[PowerUseItem]
+
+class PowerUseStartRequest(BaseModel):
+    vertical: str
+    # Frontend sends snake_case (power_use_id). Also accept camelCase alias (powerUseId) as a convenience.
+    power_use_id: Optional[str] = Field(default=None)
+    audience: Optional[str] = Field(default=None)
+    mode: Optional[str] = Field(default=None)
+    # camelCase aliases for clients that send camelCase
+    powerUseId: Optional[str] = Field(default=None)
+
+    class Config:
+        populate_by_name = True
+
+class PowerUseStartResponse(BaseModel):
+    session_id: str
+    first_message: str
+
+    class Config:
+        populate_by_name = True
+

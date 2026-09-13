@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ArrowRight, FileText, Folder, Image as ImageIcon, Plus, Sparkles, UploadCloud, Video, Loader2 } from "lucide-react";
 import { figmaAssets } from "../webappData";
 import { webappApi } from "../../../lib/webappApi";
+import BatchUploadZone from "../../BatchUpload/BatchUploadZone";
 
 import AddMediaView from "./AddMediaView";
 import CreateCollectionView from "./CreateCollectionView";
@@ -73,34 +74,35 @@ function AIPhotoManager() {
         ))}
       </div>
 
-      <div className="bg-gray-50 border-2 border-dashed border-gray-300 rounded-3xl p-12 text-center">
-        <UploadCloud className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-        <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold  mb-2">Upload for AI Processing</h3>
-        <p className="text-gray-500 text-sm max-w-sm mx-auto mb-6">Drop your images here to automatically tag, enhance, and organize them using Vizzy AI.</p>
-        <button className="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-500/30">
-          Select Files
-        </button>
+      <div className="bg-white border border-gray-200 rounded-3xl p-6">
+        <h3 className="font-bold text-gray-900 mb-1">Batch Upload for AI Processing</h3>
+        <p className="text-xs text-gray-500 mb-4">Up to 200 images at once — art, posters, photos. Per-file validation, parallel upload.</p>
+        <BatchUploadZone libraryType="art/posters/photos" destination="personal" />
       </div>
     </div>
   );
 }
 
 function AddMedia() {
+  const [libraryType, setLibraryType] = useState<"image" | "music" | "video" | "all">("all");
   return (
     <div className="rounded-3xl p-8">
-      <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-2xl font-bold  mb-2">Add Media</h2>
-      <p className="text-gray-500 text-sm mb-8">Upload raw images, videos, or source files</p>
+      <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-2xl font-bold  mb-2">Add Media — Batch Upload</h2>
+      <p className="text-gray-500 text-sm mb-6">Upload raw images, videos, or source files — up to 200 at once, with per-file validation</p>
 
-      <div className="border-2 border-dashed border-blue-200 bg-blue-50/50 rounded-3xl p-16 text-center hover:bg-blue-50 transition cursor-pointer">
-        <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-          <Plus size={32} className="text-blue-600" />
-        </div>
-        <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-xl font-bold  mb-2">Drag and drop your media</h3>
-        <p className="text-gray-500 mb-6">Support for JPG, PNG, MP4, and PSD up to 50MB</p>
-        <div className="flex justify-center gap-4 text-gray-400">
-          <ImageIcon size={24} /> <Video size={24} /> <FileText size={24} />
-        </div>
+      <div className="flex gap-2 mb-6">
+        {(["all", "image", "music", "video"] as const).map((type) => (
+          <button
+            key={type}
+            onClick={() => setLibraryType(type)}
+            className={`px-4 py-2 rounded-full text-xs font-bold capitalize transition ${libraryType === type ? "bg-blue-600 text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"}`}
+          >
+            {type === "all" ? "All Libraries" : type}
+          </button>
+        ))}
       </div>
+
+      <BatchUploadZone libraryType={libraryType} destination="personal" />
     </div>
   );
 }

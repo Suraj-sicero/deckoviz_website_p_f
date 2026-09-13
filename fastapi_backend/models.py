@@ -112,6 +112,11 @@ class MediaObject(Base):
     external_url = Column(Text, nullable=True)
     is_generated = Column(Boolean, default=False, nullable=False)
     prompt = Column(Text, nullable=True)
+    # Upload batch taxonomy is stored with the media object so personal and global
+    # libraries can use the same upload path while remaining independently scoped.
+    tags = Column(JSON, default=list, nullable=False)
+    collection_id = Column(String(255), nullable=True, index=True)
+    collection_name = Column(String(512), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class DailyQueueSlot(Base):

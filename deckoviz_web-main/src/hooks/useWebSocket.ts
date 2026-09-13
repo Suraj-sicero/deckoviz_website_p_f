@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useAuth } from "../context/AuthContext";
 import { wsClient, type ConnectionStatus, type WSDevice } from "../lib/wsClient";
+import { auth } from "../lib/firebaseClient";
 
 export interface UseWebSocketReturn {
   status: ConnectionStatus;
@@ -31,7 +32,23 @@ export function useWebSocket(): UseWebSocketReturn {
       return;
     }
 
-    wsClient.setTokenProvider(async () => token);
+    wsClient.setTokenProvider(async () => {
+      // Always try to get a fresh Firebase token first
+      try {
+        const firebaseUser = auth.currentUser;
+        if (firebaseUser) {
+          const freshToken = await firebaseUser.getIdToken(false);
+          if (freshToken) {
+            localStorage.setItem("token", freshToken);
+            localStorage.setItem("authToken", freshToken);
+            return freshToken;
+          }
+        }
+      } catch {
+        // fall through to stored token
+      }
+      return token;
+    });
 
     const unsubStatus = wsClient.on("status", (p) => {
       if (mountedRef.current) setStatus(p.status as ConnectionStatus);
@@ -50,12 +67,31 @@ export function useWebSocket(): UseWebSocketReturn {
       }
     });
 
+    // When the backend closes with 4401 (expired token), silently refresh the
+    // Firebase ID token and reconnect — no manual logout needed.
+    const unsubAuthExpired = wsClient.on("auth_expired", async () => {
+      try {
+        const firebaseUser = auth.currentUser;
+        if (firebaseUser) {
+          const freshToken = await firebaseUser.getIdToken(true); // force refresh
+          localStorage.setItem("token", freshToken);
+          localStorage.setItem("authToken", freshToken);
+          wsClient.connect(freshToken);
+          return;
+        }
+      } catch (e) {
+        console.warn("[useWebSocket] Firebase token refresh failed:", e);
+      }
+      // If Firebase refresh fails, stay disconnected so user can re-login
+    });
+
     wsClient.connect(token);
 
     return () => {
       unsubStatus();
       unsubDevices();
       unsubOffline();
+      unsubAuthExpired();
     };
   }, [token]);
 

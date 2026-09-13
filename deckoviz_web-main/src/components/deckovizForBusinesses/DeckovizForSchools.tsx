@@ -1,786 +1,358 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import { DynamicImageGrid } from "../other/DynamicImageGrid";
-import WhatYouGetSection from "../homepage/WhatYouGetSection";
-import {
-  BookOpen,
-  Sparkles,
-  ArrowRight,
-  GraduationCap,
-  Building2,
-  Brain,
-  Cpu,
-  CheckCircle2,
-  Compass,
-  Layers,
-  Presentation,
-  Target,
-  FileText,
-  Clock,
-  Users,
-  ShieldCheck,
-  TrendingUp,
-  Search,
-  Check,
-  Award,
-  Globe
-} from "lucide-react";
+import { motion } from "framer-motion";
+import PartnerProgramSection from "./PartnerProgramSection";
+import PowerUsesSection from "../PowerUses/PowerUsesSection";
 
-/* ═══════════════ LIGHT TEAL & EMERALD DESIGN SYSTEM ═══════════════ */
-const LightTheme = {
-  bg: "#f8fafc",
-  bgSubtle: "#f1f5f9",
-  cardBg: "#ffffff",
-  textDark: "#0f172a",
-  textMuted: "#475569",
-  tealPrimary: "#0d9488",
-  tealLight: "#14b8a6",
-  tealSoft: "#ccfbf1",
-  emeraldPrimary: "#059669",
-  emeraldSoft: "#d1fae5",
-  cyanPrimary: "#0d9488",
-  cyanSoft: "#ccfbf1",
-  borderLight: "#e2e8f0",
-};
-
-/* ── school showcase images ── */
 const schoolImages = [
-  { src: "/images/school/ChatGPT Image Jul 11, 2026, 07_21_06 PM.png", tag: "A Wall That Teaches" },
-  { src: "/images/school/ChatGPT Image Jul 11, 2026, 07_21_10 PM.png", tag: "Visual Learning" },
-  { src: "/images/school/ChatGPT Image Jul 11, 2026, 07_21_12 PM.png", tag: "Creative Companion" },
-  { src: "/images/school/ChatGPT Image Jul 11, 2026, 07_21_13 PM.png", tag: "Gallery for Art" },
-  { src: "/images/school/ChatGPT Image Jul 11, 2026, 07_21_15 PM.png", tag: "History Brought to Life" },
-  { src: "/images/school/ChatGPT Image Jul 11, 2026, 07_21_16 PM.png", tag: "Dynamic Environment" },
+  { src: '/images/school/ChatGPT Image Jul 11, 2026, 07_21_06 PM.png', tag: 'A Wall That Teaches' },
+  { src: '/images/school/ChatGPT Image Jul 11, 2026, 07_21_10 PM.png', tag: 'Visual Learning' },
+  { src: '/images/school/ChatGPT Image Jul 11, 2026, 07_21_12 PM.png', tag: 'Creative Companion' },
+  { src: '/images/school/ChatGPT Image Jul 11, 2026, 07_21_13 PM.png', tag: 'Gallery for Art' },
+  { src: '/images/school/ChatGPT Image Jul 11, 2026, 07_21_15 PM.png', tag: 'History Brought to Life' },
+  { src: '/images/school/ChatGPT Image Jul 11, 2026, 07_21_16 PM.png', tag: 'Dynamic Environment' },
 ];
 
-/* ── animation variants ── */
-const fadeUp = {
-  hidden: { opacity: 0, y: 35 },
-  visible: (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, delay: i * 0.07, ease: [0.16, 1, 0.3, 1] },
-  }),
-};
+const highlights = [
+  { icon: "💡", title: "The Visual Learning Aid Every Classroom Deserves", desc: "Turn any lesson into a living visual. Diagrams, timelines, and concepts rendered beautifully, in real time, right where students are looking." },
+  { icon: "🎨", title: "A Creative Companion for Art Class", desc: "Vizzy becomes a co-creator for young artists. Sketch an idea, describe a mood, watch it come alive on screen. Creativity gets a collaborator." },
+  { icon: "📌", title: "The Notice Board Reinvented", desc: "Reception areas and common walls, transformed. Schedules, charts, reminders, and announcements, displayed with polish that makes people stop." },
+  { icon: "🖼️", title: "A Gallery for Student Art", desc: "Every masterpiece deserves a spotlight. Rotate student artwork through the frame and give young creators the recognition they deserve." },
+  { icon: "🏛️", title: "History, Brought to Life", desc: "No more flat timelines. History lessons become immersive visual narratives, students seeing the past instead of just reading about it." },
+  { icon: "📐", title: "Math, Made Visual", desc: "Abstract concepts turned into stunning, interactive visuals generated in real time. Numbers start being understandable." },
+  { icon: "🤖", title: "Personalised Learning Plans, On Autopilot", desc: "Vizzy tracks progress and tailors visual learning material to each student. A personal learning assistant for every teacher." },
+  { icon: "🏆", title: "Your Walls, Telling Your Story", desc: "Mission statements, school legacy, and achievements, displayed dynamically instead of stuck in a static frame." },
+  { icon: "🔬", title: "University Research, Visualised", desc: "Turn dense research and data into compelling visual stories for departments, labs, and open days. Make complex work instantly understandable." },
+  { icon: "🗺️", title: "Campus Wayfinding and Event Boards", desc: "Lecture changes, campus events, and wayfinding, displayed dynamically across buildings. No more laminated A4 sheets taped to doors." },
+  { icon: "📽️", title: "Lecture Halls That Feel Alive", desc: "University lectures get a visual upgrade. Complex theories and case studies, rendered as real-time visual material that holds attention." },
+  { icon: "🎓", title: "Alumni and Legacy Walls", desc: "Celebrate your institution's history, and its graduates with a dynamic wall of achievement. Living heritage, not a dusty plaque." },
+];
 
-const stagger = { hidden: {}, visible: { transition: { staggerChildren: 0.07 } } };
+const benefits = [
+  {
+    title: "Bring Learning Off the Page",
+    desc: "The more visual and immersive learning gets, the deeper it sticks. Deckoviz turns textbook content into experiences students actually remember."
+  },
+  {
+    title: "Unlock Creativity in Every Student",
+    desc: "Creativity isn't a subject, it's a skill for life, one of the most foundational ones in the age of AI. Deckoviz gives every student a canvas and a companion to bring their ideas out of their heads and onto the wall."
+  },
+  {
+    title: "A Learning Assistant for Every Teacher",
+    desc: "Vizzy creates visual material, narrations, and tailored content in real time. Teachers get a teaching partner who never clocks out, who pays infinite attention, helping the teacher deliver ever more engaging lessons."
+  },
+  {
+    title: "Future-Proof Your Institution",
+    desc: "Multi-sensory, immersive learning is where education is heading. Deckoviz gets you there today, not in five years."
+  },
+  {
+    title: "Make School Genuinely Fun",
+    desc: "Fun and rigor aren't opposites. Deckoviz makes classrooms, corridors, and common areas feel like places students want to be."
+  },
+  {
+    title: "Context-Aware, Genuinely Personal",
+    desc: "Because Vizzy holds context on all students over time, it becomes an increasingly sharp, increasingly useful assistant for every teacher on staff."
+  },
+  {
+    title: "Develop the Most Important Skill of Tomorrow",
+    desc: "Creativity is the skill that survives automation. Deckoviz makes cultivating it part of the daily environment, not an extracurricular afterthought."
+  },
+  {
+    title: "Retire the Static Noticeboard for Good",
+    desc: "Swap out laminated paper and thumbtacks for something dynamic, adaptive, and genuinely worth looking at."
+  },
+  {
+    title: "Elevate Institutional Prestige",
+    desc: "For serious schools & universities, first impressions matter enormously. A Deckoviz-equipped campus signals innovation before a single word is spoken."
+  },
+  {
+    title: "Strengthen Admissions and Campus Tours",
+    desc: "Prospective students and parents remember experiences, not brochures. Give your open days a moment that actually lands."
+  }
+];
 
-/* ═══════════════ REUSABLE VISUAL COMPONENTS ═══════════════ */
+const fits = [
+  "Exam schedules, displayed clearly and updated instantly",
+  "Staff rooms with mood-setting, calming visual environments",
+  "Science labs visualising experiments and data in real time",
+  "Language classes with immersive cultural visuals",
+  "Cafeteria and canteen walls with rotating, appetising visual themes",
+  "Library reading corners with mood-matched literary visuals",
+  "Mindfulness and quiet corners with calming generative art",
+  "Graduation ceremony backdrops and highlight reels",
+  "Career fairs with dynamic company and pathway displays",
+  "Parent-teacher meeting waiting areas with a polished first impression",
+  "Dormitory and residence hall common rooms",
+  "Research poster and thesis defense displays",
+  "Guided campus tour visual storytelling",
+  "Esports and gaming society spaces",
+  "Sports team walls celebrating wins and milestones",
+  "Alumni reunion and fundraising event backdrops",
+  "Seasonal and festival decor across common areas",
+  "Open day and orientation week welcome walls"
+];
 
-/* Dynamic Floating Teal Particles */
-const TealParticles: React.FC<{ count?: number }> = ({ count = 35 }) => {
-  const particles = Array.from({ length: count }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 5 + 2,
-    dur: Math.random() * 8 + 6,
-    delay: Math.random() * 4,
-    color: i % 3 === 0 ? "#0d9488" : i % 3 === 1 ? "#14b8a6" : "#059669",
-  }));
+const DeckovizSchoolsLanding = () => {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-            background: p.color,
-            opacity: 0.25,
-            filter: "blur(1px)",
-          }}
-          animate={{ y: [-15, 15, -15], x: [-6, 6, -6], opacity: [0.15, 0.35, 0.15] }}
-          transition={{ duration: p.dur, repeat: Infinity, delay: p.delay, ease: "easeInOut" }}
-        />
-      ))}
-    </div>
-  );
-};
+    <div className="bg-[#0A0A0B] min-h-screen text-white font-sans">
+      {/* ── 1. Immersive Hero ── */}
+      <div className="relative pt-32 pb-20 overflow-hidden lg:pt-40 lg:pb-32">
+        <div className="absolute inset-0 z-0">
+          {/* Animated Gradient Layers */}
+          <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-blue-600/20 via-indigo-500/10 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
+          <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-blue-500/15 via-indigo-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
+          <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-blue-500/10 via-indigo-400/5 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
+          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/20 via-indigo-400/10 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
+          {/* Subtle animated blobs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-indigo-600/20 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/3 w-96 h-96 bg-blue-500/15 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
+        </div>
 
-/* Soft Glow Orb */
-const GlowOrb: React.FC<{ color?: string; size?: string; top?: string; left?: string; right?: string; bottom?: string; opacity?: number; blur?: string }> = ({
-  color = "#ccfbf1", size = "650px", top, left, right, bottom, opacity = 0.45, blur = "140px",
-}) => (
-  <motion.div
-    className="absolute rounded-full pointer-events-none z-0"
-    style={{ width: size, height: size, top, left, right, bottom, background: color, filter: `blur(${blur})`, opacity }}
-    animate={{ scale: [1, 1.12, 1], opacity: [opacity, opacity * 1.25, opacity] }}
-    transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
-  />
-);
-
-/* Section Eyebrow Badge */
-const SectionEyebrow: React.FC<{ icon: React.FC<{ className?: string }>; text: string }> = ({ icon: Icon, text }) => (
-  <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full text-[11px] font-extrabold tracking-[0.2em] uppercase mb-6 bg-teal-50 border border-teal-200 text-teal-800 shadow-sm backdrop-blur-md">
-    <Icon className="w-3.5 h-3.5 text-teal-600 animate-pulse" />
-    <span>{text}</span>
-    <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-ping ml-1" />
-  </div>
-);
-
-/* ═══════════════ DATA STRUCTURES ═══════════════ */
-
-const pillars = [
-  {
-    number: "01",
-    title: "Multimodal Generation & Display",
-    sub: "Create and display anything a lesson needs, instantly.",
-    body: "Images, videos, music, narration, posters, interactive diagrams, whatever a moment calls for, generated live and displayed beautifully on the frame. No pre-built slide deck can keep up with an actual classroom conversation. Deckoviz can.",
-    points: [
-      "Real-time visual generation for any subject, any grade level",
-      "Full multimodal range: image, video, sound, narration, all in one platform",
-      "Sent straight to the frame, no exporting, no fumbling with files mid-lesson"
-    ],
-  },
-  {
-    number: "02",
-    title: "The Student's Long-Term Learning Companion",
-    sub: "Not just in class but throughout their entire school journey.",
-    body: "Every student gets their own Vizzy, one that doesn't reset each term. It remembers what a student struggled with in September and how they've grown by June, then carries that understanding into next year, and the year after that.",
-    points: [
-      "A single companion that grows with a student from their first year to their last",
-      "Learns how each student learns best, and adapts experiences, materials and explanations accordingly",
-      "Builds genuine self-motivation and love of learning, and fun in learning; this is not designed for task completion or rote learning but as a core pillar of holistic, future-focused education",
-      "Manage learning and progress on the students dashboard"
-    ],
-  },
-  {
-    number: "03",
-    title: "The Teacher's Assistant",
-    sub: "A real second presence in the classroom, not another app to manage.",
-    body: "Vizzy generates lesson visuals, materials, and assessments in real time, live, in front of the class, on the teacher's cue. It reduces prep work without ever replacing the teacher's judgment or voice or presence. It also allows teachers to manage students more effectively, flag issues, track progress and growth, and thus pay more deeper, more deliberate attention to each child’s learning journeys.",
-    points: [
-      "Live-generated visuals and materials, on demand, mid-lesson",
-      "Deep context on each teacher's style, pace, and subject",
-      "Hours of prep time given back, every single week",
-      "Manage students and their progress on the teachers dashboard"
-    ],
-  },
-  {
-    number: "04",
-    title: "80+ Unique Experiences, Skills & Modes",
-    sub: "Things a traditional classroom simply couldn't offer before.",
-    body: "From full life skills courses to immersive language immersion rooms to experiences like a planetarium or immersive experience on your classroom wall, Deckoviz already includes more than 80 distinct experiences built specifically for schools, and we add new ones every week.",
-    points: [
-      "Life skills courses: emotional intelligence, financial literacy, resilience, and more",
-      "Immersive experiences: living history, astronomy, mythology across cultures",
-      "Creative studios: comic book creation, storytelling, music, poetry, worldbuilding"
-    ],
-  },
-];
-
-const platformFeatures = [
-  { title: "Interactive, Multimodal Test Creation Suite", desc: "Teacher-guided, AI-generated assessments across any subject, calibrated to the student, with detailed post-test analysis", icon: FileText },
-  { title: "Strength & Weakness Mapping", desc: "A living, evolving picture of each student's progress, not a single test score", icon: Target },
-  { title: "Progress Tracking, Longitudinal", desc: "Growth visualised across terms and years, not just within one", icon: TrendingUp },
-  { title: "Class & Group Facilitation Tools", desc: "Vizzy-led group learning sessions for small groups, up to ten students, with balanced participation", icon: Users },
-  { title: "Daily Study Journal", desc: "An adaptive, reflective check-in that evolves with each student, never a static template", icon: BookOpen },
-  { title: "Teacher & Student Dashboards", desc: "One home for schedules, materials, progress, and Vizzy, always accessible", icon: Layers },
-  { title: "Life Skills Progress Tracker", desc: "Session-by-session continuity across every enrichment course, resumable at any time", icon: Compass },
-  { title: "Smart Access Library", desc: "Every lesson, material, and piece of student work stored and instantly retrievable, searchable, and reusable across classes and years", icon: BookOpen },
-];
-
-const useCases = [
-  { title: "Real-Time Visual and Multimodal Learning", desc: "Turns any lesson into a living diagram or scene, generated as the class discusses it, not prepared the night before.", icon: Presentation },
-  { title: "Personalised Learning Plans", desc: "Vizzy tracks each student's progress and tailors material to how they specifically learn.", icon: Brain },
-  { title: "The Creative Companion", desc: "A genuine creative partner for art, poetry, music, and writing, nudging students rather than just producing for them.", icon: Sparkles },
-  { title: "Storytelling for History & Math", desc: "Abstract lessons become immersive visual narratives students can actually see unfold.", icon: Globe },
-  { title: "The Student Art Gallery", desc: "Rotating, dignified display of student work, always fresh, never stuck to a fridge.", icon: Award },
-  { title: "Live Teaching Assistant Mode", desc: "Vizzy present in class with its own avatar, generating support material on the teacher's cue.", icon: Cpu },
-  { title: "Evaluation & Mapping Sessions", desc: "Personalised, AI-guided testing with detailed strengths and gaps analysis at the end.", icon: Target },
-  { title: "Life Skills Curriculum", desc: "50+ structured courses in emotional intelligence, creativity, and critical thinking, delivered live.", icon: GraduationCap },
-  { title: "Group Learning Sessions", desc: "Small-group facilitation that balances participation and builds genuine peer learning.", icon: Users },
-  { title: "Daily Study Journal", desc: "A short, adaptive daily reflection that deepens as it learns each student over time.", icon: Clock },
-  { title: "Dynamic Boards", desc: "Schedules, reminders, and announcements displayed with real polish, updated instantly, on dynamic notice boards.", icon: Building2 },
-  { title: "Campus-Wide Wayfinding & Legacy Walls", desc: "Mission statements, achievements, and event boards, dynamic instead of laminated.", icon: ShieldCheck },
-];
-
-const thirtyMore = [
-  { text: "Immersive field trips to places the class could never physically visit" },
-  { text: "Astronomy sessions that turn a classroom wall into a planetarium" },
-  { text: "Language immersion rooms conducted entirely in the target language" },
-  { text: "Living history scenes students can explore and question in real time" },
-  { text: "Mythology and world culture sessions with art style matched to each tradition" },
-  { text: "Philosophy discussions built around live, reshaping thought experiments" },
-  { text: "Debate mode with an AI opponent that never repeats an argument" },
-  { text: "Comic book and graphic novel creation studio for storytelling-minded students" },
-  { text: "Music composition and appreciation, paired with generated visual accompaniment" },
-  { text: "Public speaking and presentation coaching with live generated support material" },
-  { text: "Career exploration sessions mapped to a student's real interests" },
-  { text: "Financial literacy courses for both younger students and teens" },
-  { text: "Design thinking and invention labs for hands-on problem solvers" },
-  { text: "Architecture and spatial imagination exercises for young designers" },
-  { text: "Game design fundamentals, taught as a real creative discipline" },
-  { text: "Film and animation storyboarding for visual storytellers" },
-  { text: "Entrepreneurship and pitching practice for aspiring founders" },
-  { text: "Science fiction and worldbuilding projects that build systems thinking" },
-  { text: "Conflict resolution and negotiation practice through live role-play" },
-  { text: "Leadership and teamwork sessions with fairly rotated group roles" },
-  { text: "Mindfulness and breathing practice woven naturally into the school day" },
-  { text: "Gratitude and positive psychology built as a lasting, visible habit" },
-  { text: "Resilience and growth mindset lessons grounded in a student's own history" },
-  { text: "Digital wellness and honest AI literacy, taught by the AI itself" },
-  { text: "Substitute teacher bridge mode, keeping a class on track with no coverage gap" },
-  { text: "Parent-teacher conference prep, visual progress summaries built automatically" },
-  { text: "Cross-class time capsule projects building school-wide belonging" },
-  { text: "New student orientation, delivered as a warm, visual welcome" },
-  { text: "End-of-year growth retrospectives, personal and genuinely meaningful" },
-  { text: "University research visualisation and campus event boards for higher ed" },
-];
-
-const coreBenefits = [
-  { title: "Holistic Learning Journeys", desc: "for all dimensions of a child's comprehensive education - creativity, thinking skills, metalearning skills, life skills, values, love of learning and more" },
-  { title: "The Cutting Edge of Education", desc: "make your school and your educational experience adapt to the future proactively" },
-  { title: "Make Your Students AI-Ready", desc: "Designed for the AI-world and the world that comes after" },
-  { title: "Stronger Institutional Brand", desc: "a campus that feels genuinely forward-thinking, not just well-equipped" },
-  { title: "Deeper Student Engagement", desc: "visual, immersive learning that measurably improves retention; help kids develop a deep joy of learning" },
-  { title: "Significant Teacher Time Saved", desc: "hours of prep work handed back every week, so more time can be spent on personal one-to-one with students" },
-  { title: "Genuine Personalisation at Scale", desc: "every student gets tailored material and evaluations and progress journeys, without multiplying teacher workload" },
-  { title: "Higher Enrollment & Admissions Conversion", desc: "an open day experience families actually remember" },
-];
-
-const secondaryBenefits = [
-  "A meaningful competitive edge in an increasingly crowded schools market",
-  "Organic word of mouth from parents and students who've experienced it firsthand",
-  "A future-ready AI literacy and life skills foundation, built into daily school life rather than bolted on",
-  "Richer, longitudinal insight into student growth for staff and leadership",
-];
-
-const DeckovizSchoolsLanding: React.FC = () => {
-  const navigate = useNavigate();
-  const [showAllThirty, setShowAllThirty] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const displayedThirty = showAllThirty
-    ? thirtyMore
-    : thirtyMore.slice(0, 15);
-
-  const filteredThirty = displayedThirty.filter((item) =>
-    item.text.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  return (
-    <div className="relative min-h-screen bg-[#f8fafc] text-slate-900 overflow-hidden font-sans selection:bg-teal-500 selection:text-white">
-      {/* Background Lighting & Particles */}
-      <TealParticles count={40} />
-      <GlowOrb color="#ccfbf1" size="800px" top="-150px" left="-200px" opacity={0.5} />
-      <GlowOrb color="#ccfbf1" size="700px" top="35%" right="-250px" opacity={0.45} />
-      <GlowOrb color="#d1fae5" size="900px" bottom="5%" left="-300px" opacity={0.5} />
-
-      {/* Subtle Mesh Background Grid */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03] z-0"
-        style={{
-          backgroundImage: `linear-gradient(to right, #0d9488 1px, transparent 1px), linear-gradient(to bottom, #0d9488 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      {/* ════════════════════════════════════════════════════════════════
-          1. HERO SECTION
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="relative pt-36 pb-20 md:pt-44 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto z-10 text-center">
-        <motion.div initial="hidden" animate="visible" variants={stagger} className="max-w-4xl mx-auto">
-          {/* Eyebrow */}
-          <motion.div variants={fadeUp} custom={0}>
-            <SectionEyebrow icon={GraduationCap} text="DECKOVIZ FOR SCHOOLS" />
-          </motion.div>
-
-          {/* Headline */}
-          <motion.h1
-            variants={fadeUp}
-            custom={1}
-            className="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-slate-900 leading-[1.08] mb-8 font-['Playfair_Display']"
-          >
-            Where{" "}
-            <span className="bg-gradient-to-r from-teal-700 via-teal-600 to-emerald-600 bg-clip-text text-transparent">
-              Learning Comes Alive
-            </span>
-          </motion.h1>
-
-          {/* Subtitle */}
-          <motion.p
-            variants={fadeUp}
-            custom={2}
-            className="text-lg sm:text-xl md:text-2xl text-slate-600 font-normal leading-relaxed mb-12 max-w-3xl mx-auto"
-          >
-            A living, thinking, adaptive learning platform - multimodal display plus learning companion, present in every classroom, personalised to every student, every teacher, every class,{" "}
-            <span className="text-teal-800 font-semibold">growing sharper every single day.</span>
-          </motion.p>
-
-          {/* Action Buttons */}
-          <motion.div
-            variants={fadeUp}
-            custom={3}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
-          >
-            <div className="relative group">
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 opacity-60 blur-md group-hover:opacity-90 transition duration-500 animate-pulse" />
-              <button
-                onClick={() => navigate("/contact")}
-                className="relative px-9 py-4 rounded-full font-bold text-base bg-gradient-to-r from-teal-600 via-teal-700 to-emerald-600 text-white shadow-xl shadow-teal-600/25 hover:scale-105 transition-all duration-300 flex items-center gap-3"
-              >
-                <Sparkles className="w-5 h-5 text-teal-200 animate-spin" style={{ animationDuration: "6s" }} />
-                <span>Book a Demo</span>
-              </button>
-            </div>
-
-            <button
-              onClick={() => {
-                const el = document.getElementById("short-intro");
-                el?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="px-9 py-4 rounded-full font-bold text-base bg-white border border-teal-300 text-teal-800 hover:bg-teal-50 hover:border-teal-400 hover:scale-105 transition-all duration-300 shadow-md flex items-center gap-2"
-            >
-              <span>See It In Action</span>
-              <ArrowRight className="w-5 h-5 text-teal-600" />
-            </button>
-
-            <button
-              onClick={() => navigate("/schools-general-info")}
-              className="px-9 py-4 rounded-full font-bold text-base bg-teal-50 border border-teal-200 text-teal-800 hover:bg-teal-100/80 hover:scale-105 transition-all duration-300 shadow-sm flex items-center gap-2"
-            >
-              <BookOpen className="w-5 h-5 text-teal-700" />
-              <span>Full Features Catalogue</span>
-            </button>
-          </motion.div>
-
-          {/* Quick Sub-navigation */}
-          <motion.div
-            variants={fadeUp}
-            custom={4}
-            className="flex items-center justify-center gap-3 flex-wrap"
-          >
-            {[
-              { label: "Full Features Catalogue", icon: BookOpen, path: "/schools-general-info" },
-              { label: "Colleges & Universities", icon: GraduationCap, path: "/deckoviz-for-universities" },
-              { label: "Sponsorship Program", icon: Building2, path: "/sponsorship" },
-            ].map((link) => {
-              const IconComp = link.icon;
-              return (
-                <button
-                  key={link.path}
-                  onClick={() => navigate(link.path)}
-                  className="group flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 shadow-sm hover:border-teal-300 hover:bg-teal-50/70 hover:text-teal-900 transition-all duration-300"
-                >
-                  <IconComp className="w-3.5 h-3.5 text-teal-600" />
-                  <span>{link.label}</span>
-                  <span className="text-xs opacity-70 transition-transform duration-300 group-hover:translate-x-1">➔</span>
-                </button>
-              );
-            })}
-          </motion.div>
+        <motion.div 
+          className="relative z-10 max-w-7xl mx-auto px-6 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <span className="inline-block py-1.5 px-4 rounded-full bg-white/10 border border-white/20 text-white font-semibold text-sm tracking-wide mb-6 shadow-sm backdrop-blur-md">
+            Deckoviz for Schools, Universities & Learning Centres
+          </span>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-8 leading-tight font-serif">
+            Welcome to the Future of <br className="hidden md:block"/>
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Learning Centres</span>
+          </h1>
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
+            Picture this. <br className="hidden md:block"/><br className="hidden md:block"/>
+            <strong className="text-white drop-shadow-md">A wall that teaches.</strong> <br className="hidden md:block"/><br className="hidden md:block"/>
+            <strong className="text-white drop-shadow-md">A frame that listens.</strong> <br className="hidden md:block"/><br className="hidden md:block"/>
+            A space that grows <strong className="text-blue-300">smarter every single day</strong>, right alongside your students, instilling their learning with more <strong className="text-blue-300">excitement and deeper engagement</strong>, helping them become more <strong className="text-blue-300">creative</strong>, and shaping their learning in ways that will stick, for the best learning is the kind where you are <strong className="text-white">having fun while exploring new landscapes</strong>.
+            <br className="mb-4" />
+            That's the <strong className="text-blue-400">Deckoviz DASPort</strong>, the learning companion for your classrooms.
+            <br className="mb-4" />
+            A living, learning surface for the next generation of learning centres.
+          </p>
         </motion.div>
-      </section>
+      </div>
 
-      {/* ════════════════════════════════════════════════════════════════
-          SCROLLING SHOWCASE GALLERY
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="relative z-20 py-6">
-        <DynamicImageGrid
+      {/* ── Dynamic Image Grid ── */}
+      <div className="relative z-20 pb-16">
+        <DynamicImageGrid 
           imageSources={schoolImages}
           sectionTitle="Classrooms Reimagined"
           sectionDescription="Visuals that adapt. Learning that feels less like a lecture and more like a conversation."
-          isLightMode={true}
         />
+      </div>
+
+      {/* ── 2. The Longer Story ── */}
+      <section className="py-24 bg-[#08101a] relative overflow-hidden">
+        <div className="max-w-4xl mx-auto px-6">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl md:text-5xl font-bold font-serif text-white mb-6">Something is about to break in education.<br/><span className="text-blue-400">In a good way.</span></h2>
+          </motion.div>
+          <motion.div 
+            className="prose prose-lg prose-indigo mx-auto text-gray-400 space-y-6"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              By 2027, the kids sitting in your classrooms will have grown up <strong className="text-blue-300">talking to AI</strong> the way past generations grew up talking to search engines. <br/><br/>
+              They'll expect <strong className="text-white">content that responds to them</strong>. Visuals that adapt. Learning that feels less like a lecture and more like a <strong className="text-white">conversation</strong>.
+            </p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              And then they'll walk into class and open a textbook.
+            </p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              <strong className="text-white">Think about the gap.</strong> These are kids who can generate a video, remix a song, or get a <strong className="text-blue-300">personalised answer</strong> to any question in seconds. <br/><br/>
+              Then they sit down for history and get a photocopied worksheet. They sit down for art and get a box of pastels and a bell that rings in forty minutes. <br/><br/>
+              The <strong className="text-blue-400">tools they use to learn</strong> haven't caught up to the tools they use to live.
+            </p>
+            <motion.p 
+              className="text-xl leading-relaxed font-medium text-white border-l-4 border-blue-500 pl-6 my-8"
+              initial={{ x: -20, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              That gap doesn't close on its own. It has to be built.
+            </motion.p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              Classrooms built for the age of AI won't look like classrooms built for the age of chalk. <br/><br/>
+              They'll be <strong className="text-white">visual, responsive, and alive</strong>, generating material in real time instead of reheating the same slides year after year. <br/><br/>
+              The schools that make this shift early won't just teach better. They'll feel like they belong to the world their students are actually growing up in.
+            </p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              Every learning space has walls. <strong className="text-white">Most of them are wasted.</strong> <br/><br/>
+              Faded posters. Outdated timetables. A notice board nobody's updated since last term. <br/><br/>
+              Meanwhile, the kids on the other side of those walls are growing up on TikTok, YouTube, and interactive everything. The gap between how they learn and how your walls look has never been wider. 
+              <strong className="text-blue-300"> Deckoviz closes these gaps - gaps that can prevent students from reaching their fullest potential.</strong>
+            </p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
+              It's an <strong className="text-blue-400">AI-powered Dynamic Art and Storytelling Portal</strong>, running Vizzy, your always-on creative and learning companion. <br/><br/>
+              Point it at a history lesson and it becomes a <strong className="text-white">storyteller</strong>. <br/>
+              Point it at art class and it becomes a <strong className="text-white">canvas</strong>. <br/>
+              Point it at your reception and it becomes the most <strong className="text-white">compelling first impression</strong> your school has ever made.
+            </p>
+            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300 font-medium">
+              The DASPort helps teach, inspire, and remember, in ways that keep getting better with every class, every student, every day.
+              <br/><br/>
+              This is what a 2027 learning environment is supposed to feel like.
+            </p>
+          </motion.div>
+        </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════════
-          2. SHORT INTRO
-         ════════════════════════════════════════════════════════════════ */}
-      <section id="short-intro" className="py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="relative bg-white border border-teal-200/80 rounded-3xl p-8 sm:p-12 shadow-xl shadow-teal-900/5 backdrop-blur-md"
-        >
-          <div className="absolute -top-3 left-8 px-4 py-1 rounded-full bg-gradient-to-r from-teal-600 to-emerald-600 text-white font-bold text-xs shadow-md">
-            SHORT INTRO
+      {/* ── 3. 12 Key Highlights & Use Cases ── */}
+      <section className="py-24 bg-[#0A0A0B]">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-blue-300 font-bold tracking-wider uppercase text-sm">Possibilities</span>
+            <h2 className="mt-3 text-4xl md:text-5xl font-bold font-serif text-white">12 Key Highlights & Use Cases</h2>
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {highlights.map((item, idx) => (
+              <motion.div 
+                key={idx} 
+                className="group p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 relative overflow-hidden group/card hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] hover:-translate-y-2 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+              >
+                <div className="text-4xl mb-6 bg-gradient-to-br from-blue-900/40 to-indigo-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)] w-16 h-16 rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <span className="group-hover:grayscale brightness-200 group-hover:drop-shadow-md transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
+                </div>
+                <h3 className="text-xl font-bold font-serif text-white mb-3 leading-snug group-hover:text-blue-400 transition-colors duration-300">{item.title}</h3>
+                <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
-          <p className="text-xl sm:text-2xl text-slate-800 leading-relaxed font-normal tracking-wide pt-2">
-            Deckoviz for Schools brings together a generative, multimodal display and Vizzy, an AI that teaches, assists, and grows alongside every student and every teacher in your school. It's the first platform genuinely built for immersive, interactive, multimodal learning, not a mere display repurposed for the classroom.
-          </p>
-        </motion.div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════
-          3. LONGER INTRO
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
-        <div className="bg-gradient-to-b from-slate-50 to-teal-50/40 border border-slate-200/80 rounded-3xl p-8 sm:p-12 shadow-lg space-y-8 text-slate-700 text-lg sm:text-xl leading-relaxed">
-          <SectionEyebrow icon={Globe} text="LONGER INTRO" />
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-4"
-          >
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 font-['Playfair_Display']">
-              A <span className="bg-gradient-to-r from-teal-700 to-emerald-600 bg-clip-text text-transparent">Different Category</span> of Learning
-            </h2>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="border-l-2 border-slate-300 pl-6"
-          >
-            Most education technology has historically solved a distribution problem. It takes something that already exists - a worksheet, a textbook, a slideshow, a video - and makes it easier to deliver, access, or organise. That is useful. But fundamentally, it is still the same education travelling through a better pipe.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-slate-900 font-semibold text-xl sm:text-2xl border-l-4 border-teal-600 pl-6 py-2 bg-white/70 rounded-r-xl shadow-sm"
-          >
-            Deckoviz starts from a different question: what becomes possible to teach when a classroom has genuine generative intelligence, multimodal interaction, and a display designed not merely to show information, but to let students experience it?
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="border-l-2 border-slate-300 pl-6"
-          >
-            The answer is an entirely new category of learning experience. A philosophy discussion that evolves around the questions a student actually asks. A history lesson that doesn't simply describe ancient Rome, but lets an entire class walk through it. A science lesson that can move from an abstract concept to a visual simulation the moment a student struggles to understand it. A creative exercise that adapts itself to the imagination, ability and curiosity of every student in the room. And a learning companion that can grow with a child - remembering where they struggled, what fascinated them, how they learn, and what they were capable of yesterday - from their earliest years of school through their adolescence.
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="relative pt-6 border-t border-teal-200 text-teal-900 font-semibold text-lg sm:text-xl leading-relaxed"
-          >
-            That is what Deckoviz for Schools is building. Not a smart display with educational content loaded onto it, but a comprehensive learning ecosystem: a generative display, an AI teaching assistant, and a personalised learning companion, working together as one platform and becoming a persistent part of the classroom itself.
-          </motion.div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════════
-          4. THE FOUR CORE PILLARS
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <SectionEyebrow icon={Layers} text="THE FOUR CORE PILLARS" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">
-            The Four Core Pillars
-          </h2>
-        </div>
-
-        <div className="relative pl-6 sm:pl-12 space-y-16 border-l-2 border-teal-300">
-          {pillars.map((pillar, idx) => (
-            <motion.div
-              key={pillar.number}
+      {/* ── 4. Core Benefits ── */}
+      <section className="py-24 relative overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(37,99,235,0.15),_transparent_40%),_radial-gradient(circle_at_top_right,_rgba(24,42,74,0.3),_transparent_40%)]" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-16 items-start">
+            <motion.div 
+              className="col-span-1 lg:sticky lg:top-32"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
-              whileHover={{ x: 6 }}
-              className="relative pl-6 sm:pl-8 group transition-all"
+              transition={{ duration: 0.6 }}
             >
-              <div className="absolute -left-[31px] sm:-left-[55px] top-0 w-8 h-8 rounded-full bg-teal-600 text-white font-bold text-xs flex items-center justify-center shadow-md shadow-teal-600/30 group-hover:scale-125 transition-transform">
-                {pillar.number}
-              </div>
-              <div className="bg-white border border-slate-200/90 rounded-3xl p-8 shadow-md hover:shadow-xl hover:border-teal-300 transition-all">
-                <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 group-hover:text-teal-700 transition-colors">
-                  {pillar.title}
-                </h3>
-                <p className="text-base font-semibold text-teal-700 mb-4">
-                  {pillar.sub}
-                </p>
-                <p className="text-base text-slate-600 leading-relaxed mb-6 max-w-3xl">
-                  {pillar.body}
-                </p>
-                <div className="space-y-3">
-                  {pillar.points.map((pt, i) => (
-                    <div key={i} className="flex items-start gap-3 text-sm text-slate-700 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
-                      <span>{pt}</span>
-                    </div>
-                  ))}
-                </div>
+              <h2 className="text-4xl md:text-5xl font-bold font-serif text-white mb-6">Core Benefits</h2>
+              <p className="text-lg text-slate-300 mb-8 leading-relaxed">
+                Develop the most important skill of tomorrow. Creativity is the skill that survives automation. Deckoviz makes cultivating it part of the daily environment, not an extracurricular afterthought.
+              </p>
+              <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full" />
+            </motion.div>
+            <div className="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+              {benefits.map((benefit, idx) => (
+                <motion.div 
+                  key={idx} 
+                  className="relative group cursor-default"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                >
+                  <div className="absolute top-0 left-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold text-sm group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">
+                    {idx + 1}
+                  </div>
+                  <div className="pl-12 group-hover:translate-x-1 transition-transform duration-300">
+                    <h3 className="text-xl font-bold font-serif text-white mb-3 group-hover:text-blue-200 transition-colors duration-300">{benefit.title}</h3>
+                    <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">{benefit.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. 18 More Ways Deckoviz Fits Your Space ── */}
+      <section className="relative py-32 bg-[#050b14] overflow-hidden border-y border-white/5">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(37,99,235,0.08)_0%,_transparent_70%)] pointer-events-none"></div>
+        <div className="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
+        <motion.div 
+          className="max-w-7xl mx-auto px-6 mb-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="text-3xl md:text-4xl font-bold font-serif text-white">18 More Ways Deckoviz Fits Your Space</h2>
+        </motion.div>
+        
+        {/* Continuous scroll layout for the fits items */}
+        <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
+          {fits.map((fit, idx) => (
+            <motion.div 
+              key={idx} 
+              className="relative group px-6 py-3.5 bg-white/5 border border-white/10 rounded-full text-gray-300 font-medium hover:bg-white/10 hover:border-blue-500/50 hover:text-white hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all duration-300 text-sm md:text-base cursor-default backdrop-blur-md overflow-hidden"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.4, delay: (Math.min(idx, 15)) * 0.05 }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
+              <div className="relative z-10 flex items-center gap-2">
+                <span className="text-yellow-400 group-hover:scale-125 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.5)]">✨</span> 
+                <span className="group-hover:text-white transition-colors duration-300">{fit}</span>
               </div>
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════════════
-          5. MORE BUILT INTO THE PLATFORM
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <SectionEyebrow icon={Sparkles} text="MORE BUILT INTO THE PLATFORM" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">More Built Into The Platform</h2>
-        </div>
+      {/* ── 5.5. Education Partner Program Section ── */}
+      <PartnerProgramSection />
 
-        <div className="grid md:grid-cols-2 gap-4">
-          {platformFeatures.map((item, index) => {
-            const IconComponent = item.icon;
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.04 }}
-                whileHover={{ y: -3 }}
-                className="p-6 bg-white border border-slate-200/80 rounded-2xl shadow-sm hover:shadow-md hover:border-teal-300 transition-all duration-300 flex items-start gap-4"
-              >
-                <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-700 flex-shrink-0 mt-0.5">
-                  <IconComponent className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 text-base mb-1">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{item.desc}</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
+      <PowerUsesSection vertical="schools" />
 
-      {/* ════════════════════════════════════════════════════════════════
-          6. 12 CORE USE CASES
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <SectionEyebrow icon={Compass} text="12 CORE USE CASES" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">12 Core Use Cases</h2>
-        </div>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {useCases.map((useCase, idx) => {
-            const Icon = useCase.icon;
-            return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4 }}
-                whileHover={{ y: -4 }}
-                className="p-6 bg-white border border-slate-200/80 hover:border-teal-400 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center text-teal-700 mb-4 group-hover:scale-110 group-hover:bg-teal-600 group-hover:text-white transition-all">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-teal-700 transition-colors">
-                  {useCase.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  {useCase.desc}
-                </p>
-              </motion.div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════
-          7. 30 MORE WAYS DECKOVIZ FITS YOUR SCHOOL
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <SectionEyebrow icon={Building2} text="30 MORE WAYS DECKOVIZ FITS YOUR SCHOOL" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 mb-6 font-['Playfair_Display']">
-            30 More Ways Deckoviz Fits Your School
-          </h2>
-
-          <div className="mt-8 space-y-4 max-w-2xl mx-auto">
-            <div className="relative">
-              <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-teal-600" />
-              <input
-                type="text"
-                placeholder="Search school implementations..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-10 py-3.5 rounded-full bg-white border border-slate-300 text-slate-900 placeholder-slate-400 text-sm shadow-sm focus:outline-none focus:border-teal-500 transition-colors"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-slate-500 hover:text-slate-900"
-                >
-                  Clear
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <motion.div layout className="flex flex-wrap justify-center gap-3 max-w-5xl mx-auto">
-          <AnimatePresence>
-            {filteredThirty.length > 0 ? (
-              filteredThirty.map((item, idx) => (
-                <motion.div
-                  key={idx}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.25 }}
-                  whileHover={{ scale: 1.04, y: -2 }}
-                  className="px-4 py-2.5 rounded-full bg-white border border-teal-200 hover:border-teal-400 hover:bg-teal-50 text-xs text-slate-800 shadow-sm transition-all flex items-center gap-2 cursor-default"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-500 animate-pulse" />
-                  <span>{item.text}</span>
-                </motion.div>
-              ))
-            ) : (
-              <div className="py-8 text-slate-500 text-sm">
-                No matching implementations found for &quot;{searchQuery}&quot;.
-              </div>
-            )}
-          </AnimatePresence>
+      {/* ── 6. The Bottom Line (CTA) ── */}
+      <section className="py-32 relative text-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/50 to-blue-100/50 -z-10" />
+        <motion.div 
+          className="max-w-4xl mx-auto px-6"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl md:text-5xl font-bold font-serif text-white mb-8">The Bottom Line</h2>
+          <p className="text-xl text-gray-300 mb-10 leading-relaxed font-medium cursor-default">
+            Your students are growing up in a world where learning is about to be transformed dramatically. Your walls shouldn't be the one place learning stands still.
+            <br/><br/>
+            Deckoviz turns every classroom, corridor, and common area into a space that teaches, inspires, and evolves. It's infrastructure for how learning happens next.
+            <br/><br/>
+            The schools and universities that adopt this now won't just look different. They'll feel different, shaping an environment that brings the joy of learning alive for every student who walks through the door. And they’ll help shape confident kids who are ready and excited for tomorrow’s challenges and possibilities.
+          </p>
+          <motion.button 
+            onClick={() => window.location.href='/contact'} 
+            className="group px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white border border-white/10 hover:from-blue-500 hover:to-indigo-500 rounded-full font-bold text-lg hover:bg-[#2563EB] transition-all duration-300 shadow-xl shadow-[#182A4A]/20 flex items-center justify-center mx-auto gap-3"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Bring your learning centre into the future today. Book a demo with our team.
+            <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+          </motion.button>
         </motion.div>
-
-        {!showAllThirty && !searchQuery && (
-          <div className="text-center mt-8">
-            <button
-              onClick={() => setShowAllThirty(true)}
-              className="px-6 py-2.5 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold hover:bg-teal-100 transition-all shadow-sm"
-            >
-              Show All 30 Ways ↓
-            </button>
-          </div>
-        )}
-      </section>
-
-      {/* ════════════════════════════════════════════════════════════════
-          8. CORE BENEFITS
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <SectionEyebrow icon={TrendingUp} text="CORE BENEFITS" />
-          <h2 className="text-4xl sm:text-5xl font-extrabold text-slate-900 font-['Playfair_Display']">Core Benefits</h2>
-        </div>
-
-        <div className="grid lg:grid-cols-12 gap-10 items-start">
-          {/* Primary Benefits */}
-          <div className="lg:col-span-7 space-y-4">
-            <h3 className="text-xs font-bold text-teal-800 uppercase tracking-widest border-b border-slate-200 pb-3">
-              Primary Institutional Benefits
-            </h3>
-            {coreBenefits.map((benefit, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md hover:border-teal-300 transition-all"
-              >
-                <h4 className="text-base sm:text-lg font-bold text-slate-900 mb-1">{benefit.title}</h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{benefit.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Secondary Benefits */}
-          <div className="lg:col-span-5 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
-            <h3 className="text-xs font-bold text-teal-800 uppercase tracking-widest border-b border-slate-200 pb-3">
-              Secondary Benefits
-            </h3>
-            {secondaryBenefits.map((text, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                className="flex items-start gap-3 text-sm text-slate-700"
-              >
-                <CheckCircle2 className="w-4 h-4 text-teal-600 flex-shrink-0 mt-0.5" />
-                <span>{text}</span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHAT YOU GET FOR SCHOOLS */}
-      <WhatYouGetSection allowedCategories={["schools"]} defaultOpen="schools" />
-
-      {/* ════════════════════════════════════════════════════════════════
-          CLOSING & CTA
-         ════════════════════════════════════════════════════════════════ */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto relative z-10 text-center">
-        <div className="bg-gradient-to-b from-teal-50/60 via-white to-teal-50/40 border border-teal-200 rounded-3xl p-8 sm:p-14 shadow-xl space-y-8 max-w-4xl mx-auto">
-          <SectionEyebrow icon={GraduationCap} text="CLOSING" />
-
-          <div className="space-y-4 text-slate-700 text-base sm:text-lg leading-relaxed">
-            <p className="font-bold text-teal-900 text-2xl">
-              Bring Learning to Life in Every Classroom.
-            </p>
-            <p className="text-slate-600 max-w-2xl mx-auto text-base">
-              See what a school looks like when multimodal visual generation, teaching assistants, and student companions work together as one.
-            </p>
-          </div>
-
-          <div className="border-t border-teal-200 pt-10">
-            <div className="flex flex-wrap items-center justify-center gap-4 mb-10">
-              <div className="relative group">
-                <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-teal-500 to-emerald-500 opacity-60 blur-md group-hover:opacity-90 transition duration-500 animate-pulse" />
-                <button
-                  onClick={() => navigate("/contact")}
-                  className="relative px-9 py-4 rounded-full font-bold text-base bg-gradient-to-r from-teal-600 via-teal-700 to-emerald-600 text-white shadow-xl shadow-teal-600/25 hover:scale-105 transition-all duration-300 flex items-center gap-2"
-                >
-                  <Sparkles className="w-5 h-5 text-teal-200" />
-                  <span>Book a Demo</span>
-                </button>
-              </div>
-
-              <button
-                onClick={() => navigate("/contact")}
-                className="px-9 py-4 rounded-full font-bold text-base bg-white border border-teal-300 text-teal-800 hover:bg-teal-50 hover:scale-105 transition-all duration-300 shadow-md flex items-center gap-2"
-              >
-                <Users className="w-5 h-5 text-teal-700" />
-                <span>Talk to Our Team</span>
-              </button>
-            </div>
-
-            <div className="flex items-center justify-center gap-4 sm:gap-6 border-t border-slate-200 pt-8 flex-wrap">
-              {[
-                { label: "Full Features Catalogue", icon: BookOpen, path: "/schools-general-info" },
-                { label: "Colleges & Universities", icon: GraduationCap, path: "/deckoviz-for-universities" },
-                { label: "Sponsorship Program", icon: Building2, path: "/sponsorship" },
-              ].map((link, i) => {
-                const IconComp = link.icon;
-                return (
-                  <React.Fragment key={link.path}>
-                    {i > 0 && <div className="w-1.5 h-1.5 rounded-full bg-teal-300 hidden sm:block" />}
-                    <button
-                      onClick={() => navigate(link.path)}
-                      className="group flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-teal-800 transition-all duration-300"
-                    >
-                      <div className="w-8 h-8 rounded-lg bg-teal-50 border border-teal-200 flex items-center justify-center text-teal-700 shadow-sm">
-                        <IconComp className="w-4 h-4" />
-                      </div>
-                      <span>{link.label}</span>
-                      <span className="text-xs opacity-70 transition-transform duration-300 group-hover:translate-x-1">➔</span>
-                    </button>
-                  </React.Fragment>
-                );
-              })}
-            </div>
-          </div>
-        </div>
       </section>
 
     </div>

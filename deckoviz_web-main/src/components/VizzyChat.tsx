@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence, useDragControls } from "framer-motion";
 import { 
   Send, X, Minimize2, Maximize2, Sparkles, 
-  ChevronDown, Zap, RotateCcw, Plus 
+  ChevronDown, Zap, RotateCcw, Plus, BookOpen 
 } from "lucide-react";
+import { PromptLibrary } from "./PromptLibrary";
 
 
 // ─────────────────────────────────────────────
@@ -194,6 +195,7 @@ const TypingIndicator = () => (
 const VizzyChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isPromptLibraryOpen, setIsPromptLibraryOpen] = useState(false);
   const dragControls = useDragControls();
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
@@ -383,7 +385,22 @@ const VizzyChat: React.FC = () => {
                 </div>
               </div>
 
+              {/* Note: If icons appear doubled/overlapping during local development, this is a known Vite HMR refresh glitch. A simple browser page reload (F5) resolves it. */}
               <div className="relative flex items-center gap-1">
+                <button
+                  onClick={() => {
+                    const opening = !isPromptLibraryOpen;
+                    setIsPromptLibraryOpen(opening);
+                    // Auto-expand the window when the library opens; restore compact mode when it closes
+                    setIsExpanded(opening);
+                  }}
+                  className={`p-1.5 rounded-lg hover:bg-white/5 transition-colors ${
+                    isPromptLibraryOpen ? "text-[#4F75FF]" : "text-[#7c84b1] hover:text-white"
+                  }`}
+                  title={isPromptLibraryOpen ? "Close Prompt Library" : "Open Power Use Case Prompt Library"}
+                >
+                  <BookOpen size={13} />
+                </button>
                 <button
                   onClick={resetChat}
                   className="p-1.5 rounded-lg hover:bg-white/5 text-[#7c84b1] hover:text-white transition-colors"
@@ -408,22 +425,46 @@ const VizzyChat: React.FC = () => {
               </div>
             </div>
 
+            {/* ── Prompt Library Panel ── */}
+            <AnimatePresence>
+              {isPromptLibraryOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex-1 min-h-0 overflow-y-auto"
+                >
+                  <PromptLibrary
+                    onSelectPrompt={(promptTemplate) => {
+                      setInput(promptTemplate.prompt_text);
+                      setIsPromptLibraryOpen(false);
+                      setIsExpanded(false); // collapse back to normal chat size after picking a prompt
+                      setTimeout(() => inputRef.current?.focus(), 100);
+                    }}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+
             {/* ── Messages ── */}
-            <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:transparent [&::-webkit-scrollbar-thumb]:bg-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full">
-              {messages.map((message, index) => (
-                <MessageBubble
-                  key={index}
-                  message={message}
-                  isLatest={index === messages.length - 1}
-                />
-              ))}
+            {!isPromptLibraryOpen && (
+              <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-4 scroll-smooth [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:transparent [&::-webkit-scrollbar-thumb]:bg-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-white/20 [&::-webkit-scrollbar-thumb]:rounded-full">
+                {messages.map((message, index) => (
+                  <MessageBubble
+                    key={index}
+                    message={message}
+                    isLatest={index === messages.length - 1}
+                  />
+                ))}
 
-              <AnimatePresence>
-                {isLoading && <TypingIndicator />}
-              </AnimatePresence>
+                <AnimatePresence>
+                  {isLoading && <TypingIndicator />}
+                </AnimatePresence>
 
-              <div ref={messagesEndRef} />
-            </div>
+                <div ref={messagesEndRef} />
+              </div>
+            )}
 
             {/* ── Suggested Prompts ── */}
             <AnimatePresence>

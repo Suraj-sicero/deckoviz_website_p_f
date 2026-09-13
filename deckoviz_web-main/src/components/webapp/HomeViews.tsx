@@ -21,7 +21,9 @@ import {
   ChevronRight,
   Monitor,
   X,
-  Trash2
+  Trash2,
+  Shuffle,
+  RotateCcw,
 } from "lucide-react";
 import { homeApi } from "../../lib/homeApi";
 
@@ -148,6 +150,26 @@ export function HomeDailyQueueView() {
 
   useEffect(() => fetchQueue(), []);
 
+  const handleShuffleQueue = async () => {
+    try {
+      await homeApi.shuffleDailyQueue();
+      fetchQueue();
+    } catch (err) {
+      console.error("[DailyQueue] Error shuffling queue:", err);
+      alert("Failed to shuffle queue. Please try again.");
+    }
+  };
+
+  const handleAutoPopulateQueue = async () => {
+    try {
+      await homeApi.autoPopulateDailyQueue();
+      fetchQueue();
+    } catch (err) {
+      console.error("[DailyQueue] Error auto-populating queue:", err);
+      alert("Failed to auto-populate queue. Please try again.");
+    }
+  };
+
   const handleAddSlot = async () => {
     if (!formData.startTime) {
       alert("Please select a time for the slot.");
@@ -197,10 +219,26 @@ export function HomeDailyQueueView() {
       <div className="flex items-center justify-between">
         <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Today's Schedule</h2>
         <div className="flex gap-2">
-          <button className="px-4 py-2 rounded-full text-xs font-semibold bg-gradient-to-r from-[#182a4a] to-[#2563EB] text-white shadow-md hover:opacity-90 transition-opacity">Quick Display</button>
+          <button
+            onClick={handleShuffleQueue}
+            className="px-4 py-2 rounded-full text-xs font-semibold bg-white/60 text-gray-600 border border-gray-200 hover:bg-white hover:text-[#182a4a] hover:border-[#182a4a] transition-colors"
+            title="Shuffle queue order"
+          >
+            <Shuffle size={12} className="inline mr-1" />
+            <span>Shuffle</span>
+          </button>
+          <button
+            onClick={handleAutoPopulateQueue}
+            className="px-4 py-2 rounded-full text-xs font-semibold bg-white/60 text-gray-600 border border-gray-200 hover:bg-white hover:text-[#182a4a] hover:border-[#182a4a] transition-colors"
+            title="Auto-populate from your collections & favorites"
+          >
+            <RotateCcw size={12} className="inline mr-1" />
+            <span>Auto-Populate</span>
+          </button>
           <button onClick={() => setShowModal(true)} className="px-4 py-2 rounded-full text-xs font-semibold bg-white/60 text-gray-600 border border-gray-200 hover:bg-white transition-colors"><Plus size={12} className="inline mr-1" />Add Slot</button>
         </div>
       </div>
+
       
       {loading ? (
         <SkeletonLoader />
@@ -243,6 +281,7 @@ export function HomeDailyQueueView() {
     </div>
   );
 }
+
 
 /* ======================== EVENTS ======================== */
 export function HomeEventsView() {

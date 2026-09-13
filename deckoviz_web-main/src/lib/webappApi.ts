@@ -245,6 +245,59 @@ export const webappApi = {
     };
   },
 
+  /* Batch Upload — 200 cap, per-file status, parallel, background for video/waveform */
+  uploadBatch: async (
+    files: File[],
+    opts?: { destination?: "personal" | "global"; libraryType?: string; token?: string }
+  ): Promise<{ batch_id: string; total: number; done: number; failed: number; results: Array<{ filename: string; status: "done" | "failed"; error?: string; media?: any }> }> => {
+    if (files.length > 200) throw new Error("Batch exceeds 200 files limit");
+    if (files.length === 0) throw new Error("No files provided");
+    const formData = new FormData();
+    files.forEach((f) => formData.append("files", f));
+    formData.append("destination", opts?.destination || "personal");
+    if (opts?.libraryType) formData.append("library_type", opts.libraryType);
+    const headers = authHeaders(opts?.token);
+    delete headers["Content-Type"];
+    const res = await fetch(`${BASE}/api/upload/batch`, { method: "POST", headers, body: formData });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Batch upload failed: ${res.status}`);
+    }
+    return res.json();
+  },
+
+  uploadBatchRetry: async (
+    file: File,
+    opts?: { destination?: "personal" | "global"; libraryType?: string; token?: string }
+  ): Promise<{ filename: string; status: "done" | "failed"; error?: string; media?: any }> => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("destination", opts?.destination || "personal");
+    if (opts?.libraryType) formData.append("library_type", opts.libraryType);
+    const headers = authHeaders(opts?.token);
+    delete headers["Content-Type"];
+    const res = await fetch(`${BASE}/api/upload/batch/retry`, { method: "POST", headers, body: formData });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Retry failed: ${res.status}`);
+    }
+    return res.json();
+  },
+
+  tagBatch: async (payload: { media_ids: string[]; tags?: string; collection_id?: string; collection_name?: string; curation_id?: string; destination?: "personal" | "global"; library_type?: string }, token?: string) => {
+    const headers = authHeaders(token);
+    const res = await fetch(`${BASE}/api/upload/batch/tag`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `Tagging failed: ${res.status}`);
+    }
+    return res.json();
+  },
+
   getMusic: (token?: string) => homeGet("/music", token),
   createMusic: (data: unknown, token?: string) => homePost("/music", data, token),
 
@@ -274,21 +327,34 @@ export const webappApi = {
  * These wrap the /api/vizzy-canvas endpoints for persistence.
  * ───────────────────────────────────────────────────────────────────────────── */
 async function vizzyGet(path: string, token?: string) {
-  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { headers: authHeaders(token) });
+  let res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { headers: authHeaders(token) });
+  if (res.status === 404) {
+    res = await fetch(`${BASE}/api/vizzy${path}`, { headers: authHeaders(token) });
+  }
   return handleResponse(res, "GET", path);
 }
 
 async function vizzyPost(path: string, body?: unknown, token?: string) {
-  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, {
+  let res = await fetch(`${BASE}/api/vizzy-canvas${path}`, {
     method: "POST",
     headers: authHeaders(token),
     body: JSON.stringify(body ?? {}),
   });
+  if (res.status === 404) {
+    res = await fetch(`${BASE}/api/vizzy${path}`, {
+      method: "POST",
+      headers: authHeaders(token),
+      body: JSON.stringify(body ?? {}),
+    });
+  }
   return handleResponse(res, "POST", path);
 }
 
 async function vizzyDel(path: string, token?: string) {
-  const res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { method: "DELETE", headers: authHeaders(token) });
+  let res = await fetch(`${BASE}/api/vizzy-canvas${path}`, { method: "DELETE", headers: authHeaders(token) });
+  if (res.status === 404) {
+    res = await fetch(`${BASE}/api/vizzy${path}`, { method: "DELETE", headers: authHeaders(token) });
+  }
   return handleResponse(res, "DELETE", path);
 }
 
@@ -304,6 +370,72 @@ export const vizzyApi = {
 
   /* Curations */
   getCurations: (token?: string) => vizzyGet("/curations", token),
+
+  /* Power Uses — start from a selected card */
+  startFromPowerUse: (vertical: string, power_use_id: string, token?: string, audience?: string) =>
+    vizzyPostPowerUse(vertical, power_use_id, token, audience),
+
+  /* Proactive Vizzy Window */
+  getProactiveItems: (limit: number = 3, token?: string) => vizzyGet(`/proactive?limit=${limit}`, token),
+  dismissProactiveItem: (id: string, token?: string) => vizzyPost("/proactive/dismiss", { id }, token),
+};
+
+
+/* ── Power Uses API ──────────────────────────────────────────────────────── */
+export interface PowerUse {
+  id: string;
+  title: string;
+  description: string;
+  audience?: "teacher" | "student" | "both";
+  depth?: "quick" | "deep";
+}
+
+async function getPowerUses(vertical: string, token?: string): Promise<PowerUse[]> {
+  const res = await fetch(`${BASE}/api/power-uses/${vertical}`, { headers: authHeaders(token) });
+  const data = await handleResponse(res, "GET", `/power-uses/${vertical}`);
+  if (Array.isArray(data)) return data;
+  if (Array.isArray((data as any)?.items)) return (data as any).items;
+  if (Array.isArray((data as any)?.power_uses)) return (data as any).power_uses;
+  if (Array.isArray((data as any)?.powerUses)) return (data as any).powerUses;
+  return [];
+}
+
+async function vizzyPostPowerUse(vertical: string, power_use_id: string, token?: string, audience?: string) {
+  const payload: any = { vertical, power_use_id };
+  if (audience) {
+    payload.audience = audience;
+    payload.mode = audience;
+  }
+  const body = JSON.stringify(payload);
+  // Primary path per spec: /api/vizzy/...
+  let res = await fetch(`${BASE}/api/vizzy/sessions/start-from-power-use`, {
+    method: "POST",
+    headers: authHeaders(token),
+    body,
+  });
+  // Fallback for deployments where only /vizzy-canvas is mounted
+  if (res.status === 404) {
+    const fallback = await fetch(`${BASE}/api/vizzy-canvas/sessions/start-from-power-use`, {
+      method: "POST",
+      headers: authHeaders(token),
+      body,
+    });
+    // If fallback succeeded (or is a validation 404), prefer its result; otherwise keep original
+    // We distinguish by checking if fallback is not a generic "Not Found" route error vs a validation error.
+    // Simplest: if fallback is not 404, use it; if it is 404 but primary was also 404, use fallback (same validation)
+    if (fallback.status !== 404) {
+      res = fallback;
+    } else {
+      // Both 404 — use fallback (it will have the same validation message)
+      res = fallback;
+    }
+  }
+  return handleResponse(res, "POST", "/vizzy/sessions/start-from-power-use");
+}
+
+export const powerUsesApi = {
+  getPowerUses,
+  startFromPowerUse: vizzyPostPowerUse,
 };
 
 /**
@@ -315,19 +447,30 @@ export async function saveImageToMediaLibrary(
   imageUrl: string,
   metadata: { prompt?: string; source?: string; fileName?: string },
   token?: string,
-): Promise<void> {
-  try {
-    const fileName = metadata.fileName || `vizzy-${Date.now()}.jpg`;
-    const res = await fetch(`${BASE}/api/upload`, {
-      method: "POST",
-      headers: authHeaders(token),
-      body: JSON.stringify({ url: imageUrl, fileName, prompt: metadata.prompt, source: metadata.source || "vizzy_chat", isGenerated: true }),
-    });
-    if (!res.ok) throw new Error(`Media registration failed: ${res.status}`);
-    console.log("[VizzySync] Image saved to PostgreSQL media library:", fileName);
-  } catch (err) {
-    console.warn("[VizzySync] Failed to sync image to media library:", err);
+): Promise<any> {
+  const fileName = metadata.fileName || `vizzy-${Date.now()}.jpg`;
+  const formData = new FormData();
+  formData.append("url", imageUrl);
+  formData.append("fileName", fileName);
+  if (metadata.prompt) formData.append("prompt", metadata.prompt);
+  formData.append("source", metadata.source || "vizzy_chat");
+
+  const headers = authHeaders(token);
+  delete headers["Content-Type"];
+
+  const res = await fetch(`${BASE}/api/upload`, {
+    method: "POST",
+    headers,
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errText = await res.text().catch(() => "");
+    throw new Error(`Media registration failed (${res.status}): ${errText || res.statusText}`);
   }
+  const data = await res.json();
+  console.log("[VizzySync] Image saved to PostgreSQL media library:", fileName);
+  return data;
 }
 
 /**

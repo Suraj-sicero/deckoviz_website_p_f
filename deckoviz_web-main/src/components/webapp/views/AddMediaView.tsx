@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { Image as ImageIcon, Video, Palette, Music, Eye, Trash2, UploadCloud, Plus } from "lucide-react";
+import { Image as ImageIcon, Video, Palette, Music, Eye, Trash2, UploadCloud, Plus, AlertCircle } from "lucide-react";
 import { homeApi } from "../../../lib/homeApi";
+import { getUserMedia, saveUserMedia, getActiveUserKey, compressImageFile } from "../../../lib/userStorage";
 
 const mediaTypes = [
   { icon: <ImageIcon size={14} />, label: "Images" },
@@ -14,82 +15,92 @@ export default function AddMediaView() {
   const [hoveredFile, setHoveredFile] = useState<string | number | null>(null);
   const [isDragActive, setIsDragActive] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const MEDIA_STORAGE_KEY = "deckoviz_user_media_persistent";
-
-  const getSavedMedia = (): any[] => {
-    try {
-      const raw = localStorage.getItem(MEDIA_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch { return []; }
-  };
-
-  const saveMediaToStorage = (items: any[]) => {
-    try {
-      localStorage.setItem(MEDIA_STORAGE_KEY, JSON.stringify(items));
-    } catch { /* ignore */ }
-  };
-
   const fetchMedia = () => {
-    homeApi.getMedia()
-      .then(res => {
-        const apiItems = Array.isArray(res) ? res : (res.rows || res.items || res.data || []);
-        const localItems = getSavedMedia();
-        const combinedMap = new Map();
-        [...apiItems, ...localItems].forEach(item => {
-          const k = item.id || item.url || item.name || item.filename;
-          if (k) combinedMap.set(k, item);
-        });
-        const merged = Array.from(combinedMap.values());
-        setFiles(merged);
-        saveMediaToStorage(merged);
-      })
-      .catch(() => setFiles(getSavedMedia()));
+    const userMedia = getUserMedia();
+    setFiles(userMedia);
   };
 
   useEffect(() => {
     fetchMedia();
+    const handleUpdate = () => fetchMedia();
+    window.addEventListener("deckoviz-media-updated", handleUpdate);
+    window.addEventListener("deckoviz-user-changed", handleUpdate);
+    return () => {
+      window.removeEventListener("deckoviz-media-updated", handleUpdate);
+      window.removeEventListener("deckoviz-user-changed", handleUpdate);
+    };
   }, []);
 
   const handleUpload = async (uploadFiles: FileList | null) => {
     if (!uploadFiles || uploadFiles.length === 0) return;
     setIsUploading(true);
+    setErrorMessage(null);
+
+    const activeUser = getActiveUserKey();
+    const newItems: any[] = [];
 
     try {
       for (let i = 0; i < uploadFiles.length; i++) {
         const file = uploadFiles[i];
-        const previewUrl = URL.createObjectURL(file);
+
+        const dataUrl = await compressImageFile(file).catch(() => null);
+
+        if (!dataUrl) {
+          throw new Error(`Failed to read file ${file.name}`);
+        }
+
+        const mediaType = file.type.startsWith("image/")
+          ? "image"
+          : file.type.startsWith("video/")
+          ? "video"
+          : file.type.startsWith("audio/")
+          ? "music"
+          : "other";
+
         const localMediaItem = {
           id: `media-${Date.now()}-${i}`,
-          url: previewUrl,
+          userId: activeUser,
+          url: dataUrl,
+          mediaUrl: dataUrl,
           filename: file.name,
           name: file.name,
           size: file.size,
           type: file.type,
+          mediaType: mediaType,
           createdAt: new Date().toISOString(),
+          isUploaded: true,
         };
 
         try {
           const formData = new FormData();
           formData.append("file", file);
-          const res = await homeApi.uploadMedia(formData);
-          const item = (res && (res.url || res.id)) ? res : localMediaItem;
-          setFiles(prev => {
-            const next = [item, ...prev];
-            saveMediaToStorage(next);
-            return next;
-          });
+          const res = await Promise.race([
+            homeApi.uploadMedia(formData),
+            new Promise<null>((resolve) => setTimeout(() => resolve(null), 3000)),
+          ]).catch(() => null);
+
+          if (res && (res.url || res.id)) {
+            localMediaItem.url = res.url || res.mediaUrl || dataUrl;
+            localMediaItem.mediaUrl = res.url || res.mediaUrl || dataUrl;
+            if (res.id) localMediaItem.id = res.id;
+          }
         } catch {
-          setFiles(prev => {
-            const next = [localMediaItem, ...prev];
-            saveMediaToStorage(next);
-            return next;
-          });
+          /* Fallback gracefully */
         }
+
+        newItems.push(localMediaItem);
       }
+
+      const existing = getUserMedia();
+      const nextList = [...newItems, ...existing];
+      saveUserMedia(nextList);
+      setFiles(nextList);
     } catch (e) {
-      console.error(e);
+      console.error("[AddMediaView] Upload error:", e);
+      setErrorMessage("Unable to upload media. Please try again.");
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -98,12 +109,10 @@ export default function AddMediaView() {
 
   const handleRemoveFile = async (id: string | number) => {
     try {
-      setFiles(prev => {
-        const next = prev.filter(f => f.id !== id);
-        saveMediaToStorage(next);
-        return next;
-      });
-      await homeApi.deleteMedia(id);
+      const nextList = files.filter(f => f.id !== id);
+      saveUserMedia(nextList);
+      setFiles(nextList);
+      await homeApi.deleteMedia(id).catch(() => {});
     } catch (e) {
       console.error(e);
     }
@@ -114,9 +123,18 @@ export default function AddMediaView() {
       <div className="w-full max-w-4xl">
         {/* Header */}
         <div className="mb-6 px-2">
-          <h1 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-3xl font-bold  mb-1">Add Media</h1>
-          <p className="text-gray-500 text-sm font-medium">Add images, videos or artworks and many more...</p>
+          <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-3xl font-bold mb-1">
+            Add Media
+          </h1>
+          <p className="text-gray-500 text-sm font-medium">Add images, videos, audio or artworks to your media library.</p>
         </div>
+
+        {errorMessage && (
+          <div className="mb-4 flex items-center gap-2 p-3 rounded-xl bg-red-50 text-red-600 border border-red-100 text-xs font-medium">
+            <AlertCircle size={16} className="shrink-0" />
+            <span>{errorMessage}</span>
+          </div>
+        )}
 
         {/* Upload Zone */}
         <div 
@@ -134,12 +152,11 @@ export default function AddMediaView() {
           }}
         >
           <div className="flex flex-col items-center py-8">
-            {/* Upload Icon */}
             <div className="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center mb-5">
               <UploadCloud size={28} className="text-blue-500" />
             </div>
             
-            <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold  mb-2">
+            <h3 className="bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold mb-2">
               {isUploading ? "Uploading files..." : (
                 <>
                   Drag and drop files here, or{" "}
@@ -152,9 +169,8 @@ export default function AddMediaView() {
                 </>
               )}
             </h3>
-            <p className="text-gray-400 text-sm mb-5">{isUploading ? "Uploading..." : "Upload multiple artworks at once. Max file size of 20MB per file."}</p>
+            <p className="text-gray-400 text-sm mb-5">{isUploading ? "Processing..." : "Upload artworks, photos, audio or videos to your library."}</p>
             
-            {/* Media Type Icons */}
             <div className="flex items-center gap-6">
               {mediaTypes.map((type, i) => (
                 <span key={i} className="flex items-center gap-1.5 text-xs font-medium text-gray-500">
@@ -175,22 +191,27 @@ export default function AddMediaView() {
         </div>
 
         {/* Upload Files Grid */}
-        {files.length > 0 && (
+        {files.length > 0 ? (
           <div className="px-2">
-            <h2 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold  mb-5">Uploaded Files ({files.length})</h2>
+            <h2 className="bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif text-lg font-bold mb-5">
+              Your Uploaded Media ({files.length})
+            </h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5">
               {files.map((file) => (
                 <div key={file.id} className="relative aspect-[4/3] rounded-2xl overflow-hidden group cursor-pointer"
                   onMouseEnter={() => setHoveredFile(file.id)}
                   onMouseLeave={() => setHoveredFile(null)}
                 >
-                  {file.mediaType?.startsWith('video') ? (
+                  {file.mediaType === "video" || file.type?.startsWith('video') ? (
                     <video src={file.url || file.mediaUrl} className="w-full h-full object-cover" />
                   ) : (
                     <img 
-                      src={file.url || file.mediaUrl || "/images/webapp/figma/abstract-wave-wide.jpg"} 
-                      alt={file.filename || file.name || "Media"} 
+                      src={file.url || file.mediaUrl} 
+                      alt="" 
                       className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(file.filename || file.name || "art")}/800/800`;
+                      }}
                     />
                   )}
                   
@@ -219,6 +240,10 @@ export default function AddMediaView() {
                 <span className="text-sm font-medium text-gray-500 group-hover:text-blue-600 transition">Add More +</span>
               </div>
             </div>
+          </div>
+        ) : (
+          <div className="text-center py-10 text-gray-400 text-sm">
+            No media uploaded yet. Upload files above to build your library.
           </div>
         )}
       </div>

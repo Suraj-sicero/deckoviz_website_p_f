@@ -44,7 +44,7 @@ import EnterpriseWhyDeckoviz from "./EnterpriseWhyDeckoviz";
 import EnterpriseVisionMicrosite from "./EnterpriseVisionMicrosite";
 import AILayerForBusiness from "./AILayerForBusiness";
 import EnterpriseFAQ from "./EnterpriseFAQ";
-import WhatYouGetSection from "../homepage/WhatYouGetSection";
+import PowerUsesSection from "../PowerUses/PowerUsesSection";
 import useEmblaCarousel from "embla-carousel-react";
 import AutoScroll from "embla-carousel-auto-scroll";
 import {
@@ -1174,6 +1174,7 @@ export default function DeckovizForEnterprise() {
                 "/images/h5.png",
                 "/images/h6.png",
                 "/images/h10.png",
+                "/images/h11.png",
                 "/images/h12.png",
                 "/images/h13.png",
                 "/images/h14.png",
@@ -2873,9 +2874,9 @@ export default function DeckovizForEnterprise() {
 
       </section>
 
-      <WhatYouGetSection allowedCategories={["enterprises"]} defaultOpen="enterprises" />
-
       <EnterpriseFAQ />
+
+      <PowerUsesSection vertical="enterprise" />
 
       <section className="bg-transparent py-20 border-t border-gray-100">
         {/* ================= EXPLORE FURTHER PREMIUM ================= */}

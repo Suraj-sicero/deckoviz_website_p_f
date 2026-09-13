@@ -58,3 +58,12 @@ def set_status(user_id: str, app_instance_id: str, status: str) -> None:
 
 def get_device(app_instance_id: str) -> dict[str, Any] | None:
     return _devices.get(app_instance_id)
+
+
+def remove_device(user_id: str, app_instance_id: str) -> bool:
+    device = _devices.get(app_instance_id)
+    if device:
+        _devices.pop(app_instance_id, None)
+        return True
+    return False
+

@@ -18,7 +18,6 @@ import ScrollToTop from "./components/ScrollToTop";
 import Hero from "./components/homepage/Hero";
 import Features from "./components/homepage/Features";
 import WhoIsDeckovizFor from "./components/homepage/WhoIsDeckovizFor";
-import WhoTheDASPortIsFor from "./components/homepage/WhoTheDASPortIsFor";
 import PrivacyPolicy from "./components/policies/PrivacyPolicy";
 import TermsOfService from "./components/policies/TermsOfService";
 import ShippingPolicy from "./components/policies/ShippingPolicy";
@@ -37,10 +36,6 @@ import DeckovizForRealEstate from "./components/deckovizForBusinesses/DeckovizFo
 import DeckovizTherapistsLanding from "./components/deckovizForBusinesses/DeckovizForTherapists";
 import DeckovizForWellness from "./components/deckovizForBusinesses/DeckovizForWellness";
 import DeckovizSchoolsLanding from "./components/deckovizForBusinesses/DeckovizForSchools";
-import DeckovizForUniversities from "./components/deckovizForBusinesses/DeckovizForUniversities";
-import SponsorshipPage from "./components/deckovizForBusinesses/SponsorshipPage";
-import DeckovizSubscriptionsPage from "./components/payment/DeckovizSubscriptionsPage";
-import SchoolsGeneralInfoPage from "./components/deckovizForBusinesses/SchoolsGeneralInfoPage";
 import DeckovizForRetail from "./components/deckovizForBusinesses/DeckovizForStores";
 import DeckovizForEnterprise from "./components/deckovizForBusinesses/DeckovizForEnterprise";
 import FAQ from "./components/homepage/FAQ";
@@ -51,7 +46,6 @@ import AllFeatures from "./components/homepage/AllFeatures";
 import Leaderboard from "./components/Leaderboard";
 import TransformWalls from "./components/homepage/Transform";
 import DesignedFor from "./components/homepage/DesignedFor";
-import DeckovizGallerySection from "./components/homepage/DeckovizGallerySection";
 import OrderConfirmed from "./components/payment/OrderConfirmed";
 import BulkOrder from "./components/payment/BulkOrder";
 import BulkConfirm from "./components/payment/BulkConfirm";
@@ -263,8 +257,7 @@ import EnterpriseWebapp from "./components/enterpriseWebapp/EnterpriseWebapp";
 import WebFrame from "./components/WebFrame";
 import PairDevicePage from "./pages/PairDevicePage";
 import DisplayOnTvPage from "./pages/DisplayOnTvPage";
-import HomeOf2030 from "./components/essays/HomeOf2030";
-import RestaurantOf2030 from "./components/essays/RestaurantOf2030";
+import PowerUsesSection from "./components/PowerUses/PowerUsesSection";
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
 
@@ -335,7 +328,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     "/vizzy-generative-chat",
     "/pair",
     "/display",
-  ].includes(location.pathname) || location.pathname.startsWith("/enterprise-webapp") || location.pathname.startsWith("/admin");
+  ].includes(location.pathname) || location.pathname.startsWith("/webapp") || location.pathname.startsWith("/enterprise-webapp") || location.pathname.startsWith("/admin");
 
   return (
     <>
@@ -356,14 +349,15 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
             element={
               <>
                 <Hero />
+
+
                 <TransformWalls />
                 <Features />
                 <Benefits />
                 <AILayerForHome />
                 <WhyDeckoviz />
-                <DeckovizGallerySection />
                 <WhoIsDeckovizFor />
-                <WhoTheDASPortIsFor />
+                <PowerUsesSection vertical="home" />
                 <DesignedFor />
                 <HowItWorks />
                 <GuestReactionsTestimonials />
@@ -382,8 +376,6 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/blog" element={<Blog />} />
           {/* ## 2. ADD THE NEW DYNAMIC ROUTE FOR SINGLE POSTS ## */}
           <Route path="/blog/:slug" element={<BlogDetail />} />
-          <Route path="/essay/home-of-2030" element={<HomeOf2030 />} />
-          <Route path="/essay/restaurant-of-2030" element={<RestaurantOf2030 />} />
 
           <Route path="/designed-for" element={<DesignedFor />} />
           <Route path="/FAQ" element={<FAQ />} />
@@ -468,38 +460,6 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
             element={<DeckovizSchoolsLanding />}
           />
           <Route
-            path="/deckoviz-for-universities"
-            element={<DeckovizForUniversities />}
-          />
-          <Route
-            path="/deckoviz-for-colleges"
-            element={<DeckovizForUniversities />}
-          />
-          <Route
-            path="/schools-general-info"
-            element={<SchoolsGeneralInfoPage />}
-          />
-          <Route
-            path="/general-schools-info"
-            element={<SchoolsGeneralInfoPage />}
-          />
-          <Route
-            path="/schools-info"
-            element={<SchoolsGeneralInfoPage />}
-          />
-          <Route
-            path="/sponsorship"
-            element={<SponsorshipPage />}
-          />
-          <Route
-            path="/sponsorship-program"
-            element={<SponsorshipPage />}
-          />
-          <Route
-            path="/school-sponsorship"
-            element={<SponsorshipPage />}
-          />
-          <Route
             path="/partner-program"
             element={<DeckovizSchoolsLanding />}
           />
@@ -513,11 +473,6 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           />
           <Route path="/partnership" element={<Partnership />} />
           <Route path="/support" element={<Support />} />
-          <Route path="/subscriptions" element={<DeckovizSubscriptionsPage />} />
-          <Route path="/subscription" element={<DeckovizSubscriptionsPage />} />
-          <Route path="/deckoviz-subscription" element={<DeckovizSubscriptionsPage />} />
-          <Route path="/deckoviz-subscriptions" element={<DeckovizSubscriptionsPage />} />
-          <Route path="/subscriptions-page" element={<DeckovizSubscriptionsPage />} />
 
           <Route path="/Wall-Of-Love" element={<WallOfLove />} />
           <Route path="/Leaderboard" element={<Leaderboard />} />
@@ -677,8 +632,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/elinity/ellaris" element={<ElinityEllaris />} />
           <Route path="/elinity/contact" element={<ElinityContact />} />
           <Route path="/elinity/join-us" element={<ElinityJoinUs />} />
-          <Route path="/webapp" element={<ProtectedRoute><DeckovizWebapp /></ProtectedRoute>} />
-          <Route path="/webapp/*" element={<ProtectedRoute><DeckovizWebapp /></ProtectedRoute>} />
+          <Route path="/webapp" element={<ProtectedRoute><CanvasErrorBoundary><DeckovizWebapp /></CanvasErrorBoundary></ProtectedRoute>} />
+          <Route path="/webapp/*" element={<ProtectedRoute><CanvasErrorBoundary><DeckovizWebapp /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/pair" element={<ProtectedRoute><PairDevicePage /></ProtectedRoute>} />
           <Route path="/display" element={<ProtectedRoute><DisplayOnTvPage /></ProtectedRoute>} />
           <Route path="/enterprise-webapp" element={<ProtectedRoute><EnterpriseWebapp /></ProtectedRoute>} />

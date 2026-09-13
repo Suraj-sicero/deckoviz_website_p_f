@@ -61,7 +61,7 @@ export async function getPairingSession(sessionId: string): Promise<PairingSessi
 }
 
 export async function claimPairingCode(
-  token: string,
+  token: string | null | undefined,
   codeOrPayload: string
 ): Promise<ClaimPairingResult> {
   const trimmed = codeOrPayload.trim();
@@ -70,12 +70,16 @@ export async function claimPairingCode(
       ? { code: trimmed }
       : { qr_payload: trimmed, code: trimmed };
 
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  if (token && token !== "null" && token !== "undefined") {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
   const res = await fetch(`${API_BASE_URL}/api/pairing/claim`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers,
     body: JSON.stringify(body),
   });
 

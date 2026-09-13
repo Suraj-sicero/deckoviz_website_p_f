@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { webappApi } from "../../lib/webappApi";
 import { adminGetLibrary } from "../../lib/curatorApi";
+import BatchUploadZone from "../BatchUpload/BatchUploadZone";
 
 export interface LibraryItem {
   id: string;
@@ -362,8 +363,17 @@ export const MasterAdminLibrary: React.FC = () => {
               </span>
             </div>
 
+            {/* Batch Upload for Global Library — supports 200 files, all library types */}
+            <div className="mb-6 p-4 rounded-2xl bg-blue-50/50 border border-blue-100">
+              <h4 className="text-sm font-bold text-[#182A4A] mb-2 flex items-center gap-2">
+                <Upload size={16} className="text-blue-600" /> Bulk Batch Upload — Global Library (up to 200 files)
+              </h4>
+              <p className="text-xs text-slate-600 mb-3">Multi-select drag & drop for image, music, video, art/posters/photos — same mechanism as personal library, destination is global. Per-file validation, parallel upload, background processing.</p>
+              <BatchUploadZone libraryType="all" destination="global" />
+            </div>
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Dropzone */}
+              {/* Single-file Dropzone (kept for backward compat — batch above is preferred) */}
               <div
                 className="lg:col-span-1 border-2 border-dashed border-slate-200 hover:border-[#2563EB] bg-slate-50/50 hover:bg-[#2563EB]/5 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all min-h-[220px] relative overflow-hidden group"
               >
@@ -596,6 +606,14 @@ export const MasterAdminLibrary: React.FC = () => {
               <span className="px-3 py-1 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-200 text-xs font-bold flex items-center gap-1">
                 <Radio className="w-3.5 h-3.5" /> WebSocket Audio Broadcast
               </span>
+            </div>
+
+            {/* Batch Upload for Music Global Library */}
+            <div className="mb-4 p-4 rounded-2xl bg-cyan-50/50 border border-cyan-100">
+              <h4 className="text-sm font-bold text-[#182A4A] mb-2 flex items-center gap-2">
+                <Music size={16} className="text-cyan-600" /> Bulk Batch Upload — Music Global Library (up to 200)
+              </h4>
+              <BatchUploadZone libraryType="music" destination="global" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
