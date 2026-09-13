@@ -1,13 +1,13 @@
 """persist media batch tags and collection taxonomy
 
 Revision ID: 20260902_03
-Revises: 20260822_02
+Revises: 20260913_04
 """
 from alembic import op
 import sqlalchemy as sa
 
 revision = "20260902_03"
-down_revision = "20260822_02"
+down_revision = "20260913_04"
 branch_labels = None
 depends_on = None
 

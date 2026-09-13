@@ -1,14 +1,17 @@
 ﻿"""add Music Playback tables and Collection.assigned_music_id
 
 Revision ID: 20260825_03
-Revises: 20260822_02
+Revises: 20260913_04
 Create Date: 2026-08-25
+
+down_revision retargeted from 20260822_02 → 20260913_04 so collections exists
+before assigned_music_id is added (production was stuck on this ALTER).
 """
 from alembic import op
 import sqlalchemy as sa
 
 revision = "20260825_03"
-down_revision = "20260822_02"
+down_revision = "20260913_04"
 branch_labels = None
 depends_on = None
 
