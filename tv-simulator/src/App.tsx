@@ -593,7 +593,7 @@ export function App() {
     };
 
     const advance = (col: import("./types").CollectionState) => {
-      const cur = activeCollRef.current;
+      const cur = col || activeCollRef.current;
       if (!cur) return;
       const nextIdx = (cur.currentIndex + 1) % cur.items.length;
       const nextItem = cur.items[nextIdx];
