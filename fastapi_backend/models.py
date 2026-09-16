@@ -180,6 +180,20 @@ class SavedNoteItem(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 
+class ArtPlayQueueItem(Base):
+    """Persisted Art Play Page queue for a browser session app_instance_id."""
+    __tablename__ = "art_play_queue"
+
+    id = Column(String, primary_key=True, default=generate_uuid)
+    app_instance_id = Column(String, nullable=False, index=True)
+    user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), nullable=False, index=True)
+    artwork_id = Column(String, nullable=True)
+    image_url = Column(Text, nullable=False)
+    title = Column(String, nullable=True)
+    sent_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    position = Column(Integer, nullable=False, default=0)
+
+
 class UserDocument(Base):
     """Ownership-scoped flexible payloads migrated from Firestore collections.
 

@@ -8,12 +8,12 @@ paths and response aliases remain unchanged. Every lookup includes user_id.
 import asyncio
 import uuid
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Dict, List, Optional
 
 from sqlalchemy import delete, select
 
 from database import AsyncSessionLocal
-from models import MediaObject, User, UserDocument
+from models import ArtPlayQueueItem, MediaObject, User, UserDocument
 from services.s3_storage import get_media_storage
 
 
@@ -378,3 +378,112 @@ def fs_dismiss_proactive_item(uid, item_id: str):
         dismissed.append(item_id)
         _run(_save(uid, "proactive_dismissals", {"dismissed_ids": dismissed}, "proactive_dismissals", "dismissals", True))
     return dismissed
+
+
+def _art_play_payload(row: ArtPlayQueueItem) -> Dict[str, Any]:
+    sent_at = row.sent_at.isoformat() if row.sent_at else _now()
+    return {
+        "id": row.id,
+        "appInstanceId": row.app_instance_id,
+        "userId": row.user_id,
+        "artworkId": row.artwork_id,
+        "imageUrl": row.image_url,
+        "url": row.image_url,
+        "cdn_url": row.image_url,
+        "title": row.title,
+        "sentAt": sent_at,
+        "position": row.position,
+    }
+
+
+async def resolve_art_play_image_url(
+    uid: str,
+    artwork_id: Optional[str] = None,
+    url: Optional[str] = None,
+) -> str:
+    """Prefer an explicit URL; otherwise resolve MediaObject + optional S3 presign."""
+    candidate = (url or "").strip()
+    if candidate and not candidate.startswith("data:"):
+        return candidate
+
+    media_id = (artwork_id or "").strip()
+    if not media_id:
+        raise ValueError("An image url or artwork_id is required")
+
+    try:
+        async with AsyncSessionLocal() as session:
+            media = await session.scalar(
+                select(MediaObject).where(MediaObject.id == media_id, MediaObject.user_id == uid)
+            )
+            if not media:
+                if media_id.startswith("http://") or media_id.startswith("https://"):
+                    return media_id
+                raise ValueError("Media not found")
+            if media.external_url:
+                return media.external_url
+            if media.object_key:
+                try:
+                    return get_media_storage().presigned_url(media.object_key)
+                except Exception:
+                    pass
+            raise ValueError("Media has no resolvable URL")
+    except ValueError:
+        raise
+    except Exception as exc:
+        if candidate:
+            return candidate
+        raise ValueError("Could not resolve media URL: {}".format(exc))
+
+
+async def append_art_play_item(
+    uid: str,
+    app_instance_id: str,
+    artwork_id: Optional[str] = None,
+    image_url: Optional[str] = None,
+    title: Optional[str] = None,
+) -> Dict[str, Any]:
+    resolved_url = await resolve_art_play_image_url(uid, artwork_id=artwork_id, url=image_url)
+    item_id = "apq_{}".format(uuid.uuid4().hex[:12])
+    sent_at = datetime.utcnow()
+
+    async with AsyncSessionLocal() as session:
+        await _ensure_user(session, uid)
+        max_pos = await session.scalar(
+            select(ArtPlayQueueItem.position)
+            .where(
+                ArtPlayQueueItem.user_id == uid,
+                ArtPlayQueueItem.app_instance_id == app_instance_id,
+            )
+            .order_by(ArtPlayQueueItem.position.desc())
+            .limit(1)
+        )
+        position = int(max_pos or 0) + 1
+        row = ArtPlayQueueItem(
+            id=item_id,
+            app_instance_id=app_instance_id,
+            user_id=uid,
+            artwork_id=artwork_id,
+            image_url=resolved_url,
+            title=title,
+            sent_at=sent_at,
+            position=position,
+        )
+        session.add(row)
+        await session.commit()
+        await session.refresh(row)
+        return _art_play_payload(row)
+
+
+async def list_art_play_queue(uid: str, app_instance_id: str) -> List[Dict[str, Any]]:
+    async with AsyncSessionLocal() as session:
+        rows = (
+            await session.scalars(
+                select(ArtPlayQueueItem)
+                .where(
+                    ArtPlayQueueItem.user_id == uid,
+                    ArtPlayQueueItem.app_instance_id == app_instance_id,
+                )
+                .order_by(ArtPlayQueueItem.position.asc(), ArtPlayQueueItem.sent_at.asc())
+            )
+        ).all()
+        return [_art_play_payload(row) for row in rows]

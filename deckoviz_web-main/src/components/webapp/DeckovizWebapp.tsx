@@ -1764,6 +1764,10 @@ export function AllMediaPlaceholder() {
 
               return (
                 <div key={file.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-white shadow-sm hover:shadow-md transition duration-300">
+                  <ArtworkContextMenu
+                    artwork={{ id: file.id, url: file.mediaUrl, mediaUrl: file.mediaUrl, title: file.fileName, name: file.fileName }}
+                    className="absolute top-2 right-2 z-30"
+                  />
                   {isVideo ? (
                     <video src={file.mediaUrl} controls className="w-full h-full object-cover" />
                   ) : isAudio ? (

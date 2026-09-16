@@ -23,11 +23,16 @@ import {
   Play,
   Volume2,
   Send,
-  Sliders
+  Sliders,
+  MonitorPlay,
 } from "lucide-react";
 import { webappApi } from "../../lib/webappApi";
 import { adminGetLibrary } from "../../lib/curatorApi";
 import BatchUploadZone from "../BatchUpload/BatchUploadZone";
+import { ArtworkContextMenu } from "../CardContextMenu";
+import { getOrCreateArtPlayInstanceId } from "../../lib/artPlayInstance";
+import { sendToArtPlay } from "../../lib/artPlayApi";
+import { useAuth } from "../../context/AuthContext";
 
 export interface LibraryItem {
   id: string;
@@ -64,6 +69,7 @@ const DEFAULT_LIBRARY: LibraryItem[] = [
 ];
 
 export const MasterAdminLibrary: React.FC = () => {
+  const { token } = useAuth();
   const [activeTab, setActiveTab] = useState<"artworks" | "music">("artworks");
   const [libraryItems, setLibraryItems] = useState<LibraryItem[]>(DEFAULT_LIBRARY);
   const [loading, setLoading] = useState(true);
@@ -530,6 +536,13 @@ export const MasterAdminLibrary: React.FC = () => {
                     </span>
                   </div>
 
+                  <div className="absolute top-3 left-3 z-30">
+                    <ArtworkContextMenu
+                      artwork={{ id: item.id, url: item.url, title: item.title, name: item.title }}
+                      className="relative"
+                    />
+                  </div>
+
                   <div className="absolute top-3 right-3 z-10">
                     <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[#182A4A] text-[11px] font-extrabold shadow-md">
                       {item.category}
@@ -546,6 +559,26 @@ export const MasterAdminLibrary: React.FC = () => {
                     >
                       <Eye className="w-5 h-5" />
                     </a>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        const instanceId = getOrCreateArtPlayInstanceId();
+                        const res = await sendToArtPlay(token, instanceId, {
+                          artworkId: item.id,
+                          url: item.url,
+                          title: item.title,
+                        });
+                        alert(
+                          res.success
+                            ? `"${item.title}" added to Art Play Live Stream`
+                            : res.error || "Failed to add to Art Play"
+                        );
+                      }}
+                      className="p-3 rounded-2xl bg-white text-[#2563EB] hover:bg-[#2563EB] hover:text-white transition-all shadow-lg"
+                      title="Add to Live Stream"
+                    >
+                      <MonitorPlay className="w-5 h-5" />
+                    </button>
                     <button
                       onClick={() => handleDeleteItem(item.id)}
                       className="p-3 rounded-2xl bg-white text-rose-600 hover:bg-rose-600 hover:text-white transition-all shadow-lg"

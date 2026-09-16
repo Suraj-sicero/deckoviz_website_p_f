@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { MoreVertical, FolderPlus, Radio, Layers, Check, Loader2, X, Plus } from "lucide-react";
+import { MoreVertical, FolderPlus, Radio, Layers, Check, Loader2, X, Plus, MonitorPlay } from "lucide-react";
 import { useWebSocket } from "../hooks/useWebSocket";
 import { useLiveStream } from "../hooks/useLiveStream";
 import { useCollectionQueue } from "../hooks/useCollectionQueue";
 import { webappApi } from "../lib/webappApi";
 import { getUserCollections } from "../lib/userStorage";
 import { useAuth } from "../context/AuthContext";
+import { getOrCreateArtPlayInstanceId } from "../lib/artPlayInstance";
+import { sendToArtPlay } from "../lib/artPlayApi";
 
 export interface ArtworkContextMenuProps {
   artwork: {
@@ -190,6 +192,26 @@ export const ArtworkContextMenu: React.FC<ArtworkContextMenuProps> = ({ artwork,
     }
   };
 
+  const handleAddToLiveStream = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsOpen(false);
+    try {
+      const instanceId = getOrCreateArtPlayInstanceId();
+      const res = await sendToArtPlay(token, instanceId, {
+        artworkId: artworkId || undefined,
+        url: artworkUrl || undefined,
+        title: artworkTitle,
+      });
+      if (res.success) {
+        setToastMsg(`Added "${artworkTitle}" to Art Play stream`);
+      } else {
+        setToastMsg(res.error || "Failed to add to Art Play");
+      }
+    } catch (err: any) {
+      setToastMsg(err?.message || "Failed to add to Art Play");
+    }
+  };
+
   const placementClass = className !== undefined ? className : "absolute top-3 right-3 z-20";
 
   return (
@@ -222,6 +244,14 @@ export const ArtworkContextMenu: React.FC<ArtworkContextMenuProps> = ({ artwork,
             >
               <FolderPlus size={15} className="text-indigo-500" />
               Add to Collection
+            </button>
+            <button
+              type="button"
+              onClick={handleAddToLiveStream}
+              className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-slate-700 hover:bg-slate-100 hover:text-blue-600 transition-colors"
+            >
+              <MonitorPlay size={15} className="text-blue-500" />
+              Add to Live Stream
             </button>
             <button
               type="button"

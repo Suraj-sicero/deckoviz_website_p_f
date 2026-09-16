@@ -16,6 +16,7 @@ from routes.curator_routes import router as curator_router, curator_router as cu
 from routes.ws_routes import router as ws_router
 from routes.promptLibraryRoutes import router as prompt_library_router
 from routes.power_use_routes import router as power_use_router
+from routes.artplay_routes import router as artplay_router
 from database import close_database, database_is_healthy
 from config import settings
 
@@ -63,6 +64,7 @@ app.include_router(curator_router, prefix=settings.API_V1_STR)
 app.include_router(curator_catalog_router, prefix=settings.API_V1_STR)
 app.include_router(prompt_library_router, prefix=settings.API_V1_STR)
 app.include_router(power_use_router, prefix=settings.API_V1_STR)
+app.include_router(artplay_router, prefix=settings.API_V1_STR)
 app.include_router(ws_router)
 
 # Mount local static directory for uploads

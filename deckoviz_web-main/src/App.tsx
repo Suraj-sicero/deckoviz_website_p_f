@@ -258,6 +258,7 @@ import EnterpriseWebapp from "./components/enterpriseWebapp/EnterpriseWebapp";
 import WebFrame from "./components/WebFrame";
 import PairDevicePage from "./pages/PairDevicePage";
 import DisplayOnTvPage from "./pages/DisplayOnTvPage";
+import ArtPlayPage from "./pages/ArtPlayPage";
 
 
 // ## 1. IMPORT THE NEW BLOG POST PAGE COMPONENT ##
@@ -638,6 +639,7 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/webapp/*" element={<ProtectedRoute><CanvasErrorBoundary><DeckovizWebapp /></CanvasErrorBoundary></ProtectedRoute>} />
           <Route path="/pair" element={<ProtectedRoute><PairDevicePage /></ProtectedRoute>} />
           <Route path="/display" element={<ProtectedRoute><DisplayOnTvPage /></ProtectedRoute>} />
+          <Route path="/play" element={<ProtectedRoute><ArtPlayPage /></ProtectedRoute>} />
           <Route path="/enterprise-webapp" element={<ProtectedRoute><EnterpriseWebapp /></ProtectedRoute>} />
           <Route path="/enterprise-webapp/*" element={<ProtectedRoute><EnterpriseWebapp /></ProtectedRoute>} />
 
