@@ -46,7 +46,7 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
 
-/* ─── LAYOUT ─── */
+/* ─── LAYOUT (kept for legacy / debug overlay reuse) ─── */
 .app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
 
 /* ─── HEADER ─── */
@@ -68,7 +68,7 @@ body {
 .hdr-session { font-family: var(--mono); font-size: 11px; color: var(--text2); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hdr-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
 
-/* status badge */
+/* ─── STATUS BADGES ─── */
 .badge {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 4px 10px; border-radius: 5px;
@@ -148,7 +148,7 @@ body {
 .tv-idle-title { font-family: var(--sans); font-size: clamp(15px, 2vw, 20px); font-weight: 600; color: var(--text); letter-spacing: 0.3px; }
 .tv-idle-sub { font-size: clamp(12px, 1.2vw, 14px); color: var(--text2); width: 100%; max-width: 480px; line-height: 1.6; word-wrap: break-word; }
 
-/* artwork overlay (bottom of TV) */
+/* artwork overlay (bottom of TV — used in debug mini-preview) */
 .tv-overlay {
   position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;
   background: linear-gradient(transparent, rgba(3, 5, 8, 0.92) 80%);
@@ -398,6 +398,12 @@ body {
 .btn-sm { padding: 3px 8px; font-size: 9px; }
 .btn-full { width: 100%; }
 
+/* D-pad / keyboard focus rings — clearly visible for TV navigation */
+button:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ── Fullscreen Overlay ─────────────────────────────────────────────────── */
 .fs-overlay {
   position: fixed;
@@ -433,3 +439,375 @@ body {
   transition: opacity 0.2s;
 }
 .fs-exit-btn:hover { opacity: 1; }
+
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ─── ANDROID TV FULL-SCREEN MODE ──────────────────────────────────────────
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Root: locks viewport, pure black TV background */
+.tv-app-root {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+/* Full-screen TV container — centers the 16:9 frame */
+.tv-fullscreen {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  position: relative;
+}
+
+/* The 16:9 content frame — letterboxes on non-16:9 displays */
+.tv-fs-frame {
+  width: 100%;
+  height: 100%;
+  max-width: calc(100vh * 16 / 9);
+  max-height: calc(100vw * 9 / 16);
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+/* tv-img fills the full-screen frame */
+.tv-fs-frame .tv-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  animation: fadeImg .4s ease-out;
+}
+.tv-fs-frame .tv-img.contain-mode { object-fit: contain; }
+
+/* tv-idle inside full-screen frame — scales to fit 16:9 screen */
+.tv-fs-frame .tv-idle {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(10px, 2vh, 20px);
+  padding: clamp(16px, 4vw, 60px);
+  z-index: 1;
+}
+.tv-fs-frame .tv-idle-icon { font-size: clamp(32px, 6vw, 72px); opacity: .4; }
+.tv-fs-frame .tv-idle-title {
+  font-family: var(--sans);
+  font-size: clamp(18px, 3.5vw, 42px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+.tv-fs-frame .tv-idle-sub {
+  font-size: clamp(13px, 1.8vw, 22px);
+  color: var(--text2);
+  max-width: 70%;
+  line-height: 1.6;
+  text-align: center;
+}
+/* Pairing code digit boxes — scale up for TV */
+.tv-fs-frame .btn {
+  font-size: clamp(11px, 1.2vw, 14px);
+  padding: clamp(8px, 1.2vw, 14px) clamp(18px, 2.5vw, 32px);
+}
+
+/* ─── Artwork title overlay: clean & minimal, auto-fades ─── */
+.tv-corner-pair-code {
+  position: absolute;
+  top: clamp(16px, 3vh, 36px);
+  left: clamp(16px, 3vw, 36px);
+  z-index: 15;
+  background: rgba(10, 15, 26, 0.88);
+  border: 1.5px solid rgba(59, 130, 246, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 12px;
+  padding: 10px 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(37, 99, 235, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: auto;
+  animation: fadeInCode 0.3s ease-out;
+}
+
+@keyframes fadeInCode {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tv-corner-pair-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-family: var(--sans);
+}
+
+.tv-corner-pair-digits {
+  font-size: clamp(20px, 2.5vw, 32px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  font-family: var(--mono);
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+}
+
+.tv-fs-artwork-overlay {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10;
+  background: linear-gradient(transparent, rgba(0,0,0,0.82) 100%);
+  padding: clamp(24px, 5vh, 60px) clamp(24px, 4vw, 60px) clamp(16px, 3vh, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: overlayFadeIn 0.5s ease-out, overlayFadeOut 0.5s ease-in 5s forwards;
+  pointer-events: none;
+}
+@keyframes overlayFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes overlayFadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+.tv-fs-artwork-title {
+  font-family: var(--sans);
+  font-size: clamp(14px, 2.2vw, 28px);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.3px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tv-fs-artwork-sub {
+  font-family: var(--mono);
+  font-size: clamp(11px, 1.2vw, 16px);
+  color: var(--amber);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* ─── Status strip: top-right, subtle, only when no artwork ─── */
+.tv-status-strip {
+  position: absolute;
+  top: clamp(12px, 2vh, 24px);
+  right: clamp(60px, 8vw, 100px);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--mono);
+  font-size: clamp(10px, 1vw, 13px);
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  z-index: 100;
+}
+.tv-status-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(255,255,255,0.25);
+  flex-shrink: 0;
+}
+.tv-status-dot.connected  { background: var(--green); animation: blink 2.4s ease infinite; }
+.tv-status-dot.connecting { background: var(--amber); animation: blink 0.8s ease infinite; }
+.tv-status-dot.idle       { background: rgba(255,255,255,0.2); }
+.tv-status-label { color: inherit; }
+
+/* ─── Debug toggle button: tiny, unobtrusive, bottom-right corner ─── */
+.debug-toggle-btn {
+  position: absolute;
+  bottom: clamp(12px, 2vh, 24px);
+  right: clamp(12px, 2vw, 24px);
+  z-index: 500;
+  width: clamp(30px, 3vw, 44px);
+  height: clamp(30px, 3vw, 44px);
+  border-radius: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: rgba(255,255,255,0.22);
+  font-size: clamp(14px, 1.4vw, 20px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  opacity: 0.6;
+}
+.debug-toggle-btn:hover {
+  background: rgba(59,130,246,0.18);
+  border-color: rgba(59,130,246,0.5);
+  color: rgba(255,255,255,0.75);
+  opacity: 1;
+}
+.debug-toggle-btn:focus-visible {
+  background: rgba(59,130,246,0.22);
+  border-color: var(--accent);
+  color: #fff;
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  opacity: 1;
+}
+
+/* ── DEBUG OVERLAY ──────────────────────────────────────────────────────── */
+.debug-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(3, 5, 8, 0.96);
+  display: flex;
+  flex-direction: column;
+  animation: debugSlideIn 0.18s ease-out;
+  outline: none;
+}
+@keyframes debugSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Debug overlay header bar */
+.debug-overlay-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  gap: 16px;
+}
+.debug-overlay-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.debug-overlay-title svg { color: var(--accent); }
+.debug-overlay-device {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.debug-close-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Debug overlay body: left sidebar + right content */
+.debug-overlay-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Left: config + status panels — scrollable */
+.debug-overlay-left {
+  width: 340px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  background: var(--bg2);
+}
+
+/* Right: TV preview + WS terminal */
+.debug-overlay-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+  background: #030508;
+}
+
+/* Mini TV preview inside debug */
+.debug-tv-preview {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+.debug-tv-frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 35vh;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.debug-tv-no-image {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  text-align: center;
+}
+
+/* TV controls bar inside debug */
+.debug-tv-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.debug-tv-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Image flow indicator inside debug */
+.debug-img-flow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+/* WS terminal — fills remaining vertical space */
+.debug-ws-terminal {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+/* Inside the debug terminal, evlog fills height naturally */
+.debug-ws-terminal .evlog {
+  flex: 1;
+  border-top: none;
+  height: 100% !important;
+}

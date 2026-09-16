@@ -134,16 +134,9 @@ export function App() {
   const tvFrameRef = useRef<HTMLDivElement>(null);
 
   // Terminal / WebSocket Monitor layout (VS Code style resizable & dockable)
-  const [terminalHeight, setTerminalHeight] = useState<number>(240);
-  const [terminalWidth, setTerminalWidth] = useState<number>(440);
   const [terminalDock, setTerminalDock] = useState<"bottom" | "side">("bottom");
   const [terminalMinimized, setTerminalMinimized] = useState<boolean>(false);
   const [terminalMaximized, setTerminalMaximized] = useState<boolean>(false);
-  const isDraggingRef = useRef<boolean>(false);
-  const dragStartYRef = useRef<number>(0);
-  const dragStartHeightRef = useRef<number>(240);
-  const dragStartXRef = useRef<number>(0);
-  const dragStartWidthRef = useRef<number>(440);
 
   // Metrics & Events
   const [metrics, setMetrics]       = useState<Metrics>(emptyMetrics());
@@ -151,55 +144,6 @@ export function App() {
   const [logPaused, setLogPaused]   = useState(false);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [rawMsg, setRawMsg]         = useState<any>(null);
-
-  // Drag Resizing Logic for Terminal
-  const handleMouseDownResizeH = (e: React.MouseEvent) => {
-    e.preventDefault();
-    isDraggingRef.current = true;
-    dragStartYRef.current = e.clientY;
-    dragStartHeightRef.current = terminalHeight;
-
-    const onMouseMove = (moveEvent: MouseEvent) => {
-      if (!isDraggingRef.current) return;
-      const deltaY = dragStartYRef.current - moveEvent.clientY;
-      const newHeight = Math.max(90, Math.min(window.innerHeight * 0.75, dragStartHeightRef.current + deltaY));
-      setTerminalHeight(newHeight);
-      setTerminalMinimized(false);
-      setTerminalMaximized(false);
-    };
-
-    const onMouseUp = () => {
-      isDraggingRef.current = false;
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-  };
-
-  const handleMouseDownResizeV = (e: React.MouseEvent) => {
-    e.preventDefault();
-    isDraggingRef.current = true;
-    dragStartXRef.current = e.clientX;
-    dragStartWidthRef.current = terminalWidth;
-
-    const onMouseMove = (moveEvent: MouseEvent) => {
-      if (!isDraggingRef.current) return;
-      const deltaX = dragStartXRef.current - moveEvent.clientX;
-      const newWidth = Math.max(280, Math.min(window.innerWidth * 0.65, dragStartWidthRef.current + deltaX));
-      setTerminalWidth(newWidth);
-    };
-
-    const onMouseUp = () => {
-      isDraggingRef.current = false;
-      window.removeEventListener("mousemove", onMouseMove);
-      window.removeEventListener("mouseup", onMouseUp);
-    };
-
-    window.addEventListener("mousemove", onMouseMove);
-    window.addEventListener("mouseup", onMouseUp);
-  };
 
   // Refs
   const wsRef         = useRef<WebSocket | null>(null);
@@ -266,6 +210,10 @@ export function App() {
     pollRef.current = setInterval(async () => {
       try {
         const res = await fetch(`${API_BASE}/api/pairing/session/${sessionId}`);
+        if (!res.ok) {
+          const errText = await res.text().catch(() => "");
+          console.error(`[TV Simulator] Poll session check failed (HTTP ${res.status}): ${errText}`);
+        }
         const data = await res.json();
         
         if (data.status === "paired" && data.token) {
@@ -289,6 +237,7 @@ export function App() {
           sysEvent("PAIRING_EXPIRED");
         }
       } catch (err: any) {
+        console.error(`[TV Simulator] Poll session network error (${API_BASE}/api/pairing/session/${sessionId}):`, err);
         sysEvent("POLL_ERROR", err.message);
       }
     }, POLL_INTERVAL_MS);
@@ -300,10 +249,11 @@ export function App() {
     clearPollTimer();
     if (cdTimerRef.current) clearInterval(cdTimerRef.current);
     
-    sysEvent("CREATE_SESSION_START", `API=${API_BASE}/api/pairing/session`);
+    const targetUrl = `${API_BASE}/api/pairing/session`;
+    sysEvent("CREATE_SESSION_START", `API=${targetUrl}`);
     
     try {
-      const res = await fetch(`${API_BASE}/api/pairing/session`, {
+      const res = await fetch(targetUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -312,8 +262,13 @@ export function App() {
           pair_page_base_url: PAIR_PAGE_BASE || window.location.origin,
         }),
       });
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        const errMsg = errData.error || errData.detail || `HTTP ${res.status}`;
+        console.error(`[TV Simulator] Pairing session creation failed at ${targetUrl} (HTTP ${res.status}):`, errData);
+        throw new Error(errMsg);
+      }
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
       
       const session: PairingSession = data;
       setPairSession(session);
@@ -326,9 +281,13 @@ export function App() {
       startCountdown(session.expires_at);
       startPolling(session.session_id);
     } catch (err: any) {
+      const detailedErr = err.message === "Failed to fetch"
+        ? `Failed to fetch from backend at ${targetUrl}. Ensure backend is running.`
+        : err.message;
+      console.error(`[TV Simulator] startPairing failed at ${targetUrl}:`, err, { detailedMessage: detailedErr });
       setRealPairState("auth_failed");
-      setPairError(err.message);
-      sysEvent("CREATE_SESSION_ERROR", err.message);
+      setPairError(detailedErr);
+      sysEvent("CREATE_SESSION_ERROR", detailedErr);
     }
   };
 
@@ -658,6 +617,52 @@ export function App() {
     }
   };
 
+  // ── Android TV Mode: Debug overlay toggle ──────────────────────────────────
+  const [showDebug, setShowDebug] = useState(false);
+  const debugBtnRef = useRef<HTMLButtonElement>(null);
+  const debugOverlayRef = useRef<HTMLDivElement>(null);
+
+  // D-pad / keyboard handler: Escape, Back, or Android TV Remote BACK key closes debug/fullscreen panel
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      const isBackKey =
+        e.key === "Escape" ||
+        e.key === "GoBack" ||
+        e.key === "Back" ||
+        e.key === "BrowserBack" ||
+        e.keyCode === 27 ||
+        e.keyCode === 4 ||
+        e.keyCode === 10009;
+
+      if (isBackKey) {
+        if (showDebug) {
+          e.preventDefault();
+          setShowDebug(false);
+          setTimeout(() => debugBtnRef.current?.focus(), 50);
+        } else if (isFullscreen) {
+          e.preventDefault();
+          setIsFullscreen(false);
+          if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+        }
+      }
+      if (e.key === "F1") {
+        setShowDebug(d => !d);
+      }
+    };
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [showDebug, isFullscreen]);
+
+  // When debug overlay opens, move focus into it
+  useEffect(() => {
+    if (showDebug && debugOverlayRef.current) {
+      const first = debugOverlayRef.current.querySelector<HTMLElement>(
+        "button, [tabindex], input, textarea, select"
+      );
+      first?.focus();
+    }
+  }, [showDebug]);
+
   // ── Render Badges ──────────────────────────────────────────────────────────
   const wsStatusBadge = {
     connected:    <span className="badge badge-connected"><span className="badge-dot pulse"/>CONNECTED</span>,
@@ -877,20 +882,10 @@ export function App() {
   // ── Event Log (VS Code Style Resizable / Dockable Terminal) ────────────────
   const EventLog = () => {
     const isMinimized = terminalMinimized;
-    const effectiveHeight = terminalMaximized
-      ? window.innerHeight * 0.7
-      : isMinimized
-      ? 38
-      : terminalHeight;
 
     return (
       <div
         className={`evlog ${terminalDock === "side" ? "side-dock" : ""} ${isMinimized ? "minimized" : ""}`}
-        style={
-          terminalDock === "bottom"
-            ? { height: `${effectiveHeight}px` }
-            : { width: `${terminalWidth}px` }
-        }
       >
         {/* Terminal Header */}
         <div className="evlog-header">
@@ -1190,253 +1185,267 @@ export function App() {
 
   // ── Main Render ────────────────────────────────────────────────────────────
   return (
-    <div className="app">
-      {/* Header */}
-      <header className="hdr">
-        <div className="hdr-left">
-          <div className="hdr-logo">
-            {Ico.tv} DECKOVIZ TV SIMULATOR
-          </div>
-          <div className="hdr-divider" />
-          <div className="hdr-session">
-            {instanceId ? `device: ${instanceId}` : "no device paired"}
-            {pairSession ? ` · session: ${pairSession.session_id.slice(0, 8)}…` : ""}
-          </div>
-        </div>
-        <div className="hdr-right">
-          {realPairBadge}
-          {authBadge}
-          {wsStatusBadge}
-        </div>
-      </header>
+    <div className="tv-app-root">
 
-      {/* Body */}
-      <div className="body">
-        {/* Center: TV + Terminal */}
-        <div className={`center ${terminalDock === "side" ? "side-dock-layout" : ""}`}>
-          <div className="tv-area" style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
-            {/* TV Viewport Area with Centered 16:9 Frame */}
-            <div className="tv-wrap">
-              <div className="tv-frame" ref={tvFrameRef} onDoubleClick={() => setIsFullscreen(true)}>
-                <div className="tv-scanlines" />
-                <TVCanvas />
+      {/* ── FULL-SCREEN TV VIEW ───────────────────────────────────────────── */}
+      <div className="tv-fullscreen">
+        {/* 16:9 letterboxed content frame */}
+        <div className="tv-fs-frame" ref={tvFrameRef}>
+          <div className="tv-scanlines" />
 
-                {/* Floating Full Size Frame Button */}
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsFullscreen(true);
-                    try {
-                      if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen().catch(() => {});
-                      }
-                    } catch {}
-                  }}
-                  className="btn btn-primary btn-sm"
-                  style={{
-                    position: "absolute",
-                    top: 12,
-                    right: 12,
-                    zIndex: 40,
-                    background: "rgba(24, 42, 74, 0.9)",
-                    backdropFilter: "blur(8px)",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.6)",
-                    borderRadius: 8,
-                    padding: "6px 12px",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                  }}
-                  title="Expand Smart Frame to Full Screen"
-                >
-                  {Ico.expand} Full Size Frame
-                </button>
+          {/* TV content: image or clean idle state */}
+          <TVCanvas />
 
-                {image && (
-                  <div className="tv-overlay">
-                    <div className="tv-overlay-row">
-                      <div className="tv-overlay-title">
-                        {activeCollection
-                          ? `${activeCollection.name} — ${activeCollection.currentIndex + 1} / ${activeCollection.itemCount}`
-                          : (image.title || image.action)}
-                      </div>
-                      <div className="tv-overlay-flow">
-                        <FlowStep label="WS RECV" state={imgFlow.ws} />
-                        <span className="flow-arrow">›</span>
-                        <FlowStep label="PARSED" state={imgFlow.parse} />
-                        <span className="flow-arrow">›</span>
-                        <FlowStep label="LOADED" state={imgFlow.load} />
-                        <span className="flow-arrow">›</span>
-                        <FlowStep label="RENDERED" state={imgFlow.render} />
-                        {image.mediaType === "video" && <span className="flow-step done" style={{ marginLeft: 4 }}>🎬 VIDEO</span>}
-                      </div>
-                    </div>
-                    <div className="tv-overlay-meta">
-                      <span>recv: {fmtTs(image.receivedAt)}</span>
-                      {image.dims && <span>{image.dims.w}×{image.dims.h}</span>}
-                      {image.deliveryLatencyMs != null && <span>latency: {image.deliveryLatencyMs}ms</span>}
-                      <span>msg: {image.messageId?.slice(0, 12) || "—"}</span>
-                      {activeCollection && <span style={{ color: "var(--amber)" }}>SLIDESHOW ▶</span>}
-                    </div>
-                  </div>
-                )}
-              </div>
+          {/* Corner Pairing Code Overlay: displayed when code exists and no image is showing */}
+          {!image && pairSession?.code && (
+            <div className="tv-corner-pair-code">
+              <div className="tv-corner-pair-label">CONNECTIVITY CODE</div>
+              <div className="tv-corner-pair-digits">{pairSession.code}</div>
             </div>
+          )}
 
-            {/* ── True Fullscreen Overlay ── */}
-            {isFullscreen && (
-              <div
-                className="fs-overlay"
-                onClick={() => {
+          {/* Artwork overlay: only title, no technical details (hidden per design) */}
+          {image && (
+            <div className="tv-fs-artwork-overlay">
+              <div className="tv-fs-artwork-title">
+                {activeCollection
+                  ? `${activeCollection.name}  ${activeCollection.currentIndex + 1} / ${activeCollection.itemCount}`
+                  : (image.title || "")}
+              </div>
+              {activeCollection && (
+                <div className="tv-fs-artwork-sub">Slideshow ▶</div>
+              )}
+            </div>
+          )}
+
+          {/* Fullscreen overlay (when activated via button or fullscreen API) */}
+          {isFullscreen && (
+            <div
+              className="fs-overlay"
+              onClick={() => {
+                setIsFullscreen(false);
+                if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Escape") {
                   setIsFullscreen(false);
-                  if (document.fullscreenElement) {
-                    document.exitFullscreen?.().catch(() => {});
-                  }
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") {
-                    setIsFullscreen(false);
-                    if (document.fullscreenElement) {
-                      document.exitFullscreen?.().catch(() => {});
-                    }
-                  }
-                }}
-                tabIndex={0}
-                ref={(el) => el?.focus()}
-              >
-                {image ? (
-                  image.mediaType === "video" ? (
-                    <video
-                      key={image.url + "-fs"}
-                      src={image.url}
-                      autoPlay loop muted playsInline
-                      style={{ width: "100%", height: "100%", objectFit: aspectFit === "contain" ? "contain" : "cover", display: "block" }}
-                    />
-                  ) : (
-                    <img
-                      src={image.url}
-                      alt={image.title || "Artwork"}
-                      style={{ width: "100%", height: "100%", objectFit: aspectFit === "contain" ? "contain" : "cover", display: "block" }}
-                    />
-                  )
+                  if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+                }
+              }}
+              tabIndex={0}
+              ref={(el) => el?.focus()}
+            >
+              {image ? (
+                image.mediaType === "video" ? (
+                  <video
+                    key={image.url + "-fs"}
+                    src={image.url}
+                    autoPlay loop muted playsInline
+                    style={{ width: "100%", height: "100%", objectFit: aspectFit === "contain" ? "contain" : "cover", display: "block" }}
+                  />
                 ) : (
-                  <div style={{ color: "#fff", fontSize: 20, opacity: 0.5 }}>No image loaded — stream an artwork from webapp</div>
-                )}
-                {/* Exit hint */}
-                <button
-                  className="fs-exit-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsFullscreen(false);
-                    if (document.fullscreenElement) {
-                      document.exitFullscreen?.().catch(() => {});
-                    }
-                  }}
-                  title="Exit Fullscreen (Esc)"
-                >
-                  {Ico.restore} Exit Fullscreen
-                </button>
-              </div>
-            )}
-
-            {/* TV bottom toolbar */}
-            <div className="tv-bar">
-              <div className="tv-bar-left">
-                <span className="tv-bar-item">
-                  ratio: <strong>16:9 HD</strong>
-                </span>
-                <span className="tv-bar-item">
-                  msgs rx: <strong>{metrics.msgRx}</strong>
-                </span>
-                <span className="tv-bar-item">
-                  msgs tx: <strong>{metrics.msgTx}</strong>
-                </span>
-                <span className="tv-bar-item">
-                  failed: <strong style={metrics.msgFailed > 0 ? { color: "var(--red)" } : {}}>{metrics.msgFailed}</strong>
-                </span>
-                {metrics.wsConnectLatencyMs != null && (
-                  <span className="tv-bar-item">
-                    ws latency: <strong>{metrics.wsConnectLatencyMs}ms</strong>
-                  </span>
-                )}
-                {image && (
-                  <span className="tv-bar-item">
-                    last image: <strong>{fmtTs(image.receivedAt)}</strong>
-                  </span>
-                )}
-              </div>
-              <div className="tv-bar-actions">
-                {/* 16:9 Fit Mode Switcher */}
-                <button
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => setAspectFit((f) => (f === "cover" ? "contain" : "cover"))}
-                  title="Toggle between 16:9 Fill (crop to fill) and 16:9 Fit (contain entire image)"
-                >
-                  {Ico.aspect} Fit: {aspectFit === "cover" ? "16:9 Fill" : "16:9 Fit"}
-                </button>
-
-                {/* Fullscreen Button */}
-                <button
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => {
-                    setIsFullscreen(true);
-                    try {
-                      if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen().catch(() => {});
-                      }
-                    } catch {}
-                  }}
-                  title="Fullscreen — view image edge-to-edge at 16:9 (Esc to exit)"
-                  id="tv-fullscreen-btn"
-                >
-                  {Ico.expand} Fullscreen
-                </button>
-
-                {image && (
-                  <button
-                    className="btn btn-ghost btn-sm"
-                    onClick={() => {
-                      setImage(null);
-                      setImgFlow({ ws: false, parse: false, load: null, render: null });
-                    }}
-                  >
-                    {Ico.x} Clear Screen
-                  </button>
-                )}
-              </div>
+                  <img
+                    src={image.url}
+                    alt={image.title || "Artwork"}
+                    style={{ width: "100%", height: "100%", objectFit: aspectFit === "contain" ? "contain" : "cover", display: "block" }}
+                  />
+                )
+              ) : (
+                <div style={{ color: "#fff", fontSize: 20, opacity: 0.5 }}>No image loaded</div>
+              )}
+              <button
+                className="fs-exit-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsFullscreen(false);
+                  if (document.fullscreenElement) document.exitFullscreen?.().catch(() => {});
+                }}
+                title="Exit Fullscreen (Esc)"
+              >
+                {Ico.restore} Exit Fullscreen
+              </button>
             </div>
-          </div>
-
-          {/* Resizable Divider & Event Log */}
-          {terminalDock === "bottom" ? (
-            <>
-              <div className="resize-handle-h" onMouseDown={handleMouseDownResizeH} title="Drag to resize WebSocket Monitor height" />
-              <EventLog />
-            </>
-          ) : (
-            <>
-              <div className="resize-handle-v" onMouseDown={handleMouseDownResizeV} title="Drag to resize WebSocket Monitor width" />
-              <EventLog />
-            </>
           )}
         </div>
 
-        {/* Right Configuration & Telemetry Panel */}
-        <div className="right">
-          <div className="right-scroll">
-            <ConnectionPanel />
-            <StatusPanel />
-            <CollectionQueuePanel />
-            <MetricsPanel />
-            <ArtworkPanel />
-            <RawPanel />
+        {/* Status indicator strip — top-right, visible only when no artwork */}
+        {!image && (
+          <div className="tv-status-strip">
+            <span className={`tv-status-dot ${wsStatus === "connected" ? "connected" : wsStatus === "connecting" ? "connecting" : "idle"}`} />
+            <span className="tv-status-label">
+              {wsStatus === "connected" ? "Connected" : wsStatus === "connecting" ? "Connecting…" : "Not connected"}
+            </span>
+          </div>
+        )}
+
+        {/* ── Debug toggle button: tiny, bottom-right corner ── */}
+        <button
+          id="debug-toggle-btn"
+          ref={debugBtnRef}
+          className="debug-toggle-btn"
+          tabIndex={0}
+          title="Open Debug Console (F1)"
+          onClick={() => setShowDebug(true)}
+          aria-label="Open debug console"
+        >
+          ⚙
+        </button>
+      </div>
+
+      {/* ── DEBUG OVERLAY ─────────────────────────────────────────────────── */}
+      {showDebug && (
+        <div
+          className="debug-overlay"
+          ref={debugOverlayRef}
+          onKeyDown={(e) => {
+            if (e.key === "Escape" || e.key === "GoBack" || e.key === "Back") {
+              setShowDebug(false);
+              setTimeout(() => debugBtnRef.current?.focus(), 50);
+            }
+          }}
+          role="dialog"
+          aria-label="Debug Console"
+        >
+          {/* Overlay Header */}
+          <div className="debug-overlay-header">
+            <div className="debug-overlay-title">
+              {Ico.terminal}
+              <span>DEBUG CONSOLE</span>
+              <span className="debug-overlay-device">
+                {instanceId ? `· ${instanceId.slice(0, 24)}` : ""}
+              </span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              {realPairBadge}
+              {authBadge}
+              {wsStatusBadge}
+              <button
+                className="btn btn-ghost btn-sm debug-close-btn"
+                onClick={() => {
+                  setShowDebug(false);
+                  setTimeout(() => debugBtnRef.current?.focus(), 50);
+                }}
+                title="Close Debug Console (Esc)"
+                autoFocus
+              >
+                {Ico.x} Close
+              </button>
+            </div>
+          </div>
+
+          {/* Overlay Body: left = panels, right = WS terminal */}
+          <div className="debug-overlay-body">
+            {/* Left: existing config + status panels */}
+            <div className="debug-overlay-left">
+              <ConnectionPanel />
+              <StatusPanel />
+              <CollectionQueuePanel />
+              <MetricsPanel />
+              <ArtworkPanel />
+              <RawPanel />
+            </div>
+
+            {/* Right: WS terminal + TV controls */}
+            <div className="debug-overlay-right">
+              {/* Mini TV preview inside debug */}
+              <div className="debug-tv-preview">
+                <div className="debug-tv-frame">
+                  {image ? (
+                    image.mediaType === "video" ? (
+                      <video
+                        key={image.url + "-dbg"}
+                        src={image.url}
+                        autoPlay loop muted playsInline
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    ) : (
+                      <img
+                        src={image.url}
+                        alt={image.title || "Artwork"}
+                        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      />
+                    )
+                  ) : (
+                    <div className="debug-tv-no-image" style={{ position: "relative" }}>
+                      {pairSession?.code ? (
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                          <div style={{ fontSize: 9, letterSpacing: 1.5, color: "var(--accent)", fontWeight: 700 }}>CONNECTIVITY CODE</div>
+                          <div style={{ fontSize: 22, letterSpacing: 3, fontFamily: "var(--mono)", fontWeight: 700, color: "#fff" }}>
+                            {pairSession.code}
+                          </div>
+                        </div>
+                      ) : (
+                        "No artwork"
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* TV Controls bar */}
+                <div className="debug-tv-controls">
+                  <div className="debug-tv-controls-left">
+                    <span className="tv-bar-item">rx: <strong>{metrics.msgRx}</strong></span>
+                    <span className="tv-bar-item">tx: <strong>{metrics.msgTx}</strong></span>
+                    <span className="tv-bar-item">fail: <strong style={metrics.msgFailed > 0 ? { color: "var(--red)" } : {}}>{metrics.msgFailed}</strong></span>
+                    {metrics.wsConnectLatencyMs != null && (
+                      <span className="tv-bar-item">ws: <strong>{metrics.wsConnectLatencyMs}ms</strong></span>
+                    )}
+                  </div>
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <button
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => setAspectFit((f) => (f === "cover" ? "contain" : "cover"))}
+                      title="Toggle fit mode"
+                    >
+                      {Ico.aspect} {aspectFit === "cover" ? "Fill" : "Fit"}
+                    </button>
+                    <button
+                      className="btn btn-ghost btn-sm"
+                      onClick={() => {
+                        setIsFullscreen(true);
+                        try { document.documentElement.requestFullscreen?.().catch(() => {}); } catch {}
+                      }}
+                      title="Fullscreen"
+                    >
+                      {Ico.expand} Fullscreen
+                    </button>
+                    {image && (
+                      <button
+                        className="btn btn-ghost btn-sm"
+                        onClick={() => {
+                          setImage(null);
+                          setImgFlow({ ws: false, parse: false, load: null, render: null });
+                        }}
+                      >
+                        {Ico.x} Clear
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Image flow indicator */}
+                {image && (
+                  <div className="debug-img-flow">
+                    <FlowStep label="WS RECV" state={imgFlow.ws} />
+                    <span className="flow-arrow">›</span>
+                    <FlowStep label="PARSED" state={imgFlow.parse} />
+                    <span className="flow-arrow">›</span>
+                    <FlowStep label="LOADED" state={imgFlow.load} />
+                    <span className="flow-arrow">›</span>
+                    <FlowStep label="RENDERED" state={imgFlow.render} />
+                    {image.mediaType === "video" && <span className="flow-step done" style={{ marginLeft: 4 }}>🎬 VIDEO</span>}
+                  </div>
+                )}
+              </div>
+
+              {/* WS Monitor Terminal */}
+              <div className="debug-ws-terminal">
+                <EventLog />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
