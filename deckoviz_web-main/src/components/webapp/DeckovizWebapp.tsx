@@ -5,6 +5,7 @@ import { useWebSocket } from "../../hooks/useWebSocket";
 import { getAgents, getChats, sendMessage, createChat, getChat } from "../../lib/vgcApi";
 import type { VGCAgent, VGCChatSummary, VGCMessage } from "../../lib/vgcApi";
 import { ArtworkContextMenu, CollectionContextMenu } from "../CardContextMenu";
+import { AddToLiveStreamButton } from "../AddToLiveStreamButton";
 import {
   Bell,
   BookOpen,
@@ -1015,6 +1016,13 @@ export function DrawingRoomView({ onNavigate, onSendToFrame, onOpenUploadModal }
                 <ArtworkContextMenu artwork={artworkObj} className="absolute top-3 right-3 z-20" />
                 <img src={artworkObj.url || img} alt="" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-2 left-2 right-2 z-20">
+                  <AddToLiveStreamButton
+                    artworkId={String((artworkObj as any).id || (artworkObj as any).artwork_id || `fav_${i}`)}
+                    url={(artworkObj as any).url || (artworkObj as any).mediaUrl || (typeof img === "string" ? img : undefined)}
+                    title={(artworkObj as any).title || (artworkObj as any).name || `Favourite Artwork #${i + 1}`}
+                  />
+                </div>
               </div>
             );
           })}
@@ -1763,11 +1771,8 @@ export function AllMediaPlaceholder() {
               const isAudio = file.mediaType?.startsWith("audio/") || file.mediaType?.startsWith("music/") || file.fileName?.toLowerCase().endsWith(".mp3");
 
               return (
-                <div key={file.id} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-white shadow-sm hover:shadow-md transition duration-300">
-                  <ArtworkContextMenu
-                    artwork={{ id: file.id, url: file.mediaUrl, mediaUrl: file.mediaUrl, title: file.fileName, name: file.fileName }}
-                    className="absolute top-2 right-2 z-30"
-                  />
+                <div key={file.id} className="relative rounded-2xl overflow-hidden group border border-gray-200 bg-white shadow-sm hover:shadow-md transition duration-300 flex flex-col">
+                  <div className="relative aspect-square overflow-hidden">
                   {isVideo ? (
                     <video src={file.mediaUrl} controls className="w-full h-full object-cover" />
                   ) : isAudio ? (
@@ -1789,7 +1794,7 @@ export function AllMediaPlaceholder() {
                       }}
                     />
                   )}
-                  <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto">
                     {!isAudio && !isVideo && (
                       <button
                         onClick={() => setViewingImage(file.mediaUrl)}
@@ -1814,8 +1819,16 @@ export function AllMediaPlaceholder() {
                       <Trash2 size={16} />
                     </button>
                   </div>
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2.5">
-                    <p className="text-[11px] font-semibold text-white truncate">{file.fileName}</p>
+                  </div>
+                  <div className="px-2 py-2 space-y-1.5 bg-white">
+                    <p className="text-[11px] font-semibold text-gray-800 truncate">{file.fileName}</p>
+                    {!isAudio && (
+                      <AddToLiveStreamButton
+                        artworkId={String(file.id)}
+                        url={file.mediaUrl}
+                        title={file.fileName}
+                      />
+                    )}
                   </div>
                 </div>
               );

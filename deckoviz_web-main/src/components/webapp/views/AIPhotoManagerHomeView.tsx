@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { webappApi, vizzyApi } from "../../../lib/webappApi";
 import { getUserMedia } from "../../../lib/userStorage";
 import { ArtworkContextMenu, CollectionContextMenu } from "../../CardContextMenu";
+import { AddToLiveStreamButton } from "../../AddToLiveStreamButton";
 
 const fallbackCollections = [
   { title: "Abstaract", count: "42 Images", image: figmaAssets.vibrantFace },
@@ -115,9 +116,18 @@ export default function AIPhotoManagerHomeView() {
             {photos.map((photo, index) => {
               const photoObj = typeof photo === "string" ? { url: photo, title: `Photo #${index + 1}` } : photo;
               return (
-                <div key={`${photoObj.url || photo}-${index}`} className="relative h-[187px] w-full overflow-hidden rounded-[7px] group">
-                  <ArtworkContextMenu artwork={photoObj} className="absolute top-2.5 right-2.5 z-20" />
-                  <img src={photoObj.url || photo} alt="" className="h-full w-full object-cover" />
+                <div key={`${photoObj.url || photo}-${index}`} className="relative flex flex-col overflow-hidden rounded-[7px] group border border-[#dedfe3] bg-white">
+                  <div className="relative h-[187px] w-full overflow-hidden">
+                    <ArtworkContextMenu artwork={photoObj} className="absolute top-2.5 right-2.5 z-20" />
+                    <img src={photoObj.url || photo} alt="" className="h-full w-full object-cover" />
+                  </div>
+                  <div className="p-2">
+                    <AddToLiveStreamButton
+                      artworkId={String(photoObj.id || photoObj.artwork_id || `photo_${index}`)}
+                      url={photoObj.url || (typeof photo === "string" ? photo : undefined)}
+                      title={photoObj.title || photoObj.name || `Photo #${index + 1}`}
+                    />
+                  </div>
                 </div>
               );
             })}

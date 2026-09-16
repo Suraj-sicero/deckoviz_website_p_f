@@ -5,6 +5,7 @@ import { Loader2, Eye, Monitor, Check, X, FolderPlus, Trash2 } from "lucide-reac
 import { setFrameImage } from "../../../lib/frameStore";
 import { getUserCollections } from "../../../lib/userStorage";
 import { ArtworkContextMenu, CollectionContextMenu } from "../../CardContextMenu";
+import { AddToLiveStreamButton } from "../../AddToLiveStreamButton";
 
 const fallbackCollections = [
   {
@@ -281,11 +282,15 @@ export default function AIPhotoManagerView() {
                               </button>
                             </div>
                          </div>
-                         <div className="p-4 flex flex-col relative bg-white">
+                         <div className="p-4 flex flex-col relative bg-white gap-2">
                             <h3 className=" bg-clip-text text-transparent bg-gradient-to-r from-[#182a4a] to-[#3b82f6] font-serif font-bold  text-[15px] mb-1">{art.title || "Shared Artwork"}</h3>
                             <p className="text-sm font-medium text-gray-800">Shared with {art.sharedWithUser || "Someone"}</p>
                             <p className="text-xs text-gray-500 font-medium mt-1 mb-2">- {art.items || 1} items</p>
-                            
+                            <AddToLiveStreamButton
+                              artworkId={String(art.id || art.artwork_id || idx)}
+                              url={artImg}
+                              title={art.title || "Shared Artwork"}
+                            />
                             <div className="absolute bottom-4 right-4">
                               <img src={art.avatar || (art.artist && art.artist.avatar) || figmaAssets.surajAvatar} alt="user" className="w-7 h-7 rounded-full border-2 border-white shadow-sm ring-2 ring-orange-400" />
                             </div>
@@ -338,33 +343,40 @@ export default function AIPhotoManagerView() {
                     const itemUrl = item.url || item.mediaUrl || item.imageUrl || item.image;
                     const itemTitle = item.title || item.fileName || `Artwork #${idx + 1}`;
                     return (
-                      <div key={item.id || idx} className="relative aspect-square rounded-2xl overflow-hidden group border border-gray-200 bg-gray-50 shadow-sm hover:shadow-md transition duration-300">
-                        <img
-                          src={itemUrl}
-                          alt={itemTitle}
-                          className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(itemTitle)}/800/800`;
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                          <button
-                            onClick={() => setLightboxImg(itemUrl)}
-                            className="w-9 h-9 rounded-full bg-white/90 text-gray-800 flex items-center justify-center hover:bg-white transition shadow-md"
-                            title="View Full Size Image"
-                          >
-                            <Eye size={16} />
-                          </button>
-                          <button
-                            onClick={() => handleSendToFrame(itemUrl, itemTitle)}
-                            className="w-9 h-9 rounded-full bg-[#3f5fe0] text-white flex items-center justify-center hover:bg-[#344fd0] transition shadow-md"
-                            title="Send to Virtual Frame"
-                          >
-                            <Monitor size={16} />
-                          </button>
+                      <div key={item.id || idx} className="relative flex flex-col rounded-2xl overflow-hidden group border border-gray-200 bg-white shadow-sm hover:shadow-md transition duration-300">
+                        <div className="relative aspect-square bg-gray-50 overflow-hidden">
+                          <img
+                            src={itemUrl}
+                            alt={itemTitle}
+                            className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(itemTitle)}/800/800`;
+                            }}
+                          />
+                          <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px] flex items-center justify-center gap-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <button
+                              onClick={() => setLightboxImg(itemUrl)}
+                              className="w-9 h-9 rounded-full bg-white/90 text-gray-800 flex items-center justify-center hover:bg-white transition shadow-md"
+                              title="View Full Size Image"
+                            >
+                              <Eye size={16} />
+                            </button>
+                            <button
+                              onClick={() => handleSendToFrame(itemUrl, itemTitle)}
+                              className="w-9 h-9 rounded-full bg-[#3f5fe0] text-white flex items-center justify-center hover:bg-[#344fd0] transition shadow-md"
+                              title="Send to Virtual Frame"
+                            >
+                              <Monitor size={16} />
+                            </button>
+                          </div>
                         </div>
-                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2.5">
-                          <p className="text-[11px] font-semibold text-white truncate">{itemTitle}</p>
+                        <div className="p-2 space-y-1.5">
+                          <p className="text-[11px] font-semibold text-gray-800 truncate">{itemTitle}</p>
+                          <AddToLiveStreamButton
+                            artworkId={String(item.id || item.artwork_id || idx)}
+                            url={itemUrl}
+                            title={itemTitle}
+                          />
                         </div>
                       </div>
                     );
