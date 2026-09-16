@@ -130,6 +130,8 @@ export function App() {
   const [image, setImage] = useState<ImageState | null>(null);
   const [imgFlow, setImgFlow] = useState<{ws:boolean;parse:boolean;load:boolean|null;render:boolean|null}>({ ws:false, parse:false, load:null, render:null });
   const [aspectFit, setAspectFit] = useState<"cover" | "contain">("cover");
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const tvFrameRef = useRef<HTMLDivElement>(null);
 
   // Terminal / WebSocket Monitor layout (VS Code style resizable & dockable)
   const [terminalHeight, setTerminalHeight] = useState<number>(240);
@@ -1215,9 +1217,44 @@ export function App() {
           <div className="tv-area" style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflow: "hidden" }}>
             {/* TV Viewport Area with Centered 16:9 Frame */}
             <div className="tv-wrap">
-              <div className="tv-frame">
+              <div className="tv-frame" ref={tvFrameRef} onDoubleClick={() => setIsFullscreen(true)}>
                 <div className="tv-scanlines" />
                 <TVCanvas />
+
+                {/* Floating Full Size Frame Button */}
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsFullscreen(true);
+                    try {
+                      if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(() => {});
+                      }
+                    } catch {}
+                  }}
+                  className="btn btn-primary btn-sm"
+                  style={{
+                    position: "absolute",
+                    top: 12,
+                    right: 12,
+                    zIndex: 40,
+                    background: "rgba(24, 42, 74, 0.9)",
+                    backdropFilter: "blur(8px)",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
+                    boxShadow: "0 4px 16px rgba(0,0,0,0.6)",
+                    borderRadius: 8,
+                    padding: "6px 12px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 6,
+                  }}
+                  title="Expand Smart Frame to Full Screen"
+                >
+                  {Ico.expand} Full Size Frame
+                </button>
 
                 {image && (
                   <div className="tv-overlay">
@@ -1249,6 +1286,62 @@ export function App() {
                 )}
               </div>
             </div>
+
+            {/* ── True Fullscreen Overlay ── */}
+            {isFullscreen && (
+              <div
+                className="fs-overlay"
+                onClick={() => {
+                  setIsFullscreen(false);
+                  if (document.fullscreenElement) {
+                    document.exitFullscreen?.().catch(() => {});
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    setIsFullscreen(false);
+                    if (document.fullscreenElement) {
+                      document.exitFullscreen?.().catch(() => {});
+                    }
+                  }
+                }}
+                tabIndex={0}
+                ref={(el) => el?.focus()}
+              >
+                {image ? (
+                  image.mediaType === "video" ? (
+                    <video
+                      key={image.url + "-fs"}
+                      src={image.url}
+                      autoPlay loop muted playsInline
+                      style={{ width: "100%", height: "100%", objectFit: aspectFit === "contain" ? "contain" : "cover", display: "block" }}
+                    />
+                  ) : (
+                    <img
+                      src={image.url}
+                      alt={image.title || "Artwork"}
+                      style={{ width: "100%", height: "100%", objectFit: aspectFit === "contain" ? "contain" : "cover", display: "block" }}
+                    />
+                  )
+                ) : (
+                  <div style={{ color: "#fff", fontSize: 20, opacity: 0.5 }}>No image loaded — stream an artwork from webapp</div>
+                )}
+                {/* Exit hint */}
+                <button
+                  className="fs-exit-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsFullscreen(false);
+                    if (document.fullscreenElement) {
+                      document.exitFullscreen?.().catch(() => {});
+                    }
+                  }}
+                  title="Exit Fullscreen (Esc)"
+                >
+                  {Ico.restore} Exit Fullscreen
+                </button>
+              </div>
+            )}
 
             {/* TV bottom toolbar */}
             <div className="tv-bar">
@@ -1284,6 +1377,23 @@ export function App() {
                   title="Toggle between 16:9 Fill (crop to fill) and 16:9 Fit (contain entire image)"
                 >
                   {Ico.aspect} Fit: {aspectFit === "cover" ? "16:9 Fill" : "16:9 Fit"}
+                </button>
+
+                {/* Fullscreen Button */}
+                <button
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => {
+                    setIsFullscreen(true);
+                    try {
+                      if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen().catch(() => {});
+                      }
+                    } catch {}
+                  }}
+                  title="Fullscreen — view image edge-to-edge at 16:9 (Esc to exit)"
+                  id="tv-fullscreen-btn"
+                >
+                  {Ico.expand} Fullscreen
                 </button>
 
                 {image && (

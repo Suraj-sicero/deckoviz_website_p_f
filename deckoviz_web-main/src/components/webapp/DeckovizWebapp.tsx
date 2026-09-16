@@ -6,6 +6,7 @@ import { getAgents, getChats, sendMessage, createChat, getChat } from "../../lib
 import type { VGCAgent, VGCChatSummary, VGCMessage } from "../../lib/vgcApi";
 import { ArtworkContextMenu, CollectionContextMenu } from "../CardContextMenu";
 import { AddToLiveStreamButton } from "../AddToLiveStreamButton";
+import { SAMPLE_DISPLAY_IMAGES } from "../../lib/sampleDisplayImages";
 import {
   Bell,
   BookOpen,
@@ -1050,47 +1051,42 @@ export function DrawingRoomView({ onNavigate, onSendToFrame, onOpenUploadModal }
             })()}
           </div>
 
-          {userMedia.length === 0 ? (
-            <div className="flex flex-col items-center justify-center p-6 text-center rounded-xl bg-gray-50/70 border border-dashed border-gray-200 mt-4 gap-3">
-              <UploadCloud className="size-8 text-blue-500/60" />
-              <div>
-                <p className="text-sm font-bold text-gray-800">No Media Uploaded Yet</p>
-                <p className="text-xs text-gray-500">Drop files or click upload to add content to your library.</p>
+          {(() => {
+            const displayList = userMedia.length > 0 ? userMedia.slice(0, 4) : SAMPLE_DISPLAY_IMAGES.slice(0, 4).map(s => ({ id: s.id, url: s.path, name: s.name, mediaType: "image" }));
+            return (
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
+                {displayList.map((item, i) => {
+                  const src = item.url || item.mediaUrl || item.imageUrl || (item as any).path;
+                  const itemTitle = item.name || item.fileName || (item as any).title || `Media #${i + 1}`;
+                  return (
+                    <div key={item.id || i} className="aspect-square rounded-2xl overflow-hidden bg-gray-100 border border-gray-100 relative group shadow-sm hover:shadow-md transition-all duration-300">
+                      {item.mediaType === "video" || item.type?.startsWith("video/") ? (
+                        <video src={src} className="w-full h-full object-cover" />
+                      ) : (
+                        <img
+                          src={src}
+                          alt={itemTitle}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(itemTitle)}/800/800`;
+                          }}
+                        />
+                      )}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-2 pointer-events-none group-hover:pointer-events-auto">
+                        <p className="text-[10px] font-semibold text-white truncate mb-1">{itemTitle}</p>
+                        <AddToLiveStreamButton
+                          artworkId={String(item.id || `media_${i}`)}
+                          url={src}
+                          title={itemTitle}
+                          compact
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (onOpenUploadModal) onOpenUploadModal();
-                  else onNavigate("all_media");
-                }}
-                className="px-4 py-2 rounded-full text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition"
-              >
-                + Upload Media
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-4 gap-2 mt-4">
-              {userMedia.slice(0, 4).map((item, i) => {
-                const src = item.url || item.mediaUrl || item.imageUrl;
-                return (
-                  <div key={item.id || i} className="aspect-square rounded-xl overflow-hidden bg-gray-100 border border-gray-100 relative group">
-                    {item.mediaType === "video" || item.type?.startsWith("video/") ? (
-                      <video src={src} className="w-full h-full object-cover" />
-                    ) : (
-                      <img
-                        src={src}
-                        alt=""
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src = `https://picsum.photos/seed/${encodeURIComponent(item.name || item.filename || "art")}/800/800`;
-                        }}
-                      />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          )}
+            );
+          })()}
         </SectionCard>
 
         <SectionCard title="Upcoming Events" icon={<Calendar size={18} />} accentColor="#059669" onClick={() => onNavigate("events")}>
@@ -1527,8 +1523,16 @@ export function AllMediaPlaceholder() {
         isGenerated: true,
       }));
 
+      const defaultSampleMedia = SAMPLE_DISPLAY_IMAGES.map((img) => ({
+        id: img.id,
+        mediaUrl: img.path,
+        fileName: img.name,
+        mediaType: "image/png",
+        isGenerated: true,
+      }));
+
       const allCombined = new Map();
-      [...normalizedLocal, ...normalizedCollection, ...normalizedVizzy, ...normalizedMedia].forEach(item => {
+      [...normalizedLocal, ...normalizedCollection, ...normalizedVizzy, ...normalizedMedia, ...defaultSampleMedia].forEach(item => {
         if (item.mediaUrl) allCombined.set(item.mediaUrl, item);
       });
 
@@ -1572,7 +1576,15 @@ export function AllMediaPlaceholder() {
     let failed = 0;
     for (const file of Array.from(fileList)) {
       try {
-        const dataUrl = await compressImageFile(file).catch(() => null);
+        let dataUrl = await compressImageFile(file).catch(() => null);
+        if (!dataUrl) {
+          dataUrl = await new Promise<string | null>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(file);
+          });
+        }
 
         if (!dataUrl) {
           failed++;

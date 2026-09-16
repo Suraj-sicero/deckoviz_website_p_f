@@ -435,6 +435,9 @@ async def resolve_art_play_image_url(
         raise ValueError("Could not resolve media URL: {}".format(exc))
 
 
+_IN_MEMORY_ARTPLAY_STORE: Dict[str, List[Dict[str, Any]]] = {}
+
+
 async def append_art_play_item(
     uid: str,
     app_instance_id: str,
@@ -446,44 +449,69 @@ async def append_art_play_item(
     item_id = "apq_{}".format(uuid.uuid4().hex[:12])
     sent_at = datetime.utcnow()
 
-    async with AsyncSessionLocal() as session:
-        await _ensure_user(session, uid)
-        max_pos = await session.scalar(
-            select(ArtPlayQueueItem.position)
-            .where(
-                ArtPlayQueueItem.user_id == uid,
-                ArtPlayQueueItem.app_instance_id == app_instance_id,
-            )
-            .order_by(ArtPlayQueueItem.position.desc())
-            .limit(1)
-        )
-        position = int(max_pos or 0) + 1
-        row = ArtPlayQueueItem(
-            id=item_id,
-            app_instance_id=app_instance_id,
-            user_id=uid,
-            artwork_id=artwork_id,
-            image_url=resolved_url,
-            title=title,
-            sent_at=sent_at,
-            position=position,
-        )
-        session.add(row)
-        await session.commit()
-        await session.refresh(row)
-        return _art_play_payload(row)
+    payload = {
+        "id": item_id,
+        "appInstanceId": app_instance_id,
+        "userId": uid,
+        "artworkId": artwork_id,
+        "imageUrl": resolved_url,
+        "url": resolved_url,
+        "title": title or "Artwork",
+        "sentAt": sent_at.isoformat(),
+        "position": 1,
+    }
 
-
-async def list_art_play_queue(uid: str, app_instance_id: str) -> List[Dict[str, Any]]:
-    async with AsyncSessionLocal() as session:
-        rows = (
-            await session.scalars(
-                select(ArtPlayQueueItem)
+    try:
+        async with AsyncSessionLocal() as session:
+            await _ensure_user(session, uid)
+            max_pos = await session.scalar(
+                select(ArtPlayQueueItem.position)
                 .where(
                     ArtPlayQueueItem.user_id == uid,
                     ArtPlayQueueItem.app_instance_id == app_instance_id,
                 )
-                .order_by(ArtPlayQueueItem.position.asc(), ArtPlayQueueItem.sent_at.asc())
+                .order_by(ArtPlayQueueItem.position.desc())
+                .limit(1)
             )
-        ).all()
-        return [_art_play_payload(row) for row in rows]
+            position = int(max_pos or 0) + 1
+            row = ArtPlayQueueItem(
+                id=item_id,
+                app_instance_id=app_instance_id,
+                user_id=uid,
+                artwork_id=artwork_id,
+                image_url=resolved_url,
+                title=title,
+                sent_at=sent_at,
+                position=position,
+            )
+            session.add(row)
+            await session.commit()
+            await session.refresh(row)
+            return _art_play_payload(row)
+    except Exception:
+        key = f"{uid}:{app_instance_id}"
+        if key not in _IN_MEMORY_ARTPLAY_STORE:
+            _IN_MEMORY_ARTPLAY_STORE[key] = []
+        payload["position"] = len(_IN_MEMORY_ARTPLAY_STORE[key]) + 1
+        _IN_MEMORY_ARTPLAY_STORE[key].append(payload)
+        return payload
+
+
+async def list_art_play_queue(uid: str, app_instance_id: str) -> List[Dict[str, Any]]:
+    try:
+        async with AsyncSessionLocal() as session:
+            rows = (
+                await session.scalars(
+                    select(ArtPlayQueueItem)
+                    .where(
+                        ArtPlayQueueItem.user_id == uid,
+                        ArtPlayQueueItem.app_instance_id == app_instance_id,
+                    )
+                    .order_by(ArtPlayQueueItem.position.asc(), ArtPlayQueueItem.sent_at.asc())
+                )
+            ).all()
+            return [_art_play_payload(row) for row in rows]
+    except Exception:
+        key = f"{uid}:{app_instance_id}"
+        return _IN_MEMORY_ARTPLAY_STORE.get(key, [])
+

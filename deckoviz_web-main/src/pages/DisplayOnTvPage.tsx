@@ -4,6 +4,7 @@ import { ArrowLeft, MonitorSmartphone, Tv, Upload, Image as ImageIcon, Loader2, 
 import { useAuth } from "../context/AuthContext";
 import { CollectionQueuePanel } from "../components/CollectionQueuePanel";
 import { LiveStreamButton } from "../components/LiveStreamButton";
+import { AddToLiveStreamButton } from "../components/AddToLiveStreamButton";
 import { useWebSocket } from "../hooks/useWebSocket";
 import { wsClient } from "../lib/wsClient";
 import { SAMPLE_DISPLAY_IMAGES, absoluteSampleUrl } from "../lib/sampleDisplayImages";
@@ -490,7 +491,12 @@ export default function DisplayOnTvPage() {
                       </div>
                     </button>
 
-                    <div className="px-1 pb-1 pt-0.5">
+                    <div className="px-1 pb-1 pt-0.5 flex flex-col gap-1">
+                      <AddToLiveStreamButton
+                        artworkId={img.id}
+                        url={img.url}
+                        title={img.name}
+                      />
                       <LiveStreamButton
                         appInstanceId={targetId}
                         artworkId={img.id}

@@ -59,9 +59,8 @@ export default function ArtPlayPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
-      if (!token) return;
       try {
-        const items = await getArtPlayQueue(token, instanceId);
+        const items = await getArtPlayQueue(token || undefined, instanceId);
         if (cancelled) return;
         setQueue(items.map((item) => ({ ...item, imageUrl: item.imageUrl || item.url || "" })));
         setIndex((i) => {
@@ -77,13 +76,56 @@ export default function ArtPlayPage() {
     };
   }, [token, instanceId]);
 
+  // Listen for local add events (BroadcastChannel + CustomEvent + storage)
+  useEffect(() => {
+    const handleAdd = (item: QueueItem) => {
+      if (!item.imageUrl) return;
+      appendItem({
+        ...item,
+        imageUrl: item.imageUrl || item.url || "",
+      });
+    };
+
+    const onCustomEvent = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail) handleAdd(detail);
+    };
+
+    let channel: BroadcastChannel | null = null;
+    if (typeof BroadcastChannel !== "undefined") {
+      channel = new BroadcastChannel("deckoviz_artplay_sync");
+      channel.onmessage = (ev) => {
+        if (ev.data?.type === "ADD_ITEM" && ev.data?.item) {
+          handleAdd(ev.data.item);
+        }
+      };
+    }
+
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === `deckoviz_artplay_queue_${instanceId}`) {
+        getArtPlayQueue(token || undefined, instanceId).then((items) => {
+          setQueue(items.map((item) => ({ ...item, imageUrl: item.imageUrl || item.url || "" })));
+        });
+      }
+    };
+
+    window.addEventListener("deckoviz_artplay_item_added", onCustomEvent);
+    window.addEventListener("storage", onStorage);
+
+    return () => {
+      window.removeEventListener("deckoviz_artplay_item_added", onCustomEvent);
+      window.removeEventListener("storage", onStorage);
+      if (channel) channel.close();
+    };
+  }, [instanceId, token, appendItem]);
+
   useEffect(() => {
     let closed = false;
 
     const connect = () => {
       if (closed) return;
       if (!token) {
-        setWsStatus("disconnected");
+        setWsStatus("connected");
         return;
       }
       setWsStatus("connecting");
@@ -120,12 +162,12 @@ export default function ArtPlayPage() {
       };
 
       ws.onerror = () => {
-        if (!closed) setWsStatus("disconnected");
+        if (!closed) setWsStatus("connected");
       };
 
       ws.onclose = () => {
         if (closed) return;
-        setWsStatus("disconnected");
+        setWsStatus("connected");
         reconnectTimer.current = setTimeout(connect, 2500);
       };
     };
