@@ -1080,6 +1080,20 @@ export default function SchoolsGeneralInfoPage() {
               <span>Go Back</span>
             </button>
           </div>
+
+          <div className="text-center pt-4">
+            <button
+              onClick={() => navigate("/deckoviz-for-schools-features")}
+              className="inline-flex items-center text-base sm:text-lg group hover:scale-105 transition-transform duration-300"
+            >
+              <span className="font-bold text-teal-700 group-hover:text-teal-900 transition-all">
+                View DASPort V1 feature list
+              </span>
+              <span className="ml-2 font-bold text-teal-700 group-hover:translate-x-1 group-hover:text-teal-900 transition-all duration-300">
+                →
+              </span>
+            </button>
+          </div>
         </div>
       </section>
     </div>

@@ -23,6 +23,8 @@ build/
 deckoviz_web-main/fastapi_backend/firebase-service-account.json
 deckoviz_web-main/fastapi_backend/local_firestore_db.json
 **/firebase-service-account.json
+fastapi_backend/*firebase-adminsdk*.json
+*firebase-adminsdk*.json
 
 # Generated jobs
 jobs/

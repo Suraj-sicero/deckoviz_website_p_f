@@ -117,40 +117,97 @@ const DeckovizForWellness = () => {
   const [showHomePopup, setShowHomePopup] = useState(false);
 
   return (
-    <div className="bg-[#0A0A0B] min-h-screen text-white font-sans">
-      {/* ── 1. Immersive Hero ── */}
-      <div className="relative pt-32 pb-20 overflow-hidden lg:pt-40 lg:pb-32">
-        <div className="absolute inset-0 z-0">
-          {/* Animated Gradient Layers */}
-          <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-blue-600/20 via-indigo-500/10 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-blue-500/15 via-indigo-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-blue-500/10 via-indigo-400/5 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/20 via-indigo-400/10 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-teal-600/20 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-1/3 w-96 h-96 bg-indigo-500/15 rounded-full mix-blend-screen filter blur-3xl opacity-70 animate-blob animation-delay-4000"></div>
-        </div>
+    <div 
+      className="relative min-h-screen text-[#0E2438] overflow-x-hidden selection:bg-[#5CD9C4] selection:text-[#071B2C]"
+      style={{
+        background: `
+          radial-gradient(ellipse 60% 45% at 15% 0%, #DDF6F0 0%, transparent 60%),
+          radial-gradient(ellipse 55% 45% at 100% 15%, rgba(14, 169, 155, 0.10) 0%, transparent 55%),
+          linear-gradient(180deg, #F6FAF9 0%, #EDF6F4 100%)
+        `,
+        fontFamily: "'Inter', sans-serif"
+      }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+        
+        .font-fraunces {
+          font-family: 'Fraunces', serif;
+        }
 
+        @keyframes floatA {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(40px, 30px) scale(1.08); }
+        }
+        @keyframes floatB {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-35px, 25px) scale(1.05); }
+        }
+        @keyframes floatC {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(25px, -35px) scale(1.1); }
+        }
+        @keyframes pulseDot {
+          0% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0.6); }
+          70% { box-shadow: 0 0 0 9px rgba(14, 169, 155, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0); }
+        }
+        @keyframes gradShift {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 220% 50%; }
+        }
+
+        .animate-float-a { animation: floatA 22s ease-in-out infinite; }
+        .animate-float-b { animation: floatB 26s ease-in-out infinite; }
+        .animate-float-c { animation: floatC 30s ease-in-out infinite; }
+        .animate-pulse-dot { animation: pulseDot 2.2s infinite; }
+
+        .grad-text {
+          background: linear-gradient(100deg, #0EA99B, #1B4C79, #2FC2AE);
+          background-size: 220% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: gradShift 7s linear infinite;
+        }
+
+        .glass-card {
+          background: rgba(255, 255, 255, 0.56);
+          backdrop-filter: blur(22px) saturate(160%);
+          -webkit-backdrop-filter: blur(22px) saturate(160%);
+          border: 1px solid rgba(255, 255, 255, 0.75);
+          box-shadow: 0 20px 60px -25px rgba(11, 42, 69, 0.25);
+        }
+      `}</style>
+
+      {/* Decorative Blobs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute w-[38vw] h-[38vw] top-[-8%] left-[-10%] rounded-full blur-[90px] opacity-55 bg-[radial-gradient(circle,#9BE8DB,transparent_70%)] animate-float-a" />
+        <div className="absolute w-[34vw] h-[34vw] top-[8%] right-[-8%] rounded-full blur-[90px] opacity-32 bg-[radial-gradient(circle,#5CD9C4,transparent_70%)] animate-float-b" />
+        <div className="absolute w-[30vw] h-[30vw] bottom-[6%] left-[20%] rounded-full blur-[90px] opacity-16 bg-[radial-gradient(circle,#1B4C79,transparent_72%)] animate-float-c" />
+      </div>
+
+      {/* ── 1. Immersive Hero ── */}
+      <div className="relative pt-32 pb-20 overflow-hidden lg:pt-40 lg:pb-32 z-10">
         <motion.div
-          className="relative z-10 max-w-7xl mx-auto px-6 text-center"
+          className="relative z-10 max-w-7xl mx-auto px-6 text-center space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <span className="inline-block py-1.5 px-4 rounded-full bg-white/10 border border-white/20 text-white font-semibold text-sm tracking-wide mb-6 shadow-sm backdrop-blur-md">
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wider uppercase">
+            <span className="w-2 h-2 rounded-full bg-[#2FC2AE] animate-pulse-dot" />
             Gyms, Spas, Salons, Therapist Offices, & More
-          </span>
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-8 leading-tight font-serif">
+          </div>
+
+          <h1 className="font-fraunces text-5xl md:text-6xl lg:text-7xl font-medium text-[#0B2A45] leading-tight">
             Deckoviz for Physical Fitness <br className="hidden md:block"/>
-            and <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Mental Wellness</span>
+            and <span className="grad-text">Mental Wellness</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-4 font-medium leading-relaxed">
-            Welcome to the future of physical fitness and mental wellness.
-          </p>
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
-            <strong className="text-white drop-shadow-md">Different rooms.</strong> <br className="hidden md:block"/><br className="hidden md:block"/>
-             <strong className="text-white drop-shadow-md">Different work.</strong> <br className="hidden md:block"/><br className="hidden md:block"/>
-             One shared truth: the <strong className="text-teal-300">space you're in shapes the transformation</strong> you're capable of — your <strong className="text-teal-400">environment decides how far and how deep you go.</strong>
+
+          <p className="text-lg md:text-xl text-[#4C6A83] max-w-3xl mx-auto font-normal leading-relaxed">
+            Welcome to the future of physical fitness and mental wellness. <br className="hidden md:block"/><br className="hidden md:block"/>
+            The <strong className="text-[#0B2A45]">space you're in shapes the transformation</strong> you're capable of — your <strong className="text-[#0EA99B]">environment decides how far and how deep you go.</strong>
           </p>
         </motion.div>
       </div>
@@ -165,141 +222,138 @@ const DeckovizForWellness = () => {
       </div>
 
       {/* ── 2. The Longer Story ── */}
-      <section className="py-24 bg-[#08101a] relative overflow-hidden">
-        <div className="max-w-4xl mx-auto px-6">
+      <section className="py-24 relative z-10">
+        <div className="max-w-4xl mx-auto px-6 space-y-16">
           {/* Fitness Story */}
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-5xl font-bold font-serif text-white mb-6">For the body, <span className="text-blue-400">for inspiring fitness.</span></h2>
-          </motion.div>
-          <motion.div
-            className="prose prose-lg mx-auto text-gray-400 space-y-6 mb-20"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
-              Every gym, studio, and fitness space exists to help people leave better than they arrived. Trainers evolve their programs constantly. Clients push new limits every week. Music gets curated. Equipment gets upgraded.
-            </p>
-            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
-              Everything about the fitness experience keeps moving forward, except the one thing surrounding it the entire time: the room itself.
-            </p>
-            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
-              Walk into most gyms, and the walls look exactly like they did five years ago. Same posters. Same mirrors. Same static motivation quote that stopped registering after the first visit. <br/><br/>
-              But <strong className="text-blue-300">mood, tempo, and intensity</strong> are not background details in fitness.
-            </p>
-            <motion.p
-              className="text-xl leading-relaxed font-medium text-white border-l-4 border-blue-500 pl-6 my-8"
-              initial={{ x: -20, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
+          <div>
+            <motion.div
+              className="text-center mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ duration: 0.6 }}
             >
-              They're the whole game. A space that demands peak performance should feel like it's training alongside you, not sitting frozen while everything else in the room is dynamic.
-            </motion.p>
-          </motion.div>
+              <h2 className="font-fraunces text-3xl md:text-5xl font-medium text-[#0B2A45] mb-4">
+                For the body, <span className="grad-text">for inspiring fitness.</span>
+              </h2>
+            </motion.div>
+            <motion.div
+              className="glass-card rounded-3xl p-8 sm:p-12 border border-white/80 shadow-xl space-y-6 text-[#4C6A83] text-lg leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <p>
+                Every gym, studio, and fitness space exists to help people leave better than they arrived. Everything about the fitness experience keeps moving forward, except the one thing surrounding it: the room itself.
+              </p>
+              <p>
+                <strong className="text-[#0B2A45]">Mood, tempo, and intensity</strong> are not background details in fitness. They're the whole game. A space that demands peak performance should feel like it's training alongside you.
+              </p>
+            </motion.div>
+          </div>
 
           {/* Wellness Story */}
-          <motion.div
-            className="text-center mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl md:text-5xl font-bold font-serif text-white mb-6">For the mind, <span className="text-blue-400">for nurturing wellness.</span></h2>
-          </motion.div>
-          <motion.div
-            className="prose prose-lg mx-auto text-gray-400 space-y-6"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
-              Every therapy room, counseling office, spa, saloon, and wellness space carries something quiet. These rooms hold people at some of their most vulnerable moments. Emotions inside them shift by the minute, session to session, sometimes breath to breath. Safety, trust, and reflection depend enormously on how a space feels, not only on what gets said inside it.
-            </p>
-            <p className="text-xl leading-relaxed cursor-default hover:text-white transition-colors duration-300">
-              And yet most of these rooms stay visually frozen while the person inside them is <strong className="text-teal-300">anything but frozen</strong>. <br/><br/>
-              Research has shown for decades that environment directly shapes <strong className="text-white">emotional regulation and a sense of safety</strong>. <strong className="text-blue-300">Environment is one of the most powerful co-therapists in the room, and right now, almost nobody is putting it to work.</strong>
-            </p>
-          </motion.div>
+          <div>
+            <motion.div
+              className="text-center mb-10"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="font-fraunces text-3xl md:text-5xl font-medium text-[#0B2A45] mb-4">
+                For the mind, <span className="grad-text">for nurturing wellness.</span>
+              </h2>
+            </motion.div>
+            <motion.div
+              className="glass-card rounded-3xl p-8 sm:p-12 border border-white/80 shadow-xl space-y-6 text-[#4C6A83] text-lg leading-relaxed"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <p>
+                Every therapy room, counseling office, spa, salon, and wellness space carries something quiet. These rooms hold people at some of their most vulnerable moments. Emotions inside them shift by the minute, session to session, sometimes breath to breath. Safety, trust, and reflection depend enormously on how a space feels, not only on what gets said inside it.
+              </p>
+              <p>
+                And yet most of these rooms stay visually frozen while the person inside them is <strong className="text-[#0EA99B]">anything but frozen</strong>.
+              </p>
+              <div className="p-6 rounded-2xl bg-[#DDF6F0]/60 border border-[#0EA99B]/30 text-[#0B2A45] font-fraunces text-xl font-medium">
+                Research has shown for decades that environment directly shapes emotional regulation and a sense of safety. Environment is one of the most powerful co-therapists in the room.
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
       {/* ── 3. 21 Key Highlights & Use Cases ── */}
-      <section className="py-24 bg-[#0A0A0B]">
+      <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-16 space-y-3"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-blue-300 font-bold tracking-wider uppercase text-sm">Possibilities</span>
-            <h2 className="mt-3 text-4xl md:text-5xl font-bold font-serif text-white">20 Key Highlights & Use Cases</h2>
+            <span className="text-[#0A8378] font-bold tracking-wider uppercase text-xs">Possibilities</span>
+            <h2 className="font-fraunces text-4xl sm:text-5xl font-medium text-[#0B2A45]">21 Key Highlights & Use Cases</h2>
           </motion.div>
 
           {/* Physical Fitness */}
           <motion.h3
-            className="text-2xl font-bold font-serif text-blue-300 mb-8 flex items-center gap-3"
+            className="font-fraunces text-2xl md:text-3xl font-medium text-[#0B2A45] mb-8 flex items-center gap-3"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <span className="w-10 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full inline-block" />
+            <span className="w-10 h-1 bg-gradient-to-r from-[#0EA99B] to-[#1B4C79] rounded-full inline-block" />
             For Physical Fitness Spaces
           </motion.h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
             {fitnessHighlights.map((item, idx) => (
               <motion.div
                 key={idx}
-                className="group p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 relative overflow-hidden group/card hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] hover:-translate-y-2 hover:border-[#2563EB]/40 transition-all duration-500 cursor-pointer"
+                className="glass-card rounded-3xl p-8 border border-white/80 shadow-lg hover:-translate-y-1.5 transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.04 }}
               >
-                <div className="text-4xl mb-6 bg-gradient-to-br from-blue-900/40 to-indigo-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)] w-16 h-16 rounded-2xl flex items-center justify-center group-hover:bg-[#182A4A] group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <span className="group-hover:grayscale brightness-200 group-hover:drop-shadow-md transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
+                <div className="text-3xl mb-5 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#DDF6F0] to-white border border-white/80 flex items-center justify-center shadow-sm">
+                  {item.icon}
                 </div>
-                <h3 className="text-xl font-bold font-serif text-white mb-3 leading-snug group-hover:text-blue-400 transition-colors duration-300">{item.title}</h3>
-                <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">{item.desc}</p>
+                <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-3 leading-snug">{item.title}</h3>
+                <p className="text-[#4C6A83] text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Mental Wellness */}
           <motion.h3
-            className="text-2xl font-bold font-serif text-blue-300 mb-8 flex items-center gap-3"
+            className="font-fraunces text-2xl md:text-3xl font-medium text-[#0B2A45] mb-8 flex items-center gap-3"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
           >
-            <span className="w-10 h-1 bg-gradient-to-r from-teal-500 to-[#2563EB] rounded-full inline-block" />
+            <span className="w-10 h-1 bg-gradient-to-r from-[#2FC2AE] to-[#0EA99B] rounded-full inline-block" />
             For Mental Wellness Spaces
           </motion.h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {wellnessHighlights.map((item, idx) => (
               <motion.div
                 key={idx}
-                className="group p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md hover:bg-white/10 relative overflow-hidden group/card hover:shadow-[0_0_30px_rgba(37,99,235,0.2)] hover:-translate-y-2 hover:border-teal-300/60 transition-all duration-500 cursor-pointer"
+                className="glass-card rounded-3xl p-8 border border-white/80 shadow-lg hover:-translate-y-1.5 transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.04 }}
               >
-                <div className="text-4xl mb-6 bg-gradient-to-br from-teal-900/40 to-emerald-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)] w-16 h-16 rounded-2xl flex items-center justify-center group-hover:bg-teal-700 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                  <span className="group-hover:grayscale brightness-200 group-hover:drop-shadow-md transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
+                <div className="text-3xl mb-5 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#DDF6F0] to-white border border-white/80 flex items-center justify-center shadow-sm">
+                  {item.icon}
                 </div>
-                <h3 className="text-xl font-bold font-serif text-white mb-3 leading-snug group-hover:text-teal-700 transition-colors duration-300">{item.title}</h3>
-                <p className="text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors duration-300">{item.desc}</p>
+                <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-3 leading-snug">{item.title}</h3>
+                <p className="text-[#4C6A83] text-sm leading-relaxed">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -307,34 +361,34 @@ const DeckovizForWellness = () => {
       </section>
 
       {/* ── 4. Core Benefits ── */}
-      <section className="py-24 relative overflow-hidden bg-slate-900">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_rgba(37,99,235,0.15),_transparent_40%),_radial-gradient(circle_at_top_right,_rgba(24,42,74,0.3),_transparent_40%)]" />
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+      <section className="py-24 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 space-y-20">
 
           {/* Physical Fitness Benefits */}
           <motion.div
-            className="mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-serif text-white mb-4">Physical Fitness</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-[#2563EB] to-teal-400 rounded-full mb-12" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+            <h2 className="font-fraunces text-3xl md:text-4xl font-medium text-[#0B2A45] mb-3">Physical Fitness</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#0EA99B] to-[#1B4C79] rounded-full mb-10" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {fitnessBenefits.map((b, idx) => (
                 <motion.div
                   key={idx}
-                  className="relative group cursor-default"
+                  className="glass-card rounded-3xl p-8 border border-white/80 shadow-lg flex items-start gap-4"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: idx * 0.06 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.05 }}
                 >
-                  <div className="absolute top-0 left-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-blue-400 font-bold text-sm group-hover:bg-[#2563EB] group-hover:text-white transition-colors duration-300">{idx + 1}</div>
-                  <div className="pl-12 group-hover:translate-x-1 transition-transform duration-300">
-                    <h3 className="text-xl font-bold font-serif text-white mb-2 group-hover:text-blue-200 transition-colors duration-300">{b.title}</h3>
-                    <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">{b.desc}</p>
+                  <div className="w-9 h-9 rounded-full bg-[#DDF6F0] text-[#0A8378] font-bold text-sm flex items-center justify-center shrink-0 border border-white">
+                    {idx + 1}
+                  </div>
+                  <div>
+                    <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-2">{b.title}</h3>
+                    <p className="text-[#4C6A83] text-sm leading-relaxed">{b.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -343,28 +397,29 @@ const DeckovizForWellness = () => {
 
           {/* Mental Wellness Benefits */}
           <motion.div
-            className="mb-20"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-serif text-white mb-4">Mental Wellness</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-teal-400 to-[#2563EB] rounded-full mb-12" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+            <h2 className="font-fraunces text-3xl md:text-4xl font-medium text-[#0B2A45] mb-3">Mental Wellness</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#2FC2AE] to-[#0EA99B] rounded-full mb-10" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {wellnessBenefits.map((b, idx) => (
                 <motion.div
                   key={idx}
-                  className="relative group cursor-default"
+                  className="glass-card rounded-3xl p-8 border border-white/80 shadow-lg flex items-start gap-4"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ duration: 0.5, delay: idx * 0.06 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.05 }}
                 >
-                  <div className="absolute top-0 left-0 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-teal-400 font-bold text-sm group-hover:bg-gradient-to-br from-teal-900/40 to-emerald-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)]0 group-hover:text-white transition-colors duration-300">{idx + 1}</div>
-                  <div className="pl-12 group-hover:translate-x-1 transition-transform duration-300">
-                    <h3 className="text-xl font-bold font-serif text-white mb-2 group-hover:text-teal-200 transition-colors duration-300">{b.title}</h3>
-                    <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">{b.desc}</p>
+                  <div className="w-9 h-9 rounded-full bg-[#DDF6F0] text-[#0A8378] font-bold text-sm flex items-center justify-center shrink-0 border border-white">
+                    {idx + 1}
+                  </div>
+                  <div>
+                    <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-2">{b.title}</h3>
+                    <p className="text-[#4C6A83] text-sm leading-relaxed">{b.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -378,20 +433,20 @@ const DeckovizForWellness = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold font-serif text-white mb-4">Shared Across Every Space</h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mb-12" />
+            <h2 className="font-fraunces text-3xl md:text-4xl font-medium text-[#0B2A45] mb-3">Shared Across Every Space</h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#0EA99B] to-[#1B4C79] rounded-full mb-10" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {sharedBenefits.map((b, idx) => (
                 <motion.div
                   key={idx}
-                  className="p-8 rounded-3xl bg-white/5 border border-white/10 group cursor-default hover:bg-white/10 transition-all duration-300"
+                  className="glass-card rounded-3xl p-8 border border-white/80 shadow-lg"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: idx * 0.1 }}
                 >
-                  <h3 className="text-xl font-bold font-serif text-white mb-3 group-hover:text-blue-200 transition-colors duration-300">{b.title}</h3>
-                  <p className="text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">{b.desc}</p>
+                  <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-3">{b.title}</h3>
+                  <p className="text-[#4C6A83] text-sm leading-relaxed">{b.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -400,110 +455,107 @@ const DeckovizForWellness = () => {
       </section>
 
       {/* ── 5. 20 More Ways ── */}
-      <section className="relative py-32 bg-[#050b14] overflow-hidden border-y border-white/5">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(37,99,235,0.08)_0%,_transparent_70%)] pointer-events-none"></div>
-        <div className="absolute -left-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <div className="absolute -right-32 top-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-        <motion.div
-          className="max-w-7xl mx-auto px-6 mb-16 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl md:text-4xl font-bold font-serif text-white">20 More Ways Deckoviz Fits Your Space</h2>
-        </motion.div>
+      <section className="relative py-24 z-10">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="font-fraunces text-4xl font-medium text-[#0B2A45]">20 More Ways Deckoviz Fits Your Space</h2>
+          </motion.div>
 
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Fitness */}
-          <div>
-            <h3 className="text-xl font-bold font-serif text-blue-300 mb-6 flex items-center gap-2">
-              <span className="w-6 h-1 bg-[#2563EB] rounded-full inline-block" /> Fitness & Physical Wellness
-            </h3>
-            <div className="space-y-3">
-              {fitnessFits.map((fit, idx) => (
-                <motion.div
-                  key={idx}
-                  className="relative group px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-gray-300 font-medium hover:bg-white/10 hover:border-blue-500/50 hover:text-white hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(37,99,235,0.2)] transition-all duration-300 text-sm cursor-default backdrop-blur-md overflow-hidden"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: idx * 0.04 }}
-                >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
-              <div className="relative z-10 flex items-center gap-2">
-                <span className="text-blue-400 group-hover:scale-125 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(96,165,250,0.5)]">⚡</span> 
-                <span className="group-hover:text-white transition-colors duration-300">{fit}</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {/* Fitness */}
+            <div>
+              <h3 className="font-fraunces text-2xl font-medium text-[#0B2A45] mb-6 flex items-center gap-2">
+                <span className="w-6 h-1 bg-[#0EA99B] rounded-full inline-block" /> Fitness & Physical Wellness
+              </h3>
+              <div className="space-y-3">
+                {fitnessFits.map((fit, idx) => (
+                  <motion.div
+                    key={idx}
+                    className="glass-card rounded-2xl px-5 py-3.5 text-[#0B2A45] font-medium border border-white/80 text-sm shadow-sm flex items-center gap-3 hover:-translate-y-0.5 transition-all"
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: idx * 0.03 }}
+                  >
+                    <span className="text-[#0EA99B]">⚡</span>
+                    <span>{fit}</span>
+                  </motion.div>
+                ))}
               </div>
-            </motion.div>
-              ))}
             </div>
-          </div>
 
-          {/* Wellness */}
-          <div>
-            <h3 className="text-xl font-bold font-serif text-blue-300 mb-6 flex items-center gap-2">
-              <span className="w-6 h-1 bg-gradient-to-br from-teal-900/40 to-emerald-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)]0 rounded-full inline-block" /> Mental & Emotional Wellness
-            </h3>
-            <div className="space-y-3">
-              {wellnessFits.map((fit, idx) => (
-                <motion.div
-                  key={idx}
-                  className="relative group px-5 py-3.5 bg-white/5 border border-white/10 rounded-2xl text-gray-300 font-medium hover:bg-white/10 hover:border-teal-400/50 hover:text-white hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(45,212,191,0.2)] transition-all duration-300 text-sm cursor-default backdrop-blur-md overflow-hidden"
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.3, delay: idx * 0.04 }}
-                >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-teal-400/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none"></div>
-              <div className="relative z-10 flex items-center gap-2">
-                <span className="text-teal-400 group-hover:scale-125 transition-transform duration-300 drop-shadow-[0_0_8px_rgba(45,212,191,0.5)]">🌿</span> 
-                <span className="group-hover:text-white transition-colors duration-300">{fit}</span>
+            {/* Wellness */}
+            <div>
+              <h3 className="font-fraunces text-2xl font-medium text-[#0B2A45] mb-6 flex items-center gap-2">
+                <span className="w-6 h-1 bg-[#2FC2AE] rounded-full inline-block" /> Mental & Emotional Wellness
+              </h3>
+              <div className="space-y-3">
+                {wellnessFits.map((fit, idx) => (
+                  <motion.div
+                    key={idx}
+                    className="glass-card rounded-2xl px-5 py-3.5 text-[#0B2A45] font-medium border border-white/80 text-sm shadow-sm flex items-center gap-3 hover:-translate-y-0.5 transition-all"
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: idx * 0.03 }}
+                  >
+                    <span className="text-[#0EA99B]">🌿</span>
+                    <span>{fit}</span>
+                  </motion.div>
+                ))}
               </div>
-            </motion.div>
-              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* ── 6. The Bottom Line (CTA) ── */}
-      <section className="py-32 relative text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/50 to-blue-100/50 -z-10" />
+      <section className="py-24 relative z-10 text-center">
         <motion.div
           className="max-w-4xl mx-auto px-6"
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold font-serif text-white mb-8">The Bottom Line</h2>
-          <p className="text-xl text-gray-300 mb-10 leading-relaxed font-medium cursor-default text-left md:text-center">
-            Transformation isn't only physical, and it isn't only mental, and it isn't only something that happens in a studio or a clinic. It happens everywhere someone is trying to become a little more focused, a little calmer, or a little stronger than they were yesterday, whether that's a gym floor, a therapy room, or a corner of their own living room.
-            <br/><br/>
-            Deckoviz gives fitness spaces the energy to push harder. It gives wellness spaces the calm to go deeper. And it gives homes the same intelligence, scaled to fit whatever room needs it most, whenever they need it most. One platform, endlessly adaptive, built around a simple idea: the environment around you should be working as hard as you are.
-            <br/><br/>
-            This isn't decoration. It isn't background noise. It's an active participant in every workout, every session, and every quiet moment at home that adds up to real change.
-            <br/><br/>
-            <strong className="text-blue-300">Your space isn't static. It's alive. It's intentional. It's Deckoviz.</strong>
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <motion.button
-              onClick={() => window.location.href='/contact'}
-              className="group px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white border border-white/10 hover:from-blue-500 hover:to-indigo-500 rounded-full font-bold text-lg hover:bg-[#2563EB] transition-all duration-300 shadow-xl shadow-[#182A4A]/20 flex items-center justify-center gap-3"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Book a demo and see the future of wellness design.
-              <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
-            </motion.button>
-            <motion.button
-              onClick={() => setShowHomePopup(true)}
-              className="group px-8 py-4 bg-[#0A0A0B] text-blue-300 rounded-full font-bold text-base border-2 border-[#182A4A]/20 hover:border-[#2563EB] hover:text-blue-400 transition-all duration-300 shadow-md flex items-center justify-center gap-2"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              🏡 For Home & Personal Spaces
-            </motion.button>
+          <div className="glass-card rounded-3xl p-10 sm:p-14 border border-white/80 shadow-2xl space-y-8">
+            <h2 className="font-fraunces text-4xl sm:text-5xl font-medium text-[#0B2A45]">The Bottom Line</h2>
+            <div className="text-[#4C6A83] text-lg leading-relaxed space-y-4 text-left sm:text-center">
+              <p>
+                Transformation isn't only physical, and it isn't only mental, and it isn't only something that happens in a studio or a clinic. It happens everywhere someone is trying to become a little more focused, a little calmer, or a little stronger than they were yesterday, whether that's a gym floor, a therapy room, or a corner of their own living room.
+              </p>
+              <p>
+                Deckoviz gives fitness spaces the energy to push harder. It gives wellness spaces the calm to go deeper. And it gives homes the same intelligence, scaled to fit whatever room needs it most, whenever they need it most.
+              </p>
+              <div className="p-4 rounded-xl bg-[#DDF6F0]/60 border border-[#0EA99B]/30 text-[#0B2A45] font-fraunces text-xl font-medium">
+                Your space isn't static. It's alive. It's intentional. It's Deckoviz.
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+              <motion.button
+                onClick={() => window.location.href='/contact'}
+                className="w-full sm:w-auto px-10 py-5 rounded-full bg-gradient-to-r from-[#0EA99B] to-[#1B4C79] text-white font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Book a demo and see the future of wellness design.
+                <span>→</span>
+              </motion.button>
+              <motion.button
+                onClick={() => setShowHomePopup(true)}
+                className="w-full sm:w-auto px-8 py-5 rounded-full glass-card border border-[#0EA99B]/40 text-[#0B2A45] font-semibold text-base shadow-md hover:border-[#0EA99B] transition-all duration-300 flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                🏡 For Home & Personal Spaces
+              </motion.button>
+            </div>
           </div>
         </motion.div>
       </section>
@@ -519,52 +571,51 @@ const DeckovizForWellness = () => {
             transition={{ duration: 0.3 }}
           >
             {/* Backdrop */}
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setShowHomePopup(false)} />
+            <div className="absolute inset-0 bg-[#0B2A45]/40 backdrop-blur-md" onClick={() => setShowHomePopup(false)} />
 
             {/* Modal */}
             <motion.div
-              className="relative z-10 bg-[#0A0A0B] rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto"
+              className="relative z-10 glass-card bg-white/95 rounded-3xl shadow-2xl max-w-3xl w-full max-h-[85vh] overflow-y-auto border border-white/90"
               initial={{ scale: 0.9, y: 40, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: 40, opacity: 0 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
-              style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(37,99,235,0.3) transparent' }}
             >
               {/* Header */}
-              <div className="sticky top-0 z-10 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-t-3xl px-8 py-6 flex items-center justify-between">
+              <div className="sticky top-0 z-10 bg-gradient-to-r from-[#DDF6F0] via-white to-[#DDF6F0] border-b border-[#0EA99B]/20 rounded-t-3xl px-8 py-6 flex items-center justify-between">
                 <div>
-                  <h2 className="text-2xl md:text-3xl font-bold font-serif text-white">🏡 For Home & Personal Spaces</h2>
-                  <p className="text-blue-200 text-sm mt-1">The same intelligence, scaled for your home</p>
+                  <h2 className="font-fraunces text-2xl md:text-3xl font-medium text-[#0B2A45]">🏡 For Home & Personal Spaces</h2>
+                  <p className="text-[#0A8378] text-sm mt-1">The same intelligence, scaled for your home</p>
                 </div>
                 <button
                   onClick={() => setShowHomePopup(false)}
-                  className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-200 text-xl font-bold"
+                  className="w-10 h-10 rounded-full bg-[#0EA99B]/10 hover:bg-[#0EA99B]/20 text-[#0B2A45] flex items-center justify-center font-bold transition-all"
                 >
                   ✕
                 </button>
               </div>
 
-              <div className="p-8 space-y-10">
+              <div className="p-8 space-y-8">
                 {/* Intro */}
-                <div className="prose prose-lg text-gray-400 space-y-4">
-                  <p className="text-lg leading-relaxed">
+                <div className="space-y-4 text-[#4C6A83] text-base leading-relaxed">
+                  <p>
                     Here's what ties all of this together: none of this stops at the studio door or the therapy office wall. The same principles that help a gym push harder or a therapy room hold space more gently apply just as much to the home.
                   </p>
-                  <p className="text-lg leading-relaxed">
-                    Home workout corners deserve the same tempo-matched energy as a studio floor. Home meditation nooks deserve the same breath-paced calm as a therapist's office. The guest room that doubles as a yoga space, the living room that becomes a wind-down zone every evening, the home office that needs to shift from focused work to genuine rest, all of it benefits from an environment that adapts instead of one that just sits there.
+                  <p>
+                    Home workout corners deserve the same tempo-matched energy as a studio floor. Home meditation nooks deserve the same breath-paced calm as a therapist's office.
                   </p>
-                  <p className="text-lg leading-relaxed font-medium text-white">
-                    Deckoviz was built for all three of these worlds at once. An AI-powered smart art frame running Vizzy, your always-on adaptive companion, shifting with intensity in the gym, shifting with emotion in the therapy room, and shifting with whatever a home actually needs, morning, noon, and night. Same intelligence. Many different jobs. All of them done beautifully.
+                  <p className="font-medium text-[#0B2A45]">
+                    Deckoviz was built for all three of these worlds at once. An AI-powered smart art frame running Vizzy, your always-on adaptive companion.
                   </p>
                 </div>
 
                 {/* Use Cases */}
                 <div>
-                  <h3 className="text-xl font-bold font-serif text-blue-300 mb-4">Some use cases and highlights</h3>
+                  <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-4">Some use cases and highlights</h3>
                   <div className="space-y-2">
                     {homeHighlights.map((item, idx) => (
-                      <div key={idx} className="px-5 py-3 bg-gradient-to-br from-blue-900/40 to-indigo-900/40 border border-white/10 shadow-[inner_0_0_20px_rgba(255,255,255,0.05)]/50 border border-blue-100 rounded-xl text-gray-300 font-medium text-sm flex items-center gap-3">
-                        <span className="text-blue-400 font-bold">✨</span> {item}
+                      <div key={idx} className="px-5 py-3 glass-card rounded-xl text-[#0B2A45] font-medium text-sm flex items-center gap-3 border border-white/80">
+                        <span className="text-[#0EA99B] font-bold">✨</span> {item}
                       </div>
                     ))}
                   </div>
@@ -572,12 +623,12 @@ const DeckovizForWellness = () => {
 
                 {/* Core Benefits */}
                 <div>
-                  <h3 className="text-xl font-bold font-serif text-blue-300 mb-6">Core Benefits</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-6">Core Benefits</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {homeBenefits.map((b, idx) => (
-                      <div key={idx} className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
-                        <h4 className="font-bold text-white mb-2 font-serif">{b.title}</h4>
-                        <p className="text-gray-400 text-sm leading-relaxed">{b.desc}</p>
+                      <div key={idx} className="p-5 rounded-2xl glass-card border border-white/80">
+                        <h4 className="font-fraunces text-lg font-medium text-[#0B2A45] mb-2">{b.title}</h4>
+                        <p className="text-[#4C6A83] text-sm leading-relaxed">{b.desc}</p>
                       </div>
                     ))}
                   </div>

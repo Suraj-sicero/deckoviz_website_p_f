@@ -31,14 +31,74 @@ const DeckovizForRealEstate = () => {
   };
 
   return (
-    <div className="bg-[#050f0c] min-h-screen text-gray-100 font-sans selection:bg-emerald-500/30">
-      {/* Background Ambience */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[50vw] h-[50vh] bg-emerald-900/10 blur-[150px] rounded-full" />
-        <div className="absolute bottom-0 left-0 w-[50vw] h-[50vh] bg-teal-900/10 blur-[150px] rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vh] bg-black/50 blur-[100px] rounded-full" />
-        {/* Subtle noise texture */}
-        <div className="absolute inset-0 opacity-[0.015] mix-blend-overlay" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E")' }}></div>
+    <div 
+      className="relative min-h-screen text-[#0E2438] overflow-x-hidden selection:bg-[#5CD9C4] selection:text-[#071B2C]"
+      style={{
+        background: `
+          radial-gradient(ellipse 60% 45% at 15% 0%, #DDF6F0 0%, transparent 60%),
+          radial-gradient(ellipse 55% 45% at 100% 15%, rgba(14, 169, 155, 0.10) 0%, transparent 55%),
+          linear-gradient(180deg, #F6FAF9 0%, #EDF6F4 100%)
+        `,
+        fontFamily: "'Inter', sans-serif"
+      }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+        
+        .font-fraunces {
+          font-family: 'Fraunces', serif;
+        }
+
+        @keyframes floatA {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(40px, 30px) scale(1.08); }
+        }
+        @keyframes floatB {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-35px, 25px) scale(1.05); }
+        }
+        @keyframes floatC {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(25px, -35px) scale(1.1); }
+        }
+        @keyframes pulseDot {
+          0% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0.6); }
+          70% { box-shadow: 0 0 0 9px rgba(14, 169, 155, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0); }
+        }
+        @keyframes gradShift {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 220% 50%; }
+        }
+
+        .animate-float-a { animation: floatA 22s ease-in-out infinite; }
+        .animate-float-b { animation: floatB 26s ease-in-out infinite; }
+        .animate-float-c { animation: floatC 30s ease-in-out infinite; }
+        .animate-pulse-dot { animation: pulseDot 2.2s infinite; }
+
+        .grad-text {
+          background: linear-gradient(100deg, #0EA99B, #1B4C79, #2FC2AE);
+          background-size: 220% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: gradShift 7s linear infinite;
+        }
+
+        .glass-card {
+          background: rgba(255, 255, 255, 0.56);
+          backdrop-filter: blur(22px) saturate(160%);
+          -webkit-backdrop-filter: blur(22px) saturate(160%);
+          border: 1px solid rgba(255, 255, 255, 0.75);
+          box-shadow: 0 20px 60px -25px rgba(11, 42, 69, 0.25);
+        }
+      `}</style>
+
+      {/* Decorative Blobs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute w-[38vw] h-[38vw] top-[-8%] left-[-10%] rounded-full blur-[90px] opacity-55 bg-[radial-gradient(circle,#9BE8DB,transparent_70%)] animate-float-a" />
+        <div className="absolute w-[34vw] h-[34vw] top-[8%] right-[-8%] rounded-full blur-[90px] opacity-32 bg-[radial-gradient(circle,#5CD9C4,transparent_70%)] animate-float-b" />
+        <div className="absolute w-[30vw] h-[30vw] bottom-[6%] left-[20%] rounded-full blur-[90px] opacity-16 bg-[radial-gradient(circle,#1B4C79,transparent_72%)] animate-float-c" />
       </div>
 
       {/* Hero Section */}
@@ -49,52 +109,40 @@ const DeckovizForRealEstate = () => {
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-left"
+            className="text-left space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 backdrop-blur-md mb-8">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
-              <span className="text-xs font-semibold tracking-widest text-emerald-300 uppercase">Deckoviz For Real Estate Developers</span>
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wider uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#2FC2AE] animate-pulse-dot" />
+              Deckoviz For Real Estate Developers
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-[5.5rem] font-['Playfair_Display'] font-semibold mb-6 leading-[1.1] tracking-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-              Welcome To The Future Of{" "}
-              <span className="italic text-transparent bg-clip-text bg-gradient-to-br from-emerald-300 via-teal-200 to-emerald-500">Living</span>
+            <h1 className="font-fraunces text-5xl md:text-6xl lg:text-7xl font-medium text-[#0B2A45] leading-tight">
+              Welcome To The Future Of <span className="grad-text italic">Living</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-gray-400 font-light max-w-2xl mb-10 leading-relaxed">
-              <span className="text-white font-medium">The Intelligent Development.</span>{" "}
-              Transforming <span className="text-white">Static Properties</span> into{" "}
-              <span className="italic text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-300">Living, Generative Environments.</span>
+            <p className="text-[#4C6A83] text-xl md:text-2xl font-normal leading-relaxed">
+              <span className="text-[#0B2A45] font-medium">The Intelligent Development.</span> Transforming <span className="text-[#0B2A45] font-medium">Static Properties</span> into <span className="grad-text font-medium">Living, Generative Environments.</span>
             </p>
 
-            {/* Story cards - break up dense paragraphs */}
-            <div className="space-y-3 max-w-xl mb-10">
+            {/* Story cards */}
+            <div className="space-y-3 max-w-xl">
               {[
                 {
                   delay: 0.4,
                   label: "The New Luxury",
-                  color: "border-emerald-500/30 bg-emerald-500/5",
-                  accent: "text-emerald-400",
-                  icon: "◆",
-                  text: "Luxury is no longer defined by the quality of materials or a prestigious zip code. It is defined by the",
+                  text: "Luxury is no longer defined solely by materials or ZIP code. It is defined by the",
                   highlight: "Experience."
                 },
                 {
                   delay: 0.55,
                   label: "The Buyer",
-                  color: "border-teal-500/30 bg-teal-500/5",
-                  accent: "text-teal-400",
-                  icon: "◈",
                   text: "Modern buyers seek a space that understands them, responds to them, and",
                   highlight: "enhances their daily lives."
                 },
                 {
                   delay: 0.7,
                   label: "The Offer",
-                  color: "border-cyan-500/30 bg-cyan-500/5",
-                  accent: "text-cyan-400",
-                  icon: "◉",
-                  text: "With Deckoviz GAVP, you move beyond selling a physical asset and begin selling a",
+                  text: "With Deckoviz, you move beyond selling a physical asset and begin selling a",
                   highlight: "Future-Ready Lifestyle."
                 },
               ].map((card, i) => (
@@ -103,14 +151,14 @@ const DeckovizForRealEstate = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: card.delay, ease: "easeOut" }}
-                  className={`p-4 rounded-xl border backdrop-blur-md ${card.color} flex items-start gap-3 group hover:scale-[1.02] transition-transform duration-300`}
+                  className="glass-card p-4 rounded-2xl border border-white/80 flex items-start gap-3 hover:translate-x-1 transition-transform duration-300"
                 >
-                  <span className={`text-base mt-0.5 shrink-0 ${card.accent}`}>{card.icon}</span>
+                  <span className="text-[#0EA99B] font-bold mt-0.5 shrink-0">◆</span>
                   <div>
-                    <span className={`text-[10px] font-bold tracking-widest uppercase block mb-1 ${card.accent}`}>{card.label}</span>
-                    <p className="text-gray-300 text-sm leading-relaxed">
+                    <span className="text-xs font-bold tracking-widest uppercase block mb-1 text-[#0A8378]">{card.label}</span>
+                    <p className="text-[#4C6A83] text-sm leading-relaxed">
                       {card.text}{" "}
-                      <span className="text-white font-semibold italic">{card.highlight}</span>
+                      <span className="text-[#0B2A45] font-semibold italic">{card.highlight}</span>
                     </p>
                   </div>
                 </motion.div>
@@ -121,37 +169,33 @@ const DeckovizForRealEstate = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleContactClick}
-              className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-emerald-500 text-emerald-950 rounded-full font-semibold text-lg overflow-hidden transition-all hover:shadow-[0_0_40px_rgba(16,185,129,0.4)]"
+              className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r from-[#0EA99B] to-[#123C63] text-white rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-all"
             >
-              <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative">Integrate Deckoviz</span>
-              <ArrowRight className="w-5 h-5 relative group-hover:translate-x-1 transition-transform" />
+              <span>Integrate Deckoviz</span>
+              <ArrowRight className="w-5 h-5" />
             </motion.button>
           </motion.div>
 
-          {/* Hero Visual - Static Building Image */}
+          {/* Hero Visual */}
           <motion.div 
             initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
             animate={{ opacity: 1, scale: 1, rotateY: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            style={{ perspective: 1000 }}
             className="relative hidden lg:block"
           >
-            <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 to-teal-500/10 blur-[80px] rounded-full translate-x-10 translate-y-10" />
-            
-            <div className="relative aspect-[3/4] rounded-t-full rounded-b-[3rem] overflow-hidden border border-white/10 shadow-2xl shadow-emerald-900/50 p-2 bg-black/40 backdrop-blur-xl">
-              <div className="w-full h-full rounded-t-full rounded-b-[2.5rem] overflow-hidden relative">
+            <div className="glass-card rounded-[3rem] p-4 border border-white/80 shadow-2xl">
+              <div className="relative aspect-[3/4] rounded-[2.5rem] overflow-hidden">
                 <img
                   src={BUILDING_IMG}
                   alt="Deckoviz Real Estate"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050f0c] via-transparent to-transparent" />
-                <div className="absolute bottom-10 left-0 w-full text-center px-8">
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B2A45]/80 via-transparent to-transparent" />
+                <div className="absolute bottom-8 left-6 right-6">
+                  <div className="glass-card rounded-2xl p-5 border border-white/80 shadow-lg text-white">
                     <div className="flex justify-between items-center">
-                      <span className="text-emerald-300 text-sm font-semibold tracking-wider uppercase">Living Sanctuary</span>
-                      <Sparkles className="w-5 h-5 text-teal-400" />
+                      <span className="text-white text-sm font-semibold tracking-wider uppercase">Living Sanctuary</span>
+                      <Sparkles className="w-5 h-5 text-[#5CD9C4]" />
                     </div>
                   </div>
                 </div>
@@ -162,14 +206,14 @@ const DeckovizForRealEstate = () => {
             <motion.div 
               animate={{ y: [0, -15, 0] }} 
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-20 -left-12 bg-[#0a1a14] border border-emerald-500/30 rounded-2xl p-4 shadow-xl flex items-center gap-4 backdrop-blur-xl"
+              className="absolute top-12 -left-8 glass-card rounded-2xl p-4 shadow-xl flex items-center gap-4 border border-white/90"
             >
-              <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                <Gem className="w-5 h-5 text-emerald-400" />
+              <div className="w-10 h-10 rounded-xl bg-[#DDF6F0] flex items-center justify-center text-[#0EA99B]">
+                <Gem className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-white font-semibold">Premium Value</p>
-                <p className="text-emerald-400/80 text-xs">High-margin upsell</p>
+                <p className="text-[#0B2A45] font-semibold text-sm">Premium Value</p>
+                <p className="text-[#4C6A83] text-xs">High-margin upsell</p>
               </div>
             </motion.div>
           </motion.div>
@@ -177,106 +221,100 @@ const DeckovizForRealEstate = () => {
       </section>
 
       {/* The Intelligence Layer Section */}
-      <section className="py-32 relative z-10 border-t border-white/5 bg-[#030907]/50 backdrop-blur-3xl">
+      <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mb-20 text-center"
+            className="mb-16 text-center max-w-3xl mx-auto space-y-4"
           >
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-['Playfair_Display'] font-semibold mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+            <h2 className="font-fraunces text-4xl sm:text-5xl lg:text-6xl font-medium text-[#0B2A45] leading-tight">
               The Intelligence Layer <br/>
-              <span className="text-emerald-400 text-3xl md:text-4xl">Why Deckoviz is a No-Brainer</span>
+              <span className="grad-text">Why Deckoviz is a No-Brainer</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-3xl mx-auto font-light leading-relaxed">
-              Deckoviz is a multi-sensory infrastructure that combines AI-driven creation, mood engineering, and architectural design into one elegant package.
+            <p className="text-[#4C6A83] text-lg sm:text-xl font-normal leading-relaxed">
+              Deckoviz is a multi-sensory infrastructure combining AI creation, mood engineering, and architectural design.
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
-              { title: 'Differentiate Your Development', desc: 'In a crowded market, Deckoviz provides a visible, high-tech "wow factor" that separates your project from legacy developments.', icon: <Sparkles className="text-emerald-400" /> },
-              { title: 'Enhance Perceived Value', desc: 'Integrating ambient intelligence adds a layer of sophisticated luxury that justifies premium pricing without the need for structural changes.', icon: <TrendingUp className="text-teal-400" /> },
-              { title: 'The Vizzy AI Engine', desc: 'Our proprietary AI acts as a 24/7 creative curator for the homeowner, generating unique, high-fidelity art and atmospheric visuals that ensure the home never feels stagnant.', icon: <MonitorPlay className="text-emerald-300" /> },
-              { title: 'Architectural Synergy', desc: 'Designed with minimalist wooden frames and halo backlighting, Deckoviz units are built to complement high-end interior design, not distract from it.', icon: <Layers className="text-teal-300" /> },
+              { title: 'Differentiate Your Development', desc: 'In a crowded market, Deckoviz provides a visible, high-tech "wow factor" that separates your project from legacy developments.', icon: <Sparkles className="text-[#0EA99B]" /> },
+              { title: 'Enhance Perceived Value', desc: 'Integrating ambient intelligence adds a layer of sophisticated luxury that justifies premium pricing without structural changes.', icon: <TrendingUp className="text-[#0EA99B]" /> },
+              { title: 'The Vizzy AI Engine', desc: 'Our proprietary AI acts as a 24/7 creative curator for the homeowner, generating unique, high-fidelity art and atmospheric visuals.', icon: <MonitorPlay className="text-[#0EA99B]" /> },
+              { title: 'Architectural Synergy', desc: 'Designed with minimalist wooden frames and halo backlighting, Deckoviz units are built to complement high-end interior design.', icon: <Layers className="text-[#0EA99B]" /> },
             ].map((feature, idx) => (
               <motion.div 
                 key={idx} 
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="group relative overflow-hidden bg-gradient-to-b from-white/[0.03] to-transparent border border-white/10 rounded-[2rem] p-10 hover:border-emerald-500/30 transition-all duration-500"
+                className="glass-card rounded-3xl p-8 border border-white/80 shadow-lg hover:-translate-y-1.5 transition-all duration-300"
               >
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-emerald-500/10 to-transparent rounded-bl-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="w-16 h-16 rounded-2xl bg-black/50 border border-white/10 flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 group-hover:border-emerald-500/50 transition-all duration-500">
-                  {React.cloneElement(feature.icon as React.ReactElement, { size: 28 })}
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#DDF6F0] to-white border border-white/80 flex items-center justify-center mb-6 shadow-sm">
+                  {React.cloneElement(feature.icon as React.ReactElement, { size: 26 })}
                 </div>
                 
-                <h3 className="text-2xl font-semibold mb-4 text-white group-hover:text-emerald-300 transition-colors">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed text-lg">{feature.desc}</p>
+                <h3 className="font-fraunces text-2xl font-medium text-[#0B2A45] mb-3">{feature.title}</h3>
+                <p className="text-[#4C6A83] text-base leading-relaxed">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 8 Core Use Cases - Staggered Grid */}
-      <section className="py-32 relative z-10">
+      {/* 8 Core Use Cases */}
+      <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mb-20 flex flex-col md:flex-row items-end justify-between gap-8"
+            className="mb-16 flex flex-col md:flex-row items-start md:items-end justify-between gap-6"
           >
-            <div className="max-w-2xl">
-              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6 text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+            <div className="max-w-2xl space-y-3">
+              <h2 className="font-fraunces text-4xl sm:text-5xl font-medium text-[#0B2A45]">
                 8 Core Use Cases
               </h2>
-              <div className="w-20 h-1 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full mb-6" />
-              <p className="text-gray-400 text-lg leading-relaxed">
+              <p className="text-[#4C6A83] text-lg leading-relaxed">
                 From the moment a resident enters the lobby to the privacy of their own sanctuary, Deckoviz orchestrates the environment.
               </p>
             </div>
-            <div className="hidden md:block">
-              <Award className="w-20 h-20 text-emerald-500/20" />
-            </div>
+            <Award className="w-16 h-16 text-[#0EA99B]/30 hidden md:block" />
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: 'The Living Reception and Lobby', desc: 'First impressions are everything. Replace static signage with a GAVP unit that adjusts energy: calm in the morning, vibrant during evening arrivals.', icon: <Building /> },
-              { title: 'Immersive Apartment Staging', desc: 'Help buyers "feel" the life they could lead. Cycle through living rituals (Morning Yoga, Evening Lounge) to visualize the space\'s versatility.', icon: <Home /> },
-              { title: 'Digital Concierge & Community', desc: 'Blend high-end art with essential community info, announcements, or local weather, ensuring utility never compromises aesthetics.', icon: <LayoutDashboard /> },
-              { title: 'Amenity Space Ambiance', desc: 'Elevate shared gyms, spas, and lounges with synchronized visuals matching the activity, from high-intensity energy to meditative calm.', icon: <Coffee /> },
-              { title: 'Corridor & Transition Energy', desc: 'Remove the "dead space" feel of hallways. Create a gallery-like experience that makes the walk to an apartment part of the premium journey.', icon: <MapPin /> },
-              { title: 'Sales Center Storytelling', desc: 'Narrate the development\'s brand story, architectural inspiration, and future vision through generative visuals during the pre-sale phase.', icon: <Briefcase /> },
-              { title: 'Circadian Well-being', desc: 'Position your development as wellness-first by syncing light and visual frequencies with the circadian rhythm, promoting better sleep.', icon: <Sun /> },
-              { title: 'Seasonal & Cultural Adaptation', desc: 'Keep common areas fresh. Instantly update visual themes for holidays, local festivals, or seasonal changes with a single tap.', icon: <Sparkles /> },
+              { title: 'The Living Reception & Lobby', desc: 'First impressions are everything. Replace static signage with a GAVP unit that adjusts energy from morning calm to evening arrivals.', icon: <Building /> },
+              { title: 'Immersive Apartment Staging', desc: 'Help buyers feel the life they could lead. Cycle through living rituals (Morning Yoga, Evening Lounge) to show space versatility.', icon: <Home /> },
+              { title: 'Digital Concierge & Community', desc: 'Blend high-end art with essential community info, announcements, or local weather without compromising aesthetics.', icon: <LayoutDashboard /> },
+              { title: 'Amenity Space Ambiance', desc: 'Elevate shared gyms, spas, and lounges with synchronized visuals matching the activity, from energy to meditative calm.', icon: <Coffee /> },
+              { title: 'Corridor & Transition Energy', desc: 'Remove dead hallway space. Create a gallery-like experience that makes the walk to an apartment part of the premium journey.', icon: <MapPin /> },
+              { title: 'Sales Center Storytelling', desc: 'Narrate the development\'s brand story, architectural inspiration, and vision through generative visuals during pre-sale.', icon: <Briefcase /> },
+              { title: 'Circadian Well-being', desc: 'Position your development as wellness-first by syncing light and visual frequencies with natural circadian rhythms.', icon: <Sun /> },
+              { title: 'Seasonal & Cultural Adaptation', desc: 'Keep common areas fresh. Instantly update visual themes for holidays, local festivals, or seasonal changes with a tap.', icon: <Sparkles /> },
             ].map((useCase, idx) => (
               <motion.div 
                 key={idx} 
-                initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: (idx % 4) * 0.1 }}
-                className="group relative p-8 bg-[#0a1510] border border-white/5 rounded-3xl hover:bg-[#0c1f17] hover:border-emerald-500/30 transition-all duration-300 flex flex-col h-full"
-                style={{
-                  transform: `translateY(${idx % 2 === 1 ? '2rem' : '0'})`
-                }}
+                className="glass-card rounded-3xl p-6 border border-white/80 shadow-lg hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500/20 to-teal-500/20 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:text-emerald-300 transition-all duration-300 border border-emerald-500/20">
-                  {React.cloneElement(useCase.icon as React.ReactElement, { size: 20 })}
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#DDF6F0] to-white border border-white/80 text-[#0EA99B] flex items-center justify-center mb-5 shadow-sm">
+                    {React.cloneElement(useCase.icon as React.ReactElement, { size: 22 })}
+                  </div>
+                  <h3 className="font-fraunces text-xl font-medium text-[#0B2A45] mb-3">{useCase.title}</h3>
+                  <p className="text-[#4C6A83] text-sm leading-relaxed">{useCase.desc}</p>
                 </div>
-                <h3 className="text-xl font-semibold mb-4 text-white">{useCase.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed flex-grow">{useCase.desc}</p>
                 <div className="mt-6 flex justify-end">
-                  <ChevronRight className="w-5 h-5 text-emerald-500/0 group-hover:text-emerald-500 transition-colors" />
+                  <ChevronRight className="w-5 h-5 text-[#0EA99B]" />
                 </div>
               </motion.div>
             ))}
@@ -285,9 +323,7 @@ const DeckovizForRealEstate = () => {
       </section>
 
       {/* Internal Utility */}
-      <section className="py-32 relative z-10 border-y border-white/5 bg-[#030907]/50 backdrop-blur-3xl overflow-hidden mt-16">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1/3 h-full bg-emerald-900/10 blur-[150px] pointer-events-none" />
-        
+      <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div 
@@ -295,41 +331,34 @@ const DeckovizForRealEstate = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative z-10"
+              className="space-y-6"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/5 border border-white/10 mb-6">
-                <span className="text-xs font-semibold text-gray-300 uppercase tracking-wider">For Your Firm</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wider uppercase">
+                For Your Firm
               </div>
               
-              <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6 text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              <h2 className="font-fraunces text-4xl sm:text-5xl font-medium text-[#0B2A45] leading-tight">
                 Internal Utility: <br/>Deckoviz for Your Own Work
               </h2>
-              <p className="text-gray-400 text-lg mb-10 leading-relaxed max-w-xl">
+              <p className="text-[#4C6A83] text-lg leading-relaxed max-w-xl">
                 Real estate firms can use Deckoviz within their own headquarters and creative studios to optimize their professional environment and impress investors.
               </p>
               
-              <div className="space-y-8">
+              <div className="space-y-6">
                 {[
                   { title: 'Interactive Portfolio Displays', desc: 'Showcase your past developments and future renders in high-fidelity, living detail to visiting investors and partners.' },
-                  { title: 'The Dynamic Boardroom', desc: 'Shift the energy of your meeting spaces based on the objective: "Deep Work" mode for planning or "Celebration" mode for closing a deal.' },
+                  { title: 'The Dynamic Boardroom', desc: 'Shift meeting space energy based on objective: "Deep Work" for planning or "Celebration" for closing a deal.' },
                   { title: 'Brand Narrative Hub', desc: 'Maintain a consistent, high-end brand aesthetic across your offices, managed from one central cloud dashboard.' }
                 ].map((item, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.15 }}
-                    className="flex gap-5 group"
-                  >
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/10 to-teal-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 group-hover:bg-emerald-500/20 transition-colors">
-                      <CheckCircle2 size={24} className="opacity-80 group-hover:opacity-100" />
+                  <div key={i} className="glass-card rounded-2xl p-5 border border-white/80 flex gap-4 items-start">
+                    <div className="w-10 h-10 rounded-xl bg-[#DDF6F0] text-[#0EA99B] flex items-center justify-center shrink-0">
+                      <CheckCircle2 size={20} />
                     </div>
                     <div>
-                      <strong className="text-white block mb-2 text-xl font-medium">{item.title}</strong>
-                      <span className="text-gray-400 leading-relaxed block">{item.desc}</span>
+                      <h4 className="font-fraunces text-lg font-medium text-[#0B2A45] mb-1">{item.title}</h4>
+                      <p className="text-[#4C6A83] text-sm leading-relaxed">{item.desc}</p>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </motion.div>
@@ -339,18 +368,17 @@ const DeckovizForRealEstate = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative lg:h-[700px] flex items-center justify-center"
+              className="glass-card rounded-[3rem] p-4 border border-white/80 shadow-2xl"
             >
-              <div className="absolute inset-0 bg-emerald-500/5 border border-white/10 rounded-[3rem] transform rotate-3 scale-105" />
-              <div className="relative w-full aspect-[4/5] lg:h-full rounded-[2.5rem] overflow-hidden border border-white/20 shadow-2xl z-10">
+              <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden">
                 <img src={BUILDING_IMG} alt="Real Estate Presentation" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050f0c] via-transparent to-transparent flex items-end p-10">
-                  <div className="backdrop-blur-md bg-black/30 border border-white/10 rounded-2xl p-6 w-full">
-                    <div className="flex items-center gap-3 mb-2 text-emerald-300">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B2A45]/80 via-transparent to-transparent flex items-end p-8">
+                  <div className="glass-card rounded-2xl p-6 border border-white/80 text-white w-full">
+                    <div className="flex items-center gap-3 mb-2 text-[#5CD9C4]">
                       <ShieldCheck className="w-5 h-5" />
-                      <span className="font-semibold tracking-wide">Professional Edge</span>
+                      <span className="font-semibold text-sm tracking-wide">Professional Edge</span>
                     </div>
-                    <p className="text-white text-lg font-light">Transforming your headquarters into a showcase of future living.</p>
+                    <p className="text-white text-base font-light">Transforming your headquarters into a showcase of future living.</p>
                   </div>
                 </div>
               </div>
@@ -360,43 +388,39 @@ const DeckovizForRealEstate = () => {
       </section>
 
       {/* The Partnership Model */}
-      <section className="py-32 relative z-10">
+      <section className="py-24 relative z-10">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-20 max-w-3xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-['Playfair_Display'] font-semibold mb-6 text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+          <div className="text-center mb-16 max-w-3xl mx-auto space-y-4">
+            <h2 className="font-fraunces text-4xl sm:text-5xl font-medium text-[#0B2A45]">
               The Partnership Model
             </h2>
-            <h3 className="text-2xl text-emerald-400 font-medium mb-6">Flexible, Commercial, Future-Facing</h3>
-            <p className="text-lg text-gray-400 font-light leading-relaxed">
-              We offer multiple high-leverage ways for real estate developers to integrate Deckoviz into their commercial strategy, creating new revenue streams and unparalleled differentiation.
+            <h3 className="text-xl text-[#0EA99B] font-semibold">Flexible, Commercial, Future-Facing</h3>
+            <p className="text-[#4C6A83] text-lg font-normal leading-relaxed">
+              We offer multiple high-leverage ways for real estate developers to integrate Deckoviz into their commercial strategy.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
-            {/* Connecting lines for visual structure */}
-            <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-            <div className="hidden md:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-px bg-gradient-to-b from-transparent via-white/10 to-transparent" />
-            
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {[
               {
                 num: '01',
                 title: 'Premium Gift for Buyers',
-                desc: 'Position your development as a thoughtful, experience-led brand by including a Deckoviz unit as a move-in gift. This can be a single unit for the main living area or a "Full Home Package" for luxury penthouses. It ensures the first night in their new home is unforgettable.'
+                desc: 'Position your development as a thoughtful, experience-led brand by including a Deckoviz unit as a move-in gift. This ensures the first night in their new home is unforgettable.'
               },
               {
                 num: '02',
                 title: 'Premium Add-On and Upsell',
-                desc: 'Offer Deckoviz as a paid ambiance upgrade during the customization phase. Homeowners can choose to "AI-enable" specific rooms or the entire apartment. This creates a high-margin revenue stream for the developer while providing the client with a future-proof home.'
+                desc: 'Offer Deckoviz as a paid ambiance upgrade during customization. Homeowners can choose to "AI-enable" specific rooms or the entire apartment.'
               },
               {
                 num: '03',
                 title: 'Referral-Based Revenue Share',
-                desc: 'For a lighter-touch approach, developers can refer their buyers and existing residents to the Deckoviz platform.\n\n• The Reward: For every unit sold, receive 5% of the device value.\n• The Logistics: No inventory, no fulfillment. We handle white-glove setup.'
+                desc: 'Refer buyers to the Deckoviz platform. Receive 5% of device value for every unit sold, with zero inventory management or fulfillment hassle.'
               },
               {
                 num: '04',
                 title: 'Bulk Deployment Across Phases',
-                desc: 'Standardize intelligence across your entire portfolio. We offer scalable bulk pricing for developers looking to include Deckoviz as a standard feature in every unit of a new building or phase, ensuring "Ambient Intelligence" becomes a core part of your brand\'s DNA.'
+                desc: 'Standardize intelligence across your portfolio. Scalable bulk pricing for developers including Deckoviz as standard in every unit.'
               }
             ].map((item, idx) => (
               <motion.div 
@@ -405,78 +429,57 @@ const DeckovizForRealEstate = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="bg-gradient-to-br from-white/[0.03] to-transparent border border-white/5 rounded-[2.5rem] p-10 hover:bg-white/[0.05] hover:border-emerald-500/20 transition-all duration-500 relative overflow-hidden group"
+                className="glass-card rounded-3xl p-8 border border-white/80 shadow-lg relative overflow-hidden"
               >
-                <div className="absolute -right-8 -top-8 text-[120px] font-bold text-white/[0.02] group-hover:text-emerald-500/[0.05] transition-colors duration-500 font-serif leading-none">
-                  {item.num}
-                </div>
-                
-                <h4 className="text-2xl font-semibold mb-6 text-white relative z-10 flex items-center gap-4">
-                  <span className="text-emerald-400 text-lg font-mono">{item.num}.</span>
-                  {item.title}
-                </h4>
-                <p className="text-gray-400 leading-relaxed whitespace-pre-line relative z-10 text-lg">{item.desc}</p>
+                <div className="text-4xl font-fraunces font-bold text-[#0EA99B]/30 mb-4">{item.num}</div>
+                <h4 className="font-fraunces text-2xl font-medium text-[#0B2A45] mb-3">{item.title}</h4>
+                <p className="text-[#4C6A83] leading-relaxed text-base">{item.desc}</p>
               </motion.div>
             ))}
           </div>
-
         </div>
       </section>
 
       {/* Final Call to Action */}
-      <section className="py-32 relative z-10 border-t border-white/5 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050f0c] to-[#020604] pointer-events-none" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-full bg-gradient-to-b from-emerald-900/10 to-transparent blur-[100px] pointer-events-none" />
-        
-        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+      <section className="py-24 relative z-10">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
+            className="space-y-6"
           >
-            <h2 className="text-5xl md:text-6xl lg:text-7xl font-['Playfair_Display'] font-semibold mb-10 text-white leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+            <h2 className="font-fraunces text-4xl sm:text-6xl font-medium text-[#0B2A45] leading-tight">
               Homes Should Be Intelligent. <br/>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 italic">And Now, They Are.</span>
+              <span className="grad-text italic">And Now, They Are.</span>
             </h2>
             
-            <div className="space-y-6 text-xl md:text-2xl text-gray-300 font-light mb-16 leading-relaxed max-w-3xl mx-auto">
-              <p>
-                A home is no longer just a collection of walls and furniture. It is a living, breathing entity that should adapt, respond, and evolve with the people inside it.
-              </p>
-              <p>
-                Deckoviz GAVP is the easiest, most impactful way to bridge the gap between physical real estate and digital intelligence.
-              </p>
-              <div className="py-8 my-8 border-y border-white/10">
-                <p className="font-semibold text-white tracking-wide">
-                  Most things you build fill space; <span className="text-emerald-400">Deckoviz shapes how your residents live and feel within it.</span>
-                </p>
-              </div>
-            </div>
+            <p className="text-[#4C6A83] text-lg sm:text-xl font-normal leading-relaxed max-w-3xl mx-auto">
+              A home is no longer just a collection of walls and furniture. Deckoviz GAVP is the easiest, most impactful way to bridge physical real estate and digital intelligence.
+            </p>
 
-            <div className="bg-gradient-to-b from-white/10 to-white/5 border border-white/20 backdrop-blur-2xl rounded-[3rem] p-12 max-w-2xl mx-auto shadow-[0_0_100px_rgba(16,185,129,0.1)]">
-              <h3 className="text-3xl font-semibold text-white mb-4">Invite the Future into Your Development</h3>
-              <p className="text-gray-300 mb-10 text-lg">Ready to transform your properties into intelligent environments?</p>
+            <div className="glass-card rounded-3xl p-10 max-w-2xl mx-auto border border-white/80 shadow-2xl space-y-6">
+              <h3 className="font-fraunces text-3xl font-medium text-[#0B2A45]">Invite the Future into Your Development</h3>
+              <p className="text-[#4C6A83] text-base">Ready to transform your properties into intelligent environments?</p>
               
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={handleContactClick}
-                className="inline-flex items-center justify-center w-full sm:w-auto gap-3 px-10 py-5 rounded-full font-semibold text-lg text-[#050f0c] bg-emerald-400 shadow-[0_0_40px_rgba(52,211,153,0.3)] hover:shadow-[0_0_60px_rgba(52,211,153,0.5)] hover:bg-emerald-300 transition-all duration-400 mb-8"
+                className="inline-flex items-center justify-center gap-3 px-10 py-5 rounded-full font-semibold text-lg text-white bg-gradient-to-r from-[#0EA99B] to-[#123C63] shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <span>Partner With Us</span>
                 <ArrowRight className="w-5 h-5" />
               </motion.button>
               
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-base text-gray-400 font-medium">
-                <a href="mailto:partners@deckoviz.com" className="hover:text-emerald-400 transition-colors flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">📩</div> 
-                  partners@deckoviz.com
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-[#4C6A83] font-medium pt-4">
+                <a href="mailto:partners@deckoviz.com" className="hover:text-[#0EA99B] transition-colors flex items-center gap-2">
+                  <span>📩 partners@deckoviz.com</span>
                 </a>
-                <span className="hidden sm:inline text-white/20">|</span>
-                <a href="https://www.deckoviz.com" className="hover:text-emerald-400 transition-colors flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center">🌐</div> 
-                  www.deckoviz.com
+                <span className="hidden sm:inline text-[#7C93A6]">|</span>
+                <a href="https://www.deckoviz.com" className="hover:text-[#0EA99B] transition-colors flex items-center gap-2">
+                  <span>🌐 www.deckoviz.com</span>
                 </a>
               </div>
             </div>

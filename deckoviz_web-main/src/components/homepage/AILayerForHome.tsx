@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { 
   Sparkles, 
@@ -7,10 +8,14 @@ import {
   Users, 
   Palette, 
   MessageCircle, 
-  TrendingUp 
+  TrendingUp,
+  ChevronDown,
+  ChevronUp
 } from "lucide-react";
 
 export default function AILayerForHome() {
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
+
   const containerVariants = {
     hidden: {},
     visible: {
@@ -78,7 +83,7 @@ export default function AILayerForHome() {
   ];
 
   return (
-    <section className="relative py-32 bg-white overflow-hidden font-sans">
+    <section className="relative py-20 md:py-32 bg-white overflow-hidden font-sans">
       {/* Background Ambient Glows */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 via-white to-blue-50/40"></div>
@@ -95,7 +100,7 @@ export default function AILayerForHome() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={containerVariants}
-          className="max-w-4xl mx-auto text-center mb-32"
+          className="max-w-4xl mx-auto text-center mb-10"
         >
           <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 border border-indigo-100 mb-8 backdrop-blur-md shadow-sm">
             <Sparkles className="w-4 h-4 text-indigo-500" />
@@ -107,18 +112,45 @@ export default function AILayerForHome() {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 italic font-medium">This is the one worth having.</span>
           </motion.h2>
 
-          <div className="space-y-6 text-sm md:text-base text-gray-700 leading-relaxed font-medium mx-auto max-w-3xl text-left md:text-center">
+          <div className="space-y-6 text-sm md:text-base text-gray-700 leading-relaxed font-medium mx-auto max-w-3xl text-left md:text-center mb-8">
             <motion.p variants={itemVariants}>
               Smart homes gave us switches, schedules, and thermostats that learn your temperature. Useful, but none of it actually knows you.
             </motion.p>
             <motion.p variants={itemVariants}>
               Deckoviz is different: an <span className="text-gray-900 font-bold">emotionally intelligent, context-aware AI presence</span> at the centre of your home, the layer that adapts to your moods, your days, and everyone who lives there.
             </motion.p>
-            <motion.p variants={itemVariants} className="text-base md:text-lg font-serif italic text-indigo-900/90 mt-8 border-l-4 md:border-l-0 border-indigo-300 pl-4 md:pl-0 bg-indigo-50/50 md:bg-transparent rounded-r-xl py-2 md:py-0">
-              This is the heart and the hearth of your home. The thing "smart" always promised and never delivered.
-            </motion.p>
+          </div>
+
+          {/* Toggle Expand Button */}
+          <div className="flex justify-center">
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-600 text-white font-medium text-base shadow-lg hover:shadow-indigo-500/25 transition-all duration-300 hover:scale-[1.02]"
+            >
+              <span>{isExpanded ? "Minimize Vizzy AI Details" : "Explore Vizzy AI Layer & Capabilities"}</span>
+              {isExpanded ? (
+                <ChevronUp className="w-5 h-5 text-indigo-200 group-hover:-translate-y-0.5 transition-transform" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-indigo-200 group-hover:translate-y-0.5 transition-transform" />
+              )}
+            </button>
           </div>
         </motion.div>
+
+        {/* Expandable Section Content */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="pt-6">
+                <p className="text-base md:text-lg font-serif italic text-indigo-900/90 mb-16 border-l-4 md:border-l-0 border-indigo-300 pl-4 md:pl-0 bg-indigo-50/50 md:bg-transparent rounded-r-xl py-2 md:py-0 text-center max-w-3xl mx-auto">
+                  This is the heart and the hearth of your home. The thing "smart" always promised and never delivered.
+                </p>
 
         {/* What Vizzy Does Grid Section */}
         <motion.div
@@ -226,6 +258,21 @@ export default function AILayerForHome() {
             </motion.div>
           </motion.div>
         </motion.div>
+
+        {/* Bottom Minimize Button */}
+        <div className="text-center pt-8 pb-4">
+          <button
+            onClick={() => setIsExpanded(false)}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-indigo-600 transition-colors"
+          >
+            <ChevronUp className="w-4 h-4" />
+            Minimize Vizzy AI Details
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
         
       </div>
     </section>

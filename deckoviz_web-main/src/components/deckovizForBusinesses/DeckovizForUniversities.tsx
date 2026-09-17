@@ -30,19 +30,23 @@ import {
 
 /* ═══════════════ LIGHT TEAL & EMERALD DESIGN SYSTEM ═══════════════ */
 const LightTheme = {
-  bg: "#f8fafc",
+  bg: `
+    radial-gradient(ellipse 60% 45% at 15% 0%, #DDF6F0 0%, transparent 60%),
+    radial-gradient(ellipse 55% 45% at 100% 15%, rgba(14, 169, 155, 0.10) 0%, transparent 55%),
+    linear-gradient(180deg, #F6FAF9 0%, #EDF6F4 100%)
+  `,
   bgSubtle: "#f1f5f9",
-  cardBg: "#ffffff",
-  textDark: "#0f172a",
-  textMuted: "#475569",
-  tealPrimary: "#0d9488",
-  tealLight: "#14b8a6",
-  tealSoft: "#ccfbf1",
-  emeraldPrimary: "#059669",
-  emeraldSoft: "#d1fae5",
-  cyanPrimary: "#0d9488",
-  cyanSoft: "#ccfbf1",
-  borderLight: "#e2e8f0",
+  cardBg: "rgba(255, 255, 255, 0.56)",
+  textDark: "#0B2A45",
+  textMuted: "#4C6A83",
+  tealPrimary: "#0EA99B",
+  tealLight: "#2FC2AE",
+  tealSoft: "#DDF6F0",
+  emeraldPrimary: "#0A8378",
+  emeraldSoft: "#DDF6F0",
+  cyanPrimary: "#0EA99B",
+  cyanSoft: "#DDF6F0",
+  borderLight: "rgba(255, 255, 255, 0.75)",
 };
 
 /* Animation Variants */
@@ -59,6 +63,15 @@ const stagger = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.07 } },
 };
+
+/* Eyebrow Badge Pill */
+const SectionEyebrow: React.FC<{ icon?: any; text: string }> = ({ icon: Icon, text }) => (
+  <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wider uppercase mb-6 shadow-sm">
+    <span className="w-2 h-2 rounded-full bg-[#2FC2AE] animate-pulse-dot" />
+    {Icon && <Icon className="w-4 h-4 text-[#0EA99B]" />}
+    <span>{text}</span>
+  </div>
+);
 
 /* ═══════════════ BACKGROUND & LIGHTING EFFECTS ═══════════════ */
 

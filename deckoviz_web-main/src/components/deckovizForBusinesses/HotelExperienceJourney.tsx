@@ -1,550 +1,645 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import HotelAutoScroll from './HotelAutoScroll';
+import { 
+  ArrowRight, 
+  Sparkles, 
+  Building2, 
+  CheckCircle2, 
+  Palette, 
+  Music, 
+  MapPin, 
+  Heart, 
+  Layers, 
+  Volume2, 
+  Sun, 
+  Bed, 
+  GlassWater, 
+  Compass, 
+  Crown,
+  Sparkle
+} from 'lucide-react';
 
-const SectionHeader = ({ number, title, subtitle }: { number: string, title: string, subtitle?: string }) => (
-  <div className="mb-16 md:mb-24">
-    <div className="flex items-center gap-4 mb-6">
-      <span className="text-xl md:text-2xl font-light text-indigo-400 border border-indigo-400/30 rounded-full px-4 py-1">
-        {number}
-      </span>
-      <div className="h-[1px] flex-1 bg-gradient-to-r from-indigo-500/50 to-transparent" />
-    </div>
-    <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-      {title}
-    </h2>
-    {subtitle && (
-      <p className="text-xl md:text-2xl text-gray-400 font-light leading-relaxed max-w-3xl">
-        {subtitle}
-      </p>
-    )}
-  </div>
-);
+// --- DATA STRUCTURES ---
+const HOTEL_PROBLEMS = [
+  {
+    title: 'Generic Bulk-Framed Art',
+    desc: 'Bulk-ordered prints for 300 identical rooms make luxury properties feel commoditized. Deckoviz turns every wall into a curated, evolving gallery.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-6.5 h-6.5 stroke-[#0A8378]">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+        <circle cx="8.5" cy="8.5" r="1.5" />
+        <polyline points="21 15 16 10 5 21" />
+      </svg>
+    )
+  },
+  {
+    title: 'Atmospheric Stagnation',
+    desc: 'Lobbies and bars remain visually static year-round. Deckoviz seamlessly shifts light, art, and mood between morning coffee, evening cocktails, and private galas.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-6.5 h-6.5 stroke-[#0A8378]">
+        <path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5" />
+        <circle cx="12" cy="12" r="4" />
+      </svg>
+    )
+  },
+  {
+    title: 'Event Space Friction',
+    desc: 'Ballrooms require expensive temporary decor for weddings and corporate galas. Deckoviz transforms event room walls instantly at the touch of a button.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-6.5 h-6.5 stroke-[#0A8378]">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+      </svg>
+    )
+  },
+  {
+    title: 'Fragmented Guest Journey',
+    desc: 'Guest rooms often feel disconnected from the hotel’s lobby character. Deckoviz extends one cohesive visual & sonic world from arrival to check-out.',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="w-6.5 h-6.5 stroke-[#0A8378]">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 7v5l3 3" />
+      </svg>
+    )
+  }
+];
 
-const FeatureBlock = ({ title, content, delay = 0 }: { title: string, content: string, delay?: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 0.7, delay }}
-    className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-500"
-  >
-    <h3 className="text-2xl font-semibold text-white mb-4 bg-gradient-to-r from-indigo-400 to-indigo-400 bg-clip-text text-transparent" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-      {title}
-    </h3>
-    <p className="text-gray-300 leading-relaxed text-lg">
-      {content}
-    </p>
-  </motion.div>
-);
+const HOTEL_WHY = [
+  { title: 'Command Higher RevPAR & ADR', desc: 'Curated, emotionally resonance atmosphere justifies premium room rates and suite pricing.' },
+  { title: 'Create Unforgettable First Impressions', desc: 'Turn lobbies into living art galleries that mesmerize arriving guests.' },
+  { title: 'Drive Long-Term Brand Loyalty', desc: 'Guests remember properties that tailored room ambiance to their personal milestone.' }
+];
 
-const ExpandableUseCase = ({ category, items }: { category: string, items: { title: string, desc: string }[] }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const WHAT_KINDS_OF_HOTELS = [
+  {
+    icon: <Palette className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Say Something the Moment Guests Walk In',
+    bullets: [
+      'Choose from a massive, constantly expanding global art library for the lobby, the restaurant, the spa, the corridors, so the whole property feels curated rather than furnished.',
+      'Create custom art themed around your brand, your city, or the season, and refresh it for a holiday, an event, or a campaign without touching a wall.',
+      'Extend the same visual identity consistently across every public space, so a guest moving from lobby to bar to breakfast room feels one continuous world, not a series of disconnected rooms.'
+    ]
+  },
+  {
+    icon: <Crown className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Heritage as Atmosphere, Not a Forgotten Plaque',
+    bullets: [
+      'Show the history behind the building, the brand, or the destination itself, art and looping visuals that turn a lobby wait into part of the story rather than dead time.',
+      'Give returning guests a sense of continuity, a property that clearly knows what it is and where it comes from, not one that could be swapped with any other hotel in the chain.',
+      'Let heritage become atmosphere, not a plaque by the elevator that nobody reads.'
+    ]
+  },
+  {
+    icon: <Bed className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Every Room Set Up for the Person Staying in It',
+    bullets: [
+      "Give each room its own personalized art frame, so what's on the wall reflects the guest, not a fixed print ordered for three hundred identical rooms.",
+      'Put Vizzy in the room as a genuine companion, not just a screen, greeting the guest by name, adjusting to how they actually want to spend the stay, business trip, honeymoon, family vacation.',
+      'Set the mood and ambiance to match the occasion automatically, quiet and warm for someone arriving late after a long flight, celebratory for an anniversary suite, calm and unhurried for a wellness stay.',
+      'Layer sound in alongside the visuals, so the room feels considered on more than one sense, not just decorated.',
+      'Make the greeting itself part of the experience, a room that feels like it was expecting them, rather than one they simply unlocked.'
+    ]
+  },
+  {
+    icon: <MapPin className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Feel the Destination, Not Just Occupy a Room',
+    bullets: [
+      'Bring local art, photography, and culture into both the common spaces and the rooms themselves, so the property feels rooted in where it actually is.',
+      'Give guests a sense of place before they\'ve left the building, the region\'s history, its landscape, its character, present the moment they arrive.',
+      'Make cultural immersion consistent throughout the stay, not just a mural in the lobby that stops mattering the moment the elevator doors close.'
+    ]
+  },
+  {
+    icon: <Heart className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'A Considered Journey Across the Whole Stay',
+    bullets: [
+      'Carry the experience across the entire journey, arrival, room, common spaces, departure, as one considered arc instead of a single strong first impression that fades by day two.',
+      'Make event spaces genuinely responsive, a wedding, a conference, a private dinner, each one actually feeling like its own occasion rather than the same ballroom with different chairs.',
+      'Build toward the moment a guest tells someone else about the stay, the small, personal, unexpected touch that makes this hotel the one they mention, not just the one they booked.'
+    ]
+  }
+];
+
+const HOTEL_PRACTICE_PILLARS = [
+  {
+    icon: <Palette className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Choose or create the art that fits every space you have',
+    items: [
+      'Pick from a massive, constantly expanding global art library for the lobby, the restaurant, the spa, the corridors, and every room — no more sourcing generic prints in bulk for three hundred identical walls.',
+      'Create custom, themed art for your property specifically: your brand, your city, a seasonal campaign, a signature event, so the visual identity actually changes with the calendar instead of staying frozen the day the hotel opened.',
+      'Keep one coherent aesthetic running across public spaces and private rooms alike, refined and minimal, warm and heritage-driven, bold and contemporary, whatever your brand is actually going for, so a guest never feels like they\'ve walked into a different hotel between the lobby and their floor.'
+    ]
+  },
+  {
+    icon: <Bed className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Give every room its own art, its own companion, its own welcome',
+    items: [
+      'Put a personalized art frame in each room, reflecting the guest staying there rather than a fixed print ordered for the whole property.',
+      'Give each room Vizzy as a real in-room companion, greeting the guest by name and adjusting to why they\'re actually there: a business trip, a honeymoon, a family vacation, a solo wellness stay.',
+      'Set the room\'s mood automatically for the occasion: quiet and warm for a late arrival after a long flight, celebratory for an anniversary suite, calm and unhurried for a spa weekend.',
+      'Layer music into the room alongside the visuals, so the space feels considered the moment the door opens, not just tidied and turned down.'
+    ]
+  },
+  {
+    icon: <Crown className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Turn event spaces into whatever the occasion actually needs',
+    items: [
+      'Transform a ballroom or private room for a wedding, a conference, or a private dinner, no repainting, no rented decor, no extra labor to hand-build a mood that only lasts one night.',
+      'Match the space to the specific energy of the event, romantic and slow for a wedding reception, sharp and energized for a corporate gathering, so it feels designed for that occasion rather than the same room with different linens.',
+      'Turn genuinely great guest moments, a wedding first dance, a milestone celebration, into art the property can showcase elsewhere, the hospitality equivalent of a restaurant putting happy customers on the wall.'
+    ]
+  },
+  {
+    icon: <Volume2 className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Set the mood with sound, not just sight, everywhere on the property',
+    items: [
+      'Choose from a library of hundreds of thousands of tracks to build real sonic atmosphere in the lobby, the bar, the spa, and each individual room, not a single playlist piped through the whole building.',
+      'Tune it to the moment: soft and unobtrusive in a spa, warm and social in a bar, calibrated to the guest\'s own occasion in-room.',
+      'Treat sound as seriously as visuals. What envelops a guest acoustically shapes how a stay feels as much as anything on the walls does, and it\'s usually the most underused lever a property has.'
+    ]
+  },
+  {
+    icon: <MapPin className="w-6 h-6 stroke-[#0A8378]" />,
+    title: 'Bring the destination into every space, common areas and rooms alike',
+    items: [
+      'Feature local art, photography, and culture throughout the property, so a guest feels genuinely placed in your city, not in an interchangeable box that could be anywhere.',
+      'Extend that sense of place into the room itself, not just the lobby, so cultural immersion doesn\'t stop mattering the moment the elevator doors close.',
+      'Let the destination\'s character carry the guest from arrival to departure, one continuous sense of place instead of a single mural near the front desk.'
+    ]
+  }
+];
+
+const HOTEL_JOURNEY_STEPS = [
+  'Guest arrives at lobby — greeted with living local artwork and ambient entrance music.',
+  'Check-in is smooth and personalized based on guest profile and visit reason.',
+  'Guest enters room — room art frame displays personalized greeting with guest name.',
+  'In-room Vizzy adjusts room light, visuals, and acoustics for late arrival or relaxed evening.',
+  'Morning shift — room art transitions gently to soft morning light and ambient wake-up visuals.',
+  'Dining & Spa — public spaces evolve seamlessly from daytime freshness to evening luxury glow.',
+  'Private Events — ballrooms transform visually for weddings, galas, or high-level summits.',
+  'Departure — guest receives a digital memory keepsake artwork of their stay.'
+];
+
+const HotelExperienceJourney: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleDemoClick = () => {
+    navigate('/contact');
+  };
 
   return (
-    <div className="border-b border-white/10 last:border-0">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between py-6 text-left group"
-      >
-        <h3 className="text-2xl md:text-3xl font-light text-white group-hover:text-indigo-400 transition-colors duration-300" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-          {category}
-        </h3>
-        <span className={`text-3xl text-indigo-400 transition-transform duration-500 ${isOpen ? 'rotate-45' : ''}`}>
-          +
-        </span>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.04, 0.62, 0.23, 0.98] }}
-            className="overflow-hidden"
-          >
-            <div className="pb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-              {items.map((item, idx) => (
-                <div key={idx} className="bg-white/5 rounded-xl p-6 border border-white/5 hover:border-indigo-500/30 transition-colors">
-                  <h4 className="text-xl font-medium text-white mb-2">{item.title}</h4>
-                  <p className="text-gray-400 leading-relaxed">{item.desc}</p>
+    <div 
+      className="relative min-h-screen text-[#0E2438] overflow-x-hidden selection:bg-[#5CD9C4] selection:text-[#071B2C]"
+      style={{
+        background: `
+          radial-gradient(ellipse 60% 45% at 15% 0%, #DDF6F0 0%, transparent 60%),
+          radial-gradient(ellipse 55% 45% at 100% 15%, rgba(14, 169, 155, 0.10) 0%, transparent 55%),
+          linear-gradient(180deg, #F6FAF9 0%, #EDF6F4 100%)
+        `,
+        fontFamily: "'Inter', sans-serif"
+      }}
+    >
+      {/* Inline styles for custom animations & Fraunces font */}
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+        
+        .font-fraunces {
+          font-family: 'Fraunces', serif;
+        }
+
+        @keyframes floatA {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(40px, 30px) scale(1.08); }
+        }
+        @keyframes floatB {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-35px, 25px) scale(1.05); }
+        }
+        @keyframes floatC {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(25px, -35px) scale(1.1); }
+        }
+        @keyframes pulseDot {
+          0% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0.6); }
+          70% { box-shadow: 0 0 0 9px rgba(14, 169, 155, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0); }
+        }
+        @keyframes gradShift {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 220% 50%; }
+        }
+
+        .animate-float-a { animation: floatA 22s ease-in-out infinite; }
+        .animate-float-b { animation: floatB 26s ease-in-out infinite; }
+        .animate-float-c { animation: floatC 30s ease-in-out infinite; }
+        .animate-pulse-dot { animation: pulseDot 2.2s infinite; }
+
+        .grad-text {
+          background: linear-gradient(100deg, #0EA99B, #1B4C79, #2FC2AE);
+          background-size: 220% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: gradShift 7s linear infinite;
+        }
+
+        .glass-card {
+          background: rgba(255, 255, 255, 0.56);
+          backdrop-filter: blur(22px) saturate(160%);
+          -webkit-backdrop-filter: blur(22px) saturate(160%);
+          border: 1px solid rgba(255, 255, 255, 0.75);
+          box-shadow: 0 20px 60px -25px rgba(11, 42, 69, 0.25);
+        }
+      `}</style>
+
+      {/* Decorative Background Ambient Blobs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute w-[38vw] h-[38vw] top-[-8%] left-[-10%] rounded-full blur-[90px] opacity-55 bg-[radial-gradient(circle,#9BE8DB,transparent_70%)] animate-float-a" />
+        <div className="absolute w-[34vw] h-[34vw] top-[8%] right-[-8%] rounded-full blur-[90px] opacity-32 bg-[radial-gradient(circle,#5CD9C4,transparent_70%)] animate-float-b" />
+        <div className="absolute w-[30vw] h-[30vw] bottom-[6%] left-[20%] rounded-full blur-[90px] opacity-16 bg-[radial-gradient(circle,#1B4C79,transparent_72%)] animate-float-c" />
+      </div>
+
+      {/* Main Content Area */}
+      <main className="relative z-10">
+
+        {/* HERO SECTION */}
+        <section className="relative pt-40 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+          <svg className="absolute inset-0 w-full h-full opacity-35 pointer-events-none z-[-1]" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice">
+            <g stroke="#0EA99B" strokeWidth="1" fill="none" opacity="0.14">
+              <path d="M0 80 Q 250 40 500 80 T 1000 80" />
+              <path d="M0 180 Q 250 120 500 180 T 1000 180" />
+              <path d="M0 600 Q 250 660 500 600 T 1000 600" />
+              <path d="M0 520 Q 250 580 500 520 T 1000 520" />
+            </g>
+          </svg>
+
+          <div className="max-w-5xl mx-auto text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card text-sm font-semibold text-[#0A8378] tracking-tight mb-8"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#2FC2AE] animate-pulse-dot" />
+              Deckoviz for Hotels
+            </motion.div>
+
+            <motion.h1 
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="font-fraunces text-4xl sm:text-6xl lg:text-7xl font-medium text-[#0B2A45] leading-[1.1] tracking-tight mb-6"
+            >
+              The new standard in<br />
+              <span className="grad-text">hotel atmosphere & guest journey</span>
+            </motion.h1>
+
+            <motion.p 
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="text-lg sm:text-xl lg:text-2xl text-[#4C6A83] font-normal max-w-3xl mx-auto leading-relaxed mb-12"
+            >
+              Elevate your property from a <em className="italic text-[#0B2A45] font-medium">"place to sleep"</em> to an <em className="italic text-[#0B2A45] font-medium">"unforgettable sanctuary of art, story, and sanctuary."</em>
+            </motion.p>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="glass-card rounded-3xl p-8 sm:p-10 text-left max-w-4xl mx-auto shadow-xl"
+            >
+              <h3 className="font-fraunces text-2xl sm:text-3xl text-[#0B2A45] font-medium mb-4">
+                With the Deckoviz Hotel GAVP
+              </h3>
+              <p className="text-[#4C6A83] text-base sm:text-lg leading-relaxed mb-4">
+                Deckoviz for Hotels is an AI-powered multi-sensory ambiance infrastructure designed for luxury hotels, boutique resorts, and hospitality groups.
+              </p>
+              <p className="text-[#4C6A83] text-base sm:text-lg leading-relaxed">
+                Using our proprietary AI, Vizzy, Deckoviz curates artwork, local heritage narratives, in-room guest greetings, and ambient soundscapes across your lobby, corridors, guest suites, and ballrooms.
+              </p>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* MEDIA / VIDEO & DEMO SECTION */}
+        <section className="py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="text-center max-w-3xl mx-auto">
+              <h2 className="font-fraunces text-3xl sm:text-5xl text-[#0B2A45] font-medium mb-4">
+                A glimpse of Deckoviz for your hotel
+              </h2>
+              <div className="w-16 h-0.5 bg-gradient-to-r from-[#2FC2AE] to-[#1B4C79] mx-auto rounded-full mt-4" />
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+              <motion.div 
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.4 }}
+                className="glass-card rounded-3xl p-4 sm:p-6 shadow-xl flex flex-col justify-between"
+              >
+                <div className="text-center mb-4">
+                  <h3 className="font-fraunces text-xl font-medium text-[#0B2A45]">Watch Deckoviz Transform Hotel Spaces</h3>
+                </div>
+                <div className="relative aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/60">
+                  <iframe
+                    src="https://www.youtube.com/embed/pq6vb-AvmYc?rel=0&showinfo=0"
+                    title="Deckoviz Hotel Ambiance Demo"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowFullScreen
+                    className="w-full h-full border-0"
+                  />
+                </div>
+                <p className="text-center text-[#4C6A83] text-sm sm:text-base mt-4">
+                  See how Deckoviz elevates lobbies, suites, and public rooms into living art spaces.
+                </p>
+              </motion.div>
+
+              <motion.div 
+                whileHover={{ y: -6 }}
+                transition={{ duration: 0.4 }}
+                className="glass-card rounded-3xl p-4 sm:p-6 shadow-xl flex flex-col justify-between"
+              >
+                <div className="text-center mb-4">
+                  <h3 className="font-fraunces text-xl font-medium text-[#0B2A45]">Hospitality Visual Stories</h3>
+                </div>
+                <div className="w-full aspect-[4/3] sm:aspect-video rounded-2xl overflow-hidden shadow-lg border border-white/60 bg-white/40">
+                  <iframe
+                    src="https://www.instagram.com/p/DLM9TrnSibN/embed"
+                    className="w-full h-full border-0"
+                    allowTransparency={true}
+                    allow="encrypted-media"
+                    title="Instagram Post"
+                  />
+                </div>
+                <p className="text-center text-[#4C6A83] text-sm sm:text-base mt-4">
+                  Explore custom regional curation, guest welcome frames, and resort installations.
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
+        {/* CORE PROBLEMS WE SOLVE */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center max-w-3xl mx-auto mb-16">
+              <h2 className="font-fraunces text-3xl sm:text-5xl text-[#0B2A45] font-medium mb-4">
+                Core problems we solve for hotels
+              </h2>
+              <div className="w-16 h-0.5 bg-gradient-to-r from-[#2FC2AE] to-[#1B4C79] mx-auto rounded-full" />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+              {HOTEL_PROBLEMS.map((prob, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ y: -6, boxShadow: "0 30px 80px -30px rgba(14,169,155,0.35)" }}
+                  transition={{ duration: 0.4 }}
+                  className="glass-card rounded-3xl p-8 sm:p-10 flex gap-6 items-start border border-white/75 hover:border-[#0EA99B]/40 transition-colors"
+                >
+                  <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-[#DDF6F0] to-white border border-white/80 flex items-center justify-center shadow-sm">
+                    {prob.icon}
+                  </div>
+                  <div>
+                    <h3 className="font-fraunces text-xl sm:text-2xl text-[#0B2A45] font-medium mb-2.5">
+                      {prob.title}
+                    </h3>
+                    <p className="text-[#4C6A83] text-base leading-relaxed">
+                      {prob.desc}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* WHY DECKOVIZ FOR HOTELS */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto space-y-8">
+            <div>
+              <h2 className="font-fraunces text-3xl sm:text-5xl text-[#0B2A45] font-medium leading-tight mb-4">
+                Why Deckoviz <span className="grad-text">for hotels?</span>
+              </h2>
+              <p className="text-[#4C6A83] text-lg sm:text-xl font-normal leading-relaxed">
+                Your property is a brand destination, not just guest rooms. Deckoviz gives you the power to:
+              </p>
+            </div>
+
+            <div className="space-y-6 divide-y divide-[#0B2A45]/10">
+              {HOTEL_WHY.map((item, idx) => (
+                <div key={idx} className={`pt-6 ${idx === 0 ? 'pt-0 divide-none' : ''} flex gap-4 items-start`}>
+                  <div className="flex-shrink-0 w-8 h-8 rounded-xl bg-gradient-to-br from-[#2FC2AE] to-[#1B4C79] flex items-center justify-center text-white shadow-md mt-1">
+                    <CheckCircle2 className="w-5 h-5 stroke-white" />
+                  </div>
+                  <div>
+                    <h4 className="font-fraunces text-lg sm:text-xl text-[#0B2A45] font-medium mb-1">
+                      {item.title}
+                    </h4>
+                    <p className="text-[#4C6A83] text-base leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
+          </div>
+        </section>
 
-export const HotelExperienceJourney: React.FC = () => {
-  return (
-    <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-indigo-500/30">
-      
-      {/* Intro Section */}
-      <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 px-6 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[100px] pointer-events-none" />
-        
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="max-w-4xl"
-          >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-8 leading-[1.1]" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-              The Future of Hospitality: <br />
-              <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent">
-                Beyond the Stay
+        {/* SECTION 1: WHAT KINDS OF HOTELS IS THE DECKOVIZ PORTAL FOR? */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white/30 backdrop-blur-sm border-y border-[#0B2A45]/10">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="text-center max-w-4xl mx-auto">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wide uppercase mb-4">
+                <Sparkles className="w-3.5 h-3.5" /> Hospitality Philosophy
               </span>
-            </h1>
-            <p className="text-2xl md:text-3xl font-light text-gray-300 mb-8 leading-relaxed">
-              Transforming Hotels into Intelligent, Generative, Delightful Sanctuaries
-            </p>
-            <div className="space-y-6 text-xl text-gray-400 font-light max-w-3xl leading-relaxed">
-              <p>
-                In the world of high-end hospitality, luxury is no longer defined just by thread counts or marble bathrooms. It is defined by <strong>Resonance</strong>.
-              </p>
-              <p>
-                Every hotel has walls, and every hotel has art, but most hotels have "dead" spaces: static décor that remains the same from the guest's arrival to their departure.
-              </p>
-              <p className="text-white font-medium text-2xl">
-                Deckoviz is the evolution. We provide the Generative Ambiance and Visual Platform (GAVP) that turns a passive hotel into an intelligent, living environment. This is the shift from providing a room to providing an Ever-Evolving Experience.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Video Embed Section */}
-      <section className="py-16 md:py-24 px-6 border-t border-white/5 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-              A Glimpse Of Deckoviz For Your Hotel
-            </h2>
-          </div>
-          <div className="relative pb-[56.25%] h-0 overflow-hidden rounded-3xl shadow-[0_0_50px_rgba(79,70,229,0.15)] border border-white/10">
-            <iframe
-              className="absolute top-0 left-0 w-full h-full"
-              src="https://www.youtube.com/embed/zCLi3OTFRFU?rel=0&showinfo=0"
-              title="A Glimpse Of Deckoviz For Your Hotel"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            ></iframe>
-          </div>
-        </div>
-      </section>
-
-      {/* Auto Scrolling Images */}
-      <section className="border-t border-white/5 relative z-10">
-        <HotelAutoScroll theme="dark" />
-      </section>
-
-      {/* 01. The AI Layer */}
-      <section className="py-24 md:py-32 px-6 border-t border-white/5 relative">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <SectionHeader 
-            number="01" 
-            title="The AI Layer" 
-            subtitle="The Invisible Concierge of Atmosphere" 
-          />
-          <p className="text-xl text-gray-300 mb-16 max-w-4xl font-light leading-relaxed">
-            Deckoviz is the AI Layer for your hotel infrastructure. We move beyond "screens" to provide a creative intelligence system that lives within your architecture.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <FeatureBlock 
-              title="Vizzy: Your 24/7 Creative Intelligence Engine" 
-              content="Most hotels struggle with content fatigue. With the Deckoviz AI layer, you have Vizzy, our proprietary AI that acts as your on-site Creative Director. Vizzy understands the DNA of your hotel brand. It doesn't just display images; it synthesizes unique, high-fidelity generative art and atmospheric visuals that align with your brand's specific aesthetic in real time."
-              delay={0.1}
-            />
-            <FeatureBlock 
-              title="Generative Synthesis vs. Static Storage" 
-              content="Traditional digital signage is limited by what you upload. The Deckoviz AI layer generates an infinite stream of unique visuals. Whether it is a 'Deep Forest Calm' for your spa or a 'Metropolitan Energy' for your rooftop bar, the AI ensures that no two guests ever see the exact same visual twice, maintaining a constant sense of novelty and delight."
-              delay={0.2}
-            />
-            <FeatureBlock 
-              title="Predictive Atmospheric Intelligence" 
-              content="The AI layer learns the rhythm of your hotel. It knows when to soften the lights and visuals as the sun sets, and when to energize the lobby for the morning checkout rush. It isn't just a display: it is a software-driven brain that optimizes the emotional temperature of every room."
-              delay={0.3}
-            />
-            <FeatureBlock 
-              title="Future-Ready Infrastructure" 
-              content="By installing Deckoviz, you are making your hotel AI-Ready. As we release new AI models for scent integration, gesture control, and advanced guest personalization, your hotel updates automatically over the cloud. You are investing in a platform that becomes more valuable every month."
-              delay={0.4}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* 02. The Experience & Ambience Layer */}
-      <section className="py-24 md:py-32 px-6 border-t border-white/5 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/10 to-transparent pointer-events-none" />
-        <div className="max-w-7xl mx-auto relative z-10">
-          <SectionHeader 
-            number="02" 
-            title="The Experience & Ambience Layer" 
-            subtitle="Designing the Guest State-of-Being" 
-          />
-          <p className="text-xl text-gray-300 mb-16 max-w-4xl font-light leading-relaxed">
-            Deckoviz is the Experience Layer that justifies premium rates. Guests do not pay for a room: they pay for how they feel while they are in it.
-          </p>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {[
-              { title: "Circadian Rhythm Integration", desc: "Use the Ambiance Layer to align your guest's internal clock with your environment. Deckoviz can automatically shift through light frequencies and visual tones that promote better sleep, faster recovery from jet lag, and a more profound sense of well-being." },
-              { title: "Multisensory Immersion", desc: "We believe visuals are only one part of the story. Deckoviz pairs generative art with high-fidelity soundscapes and AI-driven narration. Imagine a guest entering their suite to find a beautiful, moving landscape paired with the soft sounds of a local forest and a narrated history of the region. This is 360-degree hospitality." },
-              { title: "Personalized Mementos", desc: "Move beyond 'Welcome, Mr. Smith' on a TV screen. Deckoviz allows you to create Generative Welcome Moments. Create custom art based on a guest's preferences, or display personalized celebration visuals for honeymooners and anniversary guests that they will want to photograph and share instantly." },
-              { title: "Visual Resonance, Not Noise", desc: "Typical hotel TVs are distractions. Deckoviz units are designed with minimalist wooden frames and halo backlighting to be part of the furniture. They provide a 'Calm Tech' experience that enhances the room's design rather than cluttering it with commercial noise." }
-            ].map((item, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="flex gap-6"
-              >
-                <div className="w-12 h-12 shrink-0 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 font-bold text-xl border border-indigo-500/30">
-                  {idx + 1}
-                </div>
-                <div>
-                  <h3 className="text-2xl font-semibold text-white mb-3">{item.title}</h3>
-                  <p className="text-gray-400 leading-relaxed text-lg">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 03. 8 Core Use Cases */}
-      <section className="py-24 md:py-32 px-6 border-t border-white/5">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader 
-            number="03" 
-            title="8 Core Use Cases" 
-            subtitle="The Intelligent Journey" 
-          />
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-            {[
-              { title: "The Living Lobby", desc: "Transform the first touchpoint into a gallery of your brand's soul. Use generative art that reflects the local culture, weather, and energy to immediately ground guests in a sense of place." },
-              { title: "The Suite Sanctuary", desc: "Replace the 'black box' TV with a living canvas. Allow guests to choose their own 'Room Vibe' from a menu of AI-generated atmospheres like 'Zen Garden,' 'Oceanic Deep,' or 'Creative Studio.'" },
-              { title: "The Spa Immersion", desc: "Elevate treatment rooms with visuals and soundscapes that are perfectly synchronized to the rhythm of the therapy, creating a deeper state of relaxation than music alone could ever achieve." },
-              { title: "The Elevating Corridor", desc: "Turn long, boring hallways into a journey. Use Deckoviz units to show evolving art pieces that guide the guest toward their room, making every walk through the hotel an opportunity for discovery." },
-              { title: "The Intelligent Concierge", desc: "Use the AI layer to provide dynamic, visual recommendations for local attractions, weather updates, and hotel events, all presented as beautiful, brand-aligned art rather than 'bullet points.'" },
-              { title: "The Event Metamorphosis", desc: "Instantly transform your ballroom or conference space from a professional 'Tech Summit' vibe to a 'Gala Dinner' atmosphere with a single voice command." },
-              { title: "The Rooftop Pulse", desc: "Sync your bar's visuals to the music and the sunset. As the night progresses, the generative art becomes more vibrant, driving the energy of the space and increasing beverage sales." },
-              { title: "The Legacy Gallery", desc: "Tell the story of your hotel's history and architecture through AI-curated archival photos and narrated 'Time-Travel' loops that honor your heritage." }
-            ].map((uc, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.05 }}
-                className="group relative p-8 rounded-3xl overflow-hidden bg-white/5 border border-white/10 hover:border-indigo-500/50 transition-colors"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <h4 className="text-xl font-bold text-white mb-4 relative z-10">{uc.title}</h4>
-                <p className="text-gray-400 leading-relaxed text-sm relative z-10">{uc.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 04. 12 Unrivaled Benefits */}
-      <section className="py-24 md:py-32 px-6 border-t border-white/5 relative">
-        <div className="max-w-7xl mx-auto">
-          <SectionHeader 
-            number="04" 
-            title="12 Unrivaled Benefits" 
-            subtitle="The Business of Intelligent Atmosphere" 
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-8">
-            {[
-              { title: "Increased Guest Satisfaction (NPS)", desc: "Memorable, unique experiences lead to higher ratings, better reviews, and more repeat bookings." },
-              { title: "Higher Average Daily Rate (ADR)", desc: "High-end, AI-driven environments justify premium pricing. An 'Intelligent Suite' is a higher-value product than a standard room." },
-              { title: "Significant Revenue Upsell", desc: "Use the 'Experience Layer' to subtly promote high-margin services like spa treatments, private dining, or late checkout through beautiful, non-intrusive visuals." },
-              { title: "Eliminate Printing Costs", desc: "Stop reprinting guest directories, event schedules, and seasonal posters. Everything is updated instantly through the cloud." },
-              { title: "Zero Operational Friction", desc: "Your housekeeping and front-desk staff can manage the entire hotel's atmosphere through a central dashboard or simple voice commands." },
-              { title: "Brand Differentiation", desc: "In a crowded market, Deckoviz makes your hotel 'The AI Hotel' or 'The Experience Hotel,' a unique category that competitors cannot easily replicate." },
-              { title: "Sustainability Leadership", desc: "Dramatically reduce your paper and plastic waste. A digital-first approach to décor is better for the planet and better for your ESG reporting." },
-              { title: "Reduced Guest Stress", desc: "Ambient visuals and circadian lighting help guests feel more relaxed, leading to fewer complaints and a more harmonious environment." },
-              { title: "Talent Attraction", desc: "Modern staff want to work with modern tools. Providing an 'Intelligent Workplace' improves morale and helps you attract top-tier hospitality talent." },
-              { title: "Organic Social Media Growth", desc: "Your hotel becomes 'Instagram-Famous' by design. Guests will naturally share the beautiful, generative moments created by Deckoviz, providing you with free, high-trust marketing." },
-              { title: "Multi-Property Synchronization", desc: "Ensure that your flagship in London and your boutique in the Maldives maintain the same high-end aesthetic, controlled from one global headquarters." },
-              { title: "A Growing Asset", desc: "Unlike a painting that fades or furniture that wears out, Deckoviz gets better with every software update. Your walls are an investment that continues to evolve." }
-            ].map((ben, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: (idx % 3) * 0.1 }}
-                className="flex flex-col border-l border-indigo-500/30 pl-6 hover:border-indigo-400 transition-colors"
-              >
-                <h4 className="text-xl font-semibold text-white mb-3">{ben.title}</h4>
-                <p className="text-gray-400 leading-relaxed">{ben.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Massive Expandable Section: Deckoviz for Hotels Evolving Use Cases */}
-      <section className="py-24 md:py-32 px-6 border-t border-white/5 bg-white/5 relative">
-        <div className="max-w-5xl mx-auto">
-          <div className="mb-16 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Deckoviz for Hotels:<br/> An Evolving List of Use Cases</h2>
-            <p className="text-xl text-gray-400 font-light max-w-3xl mx-auto leading-relaxed">
-              Deckoviz becomes your hotel's visual layer, storytelling layer, concierge layer, ambience layer, memory layer, and guest delight system.
-              Hospitality is no longer just about rooms, service, and amenities. Most hotels can offer comfort. What guests remember is how the place made them feel, how personal the experience was, and whether the stay felt memorable enough to return to or recommend.
-            </p>
-            <p className="text-xl text-indigo-300 font-light max-w-3xl mx-auto leading-relaxed mt-6">
-              Deckoviz helps transform hotels from accommodation spaces into immersive hospitality experiences.
-              This is a living list of use cases we keep expanding as we discover new ways hotels can use Deckoviz to create stronger guest delight, deeper brand recall, better reviews, more upsells, and unforgettable stays.
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            <ExpandableUseCase 
-              category="Guest Experience & Personalisation"
-              items={[
-                { title: "Personalized guest welcome experiences", desc: "Welcome guests with personalised greetings at check-in, in rooms, or at concierge areas using their names, beautiful visuals, and tailored messages." },
-                { title: "VIP guest recognition", desc: "Create elevated arrival experiences for premium guests, repeat visitors, honeymoon couples, corporate guests, and long-stay customers." },
-                { title: "Returning guest memory system", desc: "Vizzy remembers preferences such as room choices, food preferences, favourite drinks, special requests, birthdays, anniversaries, and past stay details." },
-                { title: "Birthday, anniversary & celebration moments", desc: "Create personalised visual experiences for birthdays, honeymoons, anniversaries, proposals, family trips, and milestone celebrations." },
-                { title: "Personalized room welcome art", desc: "Guests enter rooms with personalised art, welcome montages, or beautiful custom visual greetings." },
-                { title: "Guest memory gifts", desc: "Turn special travel moments into personalised artworks or keepsake visuals guests can take home digitally or physically." },
-                { title: "Proposal & surprise planning support", desc: "Help orchestrate proposals, surprise celebrations, room reveals, romantic experiences, and unforgettable emotional moments." },
-                { title: "Family stay personalization", desc: "Create special experiences for children, families, and multi-generational travel groups." }
-              ]}
-            />
-            
-            <ExpandableUseCase 
-              category="Concierge & Guest Guidance"
-              items={[
-                { title: "AI-powered concierge layer", desc: "Vizzy becomes your digital concierge, helping guests with hotel information, services, local recommendations, bookings, and personal guidance." },
-                { title: "Local city guide experiences", desc: "Beautiful visual guides for nearby attractions, restaurants, shopping, hidden gems, and local experiences." },
-                { title: "Itinerary planning support", desc: "Help guests plan their day with personalised recommendations based on interests, mood, and trip type." },
-                { title: "Event and schedule displays", desc: "Spa appointments, breakfast timings, pool schedules, live music nights, yoga sessions, local tours, and event reminders." },
-                { title: "Local culture immersion", desc: "Introduce guests to local history, traditions, art, festivals, and regional stories beautifully." },
-                { title: "Airport transfer and travel coordination", desc: "Elegant communication for pickups, drop-offs, travel plans, and concierge assistance." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Room Experience & Ambience"
-              items={[
-                { title: "Dynamic room ambience engine", desc: "Vizzy becomes the room's mood layer, adapting visuals, sounds, and ambience depending on guest preferences and time of day." },
-                { title: "Morning vs evening room moods", desc: "Different visual and sensory experiences for waking up, relaxation, work mode, and nighttime wind-down." },
-                { title: "Romantic stay mode", desc: "Special ambience settings for honeymoon suites, anniversaries, and couple experiences." },
-                { title: "Wellness and calm mode", desc: "Peaceful, restorative visual environments for relaxation-focused stays." },
-                { title: "Business travel mode", desc: "Focused, calming environments for professionals and work-heavy stays." },
-                { title: "Festival and holiday transformations", desc: "Christmas, New Year, Diwali, Valentine's Day, local festivals - rooms and shared spaces adapt beautifully." },
-                { title: "Weather-responsive ambience", desc: "Rainy day warmth, winter luxury, summer freshness - spaces that feel alive with context." },
-                { title: "Family and kids mode", desc: "Playful visuals, storytelling modes, and interactive experiences for children." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Hotel Storytelling & Brand Layer"
-              items={[
-                { title: "Your hotel's story", desc: "Tell the story of your hotel: founding journey, heritage, architecture, values, and what makes the property special." },
-                { title: "Property history storytelling", desc: "Especially powerful for heritage hotels, boutique properties, and legacy hospitality brands." },
-                { title: "Destination storytelling", desc: "Show guests the soul of the location - its people, culture, traditions, food, and history." },
-                { title: "Brand philosophy storytelling", desc: "Help guests understand your hotel beyond amenities - why it exists and what it stands for." },
-                { title: "Sustainability storytelling", desc: "Communicate eco-conscious design, local sourcing, sustainability efforts, and responsible hospitality beautifully." },
-                { title: "Staff and service stories", desc: "Introduce chefs, hosts, concierge teams, wellness experts, and the people who shape the guest experience." },
-                { title: "Signature experience storytelling", desc: "Spa philosophy, wellness journeys, culinary inspiration, destination experiences, and curated adventures." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Food, Dining & Restaurant Integration"
-              items={[
-                { title: "Visual dining menus", desc: "Convert restaurant menus into immersive visual experiences inside the hotel." },
-                { title: "Signature dish storytelling", desc: "Show ingredients, inspiration, preparation, and chef philosophy behind signature dishes." },
-                { title: "Dining ambience experiences", desc: "Different restaurant moods for breakfast, brunch, dinner, rooftop dining, and special events." },
-                { title: "Room service visual menu", desc: "Make in-room dining more premium and engaging through visual storytelling." },
-                { title: "Event dining personalization", desc: "Private dinners, anniversaries, business dinners, destination weddings, and celebration meals." },
-                { title: "Culinary journey experiences", desc: "Take guests through regional cuisine and local food stories." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Revenue Growth & Upselling"
-              items={[
-                { title: "Spa and wellness upselling", desc: "Beautifully showcase spa services, treatments, wellness journeys, and premium experiences." },
-                { title: "Premium room and suite upgrades", desc: "Drive room upgrades through immersive visual storytelling and aspirational presentation." },
-                { title: "Experience package promotions", desc: "Promote honeymoon packages, wellness retreats, family stays, workation packages, and celebration bundles." },
-                { title: "Dining and event upselling", desc: "Drive bookings for private dining, tasting menus, rooftop dinners, and celebration packages." },
-                { title: "Late checkout and premium services", desc: "Upsell airport transfers, concierge services, premium amenities, and convenience services." },
-                { title: "Event and wedding bookings", desc: "Promote destination weddings, conferences, retreats, and event hosting beautifully." },
-                { title: "Loyalty and membership programs", desc: "Highlight repeat guest benefits and premium membership experiences." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Social Proof & Reputation"
-              items={[
-                { title: "Live guest review wall", desc: "Display positive guest reviews, testimonials, and memorable guest experiences beautifully." },
-                { title: "Guest memory wall", desc: "Celebrate returning guests, weddings, proposals, celebrity visits, and milestone stays." },
-                { title: "UGC and social wall", desc: "Display guest-generated content, beautiful travel moments, and shareable experiences." },
-                { title: "Influencer and celebrity visits", desc: "Celebrate notable guests tastefully and elegantly." },
-                { title: "Review generation prompts", desc: "Encourage happy guests to leave reviews through elegant checkout prompts." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Events, Weddings & Experiences"
-              items={[
-                { title: "Destination wedding storytelling", desc: "Create beautiful immersive wedding journeys across the property." },
-                { title: "Event and celebration displays", desc: "Corporate events, private celebrations, family gatherings, anniversaries, and milestone moments." },
-                { title: "Conference and business event support", desc: "Elegant event branding, scheduling, welcome displays, and professional experiences." },
-                { title: "Live music and cultural evenings", desc: "Promote performances, events, and special nights beautifully." },
-                { title: "Seasonal and festive activations", desc: "Transform the hotel visually during key festive periods and local celebrations." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Operations, Signage & Utility"
-              items={[
-                { title: "Beautiful signage system", desc: "Premium signage for directions, check-in guidance, event spaces, amenities, and guest information." },
-                { title: "Queue and waiting management", desc: "Elegant check-in and waiting experiences that feel premium rather than transactional." },
-                { title: "Multi-property brand consistency", desc: "Maintain visual and storytelling consistency across hotel chains and multiple locations." },
-                { title: "Staff recognition wall", desc: "Celebrate team members, anniversaries, service excellence, and internal culture." },
-                { title: "Recruitment wall", desc: "Hiring announcements presented beautifully and on-brand." },
-                { title: "Vendor and partner showcases", desc: "Highlight local partnerships, artists, suppliers, wineries, wellness partners, and collaborators." }
-              ]}
-            />
-
-            <ExpandableUseCase 
-              category="Wellness, Spa & Retreat Experiences"
-              items={[
-                { title: "Meditation and mindfulness modes", desc: "Beautiful visual calm spaces for wellness-focused properties." },
-                { title: "Spa storytelling", desc: "Explain rituals, treatments, healing traditions, and wellness philosophy." },
-                { title: "Retreat experience journeys", desc: "Yoga retreats, detox retreats, spiritual stays, and healing journeys." },
-                { title: "Emotional reset spaces", desc: "Create restorative environments guests deeply remember." }
-              ]}
-            />
-          </div>
-          
-          <div className="mt-32 pt-16 border-t border-white/10">
-            <div className="text-center mb-16">
-              <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-400 mb-6" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-                The Full Deckoviz Hospitality Experience
-              </h3>
-              <p className="text-xl text-gray-300 font-light max-w-2xl mx-auto leading-relaxed">
-                The real magic happens when all of this works together.
+              <h2 className="font-fraunces text-3xl sm:text-5xl text-[#0B2A45] font-medium leading-tight mb-4">
+                What Kinds of Hotels Is The <span className="grad-text">Deckoviz Portal For?</span>
+              </h2>
+              <p className="text-[#4C6A83] text-lg sm:text-xl leading-relaxed">
+                For properties that want space to speak, heritage to live, and every room to feel personally expected.
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto relative py-8">
-              {/* Vertical line connecting steps */}
-              <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-indigo-500/50 via-violet-500/50 to-pink-500/0 md:-translate-x-1/2" />
-
-              {[
-                { icon: "✨", text: "A guest arrives and feels welcomed personally." },
-                { icon: "🛏️", text: "Their room already feels prepared for them." },
-                { icon: "🏛️", text: "The property tells its story beautifully." },
-                { icon: "🍷", text: "Dining becomes immersive." },
-                { icon: "🛎️", text: "The concierge feels intelligent and personal." },
-                { icon: "🌅", text: "The ambience shifts with the moment." },
-                { icon: "🥂", text: "Celebrations become unforgettable." },
-                { icon: "📸", text: "The stay becomes a memory worth sharing." },
-              ].map((step, idx) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {WHAT_KINDS_OF_HOTELS.map((block, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: idx * 0.1 }}
-                  className={`relative flex items-center mb-8 md:mb-12 ${idx % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"}`}
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3 }}
+                  className="glass-card rounded-3xl p-8 sm:p-10 border border-white/80 shadow-xl flex flex-col justify-between"
                 >
-                  {/* Connector Dot */}
-                  <div className="absolute left-8 md:left-1/2 w-4 h-4 rounded-full bg-indigo-400 shadow-[0_0_20px_rgba(129,140,248,0.9)] transform -translate-x-1/2 z-10" />
-
-                  {/* Content Container */}
-                  <div className={`w-full md:w-1/2 flex pl-16 md:pl-0 ${idx % 2 === 0 ? "md:pr-16 md:justify-end" : "md:pl-16 md:justify-start"}`}>
-                    <div className="bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-2xl hover:bg-white/10 transition-all duration-300 shadow-lg hover:shadow-indigo-500/20 hover:border-indigo-500/50 flex items-center gap-5 group w-full">
-                      <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300 group-hover:bg-indigo-500/20">
-                        <span className="text-2xl filter grayscale group-hover:grayscale-0 transition-all duration-500">{step.icon}</span>
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#DDF6F0] to-white border border-white/80 flex items-center justify-center shadow-sm">
+                        {block.icon}
                       </div>
-                      <p className="text-lg md:text-xl text-gray-200 font-light leading-snug group-hover:text-white transition-colors">{step.text}</p>
+                      <h3 className="font-fraunces text-xl sm:text-2xl text-[#0B2A45] font-medium leading-snug">
+                        {block.title}
+                      </h3>
+                    </div>
+
+                    <div className="space-y-4 pt-2">
+                      {block.bullets.map((bullet, bIdx) => (
+                        <div key={bIdx} className="flex items-start gap-3">
+                          <div className="w-2 h-2 rounded-full bg-[#0EA99B] mt-2 flex-shrink-0" />
+                          <p className="text-[#4C6A83] text-base leading-relaxed">
+                            {bullet}
+                          </p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
 
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-center mt-20 relative px-4"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 via-cyan-500/10 to-teal-500/10 blur-[100px] rounded-full pointer-events-none" />
-              <div className="relative z-10 bg-black/40 backdrop-blur-xl border border-white/10 p-10 md:p-16 rounded-3xl max-w-4xl mx-auto shadow-2xl">
-                <h4 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-                  That is no longer just hospitality. <br className="hidden md:block" />
-                  <span className="bg-gradient-to-r from-indigo-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent inline-block mt-2">That becomes an experience.</span>
-                </h4>
-                <p className="text-xl md:text-3xl text-gray-400 font-light mt-8">
-                  And experiences are what guests return for.
+        {/* SECTION 2: HOW HOTELS USE THE DECKOVIZ PORTAL, IN PRACTICE */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto space-y-16">
+            <div className="text-center max-w-4xl mx-auto">
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wide uppercase mb-4">
+                <Building2 className="w-3.5 h-3.5" /> In Practice
+              </span>
+              <h2 className="font-fraunces text-3xl sm:text-5xl text-[#0B2A45] font-medium leading-tight mb-4">
+                How Hotels Use The Deckoviz Portal, <span className="grad-text">in Practice</span>
+              </h2>
+              <p className="text-[#4C6A83] text-lg sm:text-xl leading-relaxed">
+                Concrete ways leading luxury properties, boutique hotels, and resorts transform their public & private spaces.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {HOTEL_PRACTICE_PILLARS.map((pillar, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3 }}
+                  className="glass-card rounded-3xl p-8 sm:p-10 border border-white/80 shadow-xl"
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#DDF6F0] to-white border border-white/80 flex items-center justify-center shadow-sm">
+                      {pillar.icon}
+                    </div>
+                    <h3 className="font-fraunces text-xl sm:text-2xl text-[#0B2A45] font-medium leading-snug">
+                      {pillar.title}
+                    </h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    {pillar.items.map((itemText, itemIdx) => (
+                      <div key={itemIdx} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 stroke-[#0EA99B] mt-0.5 flex-shrink-0" />
+                        <p className="text-[#4C6A83] text-base leading-relaxed">
+                          {itemText}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FULL EXPERIENCE PANEL & TIMELINE FOR HOTELS */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="glass-card rounded-[32px] p-8 sm:p-14 relative overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(14,169,155,0.10),transparent_60%)] pointer-events-none" />
+              
+              <div className="text-center max-w-2xl mx-auto mb-14 relative z-10">
+                <h3 className="font-fraunces text-2xl sm:text-4xl text-[#0B2A45] font-medium mb-3">
+                  The complete Deckoviz hotel guest journey
+                </h3>
+                <p className="text-[#7C93A6] text-base">
+                  From arrival to in-room welcome, dining, spa, and departure.
                 </p>
               </div>
-            </motion.div>
+
+              {/* Vertical Timeline */}
+              <div className="max-w-2xl mx-auto relative pl-4 sm:pl-6 mb-16">
+                <div className="absolute left-[23px] sm:left-[27px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-[#2FC2AE] to-[#26618f]" />
+                <div className="space-y-6 relative z-10">
+                  {HOTEL_JOURNEY_STEPS.map((stepText, stepIdx) => (
+                    <div key={stepIdx} className="flex gap-5 items-start">
+                      <div className="w-10 h-10 rounded-full bg-white border-2 border-[#2FC2AE] flex items-center justify-center shadow-sm flex-shrink-0 text-[#0A8378] font-fraunces font-bold text-sm">
+                        {stepIdx + 1}
+                      </div>
+                      <p className="text-[#4C6A83] text-base sm:text-lg pt-1.5 font-normal">
+                        {stepText}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Closing Statement */}
+              <div className="text-center max-w-xl mx-auto relative z-10 space-y-4">
+                <p className="text-[#4C6A83] text-xl font-normal">
+                  That is no longer just a room booking.
+                </p>
+                <p className="font-fraunces italic text-3xl sm:text-4xl grad-text font-medium py-1">
+                  That becomes a cherished sanctuary.
+                </p>
+                <p className="text-[#4C6A83] text-lg font-normal">
+                  And sanctuary is what guests return to.
+                </p>
+
+                <div className="pt-6">
+                  <button
+                    onClick={handleDemoClick}
+                    className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-gradient-to-r from-[#0EA99B] to-[#123C63] text-white font-semibold text-base shadow-xl shadow-[#0EA99B]/30 hover:scale-105 transition-all duration-300"
+                  >
+                    See it in your hotel
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
+        </section>
 
-        </div>
-      </section>
+        {/* FINAL CTA SECTION */}
+        <section className="py-28 px-4 sm:px-6 lg:px-8 text-center relative">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <h2 className="font-fraunces text-4xl sm:text-6xl text-[#0B2A45] font-medium leading-tight">
+              Transform your hotel experience:<br />
+              <span className="grad-text">schedule your private demo</span>
+            </h2>
 
-      {/* 05. Call to Action */}
-      <section className="py-32 px-6 relative overflow-hidden bg-gradient-to-br from-indigo-900 to-[#050505]">
-        <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: "url('/images/stars.svg')" }} />
-        <div className="max-w-4xl mx-auto text-center relative z-10">
-          <SectionHeader 
-            number="05" 
-            title="Step Into the Era Of The Intelligent Hotels" 
-          />
-          <h3 className="text-3xl md:text-5xl font-bold text-white mb-8" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>Don't just host guests. Immerse them.</h3>
-          
-          <div className="space-y-6 text-xl text-gray-300 font-light mb-12">
-            <p>
-              Static hospitality is the standard of the past. The modern traveler is looking for something more: they are looking for connection, novelty, and well-being. Deckoviz GAVP is the easiest, most impactful upgrade you can make to your hotel today.
+            <p className="text-[#4C6A83] text-lg sm:text-xl font-normal leading-relaxed max-w-3xl mx-auto">
+              The future of hospitality is multi-sensory, personalized, and emotionally intelligent. Deckoviz GAVP for Hotels brings your walls, rooms, and event spaces to life.
             </p>
-            <p>
-              Most things you buy fill space: Deckoviz shapes how your guests live and feel within it.
+
+            <p className="font-fraunces italic text-2xl sm:text-3xl text-[#0B2A45] font-medium pt-4">
+              Bring incredible ambiance and guest delight to your property today.
             </p>
-            <p>
-              In a world of generic luxury, give your guests a space that finally speaks to them. The bed is where they sleep. The atmosphere is why they come back.
-            </p>
-            <p className="text-2xl text-white font-medium">
-              Stop managing rooms. Start curating the future of hospitality.
-            </p>
+
+            <div className="pt-6">
+              <button
+                onClick={handleDemoClick}
+                className="inline-flex items-center gap-3 px-9 py-4 sm:py-5 rounded-full bg-gradient-to-r from-[#0EA99B] to-[#123C63] text-white font-semibold text-base sm:text-lg shadow-2xl shadow-[#0EA99B]/40 hover:scale-105 transition-all duration-300"
+              >
+                Schedule your private hotel demo
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
+        </section>
 
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-white text-black px-10 py-5 rounded-full text-xl font-bold shadow-[0_0_40px_rgba(255,255,255,0.3)] hover:shadow-[0_0_60px_rgba(255,255,255,0.5)] transition-all"
-            onClick={() => window.location.href = '/contact'}
-          >
-            Experience the GAVP – Schedule Your Private Hotel Demo Today
-          </motion.button>
+      </main>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 text-center text-[#7C93A6] text-sm relative z-10 border-t border-[#0B2A45]/10">
+        <div className="font-fraunces italic font-medium text-xl text-[#0B2A45] flex items-center justify-center gap-2 mb-2">
+          Deckoviz <span className="w-2 h-2 rounded-full bg-gradient-to-br from-[#2FC2AE] to-[#1B4C79]" />
         </div>
-      </section>
-
+        <p>Deckoviz Space Labs — the AI-powered smart art frame platform for hospitality.</p>
+      </footer>
     </div>
   );
 };

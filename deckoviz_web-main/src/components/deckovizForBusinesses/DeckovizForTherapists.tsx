@@ -12,120 +12,114 @@ const restarauntImages = [
 
 const DeckovizTherapistsLanding = () => {
   return (
-    <div className="bg-white">
-      {/* Hero Section with Gradient Background */}
-      <div className="min-h-screen relative overflow-hidden">
-        {/* Gradient Background Effects - Only for Hero Section */}
-        <div className="absolute inset-0">
-          {/* Animated Gradient Layers */}
-          <div className="absolute top-0 left-0 w-1/4 h-full bg-gradient-to-r from-indigo-500/25 via-violet-400/15 to-transparent blur-[40px] animate-[floatLeft_6s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/4 left-0 w-1/2 h-1/2 bg-gradient-to-r from-indigo-500/20 via-violet-400/10 to-transparent blur-[50px] animate-[floatCenter_8s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/2 left-0 w-3/5 h-1/2 bg-gradient-to-r from-indigo-500/15 via-violet-400/8 to-transparent blur-[60px] animate-[floatBottom_10s_ease-in-out_infinite]"></div>
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-indigo-500/25 via-violet-400/15 to-transparent blur-[50px] animate-[floatRight_7s_ease-in-out_infinite]"></div>
-          <div className="absolute top-0 left-0 w-1/6 h-1/3 bg-gradient-to-r from-indigo-600/30 via-rose-400/15 to-transparent blur-[30px] animate-[pulse_4s_ease-in-out_infinite]"></div>
-          <div className="absolute top-1/3 left-0 w-1/5 h-1/2 bg-gradient-to-r from-indigo-500/20 via-rose-400/17 to-transparent blur-[35px] animate-[floatLeft_5s_ease-in-out_infinite_1s]"></div>
-          <div className="absolute top-2/3 left-0 w-1/4 h-1/3 bg-gradient-to-r from-indigo-600/35 via-rose-400/20 to-transparent blur-[40px] animate-[floatCenter_6s_ease-in-out_infinite_2s]"></div>
-          <div className="absolute top-0 right-0 w-1/6 h-full bg-gradient-to-l from-indigo-600/30 via-rose-400/15 to-transparent blur-[35px] animate-[floatRight_9s_ease-in-out_infinite_1.5s]"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-1/4 bg-gradient-to-t from-violet-300/20 via-pink-300/18 to-transparent blur-[45px] animate-[floatBottom_8s_ease-in-out_infinite_3s]"></div>
+    <div 
+      className="relative min-h-screen text-[#0E2438] overflow-x-hidden selection:bg-[#5CD9C4] selection:text-[#071B2C]"
+      style={{
+        background: `
+          radial-gradient(ellipse 60% 45% at 15% 0%, #DDF6F0 0%, transparent 60%),
+          radial-gradient(ellipse 55% 45% at 100% 15%, rgba(14, 169, 155, 0.10) 0%, transparent 55%),
+          linear-gradient(180deg, #F6FAF9 0%, #EDF6F4 100%)
+        `,
+        fontFamily: "'Inter', sans-serif"
+      }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap');
+        
+        .font-fraunces {
+          font-family: 'Fraunces', serif;
+        }
 
-          {/* Curved Grid Pattern - Barrel Distortion Effect */}
-          <svg
-            className="absolute inset-0 w-full h-full opacity-25 pointer-events-none"
-            viewBox="0 0 1000 800"
-            preserveAspectRatio="xMidYMid slice"
-          >
-            <g stroke="white" strokeWidth="1" fill="none">
-              {/* Vertical curved lines (longitude-style) */}
-              {Array.from({ length: 25 }).map((_, i) => {
-                const x = (i / 24) * 1000;
-                const curvature = Math.sin((i / 24) * Math.PI) * 120;
-                return (
-                  <path
-                    key={`v-${i}`}
-                    d={`M ${x} 0 Q ${x + curvature} 400 ${x} 800`}
-                  />
-                );
-              })}
-              
-              {/* Horizontal curved lines (latitude-style) */}
-              {Array.from({ length: 20 }).map((_, i) => {
-                const y = (i / 19) * 800;
-                const distanceFromCenter = Math.abs(y - 400) / 400;
-                const compression = 1 - distanceFromCenter * 0.7;
-                const curve = 150 * (1 - compression);
-                
-                return (
-                  <path
-                    key={`h-${i}`}
-                    d={`M 0 ${y} Q ${250 + curve} ${y} 500 ${y} T 1000 ${y}`}
-                  />
-                );
-              })}
-            </g>
-          </svg>
-        </div>
+        @keyframes floatA {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(40px, 30px) scale(1.08); }
+        }
+        @keyframes floatB {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(-35px, 25px) scale(1.05); }
+        }
+        @keyframes floatC {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(25px, -35px) scale(1.1); }
+        }
+        @keyframes pulseDot {
+          0% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0.6); }
+          70% { box-shadow: 0 0 0 9px rgba(14, 169, 155, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(14, 169, 155, 0); }
+        }
+        @keyframes gradShift {
+          0% { background-position: 0% 50%; }
+          100% { background-position: 220% 50%; }
+        }
 
-        {/* Hero Content */}
-        <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 text-center pt-16">
+        .animate-float-a { animation: floatA 22s ease-in-out infinite; }
+        .animate-float-b { animation: floatB 26s ease-in-out infinite; }
+        .animate-float-c { animation: floatC 30s ease-in-out infinite; }
+        .animate-pulse-dot { animation: pulseDot 2.2s infinite; }
+
+        .grad-text {
+          background: linear-gradient(100deg, #0EA99B, #1B4C79, #2FC2AE);
+          background-size: 220% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: gradShift 7s linear infinite;
+        }
+
+        .glass-card {
+          background: rgba(255, 255, 255, 0.56);
+          backdrop-filter: blur(22px) saturate(160%);
+          -webkit-backdrop-filter: blur(22px) saturate(160%);
+          border: 1px solid rgba(255, 255, 255, 0.75);
+          box-shadow: 0 20px 60px -25px rgba(11, 42, 69, 0.25);
+        }
+      `}</style>
+
+      {/* Decorative Blobs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute w-[38vw] h-[38vw] top-[-8%] left-[-10%] rounded-full blur-[90px] opacity-55 bg-[radial-gradient(circle,#9BE8DB,transparent_70%)] animate-float-a" />
+        <div className="absolute w-[34vw] h-[34vw] top-[8%] right-[-8%] rounded-full blur-[90px] opacity-32 bg-[radial-gradient(circle,#5CD9C4,transparent_70%)] animate-float-b" />
+        <div className="absolute w-[30vw] h-[30vw] bottom-[6%] left-[20%] rounded-full blur-[90px] opacity-16 bg-[radial-gradient(circle,#1B4C79,transparent_72%)] animate-float-c" />
+      </div>
+
+      {/* Hero Section */}
+      <div className="min-h-screen relative overflow-hidden z-10 pt-32 pb-16">
+        <div className="relative z-10 flex flex-col items-center justify-center px-4 text-center">
           {/* Top Badge */}
-          <div className="mt-28 mb-10 shadow-lg hover:shadow-xl">
-            <span className="inline-flex items-center px-3 py-1 bg-[#6670d8] text-white text-sm font-medium rounded-md">
-              Deckoviz For All
-            </span>
+          <div className="mb-8">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wider uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#2FC2AE] animate-pulse-dot" />
+              Deckoviz For Therapists & Wellness Spaces
+            </div>
           </div>
 
           {/* Main Heading */}
-          <div className="mb-8">
-            <h1 className="text-5xl md:text-5xl font-semibold text-gray-900 leading-tight">
+          <div className="mb-8 max-w-5xl">
+            <h1 className="font-fraunces text-4xl sm:text-6xl lg:text-7xl font-medium text-[#0B2A45] leading-tight">
               Deckoviz For Therapists, Yoga
               <br />
-              Studios & Wellness Spaces
+              Studios & <span className="grad-text">Wellness Spaces</span>
             </h1>
           </div>
 
           {/* Subtitle */}
-          <div className="mb-12 max-w-2xl">
-            <p className="text-lg font-medium text-gray-900 leading-relaxed">
-              Design Emotionally Supportive Environments. Guide Healing
-              <br />
-              Through Atmosphere. Create Inner Worlds with Art and AI.
+          <div className="mb-10 max-w-3xl">
+            <p className="text-xl md:text-2xl font-normal text-[#4C6A83] leading-relaxed">
+              Design Emotionally Supportive Environments. Guide Healing Through Atmosphere.
             </p>
           </div>
 
-          {/* Secondary Heading */}
-          <div className="mb-8">
-            <h2 className="text-2xl md:text-2xl lg:text-3xl font-semibold text-gray-800 leading-tight mb-3">
-              Support Deeper Presence, Emotional Safety, and
-              <br />
-              Healing Through Visual Design
+          {/* Secondary Heading & Card */}
+          <div className="glass-card rounded-3xl p-8 sm:p-12 max-w-4xl mx-auto border border-white/80 shadow-xl space-y-6 text-[#4C6A83] text-lg leading-relaxed">
+            <h2 className="font-fraunces text-2xl md:text-3xl font-medium text-[#0B2A45] leading-snug">
+              Support Deeper Presence, Emotional Safety, and Healing Through Visual Design
             </h2>
-          </div>
-
-          {/* Description Paragraphs */}
-          <div className="max-w-4xl space-y-6 text-gray-900 font-medium leading-relaxed">
-            <p className="text-base md:text-lg">
-              Whether you're guiding clients through therapy, holding space for nervous system regulation,
-              <br />
-              or leading people into stillness, your physical environment does more than decorate   it
-              <br />
-              participates.
+            <p>
+              Whether you're guiding clients through therapy, holding space for nervous system regulation, or leading people into stillness, your physical environment participates.
             </p>
-            
-            <p className="text-base md:text-lg">
-              Deckoviz is a revolutionary AI-powered smart art frame that transforms any room into a mood-
-              <br />
-              responsive, healing-supportive, visually immersive sanctuary. It creates the emotional
-              <br />
-              backdrop for your clients, students, or guests to feel safe, held, open, inspired, and grounded.
+            <p>
+              Deckoviz is a smart art frame that transforms any room into a mood-responsive, healing-supportive sanctuary. It creates the emotional backdrop for your clients to feel safe, held, open, inspired, and grounded.
             </p>
-            
-            <div className="pt-4 pb-20">
-              <p className="text-base md:text-lg font-semibold text-gray-800">
-                It's more than a visual display. It's a co-facilitator. A calming companion. A poetic
-                <br />
-                mirror. A living ritual.
-              </p>
-            </div>
           </div>
         </div>
       </div>

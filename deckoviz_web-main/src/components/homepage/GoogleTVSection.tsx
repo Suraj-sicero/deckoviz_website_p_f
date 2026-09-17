@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronDown, ChevronUp, Tv } from "lucide-react";
 
 const backgroundImages = [
   '/images/google-tv-images/everything-in-one-place-2x.webp=n-w2400-h1372-fcrop64=1,00000000ffffffff-rw',
@@ -9,7 +10,7 @@ const backgroundImages = [
 ];
 
 const GoogleTVSection: React.FC = () => {
-
+  const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [currentLeftIndex, setCurrentLeftIndex] = useState(0);
   const [currentRightIndex, setCurrentRightIndex] = useState(1);
 
@@ -29,7 +30,7 @@ const GoogleTVSection: React.FC = () => {
 
   return (
     <div
-      className="relative py-20 px-4 overflow-hidden"
+      className="relative py-16 md:py-24 px-4 overflow-hidden"
       style={{ background: "linear-gradient(160deg, #e8ecff 0%, #f5f7ff 30%, #eef2ff 60%, #e0e8ff 100%)" }}
     >
       {/* Background Elements */}
@@ -49,10 +50,17 @@ const GoogleTVSection: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.9 }}
-          className="text-center mb-20"
+          className="text-center mb-8"
         >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 border border-blue-200/80 shadow-sm backdrop-blur-md mb-6">
+            <Tv className="w-4 h-4 text-blue-600" />
+            <span className="text-xs md:text-sm font-semibold tracking-wider text-slate-800 uppercase">
+              Smart Entertainment Ecosystem
+            </span>
+          </div>
+
           <h2
-            className="text-5xl md:text-7xl font-bold text-gray-900 mb-4"
+            className="text-4xl md:text-6xl font-bold text-gray-900 mb-4"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             A Powerful{" "}
@@ -61,7 +69,36 @@ const GoogleTVSection: React.FC = () => {
             </span>
             . At Its Core.
           </h2>
+          <p className="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto font-medium">
+            Netflix, YouTube, Prime, Spotify, and thousands of apps natively built into your display.
+          </p>
+
+          {/* Toggle Expand Button */}
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#182A4A] to-[#2563EB] text-white font-medium text-base shadow-lg hover:shadow-blue-500/25 transition-all duration-300 hover:scale-[1.02]"
+            >
+              <span>{isExpanded ? "Minimize Smart TV Features" : "Explore Google TV Capabilities"}</span>
+              {isExpanded ? (
+                <ChevronUp className="w-5 h-5 text-blue-200 group-hover:-translate-y-0.5 transition-transform" />
+              ) : (
+                <ChevronDown className="w-5 h-5 text-blue-200 group-hover:translate-y-0.5 transition-transform" />
+              )}
+            </button>
+          </div>
         </motion.div>
+
+        {/* Expandable Content Wrapper */}
+        <AnimatePresence>
+          {isExpanded && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
 
         {/* Creative Layout with Side-by-Side Zigzag */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 space-y-20 lg:space-y-32 mt-10">
@@ -254,6 +291,20 @@ const GoogleTVSection: React.FC = () => {
             </motion.div>
           </div>
         </div>
+
+        {/* Bottom Minimize Button */}
+        <div className="text-center pt-8 pb-4">
+          <button
+            onClick={() => setIsExpanded(false)}
+            className="inline-flex items-center gap-2 text-sm font-semibold text-gray-600 hover:text-blue-700 transition-colors"
+          >
+            <ChevronUp className="w-4 h-4" />
+            Minimize Smart TV Features
+          </button>
+        </div>
+      </motion.div>
+    )}
+  </AnimatePresence>
       </div>
     </div>
   );

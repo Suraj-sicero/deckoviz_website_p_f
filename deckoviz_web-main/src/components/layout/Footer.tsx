@@ -93,35 +93,25 @@ const socialLinks = [
 
 // ───────────────── FOOTER ─────────────────
 
-const DropdownColumn = ({ title, links }: { title: string, links: {name: string, path: string}[] }) => {
+const StandardColumn = ({ title, links }: { title: string, links: {name: string, path: string}[] }) => {
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 10 },
-        visible: { opacity: 1, y: 0 },
-      }}
-      className="group flex flex-col items-center md:items-start w-full relative"
-    >
-      <h3 className="text-white font-semibold text-xs mb-1.5 flex items-center gap-1.5 cursor-pointer py-1">
+    <div className="flex flex-col items-start w-full">
+      <h3 className="text-white font-semibold text-xs md:text-sm mb-3 tracking-wider uppercase text-cyan-300">
         {title}
-        <svg className="w-3 h-3 transition-transform duration-300 group-hover:rotate-180 text-cyan-400 opacity-80" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
       </h3>
-      <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-all duration-500 ease-in-out opacity-0 group-hover:opacity-100 w-full">
-        <div className="overflow-hidden">
-          <ul className="space-y-0.5 flex flex-col items-center md:items-start pb-2">
-            {links.map((link) => (
-              <motion.li key={link.name} whileHover={{ x: 3 }}>
-                <a href={link.path} className="text-white/70 hover:text-white text-[11px] transition-colors duration-200 inline-block py-0.5">
-                  {link.name}
-                </a>
-              </motion.li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </motion.div>
+      <ul className="space-y-2 flex flex-col items-start">
+        {links.map((link) => (
+          <motion.li key={link.name} whileHover={{ x: 2 }}>
+            <a 
+              href={link.path} 
+              className="text-white/70 hover:text-white text-xs md:text-xs transition-colors duration-200 inline-block"
+            >
+              {link.name}
+            </a>
+          </motion.li>
+        ))}
+      </ul>
+    </div>
   );
 };
 
@@ -389,13 +379,13 @@ const Footer = () => {
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-3 mb-3 justify-items-center items-start"
           >
 
-            {/* Columns as dropdowns on hover */}
-            <DropdownColumn title="Product" links={productLinks} />
-            <DropdownColumn title="Company" links={companyLinks} />
-            <DropdownColumn title="Legal" links={legalLinks} />
-            <DropdownColumn title="Verticals & Products" links={verticalsLinks} />
-            <DropdownColumn title="Others" links={othersLinks} />
-            <DropdownColumn title="Deckoviz Products" links={deckovizProductsLinks} />
+            {/* Columns expanded full view by default */}
+            <StandardColumn title="Product" links={productLinks} />
+            <StandardColumn title="Company" links={companyLinks} />
+            <StandardColumn title="Legal" links={legalLinks} />
+            <StandardColumn title="Verticals & Products" links={verticalsLinks} />
+            <StandardColumn title="Others" links={othersLinks} />
+            <StandardColumn title="Deckoviz Products" links={deckovizProductsLinks} />
 
 
           </motion.div>

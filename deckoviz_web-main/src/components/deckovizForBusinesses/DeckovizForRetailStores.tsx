@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Zap, TrendingUp, Clock, Sparkles, Globe, Leaf, ShoppingBag, Users, BarChart3, Shield, ChevronDown, ChevronUp } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 
 // ─── Use Cases Data ───────────────────────────────────────────────────────────
 const retailUseCaseCategories = [
@@ -10,7 +9,7 @@ const retailUseCaseCategories = [
     label: 'Customer Experience & Personalisation',
     icon: '✦',
     color: 'from-violet-500 to-indigo-600',
-    accent: '#a78bfa',
+    accent: '#0EA99B',
     items: [
       { title: 'Personalized customer greetings', desc: 'Welcome VIP customers, repeat buyers, and special guests with personalised visual greetings and tailored experiences.' },
       { title: 'Returning customer recognition', desc: 'Vizzy remembers customer preferences, past purchases, favourite styles, sizes, and shopping habits to create delightful repeat experiences.' },
@@ -27,7 +26,7 @@ const retailUseCaseCategories = [
     label: 'Product Display & Merchandising',
     icon: '◈',
     color: 'from-amber-500 to-orange-500',
-    accent: '#f59e0b',
+    accent: '#0A8378',
     items: [
       { title: 'Dynamic product showcases', desc: 'Display products in stunning visual formats that elevate perceived value and customer curiosity.' },
       { title: 'Product visualization wall', desc: 'Show products in use, in real environments, and across multiple lifestyle contexts.' },
@@ -46,7 +45,7 @@ const retailUseCaseCategories = [
     label: 'Brand Storytelling & Identity',
     icon: '◉',
     color: 'from-rose-500 to-pink-600',
-    accent: '#fb7185',
+    accent: '#1B4C79',
     items: [
       { title: 'Your brand story', desc: 'Tell the story of your store: your founder journey, inspiration, values, philosophy, and mission.' },
       { title: 'Craftsmanship storytelling', desc: 'Show how products are made, the hands behind them, the materials used, and the care involved.' },
@@ -63,7 +62,7 @@ const retailUseCaseCategories = [
     label: 'Ambience, Mood & Atmosphere',
     icon: '◎',
     color: 'from-teal-500 to-cyan-500',
-    accent: '#2dd4bf',
+    accent: '#0EA99B',
     items: [
       { title: 'Dynamic ambience engine', desc: 'Vizzy becomes your store\'s mood layer, adapting visuals, sounds, lighting, and atmosphere depending on customer flow, season, and time of day.' },
       { title: 'Morning vs evening retail moods', desc: 'Create different shopping energy for daytime browsing versus evening premium shopping.' },
@@ -80,7 +79,7 @@ const retailUseCaseCategories = [
     label: 'Conversion, Revenue & Sales',
     icon: '◆',
     color: 'from-emerald-500 to-green-500',
-    accent: '#34d399',
+    accent: '#2FC2AE',
     items: [
       { title: 'High-conversion visual merchandising', desc: 'Guide customer attention intentionally toward products that matter most.' },
       { title: 'Upselling through emotional context', desc: 'Help customers emotionally connect with premium purchases before they rationalise them.' },
@@ -97,7 +96,7 @@ const retailUseCaseCategories = [
     label: 'Social Proof & Trust Building',
     icon: '◇',
     color: 'from-sky-500 to-blue-500',
-    accent: '#38bdf8',
+    accent: '#1B4C79',
     items: [
       { title: 'Live customer review wall', desc: 'Display customer reviews, testimonials, and real customer experiences beautifully.' },
       { title: 'UGC wall', desc: 'Show customer photos, styling inspiration, social posts, and authentic product use.' },
@@ -112,7 +111,7 @@ const retailUseCaseCategories = [
     label: 'Interactive Shopping Experiences',
     icon: '◐',
     color: 'from-fuchsia-500 to-indigo-500',
-    accent: '#d946ef',
+    accent: '#0EA99B',
     items: [
       { title: 'Virtual styling inspiration', desc: 'Show how products work together in complete lifestyle or styling contexts.' },
       { title: '"How it would look on you" visualization', desc: 'Fashion, jewellery, beauty, eyewear, accessories - help customers imagine ownership.' },
@@ -127,7 +126,7 @@ const retailUseCaseCategories = [
     label: 'Operations, Signage & Utility',
     icon: '◑',
     color: 'from-slate-400 to-gray-500',
-    accent: '#94a3b8',
+    accent: '#0A8378',
     items: [
       { title: 'Beautiful signage system', desc: 'Use Deckoviz for premium signage, directions, policies, store information, and customer guidance.' },
       { title: 'Queue and appointment management', desc: 'Elegant waiting experiences for salons, boutiques, premium stores, and service-led retail.' },
@@ -143,7 +142,7 @@ const retailUseCaseCategories = [
     label: 'Events, Launches & Community',
     icon: '✧',
     color: 'from-orange-500 to-red-500',
-    accent: '#fb923c',
+    accent: '#2FC2AE',
     items: [
       { title: 'Collection launch experiences', desc: 'Turn product launches into real in-store events people remember.' },
       { title: 'Workshop and event storytelling', desc: 'Masterclasses, launches, tasting events, community gatherings - make them visually rich.' },
@@ -160,39 +159,26 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
   const totalUseCases = retailUseCaseCategories.reduce((a, c) => a + c.items.length, 0);
 
   return (
-    <section className="relative py-32 z-10 overflow-hidden">
-      {/* Ambient background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] h-[70vh] rounded-full blur-[180px] transition-all duration-1000"
-          style={{ background: `radial-gradient(ellipse, ${cat.accent}14 0%, transparent 70%)` }}
-        />
-      </div>
-
+    <section className="relative py-24 z-10 overflow-hidden">
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20"
+          className="text-center mb-16 space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8">
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: cat.accent }} />
-            <span className="text-sm font-medium tracking-wider text-violet-200 uppercase">An Evolving List of Use Cases</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-xs font-semibold text-[#0A8378] tracking-wider uppercase">
+            <span className="w-2 h-2 rounded-full bg-[#2FC2AE] animate-pulse-dot" />
+            An Evolving List of Use Cases
           </div>
-          <h2 className="text-4xl md:text-6xl font-['Playfair_Display'] font-semibold mb-8 leading-tight" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-            Deckoviz becomes your store's{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400">
-              everything layer
-            </span>
+          <h2 className="font-fraunces text-4xl sm:text-6xl font-medium text-[#0B2A45] leading-tight">
+            Deckoviz becomes your store's <span className="grad-text">everything layer</span>
           </h2>
-          <div className="max-w-3xl mx-auto space-y-4 text-lg text-gray-400 leading-relaxed">
+          <div className="max-w-3xl mx-auto space-y-4 text-base md:text-lg text-[#4C6A83] leading-relaxed">
             <p>Deckoviz becomes your store's visual layer, storytelling layer, ambience layer, brand layer, and customer delight system.</p>
-            <p>Retail is no longer just about selling products. Products are increasingly commodities. What customers remember is how your store made them feel, how clearly they understood your brand, and whether the experience felt worth returning for.</p>
-            <p className="text-gray-500 text-base">Deckoviz helps transform retail stores from transactional spaces into immersive, memorable, high-conversion environments.</p>
-            <p className="text-gray-500 text-base">This is a living list of use cases we keep expanding as we build, add and discover new ways retail spaces can use Deckoviz to create stronger customer engagement, higher conversions, better brand recall, and more delightful in-store experiences.</p>
+            <p>Retail is no longer just about selling products. What customers remember is how your store made them feel, how clearly they understood your brand, and whether the experience felt worth returning for.</p>
           </div>
         </motion.div>
 
@@ -202,25 +188,19 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-wrap gap-3 justify-center mb-16"
+          className="flex flex-wrap gap-3 justify-center mb-12"
         >
           {retailUseCaseCategories.map((c, i) => (
             <button
               key={c.id}
               onClick={() => setActiveTab(i)}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border ${
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs md:text-sm font-semibold tracking-wide transition-all duration-300 border ${
                 activeTab === i
-                  ? 'text-white border-transparent shadow-lg scale-105'
-                  : 'bg-white/5 border-white/10 text-gray-400 hover:text-white hover:bg-white/10'
+                  ? 'bg-gradient-to-r from-[#DDF6F0] to-white border-[#0EA99B] text-[#0A8378] shadow-md scale-105'
+                  : 'glass-card border-white/80 text-[#0B2A45] hover:border-[#0EA99B]'
               }`}
-              style={activeTab === i ? {
-                background: `linear-gradient(135deg, ${c.accent}33, ${c.accent}11)`,
-                borderColor: `${c.accent}55`,
-                boxShadow: `0 0 20px ${c.accent}33`,
-                color: c.accent,
-              } : {}}
             >
-              <span className="text-base">{c.icon}</span>
+              <span className="text-base text-[#0EA99B]">{c.icon}</span>
               {c.label}
             </button>
           ))}
@@ -234,38 +214,32 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.4 }}
-            className="mb-8"
+            className="mb-12"
           >
-            <div className="flex items-center gap-4 mb-10">
-              <span className="text-4xl">{cat.icon}</span>
+            <div className="flex items-center gap-4 mb-8">
+              <span className="text-3xl text-[#0EA99B]">{cat.icon}</span>
               <div>
-                <h3 className="text-2xl md:text-3xl font-['Playfair_Display'] font-semibold text-white" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>{cat.label}</h3>
-                <p className="text-sm text-gray-500 mt-1">{cat.items.length} use cases</p>
+                <h3 className="font-fraunces text-2xl md:text-3xl font-medium text-[#0B2A45]">{cat.label}</h3>
+                <p className="text-xs text-[#0A8378] font-semibold mt-0.5">{cat.items.length} use cases</p>
               </div>
-              <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent ml-4" />
+              <div className="flex-1 h-px bg-gradient-to-r from-[#0EA99B]/30 to-transparent ml-4" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {cat.items.map((item, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, scale: 0.95, y: 15 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.35, delay: idx * 0.06 }}
-                  className="group relative p-6 rounded-2xl border bg-white/4 hover:bg-white/8 transition-all duration-300 overflow-hidden cursor-default"
-                  style={{ borderColor: `${cat.accent}20` }}
+                  transition={{ duration: 0.35, delay: idx * 0.04 }}
+                  className="glass-card rounded-2xl p-6 border border-white/80 shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                 >
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{ background: `radial-gradient(circle at 30% 40%, ${cat.accent}10 0%, transparent 70%)` }} />
-                  <div className="absolute top-0 left-0 w-0.5 h-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{ background: `linear-gradient(to bottom, transparent, ${cat.accent}, transparent)` }} />
-                  <div className="relative z-10">
-                    <div className="w-7 h-7 rounded-lg flex items-center justify-center mb-3 text-xs font-bold"
-                      style={{ background: `${cat.accent}22`, color: cat.accent }}>
+                  <div>
+                    <div className="w-8 h-8 rounded-lg bg-[#DDF6F0] text-[#0A8378] flex items-center justify-center mb-3 text-xs font-bold border border-white">
                       {(idx + 1).toString().padStart(2, '0')}
                     </div>
-                    <h4 className="text-base font-semibold text-white mb-2 leading-snug">{item.title}</h4>
-                    <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400 transition-colors">{item.desc}</p>
+                    <h4 className="font-fraunces text-lg font-medium text-[#0B2A45] mb-2 leading-snug">{item.title}</h4>
+                    <p className="text-sm text-[#4C6A83] leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>
               ))}
@@ -279,95 +253,83 @@ const RetailUseCasesJourney = ({ onDemo }: { onDemo: () => void }) => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-6 py-8 mb-24 border-y border-white/5"
+          className="flex flex-wrap items-center justify-center gap-6 py-6 mb-20 border-y border-[#0EA99B]/20"
         >
           {retailUseCaseCategories.map((c, i) => (
             <button key={c.id} onClick={() => setActiveTab(i)}
               className="flex flex-col items-center gap-1 group transition-all duration-300">
-              <span className="text-xl transition-transform group-hover:scale-125 duration-300">{c.icon}</span>
-              <span className="text-xs text-gray-600 group-hover:text-gray-300 transition-colors">{c.items.length}</span>
+              <span className="text-lg text-[#0EA99B] group-hover:scale-125 transition-transform">{c.icon}</span>
+              <span className="text-xs text-[#4C6A83] font-semibold">{c.items.length}</span>
             </button>
           ))}
-          <div className="h-8 w-px bg-white/10" />
-          <span className="text-sm text-gray-500">
-            <span className="text-2xl font-['Playfair_Display'] text-white font-semibold" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>{totalUseCases}</span>
+          <div className="h-8 w-px bg-[#0EA99B]/20" />
+          <span className="text-sm text-[#4C6A83]">
+            <span className="text-2xl font-fraunces text-[#0B2A45] font-bold">{totalUseCases}</span>
             {' '}total use cases & growing
           </span>
         </motion.div>
 
         {/* The Full Deckoviz Retail Experience - Cinematic Closing */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 1 }}
-          className="relative"
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="glass-card rounded-[2.5rem] p-8 md:p-14 border border-white/80 shadow-2xl space-y-12"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 via-cyan-500/5 to-blue-500/5 rounded-3xl pointer-events-none" />
-          <div className="border border-white/8 rounded-3xl p-10 md:p-16 backdrop-blur-sm shadow-[0_0_40px_rgba(255,255,255,0.15)] transition-shadow hover:shadow-[0_0_60px_rgba(255,255,255,0.25)]">
-            <div className="text-center mb-14">
-              <h3 className="text-3xl md:text-5xl font-['Playfair_Display'] font-semibold text-white mb-4" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-                The Full Deckoviz in Retail Experience
-              </h3>
-              <p className="text-gray-500 text-lg">The real magic happens when all of this works together.</p>
-            </div>
+          <div className="text-center space-y-3">
+            <h3 className="font-fraunces text-3xl md:text-5xl font-medium text-[#0B2A45]">
+              The Full Deckoviz in Retail Experience
+            </h3>
+            <p className="text-[#4C6A83] text-lg font-normal">The real magic happens when all of this works together.</p>
+          </div>
 
-            {/* Journey Steps */}
-            <div className="relative max-w-2xl mx-auto mb-16">
-              <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-teal-500/40 via-cyan-500/40 to-blue-500/40" />
-              {[
-                'A customer walks in and feels your brand instantly.',
-                'Products are not just displayed - they are understood.',
-                'Stories replace generic selling.',
-                'Visuals guide attention naturally.',
-                'The store adapts to the season, the customer, and the moment.',
-                'Every purchase feels more meaningful.',
-                'Every visit feels worth remembering.',
-              ].map((step, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.12 }}
-                  className="relative flex items-start gap-6 mb-6 pl-2"
-                >
-                  <div className="relative flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center z-10"
-                    style={{ background: `conic-gradient(from ${i * 51}deg, #14b8a6, #06b6d4, #0ea5e9, #3b82f6, #14b8a6)` }}>
-                    <div className="w-6 h-6 rounded-full bg-[#0a0a10] flex items-center justify-center">
-                      <span className="text-xs font-bold text-white">{i + 1}</span>
-                    </div>
-                  </div>
-                  <p className="text-lg text-gray-300 leading-relaxed pt-1">{step}</p>
-                </motion.div>
-              ))}
-            </div>
+          {/* Journey Steps */}
+          <div className="relative max-w-2xl mx-auto space-y-6">
+            <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-[#0EA99B] via-[#1B4C79] to-[#2FC2AE]" />
+            {[
+              'A customer walks in and feels your brand instantly.',
+              'Products are not just displayed - they are understood.',
+              'Stories replace generic selling.',
+              'Visuals guide attention naturally.',
+              'The store adapts to the season, the customer, and the moment.',
+              'Every purchase feels more meaningful.',
+              'Every visit feels worth remembering.',
+            ].map((step, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="relative flex items-start gap-6 pl-2"
+              >
+                <div className="w-8 h-8 rounded-full bg-[#DDF6F0] border border-[#0EA99B]/30 flex items-center justify-center shrink-0 text-[#0A8378] font-bold text-sm z-10 shadow-sm">
+                  {i + 1}
+                </div>
+                <p className="text-lg text-[#0B2A45] font-medium leading-relaxed pt-0.5">{step}</p>
+              </motion.div>
+            ))}
+          </div>
 
-            {/* Closing Statement */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-center space-y-6 max-w-3xl mx-auto"
-            >
-              <p className="text-2xl text-gray-300 font-light">That is no longer just shopping.</p>
-              <p className="text-3xl md:text-4xl font-['Playfair_Display'] font-semibold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 via-cyan-400 to-blue-400" style={{ fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-                That becomes an experience.
-              </p>
-              <p className="text-2xl text-gray-300 font-light">And experiences are what people come back for.</p>
-              <div className="pt-6">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.97 }}
-                  onClick={onDemo}
-                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold text-lg text-black bg-white shadow-[0_0_40px_rgba(45,212,191,0.3)] hover:shadow-[0_0_60px_rgba(45,212,191,0.5)] transition-all duration-300"
-                >
-                  <span>See It In Your Store</span>
-                  <ArrowRight className="w-5 h-5" />
-                </motion.button>
-              </div>
-            </motion.div>
+          {/* Closing Statement */}
+          <div className="text-center space-y-6 max-w-3xl mx-auto pt-6">
+            <p className="text-xl text-[#4C6A83]">That is no longer just shopping.</p>
+            <p className="font-fraunces text-3xl md:text-4xl font-medium grad-text">
+              That becomes an experience.
+            </p>
+            <p className="text-xl text-[#4C6A83]">And experiences are what people come back for.</p>
+            <div className="pt-4">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={onDemo}
+                className="inline-flex items-center gap-3 px-10 py-5 rounded-full font-semibold text-lg text-white bg-gradient-to-r from-[#0EA99B] to-[#123C63] shadow-xl hover:shadow-2xl transition-all duration-300"
+              >
+                <span>See It In Your Store</span>
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </div>
           </div>
         </motion.div>
       </div>

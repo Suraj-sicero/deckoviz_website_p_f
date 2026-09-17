@@ -18,6 +18,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Hero from "./components/homepage/Hero";
 import Features from "./components/homepage/Features";
 import WhoIsDeckovizFor from "./components/homepage/WhoIsDeckovizFor";
+import WhoTheDeckovizDASPortIsFor from "./components/homepage/WhoTheDeckovizDASPortIsFor";
 import PrivacyPolicy from "./components/policies/PrivacyPolicy";
 import TermsOfService from "./components/policies/TermsOfService";
 import ShippingPolicy from "./components/policies/ShippingPolicy";
@@ -69,6 +70,7 @@ import MouseSparkles from "./components/MouseSparkles";
 
 
 import Benefits from "./components/homepage/Benefits";
+import HowHomesUseDASPortal from "./components/homepage/HowHomesUseDASPortal";
 import AILayerForHome from "./components/homepage/AILayerForHome";
 import AllBenefits from "./components/homepage/AllBenefits";
 import WhyDeckoviz from "./components/homepage/WhyDeckoviz";
@@ -221,6 +223,8 @@ import MusicResponsiveArt from "./components/developerSpecs/MusicResponsiveArt";
 import AgenticShapeVortex from "./components/developerSpecs/AgenticShapeVortex";
 import CreateWorld from "./pages/CreateWorld";
 import MasterSuiteOfFeatures from "./pages/MasterSuiteOfFeatures";
+import DasportV1Features from "./pages/DasportV1Features";
+import DeckovizSchoolsFeatures from "./pages/DeckovizSchoolsFeatures";
 import VisualBookCompanion from "./components/tools/VisualBookCompanion";
 import FlagshipGamesPage from "./components/flagshipGames/FlagshipGamesPage";
 import StoryForgeApp from "./components/flagshipGames/storyForge/StoryForgeApp";
@@ -356,8 +360,10 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
                 <TransformWalls />
                 <Features />
                 <Benefits />
+                <HowHomesUseDASPortal />
                 <AILayerForHome />
                 <WhyDeckoviz />
+                <WhoTheDeckovizDASPortIsFor />
                 <WhoIsDeckovizFor />
 
                 <DesignedFor />
@@ -629,6 +635,8 @@ const AppContent: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
           <Route path="/tools/visual-book-companion" element={<ProtectedRoute><VisualBookCompanion /></ProtectedRoute>} />
           <Route path="/create-world" element={<CreateWorld />} />
           <Route path="/master-suite" element={<MasterSuiteOfFeatures />} />
+          <Route path="/dasport-v1-features" element={<DasportV1Features />} />
+          <Route path="/deckoviz-for-schools-features" element={<DeckovizSchoolsFeatures />} />
           <Route path="/vizzy-fun-zone" element={<VizzyFunZone />} />
           <Route path="/elinity" element={<ElinityLanding />} />
           <Route path="/elinity/about" element={<ElinityAboutUs />} />
